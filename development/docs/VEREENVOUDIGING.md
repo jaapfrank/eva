@@ -17,6 +17,15 @@ In [`delegated_work_delivery.py`](../../src/eva/adapters/postgres/delegated_work
 
 Scheid pure release-/receiptvalidatie van persistente wachtrij en dispatcher. Bewaar bestandsrechten, fsync, lock, onzekere toestand, controle van draaiende beelden en rollback. Een niet-lege `reviewer`-string identificeert een label, geen werkelijk onafhankelijke beoordelaar: bind review aan controleerbare herkomst en gescheiden toetsbevoegdheid, met menselijke steekproef waar nodig.
 
+## Prioriteit 3 — grote monolieten alleen met concreet probleem (P1-06)
+
+Een broninventaris toont **`pydantic_conversation.py` ca. 4.971 regels**, **`conversation_actions.py` ca. 3.581** en **`sensory_events.py` ca. 2.456**. Dit zijn reële onderhoudsrisico's, maar grootte alleen bewijst geen fout of duplicatie.
+
+1. Maak per bestand een functie-/verantwoordelijkhedenkaart en meet huidige importgrenzen met `src/tools/check_architecture.py`; **110 schendingen uit 13 oktober is geen actuele telling**.
+2. Inspecteer specifieke overlappingen: modelcontext/receiptvorming versus providertransport; action-dispatch versus stores; eventretentie versus initiatief-/leveringsclaims.
+3. Als een fout of dubbel eigenaarschap is aangetoond: extraheer één pure validatie- of selectiefunctie tegelijk naar een bestaande passende module; behoud interface en traceerbaar gedrag.
+4. Voer huidige model-, aandacht-, PostgreSQL-, STOP- en privacyregressies uit en lees de werkelijk geïnstalleerde versie terug. **Geen refactor alleen om een lager regelaantal te krijgen**.
+
 ## Acceptatie en volgorde
 
 - Draai [Postgres-deliverytests](../../development/tests/postgres/test_delegated_delivery_store.py), [afleverwerkertests](../../development/tests/operations/test_delegated_work_delivery.py) en [releaseapplicationtests](../../development/tests/operations/test_reviewed_component_application.py).
