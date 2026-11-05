@@ -129,6 +129,9 @@ def render_human(board):
     ]
     for row in dashboard["housemateSummary"]["rows"]:
         lines.append(f"| {row['name']} | {row['label']} | {row['remaining'].replace('|', '/')} |")
+    lines += ["", "## Prioriteitsvolgorde (gegenereerd)", ""]
+    for index, step in enumerate(board["audit"]["deliveryPlan"]["finishOrder"], 1):
+        lines.append(f"{index}. {step}")
     lines += ["", "## Open taken", "", "| Taak | Status |", "| --- | --- |"]
     for task in unfinished:
         state = "geparkeerd" if task.get("parked") else task["status"]
