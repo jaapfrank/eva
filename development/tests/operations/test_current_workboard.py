@@ -10,11 +10,12 @@ def board():
 
 def test_current_scope_retained():
     result = validate(ROOT, board())
-    assert result["taskCount"] == 70
+    assert result["taskCount"] == 103
     tasks = [task for step in board()["audit"]["deliveryPlan"]["implementationSlices"]
              for task in step["remainingTasks"]]
     assert len([task for task in tasks if task.get("scopeOrigin") == "finalization-20261015"]) == 18
-    assert len([task for task in tasks if task.get("scopeOrigin") != "finalization-20261015"]) == 52
+    assert len([task for task in tasks if not task.get("scopeOrigin")]) == 52
+    assert len([task for task in tasks if task.get("scopeOrigin") and task.get("scopeOrigin") != "finalization-20261015"]) == 33
     assert result["completed"] >= 45
 
 def test_missing_device_check_refused():

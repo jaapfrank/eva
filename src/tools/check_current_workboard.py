@@ -111,24 +111,38 @@ def validate(root: Path, board):
 
 
 def render_human(board):
-    project = board["audit"]["projectDashboard"]
-    overview = project["deliveryOverview"]
-    lines = ["# Eva2 — huidig werkbord", "", "Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakregistratie.", "",
-             "## Nu", "", overview["now"]["title"], "", overview["now"]["summary"], "",
-             "Klaar wanneer: " + overview["now"]["doneWhen"], "", "## Afmaakvolgorde", ""]
-    lines.extend(f"{i}. {text}" for i, text in enumerate(board["audit"]["deliveryPlan"]["finishOrder"], 1))
-    lines += ["", "## Vier productuitkomsten", "", "| Uitkomst | Wat staat | Wat ontbreekt |", "| --- | --- | --- |"]
-    for row in project["housemateSummary"]["rows"]:
-        lines.append(f"| {row['name']} | {row['label']} | {row['remaining']} |")
-    lines += ["", project["housemateSummary"]["note"], "", "## Alle geregistreerde kleine taken", "", "| Taak | Status | Eindvoorwaarde |", "| --- | --- | --- |"]
-    for task in small_tasks(board):
-        state = "✓ Afgerond" if task["status"] == "completed" else ("Geparkeerd" if task.get("parked") else "● Open")
-        lines.append(f"| {task['id']} · {task['title']} | {state} | {task['doneWhen'].replace('|', '/')} |")
-        for check in task.get("deviceChecks", []):
-            lines.append(f"| ↳ Apparaatcontrole: {check['device']} | {check['status']} | {check['doneWhen'].replace('|', '/')} |")
-    lines += ["", "## Van jou", "", overview["ownerAction"]["detail"], "", "## Historie", "",
-              f"Het oorspronkelijke bord staat in [{board['historicalWorkboard']['path']}]({os.path.relpath(board['historicalWorkboard']['path'], 'development/docs')}).",
-              "Oude criteria, mislukte proeven en onbekend verbruik blijven behouden. De reorganisatie is geen productfunctie.", ""]
+    """One small projection. Full task conditions and evidence stay in canonical JSON."""
+    work = board["currentWork"]
+    dashboard = board["audit"]["projectDashboard"]
+    overview = dashboard["deliveryOverview"]
+    tasks = small_tasks(board)
+    unfinished = [task for task in tasks if task["status"] != "completed"]
+    lines = [
+        "# Eva2 — actueel werk (compacte projectie)", "",
+        "Automatisch uit development/design/product/execution-workboard-v1.json; geen tweede statusbron.", "",
+        "## Nu", "",
+        f"**{work['id']} · {work['title']}** — {work['status']}", "",
+        f"Volgende stap: {work['nextAction']}", "",
+        "## Voortgang", "",
+        f"**{len(tasks) - len(unfinished)}/{len(tasks)}** geregistreerde deeltaken afgerond. Geen percentage product- of gezinsacceptatie.", "",
+        "| Uitkomst | Stand | Nog niet bewezen |", "| --- | --- | --- |",
+    ]
+    for row in dashboard["housemateSummary"]["rows"]:
+        lines.append(f"| {row['name']} | {row['label']} | {row['remaining'].replace('|', '/')} |")
+    lines += ["", "## Prioriteitsvolgorde (gegenereerd)", ""]
+    for index, step in enumerate(board["audit"]["deliveryPlan"]["finishOrder"], 1):
+        lines.append(f"{index}. {step}")
+    lines += ["", "## Open taken", "", "| Taak | Status |", "| --- | --- |"]
+    for task in unfinished:
+        state = "geparkeerd" if task.get("parked") else task["status"]
+        lines.append(f"| {task['id']} · {task['title']} | {state} |")
+    lines += [
+        "", "## Van jou", "", overview["ownerAction"]["detail"], "",
+        "## Details en historie", "",
+        "Alle oorspronkelijke eindvoorwaarden, bewijs, fouten en vervolgstappen staan in het [JSON-werkbord](../design/product/execution-workboard-v1.json).",
+        "De volgorde staat in [AFRONDINGSPLAN](AFRONDINGSPLAN.md).",
+        f"Het oorspronkelijke werkbord staat in [{board['historicalWorkboard']['path']}]({os.path.relpath(board['historicalWorkboard']['path'], 'development/docs')}).", "",
+    ]
     return "\n".join(lines)
 
 
