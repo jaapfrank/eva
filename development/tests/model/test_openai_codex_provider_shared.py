@@ -85,7 +85,7 @@ class _StatusFailure(RuntimeError):
 
 class _Chunks(httpx2.AsyncByteStream):
     def __init__(self, chunks: list[bytes]) -> None:
-        self._chunks = chunks
+        self._chunks = iter(chunks)
 
     async def __aiter__(self):  # type: ignore[no-untyped-def]
         for chunk in self._chunks:
@@ -701,7 +701,12 @@ def test_cancelled_request_retains_content_free_transport_observation(stage: str
     reached = asyncio.Event()
 
     class WaitingBody(httpx2.AsyncByteStream):
+        started = False
+
         async def __aiter__(self):
+            if self.started:
+                return
+            self.started = True
             if stage == "after_chunk":
                 yield b": private upstream keepalive\n\n"
             reached.set()

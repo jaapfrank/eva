@@ -1,0 +1,266 @@
+{
+  "contract": "EvaModelAdapterReleaseGateSupplement/v1",
+  "file": "deploy/release/check_design.py",
+  "beforeSha256": "b6a28300ea7d7cfbd1b52065aef0a1460bb435ac3342febf41ddb7a6e7ddbab0",
+  "afterSha256": "7e787ccb49d229345d469df971919dd1f3cb7daca3b72dbe6b6e9a1912985fcf",
+  "declarativeLiteralReplacementCount": 7,
+  "activeUse": [
+    "development/tests/platform/test_design_gates.py",
+    "development/tests/platform/test_fail_closed.py",
+    "deploy/release/managed-b-release-input-authority-v1.json"
+  ],
+  "gateBefore": {
+    "contract": "Eva2DesignGateSetResult/v1",
+    "gate": "ALL",
+    "results": [
+      {
+        "checkedFiles": [
+          "deploy/release/platform-lock.json",
+          "development/design/architecture/package-boundaries-v1.json",
+          "development/design/platform/platform-design-v1.json",
+          "development/design/platform/process-budgets-v1.json",
+          "development/design/platform/trust-boundaries-v1.json",
+          "pyproject.toml"
+        ],
+        "claimScope": "design_only",
+        "contract": "Eva2DesignGateResult/v1",
+        "errors": [
+          {
+            "code": "platform_version",
+            "detail": "pydantic_ai_slim_version must equal 2.37.0",
+            "path": "deploy/release/platform-lock.json"
+          }
+        ],
+        "gate": "PLATFORM-DESIGN-01",
+        "imageExecutionClaim": false,
+        "installerClaim": false,
+        "platformSupportClaim": false,
+        "runtimeEvidence": false,
+        "status": "failed"
+      },
+      {
+        "baseBytesExecuted": false,
+        "baseManifestMetadataSelected": true,
+        "checkedFiles": [
+          "deploy/release/build-policy.json",
+          "deploy/release/dependency-roots.in",
+          "deploy/release/design-source-bindings.json",
+          "deploy/release/formats/eva-build-inputs-v1.schema.json",
+          "deploy/release/formats/eva-build-provenance-v1.schema.json",
+          "deploy/release/formats/eva-release-manifest-v1.schema.json",
+          "deploy/release/formats/eva-revocation-list-v1.schema.json",
+          "deploy/release/formats/eva-sbom-binding-v1.schema.json",
+          "deploy/release/formats/eva-signature-envelope-v1.schema.json",
+          "deploy/release/formats/eva-trust-root-v1.schema.json",
+          "deploy/release/gate-toolchain-license-inventory.json",
+          "deploy/release/gate-toolchain-roots.in",
+          "deploy/release/gate-toolchain.lock.json",
+          "deploy/release/gate-toolchain.requirements.lock",
+          "deploy/release/license-inventory.json",
+          "deploy/release/managed-b-wheel-coverage-4d-amd64-v1.json",
+          "deploy/release/oci-image-slots.json",
+          "deploy/release/platform-lock.json",
+          "deploy/release/revocation-policy.json",
+          "deploy/release/sbom-policy.json",
+          "deploy/release/signature-policy.json",
+          "deploy/release/trust-root-slot.json",
+          "deploy/requirements-4d.lock",
+          "development/archive/history/root/design/evidence/eva2-first-vertical-contract-2c9ffb7a2ae6fd9b34cc4c29f73e6b3b2212f6a96232090ddbdbcfb02ad5b9a1.json",
+          "development/archive/history/root/design/evidence/eva2-step3-design-freeze-cac255b606224a65c9c14906dca4f2b1257a688edbc45c631688529bf9adcb33.json",
+          "development/archive/history/root/design/fixtures/noor-client-ack-key-v1.json",
+          "development/archive/history/root/docs/adr-0001-eva2-living-core.md",
+          "development/archive/history/root/docs/eva1-to-eva2-transition-manifest-2026-08-20.md",
+          "development/archive/history/root/docs/eva2-build-map-2026-08-20.md",
+          "development/archive/history/root/docs/eva2-build-map-core-contracts.md",
+          "development/archive/history/root/docs/eva2-build-map-platform.md",
+          "development/archive/history/root/docs/eva2-build-map-presence-evidence.md",
+          "development/archive/history/root/transition/evidence/eva1-to-eva2-transition-manifest-c6fff926d7f6b2f199081a91dac6cfcaf4e5c2c750159d6bf2dc068bae670c1c.json",
+          "pyproject.toml"
+        ],
+        "claimScope": "design_only",
+        "contract": "Eva2DesignGateResult/v1",
+        "errors": [
+          {
+            "code": "dependency_root_set",
+            "detail": "direct/build pin set differs",
+            "path": "deploy/release/dependency-roots.in"
+          },
+          {
+            "code": "gate_toolchain_license_inventory",
+            "detail": "inventory must cover all 19 gate/build/schema-consumer packages without legal-release claim",
+            "path": "deploy/release/gate-toolchain-license-inventory.json"
+          },
+          {
+            "code": "gate_toolchain_root_set",
+            "detail": "gate roots differ from their closed hash lock",
+            "path": "deploy/release/gate-toolchain-roots.in"
+          },
+          {
+            "code": "gate_toolchain_contract",
+            "detail": "exact external 54-distribution design-gate environment is not bound",
+            "path": "deploy/release/gate-toolchain.lock.json"
+          },
+          {
+            "code": "gate_toolchain_pin_set",
+            "detail": "exact 19-package gate/build/schema-consumer closure differs",
+            "path": "deploy/release/gate-toolchain.requirements.lock"
+          },
+          {
+            "code": "license_inventory",
+            "detail": "inventory must cover all 38 locked packages without legal-release claim",
+            "path": "deploy/release/license-inventory.json"
+          },
+          {
+            "code": "wheel_target",
+            "detail": "amd64 does not resolve all 38 locked wheels",
+            "path": "deploy/release/managed-b-wheel-coverage-4d-amd64-v1.json"
+          },
+          {
+            "code": "dependency_pin_set",
+            "detail": "exact 35-package direct/transitive set differs",
+            "path": "deploy/requirements-4d.lock"
+          },
+          {
+            "code": "pyproject_pin_set",
+            "detail": "pyproject pins do not equal dependency roots or Python 3.12.14",
+            "path": "pyproject.toml"
+          }
+        ],
+        "finalImagesBuilt": false,
+        "gate": "SUPPLY-DESIGN-01",
+        "installerClaim": false,
+        "runtimeSupportClaim": false,
+        "status": "failed"
+      }
+    ],
+    "status": "failed"
+  },
+  "gateAfter": {
+    "contract": "Eva2DesignGateSetResult/v1",
+    "gate": "ALL",
+    "results": [
+      {
+        "checkedFiles": [
+          "deploy/release/platform-lock.json",
+          "development/design/architecture/package-boundaries-v1.json",
+          "development/design/platform/platform-design-v1.json",
+          "development/design/platform/process-budgets-v1.json",
+          "development/design/platform/trust-boundaries-v1.json",
+          "pyproject.toml"
+        ],
+        "claimScope": "design_only",
+        "contract": "Eva2DesignGateResult/v1",
+        "errors": [],
+        "gate": "PLATFORM-DESIGN-01",
+        "imageExecutionClaim": false,
+        "installerClaim": false,
+        "platformSupportClaim": false,
+        "runtimeEvidence": false,
+        "status": "passed"
+      },
+      {
+        "baseBytesExecuted": false,
+        "baseManifestMetadataSelected": true,
+        "checkedFiles": [
+          "deploy/release/build-policy.json",
+          "deploy/release/dependency-roots.in",
+          "deploy/release/design-source-bindings.json",
+          "deploy/release/formats/eva-build-inputs-v1.schema.json",
+          "deploy/release/formats/eva-build-provenance-v1.schema.json",
+          "deploy/release/formats/eva-release-manifest-v1.schema.json",
+          "deploy/release/formats/eva-revocation-list-v1.schema.json",
+          "deploy/release/formats/eva-sbom-binding-v1.schema.json",
+          "deploy/release/formats/eva-signature-envelope-v1.schema.json",
+          "deploy/release/formats/eva-trust-root-v1.schema.json",
+          "deploy/release/gate-toolchain-license-inventory.json",
+          "deploy/release/gate-toolchain-roots.in",
+          "deploy/release/gate-toolchain.lock.json",
+          "deploy/release/gate-toolchain.requirements.lock",
+          "deploy/release/license-inventory.json",
+          "deploy/release/managed-b-wheel-coverage-4d-amd64-v1.json",
+          "deploy/release/oci-image-slots.json",
+          "deploy/release/platform-lock.json",
+          "deploy/release/revocation-policy.json",
+          "deploy/release/sbom-policy.json",
+          "deploy/release/signature-policy.json",
+          "deploy/release/trust-root-slot.json",
+          "deploy/requirements-4d.lock",
+          "development/archive/history/root/design/evidence/eva2-first-vertical-contract-2c9ffb7a2ae6fd9b34cc4c29f73e6b3b2212f6a96232090ddbdbcfb02ad5b9a1.json",
+          "development/archive/history/root/design/evidence/eva2-step3-design-freeze-cac255b606224a65c9c14906dca4f2b1257a688edbc45c631688529bf9adcb33.json",
+          "development/archive/history/root/design/fixtures/noor-client-ack-key-v1.json",
+          "development/archive/history/root/docs/adr-0001-eva2-living-core.md",
+          "development/archive/history/root/docs/eva1-to-eva2-transition-manifest-2026-08-20.md",
+          "development/archive/history/root/docs/eva2-build-map-2026-08-20.md",
+          "development/archive/history/root/docs/eva2-build-map-core-contracts.md",
+          "development/archive/history/root/docs/eva2-build-map-platform.md",
+          "development/archive/history/root/docs/eva2-build-map-presence-evidence.md",
+          "development/archive/history/root/transition/evidence/eva1-to-eva2-transition-manifest-c6fff926d7f6b2f199081a91dac6cfcaf4e5c2c750159d6bf2dc068bae670c1c.json",
+          "pyproject.toml"
+        ],
+        "claimScope": "design_only",
+        "contract": "Eva2DesignGateResult/v1",
+        "errors": [
+          {
+            "code": "dependency_root_set",
+            "detail": "direct/build pin set differs",
+            "path": "deploy/release/dependency-roots.in"
+          },
+          {
+            "code": "gate_toolchain_license_inventory",
+            "detail": "inventory must cover all 19 gate/build/schema-consumer packages without legal-release claim",
+            "path": "deploy/release/gate-toolchain-license-inventory.json"
+          },
+          {
+            "code": "gate_toolchain_root_set",
+            "detail": "gate roots differ from their closed hash lock",
+            "path": "deploy/release/gate-toolchain-roots.in"
+          },
+          {
+            "code": "gate_toolchain_contract",
+            "detail": "exact external 54-distribution design-gate environment is not bound",
+            "path": "deploy/release/gate-toolchain.lock.json"
+          },
+          {
+            "code": "gate_toolchain_pin_set",
+            "detail": "exact 19-package gate/build/schema-consumer closure differs",
+            "path": "deploy/release/gate-toolchain.requirements.lock"
+          },
+          {
+            "code": "license_inventory",
+            "detail": "inventory must cover all 38 locked packages without legal-release claim",
+            "path": "deploy/release/license-inventory.json"
+          },
+          {
+            "code": "wheel_target",
+            "detail": "amd64 does not resolve all 38 locked wheels",
+            "path": "deploy/release/managed-b-wheel-coverage-4d-amd64-v1.json"
+          },
+          {
+            "code": "dependency_pin_set",
+            "detail": "exact 35-package direct/transitive set differs",
+            "path": "deploy/requirements-4d.lock"
+          },
+          {
+            "code": "pyproject_pin_set",
+            "detail": "pyproject pins do not equal dependency roots or Python 3.12.14",
+            "path": "pyproject.toml"
+          }
+        ],
+        "finalImagesBuilt": false,
+        "gate": "SUPPLY-DESIGN-01",
+        "installerClaim": false,
+        "runtimeSupportClaim": false,
+        "status": "failed"
+      }
+    ],
+    "status": "failed"
+  },
+  "testSummary": "39 passed,1 historical supply-green assertion failed; same nine supply errors before/after checker change; platform gate now passed",
+  "testLogSha256": "99c260844d54cb469ca2762e59cf84708293ee9bbcb98b6dcedc78395b2c4661",
+  "baselineDefinition": "checker before declarative update, same current candidate files; captured packaging-before alternate root is not used as authority because sealed source bindings depend on root path",
+  "supplyErrorsExactlyEqualBeforeCheckerEdit": true,
+  "helperTests": {
+    "passed": 23,
+    "seconds": 0.24
+  }
+}

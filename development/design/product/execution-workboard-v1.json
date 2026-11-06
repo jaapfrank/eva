@@ -841,22 +841,33 @@
   "lastUpdated": "2026-11-04T21:12:40.203434+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.11",
+  "activeTaskId": "E4.16",
   "currentWork": {
-    "id": "E4.11",
-    "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
+    "id": "E4.16",
+    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
-    "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-    "nextAction": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
+    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+    "nextAction": "De modeladapter-upgrade is afgerond en live; deze stap niet opnieuw bouwen of installeren. E4.16 blijft open voor de volledige autonome fout→hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→beheerde toepassing→oorspronkelijke werking→later hergebruik. Oude gesloten native beoordelingsregistratie blijft bewijsgebonden en fail-closed; actuele toepassing vraagt een nieuwe bron-/release-/bevoegdheidsbinding onder ongewijzigde criteria. De bestaande twee contexttestfouten en historische supplycontroles blijven zichtbaar in het upgradebewijs; E4.11 blijft open voor geheugenresiduen.",
     "ownerActionRequired": false,
-    "startedAt": "2026-11-06T14:50:32.440313+00:00",
-    "executionStep": "Actuele geheugenrestanten classificeren en onderbouwde opschoning afmaken",
+    "startedAt": "2026-11-06T14:59:35.338758+00:00",
+    "executionStep": "Model adapter upgrade completed and live; E4.16 full autonomy remains open",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "previousFocus": {
-      "taskId": "E4.16",
-      "evidence": "development/evidence/reassessment/open-source-updates-20261106/completion.json",
-      "reason": "Laatste directe eigenaarvraag betreft de tegenstrijdige geheugenstatus en noodzakelijke opschoning; E4.16 blijft open."
+    "checkedAt": "2026-11-06T15:36:25.987454+00:00",
+    "completedOutcome": {
+      "status": "completed",
+      "built": true,
+      "independentlyReviewed": true,
+      "installed": true,
+      "actuallyUsed": "Two synthetic provider phases on installed core, zero external effects; household acceptance not claimed",
+      "technicalDeliveryComplete": true,
+      "fullCardCompleted": false,
+      "evidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
+      "review": "development/reviews/model-adapter-upgrade-independent-20261106.json",
+      "installedAt": "2026-11-06T15:31:42.893819+00:00",
+      "checkedAt": "2026-11-06T15:36:25.987454+00:00",
+      "knownBaselineFailuresRetained": true,
+      "historicalProducerUnchanged": true
     }
   },
   "historicalWorkboard": {
@@ -1649,6 +1660,23 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Modeladapter · PydanticAI2.66 geïnstalleerd en echt gebruikt — 6 november",
+            "state": "verified",
+            "summary": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
+            "remaining": "Volledige E4.16-autonomie, E4.11-residuen en de bekende baselinecontroles blijven afzonderlijk open.",
+            "source": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
+            "review": "development/reviews/model-adapter-upgrade-independent-20261106.json",
+            "checkedAt": "2026-11-06T15:36:25.987454+00:00",
+            "installedAt": "2026-11-06T15:31:42.893819+00:00",
+            "technicalDeliveryComplete": true,
+            "functionalTestPassed": true,
+            "independentReviewComplete": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.15 · Algemene pakketoverdracht geïnstalleerd — 3 november",
             "state": "installed",
@@ -3212,28 +3240,30 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Mailuitvoering · model-limiet correct verwerkt en echte testmail gecontroleerd",
-          "state": "verified_partial",
-          "summary": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
-          "remaining": "Gmail-activatie en volledige zelfstandige uitvind-/gebruiks-/feedbackcyclus blijven open.",
-          "source": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
-          "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+          "title": "Modeladapter · PydanticAI2.66 geïnstalleerd en echt gebruikt — 6 november",
+          "state": "verified",
+          "summary": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
+          "remaining": "Volledige E4.16-autonomie, E4.11-residuen en de bekende baselinecontroles blijven afzonderlijk open.",
+          "source": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
+          "review": "development/reviews/model-adapter-upgrade-independent-20261106.json",
+          "checkedAt": "2026-11-06T15:36:25.987454+00:00",
+          "installedAt": "2026-11-06T15:31:42.893819+00:00",
           "technicalDeliveryComplete": true,
           "functionalTestPassed": true,
-          "independentReviewComplete": false,
+          "independentReviewComplete": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.11",
-          "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
-          "summary": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
-          "detail": "De dag-/droomgeheugenbasis blijft geïnstalleerd. Actuele technische opschoning en bruikbaar verwerkingsoverzicht zijn heropend; de eerdere begrensde afronding blijft exact in het historische bewijs.",
-          "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-          "state": "Technische geheugenopschoning open; geen gegevens verwijderd",
-          "checkedAt": "2026-11-06T14:51:03.942527+00:00"
+          "taskId": "E4.16",
+          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+          "summary": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
+          "detail": "De modeladapter-upgrade is afgerond en live; deze stap niet opnieuw bouwen of installeren. E4.16 blijft open voor de volledige autonome fout→hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→beheerde toepassing→oorspronkelijke werking→later hergebruik. Oude gesloten native beoordelingsregistratie blijft bewijsgebonden en fail-closed; actuele toepassing vraagt een nieuwe bron-/release-/bevoegdheidsbinding onder ongewijzigde criteria. De bestaande twee contexttestfouten en historische supplycontroles blijven zichtbaar in het upgradebewijs; E4.11 blijft open voor geheugenresiduen.",
+          "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+          "state": "Modeladapter-upgrade afgerond en live; volledige E4.16 blijft open",
+          "checkedAt": "2026-11-06T15:36:25.987454+00:00"
         },
         "next": {
           "taskId": "E4.15",
@@ -3245,7 +3275,7 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-10-30T17:08:58.991639+00:00",
+        "checkedAt": "2026-11-06T15:36:25.987454+00:00",
         "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -3429,7 +3459,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.11",
+        "currentStep": "E4.16",
         "steps": [
           {
             "number": 1,
@@ -8682,7 +8712,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
+                "nextAction": "De modeladapter-upgrade is afgerond en live; deze stap niet opnieuw bouwen of installeren. E4.16 blijft open voor de volledige autonome fout→hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→beheerde toepassing→oorspronkelijke werking→later hergebruik. Oude gesloten native beoordelingsregistratie blijft bewijsgebonden en fail-closed; actuele toepassing vraagt een nieuwe bron-/release-/bevoegdheidsbinding onder ongewijzigde criteria. De bestaande twee contexttestfouten en historische supplycontroles blijven zichtbaar in het upgradebewijs; E4.11 blijft open voor geheugenresiduen.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8710,8 +8740,8 @@
                   "currentScope": "Eigenaar 6 november: volledige E4.16-keten afmaken; deelreparaties zijn onvoldoende. Onafhankelijke review op eerste ontbrekende schakel gestart."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-                "review": "development/reviews/e416-provider-native-headers-20261024.json",
-                "implementationStatus": "dependency_recovery_verdict_installed_general_autonomy_open",
+                "review": "development/reviews/model-adapter-upgrade-independent-20261106.json",
+                "implementationStatus": "model_adapter_upgrade_installed_verified_general_autonomy_open",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8720,9 +8750,9 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-06T14:40:38.615471+00:00",
-                "progress": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
-                "latestEvidence": "development/evidence/reassessment/open-source-updates-20261106/completion.json",
+                "checkedAt": "2026-11-06T15:36:25.987454+00:00",
+                "progress": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
+                "latestEvidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
                 "scopedTelegramRepairAuthorization": {
                   "at": "2026-10-27T07:47:07.435768+00:00",
                   "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -8765,6 +8795,21 @@
                   ],
                   "availabilityEvidence": "development/evidence/reassessment/open-source-updates-20261106",
                   "builtVersusInstalled": "Gerichte terugvalcorrectie geïnstalleerd en onafhankelijk teruggelezen; 55 tests ook op actual installed source. Algemene componentupdates, latere observatie en autonoom oorzakelijk herstel nog open."
+                },
+                "modelAdapterUpgrade20261106": {
+                  "status": "completed",
+                  "built": true,
+                  "independentlyReviewed": true,
+                  "installed": true,
+                  "actuallyUsed": "Two synthetic provider phases on installed core, zero external effects; household acceptance not claimed",
+                  "technicalDeliveryComplete": true,
+                  "fullCardCompleted": false,
+                  "evidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
+                  "review": "development/reviews/model-adapter-upgrade-independent-20261106.json",
+                  "installedAt": "2026-11-06T15:31:42.893819+00:00",
+                  "checkedAt": "2026-11-06T15:36:25.987454+00:00",
+                  "knownBaselineFailuresRetained": true,
+                  "historicalProducerUnchanged": true
                 }
               },
               {
@@ -9441,7 +9486,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
+        "nextAction": "De modeladapter-upgrade is afgerond en live; deze stap niet opnieuw bouwen of installeren. E4.16 blijft open voor de volledige autonome fout→hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→beheerde toepassing→oorspronkelijke werking→later hergebruik. Oude gesloten native beoordelingsregistratie blijft bewijsgebonden en fail-closed; actuele toepassing vraagt een nieuwe bron-/release-/bevoegdheidsbinding onder ongewijzigde criteria. De bestaande twee contexttestfouten en historische supplycontroles blijven zichtbaar in het upgradebewijs; E4.11 blijft open voor geheugenresiduen.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -9453,7 +9498,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele E2.6/C4.3 en extra futuristische UI pas daarna."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-06T13:40:23.527110+00:00",
+        "updatedAt": "2026-11-06T15:36:25.987454+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9729,7 +9774,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-06T14:52:05.365156+00:00",
+        "checkedAt": "2026-11-06T15:36:25.987454+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -9984,7 +10029,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.11",
+      "currentStep": "E4.16",
       "steps": [
         {
           "number": 1,
@@ -15237,7 +15282,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
+              "nextAction": "De modeladapter-upgrade is afgerond en live; deze stap niet opnieuw bouwen of installeren. E4.16 blijft open voor de volledige autonome fout→hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→beheerde toepassing→oorspronkelijke werking→later hergebruik. Oude gesloten native beoordelingsregistratie blijft bewijsgebonden en fail-closed; actuele toepassing vraagt een nieuwe bron-/release-/bevoegdheidsbinding onder ongewijzigde criteria. De bestaande twee contexttestfouten en historische supplycontroles blijven zichtbaar in het upgradebewijs; E4.11 blijft open voor geheugenresiduen.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -15265,8 +15310,8 @@
                 "currentScope": "Eigenaar 6 november: volledige E4.16-keten afmaken; deelreparaties zijn onvoldoende. Onafhankelijke review op eerste ontbrekende schakel gestart."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-              "review": "development/reviews/e416-provider-native-headers-20261024.json",
-              "implementationStatus": "dependency_recovery_verdict_installed_general_autonomy_open",
+              "review": "development/reviews/model-adapter-upgrade-independent-20261106.json",
+              "implementationStatus": "model_adapter_upgrade_installed_verified_general_autonomy_open",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -15275,9 +15320,9 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-06T14:40:38.615471+00:00",
-              "progress": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
-              "latestEvidence": "development/evidence/reassessment/open-source-updates-20261106/completion.json",
+              "checkedAt": "2026-11-06T15:36:25.987454+00:00",
+              "progress": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
+              "latestEvidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
               "scopedTelegramRepairAuthorization": {
                 "at": "2026-10-27T07:47:07.435768+00:00",
                 "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -15320,6 +15365,21 @@
                 ],
                 "availabilityEvidence": "development/evidence/reassessment/open-source-updates-20261106",
                 "builtVersusInstalled": "Gerichte terugvalcorrectie geïnstalleerd en onafhankelijk teruggelezen; 55 tests ook op actual installed source. Algemene componentupdates, latere observatie en autonoom oorzakelijk herstel nog open."
+              },
+              "modelAdapterUpgrade20261106": {
+                "status": "completed",
+                "built": true,
+                "independentlyReviewed": true,
+                "installed": true,
+                "actuallyUsed": "Two synthetic provider phases on installed core, zero external effects; household acceptance not claimed",
+                "technicalDeliveryComplete": true,
+                "fullCardCompleted": false,
+                "evidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
+                "review": "development/reviews/model-adapter-upgrade-independent-20261106.json",
+                "installedAt": "2026-11-06T15:31:42.893819+00:00",
+                "checkedAt": "2026-11-06T15:36:25.987454+00:00",
+                "knownBaselineFailuresRetained": true,
+                "historicalProducerUnchanged": true
               }
             },
             {
@@ -15996,7 +16056,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
+      "nextAction": "De modeladapter-upgrade is afgerond en live; deze stap niet opnieuw bouwen of installeren. E4.16 blijft open voor de volledige autonome fout→hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→beheerde toepassing→oorspronkelijke werking→later hergebruik. Oude gesloten native beoordelingsregistratie blijft bewijsgebonden en fail-closed; actuele toepassing vraagt een nieuwe bron-/release-/bevoegdheidsbinding onder ongewijzigde criteria. De bestaande twee contexttestfouten en historische supplycontroles blijven zichtbaar in het upgradebewijs; E4.11 blijft open voor geheugenresiduen.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -16008,7 +16068,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele E2.6/C4.3 en extra futuristische UI pas daarna."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-06T13:40:23.527110+00:00",
+      "updatedAt": "2026-11-06T15:36:25.987454+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -16284,7 +16344,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-06T14:52:05.365156+00:00",
+      "checkedAt": "2026-11-06T15:36:25.987454+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

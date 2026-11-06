@@ -92,6 +92,9 @@ from eva.adapters.model.contracts import (
     ConversationCredentialStatus,
     ConversationModelDeadlineExceeded,
     ConversationModelError,
+    ConversationModelUsageError,
+    ConversationModelUnavailable,
+    ConversationModelInputBudgetExceeded,
 )
 from eva.adapters.model.openai_codex_provider import (
     CodexProviderError,
@@ -189,15 +192,15 @@ def _recent_message_line(message: RecentConversationMessage, source_label: int |
             f"{message.text}")
 
 
-class _ProviderUsageError(ConversationModelError):
+class _ProviderUsageError(ConversationModelUsageError):
     """Provider output cannot establish consumption for the completed request."""
 
 
-class _ProviderUnavailable(ConversationModelError):
+class _ProviderUnavailable(ConversationModelUnavailable):
     """The provider failed; a blocked retry must not replace that cause."""
 
 
-class _InputBudgetError(ConversationModelError):
+class _InputBudgetError(ConversationModelInputBudgetExceeded):
     """The local request envelope does not fit; no provider request was made."""
 
 
@@ -1955,7 +1958,7 @@ class PydanticConversationModel:
             try:
                 self._admit_request(candidate, autonomous=False)
                 return enriched
-            except _InputBudgetError:
+            except ConversationModelInputBudgetExceeded:
                 restored_groups.pop()
                 restored = set().union(*restored_groups)
         return prior_actions
@@ -2284,7 +2287,7 @@ class PydanticConversationModel:
                 try:
                     maximum_output_tokens = (output_tokens_limit() if output_tokens_limit is not None
                         else self._resource_budget.max_output_tokens if self._resource_budget is not None else None)
-                except _ProviderUsageError as usage_error:
+                except ConversationModelUsageError as usage_error:
                     if unavailable_failure is None:
                         raise
                     # The failed provider request has no attested usage. Keep
@@ -2684,7 +2687,7 @@ class PydanticConversationModel:
                     prior_actions=prior_actions,
                 ), autonomous=False)
                 break
-            except _InputBudgetError:
+            except ConversationModelInputBudgetExceeded:
                 # Only an actual full-envelope misfit may move older validated
                 # pure local reads to their existing authorized source readers.
                 if not local_reads_deferred:
@@ -3101,7 +3104,7 @@ class PydanticConversationModel:
         try:
             (text, call), final_usage = self._request_using(
                 final, self._parse_sse, autonomous=True, include_usage=True)
-        except _InputBudgetError as cause:
+        except ConversationModelInputBudgetExceeded as cause:
             # This typed guard runs before provider dispatch. The first response
             # was measured; do not freeze this source as lost second usage.
             if first_usage.measurement != "measured":
@@ -3560,7 +3563,7 @@ class PydanticConversationModel:
                     body, self._parse_sse, autonomous=True, include_usage=True)
             else:
                 (text, action_call), usage = self._request_private_opportunity(body, private_context_search)
-        except _ProviderUsageError as error:
+        except ConversationModelUsageError as error:
             raise AutonomousUsageUncertain("autonomous provider usage is unverified") from error
         def rejected(message, code):
             # A completed response has known usage even when its decision is invalid.

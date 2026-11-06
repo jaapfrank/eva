@@ -79,24 +79,26 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
         {
             "contract": "EvaDelegatedEngineRelease/v1",
             "dependency_lock_sha256": lock_sha256,
-            "openai_sdk": "3.6.0",
-            "pydantic_ai": "2.37.0",
+            "openai_sdk": "3.31.0",
+            "pydantic_ai": "2.66.0",
         }
     )
 
 
 def test_shared_worker_uses_the_existing_core_dependency_release() -> None:
     lock = (EVA2_ROOT / "deploy/requirements-4d.lock").read_text()
-    assert "openai==3.6.0 " in lock
-    assert "pydantic-ai-slim==2.37.0 " in lock
+    assert "openai==3.31.0 " in lock
+    assert "pydantic-ai-slim==2.66.0 " in lock
 
 
-def test_dependency_versions_fail_closed(monkeypatch: pytest.MonkeyPatch) -> None:
-    installed = {"openai": "3.6.0", "pydantic-ai-slim": "2.37.0"}
+@pytest.mark.parametrize("changed_package", ["openai", "pydantic-ai-slim", "pydantic-graph", "genai-prices"])
+def test_dependency_versions_fail_closed(monkeypatch: pytest.MonkeyPatch, changed_package: str) -> None:
+    installed = {"openai": "3.31.0", "pydantic-ai-slim": "2.66.0",
+                 "pydantic-graph": "2.66.0", "genai-prices": "0.1.13"}
     monkeypatch.setattr(provider_module, "version", installed.__getitem__)
     verify_delegated_provider_dependencies()
 
-    installed["openai"] = "3.3.2"
+    installed[changed_package] = "0.0.0"
     with pytest.raises(RuntimeError, match="release differs"):
         verify_delegated_provider_dependencies()
 
@@ -164,8 +166,12 @@ def test_bootstrap_reads_exact_shared_access_lease_contract(
 class _ResponseStream(httpx2.AsyncByteStream):
     def __init__(self, output_tokens: int) -> None:
         self.output_tokens = output_tokens
+        self.started = False
 
     async def __aiter__(self):
+        if self.started:
+            return
+        self.started = True
         text = json.dumps({"summary": "Eén bevinding.", "findings": ["Controleer later."]})
         response = {
             "id": "resp_child", "object": "response", "created_at": 1_777_111_200,

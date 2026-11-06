@@ -128,7 +128,13 @@ def _phase_transport_adapter(
     })
 
     class WireStream(httpx2.AsyncByteStream):
-        async def __aiter__(self):
+        def __init__(self):
+            self._events_iterator = self._iterate()
+
+        def __aiter__(self):
+            return self._events_iterator
+
+        async def _iterate(self):
             for event in events:
                 yield f"event: {event['type']}\ndata: {json.dumps(event)}\n\n".encode()
             if fail:

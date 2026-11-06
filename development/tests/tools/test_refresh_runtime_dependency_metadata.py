@@ -327,3 +327,23 @@ def test_refresh_rejects_a_symlinked_source_root(native_tmp_path: Path) -> None:
         refresh_tool.refresh(root=alias, wheelhouse=wheelhouse)
 
     assert {path: path.read_bytes() for path in outputs} == originals
+
+
+def test_explicit_metadata_date_and_adoption_follow_selected_inputs(native_tmp_path):
+    root, wheelhouse, outputs = _fixture(native_tmp_path)
+    refresh_tool.refresh(root=root, wheelhouse=wheelhouse, as_of="2026-11-06")
+    binding = json.loads(outputs[0].read_bytes())
+    assert binding["decisionDate"] == "2026-11-06"
+    assert json.loads(outputs[3].read_bytes())["metadataAsOf"] == "2026-11-06"
+    selected = binding["dependencies"]["pydantic-ai-slim"]["version"]
+    assert f"pydantic-ai-slim==2.32.1 -> pydantic-ai-slim=={selected}" in binding["pyprojectAdoption"]["directRuntimeUpdated"]
+    assert len([v for v in binding["pyprojectAdoption"]["directRuntimeAdded"] if v.startswith("openai==")]) == 1
+
+
+@pytest.mark.parametrize("date", ["2026-1-6", "20261106", "not-a-date"])
+def test_invalid_metadata_date_never_changes_sealed_outputs(native_tmp_path, date):
+    root, wheelhouse, outputs = _fixture(native_tmp_path)
+    before = {path:path.read_bytes() for path in outputs}
+    with pytest.raises(ValueError):
+        refresh_tool.refresh(root=root, wheelhouse=wheelhouse, as_of=date)
+    assert {path:path.read_bytes() for path in outputs} == before

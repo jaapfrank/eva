@@ -4,9 +4,9 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 ## Nu
 
-**E4.11 · Alleen belangrijke kennis als blijvend geheugen bewaren** — in_progress
+**E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.
+Volgende stap: De modeladapter-upgrade is afgerond en live; deze stap niet opnieuw bouwen of installeren. E4.16 blijft open voor de volledige autonome fout→hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→beheerde toepassing→oorspronkelijke werking→later hergebruik. Oude gesloten native beoordelingsregistratie blijft bewijsgebonden en fail-closed; actuele toepassing vraagt een nieuwe bron-/release-/bevoegdheidsbinding onder ongewijzigde criteria. De bestaande twee contexttestfouten en historische supplycontroles blijven zichtbaar in het upgradebewijs; E4.11 blijft open voor geheugenresiduen.
 
 ## Voortgang
 

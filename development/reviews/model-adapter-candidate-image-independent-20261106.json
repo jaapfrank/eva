@@ -1,0 +1,34 @@
+{
+  "core": {
+    "baselineImage": "sha256:5e78cbebedf89a593fe240e14323ef8c05ee566f6800747bb712cc0f492052e5",
+    "candidateImage": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+    "exactFourPackageDelta": true,
+    "allOtherSourceFilesIdentical": true,
+    "changedSourceHashes": {
+      "bootstrap/delegated_work_provider.py": "160420ae2fbab12ba5f0986e67fc5617e027082c26094fb1d6b1508727eb8879",
+      "bootstrap/delegated_digital_runner.py": "778bde3c3a54d4e6a8713d6e08a72a919f0c6b556ebc4a350057806bf1a64000",
+      "adapters/model/pydantic_conversation.py": "a0f253eab1075857bf6f4fa279254484e3a087af0d6c899e57a1d1ac79266972",
+      "adapters/model/openai_codex_provider.py": "54147d1dadb3c3744c30d06e1ee088292619d1bb775e51c0a6667283a84f3db7",
+      "adapters/model/contracts.py": "745ad05a30243c2d44b19c7f8e3e676224a2863da3973577fdcd3e548569f22f"
+    },
+    "unrelatedSiteFileCount": 4821,
+    "unrelatedSiteSha256": "ec993c7625a6faa3344cae68898babffea06ae05400a432bc55c77a27fdcc650",
+    "ownRequirementsUpdated": true
+  },
+  "worker": {
+    "baselineImage": "sha256:56fa6a99bc63ce6c7c6f675ccdd1d29bb7886d72d9b66cd5ac2a8ddae699ab68",
+    "candidateImage": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8",
+    "exactFourPackageDelta": true,
+    "allOtherSourceFilesIdentical": true,
+    "changedSourceHashes": {
+      "bootstrap/delegated_work_provider.py": "160420ae2fbab12ba5f0986e67fc5617e027082c26094fb1d6b1508727eb8879",
+      "bootstrap/delegated_digital_runner.py": "778bde3c3a54d4e6a8713d6e08a72a919f0c6b556ebc4a350057806bf1a64000",
+      "adapters/model/pydantic_conversation.py": "a0f253eab1075857bf6f4fa279254484e3a087af0d6c899e57a1d1ac79266972",
+      "adapters/model/openai_codex_provider.py": "54147d1dadb3c3744c30d06e1ee088292619d1bb775e51c0a6667283a84f3db7",
+      "adapters/model/contracts.py": "745ad05a30243c2d44b19c7f8e3e676224a2863da3973577fdcd3e548569f22f"
+    },
+    "unrelatedSiteFileCount": 2452,
+    "unrelatedSiteSha256": "4614fd8a9953abd404c3608caff59e56a79f40c45ead41f1dce4371888a0d3bd",
+    "ownRequirementsUpdated": true
+  }
+}

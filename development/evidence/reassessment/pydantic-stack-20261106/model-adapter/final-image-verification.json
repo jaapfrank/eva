@@ -1,0 +1,50 @@
+{
+  "core": {
+    "image": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+    "baselineImage": "sha256:5e78cbebedf89a593fe240e14323ef8c05ee566f6800747bb712cc0f492052e5",
+    "versions": {
+      "pydantic-ai-slim": "2.66.0",
+      "pydantic-graph": "2.66.0",
+      "openai": "3.31.0",
+      "genai-prices": "0.1.13"
+    },
+    "duplicates": [],
+    "packageCount": 48,
+    "allUnrelatedPackagesAndFilesPreserved": true,
+    "unrelatedFileCount": 4821,
+    "sourceDelta": [
+      "adapters/model/contracts.py",
+      "adapters/model/openai_codex_provider.py",
+      "adapters/model/pydantic_conversation.py",
+      "bootstrap/delegated_digital_runner.py",
+      "bootstrap/delegated_work_provider.py"
+    ],
+    "allOtherSourceFilesUnchanged": true,
+    "ownMetadataRecordValid": true,
+    "candidateReadbackSha256": "6668236bd787650c1dcbf1be6d72dcfb98d16f21b6ab5cee19e01bc749646fbd"
+  },
+  "delegated-work-worker": {
+    "image": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8",
+    "baselineImage": "sha256:56fa6a99bc63ce6c7c6f675ccdd1d29bb7886d72d9b66cd5ac2a8ddae699ab68",
+    "versions": {
+      "pydantic-ai-slim": "2.66.0",
+      "pydantic-graph": "2.66.0",
+      "openai": "3.31.0",
+      "genai-prices": "0.1.13"
+    },
+    "duplicates": [],
+    "packageCount": 46,
+    "allUnrelatedPackagesAndFilesPreserved": true,
+    "unrelatedFileCount": 2452,
+    "sourceDelta": [
+      "adapters/model/contracts.py",
+      "adapters/model/openai_codex_provider.py",
+      "adapters/model/pydantic_conversation.py",
+      "bootstrap/delegated_digital_runner.py",
+      "bootstrap/delegated_work_provider.py"
+    ],
+    "allOtherSourceFilesUnchanged": true,
+    "ownMetadataRecordValid": true,
+    "candidateReadbackSha256": "563a3e382c64540ea54960c59dcaf09f85309a18cbe29057873c2dc608f49649"
+  }
+}

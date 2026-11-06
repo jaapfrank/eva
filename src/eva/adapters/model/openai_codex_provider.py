@@ -264,6 +264,9 @@ class _RawSseUsageAttestor:
         self._pending = bytearray()
         self._terminal: RawUsageAttestation | None = None
         self._completed = False
+        # SDK releases may normalize away repeated item phase metadata. Keep
+        # only bounded identity hashes, never message content or raw item IDs.
+        self._message_phases: dict[bytes, str | None] = {}
         self.cached_tokens: int | None = None
         self.failure: dict[str, str | None] | None = None
         self.event_counts = dict.fromkeys(("sse_events", "text_deltas", "tool_argument_deltas", "reasoning_deltas", "completed_events"), 0)
@@ -292,6 +295,29 @@ class _RawSseUsageAttestor:
         """Return the completed receipt as soon as its whole SSE line was read."""
 
         return self._terminal
+
+    def _message_phase(self, event: dict[str, object]) -> None:
+        item = event.get("item")
+        if (event.get("type") != "response.output_item.added"
+                or not isinstance(item, dict) or item.get("type") != "message"):
+            return
+        item_id, phase = item.get("id"), item.get("phase")
+        if not isinstance(item_id, str) or not item_id or len(item_id) > 256:
+            raise CodexProviderError("protocol")
+        try:
+            identity_bytes = item_id.encode("utf-8")
+        except UnicodeError as error:
+            raise CodexProviderError("protocol") from error
+        if len(identity_bytes) > 256 or phase not in (None, "commentary", "final_answer"):
+            raise CodexProviderError("protocol")
+        identity = hashlib.sha256(identity_bytes).digest()
+        if identity in self._message_phases:
+            if self._message_phases[identity] != phase:
+                raise CodexProviderError("protocol")
+        else:
+            if len(self._message_phases) >= 1024:
+                raise CodexProviderError("protocol")
+            self._message_phases[identity] = phase
 
     def _line(self, raw: bytes) -> None:
         if not raw.startswith(b"data: "):
@@ -323,6 +349,9 @@ class _RawSseUsageAttestor:
             error = CodexProviderError("protocol", provider_event=event)
             self.failure = error.diagnostic
             raise error
+        # Enforce raw identity before the SDK can discard a phase update and
+        # before this response chunk reaches any model event consumer.
+        self._message_phase(event)
         if kind != "response.completed":
             return
         if self._terminal is not None:
@@ -946,6 +975,9 @@ class OpenAICodexProvider:
                     "openai_reasoning_effort": self._settings.reasoning_effort,
                     **({} if self._settings.reasoning_effort == "none" else {"openai_reasoning_summary": "auto"}),
                     "openai_store": False,
+                    # Stateless history must not replay provider item IDs. This
+                    # public setting keeps the same contract across SDK releases.
+                    "openai_send_reasoning_ids": False,
                     "parallel_tool_calls": False,
                     "timeout": self._settings.timeout_seconds,
                 },

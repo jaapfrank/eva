@@ -19,6 +19,18 @@ class ConversationModelError(RuntimeError):
         super().__init__(*args)
 
 
+class ConversationModelUsageError(ConversationModelError):
+    """A completed provider request has no trustworthy consumption evidence."""
+
+
+class ConversationModelUnavailable(ConversationModelError):
+    """The configured provider is unavailable; no automatic effect replay."""
+
+
+class ConversationModelInputBudgetExceeded(ConversationModelError):
+    """The request cannot fit the local input budget; no request was sent."""
+
+
 class ResearchSourceCoverageError(ConversationModelError):
     """A completed response lacks a required source; usage remains explicit."""
 
@@ -50,4 +62,6 @@ class ConversationCredentialStatus:
     expires_at: datetime | None = None
 
 
-__all__ = ["ConversationCredentialStatus", "ConversationModelError", "ConversationModelDeadlineExceeded"]
+__all__ = ["ConversationCredentialStatus", "ConversationModelError", "ConversationModelDeadlineExceeded",
+    "ConversationModelRateLimited", "ConversationModelUsageError", "ConversationModelUnavailable",
+    "ConversationModelInputBudgetExceeded"]

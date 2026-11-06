@@ -1,0 +1,27 @@
+{
+  "approved": true,
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T15:29:59.730907+00:00",
+  "scope": "Exact image-only model adapter/PydanticAI upgrade; installer repeated fresh gates remain mandatory",
+  "installerSha256": "e6969c6372f6dd8b7aa488d3a78c5c55bbe50e58a4a06a48d1f6c64c9c877002",
+  "planSha256": "cb7616e9002647a76cc2016e7db55ffc25de8a9ae3ceea469ff41486b9b0632f",
+  "sourceBuildReview": "/home/administrator/project/Eva2/development/reviews/model-adapter-source-build-go-independent-20261106.json",
+  "sourceBuildReviewSha256": "e18efcca8efe4e71a141ae35e3b0fa846e1022222194707cb2baa01bee70a63b",
+  "currentPreflightReview": "/home/administrator/project/Eva2/development/reviews/model-adapter-install-current-independent-20261106.json",
+  "currentPreflightReviewSha256": "24b6ba3a26de2d5b656c9bfaeff543f451e6401814b6215805b83343edba87b5",
+  "checks": [
+    "Exact immutable candidate images and five-source/four-wheel delta independently verified.",
+    "Nine history files,62private criteria,28hostdropins,12helpers and historical/live clientconfig hashes pinned.",
+    "Host candidate config differs only in runtime_repairs.publisher.installed reference; closed producer/preview/criteria unchanged.",
+    "Fresh independent current claims at15:29:23UTC: work0,unexpiredleases0,currentunknown0,pending/processingmemory0; host and actual baseline roles healthy/idle.",
+    "Exclusive durable receipt precedes stop; post-stop probe owns no effects, repeats original readiness rules using old generation boundary.",
+    "Only existing core/worker image changes; data services/mounts/env/source/effective host ExecStart/roots and all four runtime profiles checked before success.",
+    "Unknown update/recovery dispatch cannot be repeated; last-good images/configs retained."
+  ],
+  "limitations": [
+    "This approves installation, not a successful installed readback yet.",
+    "Historical sealed producer remains fail-closed; fullE4.16 and memory cleanupE4.11 remain open.",
+    "Known baseline context/design gate failures are retained, not converted into green results."
+  ],
+  "reviewerPerformedInstallation": false
+}

@@ -1,0 +1,52 @@
+{
+  "core": {
+    "records": {
+      "pydantic-ai-slim": {
+        "version": "2.66.0",
+        "hashedRecordFilesVerified": 496
+      },
+      "pydantic-graph": {
+        "version": "2.66.0",
+        "hashedRecordFilesVerified": 20
+      },
+      "openai": {
+        "version": "3.31.0",
+        "hashedRecordFilesVerified": 1959
+      },
+      "genai-prices": {
+        "version": "0.1.13",
+        "hashedRecordFilesVerified": 20
+      },
+      "eva2-living-core": {
+        "version": "0.0.0",
+        "hashedRecordFilesVerified": 240
+      }
+    },
+    "startupDependencyCheck": true
+  },
+  "worker": {
+    "records": {
+      "pydantic-ai-slim": {
+        "version": "2.66.0",
+        "hashedRecordFilesVerified": 496
+      },
+      "pydantic-graph": {
+        "version": "2.66.0",
+        "hashedRecordFilesVerified": 20
+      },
+      "openai": {
+        "version": "3.31.0",
+        "hashedRecordFilesVerified": 1959
+      },
+      "genai-prices": {
+        "version": "0.1.13",
+        "hashedRecordFilesVerified": 20
+      },
+      "eva2-living-core": {
+        "version": "0.0.0",
+        "hashedRecordFilesVerified": 240
+      }
+    },
+    "startupDependencyCheck": true
+  }
+}

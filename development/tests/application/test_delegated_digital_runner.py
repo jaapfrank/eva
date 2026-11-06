@@ -2185,3 +2185,22 @@ def test_worker_distinguishes_rejected_model_request_from_uncertain_execution(st
     assert asyncio.run(worker.run_once()) == expected
     assert len(recorded) == 1 and recorded[0]["ambiguous"] is (expected == "ambiguous")
     assert recorded[0]["error_code"] == status
+
+
+@pytest.mark.parametrize("error_name,status", [
+    ("ConversationModelUsageError", "invalid_usage"),
+    ("ConversationModelUnavailable", "provider_unavailable"),
+    ("ConversationModelInputBudgetExceeded", "budget_exceeded"),
+])
+def test_provider_neutral_failures_keep_worker_semantics_without_concrete_adapter(error_name, status):
+    from eva.adapters.model import contracts
+    _, spec, _, tools, journal, runner, _ = fixture()
+    error_type = getattr(contracts, error_name)
+    class OtherAdapter:
+        def generate(self, *args, **kwargs):
+            raise error_type("safe synthetic provider refusal")
+    runner.model = OtherAdapter()
+    outcome = asyncio.run(runner.run(spec, call_id="call:public-model-failure"))
+    assert outcome.status == status and outcome.result is None
+    assert outcome.retryable is False
+    assert tools.calls == [] and journal.usages == []

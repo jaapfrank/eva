@@ -1,0 +1,43 @@
+{
+  "contract": "EvaModelAdapterUpgradeFourWheelManifest/v1",
+  "wheelhouse": "/var/lib/eva2/finalization-20261106/model-adapter-upgrade/wheelhouse",
+  "wheels": [
+    {
+      "name": "genai-prices",
+      "version": "0.1.13",
+      "filename": "genai_prices-0.1.13-py3-none-any.whl",
+      "path": "/var/lib/eva2/finalization-20261106/model-adapter-upgrade/wheelhouse/genai_prices-0.1.13-py3-none-any.whl",
+      "sha256": "6d2b40760a2f7f5e207bac9b98de0af80e60c58ead497872a5331a7cee610477",
+      "bytes": 142541,
+      "purePythonWheel": true
+    },
+    {
+      "name": "openai",
+      "version": "3.31.0",
+      "filename": "openai-3.31.0-py3-none-any.whl",
+      "path": "/var/lib/eva2/finalization-20261106/model-adapter-upgrade/wheelhouse/openai-3.31.0-py3-none-any.whl",
+      "sha256": "e5839f6670483f368de40ce3422f524c1afaf12ff8660539f53489e200db8d78",
+      "bytes": 2235454,
+      "purePythonWheel": true
+    },
+    {
+      "name": "pydantic-ai-slim",
+      "version": "2.66.0",
+      "filename": "pydantic_ai_slim-2.66.0-py3-none-any.whl",
+      "path": "/var/lib/eva2/finalization-20261106/model-adapter-upgrade/wheelhouse/pydantic_ai_slim-2.66.0-py3-none-any.whl",
+      "sha256": "c47bbd0abe6f51e5400308a53b4f7e3409a582b1459140c381e3d4701a205608",
+      "bytes": 2819952,
+      "purePythonWheel": true
+    },
+    {
+      "name": "pydantic-graph",
+      "version": "2.66.0",
+      "filename": "pydantic_graph-2.66.0-py3-none-any.whl",
+      "path": "/var/lib/eva2/finalization-20261106/model-adapter-upgrade/wheelhouse/pydantic_graph-2.66.0-py3-none-any.whl",
+      "sha256": "5b2a0aafc569c00fdb36879b1e80bed06ed5926979e2c1d44533222f208fd2ec",
+      "bytes": 53975,
+      "purePythonWheel": true
+    }
+  ],
+  "lockSha256": "67160477c7bc2f4f28c0ef31828555249271ea6b2b7ddf46c7c65e4386481143"
+}

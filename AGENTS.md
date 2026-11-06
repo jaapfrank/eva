@@ -49,8 +49,13 @@ Eva-agent. Werk die afhankelijkheid gericht weg wanneer haar vervanging is bewez
 - Controleer de relevante bestaande modules, de echte gebruikte bron/configuratie
   en de volledige overdracht vóór programmeren. Geen tweede geheugen, planner,
   agentplatform, permanente levensdaemon of voorbeeldspecifieke beslisroute.
-- Maak de gekozen uitkomst af vóór verbreding. Splits alleen waar werk afzonderlijk
-  te beoordelen is; administratieve deelstappen zijn geen nieuwe productfuncties.
+- Maak de gekozen uitkomst af vóór verbreding: implementatie, passende controles,
+  onafhankelijke review, veilige installatie en controle van de werkelijk gebruikte
+  versie horen bij dezelfde opdracht. De eigenaar heeft dit op 6 november opnieuw
+  expliciet bevestigd. Een diagnose of deelreparatie is geen eindoplevering; stop
+  alleen bij een concreet aangetoonde blokkade die niet zelfstandig oplosbaar is.
+  Splits alleen waar werk afzonderlijk te beoordelen is; administratieve deelstappen
+  zijn geen nieuwe productfuncties.
 - Verifieer alleen de geraakte werking en noodzakelijke interfaces; bundel
   onafhankelijke review op het concrete resultaat. Herhaal alleen bij gewijzigde
   oorzaak, nieuwe hypothese of werkelijk ontbrekend bewijs.

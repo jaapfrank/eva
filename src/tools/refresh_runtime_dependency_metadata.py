@@ -326,7 +326,11 @@ def _wheel_rows(
     return artifacts, licenses
 
 
-def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
+def refresh(*, root: Path, wheelhouse: Path, as_of: str | None = None) -> dict[str, object]:
+    if as_of is not None:
+        from datetime import date
+        if date.fromisoformat(as_of).isoformat() != as_of:
+            raise ValueError("metadata date must be canonical ISO date")
     if not root.is_absolute() or ".." in root.parts:
         raise RuntimeError("source root must be one explicit canonical absolute path")
     try:
@@ -414,7 +418,7 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
         "selectedWheel": pydantic_graph_artifact,
         "version": pins["pydantic-graph"],
     }
-    binding["decisionDate"] = "2026-09-01"
+    binding["decisionDate"] = as_of or binding.get("decisionDate", "2026-09-01")
     binding["licenseAndSbomRequirements"]["status"] = (
         f"must_match_{count}_selected_distributions"  # type: ignore[index]
     )
@@ -424,13 +428,13 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
     additions = adoption.get("directRuntimeAdded")
     if not isinstance(additions, list):
         raise RuntimeError("runtime dependency additions are invalid")
-    additions[:] = sorted(set(additions) | {f"openai=={pins['openai']}"})
+    additions[:] = sorted({item for item in additions if not str(item).startswith("openai==")} | {f"openai=={pins['openai']}"})
     updates = adoption.get("directRuntimeUpdated")
     if not isinstance(updates, list):
         raise RuntimeError("runtime dependency updates are invalid")
     updates[:] = sorted(
         {item for item in updates if not str(item).startswith("pydantic-ai-slim==")}
-        | {"pydantic-ai-slim==2.32.1 -> pydantic-ai-slim==2.37.0"}
+        | {f"pydantic-ai-slim==2.32.1 -> pydantic-ai-slim=={pins['pydantic-ai-slim']}"}
     )
     adoption["sha256"] = _sha256(pyproject_raw)
     standalone = binding["standaloneLock"]
@@ -521,7 +525,7 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
     old_inventory.update(
         {
             "dependencyLock": "deploy/requirements-4d.lock",
-            "metadataAsOf": "2026-09-01",
+            "metadataAsOf": binding["decisionDate"],
             "packageCount": count,
             "packages": rows,
         }
@@ -592,10 +596,11 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--wheelhouse", type=Path, required=True)
+    parser.add_argument("--as-of", help="Explicit metadata date; preserves the prior date when omitted")
     arguments = parser.parse_args()
     print(
         json.dumps(
-            refresh(root=arguments.root, wheelhouse=arguments.wheelhouse),
+            refresh(root=arguments.root, wheelhouse=arguments.wheelhouse, as_of=arguments.as_of),
             sort_keys=True,
         )
     )

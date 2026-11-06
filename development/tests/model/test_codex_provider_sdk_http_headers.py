@@ -55,7 +55,11 @@ class _NativeSdkFailure(Model):
 def _run_native_headers(headers, *, grouped, caplog):
     sdk_error = ModelHTTPError(503, "offline-sdk-error", {
         "error": {"code": "server_error", "type": "server_error", "message": _PRIVATE}},
-        headers=headers)
+        headers={key:value for key,value in headers.items() if isinstance(value,str)})
+    # Supply malformed metadata at the adapter seam: newer SDK constructors
+    # eagerly parse Retry-After and correctly require string header values.
+    if any(not isinstance(value,str) for value in headers.values()):
+        sdk_error.headers = headers
     # This supported SDK DTO has no response object or lower-level HTTP cause.
     assert not hasattr(sdk_error, "response")
     assert sdk_error.__cause__ is None

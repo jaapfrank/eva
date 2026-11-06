@@ -188,10 +188,9 @@ fastapi==0.141.1 \
     --hash=sha256:bfb91aa2d334c61cb35ba9a116fc123b3d3df31640b801cf57a7a78ec3f603b3 \
     --hash=sha256:e8822fc40db1e1858054d7a949a888695bc9bdce70139178e33bd2871a453ca1
     # via -r eva2/release/dependency-roots.in
-genai-prices==0.1.5 \
-    --hash=sha256:04c2cbf4444a3b2f5d38c3b6ab8385ea28ab924ac6f9202bde9261f599be8b45 \
-    --hash=sha256:5215706950decd833ce3527a9e1e745ad0dbdd35ce1b33ac1f7167699640b82a
-    # via pydantic-ai-slim
+genai-prices==0.1.13 \
+    --hash=sha256:6d2b40760a2f7f5e207bac9b98de0af80e60c58ead497872a5331a7cee610477 \
+    --hash=sha256:76c9e2dd3917fdacdf3bc562297c4591384142ea2283c477e1512fafa4e3a384
 greenlet==3.5.5 \
     --hash=sha256:03115c2e0a371999bf8ae616aa8d653f96641d4705c457aebaa187276e9f7537 \
     --hash=sha256:03551ed792cb1b4fc0277a0c60dfd8c343894a0ba06fe60dcd22f568b433da39 \
@@ -506,10 +505,9 @@ markupsafe==3.0.3 \
     --hash=sha256:f9e130248f4462aaa8e2552d547f36ddadbeaa573879158d721bbd33dfe4743a \
     --hash=sha256:fed51ac40f757d41b7c48425901843666a6677e3e8eb0abcff09e4ba6e664f50
     # via mako
-openai==3.6.0 \
-    --hash=sha256:18fe3f6e96390ef41ee27b152fc9effefca321c33673bd9b956a572493d3ab9b \
-    --hash=sha256:508e2158bf971687f953b62e44b02f207792c815aac306816386d7ba34d37f5f
-    # via -r eva2/release/dependency-roots.in
+openai==3.31.0 \
+    --hash=sha256:58110edba9acaf29cb2a675a1cbcccdd9f2fdb4932baed474dc847a7639e5d02 \
+    --hash=sha256:e5839f6670483f368de40ce3422f524c1afaf12ff8660539f53489e200db8d78
 opentelemetry-api==1.44.0 \
     --hash=sha256:67647e5e9566edcf421166fdf022b3537f818635daa852b289e34604dc6fb33a \
     --hash=sha256:94b98c893a91b88657eaac1e3ba89618cdb85be6918196705354f34728b2cdef
@@ -589,10 +587,9 @@ pydantic==2.12.5 \
     #   openai
     #   pydantic-ai-slim
     #   pydantic-graph
-pydantic-ai-slim==2.37.0 \
-    --hash=sha256:439973ce2dae1e64631b05b803743fe44b3b1791514b16488c005b1ca4f2b3e7 \
-    --hash=sha256:c4743bdcd6fd0ea60d82088856f3dfcce93180543b2a66587547034f9dc36e57
-    # via -r eva2/release/dependency-roots.in
+pydantic-ai-slim==2.66.0 \
+    --hash=sha256:78968fa75086ddae9039bdaa3939e9510f15a40d5f1f58fb3ded04386f9292f2 \
+    --hash=sha256:c47bbd0abe6f51e5400308a53b4f7e3409a582b1459140c381e3d4701a205608
 pydantic-core==2.41.5 \
     --hash=sha256:0177272f88ab8312479336e1d777f6b124537d47f2123f89cb37e0accea97f90 \
     --hash=sha256:01a3d0ab748ee531f4ea6c3e48ad9dac84ddba4b0d82291f87248f2f9de8d740 \
@@ -716,10 +713,9 @@ pydantic-core==2.41.5 \
     --hash=sha256:f41eb9797986d6ebac5e8edff36d5cef9de40def462311b3eb3eeded1431e425 \
     --hash=sha256:f547144f2966e1e16ae626d8ce72b4cfa0caedc7fa28052001c94fb2fcaa1c52
     # via pydantic
-pydantic-graph==2.37.0 \
-    --hash=sha256:447e4635f781ba525452d793be5935381a5a67aa4c81d0f53095cd8a8b626a94 \
-    --hash=sha256:7b07237264b92f57aa06b1686315005e320099106534fc20da4081873f68c31f
-    # via pydantic-ai-slim
+pydantic-graph==2.66.0 \
+    --hash=sha256:5b2a0aafc569c00fdb36879b1e80bed06ed5926979e2c1d44533222f208fd2ec \
+    --hash=sha256:af31fd3ad5f3446556a270b14e1a43b12996f4bb52a0511f58f739dbacadb3f9
 pynacl==1.6.2 \
     --hash=sha256:46065496ab748469cdd999246d17e301b2c24ae2fdf739132e580a0e94c94a87 \
     --hash=sha256:62985f233210dee6548c223301b6c25440852e13d59a8b81490203c3227c5ba0 \

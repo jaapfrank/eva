@@ -1,0 +1,59 @@
+{
+  "reviewer": "/root/independent_review",
+  "proof": {
+    "verified": true,
+    "roles": {
+      "core": {
+        "containerId": "81676e3a0ed06f10e4e03ca2b2053332e06d323cc4835cda42055021cd4bc66c",
+        "image": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+        "healthy": true,
+        "exactSourceTreeVerified": true,
+        "environmentPreserved": true,
+        "versions": {
+          "pydantic-ai-slim": "2.66.0",
+          "pydantic-graph": "2.66.0",
+          "openai": "3.31.0",
+          "genai-prices": "0.1.13"
+        }
+      },
+      "delegated-work-worker": {
+        "containerId": "4ea61d3f1fb25f9ad713e3507086955b447f40730346b9251cfe67a192480c79",
+        "image": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8",
+        "healthy": true,
+        "exactSourceTreeVerified": true,
+        "environmentPreserved": true,
+        "versions": {
+          "pydantic-ai-slim": "2.66.0",
+          "pydantic-graph": "2.66.0",
+          "openai": "3.31.0",
+          "genai-prices": "0.1.13"
+        }
+      }
+    },
+    "allFourProfilesMatch": true,
+    "host": {
+      "pid": "1093054",
+      "health": "ready",
+      "ownedListeningSocket": true,
+      "sourceRootsPreserved": true,
+      "authorityProof": {
+        "authorityCount": 10,
+        "moduleCount": 1,
+        "legacyAcceptedReleasesValidated": 2,
+        "hostSourceOriginsPinned": true,
+        "hostOnlyNoDispatch": true
+      },
+      "historicalBytesPreserved": true,
+      "configSha256": "e96105f44bc57f5ddc5b5c097daadff3135edb7e13c0cfc69dd70faa73a95ea8"
+    },
+    "scope": "Installed version/source/profile/health readback; no full E4.16 autonomous-learning claim"
+  },
+  "activationReceiptSha256": "7bca0ddddb6b32386397a56b56a3910ef2cd351feb44e46fd1f7688a9db047f4",
+  "imageUpdateReceiptSha256": "2b75bb92df003e6568f8c8054c307ac456c304239e725780b6ce30de9e500d7b",
+  "receiptStatus": "behavior_verified_with_retained_mounts",
+  "historyFilesPreserved": 9,
+  "criteriaFilesPreserved": 62,
+  "hostLayersPreserved": true,
+  "historicalProducerAndClientBytePreserved": true,
+  "noProviderRequestsByReviewer": true
+}

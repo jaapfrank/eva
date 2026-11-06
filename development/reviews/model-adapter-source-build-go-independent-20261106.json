@@ -1,0 +1,83 @@
+{
+  "contract": "EvaIndependentModelAdapterUpgradeReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T15:27:44.689027+00:00",
+  "decision": "GO_FOR_SOURCE_AND_CANDIDATE_BUILD",
+  "installed": false,
+  "scope": "Complete model adapter/PydanticAI upgrade bundle; installer/current claims/installed readback pending",
+  "candidateImages": {
+    "core": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+    "worker": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8"
+  },
+  "versions": {
+    "pydantic-ai-slim": "2.66.0",
+    "pydantic-graph": "2.66.0",
+    "openai": "3.31.0",
+    "genai-prices": "0.1.13"
+  },
+  "sourceHashes": {
+    "bootstrap/delegated_work_provider.py": "160420ae2fbab12ba5f0986e67fc5617e027082c26094fb1d6b1508727eb8879",
+    "bootstrap/delegated_digital_runner.py": "778bde3c3a54d4e6a8713d6e08a72a919f0c6b556ebc4a350057806bf1a64000",
+    "adapters/model/pydantic_conversation.py": "a0f253eab1075857bf6f4fa279254484e3a087af0d6c899e57a1d1ac79266972",
+    "adapters/model/openai_codex_provider.py": "54147d1dadb3c3744c30d06e1ee088292619d1bb775e51c0a6667283a84f3db7",
+    "adapters/model/contracts.py": "745ad05a30243c2d44b19c7f8e3e676224a2863da3973577fdcd3e548569f22f"
+  },
+  "buildHashes": {
+    "build-context/core/Dockerfile": "43a9647cf839027c41ef34dc42abf3ddd8c6fe9223ae16766af725dd2e55fbd7",
+    "build-context/delegated-work-worker/Dockerfile": "9472621423d2aeb92d302d50e813a32d319e7e03e779c302d110b9ca662a9a66",
+    "finalize-site.py": "cdeed10e29a1aaaba600b1ce349ccb529040ffe4f0e3bed3a5db488a709fa74d",
+    "model-stack-manifest.json": "209d5a1266e808d25066ec95f60bbe27b0ec979f91fc909664370f138648b54c",
+    "four-wheel-manifest.json": "bf54ada4e97c6283ba1e2ad7ba4001729b964a06cacf9d3e242f079a286c9f37",
+    "packaging-manifest.json": "b86aba64a0b04a9748e8f255de7c2657d46767d830968e1793b5fa47a5d97570",
+    "check-design-supplement.json": "38c88e2d5a7dee9667ac1d5b5183db1171890ae56ca98661d0a6868be731e014"
+  },
+  "independentChecks": [
+    "Exact5source delta against actual immutable baseline images, all remaining source bytes preserved.",
+    "Exact4version change,45locked packages;41unmodified lock blocks byte-identical.45readonlywheel hashes and12packaging source hashes independently verified.",
+    "Both final images independently inspected: unrelated site files4821core/2452worker preserved; all distributions outside4targets unchanged.",
+    "All hash-bearing RECORD entries verified for4updated distributions and own application; own Requires-Dist updated, no pip/wheel in runtime; startup4dependency check passes.",
+    "Offline build uses pinned builder/baseimages, --no-index/--no-deps/--require-hashes, owned old package roots removed, new console scripts accounted for, pipcheck in builder.",
+    "Public neutral exceptions preserve budget_exceeded/provider_unavailable/invalid_usage worker mapping without private concrete adapter imports; remaining private adapter subclasses preserve compatibility.",
+    "Provider idless-history setting and bounded rawSSEphase guard preserve same safety contract under both SDKversions.",
+    "No broad voice/source replacement: candidate reconstructed from actual baseline plus explicit five files."
+  ],
+  "independentTestResults": {
+    "providerCompatibility2.37": {
+      "passed": 100,
+      "seconds": 4.3
+    },
+    "providerCompatibility2.66": {
+      "passed": 100,
+      "seconds": 3.6
+    },
+    "newPublicFailureClassificationOnFrozenCandidateSource": {
+      "passed": 3,
+      "seconds": 2.23
+    },
+    "bootstrapOnFrozenCandidateSourceAndNewDependencies": {
+      "passed": 13,
+      "seconds": 3.27
+    },
+    "initialHarnessIssue": "Mixed worktree/frozen conftest roots caused collection mismatch; corrected by running only frozen runner module, no product change."
+  },
+  "baselineLimitations": [
+    "Agent frozen-source regression374pass/2same existing contextprojection assertion failures on both2.37and2.66; no whole-suite green claim.",
+    "Historical wheelhouse suite13fail/8pass and SUPPLYdesign9known pinset/design errors retained; PLATFORM and relevant packaging checks pass.",
+    "Historical sealed host producer/preview/criteria remain byte-exact and fail-closed instead of silently admitting six newer live capabilities."
+  ],
+  "evidence": {
+    "development/reviews/model-adapter-candidate-image-independent-20261106.json": "c1e6daa8b4e0b5b8790a8a7e16bc5c5970cb1491fd8f831d527ef7a8c4b3e1c7",
+    "development/reviews/model-adapter-candidate-record-independent-20261106.json": "6aad8ebac3fa2665d1e2d3331a8e23a4785aa7d416027673d38d06320441553f",
+    "development/reviews/model-adapter-public-candidate-independent-20261106.log": "b55fe83116a6662d3d990f955a9329485ae09198f593ecb472c5bc1f51111893",
+    "development/reviews/model-adapter-bootstrap-candidate-independent-20261106.log": "cc6868cd5b7f6413b40a0ac4b42d1e63ed9ded41f27e4d20bb17e622d17c77c4",
+    "development/reviews/pydantic-provider-compatibility-independent-20261106.json": "d38598bd7d0b5034b27fc2710ae9cdf5c8b9107fff556ff36ac0c78a42e30222"
+  },
+  "remainingBeforeInstalledGO": [
+    "Review exact safe image-only installer and minimal host publisher installed-configuration binding.",
+    "Fresh global work/lease/assessment/STOP/unknown/memory checks and retained data/config/history/criteria/rollback bindings.",
+    "Actual installed versions/source/metadata and all four core-worker compatibility profiles; explicitly preserve sealed old producer."
+  ],
+  "wholeE416Completed": false,
+  "memoryCleanupE411MustRemainOpen": true,
+  "reviewerInstalledOrModifiedProduct": false
+}

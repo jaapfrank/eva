@@ -13,7 +13,8 @@ from eva.adapters.connectors.delegated_completion import (
     completed_tool_evidence, recoverable_completion_context,
 )
 from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
-from eva.adapters.model.contracts import ConversationModelDeadlineExceeded, ConversationModelRateLimited
+from eva.adapters.model.contracts import (ConversationModelDeadlineExceeded, ConversationModelRateLimited,
+    ConversationModelUsageError, ConversationModelUnavailable, ConversationModelInputBudgetExceeded)
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
 from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE, COMPARE
@@ -581,8 +582,7 @@ class DelegatedDigitalRunner:
             # An empty durable journal is unmeasured. Admitted requests without
             # known usage become partial totals, so they cannot renew allowance.
             if actual.measurement == "partial":
-                from eva.adapters.model.pydantic_conversation import _ProviderUsageError
-                raise _ProviderUsageError("background model output usage is incomplete", model_usage=actual)
+                raise ConversationModelUsageError("background model output usage is incomplete", model_usage=actual)
             consumed = actual.output_tokens if actual.measurement == "measured" else 0
             remaining = spec.grant.maximum_output_tokens - consumed
             if remaining <= 0:
@@ -846,20 +846,17 @@ class DelegatedDigitalRunner:
                 usage=usage.to_payload(), completed_at=self.clock().strftime("%Y-%m-%dT%H:%M:%SZ"))
             outcome = ToolFreeChildOutcome("succeeded", result, usage, False, None)
         except Exception as error:
-            from eva.adapters.model.pydantic_conversation import (
-                _InputBudgetError, _ProviderUnavailable, _ProviderUsageError,
-            )
             from eva.adapters.model.contracts import ResearchCitationError
             if journal is not None and source is not None:
                 with suppress(Exception):
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
             status = ("cancelled" if cancellation_event is not None and cancellation_event.is_set()
                 else "timed_out" if isinstance(error, ConversationModelDeadlineExceeded) or self.clock() >= deadline
-                else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached, _InputBudgetError))
+                else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached, ConversationModelInputBudgetExceeded))
                 else "incomplete_work" if isinstance(error, (_UnfinishedWorkPlan, ResearchCitationError))
                 else "provider_transient" if isinstance(error, ConversationModelRateLimited)
-                else "provider_unavailable" if isinstance(error, _ProviderUnavailable) or type(error) is McpGatewayUnavailable
-                else "invalid_usage" if isinstance(error, _ProviderUsageError)
+                else "provider_unavailable" if isinstance(error, ConversationModelUnavailable) or type(error) is McpGatewayUnavailable
+                else "invalid_usage" if isinstance(error, ConversationModelUsageError)
                 else "internal_error")
             from eva.adapters.postgres.work_source_retention import WorkSourceUnavailable
             if (self.failure_observer is not None and native_guard is None and source is not None
@@ -881,7 +878,7 @@ class DelegatedDigitalRunner:
                 # the reason and invite an undiagnosed model retry.
                 report = ("Niet afgerond; geen gecontroleerd taakresultaat. "
                           "Onbevestigde verklaring van de uitvoerder: " + reply.text)[:4_096]
-            if status == "budget_exceeded" and isinstance(error, _InputBudgetError):
+            if status == "budget_exceeded" and isinstance(error, ConversationModelInputBudgetExceeded):
                 report = ("input_budget_exceeded: De behouden taakcontext past niet binnen "
                           "de invoergrens. De opdracht is niet afgerond.")
             if isinstance(error, ResearchCitationError) and status == "incomplete_work":

@@ -1,0 +1,16 @@
+{
+  "scope": "Development validation, separate from Eva household runtime",
+  "model": "gpt-6-astra",
+  "reasoningEffort": "medium",
+  "measuredProviderRequests": 2,
+  "measuredTokens": {
+    "inputTokens": 198,
+    "outputTokens": 33,
+    "totalTokens": 231
+  },
+  "measuredPhaseElapsedSeconds": 7.62,
+  "currencyCharge": null,
+  "subscriptionCredits": null,
+  "unmeasuredCoordinatorAndAgentUsage": "unknown",
+  "householdRuntimeUsageChanged": false
+}

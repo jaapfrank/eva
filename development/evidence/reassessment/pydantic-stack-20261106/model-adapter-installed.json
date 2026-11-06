@@ -1,0 +1,230 @@
+{
+  "contract": "EvaInstalledModelAdapterUpgrade/v1",
+  "recordedAt": "2026-11-06T15:36:25.987454+00:00",
+  "startedAt": "2026-11-06T14:59:35.338758+00:00",
+  "installedAt": "2026-11-06T15:31:42.893819+00:00",
+  "status": "built_reviewed_installed_used_and_readback_verified",
+  "scope": "Existing public model-adapter boundary and pinned PydanticAI/OpenAI provider stack; no full E4.16 completion",
+  "versions": {
+    "pydantic-ai-slim": "2.66.0",
+    "pydantic-graph": "2.66.0",
+    "openai": "3.31.0",
+    "genai-prices": "0.1.13"
+  },
+  "images": {
+    "core": {
+      "before": "sha256:5e78cbebedf89a593fe240e14323ef8c05ee566f6800747bb712cc0f492052e5",
+      "installed": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c"
+    },
+    "delegated-work-worker": {
+      "before": "sha256:56fa6a99bc63ce6c7c6f675ccdd1d29bb7886d72d9b66cd5ac2a8ddae699ab68",
+      "installed": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8"
+    }
+  },
+  "sourceHashes": {
+    "bootstrap/delegated_work_provider.py": "160420ae2fbab12ba5f0986e67fc5617e027082c26094fb1d6b1508727eb8879",
+    "bootstrap/delegated_digital_runner.py": "778bde3c3a54d4e6a8713d6e08a72a919f0c6b556ebc4a350057806bf1a64000",
+    "adapters/model/pydantic_conversation.py": "a0f253eab1075857bf6f4fa279254484e3a087af0d6c899e57a1d1ac79266972",
+    "adapters/model/openai_codex_provider.py": "54147d1dadb3c3744c30d06e1ee088292619d1bb775e51c0a6667283a84f3db7",
+    "adapters/model/contracts.py": "745ad05a30243c2d44b19c7f8e3e676224a2863da3973577fdcd3e548569f22f"
+  },
+  "dependencyChanges": {
+    "updated": 4,
+    "lockedPackages": 45,
+    "otherLockBlocksByteIdentical": 41,
+    "unchangedSiteFiles": {
+      "core": 4821,
+      "delegated-work-worker": 2452
+    }
+  },
+  "changes": [
+    "Public ConversationModelUsageError/Unavailable/InputBudgetExceeded contracts replace private concrete-model imports in the digital runner; existing failure outcomes and no-replay rules preserved.",
+    "Public model setting explicitly suppresses reasoning IDs in replayed history.",
+    "Bounded raw-SSE message-phase identity guard executes before SDK normalization; content, usage, shutdown and privacy boundaries preserved.",
+    "Stream fixtures consume events once, as real network streams do; malformed SDK header fixtures reach the adapter seam without relaxing assertions.",
+    "Active4d lock, provider startup version checks, supply metadata and declarative release expectations updated together."
+  ],
+  "verification": {
+    "actualSourceRegression": {
+      "baseline2.37": {
+        "passed": 374,
+        "failed": 2
+      },
+      "candidate2.66": {
+        "passed": 374,
+        "failed": 2
+      },
+      "sameKnownBaselineFailureNames": [
+        "test_contact_catalog_omits_only_discoverable_descriptors",
+        "test_current_multi_source_observation_reaches_real_model_wire_as_provisional"
+      ]
+    },
+    "metadataHelperTestsPassed": 23,
+    "platformGate": "passed",
+    "historicalSupplyDesignErrorsUnchanged": 9,
+    "historicalWheelhouseSuiteFailuresUnchanged": 13,
+    "liveProvider": {
+      "passed": true,
+      "scope": "development verification, synthetic prompts, no household conversation/task or external effects",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium",
+      "phases": [
+        {
+          "phase": "text",
+          "passed": true,
+          "physicalProviderRequests": 1,
+          "frameworkRequests": 1,
+          "localStreamClosed": true,
+          "usage": {
+            "inputTokens": 32,
+            "outputTokens": 9,
+            "totalTokens": 41
+          },
+          "elapsedSeconds": 4.879,
+          "externalEffects": 0,
+          "syntheticOutputVerified": true
+        },
+        {
+          "phase": "structured_tool_output",
+          "passed": true,
+          "physicalProviderRequests": 1,
+          "frameworkRequests": 1,
+          "localStreamClosed": true,
+          "usage": {
+            "inputTokens": 166,
+            "outputTokens": 24,
+            "totalTokens": 190
+          },
+          "elapsedSeconds": 2.741,
+          "externalEffects": 0,
+          "syntheticOutputVerified": true
+        }
+      ]
+    },
+    "coreWorkerAllFourProfilesMatch": true,
+    "independentInstalledReadback": {
+      "path": "development/reviews/model-adapter-installed-independent-20261106.json",
+      "sha256": "4260f31b7117816fef891b5644713d0358a8773306c43d52b22674b5eea69e2b",
+      "proof": {
+        "reviewer": "/root/independent_review",
+        "proof": {
+          "verified": true,
+          "roles": {
+            "core": {
+              "containerId": "81676e3a0ed06f10e4e03ca2b2053332e06d323cc4835cda42055021cd4bc66c",
+              "image": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+              "healthy": true,
+              "exactSourceTreeVerified": true,
+              "environmentPreserved": true,
+              "versions": {
+                "pydantic-ai-slim": "2.66.0",
+                "pydantic-graph": "2.66.0",
+                "openai": "3.31.0",
+                "genai-prices": "0.1.13"
+              }
+            },
+            "delegated-work-worker": {
+              "containerId": "4ea61d3f1fb25f9ad713e3507086955b447f40730346b9251cfe67a192480c79",
+              "image": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8",
+              "healthy": true,
+              "exactSourceTreeVerified": true,
+              "environmentPreserved": true,
+              "versions": {
+                "pydantic-ai-slim": "2.66.0",
+                "pydantic-graph": "2.66.0",
+                "openai": "3.31.0",
+                "genai-prices": "0.1.13"
+              }
+            }
+          },
+          "allFourProfilesMatch": true,
+          "host": {
+            "pid": "1093054",
+            "health": "ready",
+            "ownedListeningSocket": true,
+            "sourceRootsPreserved": true,
+            "authorityProof": {
+              "authorityCount": 10,
+              "moduleCount": 1,
+              "legacyAcceptedReleasesValidated": 2,
+              "hostSourceOriginsPinned": true,
+              "hostOnlyNoDispatch": true
+            },
+            "historicalBytesPreserved": true,
+            "configSha256": "e96105f44bc57f5ddc5b5c097daadff3135edb7e13c0cfc69dd70faa73a95ea8"
+          },
+          "scope": "Installed version/source/profile/health readback; no full E4.16 autonomous-learning claim"
+        },
+        "activationReceiptSha256": "7bca0ddddb6b32386397a56b56a3910ef2cd351feb44e46fd1f7688a9db047f4",
+        "imageUpdateReceiptSha256": "2b75bb92df003e6568f8c8054c307ac456c304239e725780b6ce30de9e500d7b",
+        "receiptStatus": "behavior_verified_with_retained_mounts",
+        "historyFilesPreserved": 9,
+        "criteriaFilesPreserved": 62,
+        "hostLayersPreserved": true,
+        "historicalProducerAndClientBytePreserved": true,
+        "noProviderRequestsByReviewer": true
+      }
+    },
+    "independentReview": {
+      "path": "development/reviews/model-adapter-upgrade-independent-20261106.json",
+      "sha256": "e2535972c78c5f19035119419e4dcfcd24fa8d25140fd934f94677ca3978f30d",
+      "decision": "GO"
+    }
+  },
+  "retainedBoundaries": {
+    "dataAndMountsRetained": true,
+    "runtimeEnvironmentPreserved": true,
+    "hostSourceRootsPreserved": true,
+    "historicalReceiptsUnchanged": 9,
+    "privateCriteriaFilesUnchanged": 62,
+    "historicalNativeProducerAndPreviewUnchanged": true,
+    "closedCriteriaRelabeled": false,
+    "voiceImplementationOrInstallationChanged": false,
+    "historicalTaskReplay": false
+  },
+  "rollback": {
+    "baselineImagesAndComposeRetained": true,
+    "previousComposeSha256": "3656c28616396ddf1b39f60985fef9dcc3b1721add1c0af1ef4a4c75ed021bc9",
+    "singleFencedImageOnlyDispatchReceiptSha256": "2b75bb92df003e6568f8c8054c307ac456c304239e725780b6ce30de9e500d7b",
+    "productionRollbackPerformed": false
+  },
+  "developmentUsage": {
+    "scope": "Development validation, separate from Eva household runtime",
+    "model": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "measuredProviderRequests": 2,
+    "measuredTokens": {
+      "inputTokens": 198,
+      "outputTokens": 33,
+      "totalTokens": 231
+    },
+    "measuredPhaseElapsedSeconds": 7.62,
+    "currencyCharge": null,
+    "subscriptionCredits": null,
+    "unmeasuredCoordinatorAndAgentUsage": "unknown",
+    "householdRuntimeUsageChanged": false
+  },
+  "knownRemaining": {
+    "fullE416": "Autonomous update/failure-to-repair/candidate/independent review/managed application/original-task verification/later reuse remains unproven. Historical sealed native producer pins a prior image/source/release and omits six capabilities that current live already has. It remains byte-exact and fail-closed; later current use requires a fresh authority binding under unchanged criteria.",
+    "baselineChecks": "Two known contextprojection assertions and historical supply-design/wheelhouse expectations remain explicit and unchanged.",
+    "memoryE411": "Remains open for verified residual cleanup; no memory changes in this upgrade.",
+    "ownerOrFamilyAcceptance": "Not inferred from development probes."
+  },
+  "evidence": {
+    "development/evidence/reassessment/pydantic-stack-20261106/model-adapter/final-image-verification.json": "d61ae332a390cdfca6e1ea3eec4e676fb42cd365c61f5f74343ee386173e60a6",
+    "development/evidence/reassessment/pydantic-stack-20261106/model-adapter/actual-source-regression.json": "71682cf4de15e2873964b6e871b21d7f8392ebac8af48e9dca61a34d0caf6091",
+    "development/evidence/reassessment/pydantic-stack-20261106/model-adapter/check-design-supplement.json": "38c88e2d5a7dee9667ac1d5b5183db1171890ae56ca98661d0a6868be731e014",
+    "development/evidence/reassessment/pydantic-stack-20261106/model-adapter/packaging-manifest.json": "b86aba64a0b04a9748e8f255de7c2657d46767d830968e1793b5fa47a5d97570",
+    "development/evidence/reassessment/pydantic-stack-20261106/model-adapter/four-wheel-manifest.json": "bf54ada4e97c6283ba1e2ad7ba4001729b964a06cacf9d3e242f079a286c9f37",
+    "development/evidence/reassessment/pydantic-stack-20261106/model-adapter/model-stack-manifest.json": "209d5a1266e808d25066ec95f60bbe27b0ec979f91fc909664370f138648b54c",
+    "development/evidence/reassessment/pydantic-stack-20261106/model-adapter/live-provider-verification.json": "08b06aa421162fd91f8c1faf1b80cc0a9c686bd0976e9f84100f1d0ef7fc0d2c",
+    "development/evidence/reassessment/pydantic-stack-20261106/model-adapter/development-usage.json": "3f49345a98deea1a9c79cc19e711d069bce82917c465c9adf4a6553de0147e0a"
+  },
+  "privateDeploymentProof": {
+    "directory": "/var/lib/eva2/finalization-20261106/model-adapter-upgrade",
+    "activationReceiptSha256": "7bca0ddddb6b32386397a56b56a3910ef2cd351feb44e46fd1f7688a9db047f4",
+    "planSha256": "cb7616e9002647a76cc2016e7db55ffc25de8a9ae3ceea469ff41486b9b0632f",
+    "installerSha256": "e6969c6372f6dd8b7aa488d3a78c5c55bbe50e58a4a06a48d1f6c64c9c877002"
+  },
+  "wholeProjectOrE416Completed": false
+}

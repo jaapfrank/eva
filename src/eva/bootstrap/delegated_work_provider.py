@@ -49,8 +49,9 @@ MODEL_MAXIMUM_REQUEST_BYTES = 256 * 1024
 MODEL_MAXIMUM_RESPONSE_BYTES = 256 * 1024
 INPUT_PRICE_USD_MICROS_PER_MILLION = 10_000_000
 OUTPUT_PRICE_USD_MICROS_PER_MILLION = 50_000_000
-PYDANTIC_AI_VERSION = "2.37.0"
-OPENAI_SDK_VERSION = "3.6.0"
+PYDANTIC_AI_VERSION = "2.66.0"
+OPENAI_SDK_VERSION = "3.31.0"
+GENAI_PRICES_VERSION = "0.1.13"
 WORKER_INSTRUCTIONS = (
     "Werk als een afgeschermde onderzoeker voor Eva. Gebruik geen tools of externe "
     "bronnen. Scheid controleerbare bevindingen van aannames, blijf bij de gegeven "
@@ -90,7 +91,7 @@ WORKER_PROFILE_RELEASE_SHA256 = canonical_sha256(
 )
 _EVA_PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 DEPENDENCY_LOCK_SHA256 = (
-    "036e2463be9fea6b3adb8528e8e0288b0985f65f958d4abdbf371c21d828693e"
+    "67160477c7bc2f4f28c0ef31828555249271ea6b2b7ddf46c7c65e4386481143"
 )
 
 
@@ -153,6 +154,8 @@ def verify_delegated_provider_dependencies() -> None:
     expected = {
         "openai": OPENAI_SDK_VERSION,
         "pydantic-ai-slim": PYDANTIC_AI_VERSION,
+        "pydantic-graph": PYDANTIC_AI_VERSION,
+        "genai-prices": GENAI_PRICES_VERSION,
     }
     try:
         installed = {package: version(package) for package in expected}

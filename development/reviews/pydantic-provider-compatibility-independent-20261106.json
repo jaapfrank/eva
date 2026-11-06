@@ -1,0 +1,47 @@
+{
+  "contract": "EvaIndependentCodexProviderUpgradeCompatibilityReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T15:00:55.577849+00:00",
+  "decision": "GO",
+  "scope": "Two bounded provider adapter compatibility changes; complete dependency/runner/installation bundle still pending",
+  "sourceHashes": {
+    "src/eva/adapters/model/openai_codex_provider.py": "54147d1dadb3c3744c30d06e1ee088292619d1bb775e51c0a6667283a84f3db7",
+    "development/tests/model/test_openai_codex_provider_shared.py": "006912e5b32eb949acc3e8831e75f6c0d163e47c2c3ca26859f854dc3db2c491",
+    "development/tests/model/test_codex_raw_phase_compatibility.py": "b142377c598ae85ca41acc4401283c04e759fea7f0fdd6f617f53c742bfa86c8"
+  },
+  "reviewedBehavior": [
+    "Explicit public model setting openai_send_reasoning_ids=False preserves idless stateless history on bothSDKversions.",
+    "RawSSEattestor checks immutable message itemphase before yielding bytes to SDK, independently of SDKnormalized events.",
+    "Itemidentity tracking stores only SHA256digests, max256UTF8bytesperID, max1024IDs; missing phase is stableNone; unknown phase/protocol conflicts fail closed.",
+    "Existing model event replacement/mixedaction/previewchecks, no-retry category policy, unique usage attestation and cleanup remain in place.",
+    "Testbody changes enforce true one-pass network stream consumption when newSDKdrains onclose; no expected safety criteria changed."
+  ],
+  "tests": {
+    "2.37": {
+      "passed": 100,
+      "seconds": 4.3
+    },
+    "2.66": {
+      "passed": 100,
+      "seconds": 3.6
+    },
+    "logs": {
+      "development/reviews/pydantic-provider-compatibility-2.37-independent-20261106.log": "f668de1e0061f31d690bf6ec2bc84257b16ab6ad5c3c79e739078b08b2268c58",
+      "development/reviews/pydantic-provider-compatibility-2.66-independent-20261106.log": "21179d539ef69e15997bd6dfcf1b1de6ec85b3e747227bdc2b7d4175f1b7343e"
+    },
+    "providerSourceUnchangedBeforeAfterRuns": true,
+    "liveModelRequests": 0
+  },
+  "necessaryBundleChecksBeforeInstallation": [
+    "Public provider-neutral error classes shared by runner/adapter without importing private concrete adapter errors.",
+    "Closed exact4wheels ai2.66/graph2.66/openai3.31/genaiprices0.1.13 with hashes/dependency resolution and consistent ownpackageRequires-Dist.",
+    "Actual baseline source/dependency delta preserved without overwriting parallelvoicework.",
+    "Exact installed source/version readback and matching core/worker/sharedprovider/publicresearch/householdresearch/digitalwork/hostproducer profiles.",
+    "Fresh claims/lease/assessment/STOP checks, retained data/config, lastworkingimages and unknownreceipts preserved."
+  ],
+  "limitations": [
+    "This source review is not full upgrade completion or installationGO.",
+    "Known earlier contextprojection assertions remain separately classified; no blanketrepositorypass claimed.",
+    "No product/dependency/voice/index/installation changes by reviewer."
+  ]
+}
