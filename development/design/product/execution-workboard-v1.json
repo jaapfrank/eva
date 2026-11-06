@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "De kritieke Hindsight/PydanticAI-kern, Node22.23.4 voor vier hostdiensten en Windows-browserworker, en de drie Python-hostpakketomgevingen zijn geïnstalleerd en onafhankelijk teruggelezen. Bron/configuratie en bevoegdheden blijven behouden; de gezichtsbrug gebruikt dezelfde CPU-extractor, modellen en profielgegevens. Volgende oplevering: AUX5/Hindsight-toegangsreparatie veilig installeren en werkelijk controleren; de volledige tokenintrekkingsroute en vier ondersteunende kandidaten zijn beoordeeld. Daarna Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties. Overige actieve afhankelijkheden volgen per compatibele groep; de spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
+    "nextAction": "AUX5-onderhoud hervatten vanaf de reeds geïnstalleerde, gezonde Hindsight625-generatie. De eerste uitvoering stopte op drie aannames in de terugleescontrole (oude entrypointvingerafdruk, NUL-teken in meetargument, PID1 in plaats van het echte dienstproces). Een aparte, onafhankelijk beoordeelde hervatting moet eerst de volledige oorspronkelijke controle en ongewijzigde 24 native tabellen bewijzen; daarna vier hulpdiensten omschakelen en kern/worker/host hervatten. Geen nieuwe model- of taakdispatch uit dit foutherstel. Daarna één echte geheugenproef met testgegevens en opruiming; pas dan deze batch afronden. Node26/filesystemMCP2.2 volgt op deze werkelijk geïnstalleerde generatie. Overige actieve updates volgen per compatibele groep; bestaande spraakoverdracht blijft gelden. E4.16-autonomie en E4.11-residuopruiming blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
     "executionStep": "Host library environments delivered live; install reviewed auxiliary/native revocation batch then Node/MCP",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-06T21:30:09.535045+00:00",
+    "checkedAt": "2026-11-06T22:26:35.056178+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -1660,6 +1660,81 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Drie Python-hostomgevingen bijgewerkt en teruggelezen — 6 november",
+            "state": "verified",
+            "summary": "Drie bestaande hostdiensten gebruiken afzonderlijke bijgewerkte pakketomgevingen; bron/configuratie, vier evaluatorbronpaden, modellen en profielgegevens zijn behouden. Ubuntu Python3.12.3-1ubuntu0.17 is actueel.",
+            "remaining": "De aanvullende Hindsight-toegangsfout is afzonderlijk in beheerde hervatting. Overige actieve updates, volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/host-python-three-installed.json",
+            "review": "development/reviews/host-python-three-role-installed-independent-20261106.json",
+            "checkedAt": "2026-11-06T21:23:04.713858+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
+            "title": "Node22.23.4 geïnstalleerd voor bestaande hostdiensten — 6 november",
+            "state": "verified",
+            "summary": "Vier WSL-hostdiensten en de bestaande Windows-browserworker gebruiken Node22.23.4. Telegramopslag, browserbevoegdheden en beide globale Node-installaties zijn behouden.",
+            "remaining": "De aanvullende Hindsight-toegangsfout is afzonderlijk in beheerde hervatting. Overige actieve updates, volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/host-node22-installed.json",
+            "review": "development/reviews/host-node22-installed-independent-20261106.json",
+            "checkedAt": "2026-11-06T20:17:12.318255+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
+            "title": "Native beveiligingsupdates en Hindsight Python3.11.18 geïnstalleerd — 6 november",
+            "state": "verified",
+            "summary": "Kern en worker behouden Python3.12.16; Hindsight gebruikt Python3.11.18. Zes Debian-pakketten zijn via de ondertekende distributieroute bijgewerkt. Echte provider- en geheugenproeven slagen.",
+            "remaining": "De aanvullende Hindsight-toegangsfout is afzonderlijk in beheerde hervatting. Overige actieve updates, volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/native-security-installed.json",
+            "review": "development/reviews/debian13-native-installed-independent-20261106.json",
+            "checkedAt": "2026-11-06T19:29:45.351821+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
+            "title": "Kern en worker met actuele compatibele Python-pakketten geïnstalleerd — 6 november",
+            "state": "verified",
+            "summary": "Beide rollen gebruiken Python3.12.16, PydanticAI/Graph2.66.0, OpenAI3.46.0 en genai-prices0.2.1. De bestaande brongebonden werkprofielen zijn gelijk.",
+            "remaining": "De aanvullende Hindsight-toegangsfout is afzonderlijk in beheerde hervatting. Overige actieve updates, volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
+            "review": "development/reviews/python31216-installed-independent-20261106.json",
+            "checkedAt": "2026-11-06T18:34:59.001981+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
+            "title": "Hindsight1.2.0 geïnstalleerd en daadwerkelijk gebruikt — 6 november",
+            "state": "verified",
+            "summary": "De Hindsight-upgrade is met behoud van brontekst, bronhashes, foutbewijs, wissen, bestaande modellen en migraties geïnstalleerd. De echte geheugentaak en haar opruiming zijn gecontroleerd.",
+            "remaining": "De aanvullende Hindsight-toegangsfout is afzonderlijk in beheerde hervatting. Overige actieve updates, volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
+            "review": "development/reviews/hindsight-installed-independent-20261106.json",
+            "checkedAt": "2026-11-06T18:09:11.530496+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "C3.1 geaccepteerd; optioneel E2.6 ingetrokken — 6 november",
             "state": "accepted",
@@ -3259,16 +3334,14 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Modeladapter · PydanticAI2.66 geïnstalleerd en echt gebruikt — 6 november",
+          "title": "Drie Python-hostomgevingen bijgewerkt en teruggelezen — 6 november",
           "state": "verified",
-          "summary": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
-          "remaining": "Volledige E4.16-autonomie, E4.11-residuen en de bekende baselinecontroles blijven afzonderlijk open.",
-          "source": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
-          "review": "development/reviews/model-adapter-upgrade-independent-20261106.json",
-          "checkedAt": "2026-11-06T15:36:25.987454+00:00",
-          "installedAt": "2026-11-06T15:31:42.893819+00:00",
+          "summary": "Drie bestaande hostdiensten gebruiken afzonderlijke bijgewerkte pakketomgevingen; bron/configuratie, vier evaluatorbronpaden, modellen en profielgegevens zijn behouden. Ubuntu Python3.12.3-1ubuntu0.17 is actueel.",
+          "remaining": "De aanvullende Hindsight-toegangsfout is afzonderlijk in beheerde hervatting. Overige actieve updates, volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
+          "source": "development/evidence/reassessment/maintenance-updates-20261106/host-python-three-installed.json",
+          "review": "development/reviews/host-python-three-role-installed-independent-20261106.json",
+          "checkedAt": "2026-11-06T21:23:04.713858+00:00",
           "technicalDeliveryComplete": true,
-          "functionalTestPassed": true,
           "independentReviewComplete": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
@@ -3278,12 +3351,12 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "Eigenaar6november: alle werkelijk gebruikte opensourceonderdelen zorgvuldig bijwerken, met Hindsight en PydanticAI voorop. PydanticAI2.66/Graph2.66/OpenAI3.31 zijn reeds geïnstalleerd en onafhankelijk geverifieerd; niet opnieuw bouwen. Hindsight0.9.1→1.2.0 eerst op actuele geïsoleerde databaseclone toetsen: migraties, bron/wis/droom/idempotency-bewijs, lokale modellen/GPU en providerroute behouden. Alleen beoordeelde kandidaat op werkvrij moment installeren en daadwerkelijk teruglezen; terugweg mag nieuw geheugen of wissen niet terugdraaien. Daarna overige actieve Python/Node/OCI/hostcomponenten per compatibele batch afronden. Algemene E4.16-autonomie en E4.11-residuopruiming blijven afzonderlijk open.",
-          "detail": "Bestaande PydanticAI-upgrade behouden; nu één Hindsight-update afmaken vóór verbreding. Geen automatische statusafronding uit alleen inventarisatie of tests.",
+          "summary": "De kritieke Hindsight/PydanticAI-stack, native beveiligingspakketten, Node22.23.4-hostdiensten en drie Python-hostomgevingen zijn bewezen geïnstalleerd. Aanvullend AUX5-onderhoud is in uitvoering; de kern, worker en evaluator zijn hiervoor gecontroleerd gestopt.",
+          "detail": "Hindsight625 is gezond en alle 24 native tabellen en schema-/bron-/foutregistraties zijn ongewijzigd. De eerste uitvoering is behouden; alleen de foutieve terugleescontrole wordt apart hersteld vóór hervatting van de vier resterende hulpdiensten.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Onderhoudsupdates in uitvoering · Hindsight eerst",
-          "checkedAt": "2026-11-06T16:08:09.093414+00:00",
-          "nextAction": "Hindsight1.2.0/Python3.11.18 en kern/workerPython3.12.16 zijn live en onafhankelijk geverifieerd, met PydanticAI/Graph2.66, OpenAI3.46, genai-prices0.2.1 en zes actuele Debian-beveiligingsrevisies. Echte model-/geheugenproeven slagen; bron/foutbewijs, privacy, STOP, leases en werkprofielen zijn behouden, proefdata opgeruimd. Volgende uitkomst: Node26/filesystemMCP bijwerken via bestaande adapter met behoud van de vijf toegestane acties, echte overdrachts-/STOP-/leaseproeven en veilige installatie. Daarna resterende actieve host-, provider- en dashboardafhankelijkheden; bestaande spraakoverdrachtgrens blijft gelden. E4.16-autonomie en E4.11-residuopruiming blijven open."
+          "state": "Onderhoud in uitvoering · aparte gecontroleerde hervatting",
+          "checkedAt": "2026-11-06T22:26:35.056178+00:00",
+          "nextAction": "AUX5-onderhoud hervatten vanaf de reeds geïnstalleerde, gezonde Hindsight625-generatie. De eerste uitvoering stopte op drie aannames in de terugleescontrole (oude entrypointvingerafdruk, NUL-teken in meetargument, PID1 in plaats van het echte dienstproces). Een aparte, onafhankelijk beoordeelde hervatting moet eerst de volledige oorspronkelijke controle en ongewijzigde 24 native tabellen bewijzen; daarna vier hulpdiensten omschakelen en kern/worker/host hervatten. Geen nieuwe model- of taakdispatch uit dit foutherstel. Daarna één echte geheugenproef met testgegevens en opruiming; pas dan deze batch afronden. Node26/filesystemMCP2.2 volgt op deze werkelijk geïnstalleerde generatie. Overige actieve updates volgen per compatibele groep; bestaande spraakoverdracht blijft gelden. E4.16-autonomie en E4.11-residuopruiming blijven open."
         },
         "next": {
           "taskId": "E4.15",
@@ -3295,8 +3368,8 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-06T15:36:25.987454+00:00",
-        "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
+        "checkedAt": "2026-11-06T22:26:35.056178+00:00",
+        "reviewedAt": "2026-11-06T22:26:35.056178+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-11-04T14:00:19.123526+00:00",
@@ -9744,7 +9817,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Hindsight1.2.0/Python3.11.18 en kern/workerPython3.12.16 zijn live en onafhankelijk geverifieerd, met PydanticAI/Graph2.66, OpenAI3.46, genai-prices0.2.1 en zes actuele Debian-beveiligingsrevisies. Echte model-/geheugenproeven slagen; bron/foutbewijs, privacy, STOP, leases en werkprofielen zijn behouden, proefdata opgeruimd. Volgende uitkomst: Node26/filesystemMCP bijwerken via bestaande adapter met behoud van de vijf toegestane acties, echte overdrachts-/STOP-/leaseproeven en veilige installatie. Daarna resterende actieve host-, provider- en dashboardafhankelijkheden; bestaande spraakoverdrachtgrens blijft gelden. E4.16-autonomie en E4.11-residuopruiming blijven open.",
+        "nextAction": "AUX5-onderhoud hervatten vanaf de reeds geïnstalleerde, gezonde Hindsight625-generatie. De eerste uitvoering stopte op drie aannames in de terugleescontrole (oude entrypointvingerafdruk, NUL-teken in meetargument, PID1 in plaats van het echte dienstproces). Een aparte, onafhankelijk beoordeelde hervatting moet eerst de volledige oorspronkelijke controle en ongewijzigde 24 native tabellen bewijzen; daarna vier hulpdiensten omschakelen en kern/worker/host hervatten. Geen nieuwe model- of taakdispatch uit dit foutherstel. Daarna één echte geheugenproef met testgegevens en opruiming; pas dan deze batch afronden. Node26/filesystemMCP2.2 volgt op deze werkelijk geïnstalleerde generatie. Overige actieve updates volgen per compatibele groep; bestaande spraakoverdracht blijft gelden. E4.16-autonomie en E4.11-residuopruiming blijven open.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -10035,7 +10108,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-06T16:08:09.093414+00:00",
+        "checkedAt": "2026-11-06T22:26:35.056178+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -16580,7 +16653,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Hindsight1.2.0/Python3.11.18 en kern/workerPython3.12.16 zijn live en onafhankelijk geverifieerd, met PydanticAI/Graph2.66, OpenAI3.46, genai-prices0.2.1 en zes actuele Debian-beveiligingsrevisies. Echte model-/geheugenproeven slagen; bron/foutbewijs, privacy, STOP, leases en werkprofielen zijn behouden, proefdata opgeruimd. Volgende uitkomst: Node26/filesystemMCP bijwerken via bestaande adapter met behoud van de vijf toegestane acties, echte overdrachts-/STOP-/leaseproeven en veilige installatie. Daarna resterende actieve host-, provider- en dashboardafhankelijkheden; bestaande spraakoverdrachtgrens blijft gelden. E4.16-autonomie en E4.11-residuopruiming blijven open.",
+      "nextAction": "AUX5-onderhoud hervatten vanaf de reeds geïnstalleerde, gezonde Hindsight625-generatie. De eerste uitvoering stopte op drie aannames in de terugleescontrole (oude entrypointvingerafdruk, NUL-teken in meetargument, PID1 in plaats van het echte dienstproces). Een aparte, onafhankelijk beoordeelde hervatting moet eerst de volledige oorspronkelijke controle en ongewijzigde 24 native tabellen bewijzen; daarna vier hulpdiensten omschakelen en kern/worker/host hervatten. Geen nieuwe model- of taakdispatch uit dit foutherstel. Daarna één echte geheugenproef met testgegevens en opruiming; pas dan deze batch afronden. Node26/filesystemMCP2.2 volgt op deze werkelijk geïnstalleerde generatie. Overige actieve updates volgen per compatibele groep; bestaande spraakoverdracht blijft gelden. E4.16-autonomie en E4.11-residuopruiming blijven open.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -16871,7 +16944,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-06T16:08:09.093414+00:00",
+      "checkedAt": "2026-11-06T22:26:35.056178+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -19680,7 +19753,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-06T15:45:49.236122+00:00",
+  "updatedAt": "2026-11-06T22:26:35.056178+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -19762,8 +19835,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-06T13:40:23.527110+00:00",
-  "checkedAt": "2026-11-06T13:40:23.527110+00:00",
+  "lastUpdatedAt": "2026-11-06T22:26:35.056178+00:00",
+  "checkedAt": "2026-11-06T22:26:35.056178+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
