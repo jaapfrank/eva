@@ -1,31 +1,31 @@
 [build-system]
-requires = ["setuptools==84.0.0"]
+requires = ["setuptools==84.2.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "eva2-living-core"
 version = "0.0.0"
 description = "Eva 2 Living Core validation build"
-requires-python = "==3.12.14"
+requires-python = "==3.12.16"
 license = "LicenseRef-Proprietary"
 dependencies = [
-  "alembic==1.19.1",
-  "cryptography==50.0.1",
-  "fastapi==0.141.1",
-  "openai==3.31.0",
-  "psycopg[binary]==3.3.4",
+  "alembic==1.20.1",
+  "cryptography==50.0.2",
+  "fastapi==0.162.0",
+  "openai==3.46.0",
+  "psycopg[binary]==3.3.8",
   "PyNaCl==1.6.2",
   "PyYAML==6.0.3",
-  "pydantic==2.12.5",
+  "pydantic==2.14.3",
   "pydantic-ai-slim==2.66.0",
-  "SQLAlchemy==2.0.52",
+  "SQLAlchemy==2.1.8",
   "tiktoken==0.14.0",
-  "uvicorn==0.41.0",
-  "websockets==17.0.1",
+  "uvicorn==0.54.0",
+  "websockets==17.4",
 ]
 
 [project.optional-dependencies]
-optional-models = ["anthropic==1.15.0"]
+optional-models = ["anthropic==2.6.0"]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -47,7 +47,7 @@ include = ["eva*", "tools*", "connector_sdk*"]
 ]
 
 [tool.eva2]
-target-python = "3.12.14"
+target-python = "3.12.16"
 dependency-lock = "deploy/requirements.lock"
 tranche-4d-dependency-lock = "deploy/requirements-4d.lock"
 tranche-4d-dependency-extra = "tranche-4d"

@@ -347,3 +347,80 @@ def test_invalid_metadata_date_never_changes_sealed_outputs(native_tmp_path, dat
     with pytest.raises(ValueError):
         refresh_tool.refresh(root=root, wheelhouse=wheelhouse, as_of=date)
     assert {path:path.read_bytes() for path in outputs} == before
+
+
+def test_all_adoption_targets_follow_selected_pins_without_losing_originals(native_tmp_path):
+    root, wheelhouse, outputs = _fixture(native_tmp_path)
+    binding = json.loads(outputs[0].read_bytes())
+    binding["pyprojectAdoption"]["directRuntimeAdded"] = ["genai-prices==0.0.1"]
+    binding["pyprojectAdoption"]["directRuntimeUpdated"] += ["openai==1.0.0 -> openai==2.0.0"]
+    _write_json(outputs[0], binding)
+    refresh_tool.refresh(root=root, wheelhouse=wheelhouse)
+    adoption = json.loads(outputs[0].read_bytes())["pyprojectAdoption"]
+    assert "genai-prices==0.1.5" in adoption["directRuntimeAdded"]
+    assert "openai==1.0.0 -> openai==3.6.0" in adoption["directRuntimeUpdated"]
+    assert all(not item.lower().startswith("openai==") for item in adoption["directRuntimeAdded"])
+    assert "pydantic-ai-slim==2.32.1 -> pydantic-ai-slim==2.37.0" in adoption["directRuntimeUpdated"]
+
+
+def test_changed_direct_dependency_history_is_added_once_then_preserved(native_tmp_path):
+    root, wheelhouse, outputs = _fixture(native_tmp_path)
+    inventory = json.loads(outputs[3].read_bytes())
+    inventory["packages"] = [{"name": "genai-prices", "version": "0.1.1"}]
+    _write_json(outputs[3], inventory)
+    refresh_tool.refresh(root=root, wheelhouse=wheelhouse)
+    first = {path:path.read_bytes() for path in outputs}
+    refresh_tool.refresh(root=root, wheelhouse=wheelhouse)
+    assert {path:path.read_bytes() for path in outputs} == first
+    updates = json.loads(outputs[0].read_bytes())["pyprojectAdoption"]["directRuntimeUpdated"]
+    assert updates.count("genai-prices==0.1.1 -> genai-prices==0.1.5") == 1
+
+
+def test_an_added_dependency_keeps_its_added_history_after_version_change(native_tmp_path):
+    root, wheelhouse, outputs = _fixture(native_tmp_path)
+    binding = json.loads(outputs[0].read_bytes())
+    binding["pyprojectAdoption"]["directRuntimeAdded"] = ["genai-prices==0.1.1"]
+    _write_json(outputs[0], binding)
+    inventory = json.loads(outputs[3].read_bytes())
+    inventory["packages"] = [{"name": "genai-prices", "version": "0.1.1"}]
+    _write_json(outputs[3], inventory)
+    refresh_tool.refresh(root=root, wheelhouse=wheelhouse)
+    adoption = json.loads(outputs[0].read_bytes())["pyprojectAdoption"]
+    assert "genai-prices==0.1.5" in adoption["directRuntimeAdded"]
+    assert all(not item.startswith("genai-prices==") for item in adoption["directRuntimeUpdated"])
+
+
+def _python_target_fixture(root, outputs, version="3.12.16", abi="cp312"):
+    (root / "pyproject.toml").write_text(
+        "[project]\nrequires-python='==" + version + "'\n"
+        "[tool.eva2]\ntarget-python='" + version + "'\n")
+    coverage = json.loads(outputs[1].read_bytes())
+    coverage["targets"][0].update({"pythonAbi": abi, "pythonVersion": "3.12.14"})
+    _write_json(outputs[1], coverage)
+    _write_json(outputs[2], {"target": {"pythonAbi": abi, "pythonVersion": "3.12.14"}})
+
+
+def test_explicit_python_patch_target_refreshes_current_metadata_with_same_wheels(native_tmp_path):
+    root, wheelhouse, outputs = _fixture(native_tmp_path)
+    _python_target_fixture(root, outputs)
+    gate_history = json.loads(outputs[4].read_bytes())["generationRecord"]
+    result = refresh_tool.refresh(root=root, wheelhouse=wheelhouse, python_version="3.12.16")
+    assert result["wheelCount"] == len(_PACKAGES)
+    assert json.loads(outputs[1].read_bytes())["targets"][0]["pythonVersion"] == "3.12.16"
+    assert json.loads(outputs[2].read_bytes())["target"] == {"pythonAbi": "cp312", "pythonVersion": "3.12.16"}
+    assert json.loads(outputs[4].read_bytes())["generationRecord"] == gate_history
+
+
+@pytest.mark.parametrize("version, source, abi", [
+    ("3.12.15", "3.12.16", "cp312"),
+    ("3.13.1", "3.13.1", "cp312"),
+    ("3.012.16", "3.012.16", "cp312"),
+    ("3.12", "3.12", "cp312"),
+])
+def test_python_target_mismatch_or_abi_change_never_mutates_metadata(native_tmp_path, version, source, abi):
+    root, wheelhouse, outputs = _fixture(native_tmp_path)
+    _python_target_fixture(root, outputs, source, abi)
+    before = {path: path.read_bytes() for path in outputs}
+    with pytest.raises((ValueError, RuntimeError)):
+        refresh_tool.refresh(root=root, wheelhouse=wheelhouse, python_version=version)
+    assert {path: path.read_bytes() for path in outputs} == before

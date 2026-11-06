@@ -326,7 +326,47 @@ def _wheel_rows(
     return artifacts, licenses
 
 
-def refresh(*, root: Path, wheelhouse: Path, as_of: str | None = None) -> dict[str, object]:
+def _refresh_adoption_targets(adoption, pins, direct, old_rows):
+    """Refresh selected targets while keeping each original adoption source."""
+    additions = adoption.get("directRuntimeAdded")
+    updates = adoption.get("directRuntimeUpdated")
+    if not isinstance(additions, list) or not isinstance(updates, list):
+        raise RuntimeError("runtime dependency adoption lists are invalid")
+
+    def pin(value):
+        match = PIN.fullmatch(value) if isinstance(value, str) else None
+        if match is None:
+            raise RuntimeError("runtime dependency adoption pin is invalid")
+        return _normalize(match[1]), value.split("==", 1)[0]
+
+    selected_additions = {}
+    for value in additions:
+        name, label = pin(value)
+        selected_additions[name] = label + "==" + pins[name] if name in pins else value
+    selected_updates = {}
+    for value in updates:
+        if not isinstance(value, str) or value.count(" -> ") != 1:
+            raise RuntimeError("runtime dependency adoption update is invalid")
+        original, target = value.split(" -> ")
+        name, _ = pin(original)
+        target_name, label = pin(target)
+        if name != target_name:
+            raise RuntimeError("runtime dependency adoption changes package identity")
+        selected_updates[name] = original + " -> " + label + "==" + pins[name] if name in pins else value
+    if "openai" not in selected_updates:
+        selected_additions.setdefault("openai", "openai==" + pins["openai"])
+    selected_updates.setdefault("pydantic-ai-slim", "pydantic-ai-slim==2.32.1 -> pydantic-ai-slim==" + pins["pydantic-ai-slim"])
+    for name, version in direct.items():
+        previous = old_rows.get(name, {}).get("version")
+        if (name != "setuptools" and previous is not None and previous != version
+                and name not in selected_additions and name not in selected_updates):
+            selected_updates[name] = name + "==" + str(previous) + " -> " + name + "==" + version
+    additions[:] = sorted(selected_additions.values())
+    updates[:] = sorted(selected_updates.values())
+
+
+def refresh(*, root: Path, wheelhouse: Path, as_of: str | None = None,
+            python_version: str | None = None) -> dict[str, object]:
     if as_of is not None:
         from datetime import date
         if date.fromisoformat(as_of).isoformat() != as_of:
@@ -372,6 +412,18 @@ def refresh(*, root: Path, wheelhouse: Path, as_of: str | None = None) -> dict[s
     gate_lock_raw, _gate_lock_mode = _read_owned_regular(
         gate_lock_path, maximum=16 * 1024 * 1024
     )
+
+    target_abi = None
+    if python_version is not None:
+        import tomllib
+        match = re.fullmatch(r"(3)\.(\d+)\.(\d+)", python_version)
+        if match is None or ".".join(str(int(part)) for part in match.groups()) != python_version:
+            raise ValueError("runtime Python version must be a canonical stable patch version")
+        project = tomllib.loads(pyproject_raw.decode("utf-8"))
+        if (project.get("project", {}).get("requires-python") != "==" + python_version
+                or project.get("tool", {}).get("eva2", {}).get("target-python") != python_version):
+            raise RuntimeError("runtime Python version differs from the current source target")
+        target_abi = "cp" + match[1] + str(int(match[2]))
 
     pins = _pins(lock_raw, path=lock_path)
     direct = _pins(roots_raw, path=roots_path)
@@ -425,17 +477,13 @@ def refresh(*, root: Path, wheelhouse: Path, as_of: str | None = None) -> dict[s
     adoption = binding["pyprojectAdoption"]
     if not isinstance(adoption, dict):
         raise RuntimeError("runtime dependency binding has no pyproject adoption")
-    additions = adoption.get("directRuntimeAdded")
-    if not isinstance(additions, list):
-        raise RuntimeError("runtime dependency additions are invalid")
-    additions[:] = sorted({item for item in additions if not str(item).startswith("openai==")} | {f"openai=={pins['openai']}"})
-    updates = adoption.get("directRuntimeUpdated")
-    if not isinstance(updates, list):
-        raise RuntimeError("runtime dependency updates are invalid")
-    updates[:] = sorted(
-        {item for item in updates if not str(item).startswith("pydantic-ai-slim==")}
-        | {f"pydantic-ai-slim==2.32.1 -> pydantic-ai-slim=={pins['pydantic-ai-slim']}"}
-    )
+    old_inventory = _load(originals[inventory_path][0], path=inventory_path)
+    old_rows = {
+        _normalize(str(row["name"])): row
+        for row in old_inventory.get("packages", [])
+        if isinstance(row, dict) and "name" in row
+    }
+    _refresh_adoption_targets(adoption, pins, direct, old_rows)
     adoption["sha256"] = _sha256(pyproject_raw)
     standalone = binding["standaloneLock"]
     protocol = binding["wheelhouseInstallProtocol"]
@@ -467,6 +515,10 @@ def refresh(*, root: Path, wheelhouse: Path, as_of: str | None = None) -> dict[s
         or not isinstance(targets[0], dict)
     ):
         raise RuntimeError("runtime wheel coverage target differs")
+    if python_version is not None:
+        if targets[0].get("pythonAbi") != target_abi:
+            raise RuntimeError("runtime Python update changes the selected wheel ABI")
+        targets[0]["pythonVersion"] = python_version
     targets[0].update(
         {
             "artifacts": artifacts,
@@ -478,6 +530,11 @@ def refresh(*, root: Path, wheelhouse: Path, as_of: str | None = None) -> dict[s
     coverage_sha = _sha256(coverage_raw)
 
     manifest = _load(originals[manifest_path][0], path=manifest_path)
+    if python_version is not None:
+        target = manifest.get("target")
+        if not isinstance(target, dict) or target.get("pythonAbi") != target_abi:
+            raise RuntimeError("runtime Python update changes the wheelhouse ABI")
+        target["pythonVersion"] = python_version
     manifest.update(
         {
             "coverageSha256": coverage_sha,
@@ -489,12 +546,6 @@ def refresh(*, root: Path, wheelhouse: Path, as_of: str | None = None) -> dict[s
     )
     manifest_raw = _canonical(manifest)
 
-    old_inventory = _load(originals[inventory_path][0], path=inventory_path)
-    old_rows = {
-        _normalize(str(row["name"])): row
-        for row in old_inventory.get("packages", [])
-        if isinstance(row, dict) and "name" in row
-    }
     rows: list[dict[str, object]] = []
     for name, version in sorted(pins.items()):
         old = old_rows.get(name)
@@ -597,10 +648,12 @@ def main() -> int:
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--wheelhouse", type=Path, required=True)
     parser.add_argument("--as-of", help="Explicit metadata date; preserves the prior date when omitted")
+    parser.add_argument("--python-version", help="Explicit current Python patch target; requires identical source and wheel ABI")
     arguments = parser.parse_args()
     print(
         json.dumps(
-            refresh(root=arguments.root, wheelhouse=arguments.wheelhouse, as_of=arguments.as_of),
+            refresh(root=arguments.root, wheelhouse=arguments.wheelhouse, as_of=arguments.as_of,
+                    python_version=arguments.python_version),
             sort_keys=True,
         )
     )

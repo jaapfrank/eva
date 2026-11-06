@@ -1,0 +1,35 @@
+{
+  "contract": "EvaRemainingFinalImagesIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "decision": "GO_FOR_EXACT_FINAL_CANDIDATE_IMAGES_NOT_INSTALL",
+  "reviewedAt": "2026-11-06T17:17:10.269745+00:00",
+  "results": {
+    "core": {
+      "image": "sha256:35e3856471be438df2f34408dc811d213edbdbba668f2a55c8a4a34dab06bf39",
+      "soleDeltaFromReviewedDependencyImage": [
+        "eva/operations/image_update.py"
+      ],
+      "comparatorSha256": "5cce3ea0418e0af865ec9c06ba0a7226345690c9072fd6480e8084476d14c67d",
+      "packageSetExact": true,
+      "sourceTreeSha256": "8699f5d82fb4f3d43ee66b1854a26260e29270a49b61776c689d311961fa4787"
+    },
+    "worker": {
+      "image": "sha256:f7b608861f425af05d39741668af9efb8eca3dc7937aa5bc33262ef29142a165",
+      "soleDeltaFromReviewedDependencyImage": [
+        "eva/operations/image_update.py"
+      ],
+      "comparatorSha256": "5cce3ea0418e0af865ec9c06ba0a7226345690c9072fd6480e8084476d14c67d",
+      "packageSetExact": true,
+      "sourceTreeSha256": "6a4dd7876eace486c9b8666bccc5072aa114e022fda2e7a0c6ee72c925867ef6"
+    }
+  },
+  "evidenceSha256": {
+    "core-worker-final-bindings.json": "70b12702524af0f0906cc5ca5edfa9f0d8c43859f1ef3e54e12c1125c953f24e",
+    "core-worker-final-readback.json": "5dff5f599ef0cbf45a4b30ec8ca6dd8c2d6d970af92232341419dbd7553fa417",
+    "core-final-image-readback.json": "a81c4cf58223cc7b8a456e874a83cfe609be8e0b730f26202c7681a70a78f103",
+    "worker-final-image-readback.json": "1e148e7ee97f92107cc8d1be1e9ffadd3aea71904f4b6fdb7af8721d5849ffa2",
+    "final-core/Dockerfile": "5ac8b915408cce325aa1e465f0ebc72596cc62228c13d919fb39880bccc18a5b",
+    "final-worker/Dockerfile": "01cf7307996ed7d996e3e8246afd323ec6041785195a7ef74eb304e23d85ca72"
+  },
+  "limitations": "No repeatedregressionneeded for alreadytestedexactcomparator; priorpackaging+39comparatorreviewsapply. Actualinstaller/config/currentprofiles+claimsgatesseparate."
+}

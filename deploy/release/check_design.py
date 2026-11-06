@@ -44,18 +44,18 @@ OCI_COMPONENT_IDS = frozenset(
 )
 
 DIRECT_PINS = {
-    "alembic": "1.19.1",
-    "cryptography": "50.0.1",
-    "fastapi": "0.141.1",
-    "openai": "3.31.0",
-    "psycopg": "3.3.4",
-    "pydantic": "2.12.5",
+    "alembic": "1.20.1",
+    "cryptography": "50.0.2",
+    "fastapi": "0.162.0",
+    "openai": "3.46.0",
+    "psycopg": "3.3.8",
+    "pydantic": "2.14.3",
     "pydantic-ai-slim": "2.66.0",
     "pynacl": "1.6.2",
-    "setuptools": "84.0.0",
-    "sqlalchemy": "2.0.52",
-    "uvicorn": "0.41.0",
-    "websockets": "17.0.1",
+    "setuptools": "84.2.1",
+    "sqlalchemy": "2.1.8",
+    "uvicorn": "0.54.0",
+    "websockets": "17.4",
 }
 
 TOOLCHAIN_DIRECT_PINS = {
@@ -84,44 +84,44 @@ TOOLCHAIN_PINS = TOOLCHAIN_DIRECT_PINS | {
 }
 
 LOCKED_PINS = {
-    "alembic": "1.19.1",
+    "alembic": "1.20.1",
     "annotated-doc": "0.0.5",
     "annotated-types": "0.8.0",
-    "anyio": "4.14.2",
+    "anyio": "4.16.0",
     "cffi": "2.1.1",
-    "click": "8.4.2",
-    "cryptography": "50.0.1",
-    "fastapi": "0.141.1",
-    "genai-prices": "0.1.13",
-    "greenlet": "3.5.5",
-    "griffelib": "2.2.0",
+    "click": "8.5.0",
+    "cryptography": "50.0.2",
+    "fastapi": "0.162.0",
+    "genai-prices": "0.2.1",
+    "greenlet": "3.5.6",
+    "griffelib": "2.4.1",
     "h11": "0.16.0",
-    "httpcore2": "2.12.0",
-    "httpx2": "2.12.0",
-    "idna": "3.19",
-    "jiter": "0.16.0",
-    "logfire-api": "4.41.0",
-    "mako": "1.4.1",
-    "markupsafe": "3.0.3",
-    "openai": "3.31.0",
-    "opentelemetry-api": "1.44.0",
-    "psycopg": "3.3.4",
-    "psycopg-binary": "3.3.4",
-    "pycparser": "3.0",
-    "pydantic": "2.12.5",
+    "httpcore2": "2.16.0",
+    "httpx2": "2.16.0",
+    "idna": "3.20",
+    "jiter": "0.19.0",
+    "logfire-api": "5.4.0",
+    "mako": "1.4.3",
+    "markupsafe": "3.0.4",
+    "openai": "3.46.0",
+    "opentelemetry-api": "1.45.2",
+    "psycopg": "3.3.8",
+    "psycopg-binary": "3.3.8",
+    "pycparser": "3.12",
+    "pydantic": "2.14.3",
     "pydantic-ai-slim": "2.66.0",
-    "pydantic-core": "2.41.5",
+    "pydantic-core": "2.50.4",
     "pydantic-graph": "2.66.0",
     "pynacl": "1.6.2",
     "sniffio": "1.3.1",
-    "setuptools": "84.0.0",
-    "sqlalchemy": "2.0.52",
-    "starlette": "1.6.0",
-    "truststore": "0.10.4",
+    "setuptools": "84.2.1",
+    "sqlalchemy": "2.1.8",
+    "starlette": "1.10.0",
+    "truststore": "0.10.5",
     "typing-extensions": "4.16.0",
-    "typing-inspection": "0.4.4",
-    "uvicorn": "0.41.0",
-    "websockets": "17.0.1",
+    "typing-inspection": "0.4.5",
+    "uvicorn": "0.54.0",
+    "websockets": "17.4",
 }
 
 SOURCE_BINDINGS = {
@@ -297,10 +297,10 @@ def platform_gate(root: Path) -> dict[str, Any]:
             "must be PlatformLock/v3 schema_version 3",
         )
     expected_versions = {
-        "python_version": "3.12.14",
+        "python_version": "3.12.16",
         "postgres_version": "16.13",
         "dbos_version": "2.30.0",
-        "pydantic_version": "2.12.5",
+        "pydantic_version": "2.14.3",
         "pydantic_ai_slim_version": "2.66.0",
     }
     for field, expected in expected_versions.items():
@@ -465,14 +465,14 @@ def platform_gate(root: Path) -> dict[str, Any]:
         pyproject = {}
     project = pyproject.get("project", {}) if isinstance(pyproject, dict) else {}
     if (
-        project.get("requires-python") != "==3.12.14"
-        or pyproject.get("tool", {}).get("eva2", {}).get("target-python") != "3.12.14"
+        project.get("requires-python") != "==3.12.16"
+        or pyproject.get("tool", {}).get("eva2", {}).get("target-python") != "3.12.16"
     ):
         issue(
             errors,
             "python_target",
             Path("pyproject.toml"),
-            "package and design target must pin CPython 3.12.14",
+            "package and design target must pin CPython 3.12.16",
         )
 
     design = safe_load(

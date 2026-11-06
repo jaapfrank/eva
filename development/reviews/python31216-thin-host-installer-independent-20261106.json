@@ -1,0 +1,26 @@
+{
+  "contract": "EvaPython31216ThinHostInstallerIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T18:21:52.751946+00:00",
+  "decision": "GO_FOR_EXACT_CORE_WORKER_PYTHON16_AND_THIN_HOST_INSTALL",
+  "installerSha256": "84256925a013db3bac2a7f468f844b51bce0c00c91fa381cd1a194a45eff035b",
+  "planSha256": "7043e133f87f03a1f00db17bacaa2db566070ed9ffc09fdbf83205cb2807a9e0",
+  "preflightSha256": "aefbaa237d07b690636582acfcc247b36c4ad2df279f72bec1370ada15388e25",
+  "checks": [
+    "Fullinstallerreadreviewed; exclusiveoriginalreceiptlock/exclusivejournal, no unknownrepeat. FreshpreflightcurrentroleID/image/StartedAt+postHindsighthealthyexactgeneration bound.",
+    "Frozenhelper/config/proof/sourcehashes verified;9history62criteria/handoffsandall3priorhostlayerhashesmatch. CoreworkerexpectedentireEva source trees exactly independentactual16candidateimage readbacks.",
+    "Exactprevious/candidateconfigurationimageonlycoreworker, preservingnativeHindsight68ageneration+successfulcontinuationproofandoriginalfailedreceipts. No migrations/storage/config/closedhistoricalproducerretarget.",
+    "Sameapprovedreadiness2e90runnerpin, sameglobalnativeDB7e38andpinned1.2scheduled346fprobe; pendingprocessingunscheduled/due15min0 and no tracecleanupbacklog. No blanketexcludedmarkers.",
+    "Existing10authority2legacyacceptedreadabilitycurrentprospectiveproofvalid, hostconfigonlypublisherinstalledsnapshotpointer. Thin4fileprefix2namespaceextend_path+exact5cce/bf8ops; old3rootorder retained. Lastsorteddropin/effectiveEnv/actualPIDownshealthsocket verifiedbyinstaller.",
+    "Stoponlyexactidlehost/coreworkerandpoststoprecheck; existingdurableimageupdateonce/noDBrestore. Actualnewsource/version3.12.16/dependencycontract/all4coreworkerprofiles/hostauthorityreadbackrequired beforeverifiedreceipt.",
+    "Candidateprofilescoreworkermatch; diagnosticpreviewdiffmodelconfigurationandallotheractualclientfieldsheld. Historicalsealedpreview+producer retainedexact; no capabilitiesexpansion."
+  ],
+  "priorCandidateReviewSha256": "e4d8a5c004507ce1ee0a9ae0561654f34c2918d1f5cb81016b898dbda608d735",
+  "priorHindsightInstalledReviewSha256": "66f3938445d8624624dc84893e3763b83a821d62fcf0e6f1393e833eeacef0cd",
+  "limitations": [
+    "No runtimeproviderprobe byreviewer; exact16image2syntheticAstraText/ToolOutputcalls231tokens proofpreviouslyreviewed.",
+    "Unknownfailure leavesdurableinspectionstate; no authorizedblindrerun/rollback/reset.",
+    "No fullE411/E416/familyacceptance/allOSSsecuritygateclosure.",
+    "Onlyfrozenexactinstaller/plan approved; source/image/configedits require renewedbinding."
+  ]
+}

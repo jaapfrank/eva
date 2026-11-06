@@ -1,0 +1,99 @@
+{
+  "bootstrapAndUpdater": {
+    "core": {
+      "exitCode": 0,
+      "passed": 52
+    },
+    "worker": {
+      "exitCode": 0,
+      "passed": 52
+    }
+  },
+  "contract": "EvaCoreMaintenanceRegressionEvidence/v1",
+  "freshWholeProjectBuildClaim": false,
+  "historicalCriteriaModified": false,
+  "historicalGateResults": [
+    {
+      "errors": [],
+      "gate": "PLATFORM-DESIGN-01",
+      "status": "passed"
+    },
+    {
+      "errors": [
+        {
+          "code": "dependency_root_set",
+          "detail": "direct/build pin set differs",
+          "path": "deploy/release/dependency-roots.in"
+        },
+        {
+          "code": "gate_toolchain_license_inventory",
+          "detail": "inventory must cover all 19 gate/build/schema-consumer packages without legal-release claim",
+          "path": "deploy/release/gate-toolchain-license-inventory.json"
+        },
+        {
+          "code": "gate_toolchain_root_set",
+          "detail": "gate roots differ from their closed hash lock",
+          "path": "deploy/release/gate-toolchain-roots.in"
+        },
+        {
+          "code": "gate_toolchain_contract",
+          "detail": "exact external 54-distribution design-gate environment is not bound",
+          "path": "deploy/release/gate-toolchain.lock.json"
+        },
+        {
+          "code": "gate_toolchain_pin_set",
+          "detail": "exact 19-package gate/build/schema-consumer closure differs",
+          "path": "deploy/release/gate-toolchain.requirements.lock"
+        },
+        {
+          "code": "license_inventory",
+          "detail": "inventory must cover all 38 locked packages without legal-release claim",
+          "path": "deploy/release/license-inventory.json"
+        },
+        {
+          "code": "wheel_target",
+          "detail": "amd64 does not resolve all 38 locked wheels",
+          "path": "deploy/release/managed-b-wheel-coverage-4d-amd64-v1.json"
+        },
+        {
+          "code": "dependency_pin_set",
+          "detail": "exact 35-package direct/transitive set differs",
+          "path": "deploy/requirements-4d.lock"
+        },
+        {
+          "code": "pyproject_pin_set",
+          "detail": "pyproject pins do not equal dependency roots or Python 3.12.14",
+          "path": "pyproject.toml"
+        }
+      ],
+      "gate": "SUPPLY-DESIGN-01",
+      "status": "failed"
+    }
+  ],
+  "metadataRefreshHelperPassed": 31,
+  "postgres18ActualRuntime": {
+    "baseline14/test_actual_postgres18_python16_contract": {
+      "exitCode": 0,
+      "failures": [],
+      "seconds": 14.239,
+      "summary": "20 passed in 11.00s"
+    },
+    "candidate16/test_actual_postgres18_python16_contract": {
+      "exitCode": 0,
+      "failures": [],
+      "seconds": 13.74,
+      "summary": "20 passed in 10.65s"
+    }
+  },
+  "provider": {
+    "exitCode": 1,
+    "failures": [
+      "FAILED ../../frozen/development/tests/model/test_pydantic_conversation_model.py::test_contact_catalog_omits_only_discoverable_descriptors",
+      "FAILED ../../frozen/development/tests/model/test_pydantic_conversation_model.py::test_current_multi_source_observation_reaches_real_model_wire_as_provisional"
+    ],
+    "seconds": 17.212,
+    "summary": "2 failed, 374 passed in 13.53s"
+  },
+  "providerFailuresUnchangedFromBaseline": true,
+  "schemaHarnessNote": "Existing installed schema installer knows revision11 while current migration/unchanged fixtures require12. The new isolated PostgreSQL18 harness explicitly loads the identical current schema installer for both comparison sides, and reuses20 unchanged critical test bodies; it is not a claim that historical16.13 criteria passed."
+}

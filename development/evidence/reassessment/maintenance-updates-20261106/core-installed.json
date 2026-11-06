@@ -1,0 +1,63 @@
+{
+  "allFourProfilesMatch": true,
+  "authority": "Exact source/image/configuration and current claims were independently reviewed; no general E4.16 completion or owner acceptance claim",
+  "contract": "EvaCoreInstalledMaintenanceEvidence/v1",
+  "hindsight12GenerationPreserved": true,
+  "historicalReceiptsPreserved": 9,
+  "historicalWorkReplayed": false,
+  "host": {
+    "authorityCount": 10,
+    "health": "ready",
+    "historicalBytesPreserved": true,
+    "legacyAcceptedReleasesValidated": 2,
+    "ownedListeningSocket": true,
+    "sourceRootsPreserved": true
+  },
+  "installedAt": "2026-11-06T18:26:33.817372+00:00",
+  "preinstall": {
+    "activeUnexpiredCheckpointLeases": 0,
+    "activeWork": 0,
+    "currentGenerationUnknownNullCheckpoints": 0,
+    "nativeEligibleUnscheduledFacts": 0,
+    "nativeMemoryOperations": {
+      "pending": 0,
+      "processing": 0
+    },
+    "nativeScheduledEligibleNow": 0,
+    "nativeScheduledEligibleWithin15Minutes": 0
+  },
+  "privateCriteriaPreserved": 62,
+  "privateReceiptSha256": "73ba873b9df1a3fdc22b8441c7f0fed5db6ceeccfc27e2f90af8a2cc52474e09",
+  "roles": {
+    "core": {
+      "environmentPreserved": true,
+      "exactSourceTreeVerified": true,
+      "healthy": true,
+      "image": "sha256:b63d0d568b73519bacd09e4a8c9142f743555506720b364bea31825ddfa3e4c0",
+      "previousImage": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+      "versions": {
+        "genai-prices": "0.2.1",
+        "openai": "3.46.0",
+        "pydantic-ai-slim": "2.66.0",
+        "pydantic-graph": "2.66.0",
+        "python": "3.12.16"
+      }
+    },
+    "delegated-work-worker": {
+      "environmentPreserved": true,
+      "exactSourceTreeVerified": true,
+      "healthy": true,
+      "image": "sha256:6c496b018b9c4650b60a89b00b2b157b41371a6c69f0b963258083c5b7081cbe",
+      "previousImage": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8",
+      "versions": {
+        "genai-prices": "0.2.1",
+        "openai": "3.46.0",
+        "pydantic-ai-slim": "2.66.0",
+        "pydantic-graph": "2.66.0",
+        "python": "3.12.16"
+      }
+    }
+  },
+  "schemaChanged": false,
+  "state": "installed_source_profile_health_verified"
+}

@@ -1,0 +1,24 @@
+{
+  "contract": "EvaPublicRecipeVerifierCheck/v1",
+  "results": {
+    "core": {
+      "liveActions": 0,
+      "packages": 48,
+      "python": "3.12.16",
+      "role": "core",
+      "siteTreeSha256": "925e0571c724affc6c8593c2a40874110784127acbf0dafb1a76e28faebed098",
+      "sourcePriorityVerified": true,
+      "verified": true
+    },
+    "worker": {
+      "liveActions": 0,
+      "packages": 46,
+      "python": "3.12.16",
+      "role": "worker",
+      "siteTreeSha256": "1b3b670afadd59a61239a5f623c26f86b2a2173c4f777627dc580a70a6bfb5e7",
+      "sourcePriorityVerified": true,
+      "verified": true
+    }
+  },
+  "scope": "Verifier executed on exact previously built/installed immutable images; no fresh image/whole-project build claim"
+}

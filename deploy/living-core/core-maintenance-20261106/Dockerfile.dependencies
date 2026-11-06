@@ -1,0 +1,19 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE} AS installed
+FROM docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134 AS dependency-builder
+RUN python -c "import pathlib,shutil; s=pathlib.Path('/usr/local/lib/python3.12/site-packages'); t=pathlib.Path('/build-tools');t.mkdir(); [shutil.copytree(p,t/p.name) for p in s.glob('pip*') if p.is_dir()]; [shutil.rmtree(p) if p.is_dir() else p.unlink() for p in s.iterdir()]"
+COPY --from=installed /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
+COPY . /build/
+ENV PYTHONPATH=/build-tools PYTHONDONTWRITEBYTECODE=1 PIP_DISABLE_PIP_VERSION_CHECK=1
+RUN python /build/install-dependencies.py
+FROM installed
+USER 0:0
+COPY role-plan.json site-before.json cleanup-site.py /build/
+RUN ["/usr/local/bin/python", "/build/cleanup-site.py"]
+COPY --from=dependency-builder /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
+COPY --from=dependency-builder /updated-external/ /
+COPY --from=dependency-builder /build-proof.json /opt/eva/full-dependency-upgrade.json
+COPY delegated_work_provider.py /opt/eva/src/eva/bootstrap/delegated_work_provider.py
+COPY pyproject.toml /opt/eva/pyproject.toml
+COPY requirements-4d.lock /opt/eva/deploy/requirements-4d.lock
+USER 65532:65532

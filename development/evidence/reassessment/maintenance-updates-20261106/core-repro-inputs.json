@@ -1,0 +1,25 @@
+{
+  "contract": "EvaPublicCoreReproductionInputChecks/v1",
+  "results": {
+    "core": {
+      "beforeSiteBytesMatchReviewedImmutableBase": true,
+      "changedWheels": 34,
+      "currentTargetPyprojectMatchesSource": true,
+      "historicalIntermediatePyprojectMatchesReviewedBytes": true,
+      "liveActions": 0,
+      "prepared": true,
+      "sourceOverlaysExact": true,
+      "wholeProjectBuildClaim": false
+    },
+    "worker": {
+      "beforeSiteBytesMatchReviewedImmutableBase": true,
+      "changedWheels": 33,
+      "currentTargetPyprojectMatchesSource": true,
+      "historicalIntermediatePyprojectMatchesReviewedBytes": true,
+      "liveActions": 0,
+      "prepared": true,
+      "sourceOverlaysExact": true,
+      "wholeProjectBuildClaim": false
+    }
+  }
+}

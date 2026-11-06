@@ -1,0 +1,26 @@
+{
+  "actualRuntimePipCheckPassedForBothRoles": true,
+  "contract": "EvaInstalledPythonPatchEvidence/v1",
+  "existingThirdPartyFilePayloadPreserved": true,
+  "from": "3.12.14",
+  "nativeExtensionImportsPassed": 67,
+  "nativeOsSecurityMaintenanceSeparate": true,
+  "optionalExtensionImportsUnavailableOnBothVersions": 12,
+  "ownedInterpreterFilesExactlyVendor16": 823,
+  "preservedRuntimeOs": "Distroless Debian13",
+  "recipe": "deploy/living-core/core-maintenance-20261106",
+  "to": "3.12.16",
+  "unchangedConfigureAndNativeAbi": {
+    "ABIFLAGS": "",
+    "CONFIG_ARGS": "'--build=x86_64-linux-gnu' '--enable-loadable-sqlite-extensions' '--enable-optimizations' '--enable-option-checking=fatal' '--enable-shared' '--with-lto' '--with-ensurepip' 'build_alias=x86_64-linux-gnu'",
+    "EXT_SUFFIX": ".cpython-312-x86_64-linux-gnu.so",
+    "LDLIBRARY": "libpython3.12.so",
+    "MULTIARCH": "x86_64-linux-gnu",
+    "Py_DEBUG": 0,
+    "Py_ENABLE_SHARED": 1,
+    "SIZEOF_VOID_P": 8,
+    "SOABI": "cpython-312-x86_64-linux-gnu"
+  },
+  "vendorBuildOs": "Debian12",
+  "vendorImage": "docker.io/library/python@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df"
+}

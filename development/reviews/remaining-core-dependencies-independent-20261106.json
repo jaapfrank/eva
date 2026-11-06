@@ -1,0 +1,93 @@
+{
+  "contract": "EvaRemainingCoreDependencyIndependentCandidateReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T16:59:13.460485+00:00",
+  "decisionByScope": {
+    "scopedPackagingSource": "GO",
+    "coreWorkerCandidateImages": "GO",
+    "installerProductionActivation": "NOT_REVIEWED"
+  },
+  "images": {
+    "core": {
+      "baselineImage": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+      "candidateImage": "sha256:d412d29a44b1cff424df73eac9688ee24d577dbd1204e8c88534afaabbbd5833",
+      "sourceDelta": [
+        "eva/bootstrap/delegated_work_provider.py"
+      ],
+      "packages": 48,
+      "updatedPackages": 34,
+      "unrelatedSiteFilesPreserved": 974,
+      "recordHashChecks": 7911,
+      "recordMismatches": []
+    },
+    "worker": {
+      "baselineImage": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8",
+      "candidateImage": "sha256:8c35cb46f9a7895853c0870ddf0d6dca3f47942c340bc535ee771288e8bd5a90",
+      "sourceDelta": [
+        "eva/bootstrap/delegated_work_provider.py"
+      ],
+      "packages": 46,
+      "updatedPackages": 33,
+      "unrelatedSiteFilesPreserved": 960,
+      "recordHashChecks": 5075,
+      "recordMismatches": []
+    }
+  },
+  "checks": {
+    "originalCaptured15FileHashesVerified": true,
+    "originalHistoricalLocksUnchanged": true,
+    "checkDesignLogicUnchangedOnlyPinLiterals": true,
+    "lockSha256": "e51dfd30fb43771e65b3f8b3c8a1d9f96a0a2f8f6385ba6254609e15498135b8",
+    "helperAdoptionOriginPreserved": "Old left-side source versions and existing added classification retained; current selected right targets refreshed. Repeated refresh idempotent; no external write side effects.",
+    "helperIndependentTests": "26 passed in0.33s",
+    "imageIndependentProbe": "Both actual candidate images run networknone/read-only/capdropALL/no-new-privileges; exact48/46package sets, no duplicate distributions, full RECORD7911/5075 checks zero mismatches, pinned OpenAI+lock/provider imports. Exact sole source delta delegated_work_provider vs baseline readback.",
+    "metadata": "Own existing METADATA identity/body preserved; only Requires-Dist/Provides-Extra aligned from exactsource pyproject, RECORD row updated and finalallRECORDchecked. Native wheel metadata untouched.",
+    "offlineBuild": "Changed-only require-hashes/no-index/binary wheels, oldownedroots+externalhashpreconditions before cleanup, exactbaselineimages. No build pip copied to runtime; namespaceoverlapand unrelated974/960sitefilepreservation assertions."
+  },
+  "regressionEvidence": {
+    "provider": "374pass/2samebaselinefailures acrossbaseline/candidate; actualimage testtools afterruntime site/source.",
+    "api": "98pass/5samebaselinefixtures/environment failures; IDs independently compared.",
+    "postgres18": "20unchangedselectedregressionbodies eachbaseline/candidate onactual18.6 disposable, no productiondata.",
+    "postgres16": "Protocol7/store25/actions29; owner5pass2samebaseline; correctedMCP3pass. Distinguish currentinstall_schema harness bridge from actual imageinstaller11; bridge same bothsides not deployed.",
+    "design": "Platformpass;9historicalSUPPLYerrors retained, not a fullreleasegatepass. No protectedcriteria changes."
+  },
+  "limitations": [
+    "No productioninstallGO; currentcore/worker profiles, hostproducerbindings, exact retainedenv/data/activeclaims+modelsassessment gate and guarded installer require ownreview.",
+    "No broadallOSSupdated claim; Hindsight/schema/browser/toolchain/othercomponents independent.",
+    "Actual live provider and streaming behavior after upgrade not proven by mocked targetedtests; coordinator decides bounded syntheticactualprobe.",
+    "Known historical tests remain failures; no blanketrepositorygreen or supplychainsecurityscanclaim."
+  ],
+  "sourceSha256": {
+    "pyproject.toml": "2e3f8abc562c411c9c7bcacb1d9edbc610187f262f23ed77844d1b4b4a638b56",
+    "deploy/release/dependency-roots.in": "d54066b53152264696387ea20c640342a61a27c22037f9b103e1968a49a845d3",
+    "deploy/requirements-4d.lock": "e51dfd30fb43771e65b3f8b3c8a1d9f96a0a2f8f6385ba6254609e15498135b8",
+    "deploy/release/4d-dependency-source-binding.json": "cb3d2f03c446b87cda1fe9645d29b2b84ef6432323bb25b170dc4be287f5ceb4",
+    "deploy/release/gate-toolchain.lock.json": "ddf82acd25caefdd7d3b5369e062e752f7ab9b1bb254c89e9e55d7629520d6c4",
+    "deploy/release/license-inventory.json": "7d4c6b457d682cbd06f94d056f8029368e9eb2240a74eb1e92253808bfed1052",
+    "deploy/release/managed-b-wheel-coverage-4d-amd64-v1.json": "0cc0a599a6af182987397c78824de336444330d121aa21df676d33a9c17efbb9",
+    "deploy/release/managed-b-wheelhouse-amd64-v2.json": "430c6e412493ce4de4cc92853b2e1818dfe5e177a843493534d3eadfae559192",
+    "deploy/release/platform-lock.json": "4ab3b908a87546d1c030a3c3a3590de5647b58890f31c01d4fa10e758acc7eff",
+    "deploy/release/platform-lock-wsl-candidate.json": "9f333573429d9cec23283a4d0af9ac105f664cf31f254f68a5aed1f290f01301",
+    "deploy/release/check_design.py": "f8d0e25059d5ef157e6dddaa7a007bc6488a3780e3fc0b17174c8e3fd1aa5275",
+    "src/eva/bootstrap/delegated_work_provider.py": "f822b78293b78cd06d17f5295a33f738c3cb217c698ebb5e4bb2588b75bec1e1",
+    "development/tests/bootstrap/test_delegated_work_provider.py": "ec8e84d7a7ea131a1ec167fe1bcdedcbd8d8f731882fb4276fbe7a58d8b13b5e",
+    "src/tools/refresh_runtime_dependency_metadata.py": "400b7d1900282587403981000ddcb330c0d5c9a48285014e265396727eaafc69",
+    "development/tests/tools/test_refresh_runtime_dependency_metadata.py": "0293fe8e52e6ed6d9b8a381ccf0a034df9224df69f6fd52e86a211caf0f93c06"
+  },
+  "evidenceSha256": {
+    "core-worker-build-plan.json": "25b38777edc0fa7486bc4d0db69f2abf4b8cd8587d7e25070e04adb8d7d290a1",
+    "core-worker-image-bindings.json": "c199af5a53c146755c92c5a84cc549837a05850f26c89a24d13dea50cc16bd25",
+    "finalize-core-site.py": "485cafb72726c69ce952d57c46bc0fc527b87fc2e428ab367e850e548087eb16",
+    "probe-final-images.py": "40e2e83206a50abe1b7fce0a86c5e8c1d916e30467ad3f52795dfcaad3b9c5b7",
+    "core-independent-readback.json": "a3ca324e092b88c9a432e943c5278e5db014cd1671449e544cb3116230c8498d",
+    "worker-independent-readback.json": "51e50b786afb9e69b2f5aeac9e1cf30ae5b2bcb1a2e49247c261ae8f331e46c9",
+    "actual-candidate-image-regression.json": "da3285a48e0e45b5ec725ac8508e2fee2f812deaa1273a536414e5b5d505d42f",
+    "core-candidate-regression.json": "5b4ca2a8c08e5ed5c9fd965af0dcd4ff4d409303af9149f92f119a94f4243f44",
+    "core-postgres18-compatibility.json": "3b1c22ff42ef0c6d8f73d531f5e57087f10a537f231a245b81c01d48689d836c",
+    "core-postgres16-per-module-regression.json": "526a11575c1d987dfe078dcd5242488f2c6ca8fe008b63e7fae1106e2f3d3fb2",
+    "core-postgres16-mcp-regression.json": "247c8aac6377d912619f8bf4c9055a2f78bf683f3dc92649acee620d7c518dc7",
+    "db-harness-source-adjustment.json": "a8ef09a4ae887cf6b0002ad5dcf0a09319c3491f9794be2de56552835e3b3a0b",
+    "current-design-gates.json": "2682df9f63d362796dc3ad03334aeefc8685770eb516d5459e151a1bd490e468",
+    "current-packaging-tests.log": "6473bfad8025e2474e4c6c8b5cab4a4e2f763422c13d77d17cc3b058c85c08e5"
+  }
+}

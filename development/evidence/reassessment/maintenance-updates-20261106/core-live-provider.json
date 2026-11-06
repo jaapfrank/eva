@@ -1,0 +1,44 @@
+{
+  "contract": "EvaInstalledCoreSyntheticProviderEvidence/v1",
+  "credits": "unknown",
+  "elapsedSeconds": 6.669,
+  "externalEffects": 0,
+  "householdConversationsUsed": false,
+  "model": "gpt-6-astra",
+  "phases": [
+    {
+      "elapsedSeconds": 4.877,
+      "externalEffects": 0,
+      "frameworkRequests": 1,
+      "localStreamClosed": true,
+      "passed": true,
+      "phase": "text",
+      "physicalProviderRequests": 1,
+      "syntheticOutputVerified": true,
+      "usage": {
+        "inputTokens": 32,
+        "outputTokens": 9,
+        "totalTokens": 41
+      }
+    },
+    {
+      "elapsedSeconds": 1.792,
+      "externalEffects": 0,
+      "frameworkRequests": 1,
+      "localStreamClosed": true,
+      "passed": true,
+      "phase": "structured_tool_output",
+      "physicalProviderRequests": 1,
+      "syntheticOutputVerified": true,
+      "usage": {
+        "inputTokens": 166,
+        "outputTokens": 24,
+        "totalTokens": 190
+      }
+    }
+  ],
+  "providerRequests": 2,
+  "reasoningEffort": "medium",
+  "scope": "Development verification on actual installed core; synthetic prompts only",
+  "totalTokens": 231
+}

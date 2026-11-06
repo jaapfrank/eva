@@ -1,0 +1,69 @@
+{
+  "contract": "EvaCorePython31216InstalledIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T18:32:30.941580+00:00",
+  "decision": "GO_SCOPED_CORE_WORKER_DEPENDENCIES_PYTHON16_AND_HOST_UPDATE_INSTALLED_VERIFIED",
+  "installedImages": {
+    "core": "sha256:b63d0d568b73519bacd09e4a8c9142f743555506720b364bea31825ddfa3e4c0",
+    "delegated-work-worker": "sha256:6c496b018b9c4650b60a89b00b2b157b41371a6c69f0b963258083c5b7081cbe"
+  },
+  "python": "3.12.16",
+  "providerPins": {
+    "pydantic-ai-slim": "2.66.0",
+    "pydantic-graph": "2.66.0",
+    "openai": "3.46.0",
+    "genai-prices": "0.2.1"
+  },
+  "independentActualChecks": {
+    "completeSourceAndPackageSetsMatchPriorIndependentlyReviewedCandidates": true,
+    "fullRecordHashCounts": {
+      "core": 7911,
+      "worker": 5075,
+      "mismatches": 0
+    },
+    "allFourCoreWorkerProfilesAgree": true,
+    "hostActualPidArgvAndThinPrefixVerified": true,
+    "oldThreeRootOrderAndAllBytesPreserved": true,
+    "authorityCount": 10,
+    "legacyAcceptancesReadable": 2,
+    "privateCriteria62History9HandoffsUnchanged": true,
+    "successfulHindsightInstalledGenerationAndEvidenceUnchanged": true,
+    "environmentAndStoragePreserved": true,
+    "orderedMetadataNote": "DockerreorderedEnvlist;fullstringsetsidentical, mountdictionariesexactsetequal. Initialstrictlistorderassertioncorrected; nofieldnormalization."
+  },
+  "liveProviderVerification": {
+    "passed": true,
+    "onceOnlyCompletedReceipt": true,
+    "physicalRequests": 2,
+    "frameworkRequests": 2,
+    "textAndPureToolOutput": true,
+    "streamsClosed": true,
+    "rawFrameworkUsageEqual": true,
+    "inputTokens": 198,
+    "outputTokens": 33,
+    "totalTokens": 231,
+    "phaseSeconds": 6.669,
+    "externalEffects": 0,
+    "householdData": false,
+    "cost": "unknown",
+    "scope": "Syntheticdevelopmentverificationonly; reviewermodelcalls0."
+  },
+  "limitations": [
+    "Boundeddependency/interpreterandhostupdatecompletion only;E411cleanup/E416autonomousend-to-end/familyacceptance remainopen.",
+    "Hindsight1.2nativePython3.11.16stillseparatecandidate3.11.18; nativeDebiansecurityupdatesnotcoveredbythisinstalledcoreoutcome.",
+    "Historical9SUPPLYerrorsandknown2provider/5APIbaselinefailuresretainedevidence; nooverallrepositorygreen/CVEfreeclaim.",
+    "No unknowndispatchreplayorrecreatedhistoricaltask; no sealedhistoricalproducerretarget."
+  ],
+  "evidenceSha256": {
+    "activation.private.json": "73ba873b9df1a3fdc22b8441c7f0fed5db6ceeccfc27e2f90af8a2cc52474e09",
+    "image-update.private.json": "ae9b84c8b4eea3080c63921c148df83707e68f4b04c99ad45a620ad0a6473132",
+    "installed-profiles.private.json": "70779b6898e6e6d10cccda95a58ecc80d538275f22e22a5ca46a406f8ef5b0cb",
+    "independent-actual-readback.private.json": "94f5d7b32faa56a1b45f005340b72651c7cf599f02ad988a1bf85b7accc90cdd",
+    "live-provider-result.json": "e4a5f0f554026f95e486b0562fdfdef5ae0a40fc779a8d2b982c38d198aa2127",
+    "live-provider-dispatch.private.json": "6becb185c522a9eaeb8e3d214850c5a6277ad87aece3b69563c2045fbee018a7"
+  },
+  "reviewBindings": {
+    "python31216-combined-candidate-independent-20261106.json": "e4d8a5c004507ce1ee0a9ae0561654f34c2918d1f5cb81016b898dbda608d735",
+    "python31216-thin-host-installer-independent-20261106.json": "4e070514a89b5912ecafd0ece2a1703066298a8c7e978a239d1e904542fd4c0b"
+  }
+}

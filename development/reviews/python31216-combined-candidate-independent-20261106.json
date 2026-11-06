@@ -1,0 +1,84 @@
+{
+  "contract": "EvaPython31216CandidateIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T17:47:29.391436+00:00",
+  "decisionByScope": {
+    "CPythonPatchAndCombinedImages": "GO",
+    "currentTargetMetadataHelper": "GO",
+    "thinHostOverlaySourceAndProspectiveImports": "GO",
+    "installerProductionActivation": "PENDING_FROZEN_REVIEW"
+  },
+  "roles": {
+    "core": {
+      "image": "sha256:b63d0d568b73519bacd09e4a8c9142f743555506720b364bea31825ddfa3e4c0",
+      "python": "3.12.16",
+      "vendor823FilesExact": true,
+      "thirdPartySitePreserved": true,
+      "recordHashChecks": 7911,
+      "sourceHashes": {
+        "eva/bootstrap/delegated_work_provider.py": "f822b78293b78cd06d17f5295a33f738c3cb217c698ebb5e4bb2588b75bec1e1",
+        "eva/operations/image_update.py": "5cce3ea0418e0af865ec9c06ba0a7226345690c9072fd6480e8084476d14c67d",
+        "eva/operations/runtime_image_update.py": "bf8ad8753745c3e316c5f04697cded6e9fcf8bf5c9abb4772a77f9604210fa03"
+      }
+    },
+    "worker": {
+      "image": "sha256:6c496b018b9c4650b60a89b00b2b157b41371a6c69f0b963258083c5b7081cbe",
+      "python": "3.12.16",
+      "vendor823FilesExact": true,
+      "thirdPartySitePreserved": true,
+      "recordHashChecks": 5075,
+      "sourceHashes": {
+        "eva/bootstrap/delegated_work_provider.py": "f822b78293b78cd06d17f5295a33f738c3cb217c698ebb5e4bb2588b75bec1e1",
+        "eva/operations/image_update.py": "5cce3ea0418e0af865ec9c06ba0a7226345690c9072fd6480e8084476d14c67d",
+        "eva/operations/runtime_image_update.py": "bf8ad8753745c3e316c5f04697cded6e9fcf8bf5c9abb4772a77f9604210fa03"
+      }
+    }
+  },
+  "checks": [
+    "Independentactualcandidateimageexecutionnetworknone/readOnly:3.12.16,823stdlib/binary/libpythonfilesexactofficialvendor16 andsameCONFIG_ARGS/SOABI/ABI; all7911/5075packageRECORDhashesvalid.",
+    "Source+packagecomparison exactpreviousrevieweddependencyclosure; onlythirdapprovedruntime_image_updatebf8 addition afterpreviouscomparator5cce/providerf822. SitebyteschangedonlyownRequiresPythonMETADATAandmatchingRECORD.",
+    "Offlinevendorpatchoverlay verifies entireinstalledoldruntime823files beforedeleting/replacing, noOSlibrarycopy/retaineddatachanges. Oldruntimeoriginalvendor14exact.",
+    "Optional--python-version requires canonicalstable3.x.patch+exactcurrentpyprojecttwofields+sameexistingcp312wheelABI; defaultbehaviorandhistoricaltargetmetadataunchanged. Independently31helpertestsPASS0.38s.",
+    "Thinhostprefix4filesonly: namespaceextend_path2 + exactapprovedcomparator5cce/recoverybf8. Existing3rootorderpreserved; before/prospectiveobservedunrelatedmoduleoriginsandhashesmatch;10authorities+2legacyvalid. Nohostrestart/sourceeditbyreviewer."
+  ],
+  "testEvidence": "52bootstrap/updater peractual16rolePASS; provider374+same2knownbaseline; PG18critical20pass14and16. Agentnative67importsuccesses/12sameunavailableoptionalmodules; no broadretestbyreviewer.",
+  "actualProviderEvidence": {
+    "physicalCalls": 2,
+    "model": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "inputTokens": 198,
+    "outputTokens": 33,
+    "totalTokens": 231,
+    "externalEffects": 0,
+    "householdData": false,
+    "scope": "Developmentsynthetictext+pureToolOutputbeforeinstallation, nothouseholdusage; no replay, trackedreceipt."
+  },
+  "limitations": [
+    "No currenthost/coreworkeractivationGOuntilfrozeninstaller/currentstateafterHindsightupgrade.",
+    "OriginalallOSS/securityCVE/supplygateoverallgreenclaimnotestablished; historical9SUPPLYfailuresremain.",
+    "Oldschema11installhelperbaselineandfixedsamebothsidestestharness12bridgelimitationretained.",
+    "Coreworkerproviderprofiles+exacthostnewprefixreadbackneedverifyafterinstallation; existingsealednativeproducer/E416gapnotretargeted."
+  ],
+  "evidenceSha256": {
+    "python16-candidate-plan.json": "f1df39181a1dc7050e5be420e453fca5754e4b2b39511617efd6306bd98872a1",
+    "core-worker-python16-bindings.json": "7944fcc8369813b2e3588a9427f838646cb3143d89b6a54075b68010b1c27908",
+    "python16-build-core/Dockerfile": "c2eff848b056133188ba09695caa0cfef55c590a551be46c3f63253043d3c790",
+    "python16-build-core/prepare-runtime.py": "3d2ef5a82ca1777c57029a4fa934f6a3d0a5af0c315064fd0dc4db256d14d9bc",
+    "python16-build-core/cleanup.py": "004b5c0557db98581364c96cfbdeba22156f29c903a057eef2bf9d4e2e9dc769",
+    "python16-build-worker/Dockerfile": "1114dd104e4388a8da8ae5c51f38c5b12d938a04ea70481b0e7ce78759b0a94a",
+    "python-vendor16-runtime-manifest.json": "f25758adf86d71e45642bfbe01db548ad10b6d3cbacf5591993f0aad653a6fde",
+    "core-python16-independent-readback.json": "e0f7340f22dcf4ade79e6606048a0e8f548e45ca32ba06885f672557fca3b1ea",
+    "worker-python16-independent-readback.json": "ca38b5972f3a97d250e591ea8f1d4b57f144c52d829ca8ae1c2e124eb573ad7c",
+    "python16-bootstrap-updater-tests.json": "965d99ccac89a542274660c8c2793110f72ec82e30ccf97c5e914ae105c8bd5b",
+    "python16-actual-image-provider-tests.json": "032e9ee699a71fb9f0382bab308d942fa10de2589707275af7478d5aee65bf3b",
+    "python16-actual-images-postgres18-compatibility.json": "9366c8ae29837013331fc6f5034abddf10f6854fd804263734c9e882616cf785",
+    "provider16-journal/result.json": "0320c18f803fb579af413cfd8238a574d01f43b77e0d9a8b9a6f60b20deb6a07",
+    "prospective-host-thin-import-probe.private.json": "998a68b822fcc7b9b5be8160dab7dc5bbf30a7978defe2443c60607d8f9b628c",
+    "prospective-host-thin-authority-probe.private.json": "177558d4786695d0654064f1297f898e2d046879523e4bca6c19b1b299e863ad"
+  },
+  "sourceSha256": {
+    "pyproject.toml": "5cf24bb2b086248ea397c304075bd25f78249c934d7fdcf26d7cf51906e86108",
+    "src/tools/refresh_runtime_dependency_metadata.py": "b487e1561315c302571bc07ea8553f704bf74c1b2516e6c60dcadeb56cbc1124",
+    "development/tests/tools/test_refresh_runtime_dependency_metadata.py": "88b31ed77b9a0a423c8c1e993fc8d5a75c4c7913ecf16a26a055bfbfe9b21b29"
+  }
+}

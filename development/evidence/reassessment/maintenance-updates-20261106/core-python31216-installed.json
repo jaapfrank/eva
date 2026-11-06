@@ -1,0 +1,80 @@
+{
+  "contract": "EvaCriticalCoreStackInstalledDelivery/v1",
+  "verifiedAt": "2026-11-06T18:34:59.001981+00:00",
+  "scope": "Compatible current core/worker dependency and supported interpreter patch; thin existing host updater integration. No full autonomous update/repair or all-OSS completion claim.",
+  "built": true,
+  "independentlyReviewed": true,
+  "installed": true,
+  "actuallyUsed": true,
+  "technicalDeliveryComplete": true,
+  "installedVersions": {
+    "Python": "3.12.16",
+    "pydantic-ai-slim": "2.66.0",
+    "pydantic-graph": "2.66.0",
+    "openai": "3.46.0",
+    "genai-prices": "0.2.1"
+  },
+  "images": {
+    "core": "sha256:b63d0d568b73519bacd09e4a8c9142f743555506720b364bea31825ddfa3e4c0",
+    "delegated-work-worker": "sha256:6c496b018b9c4650b60a89b00b2b157b41371a6c69f0b963258083c5b7081cbe"
+  },
+  "validation": {
+    "all47CoreAnd45WorkerThirdPartyPackagesRetainedAndVerified": true,
+    "thirdPartyPackagesAddedOrRemoved": false,
+    "fullRecordChecks": {
+      "core": 7911,
+      "worker": 5075,
+      "mismatches": 0
+    },
+    "approvedAppSourceDeltas": [
+      "bootstrap/delegated_work_provider.py",
+      "operations/image_update.py",
+      "operations/runtime_image_update.py"
+    ],
+    "interpreterOwnedPathsMatchPinnedOfficialVendor": 823,
+    "sameCPython312ABIAndConfigureFlags": true,
+    "bootstrapAndUpdaterRecoveryTestsPassedPerImage": 52,
+    "metadataHelperTestsPassed": 31,
+    "providerTests": {
+      "passed": 374,
+      "sameKnownBaselineFailures": 2
+    },
+    "apiTests": {
+      "passed": 98,
+      "sameKnownBaselineFailures": 5
+    },
+    "postgres18CriticalProtocolPrivacyLeaseStopTestsPassed": 20,
+    "postgresHarnessLimitation": "Disposable database compatibility comparison; unchanged historical16 fixtures preserved, additive schema harness bridge applied to both baselines; no live schema migration.",
+    "historicalSupplyGateSameKnownFailures": 9,
+    "noKnownFailureAssertionsWeakened": true,
+    "allFourInstalledCoreWorkerProfilesMatch": true,
+    "thinHostPrefixPreservesThreeOriginalRootsAndUnrelatedOrigins": true,
+    "tenAuthoritiesTwoHistoricalAcceptancesVerified": true,
+    "sixtyTwoCriteriaNineReceiptsAndHandoffsPreserved": true,
+    "liveHindsightImageAndContainerGenerationUnchanged": true
+  },
+  "actualProviderUse": {
+    "syntheticOnly": true,
+    "externalToolEffects": 0,
+    "requests": 2,
+    "frameworkRequests": 2,
+    "inputTokens": 198,
+    "outputTokens": 33,
+    "totalTokens": 231,
+    "phaseSeconds": 6.669,
+    "allLocalStreamsClosed": true,
+    "cost": null,
+    "householdEvaUsageIncluded": false
+  },
+  "remaining": {
+    "hindsightPython": "3.11.16 live;3.11.18 separately built, not installed",
+    "nativeDebianSecurityRevisions": "Separate signed package overlays being prepared; not included in this interpreter/package update",
+    "otherActiveComponents": "Node/MCP, host venvs and remaining provider maintenance still in progress",
+    "E411Completed": false,
+    "E416Completed": false,
+    "allOpenSourceComponentsUpdated": false
+  },
+  "independentReview": "development/reviews/python31216-installed-independent-20261106.json",
+  "independentReviewSha256": "d6967536c7817889509b32ced1ad6b2b0d345463ac8ebb0f84143969c5ad4f8b",
+  "liveProviderEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-live-provider.json"
+}

@@ -1,0 +1,5 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+USER 0:0
+COPY image_update.py /opt/eva/src/eva/operations/image_update.py
+USER 65532:65532
