@@ -1,0 +1,381 @@
+{
+  "contract": "EvaNonPythonUpdateBoundaryInventory/v1",
+  "observed_at": "2026-11-06T14:27:11.561406+00:00",
+  "scope": "Read-only deployment/lock/updater inspection; no source changes, updates, installs, container restart, model calls or credential/config payload publication. Latest-release checks belong to coordinator.",
+  "runtime_metadata": [
+    {
+      "container": "eva2-household-speaker-1",
+      "image_id": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "declared_image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "repo_tags": [
+        "eva2-silent-speaker:20261020"
+      ],
+      "repo_digests": [
+        "eva2-silent-speaker@sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2"
+      ],
+      "state": "running",
+      "compose_project": "eva2-household-speaker",
+      "compose_service": "speaker",
+      "persistent_mount_targets": [],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-managed-b-slot3-hindsight-1",
+      "image_id": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+      "declared_image": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+      "repo_tags": [
+        "eva2-voice-live-memory:20261018"
+      ],
+      "repo_digests": [
+        "eva2-voice-live-memory@sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388"
+      ],
+      "state": "running",
+      "compose_project": "eva2-managed-b-slot3",
+      "compose_service": "hindsight",
+      "persistent_mount_targets": [],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-managed-b-slot3-hindsight-postgres-1",
+      "image_id": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "declared_image": "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "repo_tags": [
+        "eva2/chainguard-pgvector18-offline-candidate:20260828"
+      ],
+      "repo_digests": [
+        "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+      ],
+      "state": "running",
+      "compose_project": "eva2-managed-b-slot3",
+      "compose_service": "hindsight-postgres",
+      "persistent_mount_targets": [
+        "/var/lib/postgresql/data"
+      ],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-managed-b-slot3-postgres-1",
+      "image_id": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "declared_image": "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "repo_tags": [
+        "eva2/chainguard-pgvector18-offline-candidate:20260828"
+      ],
+      "repo_digests": [
+        "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+      ],
+      "state": "running",
+      "compose_project": "eva2-managed-b-slot3",
+      "compose_service": "postgres",
+      "persistent_mount_targets": [
+        "/var/lib/postgresql/data"
+      ],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-mcp-gateway",
+      "image_id": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "declared_image": "ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "repo_tags": [
+        "ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+      ],
+      "repo_digests": [
+        "ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+      ],
+      "state": "running",
+      "compose_project": "eva2-workspace-provider",
+      "compose_service": "gateway",
+      "persistent_mount_targets": [
+        "/run/secrets",
+        "/data"
+      ],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-owner-voice-livekit-1",
+      "image_id": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "declared_image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "repo_tags": [
+        "eva2/voice-livekit:owner-session"
+      ],
+      "repo_digests": [
+        "eva2/voice-livekit@sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b"
+      ],
+      "state": "running",
+      "compose_project": "eva2-owner-voice",
+      "compose_service": "livekit",
+      "persistent_mount_targets": [],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-owner-voice-media-1",
+      "image_id": "sha256:55eef88386767f8a63944fd47c107b76ac56326fcae1a9f81825056d1866abb1",
+      "declared_image": "sha256:55eef88386767f8a63944fd47c107b76ac56326fcae1a9f81825056d1866abb1",
+      "repo_tags": [
+        "eva2-silent-owner:20261020"
+      ],
+      "repo_digests": [
+        "eva2-silent-owner@sha256:55eef88386767f8a63944fd47c107b76ac56326fcae1a9f81825056d1866abb1"
+      ],
+      "state": "running",
+      "compose_project": "eva2-owner-voice",
+      "compose_service": "media",
+      "persistent_mount_targets": [],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-shared-chrome",
+      "image_id": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+      "declared_image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+      "repo_tags": [
+        "eva2/voice-core:natural-candidate",
+        "eva2-memory-controls-parent:bf5d7e57"
+      ],
+      "repo_digests": [
+        "eva2/voice-core@sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+        "eva2-memory-controls-parent@sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3"
+      ],
+      "state": "running",
+      "compose_project": null,
+      "compose_service": null,
+      "persistent_mount_targets": [],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-whatsapp",
+      "image_id": "sha256:4c57efc93597720bb6038618c982e35f1de814a79dc9b536e9b75bff52e9a83e",
+      "declared_image": "sha256:4c57efc93597720bb6038618c982e35f1de814a79dc9b536e9b75bff52e9a83e",
+      "repo_tags": [
+        "eva2-whatsapp-calling:20261016-candidate"
+      ],
+      "repo_digests": [
+        "eva2-whatsapp-calling@sha256:4c57efc93597720bb6038618c982e35f1de814a79dc9b536e9b75bff52e9a83e"
+      ],
+      "state": "running",
+      "compose_project": "eva2-whatsapp",
+      "compose_service": "whatsapp",
+      "persistent_mount_targets": [
+        "/var/lib/eva-whatsapp"
+      ],
+      "verified_upstream_version": null
+    },
+    {
+      "container": "eva2-whatsapp-media",
+      "image_id": "sha256:539b82a3aead8f83b30e5906e5d6d09b5784268233da4f7f8e6aec6e2d1d0994",
+      "declared_image": "sha256:539b82a3aead8f83b30e5906e5d6d09b5784268233da4f7f8e6aec6e2d1d0994",
+      "repo_tags": [
+        "eva2-whatsapp-call-media:20261016"
+      ],
+      "repo_digests": [
+        "eva2-whatsapp-call-media@sha256:539b82a3aead8f83b30e5906e5d6d09b5784268233da4f7f8e6aec6e2d1d0994"
+      ],
+      "state": "running",
+      "compose_project": "eva2-whatsapp",
+      "compose_service": "whatsapp-media",
+      "persistent_mount_targets": [],
+      "verified_upstream_version": null
+    }
+  ],
+  "missing_selected_containers": [],
+  "npm_lock_inventory": [
+    {
+      "path": "deploy/chrome-bridge/package-lock.json",
+      "sha256": "3a761fc3558ba3004ddbeed2962131037eae0ed2d5411f2674b92ce38a26ed13",
+      "lockfile_version": 3,
+      "direct_dependencies": {
+        "@playwright/mcp": "0.0.80"
+      },
+      "transitive_entries": 3,
+      "entries_without_integrity": 0,
+      "entries_with_install_script": 0,
+      "installed_equals_lock": "not_verified"
+    },
+    {
+      "path": "deploy/whatsapp-bridge/package-lock.json",
+      "sha256": "7c89e13a8f415e6f70ce000a452875c7b4eeefe4bba9eec61f9d4d0243823ac6",
+      "lockfile_version": 3,
+      "direct_dependencies": {
+        "@whiskeysockets/baileys": "7.0.0-rc14",
+        "pino": "9.14.0",
+        "qrcode": "1.5.4"
+      },
+      "transitive_entries": 124,
+      "entries_without_integrity": 0,
+      "entries_with_install_script": 2,
+      "installed_equals_lock": "not_verified"
+    },
+    {
+      "path": "deploy/programming/package-lock.json",
+      "sha256": "8e225feb2863e66752b9b132454378099122b638dc1005d6c04b538e319296c1",
+      "lockfile_version": 3,
+      "direct_dependencies": {
+        "@wonderwhy-er/desktop-commander": "0.2.52"
+      },
+      "transitive_entries": 574,
+      "entries_without_integrity": 0,
+      "entries_with_install_script": 4,
+      "installed_equals_lock": "not_verified"
+    },
+    {
+      "path": "deploy/programming/python-language-server/package-lock.json",
+      "sha256": "072e6e1bc741747b56256c3bd1141f6f6ad802bf707832ce1d2de2f34780b61f",
+      "lockfile_version": 3,
+      "direct_dependencies": {
+        "pyright": "1.1.414"
+      },
+      "transitive_entries": 2,
+      "entries_without_integrity": 0,
+      "entries_with_install_script": 1,
+      "installed_equals_lock": "not_verified"
+    },
+    {
+      "path": "development/tools/project-dashboard/package-lock.json",
+      "sha256": "f9224012ffda153c49955e571cfd9cc4ba9311c0b29baadd26ad0b7d7ad94e09",
+      "lockfile_version": 3,
+      "direct_dependencies": {
+        "react": "19.2.8",
+        "react-admin": "5.15.1",
+        "react-dom": "19.2.8"
+      },
+      "transitive_entries": 200,
+      "entries_without_integrity": 0,
+      "entries_with_install_script": 1,
+      "installed_equals_lock": "not_verified"
+    }
+  ],
+  "existing_update_routes": {
+    "managed_core_worker": {
+      "implementation": "src/eva/operations/runtime_image_update.py",
+      "allowed_services": [
+        "core",
+        "delegated-work-worker"
+      ],
+      "capabilities": [
+        "immutable local image identity",
+        "exact original Compose binding",
+        "unchanged mounts/env/service inventory",
+        "exclusive durable update receipt",
+        "trusted behavior verification and bounded image rollback/recovery"
+      ],
+      "limits": [
+        "image_update_services explicitly rejects all other service image changes",
+        "no data/schema migration rollback",
+        "does not make non-core infrastructure autonomously updateable"
+      ]
+    },
+    "autonomous_dependency_adapter": {
+      "implementation": "src/eva/operations/runtime_dependency_update.py",
+      "scope": "Closed psycopg + psycopg-binary pair 3.3.4 -> 3.3.6, cp312/x86_64/glibc, core+worker only",
+      "other_image_inventory_is_update_authority": false
+    },
+    "renovate": {
+      "config": "renovate.json",
+      "scope": "proposal discovery only; approval dashboard and validation required; automerge false",
+      "digest_pinning_requested": true,
+      "go_module_manager_enabled": false,
+      "vendor_paths_ignored": true,
+      "actual_remote_bot_execution": "unknown"
+    }
+  },
+  "component_boundaries": [
+    {
+      "component": "Chrome owner bridge / Playwright MCP",
+      "recipe_lock": "deploy/chrome-bridge/package-lock.json",
+      "declared": "@playwright/mcp 0.0.80 + playwright/core 1.63.0-alpha-2026-08-31",
+      "build_reproducibility": "npm integrity locks present; browser/extension/Windows Node are separate external installed dependencies, not proved by this npm lock",
+      "safe_update_blockers": [
+        "uses private playwright-core/lib/coreBundle API; exact version compatibility tests required",
+        "must preserve owner-click sharing, STOP, one-use observation codes, no implicit reconnect/CDP/profile-copy",
+        "no existing image updater for shared-chrome proxy; WSL user service + Windows worker are a separate install boundary"
+      ],
+      "autonomous_update_and_rollback_proven": false
+    },
+    {
+      "component": "WhatsApp bridge",
+      "recipe": "deploy/whatsapp-bridge/Dockerfile",
+      "build_reproducibility": "Node 22.22.3 digest + npm ci --ignore-scripts/integrity lock; apt ffmpeg/ca-certificates are not version/snapshot pinned",
+      "safe_update_blockers": [
+        "named whatsapp-data holds session/credentials; library/session-format migration compatibility and state-preserving recovery required",
+        "Baileys prerelease/protocol compatibility and native/codec ABI require focused checks",
+        "currently excluded from core/worker image updater"
+      ],
+      "autonomous_update_and_rollback_proven": false
+    },
+    {
+      "component": "Programming sandbox + Python language server",
+      "recipe": "deploy/programming/Dockerfile",
+      "build_reproducibility": "Node/Python/reference images digest pinned; desktop-commander/pyright npm lock integrity present; apt git/ripgrep unpinned",
+      "safe_update_blockers": [
+        "reference image copies Python site-packages and Eva source; must retain Python/Node/glibc/native-extension compatibility",
+        "active programming process/workspace sessions must be idle; do not terminate claimed work",
+        "language-server feedback must remain source-version/hash bound"
+      ],
+      "autonomous_update_and_rollback_proven": false
+    },
+    {
+      "component": "ContextForge MCP gateway",
+      "declared": "ContextForge 1.0.8, image and four custom source hashes in deploy/mcp-autonomy/upstream.json",
+      "safe_update_blockers": [
+        "custom registration/RPC/RBAC/security patches must be reapplied and behavior checked",
+        "API/session capability and schema migration compatibility; production storage mode must be inspected, not inferred from candidate compose",
+        "repository gateway recipe enables migrations; rollback of image alone does not prove state compatibility",
+        "outside managed core/worker updater"
+      ],
+      "autonomous_update_and_rollback_proven": false
+    },
+    {
+      "component": "PostgreSQL + pgvector, both primary and Hindsight stores",
+      "declared": "repository platform lock selects PostgreSQL16.13; actual upstream/extension version to be verified separately by coordinator",
+      "safe_update_blockers": [
+        "persistent data directories and extension catalog/native ABI are not image-only rollback artifacts",
+        "major upgrade needs explicit data migration/dump/restore or pg_upgrade plan with verified restore; existing updater forbids data-service changes",
+        "pgvector extension compatibility must be bound to actual PostgreSQL major and migration state"
+      ],
+      "autonomous_update_and_rollback_proven": false
+    },
+    {
+      "component": "Hindsight API / embedding-reranker dependencies",
+      "declared": "repository Compose uses digest-pinned API image; installed overlays/custom images differ from upstream base metadata",
+      "safe_update_blockers": [
+        "separate Hindsight PostgreSQL schema, model artifacts/cache, CPU/CUDA/native ABI and OAuth-consumer compatibility",
+        "do not treat current healthy image or declared label as proved upstream release/reversible schema",
+        "outside existing core/worker image updater"
+      ],
+      "autonomous_update_and_rollback_proven": false
+    },
+    {
+      "component": "LiveKit + voice media/speaker",
+      "ownership": "voice owner; inspected recipes/metadata only, no voice code/config/runtime actions",
+      "recipe": "deploy/voice-session/Dockerfile.livekit",
+      "build_reproducibility": "vendored LiveKit1.13.6 source + go.mod/go.sum; digest Go/distroless bases; GOTOOLCHAIN go1.26.8; go build -mod=readonly -trimpath CGO_ENABLED=0",
+      "safe_update_blockers": [
+        "module sums pin downloaded content but Dockerfile does not demonstrate offline/vendored-module/toolchain completeness",
+        "WebRTC/audio/device interfaces, native media libraries and speaker ownership require owner-coordinated compatible update/recovery",
+        "Renovate does not enable Go manager and ignores vendor paths",
+        "outside managed core/worker image updater"
+      ],
+      "autonomous_update_and_rollback_proven": false
+    }
+  ],
+  "important_unknowns": [
+    "No remote latest-version or CVE verdict in this report",
+    "No npm ci/rebuild/reproducibility test executed",
+    "Running Node dependency bytes, browser/extension/Windows Node versions and OCI SBOM completeness not verified by repository lock inspection",
+    "platform-lock.json has selected_for_validation null/unresolved final image slots; do not use it as actual installed inventory",
+    "No general autonomous all-component update/rollback chain is presently proven; extend existing maintenance/review/managed-application chain with component-specific evidence instead of a second updater"
+  ],
+  "evidence_sha256": {
+    "src/eva/operations/image_update.py": "ddb3c7fad01f94698d745a2a0eb45d3caae54e19c371948ca6e42ecd4b5356f9",
+    "src/eva/operations/runtime_image_update.py": "bf8ad8753745c3e316c5f04697cded6e9fcf8bf5c9abb4772a77f9604210fa03",
+    "src/eva/operations/runtime_dependency_update.py": "48d6f80c55fdedb43c90944e24455f73f82eeeffca964b61ac0629293e30551f",
+    "deploy/whatsapp-bridge/Dockerfile": "eeb12da0efce59bcd49ff8c4b68160ad42a8a4f0dca9bfc325232783d5bb1812",
+    "deploy/programming/Dockerfile": "a6a444ffe964aa0416b7ca50fead104cc389fda23891dd5265b70651ef6bfdba",
+    "deploy/voice-session/Dockerfile.livekit": "493f9778d39a84158156448264c35cb4208d9795a25c1b1654caadc514592f33",
+    "deploy/voice-session/livekit-source/go.mod": "8422cd0902442f1669f0f85e2f74c7c2a2d48b6e8f98714ad2737b0f0a6bca5d",
+    "deploy/voice-session/livekit-source/go.sum": "0b9464acbb5411d939905ccfadf5b0dc32c4b1f3039441d7249ca3008fe7c516",
+    "deploy/chrome-bridge/README.md": "b8af189a4f57137a19372921770dc4b3a6d8295b0b9feff355db9f32d9e7e318",
+    "deploy/mcp-autonomy/upstream.json": "e992de9d39e3ae8b7a877477471461b49d1617d09d7096e258e33838dafb00a1",
+    "deploy/gateway/compose.yml": "aab0c53864104c3e1739925dd522b1867a91fa576f44d8b9ab2d3a882385c63c",
+    "deploy/living-core/managed-b.compose.yml": "1f3464af8bcc1e09f0cfdc83d9bcfd8369f92e59263f2fe8bd32f81e8e3fe6d8",
+    "renovate.json": "f5b713a05d3a3fd1329b23c5ab03da50cddb716f4a74a1e65e5f46ec56f70ba4"
+  }
+}

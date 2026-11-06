@@ -1,0 +1,58 @@
+{
+  "contract": "EvaIndependentDependencyBehaviorVerdictReview/v1",
+  "recordedAt": "2026-11-06T14:31:45.602620+00:00",
+  "reviewer": "/root/independent_review",
+  "decision": "GO",
+  "scope": "Source-only dependency behavior verdict correction, preserving unknown inspections and exact existing recovery protocol",
+  "candidateHashes": {
+    "src/eva/operations/runtime_dependency_update.py": "561a255413b28f8071066d02f52b23262d12df888db0acb07d9754b402554111",
+    "development/tests/operations/test_dependency_behavior_recovery.py": "51a5c58b731b0e1e4d5e69fe7b0bb4acf328c47cc45c7ff90e0fcc78d7fc71b0",
+    "development/tests/operations/test_dependency_interface_verdict_independent.py": "4d5b327572f2cc4f5159926896eec6622766a229a30ea5626e01a7f905adde42"
+  },
+  "resolvedReviewFinding": {
+    "finding": "Initial patch treated every interfacefalse as verified behavior regression, but real comparator collapsed timeout/nonzero/truncation/invalidJSON into false.",
+    "resolution": "Current compare_interface_images rejects incomplete or malformed installed one-leg observations (candidate_only is baseline/candidate), keeps preinstallcomparison baseline-retention behavior, and returns false only for completed JSON mismatches.",
+    "reviewerRegressionFile": "development/tests/operations/test_dependency_interface_verdict_independent.py"
+  },
+  "checks": [
+    "Completed authenticated output mismatch returns verifiedFalse and bounded failure_code; existing image recovery can compensate once and preserve later data.",
+    "Identity/source/inventory/tampering failures, incomplete process observations and malformed JSON remain exceptions and do not authorize rollback.",
+    "Existing baseline behavior verification, retained mounts, original dispatch completion, exclusive durable recovery receipt and no-replay logic remain unchanged.",
+    "Independent criteria/expected outcomes are not modified.",
+    "No dependency package or core/worker image upgrade is part of this source patch."
+  ],
+  "tests": {
+    "passed": 55,
+    "elapsedSeconds": 1.68,
+    "modules": [
+      "test_dependency_behavior_recovery.py",
+      "test_dependency_interface_verdict_independent.py",
+      "test_runtime_dependency_update.py",
+      "test_runtime_image_recovery.py"
+    ],
+    "sourceBeforeAndAfterSame": true,
+    "log": "development/reviews/dependency-verdict-independent-tests-20261106.log",
+    "logSha256": "307c581b67ccb7f84616897f25cbc465456d764efb571d002ecad4284793c6f7",
+    "actualDockerOrProviderEffects": false
+  },
+  "helperSourceCompatibility": {
+    "actualConfigReferenceHashValid": true,
+    "helperCandidateReferenceSha256": "c3003158844c0c557eee761b5d07bc45df72ff39dc8a04285a29fb4fd2a86ee0",
+    "immutableSourceFileCount": 64,
+    "allPinnedHelperSourcesStillMatch": true,
+    "runtimeDependencyUpdatePinnedSha256": "48d6f80c55fdedb43c90944e24455f73f82eeeffca964b61ac0629293e30551f",
+    "runtimeImageUpdatePinnedSha256": "bf8ad8753745c3e316c5f04697cded6e9fcf8bf5c9abb4772a77f9604210fa03",
+    "interpretation": "Keep frozen helper/source-root bytes unchanged. A separate active service overlay can select new verifier code without repointing or rewriting historical helper proof; helper attestation does not itself prove changed verifier behavior."
+  },
+  "conditions": [
+    "Install only through independently reviewed current-host/source/claims guard; no installation approved by this source-only review.",
+    "Preserve frozen helper source tree/configuration and nine historical/62private criteria pins or review any exact changed binding separately.",
+    "Recheck actual imported module hash and existing helper references after installation."
+  ],
+  "limitations": [
+    "Fake evaluator/Compose regressions exercise real verifier/recovery boundary; no production rollback executed.",
+    "General OSS target selection, autonomous later checks, causal failure intake, actual Eva repair and later reuse remain outside this patch and incomplete."
+  ],
+  "codeEditsByReviewer": "Only independent regression test file; no product source, criteria, runtime state or installer changes.",
+  "installedByReviewer": false
+}

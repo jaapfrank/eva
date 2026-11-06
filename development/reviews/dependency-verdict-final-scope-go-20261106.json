@@ -1,0 +1,44 @@
+{
+  "contract": "EvaIndependentDependencyVerdictFinalScopeReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T14:43:54.027369+00:00",
+  "decision": "GO",
+  "scope": "Scoped installed dependency-verdict correction and honest OSS inventory/gap evidence; no push or fullE416 claim",
+  "canonicalBoardSha256": "1bb38ec6f4b01235293b7121c10cbdcb36ba9d88747769cd7b24660f81e65db1",
+  "stagedSourceCount": 1,
+  "stagedSourcePath": "src/eva/operations/runtime_dependency_update.py",
+  "stagedSourceSha256": "561a255413b28f8071066d02f52b23262d12df888db0acb07d9754b402554111",
+  "stagedSourceMatchesReviewedAndInstalled": true,
+  "independentRegressionCases": 55,
+  "actualInstalledSourceCases": 55,
+  "stagedBoardAndHumanRenderLiveDashboardMatch": true,
+  "original103TaskStatusesAndCriteriaPreserved": true,
+  "completedCount": 83,
+  "inventoryEvidenceCounts": {
+    "pythonDistributionNames": 277,
+    "withAtLeastOneOlderInstalledVersion": 214,
+    "compatibilityForRegistryCandidatesClaimed": false
+  },
+  "stagedPrivateCredentialPatternMatches": false,
+  "stagedFilesEqualCurrentWorktree": true,
+  "evidenceHashes": {
+    "development/evidence/reassessment/open-source-updates-20261106/completion.json": "4f4a7ebf214b82f2ca497d884c00316c8d0f1ac35fe6b6e2b489adfaa05263a7",
+    "development/evidence/reassessment/open-source-updates-20261106/installed-targeted-tests.log": "fde1ca615510f855e4ec72561796936b0f98d440c1e56cd119a27e54e3445089",
+    "development/reviews/dependency-verdict-installed-go-20261106.json": "64b0f1509d6ee9bd0a002139dc4e5c761d3f2c9b3a79cd26a559c9b2ad44863b"
+  },
+  "necessarySourceLog": {
+    "path": "development/reviews/dependency-verdict-independent-tests-20261106.log",
+    "sha256": "307c581b67ccb7f84616897f25cbc465456d764efb571d002ecad4284793c6f7",
+    "mustBeIncludedInCommit": true,
+    "alreadyInIndexAtReview": true,
+    "stagedHashMatchesIndependentReview": true
+  },
+  "limitations": [
+    "Only behavior-verdict source was installed; no package release upgraded.",
+    "Production rollback was not deliberately triggered.",
+    "Generic autonomous maintenance, causal repair reuse and E4.16 remain open.",
+    "Dirty Pydantic/voice/runtime-repair continuation source is outside scoped index."
+  ],
+  "commitOrIndexChangesByReviewer": false,
+  "stagedFileCountBeforeFinalReviewRecord": 21
+}

@@ -1,0 +1,48 @@
+{
+  "contract": "EvaScopedDependencyRecoveryCompletion/v1",
+  "at": "2026-11-06T14:40:38.615471+00:00",
+  "outcome": "Installed dependency behavior verifier now distinguishes proven negative behavior from unknown inspection, enabling existing single-compensation recovery on proven regression.",
+  "source": {
+    "path": "src/eva/operations/runtime_dependency_update.py",
+    "sha256": "561a255413b28f8071066d02f52b23262d12df888db0acb07d9754b402554111"
+  },
+  "sourceReview": "development/reviews/dependency-verdict-independent-20261106.json",
+  "installedReview": "development/reviews/dependency-verdict-installed-go-20261106.json",
+  "tests": {
+    "count": 55,
+    "result": "passed",
+    "runAgainstActualInstalledSource": true,
+    "log": "development/evidence/reassessment/open-source-updates-20261106/installed-targeted-tests.log",
+    "logSha256": "fde1ca615510f855e4ec72561796936b0f98d440c1e56cd119a27e54e3445089",
+    "coverage": [
+      "Completed behavior mismatch and interface mismatch cause one compensation",
+      "STOP/current authority and uncertainty guards retained by existing recovery suite",
+      "Timeout/nonzero/truncated/malformed interface output stays unknown",
+      "Image/mount/config identity fences and retention of post-update data",
+      "No duplicate compensation after inspection or uncertain result"
+    ]
+  },
+  "installation": {
+    "state": "host_source_installed_readback_verified",
+    "pid": "637137",
+    "receiptSha256": "ff3204fa3c01db39b72864050d706fe321bf2bbd38422775ba10a5738064b040",
+    "originalUnconfirmedReceiptSha256": "0dbd3a7ae7e4933310f5b7f4efe1d1463fc91907071e571bf6b974511f8b30af",
+    "frozenHelperEvidenceChanged": false,
+    "coreWorkerImagesChanged": false,
+    "liveDependencyVersionsChanged": false,
+    "dataOrCriteriaChanged": false,
+    "sourcePrecedenceIssue": "Initial own override sorted before retained override. Failed readback preserved; guarded exact-own-file rename selected reviewed roots; actual effective environment/import/hash then verified."
+  },
+  "scopeLimits": [
+    "No production rollback was deliberately triggered.",
+    "No Python, Node, OCI service, host or voice dependency release was upgraded.",
+    "General autonomous maintenance, ongoing observation and later self-repair reuse remain unproven.",
+    "Three pre-existing posture tests use an outdated repository-root path; outside the 55 passing recovery/maintenance cases."
+  ],
+  "costs": {
+    "evaRuntimeModelCallsForThisMaintenanceAudit": 0,
+    "developmentModelCredits": null,
+    "registryReadRequests": "277 official PyPI package lookups plus 12 npm metadata lookups and source-project release/documentation reads; no package-install calls on live runtime"
+  },
+  "fullE416Completed": false
+}

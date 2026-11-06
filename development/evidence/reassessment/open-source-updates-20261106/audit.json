@@ -1,0 +1,79 @@
+{
+  "contract": "EvaOpenSourceMaintenanceAudit/v1",
+  "checkedAt": "2026-11-06T14:38:49.571229+00:00",
+  "ownerOutcome": "Eva independently observes component updates, verifies candidates, installs safely, restores the last working release on proven regression, investigates failures and later reuses a reviewed fix.",
+  "inventory": {
+    "runningEvaContainers": 22,
+    "pythonDistributionsAcrossExaminedRuntimes": 277,
+    "distributionsWithAtLeastOneOlderInstalledVersion": 214,
+    "directNpmBuildInputsChecked": 12,
+    "officialSourceProjectsChecked": 7
+  },
+  "scopeLimits": [
+    "This is not a complete SBOM of every host OS, device firmware and browser extension.",
+    "Installed distribution does not establish that every optional library is actively used.",
+    "Official availability is not dependency resolution, behavioral compatibility or installation approval.",
+    "Npm source locks remain distinct from actual installed readback."
+  ],
+  "currentCapability": {
+    "sourcePinnedPythonLocks": true,
+    "npmIntegrityLocksInspected": 5,
+    "imageOnlyCoreWorkerRecovery": true,
+    "genericAllComponentAutonomousUpdater": false,
+    "existingAutonomousDependencyTarget": {
+      "packages": [
+        "psycopg",
+        "psycopg-binary"
+      ],
+      "from": "3.3.4",
+      "to": "3.3.6"
+    },
+    "periodicCompletedUpdateBehaviorWatch": false,
+    "automaticUpdateFailureToCausallyBoundRepairGoal": false,
+    "secondIndependentAutonomousMaintenanceCycleProven": false
+  },
+  "confirmedGaps": [
+    "Hardcoded one-package-pair target and policy instead of host-trusted component descriptors.",
+    "Completed driver behavior mismatch raised an exception, suppressing compensation as unknown inspection.",
+    "Interface proof collapsed incomplete execution and genuine mismatch; live verification now must preserve that distinction.",
+    "No independent completed-update observation window in the current host state machine.",
+    "No automatic causal durable repair intake from exact update failure evidence.",
+    "External services, host tools and schema/data upgrades lack their own proven update/restore adapters."
+  ],
+  "implementationThisTurn": {
+    "source": "src/eva/operations/runtime_dependency_update.py",
+    "independentTestsPassed": 55,
+    "review": "development/reviews/dependency-verdict-independent-20261106.json",
+    "behavior": "Explicit false verdict for completed valid output mismatch; timeout/truncation/nonzero/invalid JSON/identity errors remain unknown. Existing updater owns single compensation and fresh authorization.",
+    "installationReceipt": "/var/lib/eva2/finalization-20261106/dependency-verdict/process-rebind.private.json",
+    "installationStatus": "installed_and_independently_read_back",
+    "originalUnconfirmedAttemptPreserved": true,
+    "completion": "development/evidence/reassessment/open-source-updates-20261106/completion.json"
+  },
+  "nextImplementationWithinExistingRoute": [
+    {
+      "step": "Host-trusted component descriptors",
+      "details": "Versioned descriptors bind actual installed identity, official sources, dependency group, fixed build adapter, immutable independent interface criteria, data/permissions boundary and exact restore adapter. Model text cannot add privileges."
+    },
+    {
+      "step": "Finite post-install observation",
+      "details": "Use existing host controller lifecycle and durable update job. Read behavior, not container health alone. Deterministic recovery must work while the model is unavailable."
+    },
+    {
+      "step": "Causal self-repair intake",
+      "details": "Retained release/behavior/rollback receipts create or update one source-bound repair goal after the good baseline is restored. Eva authors adaptation; independent criteria stay separate; a changed candidate must be reviewed before any bounded reattempt."
+    },
+    {
+      "step": "Second independent reuse",
+      "details": "Prove another real update or failure through the same route without a new manual host handoff, preserving original E4.16 criteria."
+    }
+  ],
+  "dataRecoveryRule": "Image rollback does not reverse a data/schema migration. Require a separately proven backwards-compatible migration/restore strategy before admission; never erase new user records by restoring an old data snapshot.",
+  "e416Completed": false,
+  "taskStatusesOrCriteriaRelaxed": false,
+  "evidenceHashes": {
+    "non-python-update-availability.json": "ea5e0594d92c1b3a2c258f6392d06e6c10e335a47764e390b76ee1649dc27558",
+    "installed-inventory.json": "a4a7300bbb7cedd71e984e1be24e7d1ee5e742d7abdcb01c2b4a0b44273c05a2",
+    "python-update-availability.json": "509adb1dfcecbb9d5260bb41956a509d20a4d4df0a17acc5a01d1de4d73ef54e"
+  }
+}

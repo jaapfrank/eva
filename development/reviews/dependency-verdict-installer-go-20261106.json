@@ -1,0 +1,35 @@
+{
+  "contract": "EvaIndependentDependencyVerdictHostInstallerReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T14:33:38.846071+00:00",
+  "decision": "GO",
+  "scope": "Single dependency-verdict module host-only overlay; repeated fresh installer gates mandatory",
+  "installerSha256": "4a2d2bf6c11dfb8dea5adfbc83d8ddef0034504af57fc5dc05594e59e549d52a",
+  "planSha256": "be853514f1731e402e7e52216bdfe14649fe5183f5866257cadcf3a829f4f830",
+  "originalReadinessSha256": "f02eff8a47adadabf47d4c66928eb3324388411782736f604895320809d65a59",
+  "sourceReviewSha256": "ccbc734e79cf3b19759b3852cb6471c6fe38e31ac41a16da4432f364de5f2485",
+  "currentReadbackSha256": "627a6786b477faebe73649fc45e989f4f5593bd837e9dff5914b8db6dcd348af",
+  "reviewedDelta": "Previous reviewed host installer changes only expected moduleCount8to1 and activation receipt label. Source/config/oldlayers/history/privatecriteria/runtime/profile/currentclaims gates retained.",
+  "overlay": {
+    "fileCount": 3,
+    "unchangedNamespaceInitFiles": 2,
+    "productModules": 1,
+    "candidateSha256": "561a255413b28f8071066d02f52b23262d12df888db0acb07d9754b402554111",
+    "actualBaselineSha256": "48d6f80c55fdedb43c90944e24455f73f82eeeffca964b61ac0629293e30551f",
+    "onlyReviewedTwoFunctionsDiffer": true,
+    "baselineByteIdenticalHEAD": true
+  },
+  "coreWorkerImagesDependenciesConfigFileChanged": false,
+  "frozenHelperSourcesMustRemainExact": true,
+  "historicalUnknownEffectsReplayed": false,
+  "installedByReviewer": false,
+  "conditions": [
+    "Repeat current work/lease/assessment/memory/source gates before stop and switch.",
+    "Any changed source/config/history/criteria/helper/profile or new active claim blocks activation.",
+    "Independently read back actual imported module, helper/config/criteria and runtime/profile pins after activation."
+  ],
+  "limitations": [
+    "No dependency upgrade or real production rollback exercised.",
+    "Generic autonomous OSS maintenance and fullE4.16 remain incomplete."
+  ]
+}

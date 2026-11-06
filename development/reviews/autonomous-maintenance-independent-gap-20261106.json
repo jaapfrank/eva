@@ -1,0 +1,127 @@
+{
+  "contract": "EvaIndependentAutonomousMaintenanceGapReview/v1",
+  "recordedAt": "2026-11-06T14:26:49.167360+00:00",
+  "reviewer": "/root/independent_review",
+  "scope": "Read-only existing OSS maintenance, managed update, rollback and repair chain; no broad tests or changes",
+  "sourceHashes": {
+    "src/eva/bootstrap/component_maintenance.py": "60071c0f44c05a2864ada13f4f148a569806d6b9c92ce55bfd1ae8dc805d488d",
+    "src/eva/operations/runtime_dependency_update.py": "48d6f80c55fdedb43c90944e24455f73f82eeeffca964b61ac0629293e30551f",
+    "src/eva/operations/runtime_image_update.py": "bf8ad8753745c3e316c5f04697cded6e9fcf8bf5c9abb4772a77f9604210fa03",
+    "src/eva/operations/image_update.py": "ddb3c7fad01f94698d745a2a0eb45d3caae54e19c371948ca6e42ecd4b5356f9",
+    "src/eva/operations/component_application_runtime.py": "31a4470e3aa5edea261a5180259bd912260eee3c20649d9c812c3ac03da111c5",
+    "src/eva/operations/reviewed_component_application.py": "291fe0cd8355575079b288735311195554560bafa65c5ffca1bb63f908e3c0f0",
+    "src/eva/operations/runtime_repair_development.py": "16fe42513ba299f7342332529bf17eb39e1606639b7200a1ce47c768a785cf60",
+    "src/eva/adapters/postgres/self_repair.py": "4717d79aa11fa2acc203a7a9d1fbfb955a16ebb67a44d49cd84d362073b7816c"
+  },
+  "actualConfigurationObserved": {
+    "hostDependencyMaintenanceConfigured": true,
+    "runtimeDependencyMaintenanceEnabled": true,
+    "observationIntervalSeconds": 3600,
+    "retainedObservationCount": 17,
+    "retainedRepairHandoffs": [
+      {
+        "contract": "EvaRuntimeRepairHandoff/v1",
+        "state": "blocked"
+      }
+    ],
+    "retainedDependencyHandoffCount": 0,
+    "hostDependencyAndImageUpdateSourcesMatchWorkingTree": true,
+    "pendingRepairContinuationSourceDifferentFromInstalledHost": true
+  },
+  "generalExistingMechanisms": [
+    {
+      "route": "runtime_image_update.py141-239",
+      "capability": "Durable single-dispatch receipt, exact local image IDs/configuration, unchanged mount/data/service declarations and optional trusted behavior verification."
+    },
+    {
+      "route": "component_application_runtime.py611-649",
+      "capability": "Existing release application invokes one baseline recovery on caught update failure when a trusted verifier and receipt exist; fresh readiness authorization still required."
+    },
+    {
+      "route": "runtime_image_update.py255-368",
+      "capability": "Recovery validates original/candidate/current images, retained mounts and baseline behavior; uncertain original dispatch or recovery dispatch cannot be replayed. Explicit negative behavior is distinct from unknown verifier failure."
+    },
+    {
+      "route": "reviewed_component_application.py389-477",
+      "capability": "Retained receipt reconciliation and completed-release behavior inspection through existing status/review-status calls; no duplicate application."
+    },
+    {
+      "route": "runtime_repair_development.py",
+      "capability": "Existing source-bound real-error -> native builder -> separate oracle -> comparison/review -> managed application -> installed behavior proof route; historical example remains blocked at oracle."
+    }
+  ],
+  "hardcodedBoundaries": [
+    {
+      "route": "bootstrap/component_maintenance.py17-23",
+      "restriction": "Owner policy requires exactly psycopg+psycopg-binary and target3.3.6; sensory selectors and completion text also hardcode psycopg3.3.4->3.3.6."
+    },
+    {
+      "route": "operations/runtime_dependency_update.py24-26,123-147",
+      "restriction": "Fixed package pair/version, official version-specific URLs and required installed baseline3.3.4. No general newest-compatible-release discovery or second update cycle."
+    },
+    {
+      "route": "operations/runtime_dependency_update.py149-235,378-456,558-597",
+      "restriction": "cp312/x86_64/glibcwheel selection, pair-specific metadata rewrite/build/recovery and driver behavior checks. Generic structure exists, but acceptance is driver-specific."
+    },
+    {
+      "route": "operations/image_update.py12-31",
+      "restriction": "Only existing core and delegated-work-worker images may change. Data services, inventory, mounts/configuration/migrations are rejected by this image-only updater."
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P1",
+      "title": "Known dependency behavior failures do not reach explicit-negative rollback contract",
+      "evidence": [
+        "runtime_dependency_update.py588-597 raises ValueError for completed driver test output mismatch and failed interface conditions. Verifier returns only verifiedTrue.",
+        "runtime_image_update.py297-307 deliberately treats verifier exceptions as unknown observations and returns without compensation.",
+        "component_application_runtime.py639-649 therefore cannot guarantee rollback of these dependency behavior regressions despite calling recovery."
+      ],
+      "nextStep": "Return typed verifiedFalse with bounded failure evidence for completed, authenticated behavioral failures. Continue raising for incomplete execution, source/image tampering or unknown infrastructure. Prove one guarded compensation and baseline readback in existing isolated recovery fixture."
+    },
+    {
+      "priority": "P1",
+      "title": "Later behavior inspection is caller-triggered, not an autonomous watch",
+      "evidence": [
+        "reviewed_component_application.py359-377 invokes inspect only when review_status/status is called.",
+        "Queue dispatch loop470-489 selects queued/waiting jobs only. Completed jobs have no periodic inspection schedule.",
+        "RuntimeRepairDevelopment excludes completed jobs from pending; MaintenanceStages.observe_due polls fixed software inventory/releases, not completed release behavior."
+      ],
+      "nextStep": "Use one bounded due-check in existing controller for the currently installed exact reviewed candidate, sharing existing queue inspection and readiness guards. Do not reopen historical jobs or run external actions as probes."
+    },
+    {
+      "priority": "P1",
+      "title": "Update failure/recovery evidence is not directly linked to Eva cause-analysis goal",
+      "evidence": [
+        "Dependency maintenance application recoveries become baseline_retained; exceptions become retained blocked/unconfirmed handoff state.",
+        "No maintenance/update recovery callback directly observes a source-correlated SELF_REPAIR incident. Existing core error observer can independently create incidents, but causal update receipt linkage/later repair is not demonstrated."
+      ],
+      "nextStep": "Feed exact candidate/baseline/recovery receipt hashes and bounded verified failure category into existing self-repair intake once, with original owner/source/STOP constraints; unknown effects remain uncertain."
+    }
+  ],
+  "smallestGeneralizationAfterRollbackVerdictFix": {
+    "change": "Replace fixed PAIR/VERSION and baseline literals with one immutable host-owned dependency target descriptor consumed by existing policy, InstalledDependencyTarget and MaintenanceStages.",
+    "descriptorBinds": [
+      "actual installed package set+versions+images",
+      "official registry/release artifact hashes and dependency resolution",
+      "candidate version set",
+      "fixed independent compatibility/original-behavior and baseline-recovery references",
+      "permitted services/storage/migration boundary"
+    ],
+    "firstAdditionalTarget": "PydanticAI/OpenAI/httpx2 pinned compatible set already investigated in isolation; do not pip-upgrade installed services or admit arbitrary model-selected shell commands.",
+    "reuse": "Existing builder, oracle/reviewer authority, publisher, application queue, image updater and self-repair; no new platform.",
+    "coverageLimit": "Current inventory includes core/worker Python distributions and declared image/provider/extension metadata. It does not establish exhaustive OS/npm/host/database/model-backend version coverage."
+  },
+  "preservedSafety": [
+    "No database snapshot rollback or data rewind; retain current volumes and all historical failure evidence.",
+    "Schema migrations/stateful service upgrades require separate explicit compatible forward/recovery contracts.",
+    "Require actual current work/assessment/lease/STOP checks immediately before application/recovery; no age-based waiver.",
+    "Unknown inspections and effects never become proven failures or replay authorization.",
+    "No private prompts, credentials or hidden criteria exposed."
+  ],
+  "limitations": [
+    "Source-based findings, no new runtime update/recovery trial.",
+    "Generic allOSS autonomous updating, later regression detection and Eva repair/reuse are not proven or technically complete."
+  ],
+  "codeCriteriaStateOrInstallationChanged": false
+}

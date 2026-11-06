@@ -1,0 +1,32 @@
+{
+  "contract": "EvaIndependentDependencyVerdictInstalledReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T14:39:53.534494+00:00",
+  "decision": "GO",
+  "scope": "Dependency behavior-verdict host source installed and independently read back",
+  "installedModuleSha256": "561a255413b28f8071066d02f52b23262d12df888db0acb07d9754b402554111",
+  "sourceRegressionCasesPassed": 55,
+  "sameReviewedSourceBytesActuallyImported": true,
+  "currentHostPID": "637137",
+  "proof": {
+    "newProcessSourceRootsAndEnvironmentVerified": true,
+    "ownedListeningHealthReady": true,
+    "frozenHelperSourcesPreserved": 64,
+    "historicalFilesPreserved": 9,
+    "privateCriteriaFilesPreserved": 62,
+    "coreWorkerImagesAndProfilesUnchanged": true,
+    "originalUnconfirmedActivationReceiptPreservedAndLinked": true,
+    "onlyExactOwnedDropinRenamed": true
+  },
+  "evidence": {
+    "dependency-verdict-independent-20261106.json": "ccbc734e79cf3b19759b3852cb6471c6fe38e31ac41a16da4432f364de5f2485",
+    "dependency-verdict-rebind-go-20261106.json": "313d71e536afd7248868905ae3e1ec2aa532d654578337204946f4fedfc5a0e0",
+    "dependency-verdict-installed-readback-20261106.json": "062dc8dcead3bedf083e9b69eb5d61105e77ca933158cd91bec1433a7598828a"
+  },
+  "limitations": [
+    "No installed OSS package version changed.",
+    "No real production regression or rollback was injected.",
+    "Generic OSS update discovery, autonomous later monitoring, causal repair intake and fullE4.16 remain incomplete."
+  ],
+  "installedByReviewer": false
+}

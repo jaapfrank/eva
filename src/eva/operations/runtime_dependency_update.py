@@ -288,6 +288,8 @@ def _interface_inputs(case):
     return root
 
 def compare_interface_images(target,build,settings,*,fixture_socket,candidate_only=None):
+    if candidate_only not in (None,'baseline','candidate'):
+        raise ValueError('unknown dependency verification leg')
     _,interfaces=_artifact(target['interfaces']);_,criteria=_artifact(target['criteria'])
     if (interfaces.get('contract')!='EvaIndependentDependencyInterfaces/v1'
             or interfaces.get('criteria')!=target['criteria'] or interfaces.get('expectations_host_only') is not True
@@ -307,9 +309,14 @@ def compare_interface_images(target,build,settings,*,fixture_socket,candidate_on
                 image=build['candidate' if leg=='candidate' else 'before']['services'][role]['image']
                 output=ComponentEvaluator(replace(settings,image=image,deadline_seconds=case['deadline']))._container(image,tuple(case['command']),extra_mounts=mounts)
                 complete=output['exit_code']==0 and not any(output.get(k) for k in ('timed_out','stdout_truncated','stderr_truncated'))
+                parsed=complete
                 try:actual=json.loads(output['stdout']) if complete else None
-                except (ValueError,TypeError):actual=None
-                success=complete and actual==case['expected_JSON'];passed=passed and success
+                except (ValueError,TypeError):actual=None;parsed=False
+                # A live verdict may authorize compensation. Incomplete or
+                # malformed observations remain unknown, unlike valid mismatch.
+                if candidate_only is not None and not parsed:
+                    raise ValueError('installed dependency interface observation incomplete')
+                success=complete and parsed and actual==case['expected_JSON'];passed=passed and success
                 rows.append({'id':case['id'],'role':role,'leg':leg,'passed':success,'actual':actual,
                     'driver_sha256':case['sha256'],'input_manifest_sha256':case['input_manifest']['sha256'],
                     'elapsed_ms':output.get('elapsed_ms'),'elapsed_seconds_decimal':str(output['elapsed_ms']//1000)+'.'+str(output['elapsed_ms']%1000).zfill(3) if type(output.get('elapsed_ms')) is int and output['elapsed_ms']>=0 else None})
@@ -584,6 +591,9 @@ def installed_dependency_behavior(observation,*,release,settings,run):
     # Verify the observed exact image, with baseline-aware expected outcomes.
     _,criteria=_artifact(target['criteria']);from eva.operations.component_evaluation import ComponentEvaluator
     cases=[]
+    proof={'verified':True,'verifier_sha256':release['behavior_verifier']['sha256'],
+        'verification_scope':'actual_loaded_driver_and_isolated_original_cases',
+        'services':rows,'cases':cases,'external_actions_replayed':False}
     for case in criteria['cases']:
         for role,image in expected.items():
             driver=_driver(case['driver']);driver_target='/review/'+driver.name if criteria.get('fixture') is not None else '/maintenance/driver.py'
@@ -591,12 +601,17 @@ def installed_dependency_behavior(observation,*,release,settings,run):
             output=ComponentEvaluator(replace(settings,image=image,deadline_seconds=max(settings.deadline_seconds,deadline)))._container(image,('/usr/local/bin/python',driver_target),
                 extra_mounts=((driver,driver_target),*_fixture_mounts(criteria,release['fixture_socket'])))
             if output['exit_code']!=0 or any(output.get(k) for k in ('timed_out','stdout_truncated','stderr_truncated')):raise ValueError('installed driver behavior not verified')
-            if json.loads(output['stdout'])!=case['expected_candidate' if leg=='candidate' else 'expected_baseline']:raise ValueError('installed driver behavior regressed')
-            cases.append({'id':case['id'],'role':role,'passed':True})
+            passed=json.loads(output['stdout'])==case['expected_candidate' if leg=='candidate' else 'expected_baseline']
+            cases.append({'id':case['id'],'role':role,'passed':passed})
+            if not passed:
+                # A completed, trusted failure is a negative verdict. Unknown
+                # inspection errors above still cannot authorize compensation.
+                return {**proof,'verified':False,'failure_code':'installed_driver_output_mismatch'}
     interface_proof=compare_interface_images(target,build,settings,fixture_socket=release['fixture_socket'],candidate_only='candidate' if leg=='candidate' else 'baseline')
-    if not interface_proof['all_conditions_passed']:raise ValueError('installed normal/held restore behavior not verified')
-    return {'verified':True,'interfaces':interface_proof,'verifier_sha256':release['behavior_verifier']['sha256'],
-        'verification_scope':'actual_loaded_driver_and_isolated_original_cases','services':rows,'cases':cases,'external_actions_replayed':False}
+    proof['interfaces']=interface_proof
+    if not interface_proof['all_conditions_passed']:
+        return {**proof,'verified':False,'failure_code':'installed_dependency_interface_regression'}
+    return proof
 
 class MaintenanceStages:
     """Optional typed branch owned by the one existing repair host controller."""

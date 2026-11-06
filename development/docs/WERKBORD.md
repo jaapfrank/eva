@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Alleen P0-03 reviewerherkomst is technisch opgeleverd: nieuwe reviews binden exact pakket, besluit, hostregistratie, beoordelingscode, baseline en bronbestemming. 241 gerichte cases en dezelfde 241 cases op een schone index zijn groen; bron en installatie onafhankelijk GO. Acht hostmodules bijgewerkt; kern/werker blijven op de P0-01/P0-02-images van 5 november. Twee oude v1-beoordelingen blijven historisch leesbaar en kunnen geen nieuwe uitvoering starten. Andere prioriteiten worden in deze opdracht niet opgepakt; volledige E4.16 en gezinsacceptatie blijven open.
+Volgende stap: Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.
 
 ## Voortgang
 

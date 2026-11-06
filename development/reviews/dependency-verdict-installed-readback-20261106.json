@@ -1,0 +1,62 @@
+{
+  "reviewer": "/root/independent_review",
+  "proof": {
+    "pid": "637137",
+    "health": "ready",
+    "ownedListeningSocket": true,
+    "sameConfigSha256": "25c64301d88dc4a6d14be54bc5c3d8b42d217be16c3499ed1ef9c95aea5e58f0",
+    "authorityProbe": {
+      "authorityCount": 10,
+      "moduleCount": 1,
+      "legacyAcceptedReleasesValidated": 2,
+      "hostSourceOriginsPinned": true,
+      "hostOnlyNoDispatch": true
+    },
+    "historicalBytesPreserved": true,
+    "privateCriteriaBytesPreserved": true,
+    "coreWorkerUnchanged": true,
+    "sourceRoots": [
+      "/var/lib/eva2/finalization-20261106/dependency-verdict/overlay",
+      "/var/lib/eva2/finalization-20261106/p003-review-provenance/overlay",
+      "/home/administrator/project/.eva2-artifacts/task-completion-20261025/e416-builder/immutable-host-package/host/source/src"
+    ]
+  },
+  "profileSha256": "d681922d24e49706cee354103bbb168b0e29764f6201987803b480d727afbe92",
+  "claims": {
+    "checkedAt": "2026-11-06T14:39:28.454755+00:00",
+    "globalRlsReadCoverage": true,
+    "activeUnexpiredCheckpointLeases": 0,
+    "currentGenerationUnknownNullCheckpoints": 0,
+    "exactReviewedOwnerGrantExcluded": 0,
+    "exactCompletedInitiativeAuditExcluded": 0,
+    "exactAdditionalCompletedNativeAuditExcluded": 0,
+    "activeWork": 0,
+    "retainedDailyReflectionCounters": 0,
+    "retainedCompletedReadAndProgressRecords": 0,
+    "retainedUndispatchedMemorySources": 0,
+    "exactCurrentCompletedProgrammingReceipts": 0,
+    "nativeMemoryOperations": {
+      "pending": 0,
+      "processing": 0
+    },
+    "boundProcessGenerationAfter": "2026-11-06T13:23:51+00:00",
+    "sourceContractsPinned": {
+      "adapters/postgres/connector_results.py": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a",
+      "adapters/postgres/background_work_progress.py": "1667c5c1a6c572f3e4d3064d4f29f048c66d13433e6a5ece57efaa5cf7e46f76",
+      "adapters/postgres/runtime_resource_usage.py": "e97ba5f22781dfb615bebc452dcb9113303d7d3f15e33f4c4e1e580e2ff87240",
+      "application/memory_background.py": "de244b8b77900802ab041c000fb51895aec79fe240c6ea4d572b96e588f4f7c6",
+      "adapters/postgres/memory_outbox.py": "3476349db333ade0304a6bc6e778b2d5cfbd0eda4f30edf637adeda94b006074",
+      "adapters/projection/hindsight.py": "df4c190691f56ee503696ecdaea0434e2558594c0edf9d9699d977f4da2e0737"
+    }
+  },
+  "rebindReceiptSha256": "ff3204fa3c01db39b72864050d706fe321bf2bbd38422775ba10a5738064b040",
+  "originalUnknownReceiptSha256": "0dbd3a7ae7e4933310f5b7f4efe1d1463fc91907071e571bf6b974511f8b30af",
+  "originalPlanInstallerAndReceiptBytePreserved": true,
+  "helperSourceCount": 64,
+  "allFrozenHelperHashesPreserved": true,
+  "exactOwnDropinRenameOnly": true,
+  "candidateModuleSha256": "561a255413b28f8071066d02f52b23262d12df888db0acb07d9754b402554111",
+  "historyFileCount": 9,
+  "privateCriteriaFileCount": 62,
+  "installedByReviewer": false
+}

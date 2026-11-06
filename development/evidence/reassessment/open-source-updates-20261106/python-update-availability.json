@@ -1,0 +1,6174 @@
+{
+  "contract": "EvaOfficialPythonUpdateAvailability/v1",
+  "checkedAt": "2026-11-06T14:25:34.476998+00:00",
+  "source": "Official PyPI JSON release metadata; stable non-yanked releases only",
+  "components": [
+    {
+      "name": "aiofile",
+      "source": "https://pypi.org/pypi/aiofile/json",
+      "latestStable": "3.12.3",
+      "latestAdvertised": "3.12.3",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.9.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.12.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "aiofiles",
+      "source": "https://pypi.org/pypi/aiofiles/json",
+      "latestStable": "25.1.0",
+      "latestAdvertised": "25.1.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "25.1.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "25.1.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "25.1.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "25.1.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "aiohappyeyeballs",
+      "source": "https://pypi.org/pypi/aiohappyeyeballs/json",
+      "latestStable": "2.7.1",
+      "latestAdvertised": "2.7.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.6.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.7.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.7.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.7.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.7.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.7.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "aiohttp",
+      "source": "https://pypi.org/pypi/aiohttp/json",
+      "latestStable": "3.14.5",
+      "latestAdvertised": "3.14.5",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.14.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.14.5"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "3.14.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.14.5"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "3.14.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.14.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "aioice",
+      "source": "https://pypi.org/pypi/aioice/json",
+      "latestStable": "0.13.0",
+      "latestAdvertised": "0.13.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.10.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.13.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.10.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.13.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "aiortc",
+      "source": "https://pypi.org/pypi/aiortc/json",
+      "latestStable": "1.16.0",
+      "latestAdvertised": "1.16.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.15.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.16.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.15.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.16.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "aiosignal",
+      "source": "https://pypi.org/pypi/aiosignal/json",
+      "latestStable": "1.4.0",
+      "latestAdvertised": "1.4.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.4.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.4.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.4.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.4.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.4.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.4.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "alembic",
+      "source": "https://pypi.org/pypi/alembic/json",
+      "latestStable": "1.20.1",
+      "latestAdvertised": "1.20.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "1.19.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.20.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "1.19.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.20.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.17.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.20.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "annotated-doc",
+      "source": "https://pypi.org/pypi/annotated-doc/json",
+      "latestStable": "0.0.5",
+      "latestAdvertised": "0.0.5",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.0.5",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.0.5"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.0.5",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.0.5"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.0.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.0.5"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.0.5",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.0.5"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.0.5",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.0.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "annotated-types",
+      "source": "https://pypi.org/pypi/annotated-types/json",
+      "latestStable": "0.8.0",
+      "latestAdvertised": "0.8.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.8.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.8.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.8.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.8.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.7.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.8.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.8.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.8.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.8.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "anthropic",
+      "source": "https://pypi.org/pypi/anthropic/json",
+      "latestStable": "2.6.0",
+      "latestAdvertised": "2.6.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "1.15.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.17.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.75.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.125.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "anyio",
+      "source": "https://pypi.org/pypi/anyio/json",
+      "latestStable": "4.16.0",
+      "latestAdvertised": "4.16.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "4.14.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.16.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "4.14.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.16.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.11.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.16.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "4.15.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.16.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "4.15.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.16.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "asgiref",
+      "source": "https://pypi.org/pypi/asgiref/json",
+      "latestStable": "3.13.0",
+      "latestAdvertised": "3.13.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.11.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.13.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "asyncpg",
+      "source": "https://pypi.org/pypi/asyncpg/json",
+      "latestStable": "0.32.0",
+      "latestAdvertised": "0.32.0",
+      "pythonRequirementForAdvertised": ">=3.9.0",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.30.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.32.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "attrs",
+      "source": "https://pypi.org/pypi/attrs/json",
+      "latestStable": "26.1.0",
+      "latestAdvertised": "26.1.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "25.4.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "25.4.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "26.1.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "26.1.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "26.1.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "26.1.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "authlib",
+      "source": "https://pypi.org/pypi/authlib/json",
+      "latestStable": "1.9.5",
+      "latestAdvertised": "1.9.5",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.6.12",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.9.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "av",
+      "source": "https://pypi.org/pypi/av/json",
+      "latestStable": "19.0.2",
+      "latestAdvertised": "19.0.2",
+      "pythonRequirementForAdvertised": ">=3.12",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "18.1.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "18.1.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "18.1.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "18.1.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "backports.tarfile",
+      "source": "https://pypi.org/pypi/backports.tarfile/json",
+      "latestStable": "1.2.0",
+      "latestAdvertised": "1.2.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.2.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.2.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "beartype",
+      "source": "https://pypi.org/pypi/beartype/json",
+      "latestStable": "0.23.1",
+      "latestAdvertised": "0.23.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.22.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.23.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "beautifulsoup4",
+      "source": "https://pypi.org/pypi/beautifulsoup4/json",
+      "latestStable": "4.15.0",
+      "latestAdvertised": "4.15.0",
+      "pythonRequirementForAdvertised": ">=3.7.0",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.14.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.15.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "boto3",
+      "source": "https://pypi.org/pypi/boto3/json",
+      "latestStable": "1.43.125",
+      "latestAdvertised": "1.43.125",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.42.74",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.43.125"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "botocore",
+      "source": "https://pypi.org/pypi/botocore/json",
+      "latestStable": "1.43.125",
+      "latestAdvertised": "1.43.125",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.42.74",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.43.125"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "cachetools",
+      "source": "https://pypi.org/pypi/cachetools/json",
+      "latestStable": "7.3.0",
+      "latestAdvertised": "7.3.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "6.2.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "6.2.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "caio",
+      "source": "https://pypi.org/pypi/caio/json",
+      "latestStable": "0.12.10",
+      "latestAdvertised": "0.12.10",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.9.25",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.12.10"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "certifi",
+      "source": "https://pypi.org/pypi/certifi/json",
+      "latestStable": "2026.10.23",
+      "latestAdvertised": "2026.10.23",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2026.7.22",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2026.10.23"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2026.7.22",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2026.10.23"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2025.10.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2025.11.12"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2026.7.22",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2026.10.23"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2026.7.22",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2026.10.23"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "cffi",
+      "source": "https://pypi.org/pypi/cffi/json",
+      "latestStable": "2.1.1",
+      "latestAdvertised": "2.1.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.1.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.1.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.1.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.1.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.0.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.1.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.1.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.1.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.1.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.1.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "charset-normalizer",
+      "source": "https://pypi.org/pypi/charset-normalizer/json",
+      "latestStable": "3.5.2",
+      "latestAdvertised": "3.5.2",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "3.5.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "3.5.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.4.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "3.5.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "3.5.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "claude-agent-sdk",
+      "source": "https://pypi.org/pypi/claude-agent-sdk/json",
+      "latestStable": "0.2.178",
+      "latestAdvertised": "0.2.178",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.2.87",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.2.178"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "click",
+      "source": "https://pypi.org/pypi/click/json",
+      "latestStable": "8.5.0",
+      "latestAdvertised": "8.5.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "8.4.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "8.5.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "8.4.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "8.5.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "8.1.8",
+          "newerStableAvailable": true,
+          "newestSameMajor": "8.5.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "8.5.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "8.5.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "8.5.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "8.5.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "cobble",
+      "source": "https://pypi.org/pypi/cobble/json",
+      "latestStable": "0.1.4",
+      "latestAdvertised": "0.1.4",
+      "pythonRequirementForAdvertised": ">=3.5",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.1.4",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.1.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "cohere",
+      "source": "https://pypi.org/pypi/cohere/json",
+      "latestStable": "7.3.1",
+      "latestAdvertised": "7.3.1",
+      "pythonRequirementForAdvertised": "<4.0,>=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "5.20.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "5.21.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "colorama",
+      "source": "https://pypi.org/pypi/colorama/json",
+      "latestStable": "0.4.6",
+      "latestAdvertised": "0.4.6",
+      "pythonRequirementForAdvertised": "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.4.6",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.4.6"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.4.6",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.4.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "coloredlogs",
+      "source": "https://pypi.org/pypi/coloredlogs/json",
+      "latestStable": "15.0.1",
+      "latestAdvertised": "15.0.1",
+      "pythonRequirementForAdvertised": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "15.0.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "15.0.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "croniter",
+      "source": "https://pypi.org/pypi/croniter/json",
+      "latestStable": "6.2.4",
+      "latestAdvertised": "6.2.4",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "6.2.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "6.2.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "cryptography",
+      "source": "https://pypi.org/pypi/cryptography/json",
+      "latestStable": "50.0.2",
+      "latestAdvertised": "50.0.2",
+      "pythonRequirementForAdvertised": "!=3.9.0,!=3.9.1,>=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "50.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "50.0.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "50.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "50.0.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "50.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "50.0.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "50.0.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "50.0.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "50.0.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "50.0.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "cuda-bindings",
+      "source": "https://pypi.org/pypi/cuda-bindings/json",
+      "latestStable": "13.5.0",
+      "latestAdvertised": "13.5.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.9.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.9.10"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "cuda-pathfinder",
+      "source": "https://pypi.org/pypi/cuda-pathfinder/json",
+      "latestStable": "1.8.6",
+      "latestAdvertised": "1.8.6",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.8.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "cyclopts",
+      "source": "https://pypi.org/pypi/cyclopts/json",
+      "latestStable": "5.3.3",
+      "latestAdvertised": "5.3.3",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.2.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.25.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "dateparser",
+      "source": "https://pypi.org/pypi/dateparser/json",
+      "latestStable": "1.5.0",
+      "latestAdvertised": "1.5.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.4.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.5.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "defusedxml",
+      "source": "https://pypi.org/pypi/defusedxml/json",
+      "latestStable": "0.7.1",
+      "latestAdvertised": "0.7.1",
+      "pythonRequirementForAdvertised": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.7.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.7.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "distro",
+      "source": "https://pypi.org/pypi/distro/json",
+      "latestStable": "1.9.0",
+      "latestAdvertised": "1.9.0",
+      "pythonRequirementForAdvertised": ">=3.6",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.9.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.9.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.9.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.9.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.9.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.9.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "dnspython",
+      "source": "https://pypi.org/pypi/dnspython/json",
+      "latestStable": "2.9.2",
+      "latestAdvertised": "2.9.2",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.8.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.9.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.9.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.9.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.9.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.9.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "docker",
+      "source": "https://pypi.org/pypi/docker/json",
+      "latestStable": "7.2.0",
+      "latestAdvertised": "7.2.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "7.1.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "7.2.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "docstring-parser",
+      "source": "https://pypi.org/pypi/docstring-parser/json",
+      "latestStable": "0.18.0",
+      "latestAdvertised": "0.18.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.18.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.18.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.17.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.18.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.18.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.18.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.18.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.18.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "docutils",
+      "source": "https://pypi.org/pypi/docutils/json",
+      "latestStable": "0.23",
+      "latestAdvertised": "0.23",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.22.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.23"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "einops",
+      "source": "https://pypi.org/pypi/einops/json",
+      "latestStable": "0.8.2",
+      "latestAdvertised": "0.8.2",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.8.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.8.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "email-validator",
+      "source": "https://pypi.org/pypi/email-validator/json",
+      "latestStable": "2.3.0",
+      "latestAdvertised": "2.3.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.3.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.3.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "et-xmlfile",
+      "source": "https://pypi.org/pypi/et-xmlfile/json",
+      "latestStable": "2.0.0",
+      "latestAdvertised": "2.0.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.0.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.0.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "exceptiongroup",
+      "source": "https://pypi.org/pypi/exceptiongroup/json",
+      "latestStable": "1.3.1",
+      "latestAdvertised": "1.3.1",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.3.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "execnet",
+      "source": "https://pypi.org/pypi/execnet/json",
+      "latestStable": "2.1.2",
+      "latestAdvertised": "2.1.2",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.1.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.1.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "fastapi",
+      "source": "https://pypi.org/pypi/fastapi/json",
+      "latestStable": "0.162.0",
+      "latestAdvertised": "0.162.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.141.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.162.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.141.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.162.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.136.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.162.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.141.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.162.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.141.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.162.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "fastapi-cli",
+      "source": "https://pypi.org/pypi/fastapi-cli/json",
+      "latestStable": "0.0.32",
+      "latestAdvertised": "0.0.32",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.0.16",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.0.32"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "fastapi-cloud-cli",
+      "source": "https://pypi.org/pypi/fastapi-cloud-cli/json",
+      "latestStable": "0.26.0",
+      "latestAdvertised": "0.26.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.3.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.26.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "fastar",
+      "source": "https://pypi.org/pypi/fastar/json",
+      "latestStable": "0.12.0",
+      "latestAdvertised": "0.12.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.11.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.12.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "fastavro",
+      "source": "https://pypi.org/pypi/fastavro/json",
+      "latestStable": "1.13.1",
+      "latestAdvertised": "1.13.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.12.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.13.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "fastmcp",
+      "source": "https://pypi.org/pypi/fastmcp/json",
+      "latestStable": "4.1.6",
+      "latestAdvertised": "4.1.6",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.2.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.4.11"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "fastuuid",
+      "source": "https://pypi.org/pypi/fastuuid/json",
+      "latestStable": "0.14.0",
+      "latestAdvertised": "0.14.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.14.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.14.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "filelock",
+      "source": "https://pypi.org/pypi/filelock/json",
+      "latestStable": "4.2.9",
+      "latestAdvertised": "4.2.9",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.20.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.32.7"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "flashrank",
+      "source": "https://pypi.org/pypi/flashrank/json",
+      "latestStable": "0.2.10",
+      "latestAdvertised": "0.2.10",
+      "pythonRequirementForAdvertised": ">=3.6",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.2.10",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.2.10"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "flatbuffers",
+      "source": "https://pypi.org/pypi/flatbuffers/json",
+      "latestStable": "25.12.19",
+      "latestAdvertised": "25.12.19",
+      "pythonRequirementForAdvertised": null,
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "25.12.19",
+          "newerStableAvailable": false,
+          "newestSameMajor": "25.12.19"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "25.12.19",
+          "newerStableAvailable": false,
+          "newestSameMajor": "25.12.19"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "25.12.19",
+          "newerStableAvailable": false,
+          "newestSameMajor": "25.12.19"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "frozenlist",
+      "source": "https://pypi.org/pypi/frozenlist/json",
+      "latestStable": "1.8.0",
+      "latestAdvertised": "1.8.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.8.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.8.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.8.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.8.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.8.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "fsspec",
+      "source": "https://pypi.org/pypi/fsspec/json",
+      "latestStable": "2026.9.0",
+      "latestAdvertised": "2026.9.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2025.10.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2025.12.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "genai-prices",
+      "source": "https://pypi.org/pypi/genai-prices/json",
+      "latestStable": "0.2.1",
+      "latestAdvertised": "0.2.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.1.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.2.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.1.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.2.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "google-auth",
+      "source": "https://pypi.org/pypi/google-auth/json",
+      "latestStable": "2.62.1",
+      "latestAdvertised": "2.62.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.43.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.62.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "google-crc32c",
+      "source": "https://pypi.org/pypi/google-crc32c/json",
+      "latestStable": "1.9.0",
+      "latestAdvertised": "1.9.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.9.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.9.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.9.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.9.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "google-genai",
+      "source": "https://pypi.org/pypi/google-genai/json",
+      "latestStable": "3.0.0",
+      "latestAdvertised": "3.0.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.53.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.75.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "googleapis-common-protos",
+      "source": "https://pypi.org/pypi/googleapis-common-protos/json",
+      "latestStable": "1.76.0",
+      "latestAdvertised": "1.76.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.75.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.76.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.75.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.76.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.75.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.76.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "greenlet",
+      "source": "https://pypi.org/pypi/greenlet/json",
+      "latestStable": "3.5.6",
+      "latestAdvertised": "3.5.6",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "3.5.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.6"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "3.5.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.6"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.2.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "griffelib",
+      "source": "https://pypi.org/pypi/griffelib/json",
+      "latestStable": "2.4.1",
+      "latestAdvertised": "2.4.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.2.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.4.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.2.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.4.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "grpcio",
+      "source": "https://pypi.org/pypi/grpcio/json",
+      "latestStable": "1.85.1",
+      "latestAdvertised": "1.85.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.83.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.85.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.83.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.85.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "h11",
+      "source": "https://pypi.org/pypi/h11/json",
+      "latestStable": "0.16.0",
+      "latestAdvertised": "0.16.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.16.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.16.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.16.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.16.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.16.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "hf-xet",
+      "source": "https://pypi.org/pypi/hf-xet/json",
+      "latestStable": "1.8.0",
+      "latestAdvertised": "1.8.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "hindsight-api-slim",
+      "source": "https://pypi.org/pypi/hindsight-api-slim/json",
+      "latestStable": "1.2.0",
+      "latestAdvertised": "1.2.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.9.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.10.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "httpcore",
+      "source": "https://pypi.org/pypi/httpcore/json",
+      "latestStable": "1.0.9",
+      "latestAdvertised": "1.0.9",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.0.9",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.0.9"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.0.9",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.0.9"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.0.9",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.0.9"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "httpcore2",
+      "source": "https://pypi.org/pypi/httpcore2/json",
+      "latestStable": "2.16.0",
+      "latestAdvertised": "2.16.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "httptools",
+      "source": "https://pypi.org/pypi/httptools/json",
+      "latestStable": "0.9.0",
+      "latestAdvertised": "0.9.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.7.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.9.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "httpx",
+      "source": "https://pypi.org/pypi/httpx/json",
+      "latestStable": "0.28.1",
+      "latestAdvertised": "0.28.1",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.28.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.28.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.28.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.28.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.28.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.28.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "httpx-sse",
+      "source": "https://pypi.org/pypi/httpx-sse/json",
+      "latestStable": "0.4.3",
+      "latestAdvertised": "0.4.3",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.4.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.4.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "httpx2",
+      "source": "https://pypi.org/pypi/httpx2/json",
+      "latestStable": "2.16.0",
+      "latestAdvertised": "2.16.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "huggingface-hub",
+      "source": "https://pypi.org/pypi/huggingface-hub/json",
+      "latestStable": "2.4.0",
+      "latestAdvertised": "2.4.0",
+      "pythonRequirementForAdvertised": ">=3.10.0",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.33.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "humanfriendly",
+      "source": "https://pypi.org/pypi/humanfriendly/json",
+      "latestStable": "10.0",
+      "latestAdvertised": "10.0",
+      "pythonRequirementForAdvertised": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "10.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "10.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "idna",
+      "source": "https://pypi.org/pypi/idna/json",
+      "latestStable": "3.20",
+      "latestAdvertised": "3.20",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "3.19",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.20"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "3.19",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.20"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.15",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.20"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "3.19",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.20"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "3.19",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.20"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "ifaddr",
+      "source": "https://pypi.org/pypi/ifaddr/json",
+      "latestStable": "0.2.0",
+      "latestAdvertised": "0.2.0",
+      "pythonRequirementForAdvertised": "",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.2.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.2.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.2.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.2.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "importlib-metadata",
+      "source": "https://pypi.org/pypi/importlib-metadata/json",
+      "latestStable": "10.1.0",
+      "latestAdvertised": "10.1.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "8.5.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "8.9.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "iniconfig",
+      "source": "https://pypi.org/pypi/iniconfig/json",
+      "latestStable": "2.3.1",
+      "latestAdvertised": "2.3.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.3.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.3.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.3.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jaraco.classes",
+      "source": "https://pypi.org/pypi/jaraco.classes/json",
+      "latestStable": "3.4.0",
+      "latestAdvertised": "3.4.0",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.4.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "3.4.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jaraco.context",
+      "source": "https://pypi.org/pypi/jaraco.context/json",
+      "latestStable": "6.1.2",
+      "latestAdvertised": "6.1.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "6.1.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "6.1.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jaraco.functools",
+      "source": "https://pypi.org/pypi/jaraco.functools/json",
+      "latestStable": "4.6.0",
+      "latestAdvertised": "4.6.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.6.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jeepney",
+      "source": "https://pypi.org/pypi/jeepney/json",
+      "latestStable": "0.9.0",
+      "latestAdvertised": "0.9.0",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.9.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.9.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jinja2",
+      "source": "https://pypi.org/pypi/jinja2/json",
+      "latestStable": "3.1.6",
+      "latestAdvertised": "3.1.6",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.1.6",
+          "newerStableAvailable": false,
+          "newestSameMajor": "3.1.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jiter",
+      "source": "https://pypi.org/pypi/jiter/json",
+      "latestStable": "0.18.0",
+      "latestAdvertised": "0.18.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.16.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.18.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.16.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.18.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.18.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.16.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.18.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.16.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.18.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jmespath",
+      "source": "https://pypi.org/pypi/jmespath/json",
+      "latestStable": "1.1.0",
+      "latestAdvertised": "1.1.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.1.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.1.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "joblib",
+      "source": "https://pypi.org/pypi/joblib/json",
+      "latestStable": "1.6.0",
+      "latestAdvertised": "1.6.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.5.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.6.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "json-repair",
+      "source": "https://pypi.org/pypi/json-repair/json",
+      "latestStable": "0.64.6",
+      "latestAdvertised": "0.64.6",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.61.7",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.64.6"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.60.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.64.6"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.60.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.64.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jsonpatch",
+      "source": "https://pypi.org/pypi/jsonpatch/json",
+      "latestStable": "1.44",
+      "latestAdvertised": "1.44",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.33",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.44"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jsonpointer",
+      "source": "https://pypi.org/pypi/jsonpointer/json",
+      "latestStable": "3.10",
+      "latestAdvertised": "3.10",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.0.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.10"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jsonref",
+      "source": "https://pypi.org/pypi/jsonref/json",
+      "latestStable": "1.1.0",
+      "latestAdvertised": "1.1.0",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.1.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.1.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jsonschema",
+      "source": "https://pypi.org/pypi/jsonschema/json",
+      "latestStable": "4.26.0",
+      "latestAdvertised": "4.26.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.23.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.26.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jsonschema-path",
+      "source": "https://pypi.org/pypi/jsonschema-path/json",
+      "latestStable": "0.5.0",
+      "latestAdvertised": "0.5.0",
+      "pythonRequirementForAdvertised": "<4.0.0,>=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.3.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.5.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "jsonschema-specifications",
+      "source": "https://pypi.org/pypi/jsonschema-specifications/json",
+      "latestStable": "2025.9.1",
+      "latestAdvertised": "2025.9.1",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2025.9.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2025.9.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "keyring",
+      "source": "https://pypi.org/pypi/keyring/json",
+      "latestStable": "25.7.0",
+      "latestAdvertised": "25.7.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "25.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "25.7.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "langchain-core",
+      "source": "https://pypi.org/pypi/langchain-core/json",
+      "latestStable": "1.7.6",
+      "latestAdvertised": "1.7.6",
+      "pythonRequirementForAdvertised": "<4.0.0,>=3.10.0",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.4.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.7.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "langchain-protocol",
+      "source": "https://pypi.org/pypi/langchain-protocol/json",
+      "latestStable": "0.0.21",
+      "latestAdvertised": "0.0.21",
+      "pythonRequirementForAdvertised": "<4.0.0,>=3.10.0",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.0.15",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.0.21"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "langchain-text-splitters",
+      "source": "https://pypi.org/pypi/langchain-text-splitters/json",
+      "latestStable": "1.1.3",
+      "latestAdvertised": "1.1.3",
+      "pythonRequirementForAdvertised": "<4.0.0,>=3.10.0",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.1.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.1.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "langsmith",
+      "source": "https://pypi.org/pypi/langsmith/json",
+      "latestStable": "0.14.17",
+      "latestAdvertised": "0.14.17",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.9.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.14.17"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "litellm",
+      "source": "https://pypi.org/pypi/litellm/json",
+      "latestStable": "1.108.1",
+      "latestAdvertised": "1.108.1",
+      "pythonRequirementForAdvertised": "<3.15,>=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.93.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.108.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "livekit",
+      "source": "https://pypi.org/pypi/livekit/json",
+      "latestStable": "1.2.1",
+      "latestAdvertised": "1.2.1",
+      "pythonRequirementForAdvertised": ">=3.9.0",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.1.17",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.2.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.1.17",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.2.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "livekit-agents",
+      "source": "https://pypi.org/pypi/livekit-agents/json",
+      "latestStable": "1.8.11",
+      "latestAdvertised": "1.8.11",
+      "pythonRequirementForAdvertised": "<3.15,>=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.8.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.8.11"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.8.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.8.11"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "livekit-api",
+      "source": "https://pypi.org/pypi/livekit-api/json",
+      "latestStable": "1.2.2",
+      "latestAdvertised": "1.2.2",
+      "pythonRequirementForAdvertised": ">=3.9.0",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.2.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.2.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.2.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.2.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "livekit-blingfire",
+      "source": "https://pypi.org/pypi/livekit-blingfire/json",
+      "latestStable": "1.2.0",
+      "latestAdvertised": "1.2.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.1.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.2.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.1.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.2.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "livekit-local-inference",
+      "source": "https://pypi.org/pypi/livekit-local-inference/json",
+      "latestStable": "0.2.7",
+      "latestAdvertised": "0.2.7",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.2.7",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.2.7"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.2.7",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.2.7"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "livekit-plugins-silero",
+      "source": "https://pypi.org/pypi/livekit-plugins-silero/json",
+      "latestStable": "1.8.11",
+      "latestAdvertised": "1.8.11",
+      "pythonRequirementForAdvertised": ">=3.10.0",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.8.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.8.11"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.8.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.8.11"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "livekit-protocol",
+      "source": "https://pypi.org/pypi/livekit-protocol/json",
+      "latestStable": "1.1.31",
+      "latestAdvertised": "1.1.31",
+      "pythonRequirementForAdvertised": ">=3.9.0",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.1.26",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.1.31"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.1.26",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.1.31"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "logfire-api",
+      "source": "https://pypi.org/pypi/logfire-api/json",
+      "latestStable": "5.4.0",
+      "latestAdvertised": "5.4.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "4.41.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.41.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "4.41.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.41.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "lxml",
+      "source": "https://pypi.org/pypi/lxml/json",
+      "latestStable": "6.1.3",
+      "latestAdvertised": "6.1.3",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "6.1.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "6.1.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "magika",
+      "source": "https://pypi.org/pypi/magika/json",
+      "latestStable": "1.0.3",
+      "latestAdvertised": "1.0.3",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.6.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.6.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "mako",
+      "source": "https://pypi.org/pypi/mako/json",
+      "latestStable": "1.4.3",
+      "latestAdvertised": "1.4.3",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "1.4.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.4.3"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "1.4.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.4.3"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.12",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.4.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "mammoth",
+      "source": "https://pypi.org/pypi/mammoth/json",
+      "latestStable": "1.13.0",
+      "latestAdvertised": "1.13.0",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.11.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.13.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "markdown-it-py",
+      "source": "https://pypi.org/pypi/markdown-it-py/json",
+      "latestStable": "4.2.0",
+      "latestAdvertised": "4.2.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.0.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.2.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "4.2.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "4.2.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "4.2.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "4.2.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "markdownify",
+      "source": "https://pypi.org/pypi/markdownify/json",
+      "latestStable": "1.2.3",
+      "latestAdvertised": "1.2.3",
+      "pythonRequirementForAdvertised": null,
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.2.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.2.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "markitdown",
+      "source": "https://pypi.org/pypi/markitdown/json",
+      "latestStable": "0.1.9",
+      "latestAdvertised": "0.1.9",
+      "pythonRequirementForAdvertised": "<3.15,>=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.1.5b1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.1.9"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "markupsafe",
+      "source": "https://pypi.org/pypi/markupsafe/json",
+      "latestStable": "3.0.4",
+      "latestAdvertised": "3.0.4",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "3.0.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.0.4"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "3.0.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.0.4"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.0.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.0.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "mcp",
+      "source": "https://pypi.org/pypi/mcp/json",
+      "latestStable": "2.3.0",
+      "latestAdvertised": "2.3.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.28.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.30.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "mdurl",
+      "source": "https://pypi.org/pypi/mdurl/json",
+      "latestStable": "0.1.2",
+      "latestAdvertised": "0.1.2",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.1.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.1.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.1.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.1.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.1.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.1.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "mlx",
+      "source": "https://pypi.org/pypi/mlx/json",
+      "latestStable": "0.32.4",
+      "latestAdvertised": "0.32.4",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.31.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.32.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "mlx-lm",
+      "source": "https://pypi.org/pypi/mlx-lm/json",
+      "latestStable": "0.32.2",
+      "latestAdvertised": "0.32.2",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.31.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.32.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "more-itertools",
+      "source": "https://pypi.org/pypi/more-itertools/json",
+      "latestStable": "11.2.1",
+      "latestAdvertised": "11.2.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "10.8.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "10.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "mpmath",
+      "source": "https://pypi.org/pypi/mpmath/json",
+      "latestStable": "1.4.1",
+      "latestAdvertised": "1.4.1",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.4.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "multidict",
+      "source": "https://pypi.org/pypi/multidict/json",
+      "latestStable": "7.2.1",
+      "latestAdvertised": "7.2.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "6.7.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "6.9.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "6.8.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "6.9.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "6.8.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "6.9.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nest-asyncio",
+      "source": "https://pypi.org/pypi/nest-asyncio/json",
+      "latestStable": "1.6.0",
+      "latestAdvertised": "1.6.0",
+      "pythonRequirementForAdvertised": ">=3.5",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.6.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.6.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.6.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.6.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "networkx",
+      "source": "https://pypi.org/pypi/networkx/json",
+      "latestStable": "3.7",
+      "latestAdvertised": "3.7",
+      "pythonRequirementForAdvertised": "!=3.14.1,>=3.12",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.7"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "numpy",
+      "source": "https://pypi.org/pypi/numpy/json",
+      "latestStable": "2.5.4",
+      "latestAdvertised": "2.5.4",
+      "pythonRequirementForAdvertised": ">=3.12",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.3.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.5.4"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.5.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.5.4"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.5.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.5.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cublas-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cublas-cu12/json",
+      "latestStable": "12.9.3.13",
+      "latestAdvertised": "12.9.3.13",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.8.4.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.9.3.13"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cuda-cupti-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cuda-cupti-cu12/json",
+      "latestStable": "12.9.79",
+      "latestAdvertised": "12.9.79",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.8.90",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.9.79"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cuda-nvrtc-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cuda-nvrtc-cu12/json",
+      "latestStable": "12.9.86",
+      "latestAdvertised": "12.9.86",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.8.93",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.9.86"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cuda-runtime-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cuda-runtime-cu12/json",
+      "latestStable": "12.9.79",
+      "latestAdvertised": "12.9.79",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.8.90",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.9.79"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cudnn-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cudnn-cu12/json",
+      "latestStable": "9.28.0.42",
+      "latestAdvertised": "9.28.0.42",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "9.10.2.21",
+          "newerStableAvailable": true,
+          "newestSameMajor": "9.28.0.42"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cufft-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cufft-cu12/json",
+      "latestStable": "11.4.1.4",
+      "latestAdvertised": "11.4.1.4",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "11.3.3.83",
+          "newerStableAvailable": true,
+          "newestSameMajor": "11.4.1.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cufile-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cufile-cu12/json",
+      "latestStable": "1.14.1.1",
+      "latestAdvertised": "1.14.1.1",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.13.1.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.14.1.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-curand-cu12",
+      "source": "https://pypi.org/pypi/nvidia-curand-cu12/json",
+      "latestStable": "10.3.10.19",
+      "latestAdvertised": "10.3.10.19",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "10.3.9.90",
+          "newerStableAvailable": true,
+          "newestSameMajor": "10.3.10.19"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cusolver-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cusolver-cu12/json",
+      "latestStable": "11.7.5.82",
+      "latestAdvertised": "11.7.5.82",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "11.7.3.90",
+          "newerStableAvailable": true,
+          "newestSameMajor": "11.7.5.82"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cusparse-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cusparse-cu12/json",
+      "latestStable": "12.5.10.65",
+      "latestAdvertised": "12.5.10.65",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.5.8.93",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.5.10.65"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-cusparselt-cu12",
+      "source": "https://pypi.org/pypi/nvidia-cusparselt-cu12/json",
+      "latestStable": "0.8.1",
+      "latestAdvertised": "0.8.1",
+      "pythonRequirementForAdvertised": null,
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.7.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.8.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-nccl-cu12",
+      "source": "https://pypi.org/pypi/nvidia-nccl-cu12/json",
+      "latestStable": "2.32.3",
+      "latestAdvertised": "2.32.3",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.27.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.32.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-nvjitlink-cu12",
+      "source": "https://pypi.org/pypi/nvidia-nvjitlink-cu12/json",
+      "latestStable": "12.9.86",
+      "latestAdvertised": "12.9.86",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.8.93",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.9.86"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-nvshmem-cu12",
+      "source": "https://pypi.org/pypi/nvidia-nvshmem-cu12/json",
+      "latestStable": "3.8.0",
+      "latestAdvertised": "3.8.0",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.4.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "nvidia-nvtx-cu12",
+      "source": "https://pypi.org/pypi/nvidia-nvtx-cu12/json",
+      "latestStable": "12.9.79",
+      "latestAdvertised": "12.9.79",
+      "pythonRequirementForAdvertised": ">=3",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.8.90",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.9.79"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "obstore",
+      "source": "https://pypi.org/pypi/obstore/json",
+      "latestStable": "0.12.1",
+      "latestAdvertised": "0.12.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.8.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.12.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "onnxruntime",
+      "source": "https://pypi.org/pypi/onnxruntime/json",
+      "latestStable": "1.31.1",
+      "latestAdvertised": "1.31.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.20.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.31.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.29.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.31.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.29.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.31.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "openai",
+      "source": "https://pypi.org/pypi/openai/json",
+      "latestStable": "3.46.0",
+      "latestAdvertised": "3.46.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "3.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.46.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "3.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.46.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.24.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.54.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.54.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.54.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.54.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.54.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "openapi-pydantic",
+      "source": "https://pypi.org/pypi/openapi-pydantic/json",
+      "latestStable": "0.6.0",
+      "latestAdvertised": "0.6.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.5.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.6.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "openpyxl",
+      "source": "https://pypi.org/pypi/openpyxl/json",
+      "latestStable": "3.1.5",
+      "latestAdvertised": "3.1.5",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.1.5",
+          "newerStableAvailable": false,
+          "newestSameMajor": "3.1.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-api",
+      "source": "https://pypi.org/pypi/opentelemetry-api/json",
+      "latestStable": "1.45.2",
+      "latestAdvertised": "1.45.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-exporter-otlp",
+      "source": "https://pypi.org/pypi/opentelemetry-exporter-otlp/json",
+      "latestStable": "1.45.2",
+      "latestAdvertised": "1.45.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-common",
+      "source": "https://pypi.org/pypi/opentelemetry-exporter-otlp-proto-common/json",
+      "latestStable": "1.45.2",
+      "latestAdvertised": "1.45.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-grpc",
+      "source": "https://pypi.org/pypi/opentelemetry-exporter-otlp-proto-grpc/json",
+      "latestStable": "1.45.2",
+      "latestAdvertised": "1.45.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-http",
+      "source": "https://pypi.org/pypi/opentelemetry-exporter-otlp-proto-http/json",
+      "latestStable": "1.45.2",
+      "latestAdvertised": "1.45.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-exporter-prometheus",
+      "source": "https://pypi.org/pypi/opentelemetry-exporter-prometheus/json",
+      "latestStable": null,
+      "latestAdvertised": "0.66b2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.65b0",
+          "newerStableAvailable": false,
+          "newestSameMajor": null
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-instrumentation",
+      "source": "https://pypi.org/pypi/opentelemetry-instrumentation/json",
+      "latestStable": null,
+      "latestAdvertised": "0.66b2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.65b0",
+          "newerStableAvailable": false,
+          "newestSameMajor": null
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-instrumentation-asgi",
+      "source": "https://pypi.org/pypi/opentelemetry-instrumentation-asgi/json",
+      "latestStable": null,
+      "latestAdvertised": "0.66b2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.65b0",
+          "newerStableAvailable": false,
+          "newestSameMajor": null
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-instrumentation-fastapi",
+      "source": "https://pypi.org/pypi/opentelemetry-instrumentation-fastapi/json",
+      "latestStable": null,
+      "latestAdvertised": "0.66b2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.65b0",
+          "newerStableAvailable": false,
+          "newestSameMajor": null
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-proto",
+      "source": "https://pypi.org/pypi/opentelemetry-proto/json",
+      "latestStable": "1.45.2",
+      "latestAdvertised": "1.45.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-sdk",
+      "source": "https://pypi.org/pypi/opentelemetry-sdk/json",
+      "latestStable": "1.45.2",
+      "latestAdvertised": "1.45.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.45.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-semantic-conventions",
+      "source": "https://pypi.org/pypi/opentelemetry-semantic-conventions/json",
+      "latestStable": null,
+      "latestAdvertised": "0.66b2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.65b0",
+          "newerStableAvailable": false,
+          "newestSameMajor": null
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.65b0",
+          "newerStableAvailable": false,
+          "newestSameMajor": null
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.65b0",
+          "newerStableAvailable": false,
+          "newestSameMajor": null
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "opentelemetry-util-http",
+      "source": "https://pypi.org/pypi/opentelemetry-util-http/json",
+      "latestStable": null,
+      "latestAdvertised": "0.66b2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.65b0",
+          "newerStableAvailable": false,
+          "newestSameMajor": null
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "orjson",
+      "source": "https://pypi.org/pypi/orjson/json",
+      "latestStable": "3.13.0",
+      "latestAdvertised": "3.13.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.11.7",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.13.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "packaging",
+      "source": "https://pypi.org/pypi/packaging/json",
+      "latestStable": "26.3",
+      "latestAdvertised": "26.3",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "26.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "26.3"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "26.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "26.3"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "26.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "26.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pandas",
+      "source": "https://pypi.org/pypi/pandas/json",
+      "latestStable": "3.1.1",
+      "latestAdvertised": "3.1.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.3.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.3.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pathable",
+      "source": "https://pypi.org/pypi/pathable/json",
+      "latestStable": "0.6.0",
+      "latestAdvertised": "0.6.0",
+      "pythonRequirementForAdvertised": "<4.0,>=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.4.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.6.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pdfminer.six",
+      "source": "https://pypi.org/pypi/pdfminer.six/json",
+      "latestStable": "20260107",
+      "latestAdvertised": "20260107",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "20251230",
+          "newerStableAvailable": true,
+          "newestSameMajor": "20251230"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pdfplumber",
+      "source": "https://pypi.org/pypi/pdfplumber/json",
+      "latestStable": "0.11.10",
+      "latestAdvertised": "0.11.10",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.11.9",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.11.10"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pg0-embedded",
+      "source": "https://pypi.org/pypi/pg0-embedded/json",
+      "latestStable": "0.16.1",
+      "latestAdvertised": "0.16.1",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.15.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.16.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pgvector",
+      "source": "https://pypi.org/pypi/pgvector/json",
+      "latestStable": "0.5.1",
+      "latestAdvertised": "0.5.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.4.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.5.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pillow",
+      "source": "https://pypi.org/pypi/pillow/json",
+      "latestStable": "13.0.0",
+      "latestAdvertised": "13.0.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "12.3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "12.3.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pip",
+      "source": "https://pypi.org/pypi/pip/json",
+      "latestStable": "26.3",
+      "latestAdvertised": "26.3",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "24.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "24.3.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "25.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "25.3"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "25.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "25.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "platformdirs",
+      "source": "https://pypi.org/pypi/platformdirs/json",
+      "latestStable": "4.14.5",
+      "latestAdvertised": "4.14.5",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.5.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.14.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pluggy",
+      "source": "https://pypi.org/pypi/pluggy/json",
+      "latestStable": "1.7.0",
+      "latestAdvertised": "1.7.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.7.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.7.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.7.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "prometheus-client",
+      "source": "https://pypi.org/pypi/prometheus-client/json",
+      "latestStable": "0.26.0",
+      "latestAdvertised": "0.26.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.23.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.26.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.26.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.26.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.26.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.26.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "propcache",
+      "source": "https://pypi.org/pypi/propcache/json",
+      "latestStable": "0.5.4",
+      "latestAdvertised": "0.5.4",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.4.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.5.4"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.5.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.5.4"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.5.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.5.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "protobuf",
+      "source": "https://pypi.org/pypi/protobuf/json",
+      "latestStable": "7.36.2",
+      "latestAdvertised": "7.36.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "7.35.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "7.36.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "7.36.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "7.36.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "7.36.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "7.36.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "psutil",
+      "source": "https://pypi.org/pypi/psutil/json",
+      "latestStable": "7.2.2",
+      "latestAdvertised": "7.2.2",
+      "pythonRequirementForAdvertised": ">=3.6",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "7.2.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "7.2.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "7.2.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "7.2.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "psycopg",
+      "source": "https://pypi.org/pypi/psycopg/json",
+      "latestStable": "3.3.8",
+      "latestAdvertised": "3.3.8",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "3.3.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.3.8"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "3.3.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.3.8"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "psycopg-binary",
+      "source": "https://pypi.org/pypi/psycopg-binary/json",
+      "latestStable": "3.3.8",
+      "latestAdvertised": "3.3.8",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "3.3.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.3.8"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "3.3.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.3.8"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "psycopg2-binary",
+      "source": "https://pypi.org/pypi/psycopg2-binary/json",
+      "latestStable": "2.9.13",
+      "latestAdvertised": "2.9.13",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.9.11",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.9.13"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "py-key-value-aio",
+      "source": "https://pypi.org/pypi/py-key-value-aio/json",
+      "latestStable": "0.4.6",
+      "latestAdvertised": "0.4.6",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.4.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.4.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pyasn1",
+      "source": "https://pypi.org/pypi/pyasn1/json",
+      "latestStable": "0.6.5",
+      "latestAdvertised": "0.6.5",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.6.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.6.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pyasn1-modules",
+      "source": "https://pypi.org/pypi/pyasn1-modules/json",
+      "latestStable": "0.4.2",
+      "latestAdvertised": "0.4.2",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.4.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.4.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pycparser",
+      "source": "https://pypi.org/pypi/pycparser/json",
+      "latestStable": "3.12",
+      "latestAdvertised": "3.12",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.12"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.12"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.23",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.23"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.12"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.12"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pydantic",
+      "source": "https://pypi.org/pypi/pydantic/json",
+      "latestStable": "2.14.3",
+      "latestAdvertised": "2.14.3",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.12.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.14.3"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.12.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.14.3"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.12.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.14.3"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.13.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.14.3"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.13.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.14.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pydantic-ai-slim",
+      "source": "https://pypi.org/pypi/pydantic-ai-slim/json",
+      "latestStable": "2.66.0",
+      "latestAdvertised": "2.66.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.37.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.66.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.37.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.66.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pydantic-core",
+      "source": "https://pypi.org/pypi/pydantic-core/json",
+      "latestStable": "2.50.4",
+      "latestAdvertised": "2.50.4",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.41.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.50.4"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.41.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.50.4"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.41.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.50.4"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.46.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.50.4"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.46.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.50.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pydantic-extra-types",
+      "source": "https://pypi.org/pypi/pydantic-extra-types/json",
+      "latestStable": "2.11.1",
+      "latestAdvertised": "2.11.1",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.11.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.11.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pydantic-graph",
+      "source": "https://pypi.org/pypi/pydantic-graph/json",
+      "latestStable": "2.66.0",
+      "latestAdvertised": "2.66.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.37.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.66.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.37.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.66.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pydantic-settings",
+      "source": "https://pypi.org/pypi/pydantic-settings/json",
+      "latestStable": "2.16.2",
+      "latestAdvertised": "2.16.2",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.14.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.16.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pyee",
+      "source": "https://pypi.org/pypi/pyee/json",
+      "latestStable": "16.0.1",
+      "latestAdvertised": "16.0.1",
+      "pythonRequirementForAdvertised": ">=3.12",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "14.0.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "14.0.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "14.0.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "14.0.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pygments",
+      "source": "https://pypi.org/pypi/pygments/json",
+      "latestStable": "2.21.0",
+      "latestAdvertised": "2.21.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.20.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.21.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.21.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.21.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.21.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.21.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pyjwt",
+      "source": "https://pypi.org/pypi/pyjwt/json",
+      "latestStable": "2.15.1",
+      "latestAdvertised": "2.15.1",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.13.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.15.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.13.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.15.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.13.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.15.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pylibsrtp",
+      "source": "https://pypi.org/pypi/pylibsrtp/json",
+      "latestStable": "1.0.0",
+      "latestAdvertised": "1.0.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.0.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.0.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.0.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.0.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pynacl",
+      "source": "https://pypi.org/pypi/pynacl/json",
+      "latestStable": "1.6.2",
+      "latestAdvertised": "1.6.2",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "1.6.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.6.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "1.6.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.6.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pyopenssl",
+      "source": "https://pypi.org/pypi/pyopenssl/json",
+      "latestStable": "26.4.0",
+      "latestAdvertised": "26.4.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "26.4.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "26.4.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "26.4.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "26.4.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pypdfium2",
+      "source": "https://pypi.org/pypi/pypdfium2/json",
+      "latestStable": "5.15.0",
+      "latestAdvertised": "5.15.0",
+      "pythonRequirementForAdvertised": ">=3.6",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "5.4.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "5.15.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pyperclip",
+      "source": "https://pypi.org/pypi/pyperclip/json",
+      "latestStable": "1.11.0",
+      "latestAdvertised": "1.11.0",
+      "pythonRequirementForAdvertised": null,
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.11.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.11.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pytest",
+      "source": "https://pypi.org/pypi/pytest/json",
+      "latestStable": "9.2.0",
+      "latestAdvertised": "9.2.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "9.0.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "9.2.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "9.1.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "9.2.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "9.1.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "9.2.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pytest-asyncio",
+      "source": "https://pypi.org/pypi/pytest-asyncio/json",
+      "latestStable": "1.4.1.post1",
+      "latestAdvertised": "1.4.1.post1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.4.1.post1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.4.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.4.1.post1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.4.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.4.1.post1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pytest-rerunfailures",
+      "source": "https://pypi.org/pypi/pytest-rerunfailures/json",
+      "latestStable": "16.7",
+      "latestAdvertised": "16.7",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "16.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "16.7"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pytest-timeout",
+      "source": "https://pypi.org/pypi/pytest-timeout/json",
+      "latestStable": "2.4.0",
+      "latestAdvertised": "2.4.0",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.4.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.4.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pytest-xdist",
+      "source": "https://pypi.org/pypi/pytest-xdist/json",
+      "latestStable": "3.8.0",
+      "latestAdvertised": "3.8.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.8.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "3.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "python-dateutil",
+      "source": "https://pypi.org/pypi/python-dateutil/json",
+      "latestStable": "4.0.0",
+      "latestAdvertised": "4.0.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.9.0.post0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.9.0.post0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "python-dotenv",
+      "source": "https://pypi.org/pypi/python-dotenv/json",
+      "latestStable": "1.2.4",
+      "latestAdvertised": "1.2.4",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.2.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.2.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "python-multipart",
+      "source": "https://pypi.org/pypi/python-multipart/json",
+      "latestStable": "0.0.33",
+      "latestAdvertised": "0.0.33",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.0.32",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.0.33"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "python-pptx",
+      "source": "https://pypi.org/pypi/python-pptx/json",
+      "latestStable": "1.0.2",
+      "latestAdvertised": "1.0.2",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.0.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.0.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pytz",
+      "source": "https://pypi.org/pypi/pytz/json",
+      "latestStable": "2026.6",
+      "latestAdvertised": "2026.6",
+      "pythonRequirementForAdvertised": null,
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2025.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2025.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "pyyaml",
+      "source": "https://pypi.org/pypi/pyyaml/json",
+      "latestStable": "6.0.3",
+      "latestAdvertised": "6.0.3",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "6.0.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "6.0.3"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "6.0.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "6.0.3"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "6.0.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "6.0.3"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "6.0.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "6.0.3"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "6.0.3",
+          "newerStableAvailable": false,
+          "newestSameMajor": "6.0.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "referencing",
+      "source": "https://pypi.org/pypi/referencing/json",
+      "latestStable": "0.37.0",
+      "latestAdvertised": "0.37.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.36.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.37.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "regex",
+      "source": "https://pypi.org/pypi/regex/json",
+      "latestStable": "2026.9.29",
+      "latestAdvertised": "2026.9.29",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2026.9.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2026.9.29"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2026.9.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2026.9.29"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2025.11.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2025.11.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "requests",
+      "source": "https://pypi.org/pypi/requests/json",
+      "latestStable": "2.34.2",
+      "latestAdvertised": "2.34.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.34.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.34.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.34.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.34.2"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.34.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.34.2"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.34.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.34.2"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.34.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.34.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "requests-toolbelt",
+      "source": "https://pypi.org/pypi/requests-toolbelt/json",
+      "latestStable": "1.0.0",
+      "latestAdvertised": "1.0.0",
+      "pythonRequirementForAdvertised": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.0.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.0.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "rich",
+      "source": "https://pypi.org/pypi/rich/json",
+      "latestStable": "15.0.0",
+      "latestAdvertised": "15.0.0",
+      "pythonRequirementForAdvertised": ">=3.9.0",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "14.2.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "14.3.4"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "15.0.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "15.0.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "15.0.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "15.0.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "rich-rst",
+      "source": "https://pypi.org/pypi/rich-rst/json",
+      "latestStable": "2.2.0",
+      "latestAdvertised": "2.2.0",
+      "pythonRequirementForAdvertised": null,
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.3.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "rich-toolkit",
+      "source": "https://pypi.org/pypi/rich-toolkit/json",
+      "latestStable": "0.20.6",
+      "latestAdvertised": "0.20.6",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.15.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.20.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "rignore",
+      "source": "https://pypi.org/pypi/rignore/json",
+      "latestStable": "0.8.1",
+      "latestAdvertised": "0.8.1",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.7.6",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.8.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "rpds-py",
+      "source": "https://pypi.org/pypi/rpds-py/json",
+      "latestStable": "2026.9.1",
+      "latestAdvertised": "2026.9.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.28.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.30.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "rsa",
+      "source": "https://pypi.org/pypi/rsa/json",
+      "latestStable": "4.9.1",
+      "latestAdvertised": "4.9.1",
+      "pythonRequirementForAdvertised": "<4,>=3.6",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.9.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "4.9.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "ruff",
+      "source": "https://pypi.org/pypi/ruff/json",
+      "latestStable": "0.17.4",
+      "latestAdvertised": "0.17.4",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.14.9",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.17.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "s3transfer",
+      "source": "https://pypi.org/pypi/s3transfer/json",
+      "latestStable": "0.19.3",
+      "latestAdvertised": "0.19.3",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.16.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.19.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "safetensors",
+      "source": "https://pypi.org/pypi/safetensors/json",
+      "latestStable": "0.8.0",
+      "latestAdvertised": "0.8.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.6.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "scikit-learn",
+      "source": "https://pypi.org/pypi/scikit-learn/json",
+      "latestStable": "1.9.1",
+      "latestAdvertised": "1.9.1",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.7.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.9.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "scipy",
+      "source": "https://pypi.org/pypi/scipy/json",
+      "latestStable": "1.18.1",
+      "latestAdvertised": "1.18.1",
+      "pythonRequirementForAdvertised": ">=3.12",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.16.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.18.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "secretstorage",
+      "source": "https://pypi.org/pypi/secretstorage/json",
+      "latestStable": "3.5.0",
+      "latestAdvertised": "3.5.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.4.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.5.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "sentence-transformers",
+      "source": "https://pypi.org/pypi/sentence-transformers/json",
+      "latestStable": "6.2.0",
+      "latestAdvertised": "6.2.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "5.2.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "5.7.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "sentencepiece",
+      "source": "https://pypi.org/pypi/sentencepiece/json",
+      "latestStable": "0.2.3",
+      "latestAdvertised": "0.2.3",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.2.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.2.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "sentry-sdk",
+      "source": "https://pypi.org/pypi/sentry-sdk/json",
+      "latestStable": "2.74.0",
+      "latestAdvertised": "2.74.0",
+      "pythonRequirementForAdvertised": ">=3.6",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.44.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.74.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "setuptools",
+      "source": "https://pypi.org/pypi/setuptools/json",
+      "latestStable": "84.2.1",
+      "latestAdvertised": "84.2.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "84.0.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "84.2.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "84.0.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "84.2.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "shellingham",
+      "source": "https://pypi.org/pypi/shellingham/json",
+      "latestStable": "1.5.4",
+      "latestAdvertised": "1.5.4",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.5.4",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.5.4"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.5.4",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.5.4"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.5.4",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.5.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "six",
+      "source": "https://pypi.org/pypi/six/json",
+      "latestStable": "1.17.0",
+      "latestAdvertised": "1.17.0",
+      "pythonRequirementForAdvertised": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.17.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.17.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "sniffio",
+      "source": "https://pypi.org/pypi/sniffio/json",
+      "latestStable": "1.3.1",
+      "latestAdvertised": "1.3.1",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "1.3.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.3.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "1.3.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.3.1"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.3.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.3.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.3.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.3.1",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.3.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "sounddevice",
+      "source": "https://pypi.org/pypi/sounddevice/json",
+      "latestStable": "0.5.6",
+      "latestAdvertised": "0.5.6",
+      "pythonRequirementForAdvertised": ">=3.7",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.5.6",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.5.6"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.5.6",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.5.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "soupsieve",
+      "source": "https://pypi.org/pypi/soupsieve/json",
+      "latestStable": "4.0.1",
+      "latestAdvertised": "4.0.1",
+      "pythonRequirementForAdvertised": ">=3.11.5",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.8.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.10"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "sqlalchemy",
+      "source": "https://pypi.org/pypi/sqlalchemy/json",
+      "latestStable": "2.1.8",
+      "latestAdvertised": "2.1.8",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.0.52",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.1.8"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.0.52",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.1.8"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.0.44",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.1.8"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "sse-starlette",
+      "source": "https://pypi.org/pypi/sse-starlette/json",
+      "latestStable": "3.6.0",
+      "latestAdvertised": "3.6.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.0.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.6.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "starlette",
+      "source": "https://pypi.org/pypi/starlette/json",
+      "latestStable": "1.10.0",
+      "latestAdvertised": "1.10.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.10.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.10.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.10.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.10.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.10.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "sympy",
+      "source": "https://pypi.org/pypi/sympy/json",
+      "latestStable": "1.14.0",
+      "latestAdvertised": "1.14.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.14.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.14.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "tenacity",
+      "source": "https://pypi.org/pypi/tenacity/json",
+      "latestStable": "9.2.1",
+      "latestAdvertised": "9.2.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "9.1.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "9.2.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "testcontainers",
+      "source": "https://pypi.org/pypi/testcontainers/json",
+      "latestStable": "4.15.0",
+      "latestAdvertised": "4.15.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.14.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.15.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "threadpoolctl",
+      "source": "https://pypi.org/pypi/threadpoolctl/json",
+      "latestStable": "3.8.0",
+      "latestAdvertised": "3.8.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "tiktoken",
+      "source": "https://pypi.org/pypi/tiktoken/json",
+      "latestStable": "0.14.0",
+      "latestAdvertised": "0.14.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.14.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.14.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.14.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.14.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.12.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.14.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "tokenizers",
+      "source": "https://pypi.org/pypi/tokenizers/json",
+      "latestStable": "0.23.3",
+      "latestAdvertised": "0.23.3",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.22.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.23.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "torch",
+      "source": "https://pypi.org/pypi/torch/json",
+      "latestStable": "2.15.0",
+      "latestAdvertised": "2.15.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.10.0+cu128",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.15.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "tornado",
+      "source": "https://pypi.org/pypi/tornado/json",
+      "latestStable": "6.6",
+      "latestAdvertised": "6.6",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "6.5.7",
+          "newerStableAvailable": true,
+          "newestSameMajor": "6.6"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "tqdm",
+      "source": "https://pypi.org/pypi/tqdm/json",
+      "latestStable": "4.70.1",
+      "latestAdvertised": "4.70.1",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.67.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.70.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "4.70.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.70.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "4.70.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.70.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "transformers",
+      "source": "https://pypi.org/pypi/transformers/json",
+      "latestStable": "5.22.1",
+      "latestAdvertised": "5.22.1",
+      "pythonRequirementForAdvertised": ">=3.11.0",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "5.12.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "5.22.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "triton",
+      "source": "https://pypi.org/pypi/triton/json",
+      "latestStable": "3.9.0",
+      "latestAdvertised": "3.9.0",
+      "pythonRequirementForAdvertised": "<3.16,>=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.9.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "truststore",
+      "source": "https://pypi.org/pypi/truststore/json",
+      "latestStable": "0.10.5",
+      "latestAdvertised": "0.10.5",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.10.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.10.5"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.10.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.10.5"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.10.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.10.5"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.10.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.10.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "ty",
+      "source": "https://pypi.org/pypi/ty/json",
+      "latestStable": "0.0.99",
+      "latestAdvertised": "0.0.99",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.0.8",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.0.99"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "typer",
+      "source": "https://pypi.org/pypi/typer/json",
+      "latestStable": "0.28.0",
+      "latestAdvertised": "0.28.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.20.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.28.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.27.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.28.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.27.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.28.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "types-protobuf",
+      "source": "https://pypi.org/pypi/types-protobuf/json",
+      "latestStable": "7.35.1.20260906",
+      "latestAdvertised": "7.35.1.20260906",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "7.35.1.20260906",
+          "newerStableAvailable": false,
+          "newestSameMajor": "7.35.1.20260906"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "7.35.1.20260906",
+          "newerStableAvailable": false,
+          "newestSameMajor": "7.35.1.20260906"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "types-requests",
+      "source": "https://pypi.org/pypi/types-requests/json",
+      "latestStable": "2.33.0.20261030",
+      "latestAdvertised": "2.33.0.20261030",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.32.4.20260107",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.33.0.20261030"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "typing-extensions",
+      "source": "https://pypi.org/pypi/typing-extensions/json",
+      "latestStable": "4.16.0",
+      "latestAdvertised": "4.16.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "4.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "4.16.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "4.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "4.16.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "4.15.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "4.16.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "4.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "4.16.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "4.16.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "4.16.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "typing-inspection",
+      "source": "https://pypi.org/pypi/typing-inspection/json",
+      "latestStable": "0.4.5",
+      "latestAdvertised": "0.4.5",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.4.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.4.5"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.4.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.4.5"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.4.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.4.5"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.4.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.4.5"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.4.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.4.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "tzdata",
+      "source": "https://pypi.org/pypi/tzdata/json",
+      "latestStable": "2026.6",
+      "latestAdvertised": "2026.6",
+      "pythonRequirementForAdvertised": ">=2",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2025.2",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2025.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "tzlocal",
+      "source": "https://pypi.org/pypi/tzlocal/json",
+      "latestStable": "5.4.5",
+      "latestAdvertised": "5.4.5",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "5.3.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "5.4.5"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "uncalled-for",
+      "source": "https://pypi.org/pypi/uncalled-for/json",
+      "latestStable": "0.6.0",
+      "latestAdvertised": "0.6.0",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.2.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.6.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "urllib3",
+      "source": "https://pypi.org/pypi/urllib3/json",
+      "latestStable": "2.8.0",
+      "latestAdvertised": "2.8.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "2.7.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.8.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "2.7.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.8.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.7.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.8.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "2.7.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.8.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "2.7.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "2.8.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "uuid-utils",
+      "source": "https://pypi.org/pypi/uuid-utils/json",
+      "latestStable": "1.2.0",
+      "latestAdvertised": "1.2.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.13.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.19.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "uv",
+      "source": "https://pypi.org/pypi/uv/json",
+      "latestStable": "0.13.7",
+      "latestAdvertised": "0.13.7",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.12.4",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.13.7"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "uvicorn",
+      "source": "https://pypi.org/pypi/uvicorn/json",
+      "latestStable": "0.54.0",
+      "latestAdvertised": "0.54.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "0.41.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.54.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "0.41.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.54.0"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.38.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.54.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "0.41.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.54.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "0.41.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.54.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "uvloop",
+      "source": "https://pypi.org/pypi/uvloop/json",
+      "latestStable": "0.23.0",
+      "latestAdvertised": "0.23.0",
+      "pythonRequirementForAdvertised": ">=3.8.1",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.22.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "0.23.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "watchfiles",
+      "source": "https://pypi.org/pypi/watchfiles/json",
+      "latestStable": "1.3.0",
+      "latestAdvertised": "1.3.0",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.1.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.3.0"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.2.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.3.0"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.2.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.3.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "websockets",
+      "source": "https://pypi.org/pypi/websockets/json",
+      "latestStable": "17.4",
+      "latestAdvertised": "17.4",
+      "pythonRequirementForAdvertised": ">=3.11",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-core",
+          "version": "17.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "17.4"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "version": "17.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "17.4"
+        },
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "15.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "15.0.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "17.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "17.4"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "17.0.1",
+          "newerStableAvailable": true,
+          "newestSameMajor": "17.4"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "wrapt",
+      "source": "https://pypi.org/pypi/wrapt/json",
+      "latestStable": "2.5.2",
+      "latestAdvertised": "2.5.2",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.17.3",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.17.3"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "wsproto",
+      "source": "https://pypi.org/pypi/wsproto/json",
+      "latestStable": "1.3.2",
+      "latestAdvertised": "1.3.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.3.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "1.3.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "xlrd",
+      "source": "https://pypi.org/pypi/xlrd/json",
+      "latestStable": "2.0.2",
+      "latestAdvertised": "2.0.2",
+      "pythonRequirementForAdvertised": "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "2.0.2",
+          "newerStableAvailable": false,
+          "newestSameMajor": "2.0.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "xlsxwriter",
+      "source": "https://pypi.org/pypi/xlsxwriter/json",
+      "latestStable": "3.3.1",
+      "latestAdvertised": "3.3.1",
+      "pythonRequirementForAdvertised": ">=3.8",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.2.9",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.3.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "xxhash",
+      "source": "https://pypi.org/pypi/xxhash/json",
+      "latestStable": "4.0.2",
+      "latestAdvertised": "4.0.2",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.6.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.8.2"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "yarl",
+      "source": "https://pypi.org/pypi/yarl/json",
+      "latestStable": "1.25.1",
+      "latestAdvertised": "1.25.1",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "1.22.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.25.1"
+        },
+        {
+          "runtime": "eva2-owner-voice-media-1",
+          "version": "1.24.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.25.1"
+        },
+        {
+          "runtime": "eva2-household-speaker-1",
+          "version": "1.24.5",
+          "newerStableAvailable": true,
+          "newestSameMajor": "1.25.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "zipp",
+      "source": "https://pypi.org/pypi/zipp/json",
+      "latestStable": "4.1.2",
+      "latestAdvertised": "4.1.2",
+      "pythonRequirementForAdvertised": ">=3.10",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "3.23.0",
+          "newerStableAvailable": true,
+          "newestSameMajor": "3.23.1"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    },
+    {
+      "name": "zstandard",
+      "source": "https://pypi.org/pypi/zstandard/json",
+      "latestStable": "0.25.0",
+      "latestAdvertised": "0.25.0",
+      "pythonRequirementForAdvertised": ">=3.9",
+      "installed": [
+        {
+          "runtime": "eva2-managed-b-slot3-hindsight-1",
+          "version": "0.25.0",
+          "newerStableAvailable": false,
+          "newestSameMajor": "0.25.0"
+        }
+      ],
+      "state": "verified_registry_metadata",
+      "compatibilityTested": false
+    }
+  ],
+  "limits": [
+    "Newer does not mean compatible or approved.",
+    "Versions are compared as package releases; inter-package constraints, ABI, platform wheels and behavioral compatibility are not yet tested.",
+    "Configured code and loaded optional paths may use only a subset of installed distributions."
+  ],
+  "installationPerformed": false
+}

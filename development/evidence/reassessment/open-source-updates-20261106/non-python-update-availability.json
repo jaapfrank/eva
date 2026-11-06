@@ -1,0 +1,274 @@
+{
+  "contract": "EvaOfficialNonPythonUpdateAvailability/v1",
+  "checkedAt": "2026-11-06T14:30:51.518429+00:00",
+  "npmDirectBuildInputs": [
+    {
+      "name": "@playwright/mcp",
+      "source": "https://registry.npmjs.org/%40playwright%2Fmcp/latest",
+      "latestDefaultTag": "0.0.84",
+      "nodeRequirement": ">=18",
+      "locked": [
+        {
+          "lock": "deploy/chrome-bridge/package-lock.json",
+          "declared": "0.0.80",
+          "resolved": "0.0.80",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "@vitejs/plugin-react",
+      "source": "https://registry.npmjs.org/%40vitejs%2Fplugin-react/latest",
+      "latestDefaultTag": "6.2.1",
+      "nodeRequirement": "^20.19.0 || >=22.12.0",
+      "locked": [
+        {
+          "lock": "development/tools/project-dashboard/package-lock.json",
+          "declared": "6.1.1",
+          "resolved": "6.1.1",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "@whiskeysockets/baileys",
+      "source": "https://registry.npmjs.org/%40whiskeysockets%2Fbaileys/latest",
+      "latestDefaultTag": "7.0.0-rc14",
+      "nodeRequirement": ">=20.0.0",
+      "locked": [
+        {
+          "lock": "deploy/whatsapp-bridge/package-lock.json",
+          "declared": "7.0.0-rc14",
+          "resolved": "7.0.0-rc14",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "@wonderwhy-er/desktop-commander",
+      "source": "https://registry.npmjs.org/%40wonderwhy-er%2Fdesktop-commander/latest",
+      "latestDefaultTag": "0.3.1",
+      "nodeRequirement": ">=22.12.0",
+      "locked": [
+        {
+          "lock": "deploy/programming/package-lock.json",
+          "declared": "0.2.52",
+          "resolved": "0.2.52",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "pino",
+      "source": "https://registry.npmjs.org/pino/latest",
+      "latestDefaultTag": "10.4.0",
+      "nodeRequirement": null,
+      "locked": [
+        {
+          "lock": "deploy/whatsapp-bridge/package-lock.json",
+          "declared": "9.14.0",
+          "resolved": "9.14.0",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "pyright",
+      "source": "https://registry.npmjs.org/pyright/latest",
+      "latestDefaultTag": "1.1.414",
+      "nodeRequirement": ">=14.0.0",
+      "locked": [
+        {
+          "lock": "deploy/programming/python-language-server/package-lock.json",
+          "declared": "1.1.414",
+          "resolved": "1.1.414",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "qrcode",
+      "source": "https://registry.npmjs.org/qrcode/latest",
+      "latestDefaultTag": "1.5.4",
+      "nodeRequirement": ">=10.13.0",
+      "locked": [
+        {
+          "lock": "deploy/whatsapp-bridge/package-lock.json",
+          "declared": "1.5.4",
+          "resolved": "1.5.4",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "react",
+      "source": "https://registry.npmjs.org/react/latest",
+      "latestDefaultTag": "19.3.1",
+      "nodeRequirement": ">=0.10.0",
+      "locked": [
+        {
+          "lock": "development/tools/project-dashboard/package-lock.json",
+          "declared": "19.2.8",
+          "resolved": "19.2.8",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "react-admin",
+      "source": "https://registry.npmjs.org/react-admin/latest",
+      "latestDefaultTag": "5.15.5",
+      "nodeRequirement": null,
+      "locked": [
+        {
+          "lock": "development/tools/project-dashboard/package-lock.json",
+          "declared": "5.15.1",
+          "resolved": "5.15.1",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "react-dom",
+      "source": "https://registry.npmjs.org/react-dom/latest",
+      "latestDefaultTag": "19.3.1",
+      "nodeRequirement": null,
+      "locked": [
+        {
+          "lock": "development/tools/project-dashboard/package-lock.json",
+          "declared": "19.2.8",
+          "resolved": "19.2.8",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "typescript",
+      "source": "https://registry.npmjs.org/typescript/latest",
+      "latestDefaultTag": "7.0.2",
+      "nodeRequirement": ">=16.20.0",
+      "locked": [
+        {
+          "lock": "development/tools/project-dashboard/package-lock.json",
+          "declared": "7.0.2",
+          "resolved": "7.0.2",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    },
+    {
+      "name": "vite",
+      "source": "https://registry.npmjs.org/vite/latest",
+      "latestDefaultTag": "8.3.6",
+      "nodeRequirement": "^20.19.0 || >=22.12.0",
+      "locked": [
+        {
+          "lock": "development/tools/project-dashboard/package-lock.json",
+          "declared": "8.2.2",
+          "resolved": "8.2.2",
+          "classification": "locked build input; installed package version not independently read"
+        }
+      ],
+      "compatibilityTested": false
+    }
+  ],
+  "officialGitHubReleases": [
+    {
+      "repository": "docker/compose",
+      "version": "v5.7.0",
+      "publishedAt": "2026-11-02T15:01:54Z",
+      "source": "https://github.com/docker/compose/releases/tag/v5.7.0",
+      "apiSource": "https://api.github.com/repos/docker/compose/releases/latest",
+      "prerelease": false,
+      "compatibilityTested": false
+    },
+    {
+      "repository": "moby/moby",
+      "version": "docker-v29.9.3",
+      "publishedAt": "2026-11-03T22:37:18Z",
+      "source": "https://github.com/moby/moby/releases/tag/docker-v29.9.3",
+      "apiSource": "https://api.github.com/repos/moby/moby/releases/latest",
+      "prerelease": false,
+      "compatibilityTested": false
+    },
+    {
+      "repository": "livekit/livekit",
+      "version": "v1.13.11",
+      "publishedAt": "2026-10-25T09:45:31Z",
+      "source": "https://github.com/livekit/livekit/releases/tag/v1.13.11",
+      "apiSource": "https://api.github.com/repos/livekit/livekit/releases/latest",
+      "prerelease": false,
+      "compatibilityTested": false
+    },
+    {
+      "repository": "vectorize-io/hindsight",
+      "version": "v1.2.0",
+      "publishedAt": "2026-11-03T11:38:19Z",
+      "source": "https://github.com/vectorize-io/hindsight/releases/tag/v1.2.0",
+      "apiSource": "https://api.github.com/repos/vectorize-io/hindsight/releases/latest",
+      "prerelease": false,
+      "compatibilityTested": false
+    },
+    {
+      "repository": "IBM/mcp-context-forge",
+      "version": "v1.1.0",
+      "publishedAt": "2026-10-20T17:31:29Z",
+      "source": "https://github.com/IBM/mcp-context-forge/releases/tag/v1.1.0",
+      "apiSource": "https://api.github.com/repos/IBM/mcp-context-forge/releases/latest",
+      "prerelease": false,
+      "compatibilityTested": false
+    },
+    {
+      "repository": "pgvector/pgvector",
+      "state": "lookup_unavailable",
+      "type": "HTTPError"
+    },
+    {
+      "repository": "renovatebot/renovate",
+      "version": "44.221.6",
+      "publishedAt": "2026-11-06T13:56:24Z",
+      "source": "https://github.com/renovatebot/renovate/releases/tag/44.221.6",
+      "apiSource": "https://api.github.com/repos/renovatebot/renovate/releases/latest",
+      "prerelease": false,
+      "compatibilityTested": false
+    }
+  ],
+  "executableVersionProbes": [
+    {
+      "container": "eva2-managed-b-slot3-postgres-1",
+      "command": [
+        "postgres",
+        "--version"
+      ],
+      "versionOutput": "postgres (PostgreSQL) 18.6",
+      "observed": true
+    },
+    {
+      "container": "eva2-owner-voice-livekit-1",
+      "command": [
+        "/livekit-server",
+        "--version"
+      ],
+      "versionOutput": null,
+      "observed": false
+    }
+  ],
+  "limits": [
+    "Npm lock version is not claimed installed without runtime readback.",
+    "Latest tag does not prove stable/compatible; release candidates remain separate.",
+    "Source project release and packaged Docker image digest are different identities.",
+    "Host updates must not interrupt active Eva runtime."
+  ],
+  "installationPerformed": false
+}

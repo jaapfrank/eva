@@ -1,0 +1,12 @@
+{
+  "canonicalSha256": "1bb38ec6f4b01235293b7121c10cbdcb36ba9d88747769cd7b24660f81e65db1",
+  "active": {
+    "id": "E4.16",
+    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+    "status": "in_progress",
+    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid."
+  },
+  "nextAction": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
+  "taskStatusesAndOriginalCriteriaUnchanged": true,
+  "projectionMatches": true
+}

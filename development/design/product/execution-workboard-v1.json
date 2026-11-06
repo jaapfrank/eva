@@ -847,11 +847,11 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Alleen P0-03 reviewerherkomst is technisch opgeleverd: nieuwe reviews binden exact pakket, besluit, hostregistratie, beoordelingscode, baseline en bronbestemming. 241 gerichte cases en dezelfde 241 cases op een schone index zijn groen; bron en installatie onafhankelijk GO. Acht hostmodules bijgewerkt; kern/werker blijven op de P0-01/P0-02-images van 5 november. Twee oude v1-beoordelingen blijven historisch leesbaar en kunnen geen nieuwe uitvoering starten. Andere prioriteiten worden in deze opdracht niet opgepakt; volledige E4.16 en gezinsacceptatie blijven open.",
+    "nextAction": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-04T14:00:19.123526+00:00",
     "previousHandoff": "development/archive/history/20261104-delivery-order/snapshot.json",
-    "executionStep": "P0-03 reviewer provenance scoped technical delivery installed and verified",
+    "executionStep": "Scoped dependency recovery verdict installed; next generalize trusted component descriptors",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false
   },
@@ -8667,7 +8667,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Alleen P0-03 reviewerherkomst is technisch opgeleverd: nieuwe reviews binden exact pakket, besluit, hostregistratie, beoordelingscode, baseline en bronbestemming. 241 gerichte cases en dezelfde 241 cases op een schone index zijn groen; bron en installatie onafhankelijk GO. Acht hostmodules bijgewerkt; kern/werker blijven op de P0-01/P0-02-images van 5 november. Twee oude v1-beoordelingen blijven historisch leesbaar en kunnen geen nieuwe uitvoering starten. Andere prioriteiten worden in deze opdracht niet opgepakt; volledige E4.16 en gezinsacceptatie blijven open.",
+                "nextAction": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8692,11 +8692,11 @@
                   ],
                   "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "ownerInstructionDate": "2026-10-25",
-                  "currentScope": "P0 technical finalization by current owner instruction, preserving original criteria and ambiguous historical effects."
+                  "currentScope": "Eigenaar 6 november: volledige E4.16-keten afmaken; deelreparaties zijn onvoldoende. Onafhankelijke review op eerste ontbrekende schakel gestart."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/e416-provider-native-headers-20261024.json",
-                "implementationStatus": "p003_review_provenance_installed_full_autonomy_open",
+                "implementationStatus": "dependency_recovery_verdict_installed_general_autonomy_open",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8705,9 +8705,9 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-06T13:40:23.527110+00:00",
-                "progress": "Eerdere gerichte P0-01/P0-02-correcties behouden. Nu ook reviewerherkomst technisch opgeleverd via extern hostgezag, exact besluit-/pakketbewijs en strikte blokkade van nieuwe v1-uitvoering. Onafhankelijke bron- en installatiereview GO. Volledige autonome herstelketen en later hergebruik blijven onbewezen.",
-                "latestEvidence": "development/evidence/reassessment/technical-finalization-20261105/installed-overlay.json",
+                "checkedAt": "2026-11-06T14:40:38.615471+00:00",
+                "progress": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
+                "latestEvidence": "development/evidence/reassessment/open-source-updates-20261106/completion.json",
                 "scopedTelegramRepairAuthorization": {
                   "at": "2026-10-27T07:47:07.435768+00:00",
                   "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -8727,6 +8727,29 @@
                   "otherDevelopmentPaused": true,
                   "historicalEffectsReplayAuthorized": false,
                   "automations": false
+                },
+                "ownerMaintenanceInstruction": {
+                  "recordedAt": "2026-11-06T14:33:29.385284+00:00",
+                  "ownerRequest": "Alle gebruikte open-source onderdelen gecontroleerd bijwerken; bij mislukking automatisch naar de laatst werkende versie terugkeren en Eva zelfstandig laten onderzoeken, aanpassen en opnieuw toetsen.",
+                  "scope": "Bestaande E4.16-herstel- en onderhoudsketen; geen tweede updater, planner of permanente agent.",
+                  "intendedCycle": [
+                    "Werkelijk geïnstalleerde versies en officiële releases vergelijken",
+                    "Per component een bron- en hashgebonden kandidaat maken met de passende adapter",
+                    "Afzonderlijk toetsen op functie, compatibiliteit, STOP, privacy en behoud van gegevens",
+                    "Onafhankelijk beoordelen en pas op een werkvrij moment installeren",
+                    "Werkelijk geïnstalleerd gedrag controleren en gedurende een begrensde observatieperiode volgen",
+                    "Bij bewezen regressie eenmalig terugkeren naar de laatst werkende release en die werking controleren",
+                    "Foutbewijs idempotent aan hersteldoel koppelen; Eva analyseert en maakt een nieuwe kandidaat",
+                    "Herhaling begrenzen en dezelfde afgewezen versie niet opnieuw installeren zonder nieuwe oorzaak of gewijzigde kandidaat"
+                  ],
+                  "safetyBoundaries": [
+                    "Een onzekere controle is geen bewezen regressie en geen vrijbrief voor herhaalde installatie.",
+                    "Schema-/gegevenswijzigingen vragen vooraf bewezen achterwaartse compatibiliteit of apart herstel; nieuwe gesprekken en receipts worden niet uit een oude snapshot overschreven.",
+                    "Kern- en workerprofielen moeten gelijk blijven; lopende werk- en beoordelingsclaims blijven beschermd.",
+                    "Spraakimplementatie en installatie blijven van de andere uitvoerder zonder expliciete taakoverdracht."
+                  ],
+                  "availabilityEvidence": "development/evidence/reassessment/open-source-updates-20261106",
+                  "builtVersusInstalled": "Gerichte terugvalcorrectie geïnstalleerd en onafhankelijk teruggelezen; 55 tests ook op actual installed source. Algemene componentupdates, latere observatie en autonoom oorzakelijk herstel nog open."
                 }
               },
               {
@@ -15190,7 +15213,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Alleen P0-03 reviewerherkomst is technisch opgeleverd: nieuwe reviews binden exact pakket, besluit, hostregistratie, beoordelingscode, baseline en bronbestemming. 241 gerichte cases en dezelfde 241 cases op een schone index zijn groen; bron en installatie onafhankelijk GO. Acht hostmodules bijgewerkt; kern/werker blijven op de P0-01/P0-02-images van 5 november. Twee oude v1-beoordelingen blijven historisch leesbaar en kunnen geen nieuwe uitvoering starten. Andere prioriteiten worden in deze opdracht niet opgepakt; volledige E4.16 en gezinsacceptatie blijven open.",
+              "nextAction": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -15215,11 +15238,11 @@
                 ],
                 "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "ownerInstructionDate": "2026-10-25",
-                "currentScope": "P0 technical finalization by current owner instruction, preserving original criteria and ambiguous historical effects."
+                "currentScope": "Eigenaar 6 november: volledige E4.16-keten afmaken; deelreparaties zijn onvoldoende. Onafhankelijke review op eerste ontbrekende schakel gestart."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/e416-provider-native-headers-20261024.json",
-              "implementationStatus": "p003_review_provenance_installed_full_autonomy_open",
+              "implementationStatus": "dependency_recovery_verdict_installed_general_autonomy_open",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -15228,9 +15251,9 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-06T13:40:23.527110+00:00",
-              "progress": "Eerdere gerichte P0-01/P0-02-correcties behouden. Nu ook reviewerherkomst technisch opgeleverd via extern hostgezag, exact besluit-/pakketbewijs en strikte blokkade van nieuwe v1-uitvoering. Onafhankelijke bron- en installatiereview GO. Volledige autonome herstelketen en later hergebruik blijven onbewezen.",
-              "latestEvidence": "development/evidence/reassessment/technical-finalization-20261105/installed-overlay.json",
+              "checkedAt": "2026-11-06T14:40:38.615471+00:00",
+              "progress": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
+              "latestEvidence": "development/evidence/reassessment/open-source-updates-20261106/completion.json",
               "scopedTelegramRepairAuthorization": {
                 "at": "2026-10-27T07:47:07.435768+00:00",
                 "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -15250,6 +15273,29 @@
                 "otherDevelopmentPaused": true,
                 "historicalEffectsReplayAuthorized": false,
                 "automations": false
+              },
+              "ownerMaintenanceInstruction": {
+                "recordedAt": "2026-11-06T14:33:29.385284+00:00",
+                "ownerRequest": "Alle gebruikte open-source onderdelen gecontroleerd bijwerken; bij mislukking automatisch naar de laatst werkende versie terugkeren en Eva zelfstandig laten onderzoeken, aanpassen en opnieuw toetsen.",
+                "scope": "Bestaande E4.16-herstel- en onderhoudsketen; geen tweede updater, planner of permanente agent.",
+                "intendedCycle": [
+                  "Werkelijk geïnstalleerde versies en officiële releases vergelijken",
+                  "Per component een bron- en hashgebonden kandidaat maken met de passende adapter",
+                  "Afzonderlijk toetsen op functie, compatibiliteit, STOP, privacy en behoud van gegevens",
+                  "Onafhankelijk beoordelen en pas op een werkvrij moment installeren",
+                  "Werkelijk geïnstalleerd gedrag controleren en gedurende een begrensde observatieperiode volgen",
+                  "Bij bewezen regressie eenmalig terugkeren naar de laatst werkende release en die werking controleren",
+                  "Foutbewijs idempotent aan hersteldoel koppelen; Eva analyseert en maakt een nieuwe kandidaat",
+                  "Herhaling begrenzen en dezelfde afgewezen versie niet opnieuw installeren zonder nieuwe oorzaak of gewijzigde kandidaat"
+                ],
+                "safetyBoundaries": [
+                  "Een onzekere controle is geen bewezen regressie en geen vrijbrief voor herhaalde installatie.",
+                  "Schema-/gegevenswijzigingen vragen vooraf bewezen achterwaartse compatibiliteit of apart herstel; nieuwe gesprekken en receipts worden niet uit een oude snapshot overschreven.",
+                  "Kern- en workerprofielen moeten gelijk blijven; lopende werk- en beoordelingsclaims blijven beschermd.",
+                  "Spraakimplementatie en installatie blijven van de andere uitvoerder zonder expliciete taakoverdracht."
+                ],
+                "availabilityEvidence": "development/evidence/reassessment/open-source-updates-20261106",
+                "builtVersusInstalled": "Gerichte terugvalcorrectie geïnstalleerd en onafhankelijk teruggelezen; 55 tests ook op actual installed source. Algemene componentupdates, latere observatie en autonoom oorzakelijk herstel nog open."
               }
             },
             {

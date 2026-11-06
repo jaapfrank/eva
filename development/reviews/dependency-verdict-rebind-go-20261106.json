@@ -1,0 +1,56 @@
+{
+  "contract": "EvaIndependentHostSourcePrecedenceRebindReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T14:38:02.206107+00:00",
+  "decision": "GO",
+  "scope": "One guarded restart, atomic rename of exact own source dropin after all retained overrides; no original installer replay",
+  "helperSha256": "945375fe2123b7016e4205660f8683f4ada0684d00233fa22a5763452f9564d5",
+  "planSha256": "9d91d68045023a9a258415eaa19236f78a406e0de65ef5256ef12b32ce8c98b0",
+  "preservedOriginalArtifacts": {
+    "plan.private.json": "be853514f1731e402e7e52216bdfe14649fe5183f5866257cadcf3a829f4f830",
+    "install.py": "4a2d2bf6c11dfb8dea5adfbc83d8ddef0034504af57fc5dc05594e59e549d52a",
+    "activation.private.json": "0dbd3a7ae7e4933310f5b7f4efe1d1463fc91907071e571bf6b974511f8b30af"
+  },
+  "priorObservedFailure": {
+    "actualHostPID": "606848",
+    "healthyOriginalRootsStillActive": true,
+    "candidateRootsNotActive": true,
+    "originalReceipt": "activation_in_progress",
+    "verificationPhase": "unknown",
+    "cause": "Own source override sorted before retained P003 override; readback refused installed success."
+  },
+  "independentFreshChecks": {
+    "at": "2026-11-06T14:37:31Z",
+    "dropinHashCount": 28,
+    "allCurrentDropinPathsAndHashesExact": true,
+    "newPathAbsentAndSortsLast": true,
+    "hostPIDArgvOldSourceRootsMatch": true,
+    "sourceConfigHistoryCriteriaRuntimePinsMatch": true,
+    "activeWork": 0,
+    "unexpiredLeases": 0,
+    "currentGenerationUnknown": 0,
+    "memoryPending": 0,
+    "memoryProcessing": 0,
+    "candidateModuleImports": 1,
+    "trustedAuthorities": 10,
+    "legacyReleasesReadable": 2,
+    "profileSha256": "d681922d24e49706cee354103bbb168b0e29764f6201987803b480d727afbe92"
+  },
+  "checks": [
+    "Durable separate fenced receipt precedes restart/rename, original installer and receipt are not modified.",
+    "Every current systemd override hash and exact path set is rechecked before stop and rename; only owned expected file is renamed.",
+    "New override sorts after every existing override; effective systemdEnvironmentPYTHONPATH is explicitly checked after daemonreload and before service start.",
+    "Actual new process argv/source roots/nonvolatile environment/listening socket/health/import origin/hash, current history/criteria/runtime and profiles are then verified.",
+    "Unknown source activation remains inspect-only; no historical task/effect replay or updater call introduced."
+  ],
+  "conditions": [
+    "Repeat all fresh checks inside helper immediately before mutation.",
+    "Any new claim, changed config/source/criteria/history/dropin/profile blocks rebind.",
+    "Independent actual source/helper/config/history/profile readback required after helper completes."
+  ],
+  "installedByReviewer": false,
+  "limitations": [
+    "Original installer precedence check was insufficient; its installed readback gate correctly refused a success claim.",
+    "This source activation does not demonstrate a real package upgrade, production rollback or full autonomous E4.16."
+  ]
+}
