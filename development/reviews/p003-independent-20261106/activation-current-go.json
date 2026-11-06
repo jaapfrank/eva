@@ -1,0 +1,49 @@
+{
+  "contract": "EvaIndependentHostActivationCurrentGateReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T13:36:00.097661+00:00",
+  "decision": "GO",
+  "scope": "Exact eight-module host-only activation; installer repeated fresh checks remain mandatory",
+  "installerSha256": "a2a759aed221f93ae979e20887d5a2c03c181d53346068770b1a0c91956bf058",
+  "planSha256": "64d7b1e2088cf9908254b18592ec7fe639798aeaeb4fcfecf32545212319918a",
+  "priorPlanSha256": "62daead7f83521d1c8d26d55738d63e22196c75bb24345d8466dc6c47d56ea31",
+  "readinessProbeSha256": "f02eff8a47adadabf47d4c66928eb3324388411782736f604895320809d65a59",
+  "delta": [
+    {
+      "path": "/pid",
+      "before": "61242",
+      "after": "64243"
+    },
+    {
+      "path": "/roles/worker/startedAt",
+      "before": "2026-11-05T20:11:07.516666744Z",
+      "after": "2026-11-06T13:23:50.647391587Z"
+    },
+    {
+      "path": "/roles/core/startedAt",
+      "before": "2026-11-05T20:10:55.917274818Z",
+      "after": "2026-11-06T13:23:51.929664646Z"
+    }
+  ],
+  "independentObservations": [
+    "Actual Docker inspect matches same container IDs/images, true new StartedAt values, running healthy core and worker.",
+    "Actual host PID, argv, original source roots and all nonvolatile environment variables match the rebound plan.",
+    "All source, host configuration, nine historical files,62private criteria and runtime handoff pins verified.",
+    "Read-only original readiness guard returned global activeWork0, active unexpired checkpoint leases0, current-generation unknown NULL0, pending/processing memory0.",
+    "Actual process generation is used; no marker clear, custom exception or operator-selected timestamp.",
+    "Candidate import probe confirms eight source origins,10trustedauthorities,twolegacyreleasesreadable.",
+    "Independent runtime profile tool output equals preserved pre-install profiles byte-semantically."
+  ],
+  "evidence": {
+    "current-preflight-readback.json": "a2ce69c22b0ab9b520659555e17d2e1af94f45215fe3d09230d07d4b6ce684ce",
+    "current-profile-readback.json": "d681922d24e49706cee354103bbb168b0e29764f6201987803b480d727afbe92"
+  },
+  "historicalUncertaintyPreserved": true,
+  "oldAmbiguousOutcomesPromotedToSuccess": false,
+  "installedByReviewer": false,
+  "conditions": [
+    "Installer must repeat all pinned/current-work gates immediately before and after stopping the idle host.",
+    "Any new active work, unexpired lease, unknown current marker, changed source/config/history/profile or unexpected host job blocks activation.",
+    "Post-activation independent actual source/authority/history/profile readback is still required."
+  ]
+}

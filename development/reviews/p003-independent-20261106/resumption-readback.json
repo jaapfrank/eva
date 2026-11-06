@@ -1,0 +1,29 @@
+{
+  "contract": "EvaIndependentReviewResumption/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T13:28:39.347775+00:00",
+  "scope": "P0-03 only; read-only classification and existing guard epoch binding",
+  "sourceHashesUnchanged": true,
+  "classifiedPrivateArtifactSha256": "b119a3ed4d6610dca793f7ea1b98c1ce14b6591990d4457863f7572fe81fe7ea",
+  "privateArtifactObserved": {
+    "markers": 6,
+    "researchStates": [
+      "succeeded",
+      "ambiguous",
+      "ambiguous",
+      "succeeded"
+    ],
+    "telegramOutcomes": [
+      "failed",
+      "failed"
+    ],
+    "allLocalStreamsClosed": true
+  },
+  "classificationLimitations": [
+    "Existing classifier work lookup is call_id-only; no independent current database reobservation yet.",
+    "Historical ambiguous outcomes and unmeasured failed model outcomes remain uncertain, without replay or success claims."
+  ],
+  "preferredGuardProtocol": "Use unchanged f02 readiness guard with independently verified actual new Docker State.StartedAt after genuine core restart; no custom marker exclusions or selected timestamp. Global active work, unexpired leases, memory operations and host assessment checks remain required.",
+  "currentInstallDecision": "NO_GO_pending_actual_runtime_readback",
+  "installedByReviewer": false
+}

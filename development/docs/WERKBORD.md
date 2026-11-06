@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Gerichte P0-01/P0-02-correcties zijn gebouwd, onafhankelijk beoordeeld, geïnstalleerd en teruggelezen: één gedeeld afleverclaimprotocol, expliciete kanaalautoriteit en duurzame herstelcallregistratie vóór dispatch. 82 tests slagen zowel op de schone commit-index als op de geïnstalleerde doelbron in een geïsoleerde testomgeving. Volledige E4.16, autonoom later hergebruik en gezinsacceptatie blijven open. Volgende technische prioriteit: P0-03 reviewerherkomst; geen herhaling van de historische onzekere HTTP400.
+Volgende stap: Alleen P0-03 reviewerherkomst is technisch opgeleverd: nieuwe reviews binden exact pakket, besluit, hostregistratie, beoordelingscode, baseline en bronbestemming. 241 gerichte cases en dezelfde 241 cases op een schone index zijn groen; bron en installatie onafhankelijk GO. Acht hostmodules bijgewerkt; kern/werker blijven op de P0-01/P0-02-images van 5 november. Twee oude v1-beoordelingen blijven historisch leesbaar en kunnen geen nieuwe uitvoering starten. Andere prioriteiten worden in deze opdracht niet opgepakt; volledige E4.16 en gezinsacceptatie blijven open.
 
 ## Voortgang
 

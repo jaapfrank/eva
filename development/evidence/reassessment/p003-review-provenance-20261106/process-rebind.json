@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-06T13:33:57.907608+00:00",
+  "oldPlanSha256": "62daead7f83521d1c8d26d55738d63e22196c75bb24345d8466dc6c47d56ea31",
+  "newPlanSha256": "64d7b1e2088cf9908254b18592ec7fe639798aeaeb4fcfecf32545212319918a",
+  "changedFields": [
+    "pid",
+    "roles.core.startedAt",
+    "roles.worker.startedAt"
+  ],
+  "oldHostPid": "61242",
+  "newHostPid": "64243",
+  "hostArgvUnchanged": true,
+  "hostEnvironmentUnchangedExceptSystemdVolatile": true,
+  "sourceAndConfigUnchanged": true,
+  "historyAndCriteriaBytesUnchanged": true,
+  "roles": {
+    "core": {
+      "sameContainerId": true,
+      "sameImage": true,
+      "sameEnvironment": true,
+      "sameMounts": true,
+      "startedAtBefore": "2026-11-05T20:10:55.917274818Z",
+      "startedAtNow": "2026-11-06T13:23:51.929664646Z"
+    },
+    "worker": {
+      "sameContainerId": true,
+      "sameImage": true,
+      "sameEnvironment": true,
+      "sameMounts": true,
+      "startedAtBefore": "2026-11-05T20:11:07.516666744Z",
+      "startedAtNow": "2026-11-06T13:23:50.647391587Z"
+    }
+  },
+  "originalReadinessBytesUnchanged": true,
+  "readinessSha256": "f02eff8a47adadabf47d4c66928eb3324388411782736f604895320809d65a59",
+  "noCustomMarkerExclusion": true,
+  "scope": "Rebind genuine new process invocations after external restart; no artifact, source, config, image, task or SQL mutation."
+}

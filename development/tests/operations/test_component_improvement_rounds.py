@@ -223,14 +223,17 @@ def test_host_configuration_loads_retained_rounds_into_existing_dispatcher(tmp_p
     base = configuration(tmp_path, current, NEXT, old)
     # Synthetic trusted host objects exercise only composition, no protected inputs.
     class Host:
-        def __init__(self, config): self.config = config
+        def __init__(self, config, **kwargs): self.config = config
         __call__ = staticmethod(reject)
     class Runtime:
-        def __init__(self, config): self.config = config
+        def __init__(self, config, **kwargs): self.config = config
         ready_to_apply = staticmethod(lambda task:"ready")
     monkeypatch.setattr(module, "HostFinalAssessment", Host)
     monkeypatch.setattr(runtime, "ComponentApplicationRuntime", Runtime)
-    monkeypatch.setattr(publisher, "ComponentReleasePublisher", lambda config:never_publish)
+    monkeypatch.setattr(publisher, "ComponentReleasePublisher", lambda config, **kwargs:never_publish)
+    # This fixture isolates retained-round composition. Authority content and
+    # host file pins are exercised separately by the provenance tests.
+    monkeypatch.setattr(module, "configured_review_authorities", lambda config: {})
     old_protocol = base["retained_rounds"][FIRST]["protocol"]
     config = {**base, "assessments": {current["path"]:{"registration":{"sha256":NEXT}}},
         "publisher":{}, "retained_rounds":{FIRST:{"path":package["path"], "protocol":old_protocol,

@@ -1,0 +1,21 @@
+{
+  "contract": "EvaIndependentReviewAuthorityHostDryReadback/v1",
+  "checkedAt": "2026-11-06T10:32:51.042689+00:00",
+  "reviewer": "/root/independent_review",
+  "hostPid": "61242",
+  "hostConfigurationSha256": "25c64301d88dc4a6d14be54bc5c3d8b42d217be16c3499ed1ef9c95aea5e58f0",
+  "activeAssessorCount": 3,
+  "retainedRoundCount": 7,
+  "trustedAuthorityCount": 10,
+  "historicalReleaseKinds": {
+    "saved_artifact": 1,
+    "component_legacy": 1
+  },
+  "historicalReadable": 2,
+  "historicalStrictNewApprovalBlocked": 2,
+  "allHistoricalReceiptAndRegistryBytesUnchanged": true,
+  "readOnly": true,
+  "productionTaskDispatched": false,
+  "newModelCalls": 0,
+  "scope": "Use candidate pure authority factory/validator against actual trusted host configuration and retained release artifacts; host process not changed."
+}

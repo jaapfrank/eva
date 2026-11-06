@@ -52,7 +52,7 @@ def _artifact(binding):
     return path, load_object(path)
 
 
-def _verify_release(review_id, release):
+def _verify_release(review_id, release, *, review_authorities=None, allow_legacy=False):
     """Reuse importer attestations and the established overlay/updater formats."""
     if isinstance(release, dict) and release.get('kind') == 'owned_package':
         from eva.operations.owned_package_application import verify_release
@@ -65,7 +65,7 @@ def _verify_release(review_id, release):
         return verify_runtime_repair_release(review_id, release)
     if isinstance(release, dict) and release.get("kind") == "saved_artifact":
         from eva.operations.saved_artifact_application import verify_saved_release
-        return verify_saved_release(review_id, release)
+        return verify_saved_release(review_id, release, review_authorities=review_authorities, allow_legacy=allow_legacy)
     if (not isinstance(release, dict)
             or set(release) - {"behavior_verifier"} != _ARTIFACTS | {"project", "update_receipt"}
             or not isinstance(release["project"], str) or not release["project"]):
@@ -87,13 +87,11 @@ def _verify_release(review_id, release):
             or digest(source.encode("utf-8")) != package.get("candidate_sha256")
             or digest(canonical(package.get("evaluation"))) != package.get("evaluation_sha256")):
         raise ValueError("approved source binding differs")
-    if (review.get("contract") != "EvaComponentReleaseReview/v1"
-            or review.get("decision") != "accept"
-            or review.get("candidate_package_sha256") != package_id
-            or not isinstance(review.get("reviewer"), str) or not review["reviewer"].strip()):
-        raise ValueError("independent review does not accept this package")
-    evidence = {name: checked_evidence(paths["review"], review.get(name)) for name in
-                ("measured_gain_evidence", "independent_review_evidence")}
+    if review_id != package_id:
+        raise ValueError("review identifier must equal the exact package hash")
+    from eva.operations.component_review_authority import validate_component_review
+    evidence = validate_component_review(package, review, paths["review"],
+        review_authorities=review_authorities, allow_legacy=allow_legacy)
     if (imported.get("contract") != "EvaComponentSourceImport/v1"
             or imported.get("state") != "source_imported_not_installed"
             or imported.get("installed") is not False
@@ -196,13 +194,17 @@ class ReviewedComponentApplications:
 
     def __init__(self, config, *, ready_to_apply, apply_release, inspect_release=None):
         if (not isinstance(config, dict)
-                or set(config) - {"receipt_root", "releases", "poll_seconds"}
+                or set(config) - {"receipt_root", "releases", "poll_seconds", "review_authorities"}
                 or not {"receipt_root", "releases"} <= config.keys()
                 or not isinstance(config["releases"], dict)):
             raise ValueError("reviewed application configuration differs")
+        authorities = config.get("review_authorities", {})
+        if not isinstance(authorities, dict):
+            raise ValueError("review authorities must be host configuration")
+        self.review_authorities = json.loads(json.dumps(authorities))
         self.releases = json.loads(json.dumps(config["releases"]))
         for review_id, release in self.releases.items():
-            _verify_release(_identifier(review_id), release)
+            _verify_release(_identifier(review_id), release, review_authorities=self.review_authorities, allow_legacy=True)
         self.interval = config.get("poll_seconds", 0.5)
         if type(self.interval) not in (int, float) or not 0.01 <= self.interval <= 60:
             raise ValueError("application polling interval differs")
@@ -219,7 +221,7 @@ class ReviewedComponentApplications:
         for stored in self.registry.glob("*.json"):
             release = load_object(_path(stored))
             review_id = _identifier(stored.stem)
-            _verify_release(review_id, release)
+            _verify_release(review_id, release, review_authorities=self.review_authorities, allow_legacy=True)
             if review_id in self.releases and self.releases[review_id] != release:
                 raise ValueError("registered accepted release changed")
             self.releases[review_id] = release
@@ -283,7 +285,7 @@ class ReviewedComponentApplications:
 
     def register(self, review_id, release):
         """Trusted independent final publisher only; not an HTTP/model operation."""
-        _verify_release(_identifier(review_id), release)
+        _verify_release(_identifier(review_id), release, review_authorities=self.review_authorities)
         with self.condition:
             if self.closed:
                 raise ValueError("application dispatcher is closed")
@@ -310,13 +312,17 @@ class ReviewedComponentApplications:
                 self._owned(request_id, task_id)
                 if existing["review_id"] != review_id or existing["release_sha256"] != binding:
                     raise ValueError("application request changed during replay")
+                historical = _verify_release(review_id, release,
+                    review_authorities=self.review_authorities, allow_legacy=True)
+                if historical["accepted_review_sha256"] != existing["accepted_review_sha256"]:
+                    raise ValueError("application approval changed during replay")
                 if existing["state"] == "interrupted_before_dispatch":
-                    _verify_release(review_id, release)
+                    _verify_release(review_id, release, review_authorities=self.review_authorities)
                     existing["state"] = "queued"
                     self._persist(existing)
                     self.condition.notify_all()
                 return self._result(existing)
-            verified = _verify_release(review_id, release)
+            verified = _verify_release(review_id, release, review_authorities=self.review_authorities)
             if any(job["accepted_review_sha256"] == verified["accepted_review_sha256"]
                    for job in self.jobs.values()):
                 raise ValueError("accepted review already has an application request")
@@ -336,11 +342,16 @@ class ReviewedComponentApplications:
             release = self.releases.get(review_id)
             if release is None:
                 raise ValueError("review is not registered by the host")
+            _verify_release(review_id, release,
+                review_authorities=self.review_authorities, allow_legacy=True)
             _, review = _artifact(release["review"])
             accepted_review_sha256 = digest(canonical(review))
             matches = [job for job in self.jobs.values()
                        if job["accepted_review_sha256"] == accepted_review_sha256]
             if not matches:
+                if review.get("contract") == "EvaComponentReleaseReview/v1":
+                    return {"review_id": review_id, "state": "rejected", "installed": False,
+                            "reason": "legacy_review_read_only"}
                 return {"review_id": review_id, "state": "ready", "installed": False}
             if len(matches) != 1:
                 raise ValueError("accepted review has ambiguous application receipts")
@@ -353,6 +364,14 @@ class ReviewedComponentApplications:
     def status(self, request_id, *, task_id):
         with self.condition:
             job = self._owned(request_id, task_id)
+            if job["state"] == "completed":
+                release = self.releases.get(job["review_id"])
+                if release is None or digest(canonical(release)) != job["release_sha256"]:
+                    raise ValueError("application release changed during inspection")
+                verified = _verify_release(job["review_id"], release,
+                    review_authorities=self.review_authorities, allow_legacy=True)
+                if verified["accepted_review_sha256"] != job["accepted_review_sha256"]:
+                    raise ValueError("application approval changed during inspection")
             if job["state"] in {"dispatching", "unconfirmed"} or (
                     job["state"] == "completed" and "behavior_verifier" in self.releases.get(job["review_id"], {})):
                 self._reconcile(job, inspect=True)
@@ -378,22 +397,24 @@ class ReviewedComponentApplications:
                 self._persist(job)
             return
         try:
+            _verify_release(job["review_id"], release,
+                review_authorities=self.review_authorities, allow_legacy=True)
             if (inspect and job["state"] in {"completed", "unconfirmed"}
                     and "behavior_verifier" in release and self.inspect_release is not None):
-                update = _verify_release(job["review_id"], release)
+                update = _verify_release(job["review_id"], release, review_authorities=self.review_authorities, allow_legacy=True)
                 update["task_id"] = job["task_id"]
                 self.inspect_release(update)
             receipt = load_object(_path(path))
             if release.get('kind') == 'owned_package':
                 from eva.operations.owned_package_application import receipt_confirms
-                verified = _verify_release(job['review_id'], release)
+                verified = _verify_release(job['review_id'], release, review_authorities=self.review_authorities, allow_legacy=True)
                 if receipt_confirms(receipt, verified['package'], job['task_id']):
                     job.update(state='completed', reason='package_catalog_verified_semantic_outcome_open')
                     self._persist(job)
                 return
             if release.get("kind") == "saved_artifact":
                 from eva.operations.saved_artifact_application import receipt_confirms_application
-                verified = _verify_release(job["review_id"], release)
+                verified = _verify_release(job["review_id"], release, review_authorities=self.review_authorities, allow_legacy=True)
                 if not receipt_confirms_application(receipt, verified["publication"], job["task_id"]):
                     return
                 job["state"] = "completed"
@@ -468,7 +489,7 @@ class ReviewedComponentApplications:
                     if not callable(getattr(self, 'owned_package_readiness', None)):
                         readiness = 'waiting'  # host composition is still starting
                     else:
-                        readiness = self.owned_package_readiness(job['task_id'], _verify_release(job['review_id'], release))
+                        readiness = self.owned_package_readiness(job['task_id'], _verify_release(job['review_id'], release, review_authorities=self.review_authorities))
                 else:
                     readiness = self.ready_to_apply(job["task_id"])
                 if readiness not in {"waiting", "ready", "cancelled"}:
@@ -499,7 +520,7 @@ class ReviewedComponentApplications:
                 try:
                     if digest(canonical(release)) != job["release_sha256"]:
                         raise ValueError("registered release changed")
-                    update = _verify_release(job["review_id"], release)
+                    update = _verify_release(job["review_id"], release, review_authorities=self.review_authorities)
                     update["task_id"] = job["task_id"]
                     if update["receipt"].exists():
                         raise ValueError("an updater receipt already exists")

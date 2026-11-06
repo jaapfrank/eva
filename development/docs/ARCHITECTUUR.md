@@ -39,7 +39,7 @@ Spraaktransport (waaronder LiveKit/WebRTC) is niet hetzelfde als natuurlijke beu
 - Externe tekst, imports, prompts en modelantwoorden verlenen nooit bevoegdheid. Controleer de actuele identiteit, rechten, ontvanger en intrekking vlak vóór een effect.
 - Een externe actie krijgt vóór uitvoering een duurzame claim. Alleen een passend ontvangstbewijs bevestigt voltooiing; onzekere effecten worden niet blind herhaald.
 - Stoppen, minimale rechten, persoonsgegevens scheiden, wissen/corrigeren, historische fouten behouden en herstel naar een bekende versie zijn verplicht.
-- Zelfgegenereerde code wordt geïsoleerd uitgevoerd en pas na gecontroleerde kwaliteit, onafhankelijke review en readback toegepast. Een reviewersnaam alleen bewijst geen onafhankelijkheid.
+- Zelfgegenereerde code wordt geïsoleerd uitgevoerd en pas na gecontroleerde kwaliteit, onafhankelijke review en readback toegepast. Een reviewersnaam alleen bewijst geen onafhankelijkheid. Nieuwe componentreviews binden het volledige kandidaatpakket en acceptatiebesluit aan de bestaande hostregistratie, vaste beoordelingscode, bron en baseline. Die toestemming komt uit hostconfiguratie; een reviewbestand kan haar niet zelf aanwijzen. Oude v1-bewijzen blijven historie en verlenen geen nieuwe uitvoerbevoegdheid.
 - Voor kinderen en gedeelde ruimten zijn afzonderlijke toegangs-/toestemmingstests nodig voordat een veilige gezinsuitrol geclaimd kan worden.
 
 ## Vereenvoudigingsgrens

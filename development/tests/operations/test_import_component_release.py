@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import difflib
 import json
+from pathlib import Path
 
 import pytest
 
 from eva.operations import component_release_import as importer
+from tests.operations.test_component_review_authority import write_review_authority
 
 
 CONTEXT_PATH = "adapters/postgres/delegated_work_actions.py"
@@ -43,6 +45,16 @@ def save_package(release):
     package["candidate_package_sha256"] = importer.digest(importer.canonical(
         {key: value for key, value in package.items() if key != "candidate_package_sha256"}))
     review["candidate_package_sha256"] = package["candidate_package_sha256"]
+    binding = review.get("measured_gain_evidence", {})
+    decision_file = Path(binding.get("path", "missing"))
+    if decision_file.is_file() and importer.digest(decision_file.read_bytes()) == binding.get("sha256"):
+        decision = json.loads(decision_file.read_text())
+        for field in ("candidate_package_sha256", "candidate_sha256", "baseline_sha256"):
+            decision[field] = package[field]
+        for field in ("candidate_sha256", "baseline_sha256"):
+            decision["binding"][field] = package[field]
+        decision_file.write_text(json.dumps(decision))
+        binding["sha256"] = importer.digest(decision_file.read_bytes())
     release["package_file"].write_text(json.dumps(package))
     release["review_file"].write_text(json.dumps(review))
 
@@ -82,12 +94,10 @@ def release_factory(tmp_path, monkeypatch):
             "evaluation": report,
             "evaluation_sha256": importer.digest(importer.canonical(report)),
         }
-        review = {
-            "contract": "EvaComponentReleaseReview/v1", "decision": "accept",
-            "reviewer": "independent-controlled-test",
-            "measured_gain_evidence": dict(binding),
-            "independent_review_evidence": dict(binding),
-        }
+        package["candidate_package_sha256"] = importer.digest(importer.canonical(package))
+        review, authorities = write_review_authority(tmp_path, package,
+            reviewer="independent-controlled-test")
+        evidence = Path(review["measured_gain_evidence"]["path"])
         commands = {
             ("rev-parse", "--show-toplevel"): str(checkout),
             ("branch", "--show-current"): "codex/reviewed-component",
@@ -99,7 +109,7 @@ def release_factory(tmp_path, monkeypatch):
             "checkout": checkout, "target": target, "evidence": evidence,
             "package_file": tmp_path / "package.json",
             "review_file": tmp_path / "review.json",
-            "package": package, "review": review,
+            "package": package, "review": review, "review_authorities": authorities,
         }
         save_package(release)
         return release
@@ -107,7 +117,8 @@ def release_factory(tmp_path, monkeypatch):
 
 
 def prepare(release):
-    return importer.prepare(release["package_file"], release["review_file"], release["checkout"])
+    return importer.prepare(release["package_file"], release["review_file"], release["checkout"],
+        review_authorities=release["review_authorities"])
 
 
 @pytest.mark.parametrize("size", [35517, 65536])

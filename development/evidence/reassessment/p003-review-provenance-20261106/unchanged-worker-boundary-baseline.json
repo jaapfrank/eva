@@ -1,0 +1,21 @@
+{
+  "contract": "EvaExistingBoundaryFailureProof/v1",
+  "at": "2026-11-06T10:34:30.821106+00:00",
+  "baseCommit": "b317b2befebf1563a81a373f4e9d477e08a2871f",
+  "originalTestBlobSha256": "a70da8864323f067ee39fa5c7363d056dcf6e96f54fda7c892d5527c03b870f6",
+  "runtimeSource": "src/eva/bootstrap/delegated_digital_runner.py",
+  "runtimeSourceSha256": "156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb",
+  "sourceUnchangedFromStart": true,
+  "results": [
+    {
+      "extra_context": false,
+      "originalCaseFails": true
+    },
+    {
+      "extra_context": true,
+      "originalCaseFails": true
+    }
+  ],
+  "scope": "Original two pinned historical AST assertions fail on unchanged pre-existing worker source. Expected AST hash, source implementation and independent criteria were not changed by P003.",
+  "cliFixtureCorrection": "CLI positive case uses the established literal-only controlled BASE checkout; the actual CLI and strict authority validation execute with real source/import receipts. Invalid authority leaves source and receipt untouched."
+}

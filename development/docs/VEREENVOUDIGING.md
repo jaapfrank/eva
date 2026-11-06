@@ -17,6 +17,8 @@ In [`delegated_work_delivery.py`](../../src/eva/adapters/postgres/delegated_work
 
 Scheid pure release-/receiptvalidatie van persistente wachtrij en dispatcher. Bewaar bestandsrechten, fsync, lock, onzekere toestand, controle van draaiende beelden en rollback. Een niet-lege `reviewer`-string identificeert een label, geen werkelijk onafhankelijke beoordelaar: bind review aan controleerbare herkomst en gescheiden toetsbevoegdheid, met menselijke steekproef waar nodig.
 
+De gedeelde controle voor nieuwe v2-reviews gebruikt een extern, hostgebonden register van vaste assessors. Zij controleert de volledige pakketidentiteit, kandidaat, baseline, bronbestemming en het echte acceptatiebesluit. Importer, publisher en uitvoeringswachtrij gebruiken dezelfde grens. De handmatige importer vraagt expliciet `--review-authorities`; de bestaande host leidt dezelfde toestemming af uit zijn actieve en behouden beoordelingsprotocollen. Afgesloten v1-bewijzen worden niet herschreven en kunnen geen nieuwe uitvoering starten. De actuele installatie- en bewijsstatus blijft uitsluitend in het JSON-werkbord.
+
 ## Prioriteit 3 — grote monolieten alleen met concreet probleem (P1-06)
 
 Een broninventaris toont **`pydantic_conversation.py` ca. 4.971 regels**, **`conversation_actions.py` ca. 3.581** en **`sensory_events.py` ca. 2.456**. Dit zijn reële onderhoudsrisico's, maar grootte alleen bewijst geen fout of duplicatie.

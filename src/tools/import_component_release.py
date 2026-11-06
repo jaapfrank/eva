@@ -24,9 +24,14 @@ def main():
     parser.add_argument("--review", required=True, type=Path)
     parser.add_argument("--checkout", required=True, type=Path)
     parser.add_argument("--receipt", type=Path)
+    parser.add_argument("--review-authorities", required=True, type=Path,
+                        help="Host-owned independent assessor authority manifest; never supplied by candidate content")
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
-    target, baseline, raw, receipt = prepare(args.package, args.review, args.checkout)
+    from eva.operations.reviewed_component_application import _path
+    authorities = load_object(_path(str(args.review_authorities)))
+    target, baseline, raw, receipt = prepare(args.package, args.review, args.checkout,
+                                           review_authorities=authorities)
     if args.apply:
         if args.receipt is None:
             parser.error("--apply requires a new --receipt path outside the release checkout")

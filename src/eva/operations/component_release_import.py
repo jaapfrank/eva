@@ -34,6 +34,11 @@ def canonical(value):
 
 
 def load_object(path):
+    return parse_object(path.read_bytes())
+
+
+def parse_object(raw):
+    """Parse the same bounded bytes whose artifact hash was checked."""
     def unique(pairs):
         result = {}
         for key, value in pairs:
@@ -41,7 +46,6 @@ def load_object(path):
                 raise ValueError("duplicate JSON field")
             result[key] = value
         return result
-    raw = path.read_bytes()
     if len(raw) > 1048576:
         raise ValueError("input exceeds one MiB")
     value = json.loads(raw, object_pairs_hook=unique,
@@ -126,7 +130,7 @@ def _work_strategy_surroundings(raw):
     return raw[:start], raw[end:]
 
 
-def prepare(package_file, review_file, checkout):
+def prepare(package_file, review_file, checkout, *, review_authorities=None):
     package = load_object(package_file)
     package_hash = package.get("candidate_package_sha256")
     payload = {key: value for key, value in package.items() if key != "candidate_package_sha256"}
@@ -159,13 +163,9 @@ def prepare(package_file, review_file, checkout):
                        ("timed_out", "stdout_truncated", "stderr_truncated"))):
             raise ValueError("evaluation is incomplete or unsuccessful")
     review = load_object(review_file)
-    if (review.get("contract") != "EvaComponentReleaseReview/v1"
-            or review.get("candidate_package_sha256") != package_hash
-            or review.get("decision") != "accept"
-            or not isinstance(review.get("reviewer"), str) or not review["reviewer"].strip()):
-        raise ValueError("operator review does not accept this exact package")
-    evidence = {name: checked_evidence(review_file, review.get(name))
-                for name in ("measured_gain_evidence", "independent_review_evidence")}
+    from eva.operations.component_review_authority import validate_component_review
+    evidence = validate_component_review(package, review, review_file,
+                                         review_authorities=review_authorities)
     root = Path(git(checkout, "rev-parse", "--show-toplevel")).resolve()
     if root != checkout.resolve() or not git(root, "branch", "--show-current").startswith("codex/"):
         raise ValueError("select the root of a separate codex release branch checkout")

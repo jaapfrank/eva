@@ -102,7 +102,7 @@ def _resolve_original(procedures, turn, target):
     return procedures.resolve_improvement_source(turn, target["procedure_reference_id"], resource_path=resource_path)
 
 
-def verify_saved_release(review_id, release):
+def verify_saved_release(review_id, release, *, review_authorities=None, allow_legacy=False):
     # Imported lazily: the existing application queue calls this discriminator.
     from eva.operations.reviewed_component_application import _artifact, _path
     from eva.operations.component_release_import import canonical, checked_evidence, digest
@@ -115,13 +115,9 @@ def verify_saved_release(review_id, release):
     plan = publication_plan(package)
     if publication != plan or review_id != plan["review_id"]:
         raise ValueError("saved publication is not the selected package")
-    if (review.get("contract") != "EvaComponentReleaseReview/v1"
-            or review.get("decision") != "accept"
-            or review.get("candidate_package_sha256") != review_id
-            or not isinstance(review.get("reviewer"), str) or not review["reviewer"].strip()):
-        raise ValueError("saved artifact requires an independent accepted review")
-    for name in ("measured_gain_evidence", "independent_review_evidence"):
-        checked_evidence(paths["review"], review.get(name))
+    from eva.operations.component_review_authority import validate_component_review
+    validate_component_review(package, review, paths["review"],
+                              review_authorities=review_authorities, allow_legacy=allow_legacy)
     receipt = _path(release["update_receipt"], exists=False)
     if receipt in paths.values():
         raise ValueError("saved application receipt collides with accepted inputs")

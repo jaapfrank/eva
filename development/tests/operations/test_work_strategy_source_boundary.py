@@ -142,18 +142,30 @@ def test_importer_rechecks_exact_baseline_before_body_admission(release_factory)
         prepare(release)
 
 
-def test_real_importer_applies_valid_literal_to_disposable_checkout_without_running_it(release_factory, monkeypatch, capsys):
-    baseline = Path(inspect.getsourcefile(_TaskModel)).read_text()
-    candidate = baseline.replace('return ("Werk naar het gevraagde gebruikersresultaat.',
-                                 'return ("Werk direct naar het gevraagde gebruikersresultaat.', 1)
+@pytest.mark.parametrize("authorized", [True, False])
+def test_real_importer_applies_valid_literal_to_disposable_checkout_without_running_it(release_factory, monkeypatch, capsys, authorized):
+    # The controlled checkout supplies the literal-only strategy contract.
+    # The live worker has since gained other responsibilities; its independent
+    # historical AST pin above remains untouched and is reported separately.
+    baseline = BASE
+    candidate = literal("A valid candidate strategy")
     release = release_factory(baseline, candidate, WORK_STRATEGY_PATH)
     receipt_file = release["review_file"].parent / "source-import.json"
+    authority_file = release["review_file"].parent / "trusted-review-authorities.json"
+    authority_file.write_text(json.dumps(release["review_authorities"] if authorized else {}))
     monkeypatch.setattr("sys.argv", ["import_component_release.py", "--package", str(release["package_file"]),
         "--review", str(release["review_file"]), "--checkout", str(release["checkout"]),
+        "--review-authorities", str(authority_file),
         "--receipt", str(receipt_file), "--apply"])
     # Git metadata is supplied by the existing isolated release fixture; the
     # actual importer validates bindings/bytes, reserves receipt and writes source.
     from tools.import_component_release import main
+    if not authorized:
+        with pytest.raises(ValueError, match="host authority"):
+            main()
+        assert release["target"].read_bytes() == baseline.encode()
+        assert not receipt_file.exists()
+        return
     main()
     capsys.readouterr()
     assert release["target"].read_bytes() == candidate.encode()

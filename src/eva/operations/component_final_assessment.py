@@ -262,6 +262,11 @@ class HostFinalAssessment:
         suffix = "-answer" if answer_evidence is not None else ""
         _save(output_root / ("decision" + suffix + ".private.json"), result, initial=True)
         public = public_decision(result, package)
+        # These attestations come from the fixed host assessor, not candidate
+        # prose or a configurable display name. Keep original scorer proof intact.
+        public["candidate_package_sha256"] = package["candidate_package_sha256"]
+        public["reviewer_identity"] = "host-final-assessment:" + self.config["registration"]["sha256"]
+        public["binding"]["scorer_sha256"] = self.config["scorer"]["sha256"]
         public_file = output_root / ("decision" + suffix + ".json")
         _save(public_file, public, initial=True)
         return {"decision": result["decision"], "public": public,
@@ -542,6 +547,54 @@ class FinalComponentAssessments:
         if not self.thread.is_alive(): self._file.close()
 
 
+def configured_review_authorities(config):
+    """Build immutable review trust from existing host-pinned assessor protocols.
+
+    This function consumes host configuration only. Review artifacts cannot
+    nominate new authorities, paths, source targets or baseline revisions.
+    """
+    if not isinstance(config, dict):
+        raise ValueError("final assessment authority configuration differs")
+    authorities = {}
+
+    def add(path, assessment, protocol):
+        if (not isinstance(path, str) or not path
+                or not isinstance(assessment, dict) or not isinstance(protocol, dict)):
+            raise ValueError("final assessment authority scope differs")
+        registration = assessment["registration"]
+        scorer = assessment["scorer"]
+        _artifact(registration)
+        if not isinstance(scorer, dict) or set(scorer) != {"path", "sha256"}:
+            raise ValueError("independent scorer authority binding differs")
+        _identifier(scorer["sha256"])
+        if digest(_path(scorer["path"]).read_bytes()) != scorer["sha256"]:
+            raise ValueError("independent scorer authority changed")
+        identity = _identifier(registration["sha256"])
+        if protocol.get("registration_sha256") != identity:
+            raise ValueError("final authority and protocol registration differ")
+        baseline = _identifier(protocol.get("baseline_sha256"))
+        target = assessment.get("source_target")
+        if target != protocol.get("source_target"):
+            raise ValueError("independent authority and protocol source target differ")
+        if target is not None:
+            target = validate_saved_artifact_target(target)
+        authority = {"registration": registration, "scorer": scorer, "path": path,
+                     "source_target": target,
+                     "baseline_sha256": baseline}
+        if identity in authorities and authorities[identity] != authority:
+            raise ValueError("independent authority has conflicting scopes")
+        authorities[identity] = json.loads(json.dumps(authority))
+
+    for path, assessment in config.get("assessments", {}).items():
+        add(path, assessment, config.get("protocols", {}).get(path))
+    for identity, value in config.get("retained_rounds", {}).items():
+        if (not isinstance(value, dict)
+                or value.get("protocol", {}).get("registration_sha256") != identity):
+            raise ValueError("retained final authority identity differs")
+        add(value["path"], value["assessment"], value["protocol"])
+    return authorities
+
+
 def configured_final_assessments(config, *, applications, runtime_config):
     from eva.operations.component_application_runtime import ComponentApplicationRuntime
     from eva.operations.component_release_publisher import ComponentReleasePublisher
@@ -549,6 +602,7 @@ def configured_final_assessments(config, *, applications, runtime_config):
     if (not isinstance(config, dict) or not required <= set(config)
             or set(config) - required - {"retained_rounds"}):
         raise ValueError("final assessment host configuration differs")
+    review_authorities = configured_review_authorities(config)
     runtime = ComponentApplicationRuntime(runtime_config)
     if config["scope_sha256"] != runtime.config["scope_sha256"]:
         raise ValueError("final and application source scopes differ")
@@ -570,9 +624,9 @@ def configured_final_assessments(config, *, applications, runtime_config):
             raise ValueError("retained protocol and independent registration differ")
         retained[registration] = {"path": value["path"], "protocol": value["protocol"]}
         retained_assessors[registration] = assessor
-        retained_publishers[registration] = ComponentReleasePublisher(value["publisher"])
+        retained_publishers[registration] = ComponentReleasePublisher(value["publisher"], review_authorities=review_authorities)
     return FinalComponentAssessments({key: config[key] for key in
         ("receipt_root", "scope_sha256", "protocols")} | {"retained_rounds": retained}, assessors=assessors,
-        publisher=ComponentReleasePublisher(config["publisher"]), applications=applications,
+        publisher=ComponentReleasePublisher(config["publisher"], review_authorities=review_authorities), applications=applications,
         task_state=runtime.ready_to_apply, retained_assessors=retained_assessors,
         retained_publishers=retained_publishers)

@@ -566,7 +566,11 @@ def main():
     applications = None
     if "reviewed_component_applications" in config:
         from eva.operations.component_application_runtime import configured_component_applications
-        applications = configured_component_applications(config["reviewed_component_applications"])
+        from eva.operations.component_final_assessment import configured_review_authorities
+        review_authorities = (configured_review_authorities(config["final_component_assessments"])
+                              if "final_component_assessments" in config else None)
+        applications = configured_component_applications(config["reviewed_component_applications"],
+            review_authorities=review_authorities)
     final_assessments = None
     if "final_component_assessments" in config:
         if applications is None:

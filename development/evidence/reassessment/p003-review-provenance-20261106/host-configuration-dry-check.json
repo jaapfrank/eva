@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-06T10:23:17.501508+00:00",
+  "hostConfigSha256": "25c64301d88dc4a6d14be54bc5c3d8b42d217be16c3499ed1ef9c95aea5e58f0",
+  "authorityCount": 10,
+  "authorityPolicySha256": "4dfad358013ab9f1735c53f63817ff3b19e776b51d39c58de819c2fe56adc560",
+  "historicalReleases": [
+    {
+      "registrationSha256": "d434f559d2d66277ae2e916513dcd358bee83e366b6c4e7968a2a499aa92d1e0",
+      "readableUnderHistoricalValidation": true,
+      "newDispatchBlocked": true
+    },
+    {
+      "registrationSha256": "4a729b4593f9d994a18d7c2f5c4ad00be9ec4033c1b3d64b70ad9c6cc10073f7",
+      "readableUnderHistoricalValidation": true,
+      "newDispatchBlocked": true
+    }
+  ],
+  "scope": "Read-only configuration and existing evidence verification; no queue object, dispatch or criteria change."
+}

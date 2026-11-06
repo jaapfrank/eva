@@ -9,7 +9,7 @@ from eva.operations.component_release_import import prepare, canonical, digest
 from eva.operations.image_update import image_update_services
 
 class ComponentReleasePublisher:
-    def __init__(self, config, *, run=subprocess.run):
+    def __init__(self, config, *, run=subprocess.run, review_authorities=None):
         if (not isinstance(config, dict)
                 or not {"repository", "integration_commit", "installed", "project", "reviewer"} <= set(config)
                 or set(config) - {"repository", "integration_commit", "installed", "project", "reviewer", "follow_current_images", "behavior_verifiers"}
@@ -17,6 +17,7 @@ class ComponentReleasePublisher:
                 or not isinstance(config["reviewer"], str) or not config["reviewer"].strip()):
             raise ValueError("invalid trusted release publisher configuration")
         self.config, self.run = dict(config), run
+        self.review_authorities = json.loads(json.dumps(review_authorities or {}))
         self.repository = Path(config["repository"])
         if not self.repository.is_absolute() or self.repository.resolve() != self.repository:
             raise ValueError("release repository must be an exact host path")
@@ -102,10 +103,17 @@ class ComponentReleasePublisher:
         _artifact(assessment["evidence"])
         _artifact(assessment["registration"])
         review_id = package["candidate_package_sha256"]
-        review = {"contract": "EvaComponentReleaseReview/v1", "decision": "accept",
+        review = {"contract": "EvaComponentReleaseReview/v2", "decision": "accept",
                   "candidate_package_sha256": review_id, "reviewer": self.config["reviewer"],
                   "measured_gain_evidence": assessment["evidence"],
-                  "independent_review_evidence": assessment["registration"]}
+                  "independent_review_evidence": assessment["registration"],
+                  "reviewer_identity": assessment["public"].get("reviewer_identity")}
+        from eva.operations.component_review_authority import validate_component_review
+        _, decision = _artifact(assessment["evidence"])
+        if decision != assessment["public"]:
+            raise ValueError("independent public decision differs from its retained proof")
+        validate_component_review(package, review, directory / "review.json",
+                                  review_authorities=self.review_authorities)
         _save(directory / "review.json", review, initial=True)
         if package.get("source_target", {}).get("kind") == "saved_artifact":
             from eva.operations.saved_artifact_application import publication_plan
@@ -115,14 +123,15 @@ class ComponentReleasePublisher:
                             "sha256": digest((directory / filename).read_bytes())}
                        for key, filename in files.items()}
             release.update(kind="saved_artifact", update_receipt=str(directory / "saved-application.private.json"))
-            _verify_release(review_id, release)
+            _verify_release(review_id, release, review_authorities=self.review_authorities)
             return release
         checkout = directory / "source"
         branch = "codex/eva-improvement-" + review_id[:20]
         self._command(["git", "-c", "safe.directory=" + str(self.repository), "-C",
             str(self.repository), "worktree", "add", "-b", branch, str(checkout),
             self.config["integration_commit"]], directory)
-        target, before, raw, imported = prepare(directory / "package.json", directory / "review.json", checkout)
+        target, before, raw, imported = prepare(directory / "package.json", directory / "review.json", checkout,
+            review_authorities=self.review_authorities)
         # Importer validates exact diff, independent evidence, AST boundary and baseline.
         if target.read_bytes() != before:
             raise ValueError("source changed before the exact import")
@@ -186,5 +195,5 @@ class ComponentReleasePublisher:
         release.update(project=self.config["project"], update_receipt=str(directory / "update.private.json"))
         if probe is not None:
             release["behavior_verifier"] = probe
-        _verify_release(review_id, release)
+        _verify_release(review_id, release, review_authorities=self.review_authorities)
         return release

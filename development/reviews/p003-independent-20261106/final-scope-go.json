@@ -1,0 +1,55 @@
+{
+  "contract": "EvaIndependentP003FinalScopeReview/v1",
+  "recordedAt": "2026-11-06T13:45:11.014757+00:00",
+  "reviewer": "/root/independent_review",
+  "decision": "GO",
+  "scope": "P0-03 only: scoped source/docs/evidence commit, no push or other priority start",
+  "canonicalBoardSha256": "1e954dc0f1e0310861774b1683d8b1385836ae8588e6205f970ba2e7ff16dbf0",
+  "canonicalBoardEqualsIndex": true,
+  "boardValidation": {
+    "status": "valid",
+    "taskCount": 103,
+    "completed": 83,
+    "activeTaskId": "E4.16"
+  },
+  "all103StatusesAndCriteriaPreserved": true,
+  "executionTasksMilestonesAndCurrentWorkCriteriaExactBefore": true,
+  "humanBoardExactCanonicalRender": true,
+  "liveDashboardPlanAndNowExactCanonical": true,
+  "coreReady": true,
+  "stagedFileCount": 50,
+  "stagedProductionSourceCount": 9,
+  "stagedSourceHashes": {
+    "src/eva/operations/component_application_runtime.py": "31a4470e3aa5edea261a5180259bd912260eee3c20649d9c812c3ac03da111c5",
+    "src/eva/operations/component_evaluation_service.py": "79adb60d5820f08200ef237ed355cb0f710226212be39dbe74449e9bc30fd398",
+    "src/eva/operations/component_final_assessment.py": "17b04f2c6373061dfc5d232469715fd902fa4c28f3d543bf36f099b7f2c82145",
+    "src/eva/operations/component_release_import.py": "2d5aeff36995debecea092229a01138164e7496119d19d89563f431535f14599",
+    "src/eva/operations/component_release_publisher.py": "50595c3649c1c51b4e729d6c52ab6683ae2ef166b63104c654d28c238a573aae",
+    "src/eva/operations/component_review_authority.py": "0da2c98f8cd443a903e3e758d2d6f24f8d6547a37b3bb24ca3bf215f1a83fc61",
+    "src/eva/operations/reviewed_component_application.py": "291fe0cd8355575079b288735311195554560bafa65c5ffca1bb63f908e3c0f0",
+    "src/eva/operations/saved_artifact_application.py": "af65f5c64221b248f4d3efe3d26e817677b26cd4d806bb16e793e3ab76cc060e",
+    "src/tools/import_component_release.py": "4f696f3ee8df767eb6eb6aa174db40fafb418c27769f8c5e6276f805e68d644f"
+  },
+  "cleanIndexSourceHashesStillMatch": true,
+  "allTenReviewedTestHashesMatchIndex": true,
+  "reviewedWorkingSourceHashesStillMatch": true,
+  "serviceStagedScope": "Only main() configured assessor authority injection,5add1delete; unrelated preexisting service work remains outside staged patch. Installed overlay retains reviewed actual baseline foreign service behavior.",
+  "evidence": {
+    "sourceReview": "7f783527ffae03de797ec5776e778f35578c8450a4780882444d37fd28c3bf09",
+    "installedReview": "d0f3001b85e15d8695a6a55d317e9cd2e381170d99f45c1f2d108a5580a5ddee",
+    "cleanIndexProof": "98791ff99a96f640c957ceed13e83525d4548952fbf11e100fa6ff2f82503cad",
+    "completion": "b937aaa482c007a400ef9bdffc31cd78a3b4f106a5ff04d8b1262e67797db975"
+  },
+  "tests": {
+    "focusedPassing": 241,
+    "cleanIndexPassing": 241,
+    "knownHistoricalASTBoundaryFailures": 2,
+    "criteriaOrWorkerSourceRelaxed": false
+  },
+  "limitations": [
+    "Whole E4.16, real autonomous later reuse and family acceptance remain open.",
+    "No new actual Eva-authored candidate was applied to prove end-to-end household use.",
+    "Historical v1 reviews remain readable without new-dispatch authority; ambiguous historical outcomes remain uncertain."
+  ],
+  "commitOrPushPerformedByReviewer": false
+}

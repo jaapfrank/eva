@@ -1,0 +1,99 @@
+{
+  "contract": "EvaIndependentTechnicalReview/v1",
+  "priority": "P0-03",
+  "recordedAt": "2026-11-06T10:37:22.668315+00:00",
+  "reviewer": {
+    "identity": "/root/independent_review",
+    "separateFromImplementers": true,
+    "implementedProductCandidate": false
+  },
+  "decision": "GO",
+  "scope": "Component/saved-artifact v2 review provenance, host authority factory, publication/import/application gates and operator CLI",
+  "candidateSources": {
+    "src/eva/operations/component_review_authority.py": "0da2c98f8cd443a903e3e758d2d6f24f8d6547a37b3bb24ca3bf215f1a83fc61",
+    "src/eva/operations/component_release_import.py": "2d5aeff36995debecea092229a01138164e7496119d19d89563f431535f14599",
+    "src/eva/operations/reviewed_component_application.py": "291fe0cd8355575079b288735311195554560bafa65c5ffca1bb63f908e3c0f0",
+    "src/eva/operations/saved_artifact_application.py": "af65f5c64221b248f4d3efe3d26e817677b26cd4d806bb16e793e3ab76cc060e",
+    "src/eva/operations/component_application_runtime.py": "31a4470e3aa5edea261a5180259bd912260eee3c20649d9c812c3ac03da111c5",
+    "src/eva/operations/component_final_assessment.py": "17b04f2c6373061dfc5d232469715fd902fa4c28f3d543bf36f099b7f2c82145",
+    "src/eva/operations/component_release_publisher.py": "50595c3649c1c51b4e729d6c52ab6683ae2ef166b63104c654d28c238a573aae",
+    "src/eva/operations/component_evaluation_service.py": "496d3f1e9d2a02835c01a18b8359d17ef09f16aac134a5f5280be48f0e874020",
+    "src/tools/import_component_release.py": "4f696f3ee8df767eb6eb6aa174db40fafb418c27769f8c5e6276f805e68d644f"
+  },
+  "candidateTests": {
+    "development/tests/operations/test_component_review_authority.py": "89c3c24d89c784aafff4ae8b912df6a6118c68346c0af8ae2de7b05d9d3b9029",
+    "development/tests/operations/test_import_component_release.py": "007ad89d8b89c4817c77d4a580cc4589f342a312601d211fcb1d2c5c4cf04398",
+    "development/tests/operations/test_reviewed_component_application.py": "ecce77e58e99b7120a91475b77b8952e3a81d30ee18c08b729a840b508094724",
+    "development/tests/operations/test_component_review_handoff.py": "720894e7b11bb9ac2e477d0ff5b64861e6fa8459273d04e21a8ebb960a19c9fa",
+    "development/tests/operations/test_component_behavior_handoff.py": "e974b4ee585dd2de45b2f6cfdc57a1419784e2c6e28d12bc892879a21c98b8ad",
+    "development/tests/operations/test_saved_artifact_application.py": "5f27d2686f24a2f2c48f3e289c39a90146d22946fb3b55e945829f1cac5e358c",
+    "development/tests/operations/test_component_final_assessment.py": "bec495d06c59ee3c3e14eb2eaf902545c364ff90a087f13f9f6f188c5c377224",
+    "development/tests/operations/test_component_improvement_rounds.py": "183267bb4a531d6ac609c7962c5b24e721e5be7b9935418fba8ef7891284eba8",
+    "development/tests/operations/test_saved_artifact_final_assessment.py": "85335bac4beaf5057a77e1fcc68e5ef66500d90aa1de40c1c5fa278310b3bd5b",
+    "development/tests/operations/test_work_strategy_source_boundary.py": "f3c4d3e5c00c32cc94a1d0a493a98ea8d33024e29066854a25c3a9af96aa01ce"
+  },
+  "findings": [],
+  "resolvedDuringReview": [
+    "Host authority factory now checks assessment/protocol source_target equality before queue construction.",
+    "Legacy v1 review without a prior job reports rejected/legacy_review_read_only rather than ready.",
+    "Review decision/registration JSON parsed from the exact hash-checked bounded byte snapshot, not a second file read.",
+    "Operator CLI carries separate required trusted authority manifest; controlled pure literal checkout tests cover both granted and absent authority without relaxing historical AST criteria."
+  ],
+  "checks": [
+    "A display label has no approval authority; external configured registration/scorer/path/source_target/baseline anchor is mandatory for v2.",
+    "Exact full package hash plus candidate/baseline, accepting public decision, semantic improvement and completed answer stage are bound to configured reviewer identity and scorer.",
+    "Core review_id must equal the exact package hash; same-code/different-package or borrowed registration evidence cannot authorize publication.",
+    "All host authority artifacts retain owner/hash/non-symlink/non-writable checks and duplicate/nonfinite JSON rejection.",
+    "Actual HostFinalAssessment supplies identity/package/scorer metadata after the original scorer checks; original private scorer result is retained unchanged.",
+    "Publisher checks retained decision equals public assessment and validates authority before writing review or running build commands.",
+    "All3active and7retained host rounds supply the10external authority anchors. No review-supplied authority fallback.",
+    "New registration/new request/interrupted dispatch resume and actual dispatch remain strict v2; legacy validation is confined to historical read/receipt inspection.",
+    "Legacy reconcile remains behind exact release hash and existing receipt paths; it cannot call apply_release or blindly retry.",
+    "Owned-package/runtime-repair/dependency-update discriminator contracts and existing locks/fsync/receipts/rollback/STOP routes are preserved.",
+    "Eight host modules are needed; CLI remains the ninth local operator source. Existing foreign service changes must remain outside scoped patch installation."
+  ],
+  "verification": {
+    "focusedSuites": [
+      "development/tests/operations/test_component_review_authority.py",
+      "development/tests/operations/test_import_component_release.py",
+      "development/tests/operations/test_reviewed_component_application.py",
+      "development/tests/operations/test_component_review_handoff.py",
+      "development/tests/operations/test_component_behavior_handoff.py",
+      "development/tests/operations/test_saved_artifact_application.py",
+      "development/tests/operations/test_component_final_assessment.py",
+      "development/tests/operations/test_component_improvement_rounds.py",
+      "development/tests/operations/test_saved_artifact_final_assessment.py"
+    ],
+    "focusedPassed": 210,
+    "focusedFailed": 0,
+    "focusedSeconds": 10.82,
+    "focusedLog": "development/reviews/p003-independent-20261106/focused-tests.log",
+    "focusedLogSha256": "4f67df06dc82ac8eced09aa5fa8ae01f12da46cc17e13398396f7e37354ee0e6",
+    "cliSuitePassed": 31,
+    "historicalAstFailures": 2,
+    "cliLog": "development/reviews/p003-independent-20261106/cli-boundary-tests.log",
+    "cliBaselineProof": "development/reviews/p003-independent-20261106/cli-boundary-baseline-review.json",
+    "originalAstExpectedHashUnchanged": true,
+    "workerSourceUnchangedSha256": "156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb",
+    "allFrozenSourceAndFocusedTestHashesUnchangedDuringRun": true,
+    "productionDatabaseUsed": false,
+    "externalModelCalls": 0,
+    "productionEffects": false
+  },
+  "liveConfigurationDryValidation": {
+    "evidence": "development/reviews/p003-independent-20261106/host-dry-readback.json",
+    "trustedAuthorities": 10,
+    "historicalV1ReleasesReadable": 2,
+    "historicalV1NewApprovalBlocked": 2,
+    "historicalArtifactBytesUnchanged": true
+  },
+  "conditions": [
+    "Install only the scoped P0-03 host overlay derived from actual active host source; preserve unrelated host/native/voice work.",
+    "Fresh host assessment/work/readiness checks before replacing the shared evaluation host; independent installed readback still required."
+  ],
+  "limitations": [
+    "GO binds these exact candidate bytes; any further product change needs a new hash check.",
+    "Historical2AST-pin failures remain openly recorded, independently reproduced from the original b317b2be test function on the unchanged worker; no expected pin or criterion was modified.",
+    "This review does not claim a new real Eva-authored accepted improvement, managed application outcome, general product completion or family acceptance."
+  ]
+}

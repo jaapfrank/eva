@@ -1,0 +1,91 @@
+{
+  "contract": "EvaIndependentHostOverlayInstallerReview/v1",
+  "priority": "P0-03",
+  "recordedAt": "2026-11-06T10:40:52.618369+00:00",
+  "reviewer": "/root/independent_review",
+  "decision": "GO",
+  "scope": "Scoped eight-module host overlay and guarded installer design; live installation permission remains conditional on idle proof",
+  "installerSha256": "a2a759aed221f93ae979e20887d5a2c03c181d53346068770b1a0c91956bf058",
+  "planSha256": "62daead7f83521d1c8d26d55738d63e22196c75bb24345d8466dc6c47d56ea31",
+  "probeSha256": "79388bed41420c171b3b6a87b265ab53d2a1c77424dd3b46853e47a1cba4c0f7",
+  "readinessSha256": "f02eff8a47adadabf47d4c66928eb3324388411782736f604895320809d65a59",
+  "overlay": {
+    "oldOverlayFileCount": 14,
+    "newOverlayFileCount": 19,
+    "exactlyEightTargetsChangedOrAdded": true,
+    "allOtherOldFilesRetainedByteExact": true,
+    "newHelperSha256": "0da2c98f8cd443a903e3e758d2d6f24f8d6547a37b3bb24ca3bf215f1a83fc61",
+    "patches": [
+      {
+        "path": "eva/operations/component_release_import.py",
+        "baselineSha256": "da0d21984d6e3a80350a19f636132d126c5c655b419e659a711587815db0d82d",
+        "candidateSha256": "2d5aeff36995debecea092229a01138164e7496119d19d89563f431535f14599",
+        "patchSha256": "024dd7e0493c568d25ba076f6c444420c4eb66954809ad1e639d8e26ee3fba68",
+        "forwardAndReverseExact": true
+      },
+      {
+        "path": "eva/operations/reviewed_component_application.py",
+        "baselineSha256": "fa972e8fd6471db92c746aac23c1906a162224efd951ebe51cf894edd0a4f20f",
+        "candidateSha256": "291fe0cd8355575079b288735311195554560bafa65c5ffca1bb63f908e3c0f0",
+        "patchSha256": "6599380fc0f45ae02c21fc46a037d10d1b1c431b885e81d1f940503378a4afa8",
+        "forwardAndReverseExact": true
+      },
+      {
+        "path": "eva/operations/saved_artifact_application.py",
+        "baselineSha256": "a20b018e2b2810626264ca613286f51c7eaebd1f20d2da27b6113ec2638fefd4",
+        "candidateSha256": "af65f5c64221b248f4d3efe3d26e817677b26cd4d806bb16e793e3ab76cc060e",
+        "patchSha256": "1c18ab12fbe59a93c5247d38ca3cd0f6d21e27a51b7cecc5743109812b2f3f37",
+        "forwardAndReverseExact": true
+      },
+      {
+        "path": "eva/operations/component_final_assessment.py",
+        "baselineSha256": "7cd09366111850e9fa7db73c6efff0192660a3ca46072658c7703fe7052110d2",
+        "candidateSha256": "17b04f2c6373061dfc5d232469715fd902fa4c28f3d543bf36f099b7f2c82145",
+        "patchSha256": "d5e092bdab15f4ed029685cd66c93c37446ef265f326b3bec67944b437674762",
+        "forwardAndReverseExact": true
+      },
+      {
+        "path": "eva/operations/component_release_publisher.py",
+        "baselineSha256": "afccab9eea138b03771c5e3115777ab59dafc62c4b982b08196d27729dc51349",
+        "candidateSha256": "50595c3649c1c51b4e729d6c52ab6683ae2ef166b63104c654d28c238a573aae",
+        "patchSha256": "1d7b60934bfc88c431bc5b7bff6c718d8794caf9bc65b8fd1ced08caa7531e40",
+        "forwardAndReverseExact": true
+      },
+      {
+        "path": "eva/operations/component_application_runtime.py",
+        "baselineSha256": "e48c622a5c3157d07c8102960c3e1d29c720ca0a7cfa6fc2f411a91bda792fd6",
+        "candidateSha256": "31a4470e3aa5edea261a5180259bd912260eee3c20649d9c812c3ac03da111c5",
+        "patchSha256": "77fd3306126a12f3310e2e82e0dc0873db0517a252366bdda6f2435d8d53512c",
+        "forwardAndReverseExact": true
+      },
+      {
+        "path": "eva/operations/component_evaluation_service.py",
+        "baselineSha256": "548ee91254f214603cbaf4a7e0775f766db2bda06fda5b5153a5415eeba4ce6d",
+        "candidateSha256": "496d3f1e9d2a02835c01a18b8359d17ef09f16aac134a5f5280be48f0e874020",
+        "patchSha256": "8f4cba04baeb784610ab8aff0c4c6d92b69923a16954112b4f914f6696143094",
+        "forwardAndReverseExact": true
+      }
+    ]
+  },
+  "checks": [
+    "Seven scoped patches independently applied to actual active host baseline copies and reversed with fuzz0; all forward/reverse SHA256 values exact.",
+    "Only8P0-03modules differ; unrelated host/native/owned-package overrides stay unchanged.",
+    "Installer preserves actual argv/config hash, non-source environment, immutable source layer pins,9historical job/registry files,62private criteria files and runtime handoffs.",
+    "No core/worker container/image or profile update, provider/model/grant change, or configuration file rewrite.",
+    "Exclusive durable activation receipt precedes mutations; repeated unknown activation is rejected.",
+    "Fresh idle/current-work checks repeat before stop, after stop and immediately before source drop-in. If post-stop idle proof fails before source change, only the old host is restarted.",
+    "New host readiness checks exact PID/argv/source roots/owned listening socket/config/environment and source imports; history and criteria hashes rechecked.",
+    "No updater dispatch, historical replay or source cleanup occurs in this installer."
+  ],
+  "currentPreflight": {
+    "blocked": true,
+    "unresolvedNullMarkerCount": 6,
+    "readinessRuleRelaxed": false,
+    "installedByReviewer": false
+  },
+  "conditions": [
+    "Do not install while the six current unknown markers remain unclassified; zero guards or separately reviewed exact immutable proof amendment required.",
+    "A newly observed/mismatching marker, active assessment, altered history/source or profile remains a hard blocker.",
+    "After allowed activation, perform independent source/authority/history readback; this report does not assert installed v2 behavior."
+  ]
+}

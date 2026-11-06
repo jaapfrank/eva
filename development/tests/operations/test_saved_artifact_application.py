@@ -18,6 +18,7 @@ from eva.operations.saved_artifact_application import (
 from eva.contracts.canonical_json import canonical_sha256
 from tests.operations.test_saved_artifact_final_assessment import selected
 from tools.import_component_release import digest
+from tests.operations.test_component_review_authority import write_review_authority
 
 
 TASK = "work:eva-chat:saved-application"
@@ -47,18 +48,19 @@ def completed(plan):
 def published(tmp_path):
     package = selected()
     installed = binding(tmp_path / "installed.json", {"services": {}})
-    evidence = binding(tmp_path / "evidence.json", {"synthetic_fixed_gain": True})
-    registration = binding(tmp_path / "registration.json", {"synthetic_fixed_criteria": True})
+    review, authorities = write_review_authority(tmp_path / "authority", package)
     directory = tmp_path / "candidate"; directory.mkdir(mode=0o700)
     binding(directory / "package.json", package)
     publisher = ComponentReleasePublisher({"repository": str(tmp_path / "repository"),
         "integration_commit": "a" * 40, "installed": installed,
         "project": "test-only", "reviewer": "independent-synthetic-review"},
-        run=lambda *a, **k: pytest.fail("saved helper must not build images or run Git"))
-    assessment = {"decision": "accept", "public": {"semantic_improvement_verified": True},
-        "evidence": evidence, "registration": registration}
+        run=lambda *a, **k: pytest.fail("saved helper must not build images or run Git"),
+        review_authorities=authorities)
+    assessment = {"decision": "accept",
+        "public": json.loads(Path(review["measured_gain_evidence"]["path"]).read_text()),
+        "evidence": review["measured_gain_evidence"], "registration": review["independent_review_evidence"]}
     release = publisher(package, assessment, directory)
-    return package, release
+    return package, release, authorities
 
 
 def wait(app, wanted):
@@ -72,10 +74,11 @@ def wait(app, wanted):
 
 
 def test_saved_publication_applies_once_and_survives_queue_restart(tmp_path, published):
-    package, release = published
+    package, release, authorities = published
     calls = []
     config = {"receipt_root": str(tmp_path / "queue"),
-        "releases": {package["candidate_package_sha256"]: release}, "poll_seconds": 0.01}
+        "releases": {package["candidate_package_sha256"]: release}, "poll_seconds": 0.01,
+        "review_authorities": authorities}
     def apply(update):
         assert update["kind"] == "saved_artifact" and update["task_id"] == TASK
         assert update["candidate_content"] == package["candidate_content"]
@@ -92,9 +95,10 @@ def test_saved_publication_applies_once_and_survives_queue_restart(tmp_path, pub
 
 
 def test_stop_prevents_saved_dispatch(tmp_path, published):
-    package, release = published
+    package, release, authorities = published
     config = {"receipt_root": str(tmp_path / "queue"),
-        "releases": {package["candidate_package_sha256"]: release}, "poll_seconds": 0.01}
+        "releases": {package["candidate_package_sha256"]: release}, "poll_seconds": 0.01,
+        "review_authorities": authorities}
     with closing(ReviewedComponentApplications(config, ready_to_apply=lambda _: "cancelled",
             apply_release=lambda _: pytest.fail("stopped task must not save"))) as app:
         app.request(package["candidate_package_sha256"], REQUEST, TASK)
@@ -110,10 +114,11 @@ def test_stop_prevents_saved_dispatch(tmp_path, published):
                   "principal_id": "another-person", "project_id": "project"}, "receipt": "e" * 64})),
 ])
 def test_saved_queue_does_not_accept_unbound_success(tmp_path, published, bad_field, bad_value):
-    package, release = published
+    package, release, authorities = published
     calls = []
     config = {"receipt_root": str(tmp_path / "queue"),
-        "releases": {package["candidate_package_sha256"]: release}, "poll_seconds": 0.01}
+        "releases": {package["candidate_package_sha256"]: release}, "poll_seconds": 0.01,
+        "review_authorities": authorities}
     def apply(update):
         calls.append(update)
         receipt = completed(update["publication"])

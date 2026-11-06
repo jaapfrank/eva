@@ -1,0 +1,396 @@
+{
+  "readOnly": true,
+  "independentlyAssertedWorkScopeAndOwnerBinding": true,
+  "historicalClassification": {
+    "markers": [
+      {
+        "thread_sha256": "6071327345be5cd8a6df027df2d7f71e1a1c18555ea6c5714c365aa785beac49",
+        "category": "delegated-research",
+        "operations": [
+          {
+            "phase": "state_verified",
+            "status": "completed",
+            "revision": 4,
+            "deadline": null,
+            "updated_at": "2026-11-05 21:03:22+00:00",
+            "thread_sha256": "482647ca665c77c6665cc8f3ae862445af406b17b7ce069de3d269660756c4e1",
+            "events": [
+              {
+                "sequence": 1,
+                "event_type": "TOOL_REQUEST_ADMITTED",
+                "data_keys": [
+                  "action_arguments",
+                  "action_call_id",
+                  "action_name",
+                  "conversation_id",
+                  "observation_output_key",
+                  "principal_id",
+                  "receipt_output",
+                  "request_arguments",
+                  "request_execution_timeout_seconds",
+                  "request_expected_proof",
+                  "request_observation_arguments",
+                  "request_observation_tool_name",
+                  "request_tool_configuration_sha256",
+                  "request_tool_name",
+                  "request_verification_timeout_seconds",
+                  "source_message_id"
+                ],
+                "payload_sha256": "b0ee53f1d9b95d30ed6cfa4d39d56fd24cdbb4b4354e5c114f0306fd54133e8f",
+                "hash_valid": true
+              },
+              {
+                "sequence": 2,
+                "event_type": "TOOL_PREPARED",
+                "data_keys": [
+                  "arguments",
+                  "expected_proof",
+                  "observation_arguments",
+                  "observation_tool_name",
+                  "tool_configuration_sha256",
+                  "tool_name"
+                ],
+                "payload_sha256": "24fc7577d14d3b5e225b5997e77e7248fdd98893799fa5a547b1a736712ea7ac",
+                "hash_valid": true
+              },
+              {
+                "sequence": 3,
+                "event_type": "TOOL_EXECUTED",
+                "data_keys": [
+                  "dispatch"
+                ],
+                "payload_sha256": "09e871cb4764105a1f808cd3512a90382e100a854a59b9043ed9054c8cbd598b",
+                "hash_valid": true
+              },
+              {
+                "sequence": 4,
+                "event_type": "STATE_VERIFIED",
+                "data_keys": [
+                  "proof"
+                ],
+                "payload_sha256": "d2066d2ed3f63962812f7cd6953726456a284c5c567b35867fbc123d5365e0b8",
+                "hash_valid": true
+              }
+            ]
+          }
+        ],
+        "work": [
+          {
+            "state": "succeeded",
+            "revision": 4,
+            "deadline": "2026-11-05 21:07:51+00:00",
+            "leased": false,
+            "lease_expires_at": null,
+            "call_started_at": "2026-11-05 21:03:02+00:00",
+            "completed_at": "2026-11-05 21:03:22+00:00",
+            "stop_requested_at": null,
+            "error_code": null,
+            "sha": "c6bd60244969a1256a8e248eada53c7cd138006d75644abe0dd44fb371da793c",
+            "result_sha": "9397e37ef362e3ce48bcdebde99a495e82ab3067128e29fc2109a932fd83a695",
+            "work_sha256": "df5b7f61349ebebdb23710c9fded822566b74b853457a0cbd273a1913b7d687c",
+            "spec_hash_valid": true,
+            "result_hash_valid": true
+          }
+        ],
+        "model_outcomes": [],
+        "ingress_queue": []
+      },
+      {
+        "thread_sha256": "515571f738de8817edaf29c4d9f289a4a58605cc814858b0489d3669deb2c27d",
+        "category": "delegated-research",
+        "operations": [
+          {
+            "phase": "tool_prepared",
+            "status": "failed",
+            "revision": 3,
+            "deadline": null,
+            "updated_at": "2026-11-05 21:06:45+00:00",
+            "thread_sha256": "85911308091ace3192f7114bff06961c7f38c8699fc4f43cfc8a5c827ee063a3",
+            "events": [
+              {
+                "sequence": 1,
+                "event_type": "TOOL_REQUEST_ADMITTED",
+                "data_keys": [
+                  "action_arguments",
+                  "action_call_id",
+                  "action_name",
+                  "conversation_id",
+                  "observation_output_key",
+                  "principal_id",
+                  "receipt_output",
+                  "request_arguments",
+                  "request_execution_timeout_seconds",
+                  "request_expected_proof",
+                  "request_observation_arguments",
+                  "request_observation_tool_name",
+                  "request_tool_configuration_sha256",
+                  "request_tool_name",
+                  "request_verification_timeout_seconds",
+                  "source_message_id"
+                ],
+                "payload_sha256": "01d5831025072cfd3b78d12e71be2090a270f7fe7068459aac7c8cb8afb8ec22",
+                "hash_valid": true
+              },
+              {
+                "sequence": 2,
+                "event_type": "TOOL_PREPARED",
+                "data_keys": [
+                  "arguments",
+                  "expected_proof",
+                  "observation_arguments",
+                  "observation_tool_name",
+                  "tool_configuration_sha256",
+                  "tool_name"
+                ],
+                "payload_sha256": "2cbca4707310b5ff2cf4bcf389cd771539073cd369891d4efe8541d8a38ad4b5",
+                "hash_valid": true
+              },
+              {
+                "sequence": 3,
+                "event_type": "RECOVERY_FAILED",
+                "data_keys": [
+                  "error_fingerprint",
+                  "model_usage",
+                  "retry_count"
+                ],
+                "payload_sha256": "c5adfe9ea345e5e272bbbcf640d79519e508110a55721e3deb05580b65309dd9",
+                "hash_valid": true
+              }
+            ]
+          }
+        ],
+        "work": [
+          {
+            "state": "ambiguous",
+            "revision": 4,
+            "deadline": "2026-11-05 21:11:24+00:00",
+            "leased": false,
+            "lease_expires_at": null,
+            "call_started_at": "2026-11-05 21:06:35+00:00",
+            "completed_at": "2026-11-05 21:06:45+00:00",
+            "stop_requested_at": null,
+            "error_code": "internal_error",
+            "sha": "a2ab385b5fb00588736af240e00601fc94694f2173c329d53fb04f510e36a0c0",
+            "result_sha": null,
+            "work_sha256": "65c34917dd57ba2c77b6b02bf18bb79f0d70a53b1dab38e03a46777d0c05f22d",
+            "spec_hash_valid": true,
+            "result_hash_valid": null
+          }
+        ],
+        "model_outcomes": [],
+        "ingress_queue": []
+      },
+      {
+        "thread_sha256": "cbca65500fa9419aa4bc983523f7d0ea0d04629d6e216c0f81a103d17b03ffe2",
+        "category": "delegated-research",
+        "operations": [
+          {
+            "phase": "tool_prepared",
+            "status": "failed",
+            "revision": 3,
+            "deadline": null,
+            "updated_at": "2026-11-05 21:09:25+00:00",
+            "thread_sha256": "4e32721a17fccc713619c768778b8116c95397632744ef15a3d116fe897473f7",
+            "events": [
+              {
+                "sequence": 1,
+                "event_type": "TOOL_REQUEST_ADMITTED",
+                "data_keys": [
+                  "action_arguments",
+                  "action_call_id",
+                  "action_name",
+                  "conversation_id",
+                  "observation_output_key",
+                  "principal_id",
+                  "receipt_output",
+                  "request_arguments",
+                  "request_execution_timeout_seconds",
+                  "request_expected_proof",
+                  "request_observation_arguments",
+                  "request_observation_tool_name",
+                  "request_tool_configuration_sha256",
+                  "request_tool_name",
+                  "request_verification_timeout_seconds",
+                  "source_message_id"
+                ],
+                "payload_sha256": "c9e0ce009e190807b727b66b5bd93a95fa6f0c7b589088def486364a4d3edc54",
+                "hash_valid": true
+              },
+              {
+                "sequence": 2,
+                "event_type": "TOOL_PREPARED",
+                "data_keys": [
+                  "arguments",
+                  "expected_proof",
+                  "observation_arguments",
+                  "observation_tool_name",
+                  "tool_configuration_sha256",
+                  "tool_name"
+                ],
+                "payload_sha256": "8aedbe1ad5409ded3f702c01e10f3e2c212ab407553c30d9db9f8dd1299c4b08",
+                "hash_valid": true
+              },
+              {
+                "sequence": 3,
+                "event_type": "RECOVERY_FAILED",
+                "data_keys": [
+                  "error_fingerprint",
+                  "model_usage",
+                  "retry_count"
+                ],
+                "payload_sha256": "78c00a1e89adf37288fa429dede27a406901dcd0c23b28bfd7f417bbf3142c9f",
+                "hash_valid": true
+              }
+            ]
+          }
+        ],
+        "work": [
+          {
+            "state": "ambiguous",
+            "revision": 4,
+            "deadline": "2026-11-05 21:13:54+00:00",
+            "leased": false,
+            "lease_expires_at": null,
+            "call_started_at": "2026-11-05 21:09:11+00:00",
+            "completed_at": "2026-11-05 21:09:25+00:00",
+            "stop_requested_at": null,
+            "error_code": "internal_error",
+            "sha": "a7b72675f2f0742f527aca4df4cb2a59895dff8b8f8328e901f3bda45b8dd9fa",
+            "result_sha": null,
+            "work_sha256": "c7a55efb11aa62cb1df306a05681a04203a05d12ee234101e77a5fd608e1a9ab",
+            "spec_hash_valid": true,
+            "result_hash_valid": null
+          }
+        ],
+        "model_outcomes": [],
+        "ingress_queue": []
+      },
+      {
+        "thread_sha256": "d8aa0202a64e7b66ee3ded9727bc3e215e5491a394996f134adfbb82ee614191",
+        "category": "delegated-research",
+        "operations": [
+          {
+            "phase": "state_verified",
+            "status": "completed",
+            "revision": 4,
+            "deadline": null,
+            "updated_at": "2026-11-05 21:14:27+00:00",
+            "thread_sha256": "ce5986232de7139b1badf706cb462968a30dc7c8350788a45b299a8cc99defdf",
+            "events": [
+              {
+                "sequence": 1,
+                "event_type": "TOOL_REQUEST_ADMITTED",
+                "data_keys": [
+                  "action_arguments",
+                  "action_call_id",
+                  "action_name",
+                  "conversation_id",
+                  "observation_output_key",
+                  "principal_id",
+                  "receipt_output",
+                  "request_arguments",
+                  "request_execution_timeout_seconds",
+                  "request_expected_proof",
+                  "request_observation_arguments",
+                  "request_observation_tool_name",
+                  "request_tool_configuration_sha256",
+                  "request_tool_name",
+                  "request_verification_timeout_seconds",
+                  "source_message_id"
+                ],
+                "payload_sha256": "5777419f4787815cf86132a076fec62cea64b3a748b87949f3ef821502cfe18f",
+                "hash_valid": true
+              },
+              {
+                "sequence": 2,
+                "event_type": "TOOL_PREPARED",
+                "data_keys": [
+                  "arguments",
+                  "expected_proof",
+                  "observation_arguments",
+                  "observation_tool_name",
+                  "tool_configuration_sha256",
+                  "tool_name"
+                ],
+                "payload_sha256": "baf9843598643d2f5988c8c7bf00c890f9056b985cc3208c830664d3702ae869",
+                "hash_valid": true
+              },
+              {
+                "sequence": 3,
+                "event_type": "TOOL_EXECUTED",
+                "data_keys": [
+                  "dispatch"
+                ],
+                "payload_sha256": "39a2668bd314168ef95e3c053aa89a15fbc754b79e1e9444bb9037b11a0c554e",
+                "hash_valid": true
+              },
+              {
+                "sequence": 4,
+                "event_type": "STATE_VERIFIED",
+                "data_keys": [
+                  "proof"
+                ],
+                "payload_sha256": "b5cc1f2e9461970ebf776dabc9905a9eaed32f2c92ece7b7401919d4fd012ef8",
+                "hash_valid": true
+              }
+            ]
+          }
+        ],
+        "work": [
+          {
+            "state": "succeeded",
+            "revision": 4,
+            "deadline": "2026-11-05 21:18:36+00:00",
+            "leased": false,
+            "lease_expires_at": null,
+            "call_started_at": "2026-11-05 21:13:52+00:00",
+            "completed_at": "2026-11-05 21:14:27+00:00",
+            "stop_requested_at": null,
+            "error_code": null,
+            "sha": "f9bd2c4694c2bc4cbc4a3f9376a418bbb9237e839934a0ea39f91baa0e59c834",
+            "result_sha": "c025012bc9ee56b180682a7f23cf2b560d480b3b55777fb5b5ea30ec7fff9a8e",
+            "work_sha256": "9d3850c1b88694038f7f5717528540fc0410f162e3109e9bac747e128d18fd4e",
+            "spec_hash_valid": true,
+            "result_hash_valid": true
+          }
+        ],
+        "model_outcomes": [],
+        "ingress_queue": []
+      },
+      {
+        "thread_sha256": "c848f676a992c49d57396a9b0a49552ce41874439d6bd88b95836ed9bc0170c9",
+        "category": "telegram",
+        "operations": [],
+        "work": [],
+        "model_outcomes": [
+          {
+            "outcome": "failed",
+            "local_stream_closed": true,
+            "usage_measurement": "unmeasured",
+            "payload_sha256": "1d7394cf19dc472e4c709069b73ca6e1d25d7e35786e64762baafe4b9affd5da",
+            "hash_valid": true
+          }
+        ],
+        "ingress_queue": []
+      },
+      {
+        "thread_sha256": "1134a298dd5e008349e8ba9da881d9fd8e1d3220093bebc726d0ba51df8f23ce",
+        "category": "telegram",
+        "operations": [],
+        "work": [],
+        "model_outcomes": [
+          {
+            "outcome": "failed",
+            "local_stream_closed": true,
+            "usage_measurement": "unmeasured",
+            "payload_sha256": "f88c126d64c1ad5a2a8a2d7416bfd4a2279f7683b3bf02ff287882c98b18651b",
+            "hash_valid": true
+          }
+        ],
+        "ingress_queue": []
+      }
+    ],
+    "readOnly": true,
+    "privateContentIncluded": false
+  }
+}

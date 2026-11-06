@@ -1,0 +1,691 @@
+"""Authenticated host endpoint for the fixed isolated component evaluator."""
+from __future__ import annotations
+
+import argparse
+from dataclasses import fields
+import hmac
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import ipaddress
+import json
+import logging
+import signal
+from pathlib import Path
+import threading
+
+from eva.operations.component_evaluation import (
+    CandidateRequest, ComponentEvaluator, EvaluationConfig, validate_saved_artifact_target,
+    validated_skill_package_context,
+)
+
+_LOG = logging.getLogger(__name__)
+
+_MAX_BODY = 96 * 1024
+# Local trusted configuration includes retained round metadata; HTTP request bounds remain separate.
+_MAX_CONFIG = 1024 * 1024
+# Two bounded sources can expand sixfold when JSON escapes control characters.
+_MAX_EVALUATE_BODY = 1024 * 1024
+
+
+def _object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate JSON field")
+        result[key] = value
+    return result
+
+
+def load_config(path):
+    with Path(path).open("rb") as stream:
+        raw = stream.read(_MAX_CONFIG + 1)
+    if len(raw) > _MAX_CONFIG:
+        raise ValueError("evaluation service configuration is too large")
+    config = json.loads(raw, object_pairs_hook=_object)
+    required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
+    limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite", "work_execution_producers", "runtime_repairs", "component_maintenance", "owned_packages"}:
+        raise ValueError("invalid evaluation service configuration fields")
+    if (not isinstance(config["command"], list)
+            or not isinstance(config["token_file"], str)
+            or not Path(config["token_file"]).is_absolute()
+            or type(config["port"]) is not int or not 1 <= config["port"] <= 65535
+            or not isinstance(config["bind_host"], str)):
+        raise ValueError("invalid evaluation service configuration")
+    # Explicit numeric address avoids surprise DNS changes at bind time.
+    address = ipaddress.ip_address(config["bind_host"])
+    if address.version != 4:
+        raise ValueError("evaluation service requires an explicit IPv4 bind address")
+    paths = config["allowed_paths"]
+    if (not isinstance(paths, list) or not 1 <= len(paths) <= 128
+            or any(not isinstance(item, str) for item in paths) or len(set(paths)) != len(paths)):
+        raise ValueError("invalid evaluation service path allowlist")
+    for item in paths:
+        CandidateRequest(item, "0" * 64, "pass")
+    if type(config.get("procedure_execution_enabled", False)) is not bool:
+        raise ValueError("invalid procedure execution switch")
+    if "saved_artifact_suite" in config:
+        value = config["saved_artifact_suite"]
+        if (not isinstance(value, dict) or set(value) != {"source_target", "evaluation", "assessment"}
+                or not isinstance(value["evaluation"], dict) or not isinstance(value["assessment"], dict)):
+            raise ValueError("invalid fixed saved artifact development suite")
+        validate_saved_artifact_target(value["source_target"])
+    suites = config.get("component_suites", {})
+    if not isinstance(suites, dict) or set(suites) - set(paths):
+        raise ValueError("component development suites must use admitted paths")
+    for relative_path, value in suites.items():
+        _validate_component_suite(relative_path, value)
+    settings = EvaluationConfig(image=config["image"], command=tuple(config["command"]),
+        **{key: config[key] for key in limits if key in config})
+    with Path(config["token_file"]).open("rb") as stream:
+        token_bytes = stream.read(4097)
+    token = token_bytes.decode("ascii").strip()
+    if not 32 <= len(token) <= 256 or any(ord(c) < 33 or ord(c) > 126 for c in token):
+        raise ValueError("invalid evaluation service token")
+    return settings, token, frozenset(paths), (str(address), config["port"])
+
+
+def _validate_component_suite(path, value):
+    if (not isinstance(value, dict) or not {"evaluation", "assessment"} <= set(value)
+            or set(value) - {"evaluation", "assessment", "source_target"}
+            or not isinstance(value["evaluation"], dict) or not isinstance(value["assessment"], dict)):
+        raise ValueError("invalid fixed component development suite")
+    if "source_target" in value:
+        validate_saved_artifact_target(value["source_target"], relative_path=path)
+
+
+class EvaluationServer(ThreadingHTTPServer):
+    daemon_threads = False
+    request_queue_size = 8
+
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None, work_execution_producers=None, runtime_repairs=None, owned_packages=None):
+        self.owned_packages = owned_packages
+        self.evaluator = evaluator
+        self.runtime_repairs = runtime_repairs
+        self.component_suites = component_suites or {}
+        for path, suite in self.component_suites.items():
+            if getattr(suite, "source_target", None) is not None:
+                validate_saved_artifact_target(suite.source_target, relative_path=path)
+        if saved_artifact_suite is not None:
+            validate_saved_artifact_target(saved_artifact_suite.source_target)
+        self.saved_artifact_suite = saved_artifact_suite
+        self.procedure_executor = procedure_executor
+        self.programming_workspaces = programming_workspaces
+        self.reviewed_applications = reviewed_applications
+        self.final_assessments = final_assessments
+        self.token = token
+        self.allowed_paths = allowed_paths
+        self.work_execution_producers = work_execution_producers or {}
+        if (set(self.work_execution_producers) - set(self.component_suites)
+                or set(self.work_execution_producers) - set(self.allowed_paths)):
+            raise ValueError("native work producers must use registered component suites")
+        self.execution_lock = threading.Lock()
+        super().__init__(address, EvaluationHandler)
+
+    def handle_error(self, request, client_address):
+        # Never send request details or credentials to the server error log.
+        pass
+
+
+class EvaluationHandler(BaseHTTPRequestHandler):
+    server_version = "EvaEvaluation"
+    sys_version = ""
+
+    def setup(self):
+        self.request.settimeout(10)
+        super().setup()
+
+    def log_message(self, format, *args):
+        pass
+
+    def _reply(self, status, payload):
+        body = json.dumps(payload, ensure_ascii=True, separators=(",", ":")).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Connection", "close")
+        self.end_headers()
+        self.close_connection = True
+        try:
+            self.wfile.write(body)
+        except (OSError, TimeoutError):
+            pass
+
+    def _authenticated(self):
+        values = self.headers.get_all("Authorization", [])
+        if len(values) != 1:
+            return False
+        try:
+            return hmac.compare_digest(values[0].encode("ascii"),
+                ("Bearer " + self.server.token).encode("ascii"))
+        except UnicodeEncodeError:
+            return False
+
+    def do_GET(self):
+        if self.path != "/health":
+            self._reply(404, {"error": "not_found"})
+            return
+        self._reply(200, {"status": "ready"})
+
+    def _programming(self):
+        if self.server.programming_workspaces is None:
+            self._reply(404, {"error": "not_found"})
+            return
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        # In particular, close must never wait for the evaluator or a tool call.
+        try:
+            lengths = self.headers.get_all("Content-Length", [])
+            types = self.headers.get_all("Content-Type", [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all("Transfer-Encoding") or len(types) != 1
+                    or types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                raise ValueError()
+            length = int(lengths[0])
+            if not 1 <= length <= _MAX_BODY:
+                raise ValueError()
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError()
+            value = json.loads(raw, object_pairs_hook=_object)
+            if not isinstance(value, dict):
+                raise ValueError()
+            action = value.get("action")
+            keys = {"session_key", "action"}
+            if action == "close" and set(value) == keys:
+                self.server.programming_workspaces.close(value["session_key"])
+                result = {"closed": True}
+            elif action == "status" and set(value) == keys | {"workspace_key"}:
+                result = self.server.programming_workspaces.processes_idle(
+                    value["session_key"], workspace_key=value["workspace_key"])
+            elif action == "list" and set(value) == keys | {"workspace_key"}:
+                result = self.server.programming_workspaces.list_tools(
+                    value["session_key"], workspace_key=value["workspace_key"])
+            elif action == "call" and set(value) == keys | {"workspace_key", "name", "arguments", "request_id"}:
+                result = self.server.programming_workspaces.call_tool(
+                    value["session_key"], value["name"], value["arguments"], value["request_id"],
+                    workspace_key=value["workspace_key"])
+            else:
+                raise ValueError()
+            if not isinstance(result, dict):
+                raise ValueError("programming result must be an object")
+        except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {"error": "invalid_programming_request"})
+            return
+        except Exception:
+            self._reply(500, {"error": "programming_execution_unconfirmed"})
+            return
+        self._reply(200, result)
+
+    def _reviewed_component(self):
+        if self.server.reviewed_applications is None:
+            self._reply(404, {"error": "not_found"})
+            return
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        route = "request_envelope"
+        try:
+            lengths = self.headers.get_all("Content-Length", [])
+            types = self.headers.get_all("Content-Type", [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all("Transfer-Encoding") or len(types) != 1
+                    or types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                raise ValueError()
+            length = int(lengths[0])
+            if not 1 <= length <= 8192:
+                raise ValueError()
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError()
+            value = json.loads(raw, object_pairs_hook=_object)
+            base = {"action", "review_id", "request_id", "task_id"}
+            if not isinstance(value, dict) or set(value) not in (base, base | {'scope_sha256'}):
+                raise ValueError()
+            package_scope = value.get('scope_sha256')
+            if package_scope is not None:
+                from eva.operations.owned_package import key
+                key(package_scope)
+                if self.server.owned_packages is None:
+                    raise ValueError('package route is not configured')
+            if value['action'] == 'reconcile_no_dispatch':
+                if package_scope is None or self.server.owned_packages is None or value['review_id'] != '0' * 64:
+                    raise ValueError('task-bound host reconciliation required')
+                route = "package_no_dispatch"
+                result = self.server.owned_packages.no_dispatch_proof(
+                    task_id=value['task_id'], scope_sha256=package_scope)
+            elif value["action"] == "request":
+                packages = self.server.owned_packages
+                if packages is not None and (packages.contains(value['review_id'])
+                        or value['review_id'] not in self.server.reviewed_applications.releases):
+                    if package_scope is None:
+                        raise ValueError('package source scope is required')
+                    route = "package_submission"
+                    result = packages.request(value['review_id'], value['request_id'], value['task_id'], scope_sha256=package_scope)
+                else:
+                    route = "reviewed_application"
+                    result = self.server.reviewed_applications.request(
+                        value["review_id"], value["request_id"], value["task_id"])
+            elif value["action"] == "status":
+                route = "application_status"
+                if self.server.owned_packages is not None and self.server.owned_packages.contains(value['review_id']):
+                    if package_scope is None:
+                        raise ValueError('package source scope is required')
+                    result = self.server.owned_packages.status(value['review_id'], task_id=value['task_id'], scope_sha256=package_scope)
+                elif (package_scope is not None and self.server.final_assessments is not None
+                        and value['review_id'] not in self.server.reviewed_applications.releases):
+                    try:
+                        result = self.server.final_assessments.status(value['review_id'], scope_sha256=package_scope)
+                    except ValueError as error:
+                        if (str(error) != 'final assessment is unavailable'
+                                or self.server.owned_packages is None):
+                            raise
+                        result = self.server.owned_packages.status(value['review_id'],
+                            task_id=value['task_id'], scope_sha256=package_scope)
+                elif package_scope is not None and self.server.owned_packages is not None:
+                    result = self.server.owned_packages.status(value['review_id'],
+                        task_id=value['task_id'], scope_sha256=package_scope)
+                else:
+                    result = self.server.reviewed_applications.review_status(value["review_id"])
+            else:
+                raise ValueError()
+        except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError) as error:
+            # Trace locations are code metadata. Exception text and request
+            # fields may contain private task data or host paths.
+            frames = []
+            trace = error.__traceback__
+            while trace is not None:
+                frame = trace.tb_frame
+                module = frame.f_globals.get("__name__", "")
+                if module.startswith("eva.operations."):
+                    frames.append(f"{module}.{frame.f_code.co_name}:{trace.tb_lineno}")
+                trace = trace.tb_next
+            _LOG.warning("Reviewed component rejected route=%s error=%s code=%s",
+                         route, type(error).__name__, " > ".join(frames[-6:]))
+            self._reply(400, {"error": "invalid_component_application"})
+            return
+        except Exception:
+            self._reply(500, {"error": "component_application_unconfirmed"})
+            return
+        self._reply(200, result)
+
+    def _final_component(self):
+        if self.server.final_assessments is None:
+            self._reply(404, {"error": "not_found"})
+            return
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        try:
+            lengths = self.headers.get_all("Content-Length", [])
+            types = self.headers.get_all("Content-Type", [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all("Transfer-Encoding") or len(types) != 1
+                    or types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                raise ValueError()
+            length = int(lengths[0])
+            if not 1 <= length <= 160000:
+                raise ValueError()
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError()
+            value = json.loads(raw, object_pairs_hook=_object)
+            if not isinstance(value, dict):
+                raise ValueError()
+            if value.get("action") == "request" and set(value) == {
+                    "action", "package", "request_id", "task_id", "scope_sha256"}:
+                result = self.server.final_assessments.request(value["package"],
+                    request_id=value["request_id"], task_id=value["task_id"], scope_sha256=value["scope_sha256"])
+            elif value.get("action") == "status" and set(value) == {"action", "review_id", "scope_sha256"}:
+                result = self.server.final_assessments.status(value["review_id"], scope_sha256=value["scope_sha256"])
+            elif value.get("action") == "round_status" and set(value) == {"action", "path", "scope_sha256"}:
+                result = self.server.final_assessments.round_status(value["path"], scope_sha256=value["scope_sha256"])
+            else:
+                raise ValueError()
+        except (ValueError, KeyError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {"error": "invalid_final_assessment"})
+            return
+        except Exception:
+            self._reply(500, {"error": "final_assessment_unconfirmed"})
+            return
+        self._reply(200, result)
+
+    def _work_authority(self):
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        from eva.operations.component_evaluation import WORK_STRATEGY_PATH
+        producer = self.server.work_execution_producers.get(WORK_STRATEGY_PATH)
+        if producer is None and self.server.final_assessments is None:
+            self._reply(404, {"error": "not_found"})
+            return
+        try:
+            lengths = self.headers.get_all("Content-Length", [])
+            types = self.headers.get_all("Content-Type", [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all("Transfer-Encoding") or len(types) != 1
+                    or types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                raise ValueError()
+            length = int(lengths[0])
+            if not 1 <= length <= 2048:
+                raise ValueError()
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError()
+            binding = json.loads(raw, object_pairs_hook=_object)
+            if isinstance(binding, dict) and binding.get("contract") == "EvaIndependentComponentWorkBinding/v1":
+                if self.server.final_assessments is None:
+                    raise ValueError("independent final work unavailable")
+                result = self.server.final_assessments.authorize_native_work(binding)
+            else:
+                if producer is None:
+                    raise ValueError("development work unavailable")
+                result = producer.authorize(binding)
+        except (ValueError, TypeError, KeyError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {"error": "work_authority_unconfirmed"})
+            return
+        except Exception:
+            self._reply(500, {"error": "work_authority_unconfirmed"})
+            return
+        self._reply(200, result)
+
+    def _runtime_repair(self):
+        if self.server.runtime_repairs is None:
+            self._reply(404, {'error':'not_found'});return
+        if not self._authenticated():
+            self._reply(401, {'error':'unauthorized'});return
+        try:
+            lengths=self.headers.get_all('Content-Length',[])
+            types=self.headers.get_all('Content-Type',[])
+            if (len(lengths)!=1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all('Transfer-Encoding') or len(types)!=1
+                    or types[0].split(';',1)[0].strip().lower()!='application/json'):
+                raise ValueError('exact repair request headers required')
+            length=int(lengths[0])
+            if not 1<=length<=8192:raise ValueError('repair request exceeds bound')
+            raw=self.rfile.read(length)
+            if len(raw)!=length:raise ValueError('incomplete repair request')
+            method=self.server.runtime_repairs.request_maintenance if self.path=='/component-update' else self.server.runtime_repairs.request
+            result=method(json.loads(raw,object_pairs_hook=_object))
+        except (ValueError,TypeError,KeyError,UnicodeError,OSError,OverflowError,RecursionError):
+            self._reply(400, {'error':'repair_handoff_not_admitted'});return
+        except Exception:
+            self._reply(500, {'error':'repair_handoff_unconfirmed'});return
+        self._reply(200,result)
+
+    def _owned_package(self):
+        packages = self.server.owned_packages
+        if packages is None:
+            self._reply(404, {'error': 'not_found'}); return
+        control = self.path in {'/owned-package-auth', '/owned-package-setup'}
+        if control and not self._authenticated():
+            self._reply(401, {'error': 'unauthorized'}); return
+        try:
+            lengths = self.headers.get_all('Content-Length', [])
+            types = self.headers.get_all('Content-Type', [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all('Transfer-Encoding') or len(types) != 1
+                    or types[0].split(';', 1)[0].strip().lower() != 'application/json'
+                    or self.headers.get_all('Origin')):
+                raise ValueError('exact non-browser package request required')
+            length = int(lengths[0])
+            if not 1 <= length <= 65536:
+                raise ValueError('package request exceeds bound')
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError('incomplete package request')
+            value = json.loads(raw, object_pairs_hook=_object)
+            if not isinstance(value, dict):
+                raise ValueError('package request must be an object')
+            if control:
+                if self.path == '/owned-package-auth':
+                    if set(value) != {'endpoint', 'scope_sha256'}:
+                        raise ValueError('package registration request differs')
+                    result = packages.transport_auth(value['endpoint'], value['scope_sha256'])
+                else:
+                    if not {'action', 'review_id', 'scope_sha256'} <= set(value) or set(value) - {
+                            'action', 'review_id', 'scope_sha256', 'environment', 'secret_values', 'query'}:
+                        raise ValueError('package owner setup request differs')
+                    result = packages.setup(**value)
+            else:
+                import re
+                match = re.fullmatch(r'/owned-package/([0-9a-f]{64})/mcp', self.path)
+                headers = self.headers.get_all('Authorization', [])
+                if match is None or len(headers) != 1:
+                    raise PermissionError('package transport authentication required')
+                result = packages.proxy(match[1], headers[0], value)
+        except PermissionError:
+            self._reply(401, {'error': 'unauthorized'}); return
+        except (ValueError, TypeError, KeyError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {'error': 'package_request_not_admitted'}); return
+        except Exception:
+            # A lost tool response is unknown, never a successful effect or a retry.
+            self._reply(500, {'error': 'package_execution_unconfirmed'}); return
+        if result is None:
+            self.send_response(202); self.send_header('Content-Length', '0')
+            self.send_header('Cache-Control', 'no-store'); self.end_headers()
+        else:
+            self._reply(200, result)
+
+    def do_POST(self):
+        if self.path in {'/owned-package-auth', '/owned-package-setup'} or self.path.startswith('/owned-package/'):
+            self._owned_package()
+            return
+        if self.path in {"/runtime-repair", "/component-update"}:
+            self._runtime_repair()
+            return
+        if self.path == "/work-authority":
+            self._work_authority()
+            return
+        if self.path == "/component-assessment":
+            self._final_component()
+            return
+        if self.path == "/reviewed-component":
+            self._reviewed_component()
+            return
+        if self.path == "/programming":
+            self._programming()
+            return
+        procedure = self.path == "/run-procedure" and self.server.procedure_executor is not None
+        if self.path != "/evaluate" and not procedure:
+            self._reply(404, {"error": "not_found"})
+            return
+        if not self._authenticated():
+            self._reply(401, {"error": "unauthorized"})
+            return
+        locked = False
+        try:
+            try:
+                lengths = self.headers.get_all("Content-Length", [])
+                content_types = self.headers.get_all("Content-Type", [])
+                if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                        or self.headers.get_all("Transfer-Encoding")
+                        or len(content_types) != 1
+                        or content_types[0].split(";", 1)[0].strip().lower() != "application/json"):
+                    raise ValueError()
+                length = int(lengths[0])
+                maximum_body = _MAX_EVALUATE_BODY if self.path == "/evaluate" else _MAX_BODY
+                if not 1 <= length <= maximum_body:
+                    raise ValueError()
+                raw = self.rfile.read(length)
+                if len(raw) != length:
+                    raise ValueError()
+                payload = json.loads(raw, object_pairs_hook=_object)
+                binding = producer = None
+                if procedure:
+                    if not isinstance(payload, dict) or set(payload) != {"source", "input_data"}:
+                        raise ValueError()
+                    request = payload
+                else:
+                    package_fields = {"relative_path", "baseline_sha256", "source"}
+                    allowed = (package_fields, package_fields | {"baseline_source", "source_target"},
+                               package_fields | {"baseline_source", "source_target", "baseline_package_content"},
+                               package_fields | {"execution_binding"})
+                    if not isinstance(payload, dict) or set(payload) not in allowed:
+                        raise ValueError()
+                    binding = payload.get("execution_binding")
+                    request = CandidateRequest(**{key: value for key, value in payload.items()
+                                                  if key != "execution_binding"})
+                    if ("baseline_package_content" in payload and (
+                            request.source_target is None
+                            or "skill_package_binding" not in request.source_target)):
+                        raise ValueError()
+                    validated_skill_package_context(request.source_target,
+                        request.baseline_package_content, baseline_source=request.baseline_source)
+                    configured = self.server.component_suites.get(request.relative_path)
+                    if request.source_target is not None:
+                        evaluator = configured if configured is not None else self.server.saved_artifact_suite
+                        if (evaluator is None
+                                or request.source_target != getattr(evaluator, "source_target", None)):
+                            raise ValueError()
+                    else:
+                        if (request.relative_path not in self.server.allowed_paths
+                                or getattr(configured, "source_target", None) is not None):
+                            raise ValueError()
+                        evaluator = configured if configured is not None else self.server.evaluator
+                    producer = self.server.work_execution_producers.get(request.relative_path)
+                    if (binding is not None) != (producer is not None):
+                        raise ValueError()
+                    if producer is not None:
+                        from eva.operations.component_work_execution import validate_execution_binding
+                        binding = validate_execution_binding(binding)
+            except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
+                self._reply(400, {"error": "invalid_request"})
+                return
+            # The native producer uses this lock only for static checks. Keeping
+            # it over native work would block its own existing /run-procedure.
+            if producer is None:
+                locked = self.server.execution_lock.acquire(blocking=False)
+                if not locked:
+                    self._reply(409, {"error": "busy"})
+                    return
+            try:
+                if procedure:
+                    report = self.server.procedure_executor.execute(**request)
+                else:
+                    if producer is not None:
+                        report = producer.evaluate(request, execution_binding=binding,
+                            evaluator=evaluator, static_lock=self.server.execution_lock)
+                    else:
+                        report = evaluator.evaluate(request)
+            except ValueError:
+                self._reply(400, {"error": "candidate_rejected"})
+                return
+            except Exception:
+                self._reply(500, {"error": "evaluation_failed"})
+                return
+            self._reply(200, report)
+        finally:
+            if locked:
+                self.server.execution_lock.release()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", required=True)
+    args = parser.parse_args()
+    settings, token, allowed_paths, address = load_config(args.config)
+    executor = None
+    if json.loads(Path(args.config).read_text()).get("procedure_execution_enabled", False):
+        from eva.operations.procedure_execution import ProcedureExecutor, ProcedureExecutionConfig
+        executor = ProcedureExecutor(ProcedureExecutionConfig(image=settings.image,
+            deadline_seconds=min(settings.deadline_seconds, 30),
+            output_bytes=min(settings.output_bytes, 16384), memory_mb=settings.memory_mb,
+            cpus=settings.cpus, pids=settings.pids))
+    programming = None
+    config = json.loads(Path(args.config).read_text())
+    if "programming_workspace" in config:
+        from eva.operations.programming_workspace import ProgrammingWorkspaceConfig, ProgrammingWorkspaces
+        programming = ProgrammingWorkspaces(ProgrammingWorkspaceConfig(**config["programming_workspace"]))
+    applications = None
+    if "reviewed_component_applications" in config:
+        from eva.operations.component_application_runtime import configured_component_applications
+        applications = configured_component_applications(config["reviewed_component_applications"])
+    final_assessments = None
+    if "final_component_assessments" in config:
+        if applications is None:
+            raise ValueError("final assessment requires the existing application queue")
+        from eva.operations.component_final_assessment import configured_final_assessments
+        final_assessments = configured_final_assessments(config["final_component_assessments"],
+            applications=applications, runtime_config=config["reviewed_component_applications"]["runtime"])
+    component_suites = {}
+    from eva.operations.component_development import DevelopmentAssessment
+    suites = config.get("component_suites", {})
+    if not isinstance(suites, dict) or set(suites) - allowed_paths:
+        raise ValueError("component development suites must use admitted paths")
+    for path, value in suites.items():
+        _validate_component_suite(path, value)
+        evaluation = dict(value["evaluation"])
+        evaluation["command"] = tuple(evaluation["command"])
+        component_suites[path] = ComponentEvaluator(EvaluationConfig(**evaluation),
+            assessment=DevelopmentAssessment(value["assessment"]), source_target=value.get("source_target"))
+    saved_artifact_suite = None
+    if "saved_artifact_suite" in config:
+        value = config["saved_artifact_suite"]
+        if (not isinstance(value, dict) or set(value) != {"source_target", "evaluation", "assessment"}
+                or not isinstance(value["evaluation"], dict)):
+            raise ValueError("invalid fixed saved artifact development suite")
+        evaluation = dict(value["evaluation"])
+        evaluation["command"] = tuple(evaluation["command"])
+        saved_artifact_suite = ComponentEvaluator(EvaluationConfig(**evaluation),
+            assessment=DevelopmentAssessment(value["assessment"]), source_target=value["source_target"])
+    work_producers = {}
+    producer_configs = config.get("work_execution_producers", {})
+    if (not isinstance(producer_configs, dict) or set(producer_configs) - set(component_suites)
+            or producer_configs and applications is None):
+        raise ValueError("native work producer requires an existing suite and application runtime")
+    for path, value in producer_configs.items():
+        from eva.operations.component_work_execution import ComponentWorkRuntime, NativeComponentWorkProducer
+        if not isinstance(value, dict) or set(value) != {"producer", "suite_sha256"}:
+            raise ValueError("invalid registered native work producer")
+        runtime = ComponentWorkRuntime(config["reviewed_component_applications"]["runtime"],
+            path=path, suite_sha256=value["suite_sha256"])
+        work_producers[path] = NativeComponentWorkProducer(value["producer"], runtime=runtime,
+            assessment=suites[path]["assessment"])
+    runtime_repairs = None
+    if 'runtime_repairs' in config:
+        from eva.operations.runtime_repair_service import configured_runtime_repairs
+        runtime_repairs = configured_runtime_repairs(config['runtime_repairs'],settings=settings,
+            programming=programming,applications=applications,
+            runtime_config=config.get('reviewed_component_applications',{}).get('runtime',{}))
+    if 'component_maintenance' in config:
+        from eva.operations.runtime_dependency_update import configure_component_maintenance
+        configure_component_maintenance(config['component_maintenance'],controller=runtime_repairs,settings=settings)
+    owned_packages = None
+    if 'owned_packages' in config:
+        if applications is None or programming is None:
+            raise ValueError('owned packages require the existing programming/application routes')
+        from eva.operations.component_application_runtime import ComponentApplicationRuntime
+        from eva.operations.owned_package_handoff import OwnedPackageHandoff
+        owned_packages = OwnedPackageHandoff(config['owned_packages'], programming=programming,
+            applications=applications, runtime=ComponentApplicationRuntime(config['reviewed_component_applications']['runtime']))
+        applications.owned_package_readiness = owned_packages.ready_to_apply
+    with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
+                          allowed_paths=allowed_paths, procedure_executor=executor,
+                          programming_workspaces=programming, reviewed_applications=applications,
+                          component_suites=component_suites, final_assessments=final_assessments,
+                          saved_artifact_suite=saved_artifact_suite,
+                           work_execution_producers=work_producers, runtime_repairs=runtime_repairs,
+                           owned_packages=owned_packages) as server:
+        def stop(signum, frame):
+            threading.Thread(target=server.shutdown, daemon=True).start()
+        signal.signal(signal.SIGTERM, stop)
+        signal.signal(signal.SIGINT, stop)
+        try:
+            server.serve_forever(poll_interval=0.5)
+        finally:
+            if owned_packages is not None:
+                owned_packages.close()
+            if runtime_repairs is not None:
+                runtime_repairs.close()
+            if final_assessments is not None:
+                final_assessments.close()
+            if applications is not None:
+                applications.close()
+            if programming is not None:
+                programming.close_all()
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,73 @@
+{
+  "contract": "EvaReviewProvenanceDelivery/v1",
+  "recordedAt": "2026-11-06T13:40:23.527110+00:00",
+  "scope": "Only authoritative independent reviewer provenance (P0-03)",
+  "status": "built_reviewed_installed_verified",
+  "hostSourceOnly": true,
+  "coreWorkerImagesChanged": false,
+  "configurationFileChanged": false,
+  "deployedModules": {
+    "eva/operations/component_review_authority.py": "0da2c98f8cd443a903e3e758d2d6f24f8d6547a37b3bb24ca3bf215f1a83fc61",
+    "eva/operations/component_release_import.py": "2d5aeff36995debecea092229a01138164e7496119d19d89563f431535f14599",
+    "eva/operations/reviewed_component_application.py": "291fe0cd8355575079b288735311195554560bafa65c5ffca1bb63f908e3c0f0",
+    "eva/operations/saved_artifact_application.py": "af65f5c64221b248f4d3efe3d26e817677b26cd4d806bb16e793e3ab76cc060e",
+    "eva/operations/component_final_assessment.py": "17b04f2c6373061dfc5d232469715fd902fa4c28f3d543bf36f099b7f2c82145",
+    "eva/operations/component_release_publisher.py": "50595c3649c1c51b4e729d6c52ab6683ae2ef166b63104c654d28c238a573aae",
+    "eva/operations/component_application_runtime.py": "31a4470e3aa5edea261a5180259bd912260eee3c20649d9c812c3ac03da111c5",
+    "eva/operations/component_evaluation_service.py": "496d3f1e9d2a02835c01a18b8359d17ef09f16aac134a5f5280be48f0e874020"
+  },
+  "actualAuthorities": 10,
+  "historicalV1Reviews": 2,
+  "historicalReviewsRemainReadable": true,
+  "newV1DispatchBlocked": true,
+  "historyFilesPreserved": 9,
+  "privateCriteriaFilesPreserved": 62,
+  "independentSourceReview": "development/reviews/p003-independent-20261106/review.json",
+  "independentInstalledGO": "development/reviews/p003-independent-20261106/installed-go.json",
+  "cleanIndexEvidence": "development/evidence/reassessment/p003-review-provenance-20261106/clean-index-proof.json",
+  "focusedTestCasesPassed": 241,
+  "cleanIndexCasesPassed": 241,
+  "knownBaselineCases": {
+    "count": 2,
+    "evidence": "development/evidence/reassessment/p003-review-provenance-20261106/unchanged-worker-boundary-baseline.json",
+    "scope": "Original historical worker AST pins; expected criteria and worker source untouched."
+  },
+  "phases": [
+    {
+      "name": "stop_exact_idle_host",
+      "state": "completed"
+    },
+    {
+      "name": "recheck_idle_after_host_stop",
+      "state": "completed"
+    },
+    {
+      "name": "pin_reviewed_host_source_roots",
+      "state": "completed"
+    },
+    {
+      "name": "start_same_host_configuration",
+      "state": "completed"
+    },
+    {
+      "name": "verify_source_health_authorities_history",
+      "state": "completed"
+    },
+    {
+      "name": "verify_installed_profiles_unchanged",
+      "state": "completed"
+    }
+  ],
+  "activationReceiptSha256": "e969ee7f4c8e93121f1f9d1df23deccdd16b8c74875a483e1ca8d18e468fe561",
+  "originalReadinessUnchanged": true,
+  "customMarkerExclusionsAdded": false,
+  "ambiguousHistoricalOutcomesPreserved": true,
+  "forcedLiveModelRequests": 0,
+  "ordinaryRuntimeModelUsage": "not measured",
+  "developmentCredits": "unknown",
+  "wholeRepositoryInstalled": false,
+  "realNewEvaAuthoredCandidateApplied": false,
+  "fullE416Completed": false,
+  "familyAcceptanceGranted": false,
+  "otherPrioritiesStarted": false
+}

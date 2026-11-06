@@ -58,11 +58,12 @@ def reconciler(config, state="unconfirmed", inspect=None):
     # Exercise the real synchronous reconciliation without its background worker.
     app = ReviewedComponentApplications.__new__(ReviewedComponentApplications)
     app.releases = config["releases"]
+    app.review_authorities = config["review_authorities"]
     app.inspect_release = inspect
     app.root = Path(config["receipt_root"])
     app.root.mkdir(mode=0o700, exist_ok=True)
     release = app.releases[REVIEW_ID]
-    verified = _verify_release(REVIEW_ID, release)
+    verified = _verify_release(REVIEW_ID, release, review_authorities=config["review_authorities"])
     job = {"contract": "EvaReviewedComponentApplication/v1", "request_id": REQUEST_ID,
         "review_id": REVIEW_ID, "task_id": TASK_ID, "state": state,
         "release_sha256": canonical_sha256(release), "accepted_review_sha256": verified["accepted_review_sha256"]}
@@ -72,8 +73,8 @@ def reconciler(config, state="unconfirmed", inspect=None):
 
 
 def test_fixed_probe_checks_package_bound_source_hash_for_each_target(behavior):
-    _, release, binding = behavior
-    checked = _verify_release(REVIEW_ID, release)
+    config, release, binding = behavior
+    checked = _verify_release(REVIEW_ID, release, review_authorities=config["review_authorities"])
     callback = runtime(binding)._behavior_verifier(checked)
     for target in ("candidate", "baseline"):
         result = callback({"target": target})
@@ -83,8 +84,8 @@ def test_fixed_probe_checks_package_bound_source_hash_for_each_target(behavior):
 
 
 def test_runtime_rejects_different_probe_authority_even_with_valid_source(behavior):
-    _, release, binding = behavior
-    checked = _verify_release(REVIEW_ID, release)
+    config, release, binding = behavior
+    checked = _verify_release(REVIEW_ID, release, review_authorities=config["review_authorities"])
     other = Path(binding["path"]).with_name("other.py")
     other.write_text(Path(binding["path"]).read_text())
     with pytest.raises(ValueError, match="authority differs"):
@@ -92,8 +93,8 @@ def test_runtime_rejects_different_probe_authority_even_with_valid_source(behavi
 
 
 def test_probe_hash_change_is_rejected_before_execution(behavior):
-    _, release, binding = behavior
-    checked = _verify_release(REVIEW_ID, release)
+    config, release, binding = behavior
+    checked = _verify_release(REVIEW_ID, release, review_authorities=config["review_authorities"])
     host = runtime(binding)
     Path(binding["path"]).write_text("raise AssertionError('changed probe may never execute')")
     with pytest.raises(ValueError, match="source differs"):
@@ -101,12 +102,12 @@ def test_probe_hash_change_is_rejected_before_execution(behavior):
 
 
 def test_release_cannot_change_probe_without_matching_build_attestation(behavior):
-    _, release, binding = behavior
+    config, release, binding = behavior
     other = Path(binding["path"]).with_name("different.py")
     other.write_text("def verify(*a, **k): return {'verified': True}\n")
     release["behavior_verifier"] = {"path": str(other), "sha256": __import__('hashlib').sha256(other.read_bytes()).hexdigest()}
     with pytest.raises(ValueError, match="build behavior verifier binding"):
-        _verify_release(REVIEW_ID, release)
+        _verify_release(REVIEW_ID, release, review_authorities=config["review_authorities"])
 
 
 @pytest.mark.parametrize("baseline", [False, True])
@@ -172,8 +173,8 @@ def test_later_regression_uses_existing_inspection_without_application_replay(be
 
 def test_runtime_failed_update_hands_off_to_same_inspect_recovery_once(behavior, monkeypatch):
     from eva.operations import runtime_image_update as updater
-    _, release, binding = behavior
-    checked = _verify_release(REVIEW_ID, release)
+    config, release, binding = behavior
+    checked = _verify_release(REVIEW_ID, release, review_authorities=config["review_authorities"])
     calls = []
     def fail(**arguments):
         calls.append(("apply", arguments))
@@ -239,8 +240,8 @@ def test_missing_current_receipt_cannot_keep_completed_green(behavior):
 @pytest.mark.parametrize("readiness", ["ready", "waiting", "cancelled", "exception"])
 def test_current_foreground_readiness_guards_compensation_on_both_runtime_routes(behavior, monkeypatch, route, readiness):
     from eva.operations import runtime_image_update as updater
-    _, release, binding = behavior
-    checked = _verify_release(REVIEW_ID, release) | {"task_id": TASK_ID}
+    config, release, binding = behavior
+    checked = _verify_release(REVIEW_ID, release, review_authorities=config["review_authorities"]) | {"task_id": TASK_ID}
     host = runtime(binding)
     effects, checks = [], []
     def ready(task_id):

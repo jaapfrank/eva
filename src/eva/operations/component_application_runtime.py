@@ -719,11 +719,16 @@ class ComponentApplicationRuntime:
         return observed
 
 
-def configured_component_applications(config):
+def configured_component_applications(config, *, review_authorities=None):
     from eva.operations.reviewed_component_application import ReviewedComponentApplications
     if not isinstance(config, dict) or set(config) != {"runtime", "queue"}:
         raise ValueError("invalid reviewed application configuration")
     runtime = ComponentApplicationRuntime(config["runtime"])
-    return ReviewedComponentApplications(config["queue"], ready_to_apply=runtime.ready_to_apply,
+    queue = dict(config["queue"])
+    if review_authorities is not None:
+        if "review_authorities" in queue and queue["review_authorities"] != review_authorities:
+            raise ValueError("application authority differs from fixed assessor configuration")
+        queue["review_authorities"] = review_authorities
+    return ReviewedComponentApplications(queue, ready_to_apply=runtime.ready_to_apply,
                                          apply_release=runtime.apply_release,
                                          inspect_release=runtime.inspect_release)

@@ -8,9 +8,10 @@ import pytest
 
 from eva.operations.reviewed_component_application import ReviewedComponentApplications
 from eva.operations import component_release_import as importer
+from tests.operations.test_component_review_authority import write_review_authority
 
 
-REVIEW_ID, REQUEST_ID = "a" * 64, "b" * 64
+REVIEW_ID, REQUEST_ID = "a403218126473f1035446d8b5716ddf906a248d7ef8f964003f37366605341b6", "b" * 64
 TASK_ID = "work:eva-chat:controlled-test"
 
 
@@ -46,10 +47,8 @@ def prepared(tmp_path, monkeypatch):
                  "\n@@ -1 +1 @@\n-VALUE = 0\n+VALUE = 1\n",
     }
     package["candidate_package_sha256"] = importer.digest(importer.canonical(package))
-    evidence = write_json(tmp_path / "evidence.json", {"independent_controlled_evidence": True})
-    review = {"contract": "EvaComponentReleaseReview/v1", "decision": "accept",
-              "reviewer": "independent-test", "candidate_package_sha256": package["candidate_package_sha256"],
-              "measured_gain_evidence": dict(evidence), "independent_review_evidence": dict(evidence)}
+    assert package["candidate_package_sha256"] == REVIEW_ID
+    review, authorities = write_review_authority(tmp_path, package, reviewer="independent-test")
     package_binding = write_json(tmp_path / "package.json", package)
     review_binding = write_json(tmp_path / "review.json", review)
     commands = {
@@ -59,7 +58,7 @@ def prepared(tmp_path, monkeypatch):
         ("rev-parse", "HEAD"): "a" * 40,
     }
     monkeypatch.setattr(importer, "git", lambda root, *args: commands[args])
-    _, _, raw, imported = importer.prepare(Path(package_binding["path"]), Path(review_binding["path"]), checkout)
+    _, _, raw, imported = importer.prepare(Path(package_binding["path"]), Path(review_binding["path"]), checkout, review_authorities=authorities)
     target.write_bytes(raw)
     imported["state"] = "source_imported_not_installed"
     before = {"core": "sha256:" + "1" * 64, "delegated-work-worker": "sha256:" + "2" * 64}
@@ -80,7 +79,7 @@ def prepared(tmp_path, monkeypatch):
         "project": "controlled-project", "update_receipt": str(tmp_path / "update.json"),
     }
     return {"receipt_root": str(tmp_path / "requests"), "releases": {REVIEW_ID: release},
-            "poll_seconds": 0.01}
+            "poll_seconds": 0.01, "review_authorities": authorities}
 
 
 @pytest.fixture
@@ -217,8 +216,9 @@ def test_non_image_compose_changes_are_not_accepted(prepared, apps):
 
 
 def test_task_scope_and_request_binding_are_immutable(prepared, apps):
-    prepared["releases"]["c" * 64] = deepcopy(prepared["releases"][REVIEW_ID])
     app = apps(prepared, lambda task: "waiting")
+    # A forged in-memory alias must still fail the immutable request binding.
+    app.releases["c" * 64] = deepcopy(prepared["releases"][REVIEW_ID])
     app.request(REVIEW_ID, REQUEST_ID, TASK_ID)
     for method in (app.status, app.cancel):
         with pytest.raises(ValueError, match="unavailable in this task"):
@@ -327,14 +327,14 @@ def test_readiness_error_is_terminal_without_dispatch(prepared, apps):
 
 
 def test_uncertain_review_cannot_dispatch_again_under_new_request_or_task(prepared, apps):
-    prepared["releases"]["d" * 64] = deepcopy(prepared["releases"][REVIEW_ID])
     calls = []
     app = apps(prepared, apply=calls.append)
     app.request(REVIEW_ID, REQUEST_ID, TASK_ID)
     wait_for(app, "unconfirmed")
-    for review_id in (REVIEW_ID, "d" * 64):
-        with pytest.raises(ValueError, match="already has an application request"):
-            app.request(review_id, "e" * 64, "work:another-task")
+    with pytest.raises(ValueError, match="already has an application request"):
+        app.request(REVIEW_ID, "e" * 64, "work:another-task")
+    with pytest.raises(ValueError, match="exact package hash"):
+        app.register("d" * 64, deepcopy(prepared["releases"][REVIEW_ID]))
     assert len(calls) == 1
 
 
@@ -344,13 +344,12 @@ def test_reformatted_review_alias_cannot_redispatch_same_approval(prepared, apps
     path = tmp_path / "review-formatted.json"
     path.write_text(json.dumps(original, indent=2))
     alias["review"] = {"path": str(path), "sha256": importer.digest(path.read_bytes())}
-    prepared["releases"]["d" * 64] = alias
     calls = []
     app = apps(prepared, apply=calls.append)
     app.request(REVIEW_ID, REQUEST_ID, TASK_ID)
     wait_for(app, "unconfirmed")
-    with pytest.raises(ValueError, match="already has an application request"):
-        app.request("d" * 64, "e" * 64, "work:another-task")
+    with pytest.raises(ValueError, match="exact package hash"):
+        app.register("d" * 64, alias)
     assert len(calls) == 1
 
 
@@ -372,7 +371,6 @@ def test_model_writable_receipt_directory_is_rejected(prepared, apps):
 
 
 def test_later_task_reads_completed_review_without_original_request_credentials(prepared, apps):
-    prepared["releases"]["d" * 64] = deepcopy(prepared["releases"][REVIEW_ID])
     calls = []
     def apply(update):
         calls.append(update)
@@ -380,7 +378,7 @@ def test_later_task_reads_completed_review_without_original_request_credentials(
     app = apps(prepared, apply=apply)
     app.request(REVIEW_ID, REQUEST_ID, TASK_ID)
     wait_for(app, "completed")
-    assert app.review_status("d" * 64) == app.status(REQUEST_ID, task_id=TASK_ID)
+    assert app.review_status(REVIEW_ID) == app.status(REQUEST_ID, task_id=TASK_ID)
     assert app.review_status(REVIEW_ID)["installed"] is True
     assert len(calls) == 1
 
@@ -416,3 +414,90 @@ def test_unrequested_review_status_is_ready_without_side_effects(prepared, apps)
     assert not app.jobs
     with pytest.raises(ValueError, match="not registered"):
         app.review_status("e" * 64)
+
+
+def legacy_history(config, *, state="completed", update_receipt=True):
+    """Exact retained v1 bytes are historical evidence, never a new approval."""
+    release = config["releases"][REVIEW_ID]
+    review = json.loads(Path(release["review"]["path"]).read_text())
+    review["contract"] = "EvaComponentReleaseReview/v1"
+    review.pop("reviewer_identity")
+    release["review"] = write_json(Path(release["review"]["path"]), review)
+    imported = json.loads(Path(release["source_import"]["path"]).read_text())
+    imported["review_sha256"] = importer.digest(importer.canonical(review))
+    release["source_import"] = write_json(Path(release["source_import"]["path"]), imported)
+    root = Path(config["receipt_root"]);root.mkdir(mode=0o700)
+    job = {"contract": "EvaReviewedComponentApplication/v1", "request_id": REQUEST_ID,
+        "review_id": REVIEW_ID, "task_id": TASK_ID,
+        "release_sha256": importer.digest(importer.canonical(release)),
+        "accepted_review_sha256": importer.digest(importer.canonical(review)), "state": state}
+    write_json(root / (REQUEST_ID + ".json"), job)
+    if update_receipt:
+        images = json.loads(Path(release["build"]["path"]).read_text())["images"]
+        completed_update({"receipt": Path(release["update_receipt"]),
+            "project": release["project"], "candidate_images": images})
+    return release, review
+
+
+@pytest.mark.parametrize("old_state", ["completed", "unconfirmed"])
+def test_retained_v1_completion_is_readable_without_granting_new_dispatch(prepared, apps, old_state):
+    legacy_history(prepared, state=old_state)
+    calls = []
+    app = apps(prepared, apply=calls.append)
+    assert app.status(REQUEST_ID, task_id=TASK_ID)["installed"] is True
+    assert app.review_status(REVIEW_ID)["installed"] is True
+    assert app.request(REVIEW_ID, REQUEST_ID, TASK_ID)["installed"] is True
+    with pytest.raises(ValueError, match="review v2"):
+        app.request(REVIEW_ID, "e" * 64, "work:new-task")
+    with pytest.raises(ValueError, match="review v2"):
+        app.register(REVIEW_ID, prepared["releases"][REVIEW_ID])
+    assert not calls
+
+
+def test_retained_v1_waiting_request_cannot_resume_dispatch(prepared, apps):
+    legacy_history(prepared, state="waiting", update_receipt=False)
+    calls = []
+    app = apps(prepared, apply=calls.append)
+    assert state(app) == "interrupted_before_dispatch"
+    with pytest.raises(ValueError, match="review v2"):
+        app.request(REVIEW_ID, REQUEST_ID, TASK_ID)
+    assert state(app) == "interrupted_before_dispatch" and not calls
+
+
+def test_tampered_legacy_evidence_is_rejected_even_during_completed_status(prepared, apps):
+    _, review = legacy_history(prepared)
+    app = apps(prepared, apply=lambda _: pytest.fail("history cannot apply"))
+    Path(review["measured_gain_evidence"]["path"]).write_text("tampered")
+    with pytest.raises(ValueError, match="changed"):
+        app.status(REQUEST_ID, task_id=TASK_ID)
+    with pytest.raises(ValueError, match="changed"):
+        app.review_status(REVIEW_ID)
+
+
+def test_revoked_authority_blocks_waiting_modern_release_before_dispatch(prepared, apps):
+    ready = threading.Event();calls = []
+    app = apps(prepared, lambda _: "ready" if ready.is_set() else "waiting", calls.append)
+    app.request(REVIEW_ID, REQUEST_ID, TASK_ID)
+    wait_for(app, "waiting")
+    app.review_authorities.clear()
+    ready.set()
+    assert wait_for(app, "rejected")["reason"] == "release_binding_changed"
+    assert not calls
+
+
+def test_core_review_identifier_must_be_the_exact_package_not_an_alias(prepared, apps):
+    prepared["releases"]["d" * 64] = deepcopy(prepared["releases"][REVIEW_ID])
+    with pytest.raises(ValueError, match="exact package hash"):
+        apps(prepared)
+
+
+def test_legacy_review_without_application_history_is_not_ready_for_dispatch(prepared, apps):
+    legacy_history(prepared, update_receipt=False)
+    (Path(prepared["receipt_root"]) / (REQUEST_ID + ".json")).unlink()
+    calls = []
+    app = apps(prepared, apply=calls.append)
+    assert app.review_status(REVIEW_ID) == {"review_id": REVIEW_ID,
+        "state": "rejected", "installed": False, "reason": "legacy_review_read_only"}
+    assert not app.jobs and not calls
+    with pytest.raises(ValueError, match="review v2"):
+        app.request(REVIEW_ID, REQUEST_ID, TASK_ID)

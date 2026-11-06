@@ -1,0 +1,66 @@
+{
+  "contract": "EvaInstalledResearchCompatibility/v1",
+  "compatible": true,
+  "mismatched_profiles": [],
+  "core": {
+    "digital_work": {
+      "worker_profile_release_sha256": "0f845686c68043f8d890bcef44a2a285d734b0c989b1b1c5aaf5531697216bc5",
+      "model_profile_release_sha256": "01231340e1a6d84a90d56c8de87bea5eb805107ccc8152cff816897fb1998c6c",
+      "worker_program_sha256": "f11a29de223931132c33ea42c62e9098d309b63ff5c91d3883f6c913f92dc9a7",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+    },
+    "shared_provider": {
+      "worker_profile_release_sha256": "1495b2c255e7ab03620cae26167a364476c1b04b4ab30faae148093e89a55192",
+      "model_profile_release_sha256": "82686b1fd6d05eeab299bfa896f9d651c072d959e814b272bf2519c39c66222f",
+      "worker_program_sha256": "9f64f22c8c544b91890faf203fddfde06a07c9e9dc73c96c551792ce5e139fd3",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "d45b0589c23a3066b6c3dc49bafb0c04cc5d12f49d9717b430263fd69631de2e"
+    },
+    "public_research": {
+      "worker_profile_release_sha256": "4b71e8bffd1c4f68bac632d0f9c7506c494f0546c81be0b33b38dccb8fefd8d7",
+      "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+      "worker_program_sha256": "86c016509a07e9ba0bba3ed1976f03db1e9bc0e8c65a2f2421564f68596fead0",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+    },
+    "household_research": {
+      "worker_profile_release_sha256": "e37be67b5da71b17163cf04f3026d77fa9ac4fc77c5150acd723904b75c23bc1",
+      "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+      "worker_program_sha256": "0c9e21c3b76fa55a994030685c737710b387d371d552f05b0f9173d1a87d8203",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+    }
+  },
+  "worker": {
+    "digital_work": {
+      "worker_profile_release_sha256": "0f845686c68043f8d890bcef44a2a285d734b0c989b1b1c5aaf5531697216bc5",
+      "model_profile_release_sha256": "01231340e1a6d84a90d56c8de87bea5eb805107ccc8152cff816897fb1998c6c",
+      "worker_program_sha256": "f11a29de223931132c33ea42c62e9098d309b63ff5c91d3883f6c913f92dc9a7",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+    },
+    "shared_provider": {
+      "worker_profile_release_sha256": "1495b2c255e7ab03620cae26167a364476c1b04b4ab30faae148093e89a55192",
+      "model_profile_release_sha256": "82686b1fd6d05eeab299bfa896f9d651c072d959e814b272bf2519c39c66222f",
+      "worker_program_sha256": "9f64f22c8c544b91890faf203fddfde06a07c9e9dc73c96c551792ce5e139fd3",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "d45b0589c23a3066b6c3dc49bafb0c04cc5d12f49d9717b430263fd69631de2e"
+    },
+    "public_research": {
+      "worker_profile_release_sha256": "4b71e8bffd1c4f68bac632d0f9c7506c494f0546c81be0b33b38dccb8fefd8d7",
+      "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+      "worker_program_sha256": "86c016509a07e9ba0bba3ed1976f03db1e9bc0e8c65a2f2421564f68596fead0",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+    },
+    "household_research": {
+      "worker_profile_release_sha256": "e37be67b5da71b17163cf04f3026d77fa9ac4fc77c5150acd723904b75c23bc1",
+      "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+      "worker_program_sha256": "0c9e21c3b76fa55a994030685c737710b387d371d552f05b0f9173d1a87d8203",
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+    }
+  },
+  "scope": "Shared provider, digital work, private and household public research; no task success claim."
+}

@@ -1,0 +1,34 @@
+{
+  "contract": "EvaIndependentP003InstalledReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T13:38:31.136835+00:00",
+  "decision": "GO",
+  "scope": "P0-03 reviewer provenance installed in existing host assessment service; no other project completion claim",
+  "actualHostModuleCount": 8,
+  "installedHashes": {
+    "eva/operations/component_review_authority.py": "0da2c98f8cd443a903e3e758d2d6f24f8d6547a37b3bb24ca3bf215f1a83fc61",
+    "eva/operations/component_release_import.py": "2d5aeff36995debecea092229a01138164e7496119d19d89563f431535f14599",
+    "eva/operations/reviewed_component_application.py": "291fe0cd8355575079b288735311195554560bafa65c5ffca1bb63f908e3c0f0",
+    "eva/operations/saved_artifact_application.py": "af65f5c64221b248f4d3efe3d26e817677b26cd4d806bb16e793e3ab76cc060e",
+    "eva/operations/component_final_assessment.py": "17b04f2c6373061dfc5d232469715fd902fa4c28f3d543bf36f099b7f2c82145",
+    "eva/operations/component_release_publisher.py": "50595c3649c1c51b4e729d6c52ab6683ae2ef166b63104c654d28c238a573aae",
+    "eva/operations/component_application_runtime.py": "31a4470e3aa5edea261a5180259bd912260eee3c20649d9c812c3ac03da111c5",
+    "eva/operations/component_evaluation_service.py": "496d3f1e9d2a02835c01a18b8359d17ef09f16aac134a5f5280be48f0e874020"
+  },
+  "allInstalledHashesEqualReviewedWorkingHashes": true,
+  "sourceSuitePassingCases": 241,
+  "originalUnchangedBoundaryFailures": 2,
+  "testRepetition": "No identical tests repeated: exact installed module hashes independently match already reviewed and tested frozen candidate bytes. Clean-index evidence is distinct from installed host overlay, whose existing foreign service code is preserved through exact baseline patches.",
+  "evidence": {
+    "activation-current-go.json": "2e270801f71509f4aa67dcd9b5d168e7ab7983d54535655a606a3528de5238df",
+    "installed-independent-readback.json": "451c56eb04309841a7bd34ebd757289b67ca692e2c57484027306cb30bc4aa76",
+    "installed-legacy-strict-readback.json": "b821d0d179e1163c5dcd10bbbea81f375bb90da0e5bca191ad18148a19ed9279",
+    "historical-marker-readback.json": "50c7b68d2242eb5f37d482f74d066a79ea30846d90c4576ad7864afbd8a363bd"
+  },
+  "installedByReviewer": false,
+  "limitations": [
+    "Readback and scoped regression proof do not demonstrate a new real household release, autonomous reuse, fullE4.16 or F2owner acceptance.",
+    "Two retained ambiguous work outcomes and two unmeasured failed model outcomes remain unchanged.",
+    "Legacy review bytes remain historical read-only proof and cannot authorize a new dispatch on strict paths."
+  ]
+}
