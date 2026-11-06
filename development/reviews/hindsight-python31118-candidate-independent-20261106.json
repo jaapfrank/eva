@@ -1,0 +1,43 @@
+{
+  "contract": "EvaHindsightPython31118CandidateIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T18:34:36.597272+00:00",
+  "decision": "GO_FOR_EXACT_INTERPRETER_CANDIDATE_NOT_INSTALL",
+  "candidateImage": "sha256:065f4bd5aba4f0e174d53416448b5b9c7c99b1cfc4541e00326c8d7f1c197f3b",
+  "baselineImage": "sha256:68a135a99d96506bb627eaf1fddeea83104ee304db841edc0dd7bca33b8a0daa",
+  "freezeSha256": "0790ea17d9a92ef9ecfbbcf7e5fa9b1ec6c96c823cc9b9dfbe3defb58b84aa4a",
+  "checks": [
+    "Allfrozenfilehashesverified; actualbaseline/candidateDockerConfigidentical.",
+    "Owned1069interpreterpathsunder/usr/local only; no traversal/site-packages/pipscripts/distro/appchanges. Cleanupchecksoldbytes/symlinksbeforeunlink.",
+    "Independentlyrederived45466->45468filesystemmanifestdifference:28onlyapprovedinterpreter/helperchanges; all/app,/usr/lib,/etcbytes/modes/owners/links unchanged exceptDocker-generated4filesexcluded. Comparedall1069afterfilehashes/symlinkstovendorextractedtree.",
+    "Independentactual065fcandidatecontainer networknone/readOnly/capdrop/no-new-privileges/tmpfsonly: Python3.11.18,Hindsight1.2,CPUtorch2.13,cudaFalse,202distributions, nativeimportspass. LocaltrustedTLSv1.3anduntrustedcertrejectionPASS,provider/databasecalls0.",
+    "SOABI/GCC/configargsvendorcompatreceiptinspected; extensionimportbaseline/candidatedictionariesidentical.10missingoptionalOSlibrariesremainexactbaselinefailures, notnewregressions.",
+    "Previouslyreviewedpublic8activation8guard7overlaytests23passonnewcandidate receipt; actualnativeOpenAICompatibleLLMoneMockTransportrequestpassed, noexternalmodelrequest."
+  ],
+  "limitations": [
+    "NoinstallationGOorfreshDB/nativejob/claims/configbindingyet; activationmustuseactualcurrentgenerationandpreserveDB/source/profile/history.",
+    "CPythonpatchdoesnotupgradedistributionSSL/libc/CA/timezonepackages; separateDebiansecuritycandidateandfinalcombinedreviewrequired.",
+    "NoallOSS/CVEfree/latestproviderclaim; explicitruntime3.11.18actualreadbackdistinguishedfrominheritedimageENVmetadata.",
+    "NooriginalE411cleanup/E416closureornewfamilyacceptance."
+  ],
+  "evidenceSha256": {
+    "freeze.json": "0790ea17d9a92ef9ecfbbcf7e5fa9b1ec6c96c823cc9b9dfbe3defb58b84aa4a",
+    "context/Dockerfile": "0a475b553e52b2c7ab304d7377c08046779c0b23c77e0e3e1b6724143031cd9b",
+    "context/cleanup.py": "ac4ffa8ee9fc0f8e8894e92237aec80d4a0123b11b4dc21e63845e92600b00de",
+    "context/owned-manifest.json": "72280e92ac42e60b06a033cd4f8b2bcd6a49f567c90972d5750d4bf5ba034bac",
+    "filesystem-preservation.json": "d08b50baf67937e2eccda6ad9302b3f36e68b6e58ca719d0f52a5f1db05c1687",
+    "baseline-filesystem.json": "a579eb1841f76ad57af44e08d33a7fa5e22bdd7dc275afb40ddc0dd01538aa7a",
+    "candidate-filesystem.json": "3d2cdd46aa4899bc160b977325a0f415449eb35a78f14a0c31253751cce7bf40",
+    "vendor-interpreter-inventory.json": "1912350f2b1056245ad86674071e40c1a4a5db97d2469edfc34ab1ade9d118e2",
+    "runtime-probe-independent.json": "483f620e3930d652338383e75b27cd6fe4a03cb61f314de470e355b0aa012e19",
+    "candidate-verification.json": "46efd00cb205ad438435349fe0d23b6a3307bd2f3dabd5306f5cba94a97a484a",
+    "extension-import-comparison.json": "8b58d1995b2f1944980086bb119b296b0db013dce164c9bc2d18635fea04a8e1",
+    "provider-probe.py": "705e210f9362b8db307d8ec1b4877d91ffef0ed4557ecd4a1bb923bd819d2a14",
+    "provider-probe.stdout": "547d52a65da373981b49cde3974abe07e7a22f92aaccf0289eea8245a15dd1ac"
+  },
+  "developmentUsage": {
+    "reviewerModelCalls": 0,
+    "providerCalls": 0,
+    "databaseCalls": 0
+  }
+}

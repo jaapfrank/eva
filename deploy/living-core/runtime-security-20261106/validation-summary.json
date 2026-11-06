@@ -1,0 +1,124 @@
+{
+  "contract": "EvaRuntimeSecurityPublicValidation/v1",
+  "scope": "Bounded component/development verification; no overall Eva completion",
+  "candidateFilesystemUnexpectedChanges": {
+    "core": 0,
+    "worker": 0,
+    "hindsight": 0
+  },
+  "nativePackagesInstalled": 14,
+  "nativePackagesUpdated": 6,
+  "imageConfigurationChanged": false,
+  "appSourceOrSitePackagesChangedByNativeOverlay": false,
+  "nativeAbiImportsAndTrustedUntrustedTls": "passed",
+  "actualLoadedLibrariesMatchSignedPackages": true,
+  "coreProviderRegression": {
+    "passed": 374,
+    "existingBaselineFailures": 2,
+    "failureNames": [
+      "test_contact_catalog_omits_only_discoverable_descriptors",
+      "test_current_multi_source_observation_reaches_real_model_wire_as_provisional"
+    ],
+    "baselineFreshlyReproducedSameFailures": true
+  },
+  "criticalPostgres18StopLeaseClaimPrivacy": {
+    "corePassed": 20,
+    "workerPassed": 20
+  },
+  "bootstrapUpdater": {
+    "corePassed": 52,
+    "workerPassed": 52
+  },
+  "hindsightCacheStopWarmupProfileRollbackPassed": 23,
+  "allFourRuntimeProfilesMatch": true,
+  "coreExistingProviderCanary": {
+    "modelRequests": 2,
+    "callsPerPhase": 1,
+    "streamClosure": true,
+    "externalEffects": 0
+  },
+  "hindsightExistingAdapterCanary": {
+    "modelRequests": 2,
+    "selectedFacts": 2,
+    "explicitNotSelectedFacts": 0,
+    "receiptRecoveryWithoutReplay": true,
+    "personFilteredRecall": true,
+    "forget": true,
+    "all21BankTablesZeroAfterCleanup": true,
+    "testWorkerStopped": true
+  },
+  "developmentModelUsage": {
+    "contract": "EvaNativeSecurityDevelopmentModelUsage/v1",
+    "scope": "Measured development model requests via existing Codex access lease; household runtime excluded",
+    "physicalRequests": 4,
+    "coreRequests": 2,
+    "nativeRequests": 2,
+    "inputTokens": 6718,
+    "outputTokens": 218,
+    "nativeCachedTokens": 5376,
+    "coreCachedTokens": null,
+    "thoughtsTokens": null,
+    "cost": null,
+    "verifiedBillingMeasurement": false,
+    "coreWallSeconds": 5.389,
+    "nativeAdapterWallSeconds": 10.169,
+    "nativeModelDurationMs": 8053,
+    "earlierHarnessFailure": "UID1000 settings permission failure before provider construction; zero requests; retained separately",
+    "externalEffects": 0
+  },
+  "activationEvidence": "Installed role/source/profile/native/TLS/row preservation and owner-authorized synthetic live routes verified in separately bound receipts; no overall Eva/E4.16 completion claim.",
+  "actualInstalledVerification": {
+    "scope": "Post-install synthetic development verification on actual running services; household runtime excluded",
+    "core": {
+      "modelRequests": 2,
+      "textAndToolOutputPassed": true,
+      "inputTokens": 198,
+      "outputTokens": 33,
+      "localStreamsClosed": true,
+      "externalEffects": 0
+    },
+    "native": {
+      "recordedSuccessfulModelRequests": 3,
+      "actualAutoConsolidationIncluded": true,
+      "inputTokens": 11125,
+      "outputTokens": 331,
+      "cachedTokensTotal": null,
+      "knownPartialCachedTokens": 5376,
+      "reasoningTokens": null,
+      "selectedFacts": 2,
+      "explicitNotSelectedFacts": 0,
+      "receiptRecoveryWithoutReplay": true,
+      "personFilteredRecall": true,
+      "forget": true,
+      "allSyntheticWritersTerminalBeforeErase": true,
+      "all21BankTablesZeroAfterCleanup": true
+    },
+    "billingMeasurementVerified": false,
+    "cost": null,
+    "evidenceSha256": {
+      "live-core-provider.json": "73904783a227ac817ff89e465464ba7ba3d0850354b8541cbfe1b185ba5396e3",
+      "live-memory-adapter.json": "03af27645735bddae3f9a8842ed6433e51975995c01c5a2eca1cb6b5d8beca6f",
+      "live-memory-cleanup-counts.json": "b66f852f2ddde03851bd444e25a25b1022e24b579f576694102dd42cbe86ae7e",
+      "hostconfig-continuation/continuation.private.json": "5a50e733ff71c8f19550d64731a3a974ee960c3d43a83dfd266cc54b4a1583fb"
+    }
+  },
+  "installationOutcome": {
+    "state": "installed_source_profile_health_verified",
+    "imagesRedispatched": false,
+    "originalReceiptsUnchanged": true,
+    "sameC7SchemaAndAllNativeRowsPreserved": true,
+    "same4HostRoots": true,
+    "same62CriteriaAnd9HistoricalReceipts": true,
+    "originalReceiptFailuresRetainedWithSeparateNoDispatchContinuation": true
+  },
+  "independentInstalledReview": {
+    "path": "development/reviews/debian13-native-installed-independent-20261106.json",
+    "sha256": "26fc55eb2f89e5fa005654e6b439656b9e77e895522037ddb5b63e430f281bb5"
+  },
+  "publicRecipeReproduction": {
+    "threeNativeOverlaysAll289PathsAndManifestsMatched": true,
+    "pythonOverlayAll1069PathsLinksAndManifestMatched": true,
+    "publicBundleGuardTestsPassed": 4,
+    "freshFullDockerRebuildClaimed": false
+  }
+}

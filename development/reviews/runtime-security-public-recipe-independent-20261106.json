@@ -1,0 +1,39 @@
+{
+  "contract": "EvaRuntimeSecurityPublicRecipeIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T19:28:47.019356+00:00",
+  "decision": "GO_EXACT15_PUBLIC_RECIPE_FILES_FOR_SCOPED_COMMIT",
+  "artifactManifestSha256": "2b7bab26d91182b298388be0e3b6e5421dcae93e1f1769ae4cb8729fe009cc4b",
+  "fileCountIncludingManifest": 15,
+  "checks": [
+    "Exact15filewhitelist+all14entrySHA256verified. ReadallpublicPythonbuilders/extractor/filter/cleanup/README/manifests/signedreleases/sanitizedproofs. NoDSNs/tokens/privatehostpaths/privatekey/household/closedcriteriadataorbinarypackages.",
+    "OriginalCPythonPSFlicensebyteidenticaltopinnedvendorstdlib; packageauthor/licensemetadataremainsauthenticatedDebiancontrol. Existingprojectlicenseunchanged.",
+    "Stored2InReleasefilesbyteidenticaltopreviouslyindependentlygpgvverifiedreleases. Builderextractsdigest-pinnedofficialvendorkeyring+SHA,verifiessignatures,exactPackagesbytes/SHAandselectedPackage/Version/Filename/Size/SHA256with.debchecksumpriorextraction. No maintainer scripts executed.",
+    "Historicalreconstructonly, currentadvancingindicesfailclosedwithlocalexactindex/deb-cacheoption. No later-latest/securitygreenclaim. Fixedlocalbaseimagesrequired; newoutputonly, noactivecontainers/volumes/DB/servicesstartedormutatedbyrecipe.",
+    "Independentlycomparedactualpublic-native-reproductionforeach3roles:all289overlayfilebytesandmanifestsexactreviewedinstalledbuild. Independentlypublic-pythonreproduction:all1069files/symlinks+manifestexactreviewedPython18build.",
+    "Independently4publicCAfilterguardtestsPASS0.001swithpublicreproducedauthenticatedCAinputs. No extra model/live/producttests repeated.",
+    "READMEandvalidationdifferentiate4isolateddevelopmentrequestsfrom5postinstallactualrequests, NULLreasoning/cache/costretained; known2baselineprovidertestfailuresandpriorrejectedpycbuildexplicit. Actualinstalledreview26fc55bound.",
+    "No freshfullDockerimagebuildrepeatedorclaimed; source/contextpayloadreproduced, regeneratedimageIDrequiresnewverification/activationbinding. DefaultHostname/listDNSrepresentationresolutionnotnewruntimefeature."
+  ],
+  "scopeLimits": [
+    "Commitonly15publicrecipefilesplusparentexplicitlyscopedcompletion/reviews/canonicalprojection; unrelateddirtyworkexcluded.",
+    "Selectedcore/worker/Hindsightnativeupdatescomplete; noallOSS/hostCVEfree/E411/E416/familyclosure."
+  ],
+  "fileSha256": {
+    "CPYTHON-LICENSE.txt": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+    "README.md": "532eac214a29d8b973948df65e155469695a02f689afdff69daa14335fd33bbc",
+    "bundle_filter.py": "bee00098e78ec77e71b6fca29021686ced0ccdf727bae76e80b2c5c39bcc082a",
+    "context-reproduction-summary.json": "6e5af8c527f90b90fc07eae7a66c205e839639a6f7ef3f44436e6e3b1abcaf36",
+    "extract_baseline.py": "6cbeb1de5f660acd63c0fa7f28f9bbe6070664133f5d94e81efcbad0d3a98841",
+    "prepare_native.py": "1ad91a23c72ff04997e27f29671c7f350450ba4000b4c1cabaad375d38a256c8",
+    "prepare_overlays.py": "15ec0e515418e361e99586e88619f8e4b8b19698e4caad80f36f6aed248600e9",
+    "prepare_python31118.py": "edd3a3ddb297bffaaa9b3905f1c296eca4be134d4b42cbcbdd55701e0463b7d8",
+    "python_owned_cleanup.py": "ac4ffa8ee9fc0f8e8894e92237aec80d4a0123b11b4dc21e63845e92600b00de",
+    "tests/test_bundle_filter.py": "33edd9857b4e6d321608b61884baee7afc2deaab1ddb5497d70cdad01092ed6f",
+    "trixie-security.InRelease": "d0dbede32d80c3e9462e037ede87b138bdd5e44be10145acf46c9f643388836d",
+    "trixie.InRelease": "0584fba32e13e0ab8285fb16c27adea1ec03a73669c18702821094fd6ca86675",
+    "validation-summary.json": "09de92621bd6ea0ff432f69d8560aa2369e50281f867ff326b178687bf95684c",
+    "vendor-inputs.json": "7c13408428e82d48d4abf98815771c3e4a73af4969ea14aab12434215ad407fa"
+  },
+  "installedReviewSha256": "26fc55eb2f89e5fa005654e6b439656b9e77e895522037ddb5b63e430f281bb5"
+}

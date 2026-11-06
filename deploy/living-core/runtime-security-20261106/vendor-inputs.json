@@ -1,0 +1,235 @@
+{
+  "contract": "EvaRuntimeVendorSecurityBuildInputs/v1",
+  "asOf": "2026-11-06",
+  "python31118": {
+    "baselineImage": "sha256:68a135a99d96506bb627eaf1fddeea83104ee304db841edc0dd7bca33b8a0daa",
+    "vendorImage": "python@sha256:b701198cb708b68d9413ca67d6311bd97c9389a2c5fe4da0511fc652642366cd",
+    "beforeOwnedFiles": 1069,
+    "afterOwnedFiles": 1069,
+    "beforeOwnedCanonicalSha256": "0b6b38010d185aa5df785e2c7ec39a9f0c7a5f2d05150b109563ee9034e20bb9",
+    "afterOwnedCanonicalSha256": "108516332f8ae4484dff4e4e58b2673975c8eb4cd81cdcbc098289b300772262",
+    "ownedSelector": "bin/python*; lib/python3.11 excluding site-packages and __pycache__; include/python3.11; libpython3.11.so and .so.1.0; versioned python pkgconfig files",
+    "observedReviewedImage": "sha256:065f4bd5aba4f0e174d53416448b5b9c7c99b1cfc4541e00326c8d7f1c197f3b"
+  },
+  "native": {
+    "baselines": {
+      "core": "sha256:b63d0d568b73519bacd09e4a8c9142f743555506720b364bea31825ddfa3e4c0",
+      "worker": "sha256:6c496b018b9c4650b60a89b00b2b157b41371a6c69f0b963258083c5b7081cbe",
+      "hindsight": "sha256:065f4bd5aba4f0e174d53416448b5b9c7c99b1cfc4541e00326c8d7f1c197f3b"
+    },
+    "observedReviewedImages": {
+      "core": "sha256:4db9d39bfc2651eb32feba4d3dd3a6b7d2b27d6be3a30c94cf25f3545a04a1b6",
+      "worker": "sha256:c2bd46136181764b296f84bb63fdda1d75e672229336754df2d7667c64d8019c",
+      "hindsight": "sha256:59ecb01c1ebe325d364d474286df3543667d0df8fc8ecb3f8bd7d1d1af486e08"
+    },
+    "indices": {
+      "trixie": {
+        "Suite": "stable",
+        "Codename": "trixie",
+        "Date": "Sat, 12 Sep 2026 07:55:41 UTC",
+        "url": "https://deb.debian.org/debian/dists/trixie/main/binary-amd64/Packages.xz",
+        "sha256": "7778d3e3f303b7ddb8ce0fe7c8d57473a076c6bf2e8f241f75421d2396352498",
+        "bytes": 9678380,
+        "signatureVerified": true,
+        "inReleaseSha256": "0584fba32e13e0ab8285fb16c27adea1ec03a73669c18702821094fd6ca86675"
+      },
+      "trixie-security": {
+        "Suite": "stable-security",
+        "Codename": "trixie-security",
+        "Date": "Thu, 05 Nov 2026 18:22:29 UTC",
+        "Valid-Until": "Thu, 12 Nov 2026 18:22:29 UTC",
+        "url": "https://security.debian.org/debian-security/dists/trixie-security/main/binary-amd64/Packages.xz",
+        "sha256": "5f9fc5aa45642005a7d58bf8782e6fe1a483b9082f4e1918dfb186fa490d2a20",
+        "bytes": 298120,
+        "signatureVerified": true,
+        "inReleaseSha256": "d0dbede32d80c3e9462e037ede87b138bdd5e44be10145acf46c9f643388836d"
+      }
+    },
+    "keyTrust": {
+      "authority": "https://ftp-master.debian.org/keys.html",
+      "pinnedPrimaryFingerprints": {
+        "archive-key-13.asc": "04B54C3CDCA79751B16BC6B5225629DF75B188BD",
+        "archive-key-13-security.asc": "5E04A1E3223A19A20706E20F9904613D4CCE68C6",
+        "release-13.asc": "41587F7DB8C774BCCF131416762F67A0B2C39DE4",
+        "archive-key-12.asc": "B8B80B5B623EAB6AD8775C45B7C5D7D6350947F8",
+        "archive-key-12-security.asc": "05AB90340C0C5E797F44A8C8254CF3B5AEC0A8F0"
+      },
+      "keyringSha256": "59e6105598e3d9924929553293ac7f283d342ef60c5faa009fc0a3c6542a128a",
+      "note": "Both independently fingerprint-pinned official keys and digest-pinned official vendor Debian keyring verify both InRelease files with gpgv exit0",
+      "vendorDigest": "python@sha256:b701198cb708b68d9413ca67d6311bd97c9389a2c5fe4da0511fc652642366cd",
+      "vendorKeyringSha256": "506b815cbb32d9b6066b4a2aa524071e071761e7e7f68c3ac74f3061ba852017",
+      "vendorKeyringGpgvExitCodes": {
+        "trixie": 0,
+        "trixie-security": 0
+      }
+    },
+    "packages": {
+      "tzdata-legacy": {
+        "Package": "tzdata-legacy",
+        "Source": "tzdata",
+        "Version": "2026c-0+deb13u1",
+        "Installed-Size": "1251",
+        "Maintainer": "GNU Libc Maintainers <debian-glibc@lists.debian.org>",
+        "Architecture": "all",
+        "Replaces": "tzdata (<< 2024b-3~), tzdata-bookworm, tzdata-bullseye",
+        "Depends": "tzdata",
+        "Conflicts": "tzdata-bookworm, tzdata-bullseye",
+        "Breaks": "tzdata (<< 2024b-3~)",
+        "Description": "time zone data for TAI minus ten seconds",
+        "Multi-Arch": "foreign",
+        "Homepage": "https://www.iana.org/time-zones",
+        "Description-md5": "e9abab063129c60dae9d14447e549234",
+        "Section": "localization",
+        "Priority": "optional",
+        "Filename": "pool/main/t/tzdata/tzdata-legacy_2026c-0+deb13u1_all.deb",
+        "Size": "183544",
+        "MD5sum": "54247372c2addd21b2022da74457043c",
+        "SHA256": "2779c2f5e9582fb501c592ec44d1d4421e0add97d25631926673be817a221028",
+        "suite": "trixie"
+      },
+      "base-files": {
+        "Package": "base-files",
+        "Version": "13.8+deb13u7",
+        "Essential": "yes",
+        "Installed-Size": "500",
+        "Maintainer": "Santiago Vila <sanvila@debian.org>",
+        "Architecture": "amd64",
+        "Replaces": "base, dpkg (<= 1.15.0), miscutils",
+        "Provides": "base, usr-is-merged",
+        "Pre-Depends": "awk",
+        "Breaks": "debian-security-support (<< 2019.04.25), initscripts (<< 2.88dsf-13.3), sendfile (<< 2.1b.20080616-5.2~)",
+        "Description": "Debian base system miscellaneous files",
+        "Multi-Arch": "foreign",
+        "Description-md5": "6d16337f57b84c4747f56438355b2395",
+        "Tag": "admin::configuring, admin::filesystem, admin::install, admin::login,\n role::app-data, suite::debian",
+        "Section": "admin",
+        "Priority": "required",
+        "Filename": "pool/main/b/base-files/base-files_13.8+deb13u7_amd64.deb",
+        "Size": "88296",
+        "MD5sum": "0e2724f0cea2fac746c8472de3483104",
+        "SHA256": "fcd42bb5cb63f7bfc4326a92541247872206d60a192fdff65ca14eb83ed408b9",
+        "suite": "trixie"
+      },
+      "tzdata": {
+        "Package": "tzdata",
+        "Version": "2026c-0+deb13u1",
+        "Installed-Size": "1358",
+        "Maintainer": "GNU Libc Maintainers <debian-glibc@lists.debian.org>",
+        "Architecture": "all",
+        "Replaces": "tzdata-legacy (= 2023c-8), tzdata-legacy (= 2023c-9)",
+        "Provides": "tzdata-trixie",
+        "Depends": "debconf (>= 0.5) | debconf-2.0",
+        "Breaks": "tzdata-legacy (= 2023c-8), tzdata-legacy (= 2023c-9)",
+        "Description": "time zone and daylight-saving time data",
+        "Multi-Arch": "foreign",
+        "Homepage": "https://www.iana.org/time-zones",
+        "Description-md5": "a77a3cc9a67658dd7cfdc6547391b8f8",
+        "Tag": "role::app-data, use::timekeeping",
+        "Section": "localization",
+        "Priority": "required",
+        "Filename": "pool/main/t/tzdata/tzdata_2026c-0+deb13u1_all.deb",
+        "Size": "264156",
+        "MD5sum": "57b7a59698976d6c0e7e769a049eb3fe",
+        "SHA256": "813b9bbbe14ccda2b24617b8bade0ade4d745957e75921766c153d249886bd4c",
+        "suite": "trixie"
+      },
+      "libssl3t64": {
+        "Package": "libssl3t64",
+        "Source": "openssl",
+        "Version": "3.5.7-1~deb13u3",
+        "Installed-Size": "8115",
+        "Maintainer": "Debian OpenSSL Team <pkg-openssl-devel@alioth-lists.debian.net>",
+        "Architecture": "amd64",
+        "Replaces": "libssl3",
+        "Provides": "libssl3 (= 3.5.7-1~deb13u3)",
+        "Depends": "libc6 (>= 2.38), libzstd1 (>= 1.5.5), zlib1g (>= 1:1.1.4), openssl-provider-legacy",
+        "Breaks": "freeradius (<< 3.2.7+dfsg-1+deb13u1), libssl3 (<< 3.5.7-1~deb13u3), openssh-client (<< 1:9.4p1), openssh-server (<< 1:9.4p1), python3-m2crypto (<< 0.38.0-4)",
+        "Description": "Secure Sockets Layer toolkit - shared libraries",
+        "Homepage": "https://openssl-library.org",
+        "Description-md5": "88547c6206c7fbc4fcc7d09ce100d210",
+        "Multi-Arch": "same",
+        "Section": "libs",
+        "Priority": "optional",
+        "Filename": "pool/updates/main/o/openssl/libssl3t64_3.5.7-1~deb13u3_amd64.deb",
+        "Size": "2458176",
+        "SHA256": "ff16bc048bcd7d1b256094450b79c77947d8e76fe2a24bd99b91021d591fa074",
+        "suite": "trixie-security"
+      },
+      "ca-certificates": {
+        "Package": "ca-certificates",
+        "Version": "20250419+deb13u1",
+        "Installed-Size": "387",
+        "Maintainer": "Julien Cristau <jcristau@debian.org>",
+        "Architecture": "all",
+        "Depends": "openssl (>= 1.1.1), debconf (>= 0.5) | debconf-2.0",
+        "Breaks": "ca-certificates-java (<< 20121112+nmu1)",
+        "Description": "Common CA certificates",
+        "Description-md5": "e867d2a359bea1800b5bff209fc65bd1",
+        "Enhances": "openssl",
+        "Multi-Arch": "foreign",
+        "Section": "misc",
+        "Priority": "standard",
+        "Filename": "pool/updates/main/c/ca-certificates/ca-certificates_20250419+deb13u1_all.deb",
+        "Size": "160720",
+        "SHA256": "c10585ac22c7f617a73d394eea29ba71d0356f350ae973b19043d1b017f80f54",
+        "suite": "trixie-security"
+      },
+      "libc6": {
+        "Package": "libc6",
+        "Source": "glibc",
+        "Version": "2.41-12+deb13u4",
+        "Installed-Size": "13226",
+        "Maintainer": "GNU Libc Maintainers <debian-glibc@lists.debian.org>",
+        "Architecture": "amd64",
+        "Replaces": "libc6-amd64",
+        "Depends": "libgcc-s1",
+        "Recommends": "libidn2-0 (>= 2.0.5~)",
+        "Suggests": "glibc-doc, debconf | debconf-2.0, libc-l10n, locales, libnss-nis, libnss-nisplus",
+        "Breaks": "base-files (<< 13.3~), chrony (<< 4.2-3~), dhcpcd (<< 1:10.1.0-7~), fakechroot (<< 2.19-3.5), firefox (<< 91~), firefox-esr (<< 91~), gnumach-image-1.8-486 (<< 2:1.8+git20210923~), gnumach-image-1.8-486-dbg (<< 2:1.8+git20210923~), gnumach-image-1.8-xen-486 (<< 2:1.8+git20210923~), gnumach-image-1.8-xen-486-dbg (<< 2:1.8+git20210923~), hurd (<< 1:0.9.git20220301-2), libamdhip64-5 (<< 5.7.1-5+b1), libhiprtc-builtins5 (<< 5.7.1-5+b1), librccl1 (<< 5.4.3-3+b1), libswupdate0.1 (<< 2024.12.1+dfsg-1+b3), locales (<< 2.41), locales-all (<< 2.41), lua-swupdate (<< 2024.12.1+dfsg-1+b3), nscd (<< 2.41), pd-scaf (<< 1:0.14.1+darcs20180201-6+b4), postgresql-15-pllua (<< 1:2.0.12-4), postgresql-17-pllua (<< 1:2.0.12-3+b2), python3-iptables (<< 1.0.0-2), python3-mrgingham (<< 1.25-1), python3-onnxruntime (<< 1.20.1+dfsg-2~), sysvinit (<< 3.09-2~), sysvinit-core (<< 3.09-2~), tinydns (<< 1:1.05-14), uwsgi-plugin-pypy3 (<< 0.0.2+b1), valgrind (<< 1:3.19.0-1~)",
+        "Description": "GNU C Library: Shared libraries",
+        "Multi-Arch": "same",
+        "Homepage": "https://www.gnu.org/software/libc/libc.html",
+        "Description-md5": "fc3001b0b90a1c8e6690b283a619d57f",
+        "Tag": "role::shared-lib",
+        "Section": "libs",
+        "Priority": "optional",
+        "Filename": "pool/main/g/glibc/libc6_2.41-12+deb13u4_amd64.deb",
+        "Size": "2846580",
+        "MD5sum": "5559581916477ef1f57ea9f82cecf22e",
+        "SHA256": "967aa62605721081c3eb2a17650611a792aa802d76a6511d1840242623d204c9",
+        "suite": "trixie"
+      }
+    },
+    "caBlacklist": {
+      "oldVersion": "20250419",
+      "oldDebSha256": "ef590f89563aa4b46c8260d49d1cea0fc1b181d19e8df3782694706adf05c184",
+      "newVersion": "20250419+deb13u1",
+      "removedCertificates": [
+        {
+          "name": "Comodo_AAA_Services_root.crt",
+          "derSha256": "d7a7a0fb5d7e2731d771e9484ebcdef71d5f0c3e0a2948782bc83ee0ea699ef4",
+          "sourcePemSha256": "a5ddabd1602ae1c66ce11ad078e734cc473dcb8e9f573037832d8536ae3de90b"
+        },
+        {
+          "name": "emSign_ECC_Root_CA_-_G3.crt",
+          "derSha256": "86a1ecba089c4a8d3bbe2734c612ba341d813e043cf9e8a862cd5c57a36bbe6b",
+          "sourcePemSha256": "36e68e205b53c67c7a013894e0d5c8583063468118d1ce78ecbc2200d1dd185c"
+        }
+      ],
+      "oldRootCount": 150,
+      "newRootCount": 148,
+      "unchangedRemainingPem": true
+    }
+  },
+  "rebuildClaim": "Owned source/package bytes are checksum-bound; rebuilt Docker image timestamps/manifest IDs may differ and require new independent verification. No activation is performed by these build tools.",
+  "excluded": [
+    "private DSNs",
+    "credentials",
+    "host config",
+    "database data",
+    "binary wheels",
+    "binary Debian packages",
+    "private criteria",
+    "live claim markers"
+  ]
+}

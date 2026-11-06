@@ -1,0 +1,31 @@
+{
+  "contract": "EvaThreeImageNativeSecurityInstallerIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T18:59:00.144821+00:00",
+  "decision": "GO_EXACT_THREE_IMAGE_NATIVE_SECURITY_INSTALL",
+  "installerSha256": "a4b6f9efae8bbe72fc8276d0b83c069bbbafb832f035ee54ac58b2e15244924b",
+  "planSha256": "d51a1918655b3d1592ab287a00732aa74ccad9c7a8bac43cebc3a94a2023e01b",
+  "freezeSha256": "72308e27cd8399eb501bf04f98ba78e03e9ba4fe80acc0033f002f7f3d64233e",
+  "currentPreflightSha256": "ef3494a27cc479e40a626ed4dab6bac7c8a91ef6cf838d77c7900f11794c3d0c",
+  "reviewedPreflightSha256": "df4572ae7bee8714c48dfb2e6a54295c32ace7bc0f37555817d712e2b3d98df2",
+  "checks": [
+    "Full218lineinstallerreadreviewed. Allhelper/candidate/canary/hostsource/criterion/history/handoff/previouscompletionhashes verified; actual3currentcontainerID/image/StartedAthealthy independentlymatched.",
+    "Exact3serviceimagechangesONLY(core,delegated-worker,Hindsight). Sameapplication/source/packages/entrypoints/env/security/volumes/resources/closedproducer; HindsightPython18alreadyreviewedandnativeheadc7mustnotchange.",
+    "Fourexistinghostroots/order/allbytesunchanged, hostconfigonlypublisherinstalledsnapshotpointer. Noadditionalsourceoverlayorretargetinghistoricalpreview.9history62criteria+handoffexact.",
+    "Sameapprovedreadinessrunner2e90 andglobalnative7e38/pinned1.2scheduler346fread-onlyidleclaims. Freshpreflight0work/leases/currentunknown/nativependingprocessing/unscheduled/scheduledNow+15min,10authorities2legacy.",
+    "Hostintakestaysstoppedafterdropinpointeralignment untilSDK3imagecandidatecallbackverifiesfullsource/fourprofiles/actualCLI1.2CPU/Python18/nativeversions/loadedlibs/TLS/CA andstrictentirec7nativecolumns/rows/operationstates/compaction/extensions/serverversionequalsimmediatepostStopSnapshot. NoDBrestore/migrationscope.",
+    "KnownabsentDNSNone/[]only3fieldsnormalized. Requiredrepresentationbugfix completed:ConfigEnvfullstrings sortedwithduplicatesretained, fullMountdictionarylistssortedwithoutdroppingattributes. Independently6actualASTfunctiontestsPASS0.054s(order/DNSpositive; changedEnv/duplicate/mountRW/source/nonDNSHostConfignegatives).",
+    "Exclusiveworkflow+SDKreceiptfencesbeforedispatch; unknownresultsretained, neverblindrerun. Existingbf8receiptboundcompensationavailable; healthyunknowninspectiononly, nofabricatedFalseornewrecoveryframework.",
+    "Actualfinalcore2requesttext/ToolOutputandfreshsyntheticHindsightselected2/explicit0/recovery/personread/forget/terminalwriters/all21rowscleanupreceiptspinned. No householddata/providerexport;reviewermodelcalls0."
+  ],
+  "resolvedFinding": "Beforeapproval foundsortedEnvcheckundonebyunsortedfullConfigcompare/rawMountlistorder. Fixedonlyrepresentationorderingprioractivation; originalfreezepreserved, no product/imagechange.",
+  "limitations": [
+    "Thisisexactselected3roleDebianruntime+HindsightPythonpatchactivation, notallhost/ancillaryOSSclosure orCVEfreeassertion.",
+    "Installerfailurestaysinspect-retained-state; no approvaltoreplayunknownphaseorrestoreDB.",
+    "Finalactualinstalledsource/profile/nativehash/healthreadbackrequired;E411/E416/familyacceptance remainopen."
+  ],
+  "priorReviews": {
+    "debian13-security-candidates-independent-20261106.json": "983f7d1329855fc2af10b7750725ef0246adb29782c19121fe012b7a122782f8",
+    "hindsight-python31118-candidate-independent-20261106.json": "eb2025cfb7be07ab3078e2b46c3016d1f53de914d829fc6965b0c3e6fde4ace0"
+  }
+}

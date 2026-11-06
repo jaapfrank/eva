@@ -1,0 +1,137 @@
+{
+  "contract": "EvaDebian13ThreeImageSecurityCandidateIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T18:47:27.059885+00:00",
+  "decision": "GO_FOR_EXACT_THREE_SECURITY_CANDIDATE_IMAGES_NOT_INSTALL",
+  "freezeSha256": "cb43dcffc47614a398eef9e1906a9c01714e5670a833bb719cd82e5d79f1bfbf",
+  "images": {
+    "core": "sha256:4db9d39bfc2651eb32feba4d3dd3a6b7d2b27d6be3a30c94cf25f3545a04a1b6",
+    "worker": "sha256:c2bd46136181764b296f84bb63fdda1d75e672229336754df2d7667c64d8019c",
+    "hindsight": "sha256:59ecb01c1ebe325d364d474286df3543667d0df8fc8ecb3f8bd7d1d1af486e08"
+  },
+  "actualIndependentReadbacks": {
+    "core": {
+      "python": "3.12.16",
+      "glibc": "2.41",
+      "openssl": "OpenSSL 3.5.7 9 Jun 2026",
+      "nativeDistroPackages": {
+        "tzdata-legacy": "2026c-0+deb13u1",
+        "zlib1g": "1:1.3.dfsg+really1.3.1-1+b1",
+        "gcc-14-base": "14.2.0-19",
+        "libstdc++6": "14.2.0-19",
+        "base-files": "13.8+deb13u7",
+        "media-types": "13.0.0",
+        "netbase": "6.5",
+        "tzdata": "2026c-0+deb13u1",
+        "libssl3t64": "3.5.7-1~deb13u3",
+        "ca-certificates": "20250419+deb13u1",
+        "libgomp1": "14.2.0-19",
+        "libzstd1": "1.5.7+dfsg-1",
+        "libgcc-s1": "14.2.0-19",
+        "libc6": "2.41-12+deb13u4"
+      },
+      "loadedLibrarySha256": {
+        "/usr/lib/x86_64-linux-gnu/libcrypto.so.3": "8ae56f0a9481280a68c19f59809cd242a07a91ad7142944d21a878221992244b",
+        "/usr/lib/x86_64-linux-gnu/libssl.so.3": "9592038e92d1f41affcbb625334d0b6e788714c889104fa6d5b107cf9fd657f2",
+        "/usr/lib/x86_64-linux-gnu/libc.so.6": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92"
+      },
+      "defaultCaRootCount": 148,
+      "tlsTrusted": "TLSv1.3",
+      "tlsUntrusted": "untrusted_certificate_rejected",
+      "timezoneAmsterdam": 1.0,
+      "timezoneEdmonton": -6.0
+    },
+    "worker": {
+      "python": "3.12.16",
+      "glibc": "2.41",
+      "openssl": "OpenSSL 3.5.7 9 Jun 2026",
+      "nativeDistroPackages": {
+        "tzdata-legacy": "2026c-0+deb13u1",
+        "zlib1g": "1:1.3.dfsg+really1.3.1-1+b1",
+        "gcc-14-base": "14.2.0-19",
+        "libstdc++6": "14.2.0-19",
+        "base-files": "13.8+deb13u7",
+        "media-types": "13.0.0",
+        "netbase": "6.5",
+        "tzdata": "2026c-0+deb13u1",
+        "libssl3t64": "3.5.7-1~deb13u3",
+        "ca-certificates": "20250419+deb13u1",
+        "libgomp1": "14.2.0-19",
+        "libzstd1": "1.5.7+dfsg-1",
+        "libgcc-s1": "14.2.0-19",
+        "libc6": "2.41-12+deb13u4"
+      },
+      "loadedLibrarySha256": {
+        "/usr/lib/x86_64-linux-gnu/libcrypto.so.3": "8ae56f0a9481280a68c19f59809cd242a07a91ad7142944d21a878221992244b",
+        "/usr/lib/x86_64-linux-gnu/libssl.so.3": "9592038e92d1f41affcbb625334d0b6e788714c889104fa6d5b107cf9fd657f2",
+        "/usr/lib/x86_64-linux-gnu/libc.so.6": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92"
+      },
+      "defaultCaRootCount": 148,
+      "tlsTrusted": "TLSv1.3",
+      "tlsUntrusted": "untrusted_certificate_rejected",
+      "timezoneAmsterdam": 1.0,
+      "timezoneEdmonton": -6.0
+    },
+    "hindsight": {
+      "python": "3.11.18",
+      "glibc": "2.41",
+      "openssl": "OpenSSL 3.5.7 9 Jun 2026",
+      "nativeDistroPackages": {
+        "base-files": "13.8+deb13u7",
+        "tzdata-legacy": "2026c-0+deb13u1",
+        "tzdata": "2026c-0+deb13u1",
+        "libssl3t64": "3.5.7-1~deb13u3",
+        "ca-certificates": "20250419+deb13u1",
+        "libc6": "2.41-12+deb13u4",
+        "gcc-14-base": "14.2.0-19",
+        "libgcc-s1": "14.2.0-19",
+        "libstdc++6": "14.2.0-19",
+        "libgomp1": "14.2.0-19",
+        "zlib1g": "1:1.3.dfsg+really1.3.1-1+b1",
+        "libzstd1": "1.5.7+dfsg-1",
+        "media-types": "13.0.0",
+        "netbase": "6.5"
+      },
+      "loadedLibrarySha256": {
+        "/usr/lib/x86_64-linux-gnu/libcrypto.so.3": "8ae56f0a9481280a68c19f59809cd242a07a91ad7142944d21a878221992244b",
+        "/usr/lib/x86_64-linux-gnu/libssl.so.3": "9592038e92d1f41affcbb625334d0b6e788714c889104fa6d5b107cf9fd657f2",
+        "/usr/lib/x86_64-linux-gnu/libc.so.6": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92"
+      },
+      "defaultCaRootCount": 148,
+      "tlsTrusted": "TLSv1.3",
+      "tlsUntrusted": "untrusted_certificate_rejected",
+      "timezoneAmsterdam": 1.0,
+      "timezoneEdmonton": -6.0
+    }
+  },
+  "checks": [
+    "All65frozenhashesverifiedbeforeandafterreview. OfficialDebian13archive/security/releasefingerprintsindependentlymatchedhttps://ftp-master.debian.org/keys.html; secondarydigest-pinnedofficialvendorDebiankeyringprovidesseparatetrustpath.",
+    "Independentlyrerangpgv:bothfrozenInReleasefilesverifyexit0withbothpinnedandvendorkeyrings. SHA256andsizeofPackages.xzmatchauthenticatedRelease;6selectedPackage/Version/Filename/SHA256entriesandactual.debbytesmatchsignedindices. SecurityValidUntil12Nov2026notexpiredatreview.",
+    "Independentlystreameddpkg-debdata/controltar(no maintainer scripts) andcrosscheckedeveryroleeveryallowedstagedfile/metadatahashagainstauthenticatedpayload. Actualloadedlibc/SSL/cryptohashesmatchsigned.debfiles.",
+    "Independentlyrederivedfullfilesystemdelta291perimage=289approvedstagedpaths+2provenancehelpers. BaselineonlyMD5comparisonmetadataexcludedfromstructuralequality;SHA256/mode/uid/gid/linkremainexact. Allapp/site/interpreter/sourceandcustomDistrolessos-releasepreserved;omittedpackagefilesstayomitted. DockerConfigactualbaseline/candidateidentical.",
+    "CAexact2DERrootsremovedperauthenticatednewpackage; oldCAarchiveSHAalsoinsignedindex. Independentlycomparedold/newrootsetsandremainingPEMbytes, appliedfiltertoall3actualbaselinebundlesandmatchedcandidatebytes.4independentbundlefiltertestsPASS; noextraorcustomrootsremoved/added.",
+    "Independentlyranactual3imagesnetworknone/readOnly/capdrop/no-new-privileges/tmpfs:14packageversions,loadednativehashes, trustedTLSv1.3+untrustedcertrefusal, Amsterdam+1/Edmonton-6timezonePASS;provider/databasecalls0.",
+    "ExecutorPG18critical20+20STOP/lease/claim/privacyPASS; core374pass+same2baselinecontextfailures; Hindsight23focusedtestsandnativeMockTransportPASS. Firstpyc-changingHindsightbuildretainedrejected; -Brebuildhasstrictnoextraexclusionproof."
+  ],
+  "scopeLimits": [
+    "No productioninstallGO: actualexisting-providerHindsightcanary/freshDBandfrozen3roleinstaller/currentallclaimsgatesstillrequired.",
+    "SignedDebianpoint/securityupdatesfor6of14installedpackagesinthe3selectedruntimeimages, notallhost/WSL/Evaancillarycomponents orproofzerovulnerabilities.",
+    "Distrolessomittedopenssl-provider-legacy/opensslCLI/debconf/CA-sourcecompanionsremainbaselineomissions; dependenciesunchangedandusedruntimepathsverified, notfullDebianpackageinstallationclaim.",
+    "HindsightimageincludespriorreviewedPython3.11.18candidate, no schema/provider/sourceprofilechange; defaultnativecontractstillrequiresseparateactivationreadback.",
+    "No reviewerpaidmodelrequests/privateDB/householddataaccess."
+  ],
+  "evidenceSha256": {
+    "freeze.json": "cb43dcffc47614a398eef9e1906a9c01714e5670a833bb719cd82e5d79f1bfbf",
+    "assessment.json": "c702f95b0eff84f08f5db0d9b91f1ac5d8d06f4397a4b56b2caae17024ed75b5",
+    "key-trust.json": "0cf61eb1046b1e55fa33fc420558e942626a9da91831c0e74780926cfd6a069d",
+    "selected-index-entries.json": "0931b689c8e2965d3085f90c79edfaeaaa6032225149330d3a67ae89617cc025",
+    "ca-blacklist-proof.json": "99790bc20fc442eb0366780c6d3ab74c8379424524bda60097394228c392602f",
+    "prepare-overlays.py": "5cce078eaf5ce3f9ce89176041f6546be1c0edf51d5734d4d43eeb5d28c4784a",
+    "bundle_filter.py": "bee00098e78ec77e71b6fca29021686ced0ccdf727bae76e80b2c5c39bcc082a",
+    "verification.json": "575023041462f11bdddf6282503dbc9545f38f18e9a278140196b5f2cb350fbd",
+    "core/native-runtime-independent.json": "8cd9edf9f7ccc9df6567fd3fb102a1f2ba522e596880de234d3fb0aab0b4a1ce",
+    "worker/native-runtime-independent.json": "809ca913af1e08184a68418d623683e87db160f238b245b293f20c819bb167f1",
+    "hindsight/native-runtime-independent.json": "1ce1b0e9af6631f4ec0c923d9c32c9199c7272890290c26206adcd572cef5a4c"
+  },
+  "officialAuthority": "https://ftp-master.debian.org/keys.html"
+}

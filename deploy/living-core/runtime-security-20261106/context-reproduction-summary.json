@@ -1,0 +1,27 @@
+{
+  "contract": "EvaRuntimeSecurityPublicContextReproduction/v1",
+  "native": {
+    "core": {
+      "allOverlayPathsAndBytesMatched": true,
+      "files": 289,
+      "manifestMatched": true
+    },
+    "worker": {
+      "allOverlayPathsAndBytesMatched": true,
+      "files": 289,
+      "manifestMatched": true
+    },
+    "hindsight": {
+      "allOverlayPathsAndBytesMatched": true,
+      "files": 289,
+      "manifestMatched": true
+    }
+  },
+  "pythonOwnedOverlay": {
+    "all1069FilesAndLinksMatched": true,
+    "files": 1069,
+    "baselineAndVendorCanonicalHashesMatched": true,
+    "manifestMatched": true
+  },
+  "freshFullDockerImageRebuildClaimed": false
+}

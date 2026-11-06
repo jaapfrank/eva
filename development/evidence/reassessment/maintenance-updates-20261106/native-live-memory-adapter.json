@@ -1,0 +1,69 @@
+{
+  "scope": "Synthetic only; actual installed Eva adapter plus Hindsight1.2.0 and existing Astra/medium provider route",
+  "checks": {
+    "actualNativeSelectionAndExactProof": {
+      "bank_id": "eva-upgrade-live-20261106-5efbad3e1ebfc0c8c46357c23d8a1000",
+      "document_id": "synthetic-update-canary:exchange:semantic-positive",
+      "content_sha256": "96657de85069bf5c7877a73dcef2dd9a3245870464a6eb895779734cd5bf8db6",
+      "disposition": "retained",
+      "selected_fact_count": 2,
+      "operation_id": "6dbfef99-d088-5d86-bb7a-ec8bdb4bb221"
+    },
+    "modelResultRecoveredWithoutReplay": true,
+    "actualEmptySelectionExplicitZeroErrorsAndSourceProof": {
+      "bank_id": "eva-upgrade-live-20261106-5efbad3e1ebfc0c8c46357c23d8a1000",
+      "document_id": "synthetic-update-canary:exchange:semantic-empty",
+      "content_sha256": "d87d3680146bd7ab0891a57de9e96fe87e53d32b5970b14519138ae3e8e24840",
+      "disposition": "not_selected",
+      "selected_fact_count": 0,
+      "operation_id": "69e9c963-aefb-5e73-a08b-e31d907dd3b9"
+    },
+    "actualSelectedFactsRetrievedWithPersonFilter": true,
+    "allSyntheticBankWritersTerminalBeforeErase": true,
+    "actualSelectedDocumentForgotten": true,
+    "dedicatedSyntheticBankCleanedAfterProof": true
+  },
+  "externalProvider": "openai-codex",
+  "reasoningEffort": "medium",
+  "bank": "eva-upgrade-live-20261106-5efbad3e1ebfc0c8c46357c23d8a1000",
+  "positiveOperationId": "6dbfef99-d088-5d86-bb7a-ec8bdb4bb221",
+  "positiveSeconds": 7.309,
+  "emptySeconds": 2.125,
+  "nativeProviderUsage": [
+    {
+      "provider": "openai-codex",
+      "model": "gpt-6-astra",
+      "status": "success",
+      "input_tokens": 3251,
+      "output_tokens": 9,
+      "cached_tokens": 2688,
+      "thoughts_tokens": null,
+      "total_tokens": 3260,
+      "duration_ms": 1522
+    },
+    {
+      "provider": "openai-codex",
+      "model": "gpt-6-astra",
+      "status": "success",
+      "input_tokens": 4605,
+      "output_tokens": 146,
+      "cached_tokens": null,
+      "thoughts_tokens": null,
+      "total_tokens": 4751,
+      "duration_ms": 4275
+    },
+    {
+      "provider": "openai-codex",
+      "model": "gpt-6-astra",
+      "status": "success",
+      "input_tokens": 3269,
+      "output_tokens": 176,
+      "cached_tokens": 2688,
+      "thoughts_tokens": null,
+      "total_tokens": 3445,
+      "duration_ms": 5819
+    }
+  ],
+  "usageScope": "Synthetic development verification on installed Eva; household runtime usage excluded; cost unknown",
+  "passed": true
+}

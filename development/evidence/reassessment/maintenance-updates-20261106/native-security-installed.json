@@ -1,0 +1,110 @@
+{
+  "contract": "EvaNativeSecurityInstalledTechnicalDelivery/v1",
+  "verifiedAt": "2026-11-06T19:29:45.351821+00:00",
+  "scope": "Supported Debian13 native patch closure for actual core/worker/Hindsight; Hindsight supported Python3.11.18 security patch. No full-OSS or autonomous repair completion claim.",
+  "built": true,
+  "independentlyReviewed": true,
+  "installed": true,
+  "actuallyUsed": true,
+  "technicalDeliveryComplete": true,
+  "images": {
+    "core": "sha256:4db9d39bfc2651eb32feba4d3dd3a6b7d2b27d6be3a30c94cf25f3545a04a1b6",
+    "delegated-work-worker": "sha256:c2bd46136181764b296f84bb63fdda1d75e672229336754df2d7667c64d8019c",
+    "hindsight": "sha256:59ecb01c1ebe325d364d474286df3543667d0df8fc8ecb3f8bd7d1d1af486e08"
+  },
+  "versions": {
+    "corePython": "3.12.16",
+    "workerPython": "3.12.16",
+    "hindsightPython": "3.11.18",
+    "hindsight-api-slim": "1.2.0",
+    "pydantic-ai-slim": "2.66.0",
+    "pydantic-graph": "2.66.0",
+    "openaiCore": "3.46.0",
+    "genai-pricesCore": "0.2.1",
+    "torchHindsight": "2.13.0+cpu"
+  },
+  "distroPackageUpdates": [
+    {
+      "package": "tzdata-legacy",
+      "oldVersion": "2026b-0+deb13u1",
+      "newVersion": "2026c-0+deb13u1",
+      "packageSha256": "2779c2f5e9582fb501c592ec44d1d4421e0add97d25631926673be817a221028"
+    },
+    {
+      "package": "base-files",
+      "oldVersion": "13.8+deb13u6",
+      "newVersion": "13.8+deb13u7",
+      "packageSha256": "fcd42bb5cb63f7bfc4326a92541247872206d60a192fdff65ca14eb83ed408b9"
+    },
+    {
+      "package": "tzdata",
+      "oldVersion": "2026b-0+deb13u1",
+      "newVersion": "2026c-0+deb13u1",
+      "packageSha256": "813b9bbbe14ccda2b24617b8bade0ade4d745957e75921766c153d249886bd4c"
+    },
+    {
+      "package": "libssl3t64",
+      "oldVersion": "3.5.7-1~deb13u2",
+      "newVersion": "3.5.7-1~deb13u3",
+      "packageSha256": "ff16bc048bcd7d1b256094450b79c77947d8e76fe2a24bd99b91021d591fa074"
+    },
+    {
+      "package": "ca-certificates",
+      "oldVersion": "20250419",
+      "newVersion": "20250419+deb13u1",
+      "packageSha256": "c10585ac22c7f617a73d394eea29ba71d0356f350ae973b19043d1b017f80f54"
+    },
+    {
+      "package": "libc6",
+      "oldVersion": "2.41-12+deb13u3",
+      "newVersion": "2.41-12+deb13u4",
+      "packageSha256": "967aa62605721081c3eb2a17650611a792aa802d76a6511d1840242623d204c9"
+    }
+  ],
+  "validation": {
+    "all14DistroPackagesCurrentAgainstSignedIndexesAtBuild": true,
+    "inReleaseSignaturesAndPackageShaChainIndependentlyVerified": true,
+    "sixPackageUpdatesNoNewCompanions": true,
+    "existingDistrolessCustomisationAndOmissionsPreserved": true,
+    "onlyTwoOfficiallyRevokedCertificateRootsRemovedRemainingPemBytesAndCustomRootsPreserved": true,
+    "nativeLoadedFileHashesAndTrustedUntrustedTlsTimezonesPassed": true,
+    "noAppSourceOrThirdPartySiteBytesChanged": true,
+    "allFourCoreWorkerProfilesPreserved": true,
+    "nativeC7Head24DataTablesOperationsAndCompactionPreserved": true,
+    "sameDatabaseNoSnapshotRestore": true,
+    "hostFourSourceRootsTenAuthoritiesTwoHistoricalAcceptancesPreserved": true,
+    "sixtyTwoCriteriaNineReceiptsPreserved": true,
+    "unrelatedContainersPreserved": true,
+    "all21SyntheticBankTablesZeroAfterOneCleanup": true
+  },
+  "metadataReinspection": {
+    "initialPostcheckStoppedOnFullHostConfigListOrdering": true,
+    "generatedHostnamesConditionallyBoundToExactContainerIds": true,
+    "noConfigurationValueOrMountAttributeExcluded": true,
+    "copiedSdkReceiptAdoptedWithDispatchForbidden": true,
+    "threeImageGenerationsNotRedispatched": true,
+    "originalIncompleteReceiptsPreserved": true
+  },
+  "actualDevelopmentProviderUse": {
+    "coreRequests": 2,
+    "hindsightRequests": 3,
+    "totalRequests": 5,
+    "inputTokens": 11323,
+    "outputTokens": 364,
+    "totalTokens": 11687,
+    "providerSeconds": 18.312,
+    "cacheAggregate": null,
+    "reasoningTokens": null,
+    "billedCost": null,
+    "scope": "Development verification on live images, synthetic context only; household Eva usage excluded; existing subscription/access-lease route"
+  },
+  "remaining": {
+    "allOtherOpenSourceComponentsUpdated": false,
+    "next": "Separately verified Node26/filesystemMCP compatible contract update, then remaining active host/provider/frontend families; voice ownership boundary retained",
+    "E411ResidualCleanupCompleted": false,
+    "fullE416Completed": false
+  },
+  "independentReview": "development/reviews/debian13-native-installed-independent-20261106.json",
+  "independentReviewSha256": "26fc55eb2f89e5fa005654e6b439656b9e77e895522037ddb5b63e430f281bb5",
+  "publicRecipeReview": "development/reviews/runtime-security-public-recipe-independent-20261106.json"
+}

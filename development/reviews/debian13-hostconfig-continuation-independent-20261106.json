@@ -1,0 +1,24 @@
+{
+  "contract": "EvaNativeSecurityHostConfigContinuationIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T19:17:34.159610+00:00",
+  "decision": "GO_EXACT_NO_REDISPATCH_REINSPECTION_AND_HOST_RESUME",
+  "sidecarSha256": "0fa350487f7e3e0efc467daed11312959cc6f835a0ed6d3afec93f1d9311d7ac",
+  "planSha256": "9e019b474c248deef22e009fc7872da8c35aa24f4596731adfab371d134c5cb1",
+  "freezeSha256": "65702ba9ef69639f509a8a2e92c53a605702f8e1a003b20f381b044f9d7d50cc",
+  "reviewedPreflightSha256": "62be483127ebfa69097ccff95c27bd8a9b22c789bb7f91eb6efb1bb025a70770",
+  "checks": [
+    "Exactcurrent3healthyimageCID/StartedAt/rawHostConfig/rawConfigSHAandfullsortedactualMountshashindependentlyverified. RawtopMountsorderisnondeterministic, onlyfullordered-dictsetpinused; duplicates/attributesretained.",
+    "Originalinstaller/plan/mainfailedactivation/SDKfailedreceipt/approval/freezehashespreserved. Originalfunctions/importsASTonlyloaded, nooriginaltop-levelworkflowreplay. Originalmain+SDK+newcontinuationlocksheld, SDKreinspectionwritesexclusivecopiedreceiptandprofilesredirectonlyinsideS.",
+    "OnlynewHostConfigequivalenceBindsfullstringsandMountsfulldictionariesorder. Existingapproved3emptyDNSnormalizationretained; everyotherattribute/valueexact.",
+    "OnlydefaultgeneratedHostnamemetadataequivalence:Composehostnameabsentbothconfigs, priorId==boundbeforeIdandhostname==own12CIDprefix, currentId==sidepinandhostname==own12CIDprefix, rawcurrentConfigSHAstillpinned. DeepcopiesonlybeforeoriginalConfigcomparison; arbitraryhostname/otherConfigdifferencesrefused.",
+    "FoundandfixedSDKinjectioncontractbugbeforeadoption:inspectionrunnernowfrozenbf8_commandstdoutstringwithdeadline/limitpreserved; allmutatingDockercommandsforbiddenbeforesubprocess. Independent12ASTsourcefocusedtestsPASS0.190s includingchangedbindRO/target/nestedmountattributes/duplicates/nonDNS/explicitunknownhostnameandrunnercontractnegatives.",
+    "Freshfulloriginal3imageapplication/source/4profiles/CPUmodel/Python18/nativeTLS/signedlibs/completec7nativecolumnsrowsoperationscompactionproofPASSwhilehoststopped. ExactoriginalpostStopNativeSnapshotbound, unchangedDBrequiredagainbeforehostresume.",
+    "Noimage/containerredispatchorrecreationauthorized. Existingrecover_runtimecandidate-readyadoptiononly/callbackbeforecompensationforbidden; thenfreshclaims+nativeproofandstartexistinghostwithactualPID/argv/4roots/10authorityhealthreadback."
+  ],
+  "limitations": [
+    "Originalfailedreceiptsremainhistoricallyunknown; thisseparateexplicitresolutionrecordwillcloseinstalledoutcomeonlyafteractualcontinuationsuccess.",
+    "No blindrerunifsidecarunknown; exactindependentapprovalhashesonly.",
+    "Finalinstalledreadbackrequired, no fullE411/E416/ancillaryOSSclosure."
+  ]
+}

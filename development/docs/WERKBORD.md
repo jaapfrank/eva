@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Hindsight1.2.0 én de kern-/workerbatch zijn live en onafhankelijk geverifieerd: Python3.12.16, PydanticAI/Graph2.66, OpenAI3.46 en genai-prices0.2.1; echte geheugen- en modelproeven slagen. Bestaande bron-, privacy-, STOP-, lease- en werkprofielgrenzen zijn behouden. Volgende uitkomst: gesigneerde Debian-beveiligingsrevisies en Hindsight-Python3.11.18 per beoordeelde overlay afronden; daarna overige actieve Node/MCP-/host-/providerafhankelijkheden met echte compatibiliteitsproeven en veilige installatie. Volledige zelfstandige update-/reparatiekringloop E4.16 en geheugenresiduopruiming E4.11 blijven open.
+Volgende stap: Hindsight1.2.0/Python3.11.18 en kern/workerPython3.12.16 zijn live en onafhankelijk geverifieerd, met PydanticAI/Graph2.66, OpenAI3.46, genai-prices0.2.1 en zes actuele Debian-beveiligingsrevisies. Echte model-/geheugenproeven slagen; bron/foutbewijs, privacy, STOP, leases en werkprofielen zijn behouden, proefdata opgeruimd. Volgende uitkomst: Node26/filesystemMCP bijwerken via bestaande adapter met behoud van de vijf toegestane acties, echte overdrachts-/STOP-/leaseproeven en veilige installatie. Daarna resterende actieve host-, provider- en dashboardafhankelijkheden; bestaande spraakoverdrachtgrens blijft gelden. E4.16-autonomie en E4.11-residuopruiming blijven open.
 
 ## Voortgang
 
