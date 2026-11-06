@@ -1,0 +1,47 @@
+{
+  "schema": "EvaAuxiliaryProfileContinuationIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T22:30:32.407242+00:00",
+  "decision": "GO",
+  "installerSha256": "8752963c489eecce5a012d7fb86271755179f72c2a3208466b4abb5409663c57",
+  "planSha256": "e21acfe20ff19f4a208b8276eeeb1f5af37fcb09bced4a144f46ed10ad9d21fc",
+  "freezeSha256": "1da07f97982593d8d08c1bb99101a04107a5e867ac3c51757eafa65b6dbdded8",
+  "preflightSha256": "9fbc862f207c1a4dc58dbc522323bcea78c768842e29ba011e5472425cd652c0",
+  "canaryWrapperSha256": "38ca60dba0bb8f7df92a3966ee95498401fe2cfdeec42e87a748509903ab9de9",
+  "originalFilesSha256": {
+    "/var/lib/eva2/finalization-20261106/auxiliary-python-upgrade/activation/install.py": "10be424bcdec9466db0769072d25c2ffec033aae80febc11213e4d18f8a42203",
+    "/var/lib/eva2/finalization-20261106/auxiliary-python-upgrade/activation/plan.private.json": "73d928b9452215bbd5cb267d3fff03fecb921a88ec6984333b295eda105b7258",
+    "/var/lib/eva2/finalization-20261106/auxiliary-python-upgrade/activation/effective-profile-probe.py": "1bb933185b8497b33a0fccd2b4fd85fe7da23b9cea4a02850fd7f67b7703f050",
+    "/var/lib/eva2/finalization-20261106/auxiliary-python-upgrade/activation/activation.private.json": "342882d900737d28823d9200f72fb5ac2a5fe251d3423ef8927de97be2affeaf",
+    "/var/lib/eva2/finalization-20261106/auxiliary-python-upgrade/activation/hindsight-image-update.private.json": "bdeff2a8e8a1b4b5aac57f5ea78a023d5052274ca90bd2f1ff9d9362fa8da61d"
+  },
+  "independentFocusedTests": {
+    "passed": 7,
+    "seconds": 0.08,
+    "logSha256": "229e4533d1597c28d56b8b7c42e076151a9d019effe66ced40bfb2ba3347ae36"
+  },
+  "independentCurrentProofs": {
+    "originalStaleProfileFailure": "cd80d7735bce9a37c69dcd1e287fe0b6f890cf5c6cea67ac4de694f487d038dd",
+    "pid1FlagFailureAfterEncodingCorrection": "cc037af57183c163c41a1e5549b34844cc573d5984022ec71eb4748a41f668f1",
+    "actualCliFlag1": "be3af2a14e13f73452622da41751ce473c4796eba819e423811bc7d7014c423e",
+    "fullNativeSchemaDataPreservation": "e7e68dda0356111e29ecd9bd0009ddbeb5ad6d81c02e4c4ba22f1574f6a0cc22"
+  },
+  "resolvedHarnessFailures": [
+    "Exactlyonehistoricalentrypointpin b4\u2192reviewed1eb in separateprofileprobe; originalhelperbyteunchanged.",
+    "ExactlyoneembeddedNUL encodedasbackslashzero in exactSHA-boundsourceargument, no unknownscript/secondNUL accepted.",
+    "Accessflag readfromsamevalidatedCLI7/startticks3208799/cmdline beforeandafter, ratherthanPID1init. ActualCLIflag1 independentlyconfirmed."
+  ],
+  "reviewedBoundaries": [
+    "Native751a1d/625/StartedAt22:15:38.239646446Z/rawConfig+HostConfig pinned; alloriginal5filesincludingouterandSDKreceipts remainunchanged.",
+    "Originalouter/SDK/sidecarreceiptlocks held; sidecarreceipt exclusive andsingle-use. CopiedSDKreceipt reinspection/adoption usesfrozenSDK_command stdout/deadline/limitcontract andeffect-denyingrunner, noHindsightstop/create/up/start allowed.",
+    "Fulloriginalnativecallbacksuccessfulwithcorrectedreadonlyharness, includingCompose/source/CPU/effectiveprofile/full24tablec7schema/states/compaction hashes. IndependentnativeDBsnapshot exact beforeallremainingeffects.",
+    "OnlyexactoriginalASTremainingclosed4AUXloop+finalreadbacks/resume executed; initialconsumerstops,hostpointerbinding,Hindsightimageleg absentfromslice. Original22snapshot/network/ACK guards unchanged.",
+    "Alloriginalcallback/source/schema/claims/native0/browser/document/criteria/history gates retained. Remainingfourreplacements arefirstdispatches, not replayofpreviousimageleg.",
+    "Revisedonce-onlynativecanarywrapper requiresCsuccess+explicitactualcontinuationreceiptSHA andcurrentcore/HindsightCID/image/StartedAt. Original9bdadapter+d797cleanup hashes unchanged; ownsyntheticbank only, priorunknownreceipt neverreplayed."
+  ],
+  "limitations": [
+    "Coordinatoraloneexecutes --resume; reviewer hasnotinstalled/stopped/restarted orcalledmodels.",
+    "Originalfailedinstallationand8e/625historicalproofs stayhistorical. Thisapproval doesnotoverwriteoriginalreceipt orclaiminitialattemptsuccess.",
+    "UnknownACK/failure preservesnewphase forinspection; no broadautomaticcompensation or allautonomousmaintenance/E4.16/familyacceptanceclosure."
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "contract": "EvaIndependentReadonlyProbeContinuationReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-06T23:32:10.475404+00:00",
+  "decision": "GO_SCOPED_DOCUMENT_AND_RESUME",
+  "installerSha256": "8767d7d8fda5836f19efdb4522a9c46a8ed481eb7e8e0b9ac37e39ede1794934",
+  "planSha256": "d774df3bf5badcb57e18a17d922f5885fae216cfc721ef4a07d6a48016ced86d",
+  "freezeSha256": "4e65d12546ce83f8d7ce8b229ea6aad0d8fdf1534c7edac1e5d2566dc2cdcd72",
+  "preflightSha256": "624fe2ea6e3553842d7c650c0ae1e5374b692236569c14d95840dd7442a4fec5",
+  "newProbeSha256": "e3253536dfaf3f6bfc9e2c6a33a6c03ed29fa3e95ab30e2a18adce920ce74c3d",
+  "memoryWrapperSha256": "6460335b85908203769768deff9e95113f540a50ccc3980d977c4fc78310678b",
+  "ownTestsPassed": 4,
+  "ownTestsLogSha256": "538932b09858e3c788f1621d6c8450861df568cb04e930373d78349e929f7308",
+  "ownActualReadonlyChromeTlsProofSha256": "3f510c4683762d79a04901a86d91bffb836b6b8c9f0fe8f5a4dfe2077272a692",
+  "verified": [
+    "All frozen J and retainedA/C/D/E source/receipt hashes match. Original failure receipts remain immutable.",
+    "Only TLS handshake function changes: anonymous memfd cert/key plus in-memory trust cadata replaces disk temporary files. All other AST nodes, package/native hash expectations, certificate and trusted/untrusted assertions remain identical.",
+    "Reviewer independently executed exact new probe against actual read-only Chrome: trusted TLSv1.3, untrusted certificate rejected, provider0/database0; no filesystem mount/config/environment changes.",
+    "Three live replacements bind CID/image/Created/StartedAt/running and full snapshot security/storage/network/source labels. The two completed publisher proofs are tied to same E receipt and unchanged generations; Chrome whole source/closure/native/TLS readback completes before any continuation mutation.",
+    "New exclusive J receipt and locks fence replay. Extracted original D loop contains only the still-stopped document replacement, followed by original core/worker/profile/host resume tail. No previous live replacement stop/remove/create/start, hostpointer alignment or nativeimage redispatch.",
+    "New once-memory wrapper binds J completion receipt with explicit actualSHA and final generations; unchanged9bd2/d797 scripts and no-replay/cleanup fences retained."
+  ],
+  "limitations": [
+    "Reviewer issued no provider/model requests, production signals or service lifecycle changes. Local synthetic loopback TLS verification only.",
+    "Installation outcome remains pending actual final source/data/profile/host readback and once-only memory canary/21table cleanup.",
+    "Unknown continuation outcomes require inspection; no broad recovery, complete E4.16 or family acceptance claim."
+  ]
+}

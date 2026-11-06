@@ -1,0 +1,34 @@
+{
+  "contract": "EvaIndependentAuxiliaryGracefulFinishReview/v1",
+  "reviewer": "/root/independent_review",
+  "createdAt": "2026-11-06T23:07:26.237548+00:00",
+  "decision": "GO_SCOPED_FINISH",
+  "installerSha256": "e88c80fd44dd3bd19207ac054abe26b692ff24b253eaab8d4e44753e114dc3f4",
+  "planSha256": "f45cdefbf67594af396d2aba846db87328b65743620ddf7dff9124295bbe7fdc",
+  "freezeSha256": "307193584f02741ffe1a58e4666f6991c0c38f286358c2d0b03f227b5ab6ffc4",
+  "runtimePlanSha256": "64b95f94f71b1c081a427320b832b62d38525af3a0a764fdddcc00e7c7af2474",
+  "preflightSha256": "d55e32772bc050d58011c93e4c3f7e1a0c78afc20d88efd1b72d855f7696fd78",
+  "memoryWrapperSha256": "d0d0efb9433c62a2531614a6a65204779498adf640c1548ff1853a62e78147d8",
+  "sourceReviewSha256": "60eb2887b45eb4d4f0845a5938a48bce439d324769f901efd8d55f7c4c4570ec",
+  "independentTests": {
+    "cases": 6,
+    "passed": 6,
+    "logSha256": "31eab741e6eeafccc8365954e8395b0405c1cd0458a2cb6a322621c3d505ca0d"
+  },
+  "verified": [
+    "Every original A/C installer, plan and error/SDK receipt, runtime helper, source and referenced proof matches its frozen hash. No original receipt is redirected or overwritten.",
+    "New exclusive finish receipt and original A/C locks fence repeat dispatch. Unknown Stop API acknowledgement propagates, preserves intent, and cannot reenter --finish. Only three exact running legacy generations may receive one explicit public stop SIGINT with infinite timeout; exit137, changed image/generation/policy/Init and unknown role are refused.",
+    "Exact actual-unless-stopped proof binds manual-stop restart suppression; no forced kill or original SIGTERM repetition.",
+    "Replacement helper is unchanged: no volume deletion/force; create unknown acknowledgement is inspected by source labels; full configuration, mounts, network generation and source bindings validated before start and again after start. Fresh stopped-consumer guards precede remove/start.",
+    "Publisher snapshot payloads change only approved image IDs. Chrome full mount dictionaries change only /proxy.py Source to root-owned0444 exact reviewed42 source; no other mount attributes, grants or configuration change. Old76 bind source is preserved until old container retired. Document payload is unchanged.",
+    "Host config changes only installed-snapshot pointer; same interpreter and four roots. Existing host remains stopped during all replacements. Actual core/worker containers are resumed after final image/source/native/schema/profile checks.",
+    "Phase-aware Chrome hash is applied only after the replacement was read back. Original publisher source proofs are overridden by exact final-role proof files without copying a dirty product tree.",
+    "Post-install wrapper binds explicit successful finish-receipt SHA and actual final core/native generations, uses unchanged reviewed9bd2/d797 synthetic-only canary/cleanup, and fences unknown provider outcomes with a new once-only durable receipt."
+  ],
+  "limitations": [
+    "Reviewer did not signal, replace or start production services and issued no model calls.",
+    "This approval authorizes only the exact frozen finish procedure; any unknown result requires inspection and a separate reviewed continuation.",
+    "Installed completion remains pending actual five-role/source/data/profile/host readback and once-only memory canary plus all21table cleanup.",
+    "No general automatic-update, complete E4.16 or family acceptance claim."
+  ]
+}

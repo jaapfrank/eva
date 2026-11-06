@@ -1,0 +1,160 @@
+--- codex_llm.before.py
++++ codex_llm.py
+@@ -16,8 +16,10 @@
+ """
+ 
+ import asyncio
++import base64
+ import codecs
+ import json
++import os
+ import logging
+ import re
+ import time
+@@ -345,6 +347,13 @@
+             auth_file=default_codex_auth_file(self._codex_home),
+         )
+ 
++        lease_mode = os.environ.get("EVA_HINDSIGHT_CODEX_ACCESS_ONLY", "0")
++        if lease_mode not in {"0", "1"}:
++            raise ValueError("Invalid external Codex access-only mode")
++        self._external_access_only = lease_mode == "1" or refresh_token is None
++        if self._external_access_only:
++            self._reload_external_access_lease()
++
+         # Use ChatGPT backend API endpoint. Codex auth is tied to
+         # chatgpt.com/backend-api, not the OpenAI-compatible base URL used by
+         # other providers. Deployments often set a global LLM_BASE_URL for an
+@@ -389,6 +398,92 @@
+     @property
+     def account_id(self) -> str:
+         return self._auth_manager.account_id
++
++    def _reload_external_access_lease(self) -> None:
++        """Read one owned access-only snapshot; never retain stale authority."""
++        import fcntl
++        import math
++        import stat
++
++        directory = lock = auth = None
++        try:
++            path = self._auth_file
++            if not path.is_absolute() or ".." in path.parts or path.name != "auth.json":
++                raise ValueError("Unexpected access lease path")
++            parent = path.parent.lstat()
++            uid, gid = os.geteuid(), os.getegid()
++            if (not stat.S_ISDIR(parent.st_mode) or stat.S_IMODE(parent.st_mode) != 0o700
++                    or parent.st_uid != uid or parent.st_gid != gid):
++                raise ValueError("Unsafe access lease directory")
++            flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW
++            directory = os.open(path.parent, flags | os.O_DIRECTORY)
++            identity = lambda value: (value.st_dev, value.st_ino, value.st_mode,
++                                      value.st_uid, value.st_gid, value.st_nlink,
++                                      value.st_size, value.st_mtime_ns, value.st_ctime_ns)
++            if identity(os.fstat(directory)) != identity(parent):
++                raise ValueError("Access lease directory changed")
++            lock_name = path.with_suffix(".lock").name
++            lock = os.open(lock_name, flags, dir_fd=directory)
++            lock_before = os.fstat(lock)
++            if (not stat.S_ISREG(lock_before.st_mode) or lock_before.st_nlink != 1
++                    or lock_before.st_uid != uid or lock_before.st_gid != gid
++                    or stat.S_IMODE(lock_before.st_mode) != 0o600 or lock_before.st_size != 0):
++                raise ValueError("Unsafe access lease lock")
++            fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
++            auth = os.open(path.name, flags, dir_fd=directory)
++            before = os.fstat(auth)
++            if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
++                    or before.st_uid != uid or before.st_gid != gid
++                    or stat.S_IMODE(before.st_mode) != 0o600 or not 0 < before.st_size <= 65536):
++                raise ValueError("Unsafe access lease file")
++            pieces = []
++            size = 0
++            while size <= 65536:
++                piece = os.read(auth, min(4096, 65537 - size))
++                if not piece:
++                    break
++                pieces.append(piece)
++                size += len(piece)
++            if size > 65536 or size != before.st_size:
++                raise ValueError("Access lease size changed")
++            if (identity(os.fstat(auth)) != identity(before)
++                    or identity(os.stat(path.name, dir_fd=directory, follow_symlinks=False)) != identity(before)
++                    or identity(os.fstat(lock)) != identity(lock_before)
++                    or identity(os.stat(lock_name, dir_fd=directory, follow_symlinks=False)) != identity(lock_before)
++                    or identity(path.parent.lstat()) != identity(parent)):
++                raise ValueError("Access lease snapshot changed")
++            value = json.loads(b"".join(pieces))
++            tokens = value.get("tokens") if isinstance(value, dict) else None
++            if (not isinstance(tokens, dict) or set(value) != {"auth_mode", "tokens"}
++                    or value["auth_mode"] != "chatgpt"
++                    or set(tokens) != {"access_token", "account_id"}
++                    or any(not isinstance(tokens[k], str) or not tokens[k] for k in tokens)):
++                raise ValueError("Access lease is unavailable or contains extra authority")
++            token = tokens["access_token"]
++            parts = token.split(".")
++            if len(parts) == 3:
++                payload = base64.b64decode(parts[1] + "=" * (-len(parts[1]) % 4),
++                                           altchars=b"-_", validate=True)
++                claims = json.loads(payload)
++                if not isinstance(claims, dict):
++                    raise ValueError("Invalid declared JWT payload")
++                if "exp" in claims:
++                    expiry = claims["exp"]
++                    if (type(expiry) not in (int, float) or not math.isfinite(float(expiry))
++                            or expiry <= time.time()):
++                        raise ValueError("Access lease expired")
++            self._auth_manager.access_token = token
++            self._auth_manager.account_id = tokens["account_id"]
++            self._auth_manager.refresh_token = None
++        except (OSError, ValueError, UnicodeError, OverflowError, RecursionError):
++            self._auth_manager.access_token = ""
++            self._auth_manager.account_id = ""
++            self._auth_manager.refresh_token = None
++            raise RuntimeError("External access-only Codex lease is unavailable") from None
++        finally:
++            for descriptor in (auth, lock, directory):
++                if descriptor is not None:
++                    os.close(descriptor)
+ 
+     def _build_request_headers(self) -> dict[str, str]:
+         return {
+@@ -507,6 +602,8 @@
+                 error code or any 401 on the refresh endpoint.
+             RuntimeError: for other refresh failures (network, 5xx, etc.).
+         """
++        if self._external_access_only:
++            raise RuntimeError("External access-only Codex lease cannot refresh")
+         await self._auth_manager.refresh_tokens(reason, force=force)
+ 
+     async def _ensure_fresh_token(self) -> None:
+@@ -515,6 +612,9 @@
+         Called at the top of every API-bound method. Cheap when the token is
+         fresh (just decodes the JWT exp claim and returns).
+         """
++        if self._external_access_only:
++            self._reload_external_access_lease()
++            return
+         if self._auth_manager._token_is_stale():
+             try:
+                 await self._refresh_oauth_tokens(reason="proactive (token near expiry)")
+@@ -769,6 +869,8 @@
+                 # the JWT exp claim is unparseable and we never knew it was
+                 # stale. Reactive refresh is the safety net.
+                 if status_code in (401, 403):
++                    if self._external_access_only:
++                        raise RuntimeError("External access-only Codex request was rejected") from None
+                     if not attempted_refresh_after_auth_error:
+                         attempted_refresh_after_auth_error = True
+                         try:
+@@ -866,6 +968,11 @@
+         deadline = asyncio.timeout(self._request_timeout)
+         try:
+             async with deadline:
++                if self._external_access_only:
++                    self._reload_external_access_lease()
++                    headers = dict(headers)
++                    headers["Authorization"] = f"Bearer {self.access_token}"
++                    headers["ChatGPT-Account-ID"] = self.account_id
+                 async with self._session.get().post(url, json=payload, headers=headers) as response:
+                     await raise_for_status(response)
+                     yield response

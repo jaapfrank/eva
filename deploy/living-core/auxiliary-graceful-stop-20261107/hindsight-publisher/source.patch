@@ -1,0 +1,62 @@
+--- model_credentials.before.py
++++ model_credentials.py
+@@ -11,6 +11,7 @@
+ import os
+ from pathlib import Path
+ import secrets
++import signal
+ import stat
+ import sys
+ import time
+@@ -385,20 +386,38 @@
+             print(str(error), file=sys.stderr)
+             return 2
+         return 0
+-    while True:
+-        try:
+-            if arguments.format == "codex-consumer":
+-                publish_codex_consumer_auth(arguments.source, arguments.target)
+-            else:
+-                publish_access_lease(arguments.source, arguments.target)
+-        except ModelCredentialLeaseError as error:
+-            publish_unavailable_lease(arguments.target, lease_format=arguments.format)
++    stop_requested = False
++
++    def request_stop(_signum: int, _frame: object) -> None:
++        nonlocal stop_requested
++        stop_requested = True
++
++    previous_handlers = {}
++    if not arguments.once:
++        for signum in (signal.SIGTERM, signal.SIGINT):
++            previous_handlers[signum] = signal.getsignal(signum)
++            signal.signal(signum, request_stop)
++    try:
++        while not stop_requested:
++            try:
++                if arguments.format == "codex-consumer":
++                    publish_codex_consumer_auth(arguments.source, arguments.target)
++                else:
++                    publish_access_lease(arguments.source, arguments.target)
++            except ModelCredentialLeaseError as error:
++                publish_unavailable_lease(arguments.target, lease_format=arguments.format)
++                if arguments.once:
++                    print(str(error), file=sys.stderr)
++                    return 2
+             if arguments.once:
+-                print(str(error), file=sys.stderr)
+-                return 2
+-        if arguments.once:
+-            return 0
+-        time.sleep(arguments.interval_seconds)
++                return 0
++            if not stop_requested:
++                time.sleep(arguments.interval_seconds)
++        return 0
++    finally:
++        for signum, handler in previous_handlers.items():
++            signal.signal(signum, handler)
++
+ 
+ 
+ if __name__ == "__main__":

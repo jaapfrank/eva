@@ -1,0 +1,9 @@
+{
+  "contract": "EvaAuxiliaryGracefulPublisherSourceOverlay/v1",
+  "baseImage": "sha256:dcafff965787617ff91bad30ca3959caa89433bff836f7d0ec1dabc539c4d44d",
+  "sourcePath": "/opt/eva/src/eva/operations/model_credentials.py",
+  "beforeSha256": "d1df67cf7cf55ce7edbdc373024e1a0442cfe1db4f882b7027b45ff3a6d01450",
+  "afterSha256": "64a4e2a47889eab1eefae7c48dbbd5e136289982855356b4e4851b6becac13ca",
+  "change": "CLI daemon SIGTERM/SIGINT stop flag; finish current atomic publish/fsync; once/install_owner unchanged",
+  "imageConfigurationUnchanged": true
+}

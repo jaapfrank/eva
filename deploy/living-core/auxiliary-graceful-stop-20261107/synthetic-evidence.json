@@ -1,0 +1,74 @@
+{
+  "contract": "EvaAuxiliaryGracefulShutdownSyntheticEvidence/v1",
+  "status": "synthetic_pid1_and_source_reproduction_verified",
+  "newPublisherCases": {
+    "count": 2,
+    "pid1": true,
+    "init": null,
+    "signal": "SIGTERM",
+    "exitCode": 0,
+    "inflightAtomicPublishCompletedBeforeExit": true,
+    "authLockBytesAndInodePreserved": true,
+    "temporaryFilesAfterExit": 0,
+    "forcedKill": false
+  },
+  "newProxyCases": {
+    "count": 2,
+    "uid": 1000,
+    "pid1": true,
+    "init": null,
+    "actualReadonlyCodeFileBind": true,
+    "idleAndInflightSignal": "SIGTERM",
+    "exitCode": 0,
+    "acceptanceStoppedWhileInflightResponseDrained": true,
+    "handlersRoutesAndAuthorizationUnchanged": true
+  },
+  "legacyCases": {
+    "count": 3,
+    "originalImages": true,
+    "actualEntrypointCommandUid": true,
+    "pid1": true,
+    "init": null,
+    "restartPolicy": "unless-stopped",
+    "activeBeforeSignalSecondsMinimum": 12,
+    "publicApi": "POST /v1.52/containers/{id}/stop?signal=SIGINT&t=-1",
+    "dispatchPerGeneration": 1,
+    "exitCode": 130,
+    "inactiveStableSecondsMinimum": 11,
+    "restartCount": 0,
+    "startedAtPreserved": true,
+    "targetSourceLockBytesInodesModesOwnersPreserved": true,
+    "forcedKill": false
+  },
+  "sourceReproduction": {
+    "passed": true,
+    "sourceReproductions": {
+      "model-publisher": {
+        "beforeSha256": "aede53f5616f0164ad266f03f00d5c1e60ff80c46e8e5cc7af1f3aceb626e28a",
+        "afterSha256": "d830aae189e92b1e4ee2fc8eaf4b252e5fe8c24d9ef5805f4c9656d293d072ec",
+        "byteExactReviewedSource": true
+      },
+      "hindsight-publisher": {
+        "beforeSha256": "d1df67cf7cf55ce7edbdc373024e1a0442cfe1db4f882b7027b45ff3a6d01450",
+        "afterSha256": "64a4e2a47889eab1eefae7c48dbbd5e136289982855356b4e4851b6becac13ca",
+        "byteExactReviewedSource": true
+      },
+      "proxy": {
+        "beforeSha256": "76d8658d841ec9d2ca8e6a035638919fb6d776c7c1fe6e7efc4635e4a8caaaf8",
+        "afterSha256": "42c873ec421ec2a666df4d999420e2d34f028f37fdb7109f4572ca312d6782d7",
+        "byteExactReviewedSource": true
+      }
+    },
+    "runtimeActions": 0,
+    "productionActions": 0,
+    "wholeImageRebuildClaim": false
+  },
+  "measuredDevelopmentModelRequests": 0,
+  "productionSignals": 0,
+  "proofSha256": {
+    "atomicFourCases": "a99599f157774addee364733d38c580c59b4067b172352b08a1f848ce87bba0a",
+    "proxyTwoCases": "93e22dbb0135be449294f689fd6bd3144015f0f7085b4348888edc1e35d54f6f",
+    "legacyPublicStopApiPolicy": "adbdcc3bb9e58f93ba8782fd246d64c61235c0af231e385e8b2d28c412aa42fa"
+  },
+  "guaranteeScope": "The synthetic proofs establish graceful shutdown and pre-dispatch transition guards. They do not claim cancellation of an already dispatched external effect or production re-signalling."
+}

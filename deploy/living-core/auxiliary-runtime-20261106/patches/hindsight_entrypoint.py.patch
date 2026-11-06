@@ -1,0 +1,10 @@
+--- a/hindsight_entrypoint.py
++++ b/hindsight_entrypoint.py
+@@ -89,6 +89,7 @@
+     os.environ.setdefault("HINDSIGHT_API_EMBEDDINGS_LOCAL_MODEL", "BAAI/bge-small-en-v1.5")
+     os.environ.setdefault("HINDSIGHT_API_RERANKER_LOCAL_MODEL", "cross-encoder/ms-marco-MiniLM-L-6-v2")
+     os.environ["EVA_HINDSIGHT_PARALLEL_RERANK_BATCHES"] = "0"
++    os.environ["EVA_HINDSIGHT_CODEX_ACCESS_ONLY"] = "1"
+ 
+ 
+ def main() -> None:

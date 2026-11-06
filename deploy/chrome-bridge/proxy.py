@@ -3,6 +3,7 @@ import http.client
 import json
 import ipaddress
 import select
+import signal
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import socket
@@ -161,4 +162,22 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     TOKEN = Path('/run/secrets/chrome-token').read_text().strip()
-    ThreadingHTTPServer(('0.0.0.0', 45164), Handler).serve_forever()
+    server = ThreadingHTTPServer(('0.0.0.0', 45164), Handler)
+    server.daemon_threads = False
+    server.block_on_close = True
+    stopping = False
+
+    def request_stop(_signum, _frame):
+        global stopping
+        if not stopping:
+            stopping = True
+            # shutdown() must run outside the serve_forever thread.
+            threading.Thread(target=server.shutdown, daemon=True).start()
+
+    signal.signal(signal.SIGTERM, request_stop)
+    signal.signal(signal.SIGINT, request_stop)
+    try:
+        server.serve_forever()
+    finally:
+        # ThreadingMixIn joins the already admitted non-daemon handlers.
+        server.server_close()

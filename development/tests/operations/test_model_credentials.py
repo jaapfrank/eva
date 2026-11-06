@@ -275,3 +275,157 @@ def test_publisher_requires_exact_preprovisioned_directory_contract(
     target.parent.chmod(0o2750)
     assert publish_access_lease(source, target) is True
     assert stat.S_IMODE(target.stat().st_mode) == 0o640
+
+
+def _synthetic_jwt(expiry: int) -> str:
+    import base64
+    payload = base64.urlsafe_b64encode(json.dumps({"exp": expiry}).encode()).decode().rstrip("=")
+    return "synthetic-header." + payload + ".synthetic-signature"
+
+
+@pytest.mark.parametrize("lease_format,directory_mode,file_mode", [
+    ("eva-lease", 0o2750, 0o640), ("codex-consumer", 0o700, 0o600),
+])
+@pytest.mark.parametrize("failure", ["missing", "invalid", "expired_jwt", "source_mode", "source_symlink", "deep_json", "deep_jwt"])
+def test_publisher_failure_revokes_only_selected_consumer_without_secret_leak(
+    private_tmp_path, monkeypatch, capsys, lease_format, directory_mode, file_mode, failure,
+):
+    source = private_tmp_path / "owner.json"
+    _source(source, "synthetic-stale-secret")
+    target = private_tmp_path / "selected" / "auth.json"
+    _lease_directory(target.parent, directory_mode)
+    untouched = private_tmp_path / "other-consumer.json"
+    untouched.write_bytes(b"other-consumer-must-not-change")
+    publisher = publish_access_lease if lease_format == "eva-lease" else publish_codex_consumer_auth
+    publisher(source, target)
+    previous_inode = target.stat().st_ino
+    lock = target.with_suffix(".lock")
+    lock_inode = lock.stat().st_ino if lock.exists() else None
+    if failure == "missing":
+        source.unlink()
+    elif failure == "invalid":
+        source.write_text('{"tokens":{"access_token":"synthetic-secret-never-log"}}')
+    elif failure == "expired_jwt":
+        _source(source, _synthetic_jwt(1000))
+        monkeypatch.setattr(credentials.time, "time", lambda: 2000)
+    elif failure == "deep_json":
+        source.write_text("[" * 1100 + "]" * 1100)
+    elif failure == "deep_jwt":
+        import base64
+        payload = base64.urlsafe_b64encode(("[" * 1100 + "]" * 1100).encode()).decode().rstrip("=")
+        _source(source, "synthetic." + payload + ".synthetic")
+    elif failure == "source_mode":
+        source.chmod(0o644)
+    else:
+        original = source.with_suffix(".original")
+        source.rename(original)
+        source.symlink_to(original)
+    monkeypatch.setattr("sys.argv", ["model_credentials", "--source", str(source),
+        "--target", str(target), "--format", lease_format, "--once"])
+    assert credentials.main() == 2
+    assert json.loads(target.read_bytes()) == {"contract":"EvaModelAccessLeaseUnavailable/v1", "state":"source_unavailable"}
+    assert target.stat().st_ino != previous_inode
+    assert stat.S_IMODE(target.stat().st_mode) == file_mode
+    assert target.stat().st_uid == os.geteuid() and target.stat().st_gid == os.getegid()
+    assert untouched.read_bytes() == b"other-consumer-must-not-change"
+    if lock_inode is not None:
+        assert lock.stat().st_ino == lock_inode and lock.read_bytes() == b""
+        with pytest.raises(ModelCredentialLeaseError):
+            check_codex_consumer_auth(target)
+    output = capsys.readouterr()
+    assert "synthetic-stale-secret" not in output.out + output.err
+    assert "synthetic-secret-never-log" not in output.out + output.err
+    assert not list(target.parent.glob(".model-lease-*.tmp"))
+
+
+@pytest.mark.parametrize("invalid_lock", ["symlink", "hardlink", "nonempty", "wrong_mode"])
+def test_codex_lock_tamper_revokes_auth_without_repairing_lock_or_other_consumer(
+    private_tmp_path, monkeypatch, invalid_lock,
+):
+    source = private_tmp_path / "owner.json"
+    _source(source)
+    target = private_tmp_path / "codex" / "auth.json"
+    _lease_directory(target.parent, 0o700)
+    publish_codex_consumer_auth(source, target)
+    lock = target.with_suffix(".lock")
+    lock.unlink()
+    other = private_tmp_path / "other"
+    other.write_bytes(b"")
+    other.chmod(0o600)
+    if invalid_lock == "symlink":
+        lock.symlink_to(other)
+    elif invalid_lock == "hardlink":
+        os.link(other, lock)
+    else:
+        lock.write_bytes(b"unchanged lock content" if invalid_lock == "nonempty" else b"")
+        lock.chmod(0o644 if invalid_lock == "wrong_mode" else 0o600)
+    before = lock.lstat()
+    monkeypatch.setattr("sys.argv", ["model_credentials", "--source", str(source),
+        "--target", str(target), "--format", "codex-consumer", "--once"])
+    assert credentials.main() == 2
+    assert json.loads(target.read_bytes())["contract"] == "EvaModelAccessLeaseUnavailable/v1"
+    assert stat.S_IMODE(target.stat().st_mode) == 0o600
+    assert lock.lstat() == before and other.read_bytes() == b""
+    with pytest.raises(ModelCredentialLeaseError):
+        check_codex_consumer_auth(target)
+
+
+def test_declared_jwt_expiry_is_rejection_only_and_opaque_compatibility_is_unchanged(
+    private_tmp_path, monkeypatch,
+):
+    source = private_tmp_path / "owner.json"
+    monkeypatch.setattr(credentials.time, "time", lambda: 2000)
+    _source(source, _synthetic_jwt(3000))
+    assert json.loads(build_access_lease(source))["access_token"] == _synthetic_jwt(3000)
+    _source(source, _synthetic_jwt(2000))
+    with pytest.raises(ModelCredentialLeaseError, match="expired"):
+        build_access_lease(source)
+    _source(source, "opaque-token-has-no-local-expiry")
+    assert json.loads(build_access_lease(source))["access_token"] == "opaque-token-has-no-local-expiry"
+
+
+def test_cli_daemon_sigterm_finishes_current_publish_and_restores_handlers(monkeypatch, private_tmp_path):
+    from types import SimpleNamespace
+    arguments = SimpleNamespace(interval_seconds=0.25, install_owner=False, once=False,
+                                format="codex-consumer", source=private_tmp_path / "source", target=private_tmp_path / "target")
+    monkeypatch.setattr(credentials, "_parser", lambda: SimpleNamespace(parse_args=lambda: arguments))
+    previous = {credentials.signal.SIGTERM: object(), credentials.signal.SIGINT: object()}
+    active = {}
+    calls = []
+    monkeypatch.setattr(credentials.signal, "getsignal", lambda signum: previous[signum])
+    def install(signum, handler):
+        active[signum] = handler
+        calls.append((signum, handler))
+    monkeypatch.setattr(credentials.signal, "signal", install)
+    completed = []
+    def publish(source, target):
+        active[credentials.signal.SIGTERM](credentials.signal.SIGTERM, None)
+        completed.append((source, target))
+        return True
+    monkeypatch.setattr(credentials, "publish_codex_consumer_auth", publish)
+    monkeypatch.setattr(credentials.time, "sleep", lambda _: pytest.fail("no next wait after stop"))
+    assert credentials.main() == 0
+    assert completed == [(arguments.source, arguments.target)]
+    assert calls[-2:] == list(previous.items())
+
+
+def test_cli_once_does_not_replace_process_signal_handlers(monkeypatch, private_tmp_path):
+    from types import SimpleNamespace
+    arguments = SimpleNamespace(interval_seconds=0.25, install_owner=False, once=True,
+                                format="eva-lease", source=private_tmp_path / "source", target=private_tmp_path / "target")
+    monkeypatch.setattr(credentials, "_parser", lambda: SimpleNamespace(parse_args=lambda: arguments))
+    monkeypatch.setattr(credentials.signal, "signal", lambda *_: pytest.fail("once must retain signal behavior"))
+    monkeypatch.setattr(credentials, "publish_access_lease", lambda *_: True)
+    assert credentials.main() == 0
+
+
+def test_cli_owner_install_does_not_replace_process_signal_handlers(monkeypatch, private_tmp_path):
+    from types import SimpleNamespace
+    arguments = SimpleNamespace(interval_seconds=0.25, install_owner=True,
+                                source=private_tmp_path / "source", target=private_tmp_path / "target")
+    monkeypatch.setattr(credentials, "_parser", lambda: SimpleNamespace(parse_args=lambda: arguments))
+    monkeypatch.setattr(credentials.signal, "signal", lambda *_: pytest.fail("owner install must retain signal behavior"))
+    calls = []
+    monkeypatch.setattr(credentials, "install_auth_owner", lambda *args: calls.append(args))
+    assert credentials.main() == 0
+    assert calls == [(arguments.source, arguments.target)]

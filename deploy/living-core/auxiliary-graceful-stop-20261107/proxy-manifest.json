@@ -1,0 +1,10 @@
+{
+  "contract": "EvaChromeProxyGracefulMainPatch/v1",
+  "baseImage": "sha256:0f489223c0f42bbac07f120ffe7c82107f260c8090a6dde06b80d35813164a9c",
+  "imageChanged": false,
+  "beforeSha256": "76d8658d841ec9d2ca8e6a035638919fb6d776c7c1fe6e7efc4635e4a8caaaf8",
+  "afterSha256": "42c873ec421ec2a666df4d999420e2d34f028f37fdb7109f4572ca312d6782d7",
+  "sourceDestination": "/proxy.py",
+  "deployment": "New root-owned readonly regular code-file bind replaces only the previous code Source; preserve original bytes as rollback source. Existing handlers/routes/config/data mounts unchanged.",
+  "important": "The image copy is hidden by the actual code-file bind; loading the new file requires the explicit reviewed bind-source change."
+}

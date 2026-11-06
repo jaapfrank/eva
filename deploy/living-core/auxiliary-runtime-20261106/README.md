@@ -1,0 +1,32 @@
+# Vier aanvullende runtimes en intrekbare modeltoegang
+
+Deze bronset reproduceert de geteste kandidaten van 6 november 2026. Dit is geen installatieopdracht en bevat geen referenties naar privéconfiguratie, tokens, gesprekken of databases.
+
+De bestaande Chrome-proxy, documentdoelworker en beide access-leasepublishers krijgen CPython 3.12.16 met dezelfde pakketfamilies en een volledig vastgezette compatibele closure. De twee closures bevatten 44 respectievelijk 38 externe distributies; de eigen pakketmetadata blijft apart. De daadwerkelijk gebruikte routes laden geen model-SDK. Aanwezige SDK-pakketten blijven behouden en bijgewerkt. Alleen de twee leasepublishers krijgen de broncorrectie voor foutpublicatie en expliciete verlopen JWT-claims. Dit controleert geen tokenhandtekening en geeft geen nieuwe bevoegdheid. Het historische vlakke `expires_at` blijft ongewijzigd genegeerd.
+
+De Hindsight-kandidaat behoudt native 1.2.0, CPython 3.11.18, 202 distributies, CPU-modellen, bronports en de geïnstalleerde native beveiligingspatches. Een checksumgebonden patch valideert de actuele externe access-only lease vóór elke fysieke verzending, ook bij interne HTTP-retry. Bij geforceerde access-only koude start is de begrensde, beveiligde snapshot de enige credentiallezing: de oudere loader en accountlogging worden geheel overgeslagen. Afwijzing behoudt het bestaande native ProviderUnavailableError-contract. Bij intrekking, een onveilig bestand/slot of expliciet verlopen token worden cache en verzending geweigerd. De entrypoint forceert daarvoor uitsluitend `EVA_HINDSIGHT_CODEX_ACCESS_ONLY=1` in de effectieve procesomgeving; Docker Config.Env blijft gelijk. De volledige OAuth-route zonder deze vlag behoudt haar bestaande contract. De garantie geldt vóór verzending, niet voor al lopende verzoeken. Geen refreshbevoegdheid wordt toegevoegd.
+
+## Reproduceren
+
+Vereisten: Linux, Docker, Python 3.12-compatibele amd64 images, `patch`, en voor de native overlay `gpgv`/`dpkg-deb`. De exacte bestaande Eva-basisimages moeten lokaal beschikbaar blijven; ze zijn zelf afgeleid van de eerder vastgelegde bron- en vendorrecepten. `build-inputs.json` bindt alle vijf baselines. Verander deze grenzen niet om een ontbrekende baseline te omzeilen.
+
+```sh
+python3 prepare.py --output /nieuwe/lege/reproductie
+python3 -m unittest discover -s . -p test_prepare.py
+```
+
+De eerste opdracht maakt vier offline bouwcontexten en de Hindsight-bronoverlay. Elke officiële wheel wordt op exacte lengte en SHA-256 gecontroleerd. Een bestaande uitvoermap wordt geweigerd. De interpreter wordt op alle 823 geselecteerde bestanden vergeleken met de gepinde officiële vendor. Bronpatches vereisen exact dezelfde voor- en nahash en nul patchfuzz. De bestaande pakketbezitting wordt uitsluitend via metadata gemeten; er worden geen applicatiesecrets ingelezen.
+
+Voeg `--build-images` toe om de kandidaten daadwerkelijk te bouwen. Vóór bouwen controleert de voorbereider de gepinde externe manifest én alle daarin opgenomen bronbytes; alleen de zeven exact geverifieerde bronsnapshots worden gekopieerd en uitgevoerd. De vier aanvullende images krijgen vervolgens de ondertekende Debian-13-patches via het bestaande recept `../runtime-security-20261106`. Voor historische indexbytes kan `--index-directory` worden opgegeven; `--deb-directory` en `--wheel-cache` zijn optionele geverifieerde caches. Bouwen verandert geen bestaande container, volume, configuratie of ontvangstbewijs. Verse bouwbewijsmetadata bindt de nieuw gemaakte images; historische OCI-image-ID's en oude bewijsmetadata worden niet als bitidentieke bouwuitkomst voorgesteld. Applicatie-, vendor- en afhankelijkheidsbytes en de vastgezette contracten zijn de reproduceerbare inhoud.
+
+De oorspronkelijke image-USER blijft exact behouden. De bestaande Compose-gebruikersoverschrijving van de werkelijke publishers/proxy staat los daarvan en wordt bij installatie apart behouden. De bijgewerkte eigen METADATA en RECORD zijn waarheidsgetrouw; historische release-locks blijven aanwezig. Een oudere tussenliggende dependency-buildmanifest kan de vóór de laatste bronoverlay geldende publisherhash bevatten. De laatste publisher-manifest, exacte bronbinding en volledige bestandvergelijking geven de huidige bron aan; oude bewijsbytes blijven bewaard.
+
+## Gerichte controles
+
+`verify_records.py` controleert alle ingevulde RECORD-hashes en native imports. `native_runtime_probe.py` controleert daadwerkelijke libc/SSL-pakketten, geladen bibliotheken, tijdzonegegevens en zowel vertrouwde als afgewezen lokale TLS-verbindingen. Dit gebruikt uitsluitend een synthetisch lokaal certificaat. `test_proxy_contract.py` gebruikt `/actual-proxy.py` en een tijdelijke Unix-socket voor de bestaande proxy: autorisatie, overdracht, afwijzingsprivacy, groottebudgetten, gezondheid en annulering. `test_lease_daemon.py REPRODUCTIEMAP` gebruikt alleen synthetische authbestanden en gesloten tijdelijke containers voor rotatie, foutpublicatie, slotbehoud en stoppen.
+
+`test_consumer_handoff.py` wordt binnen de Hindsight-kandidaat met `/publisher` naar de gemaakte `publisher-test-source` uitgevoerd. De echte publieke native `.call` gebruikt een mocktransport; de proeven maken geen externe modelverzoeken en delegeren geen refresh. De versiegebonden code en oorspronkelijke Hindsight-licentie blijven herkenbaar. Oorspronkelijke pakketlicenties blijven in de wheels/images; er is geen licentiewijziging.
+
+De kandidaatproeven bewezen 72 bestaande documentdoelgevallen op zowel baseline als kandidaat, 10 proxygevallen per image, 33 publishergevallen, twee daadwerkelijke UID/GID-daemonroutes, drie kernconsumer-overdrachten en 25 native consumergevallen (21 plus vier alleen voor root bij UID1000), aangevuld met 13 koude-startgevallen voor zowel root als UID1000. Onafhankelijke kandidaat- en handoffreviews staan onder `development/reviews`. Dit is kandidaatbewijs; installatie, actuele claims, databasebehoud en werkelijk gebruik vereisen een apart beoordeelde installatie en teruglezing. Ontwikkelverbruik voor deze proeven: nul externe modelverzoeken; kosten blijven onbekend.
+
+De oudere 8e588-kandidaat, bron-/reviewhashes en publieke gewijzigde bestanden blijven onder `history/pre-cold-start-*` herkenbaar als eerder bewijs. De koude-startvervolgmeting hoort uitsluitend bij de nieuwe native image; de vier AUX-kandidaten en hun bestaande bewijs zijn ongewijzigd.

@@ -1,0 +1,120 @@
+{
+  "contract": "EvaAuxiliaryPythonAndAccessOnlyInstalledEvidence/v1",
+  "status": "installed_used_and_independently_read_back",
+  "installedAt": "2026-11-06T23:35:20.041048+00:00",
+  "images": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:4db9d39bfc2651eb32feba4d3dd3a6b7d2b27d6be3a30c94cf25f3545a04a1b6",
+      "startedAt": "2026-11-06T23:34:56.830902589Z"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:c2bd46136181764b296f84bb63fdda1d75e672229336754df2d7667c64d8019c",
+      "startedAt": "2026-11-06T23:34:57.898326848Z"
+    },
+    "eva2-managed-b-slot3-hindsight-1": {
+      "image": "sha256:625111da5ebbc116258e8c8e14030109f0f1a40430801fc010576d067284c6e9",
+      "startedAt": "2026-11-06T22:15:38.239646446Z"
+    },
+    "eva2-shared-chrome": {
+      "image": "sha256:0f489223c0f42bbac07f120ffe7c82107f260c8090a6dde06b80d35813164a9c",
+      "startedAt": "2026-11-06T23:27:00.22791708Z"
+    },
+    "eva2-document-goal-worker-au006": {
+      "image": "sha256:e8e4948430bf10e2b041c42e96f371dd19640978d9e369fafa653a1f55215443",
+      "startedAt": "2026-11-06T23:34:11.454453331Z"
+    },
+    "eva2-managed-b-slot3-model-access-lease-1": {
+      "image": "sha256:7181557887eda752ae0413390bfd16e384206740d6f3de90fffd9facf181029d",
+      "startedAt": "2026-11-06T23:23:55.377288529Z"
+    },
+    "eva2-managed-b-slot3-hindsight-access-lease-1": {
+      "image": "sha256:b9b2903e11b507f12b5efc4952304d41d9df53ae41e497c9dfc4f645651701fb",
+      "startedAt": "2026-11-06T23:25:29.56757375Z"
+    }
+  },
+  "currentNativeImage": "sha256:625111da5ebbc116258e8c8e14030109f0f1a40430801fc010576d067284c6e9",
+  "auxiliaryPython": "3.12.16",
+  "nativePython": "3.11.18",
+  "nativeVersion": "1.2.0",
+  "hostInterpreter": {
+    "version": "3.12.3",
+    "ubuntuPackageRevision": "3.12.3-1ubuntu0.17",
+    "binarySha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "sourceAndConfigPreservation": {
+    "hostRoots": 4,
+    "protectedCriteriaBytePins": 62,
+    "historicalReceiptBytePins": 9,
+    "originalFailureEvidenceUnchanged": true,
+    "sourceGrantsRebound": false,
+    "newAuthorityAdded": false,
+    "nativeSchemaMigration": false,
+    "databaseRestore": false,
+    "nativeOperationRetentionDays": 0,
+    "nativeRowsAndCompactionVerifiedBeforeIntakeResume": true
+  },
+  "authFailureOutcome": {
+    "formatAwareUnavailablePublisherInstalled": true,
+    "currentLeaseCheckedBeforeEveryNativePhysicalSend": true,
+    "forcedAccessOnlyColdStartNoLegacyReadOrAccountLog": true,
+    "tokenRefreshAuthorityAdded": false,
+    "guaranteeScope": "pre-dispatch only; no claim about already-dispatched calls"
+  },
+  "nativeModelCanary": {
+    "selectedFacts": 2,
+    "explicitEmptySelectionFacts": 0,
+    "recallWithPersonFilter": true,
+    "forgetVerified": true,
+    "allWritersTerminalBeforeErase": true,
+    "allSyntheticOwnedBankTablesZero": 21,
+    "householdDataTouched": false
+  },
+  "measuredDevelopmentUsage": {
+    "kind": "development model requests through existing Codex subscription route",
+    "requestCount": 3,
+    "totals": {
+      "input_tokens": 11125,
+      "output_tokens": 333,
+      "cached_tokens": 9600,
+      "thoughts_tokens": null,
+      "total_tokens": 11458,
+      "duration_ms": 12319
+    },
+    "billingMeasurement": "unknown"
+  },
+  "cost": null,
+  "remainingCredits": null,
+  "evaRuntimeModelUsageDuringMaintenance": null,
+  "gracefulShutdown": {
+    "publisherSigtermFinishesAtomicPublish": true,
+    "proxyStopsAcceptingAndDrainsOwnedRequests": true,
+    "legacyStopPublicApi": "SIGINT; timeout=-1; no forced timeout",
+    "legacyStopProofSha256": "adbdcc3bb9e58f93ba8782fd246d64c61235c0af231e385e8b2d28c412aa42fa",
+    "modelPublisherSourceSha256": "d830aae189e92b1e4ee2fc8eaf4b252e5fe8c24d9ef5805f4c9656d293d072ec",
+    "hindsightPublisherSourceSha256": "64a4e2a47889eab1eefae7c48dbbd5e136289982855356b4e4851b6becac13ca",
+    "actualProxyCodeBindSha256": "42c873ec421ec2a666df4d999420e2d34f028f37fdb7109f4572ca312d6782d7",
+    "guaranteeScope": "pre-dispatch idle then exact-generation manual stop; atomic publish finishes; no claim of cancellation of already dispatched effects"
+  },
+  "actualInstalledReview": {
+    "path": "development/reviews/auxiliary-five-role-installed-independent-20261107.json",
+    "sha256": "c37ee8b0252ca6ba5a91e7273d94599a6ff21a251c8a2e4c4bbed68f83bad659"
+  },
+  "evidenceSha256": {
+    "originalActivationFailure": "342882d900737d28823d9200f72fb5ac2a5fe251d3423ef8927de97be2affeaf",
+    "originalSdkReceipt": "bdeff2a8e8a1b4b5aac57f5ea78a023d5052274ca90bd2f1ff9d9362fa8da61d",
+    "retainedProfileContinuation": "00e4d854f32e266b820c5acbb7ec4fa17683f927c7c11c42b586d8ae6e1ffeff",
+    "retainedGracefulFinish": "2b1f42228c81b99c7b435d16b44e61558dde3276fd1ae0442b6eff8d7d073027",
+    "retainedCreatedAdoption": "7211cca77c9e473ba76f615c0bc594c1c7e6b3ba2c348ba24b8a36de34bece3a",
+    "continuation": "0e27c3dffce3c959926672bd796654b2990bde901b5675724ca324693e7ab39c",
+    "canaryDispatch": "9173f32187db4341daec7b1eb01b225cbc729d1b3ebec9994499f9892048bdfa",
+    "memoryCanary": "4b4ab6261a8f3be04968b03eebd0c3640723de7582fe07a8debe3c696512ac7a",
+    "cleanup": "b66f852f2ddde03851bd444e25a25b1022e24b579f576694102dd42cbe86ae7e"
+  },
+  "retainedTransitionBoundaries": [
+    "Original native update completed once; source/readback harness bound to effective CLI",
+    "Legacy Python PID1 required explicit reviewed manual SIGINT stop; new publishers install graceful handlers",
+    "Already-created model replacement adopted without repeating stop/remove/create after strict OomKillDisable default comparison",
+    "Three live replacements retained; readonly Chrome TLS fixture moved to anonymous memory; only stopped document role remained"
+  ],
+  "projectOverallComplete": false
+}

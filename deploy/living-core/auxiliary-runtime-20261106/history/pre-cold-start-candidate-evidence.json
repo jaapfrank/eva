@@ -1,0 +1,47 @@
+{
+  "contract": "EvaAuxiliaryRuntimeCandidatePublicEvidence/v1",
+  "asOf": "2026-11-06",
+  "installed": false,
+  "candidateFreezeSha256": "dcc0b2978944614113fdcf18448f4d0d36e9f798d2941b9c27c844ad8923d255",
+  "candidateRoles": {
+    "eva2-shared-chrome": {
+      "baseline": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+      "candidate": "sha256:0f489223c0f42bbac07f120ffe7c82107f260c8090a6dde06b80d35813164a9c"
+    },
+    "eva2-document-goal-worker-au006": {
+      "baseline": "sha256:8e620f3df65d3b9631f87c10c2db620357046228a5b1219ef4d8c34d66a1d013",
+      "candidate": "sha256:e8e4948430bf10e2b041c42e96f371dd19640978d9e369fafa653a1f55215443"
+    },
+    "eva2-managed-b-slot3-model-access-lease-1": {
+      "baseline": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "candidate": "sha256:81d6901692824b0ae0aa9e65aca7e3c4aae3fd2c7b05ebb5216d46d255e2e13d"
+    },
+    "eva2-managed-b-slot3-hindsight-access-lease-1": {
+      "baseline": "sha256:a6851c80b8ec88a75c4b99ff9c7beec2824ff8b7c38ca4a21a74d91c67d741d1",
+      "candidate": "sha256:dcafff965787617ff91bad30ca3959caa89433bff836f7d0ec1dabc539c4d44d"
+    }
+  },
+  "hindsight": {
+    "baseline": "sha256:59ecb01c1ebe325d364d474286df3543667d0df8fc8ecb3f8bd7d1d1af486e08",
+    "candidate": "sha256:8e588615d56327c96262996273f1e56bfad66d23a148b5fc5bd4a32bc10f060e"
+  },
+  "tests": {
+    "documentBaseline": 72,
+    "documentCandidate": 72,
+    "proxyBaseline": 10,
+    "proxyCandidate": 10,
+    "publisher": 33,
+    "leaseDaemonActualUidGidRoutes": 2,
+    "coreConsumerTransitions": 3,
+    "nativeConsumerRoot": 25,
+    "nativeConsumerUid1000": 21,
+    "nativeRootOnlySkippedForUid1000": 4
+  },
+  "externalModelRequests": 0,
+  "cost": "unknown",
+  "reviews": [
+    "development/reviews/access-only-publisher-consumer-independent-20261106.json",
+    "development/reviews/auxiliary-four-role-candidates-independent-20261106.json"
+  ],
+  "sourceAuthority": "Final publisher manifest, exact role-source binding and actual source bytes supersede historical intermediate dependency-build source metadata; original evidence remains untouched."
+}

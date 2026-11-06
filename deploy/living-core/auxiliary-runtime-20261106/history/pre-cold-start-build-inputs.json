@@ -1,0 +1,77 @@
+{
+  "contract": "EvaAuxiliaryRuntimeReproductionInputs/v1",
+  "asOf": "2026-11-06",
+  "pythonVendor": "python@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df",
+  "pythonRuntimeFiles": 823,
+  "runtimeFileMappingSha256": {
+    "before": "88d900f4af2f3b63fb07f162e1ff34f5ad567bdc9fd40c23110658b48a056d37",
+    "after": "fa7728031787ded36346a941b530f270d0cdee5c1308763ede75264b8083bc5b"
+  },
+  "roles": {
+    "eva2-shared-chrome": {
+      "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+      "configUser": "65532:65532",
+      "family": "bridge-document",
+      "reviewedCandidate": "sha256:0f489223c0f42bbac07f120ffe7c82107f260c8090a6dde06b80d35813164a9c"
+    },
+    "eva2-document-goal-worker-au006": {
+      "image": "sha256:8e620f3df65d3b9631f87c10c2db620357046228a5b1219ef4d8c34d66a1d013",
+      "configUser": "65532:65532",
+      "family": "bridge-document",
+      "reviewedCandidate": "sha256:e8e4948430bf10e2b041c42e96f371dd19640978d9e369fafa653a1f55215443"
+    },
+    "eva2-managed-b-slot3-model-access-lease-1": {
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "configUser": "65532:65532",
+      "family": "lease",
+      "reviewedCandidate": "sha256:81d6901692824b0ae0aa9e65aca7e3c4aae3fd2c7b05ebb5216d46d255e2e13d",
+      "source": {
+        "beforeSha256": "7a43b1249aa976225393f644f57baf1ac035800bf51ce78e3646baaa85e90897",
+        "afterSha256": "aede53f5616f0164ad266f03f00d5c1e60ff80c46e8e5cc7af1f3aceb626e28a",
+        "allUnrelatedFunctionsAstUnchanged": true
+      }
+    },
+    "eva2-managed-b-slot3-hindsight-access-lease-1": {
+      "image": "sha256:a6851c80b8ec88a75c4b99ff9c7beec2824ff8b7c38ca4a21a74d91c67d741d1",
+      "configUser": "65532:65532",
+      "family": "lease",
+      "reviewedCandidate": "sha256:dcafff965787617ff91bad30ca3959caa89433bff836f7d0ec1dabc539c4d44d",
+      "source": {
+        "beforeSha256": "1df1b4f5de919b57e243d6308cb6c192094e95733b04b3444fad1f7369f6fe5b",
+        "afterSha256": "d1df67cf7cf55ce7edbdc373024e1a0442cfe1db4f882b7027b45ff3a6d01450",
+        "allUnrelatedFunctionsAstUnchanged": true
+      }
+    }
+  },
+  "hindsight": {
+    "contract": "EvaHindsightExternalAccessOnlyConsumer/v1",
+    "baseImage": "sha256:59ecb01c1ebe325d364d474286df3543667d0df8fc8ecb3f8bd7d1d1af486e08",
+    "nativeVersion": "1.2.0",
+    "nativeCommit": "34a138684a899b6ec34175f7a2b633860466d289",
+    "python": "3.11.18",
+    "dependencyClosureUnchanged202": true,
+    "dockerConfigurationUnchanged": true,
+    "effectiveProfileExport": {
+      "EVA_HINDSIGHT_CODEX_ACCESS_ONLY": "1"
+    },
+    "source": {
+      "codex_llm.py": {
+        "beforeSha256": "dee1d0fb6c71ac17ebcc78c3d3110ddbec2851f4249134a0165971a1cc065ec9",
+        "afterSha256": "2036418fb745261a9419f319ae5d18d7f767ace9f49c4a3a38f6ee638f21f6a0"
+      },
+      "hindsight_entrypoint.py": {
+        "beforeSha256": "b4fff95866951e111fe5dc3de9c9e1aa50e8c006a322584417864778d64b3d99",
+        "afterSha256": "1eb080d29331ef0f95a460ab7847e388ac58ef531ca849513bfe55d81eb01aca"
+      }
+    },
+    "recordBeforeSha256": "ffae70270f610c2188d9ae21dd3529fb44a43e281dec300c1cd1688167c49e0c",
+    "recordAfterSha256": "0500662ad6604d4bfad2efe6c2233867fb99d96e80e72a2dde353cc11ba27990",
+    "recordRowsChanged": 1,
+    "ownerSourceRefreshAuthorityAdded": false,
+    "guarantee": "Current owned lease snapshot is checked before physical dispatch; no claim about already-dispatched calls",
+    "fullOAuthWithoutAccessOnlyFlag": "original branch preserved"
+  },
+  "nativeRecipe": "../runtime-security-20261106",
+  "externalModelRequests": 0,
+  "nativeRecipeArtifactManifestSha256": "2b7bab26d91182b298388be0e3b6e5421dcae93e1f1769ae4cb8729fe009cc4b"
+}

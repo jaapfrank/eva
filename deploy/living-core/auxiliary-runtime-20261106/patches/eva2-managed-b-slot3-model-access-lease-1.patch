@@ -1,0 +1,106 @@
+--- model_credentials.before.py
++++ model_credentials.py
+@@ -5,6 +5,9 @@
+ import argparse
+ import hashlib
+ import json
++import math
++import binascii
++import base64
+ import os
+ from pathlib import Path
+ import secrets
+@@ -83,13 +86,37 @@
+     return descriptor
+ 
+ 
++def _require_unexpired_access_token(access_token: str) -> None:
++    """Reject a declared expired JWT; this does not authenticate its claims."""
++
++    parts = access_token.split(".")
++    if len(parts) != 3:
++        return  # Existing opaque access tokens have no locally known expiry.
++    try:
++        payload = base64.b64decode(
++            parts[1] + "=" * (-len(parts[1]) % 4), altchars=b"-_", validate=True
++        )
++        claims = json.loads(payload)
++        if not isinstance(claims, dict):
++            raise ValueError("JWT payload must be an object")
++        if "exp" not in claims:
++            return
++        expires = claims["exp"]
++        if type(expires) not in (int, float) or not math.isfinite(float(expires)):
++            raise ValueError("JWT expiry must be a finite number")
++    except (ValueError, UnicodeDecodeError, binascii.Error, OverflowError, RecursionError):
++        raise ModelCredentialLeaseError("model access token lifetime is invalid") from None
++    if expires <= time.time():
++        raise ModelCredentialLeaseError("model access token has expired")
++
++
+ def build_access_lease(source: Path) -> bytes:
+     """Strip refresh authority and return one canonical access-only lease."""
+ 
+     try:
+         raw = _read_authority_source(source)
+         value = json.loads(raw)
+-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
++    except (OSError, UnicodeDecodeError, json.JSONDecodeError, RecursionError) as error:
+         raise ModelCredentialLeaseError(
+             "model credential source is unavailable"
+         ) from error
+@@ -107,6 +134,7 @@
+         raise ModelCredentialLeaseError("model access token is missing")
+     if not isinstance(account_id, str) or not account_id:
+         raise ModelCredentialLeaseError("model account ID is missing")
++    _require_unexpired_access_token(access_token)
+     return _canonical(
+         {
+             "access_token": access_token,
+@@ -220,9 +248,21 @@
+     )
+ 
+ 
+-def publish_unavailable_lease(target: Path) -> bool:
+-    """Replace any stale token with a non-secret fail-closed marker."""
+-
++def publish_unavailable_lease(target: Path, *, lease_format: str = "eva-lease") -> bool:
++    """Revoke stale access in its existing consumer directory without touching its lock."""
++
++    if lease_format == "eva-lease":
++        reader_gid, directory_mode, file_mode = (
++            EVA_CORE_LEASE_READER_GID, EVA_CORE_LEASE_DIRECTORY_MODE, EVA_CORE_LEASE_FILE_MODE
++        )
++    elif lease_format == "codex-consumer":
++        reader_gid, directory_mode, file_mode = (
++            CODEX_LEASE_READER_GID, CODEX_LEASE_DIRECTORY_MODE, CODEX_LEASE_FILE_MODE
++        )
++    else:
++        raise ModelCredentialLeaseError("model lease format is unsupported")
++    # Revocation replaces only auth bytes. An unsafe lock is never followed,
++    # repaired or recreated; valid consumer-held flock inodes remain stable.
+     return _publish_bytes(
+         _canonical(
+             {
+@@ -231,9 +271,9 @@
+             }
+         ),
+         target,
+-        reader_gid=EVA_CORE_LEASE_READER_GID,
+-        directory_mode=EVA_CORE_LEASE_DIRECTORY_MODE,
+-        file_mode=EVA_CORE_LEASE_FILE_MODE,
++        reader_gid=reader_gid,
++        directory_mode=directory_mode,
++        file_mode=file_mode,
+     )
+ 
+ 
+@@ -287,7 +327,7 @@
+             else:
+                 publish_access_lease(arguments.source, arguments.target)
+         except ModelCredentialLeaseError as error:
+-            publish_unavailable_lease(arguments.target)
++            publish_unavailable_lease(arguments.target, lease_format=arguments.format)
+             if arguments.once:
+                 print(str(error), file=sys.stderr)
+                 return 2

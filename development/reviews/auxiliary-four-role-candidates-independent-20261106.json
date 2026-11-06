@@ -1,0 +1,68 @@
+{
+  "schema": "EvaAuxiliaryFourRoleCandidatesIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T20:55:30.337769+00:00",
+  "decision": "GO_CANDIDATES_ONLY",
+  "images": {
+    "eva2-shared-chrome": {
+      "baseline": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+      "candidate": "sha256:0f489223c0f42bbac07f120ffe7c82107f260c8090a6dde06b80d35813164a9c"
+    },
+    "eva2-document-goal-worker-au006": {
+      "baseline": "sha256:8e620f3df65d3b9631f87c10c2db620357046228a5b1219ef4d8c34d66a1d013",
+      "candidate": "sha256:e8e4948430bf10e2b041c42e96f371dd19640978d9e369fafa653a1f55215443"
+    },
+    "eva2-managed-b-slot3-model-access-lease-1": {
+      "baseline": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "candidate": "sha256:81d6901692824b0ae0aa9e65aca7e3c4aae3fd2c7b05ebb5216d46d255e2e13d"
+    },
+    "eva2-managed-b-slot3-hindsight-access-lease-1": {
+      "baseline": "sha256:a6851c80b8ec88a75c4b99ff9c7beec2824ff8b7c38ca4a21a74d91c67d741d1",
+      "candidate": "sha256:dcafff965787617ff91bad30ca3959caa89433bff836f7d0ec1dabc539c4d44d"
+    }
+  },
+  "hindsightConsumerCandidate": {
+    "baseline": "sha256:59ecb01c1ebe325d364d474286df3543667d0df8fc8ecb3f8bd7d1d1af486e08",
+    "candidate": "sha256:8e588615d56327c96262996273f1e56bfad66d23a148b5fc5bd4a32bc10f060e"
+  },
+  "proofSha256": {
+    "candidate-freeze.json": "dcc0b2978944614113fdcf18448f4d0d36e9f798d2941b9c27c844ad8923d255",
+    "final-image-preservation-summary.json": "c56d5f0c5f8658794e8a02b300db2cf741eab8fc5e0d39b91d0da1aaa43467a3",
+    "final-probe-bindings.json": "8adace4e762883ae0b60741fac59e4729230a3619d948b49adafbd506ff156bc",
+    "image-config-preservation.json": "5fdcaf3f6d928b99a331aa01c2a1b183dfaac6154de056e0714c2e63a0a490b1",
+    "native-runtime-summary.json": "e5a13adc4cb39674ee9e403baa39343877ae2129b2f7d861d353c081299d2b1d",
+    "record-summary.json": "27ad53a38de0109fc028db05f5ca18d78c1d674018ef114fe91a25f35dbc251a",
+    "official-role-targets.json": "7cd086c5eb0f69ddb124a20b3099ae184eeb433e968f9f7801bb56f5a9b2b2a9",
+    "lease-daemon-results.json": "1cc4d9f6d504a2519b044499d18c1adf9408f50848bba06a1d5bdfd5cf299b83",
+    "document-tests/results-final.json": "68dbdf811f91808fa5a6953bae784e2e5d4a08c11057be78adbbbc70ca7673a1",
+    "chrome-tests/results.json": "47cb7232bc24e1f136898746cee4bc97ee50747a6e39956cdef761128b524e85",
+    "chrome-tests/independent-final-candidate-actual-compose-proxy.log": "0435566c07df0f773f0560868eb92e712cd23652ae22d709cbcedc5bf811403b",
+    "chrome-tests/independent-final-candidate.log": "e8060a82f7ea75bbdf86e5321e065f159e051c158e6fa63e0f7d532a0d6c9c9a",
+    "independent-four-image-record-config-readback.json": "eb99e124072be606621dd57861a5c6608fb0a95af76f1bb553b810b1b876e3f3"
+  },
+  "accessOnlyHandoffReviewSha256": "d1c66c63a02f68e1d6d5e469d9b64ebdda73677bf4e44963b611419cf12d5678",
+  "findings": [],
+  "independentChecks": [
+    "FreezeSHA and everyboundevidencefile rehashed. Actual finalfour imageConfig dictionaries independently equal exactactualbaseline, includingoriginalUser.",
+    "Actual finalfourimages eachpassed allinstalleddistribution RECORDbytes+sizes and native/publicimports:45/45/39/39 distributions,5052/5052/4910/4910hashedentries. No arbitraryworkingtreeproductsource fallback.",
+    "Actual finalsharedChrome image+actualexistingCompose-mountedproxy independentlypassed10HTTP/Unixauth/peer/cancellation/privacy/budget/health tests atactualUID1000/networknone. Originalfixtureattempt lookingforunmounted/proxy.py failedsetupand retained; correctedonlyactualreadonlybindhandoff, no productchange.",
+    "Examined cleanup/install/runtimebuilders: ownership+hashpreconditions onoldownedfiles, offlinehashlockedwheelinstall, narrowownMETADATAdependency/Pythonpin+RECORDrepair, exact823officialPythonfiles and6signednativepatchsubset; fullfilesystemcomparison rejectsunrelatedsources/files/modes/owners/links changes."
+  ],
+  "provenance": [
+    "44/38externaldistributionfamilies retained; actualcounts45/39includeownEva distribution. No unusedSDK route behavior claimed; actualauxroutes remain unchangedexceptscopedpublisherrepair.",
+    "Previousintermediateimages had imageUSERbuildmetadata mismatch; finalConfigonlyrestoration preserves exacttestedRootFS andoriginalComposeUID/GID. final-probe-bindings proves precedence explicitly.",
+    "Intermediate build-proof codeChanges maydescribeearlierpublisherrevision; finalleaf publisher-manifest andactualsource-bound filesystem/role-source-bindings supersede it withaede53(corepublisher)/d1df67(nativepublisher), linkedtoindependent33casehandoffreview. Do notinterpretintermediatemanifest asfinalsourceauthority."
+  ],
+  "agentRegressionEvidenceReviewed": [
+    "Actualdocumentgoal72cases baseline+candidate green.",
+    "SharedChrome10baseline+candidate andownfinal10green.",
+    "33publishercases green onactualsource; actualUID1000/GID65532 and1000 lease daemon rotate\u2192unavailable\u2192recover,authlocktamper remainsunrepaired,stoppedsynthetic-only.",
+    "Nativeconsumer25root/21productionUID+4root-onlyskips andownrevocation-betweenattempts negative alreadyindependentlyapproved inlinkedhandoffreport.",
+    "Trusted/untrustedTLScertificate checks pass; signednativepackages/currentPython/CApreservation bind exacttestedRootFStofinalimages."
+  ],
+  "limitations": [
+    "No installationGO. Fresh exactfive-roleimagecutover/claims/nativeidle/browserownership/source/profile/credential/mount/history/data andrecoveryboundaries requireseparateinstallerreview.",
+    "No householddata/privatecontent/models/messages usedbyreviewer; noexternalprovider/modelrequests.",
+    "No fromscratchwholeprojectrelease,allOSS,E4.16,familyacceptance orautonomousrollbackclosure claim."
+  ]
+}

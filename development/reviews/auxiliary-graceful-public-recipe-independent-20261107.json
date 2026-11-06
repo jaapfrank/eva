@@ -1,0 +1,43 @@
+{
+  "contract": "EvaIndependentGracefulPublicRecipeReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-06T23:29:54.159161+00:00",
+  "decision": "GO_PUBLIC_SOURCE_RECIPE_ONLY",
+  "artifactManifestSha256": "0053b2cbf02190af5530fba70a537942c8c0f20a540a274d513171a86f4bc03a",
+  "payloadFiles": 13,
+  "fileHashes": {
+    "prepare.py": "288e9505c234f77993734952ca932db905ee070ab32da26cad2e0e0f5ed42494",
+    "synthetic-evidence.json": "1b0e961f866362291ff93db7e8fc97293c8a9e03130bb7db2f957d3fac1f0c17",
+    "proxy-main.patch": "d5fb7c0535ec7d5e0722a954e15a4ede3f58a954322d112e1465311a165845dc",
+    "proxy-manifest.json": "fd7511a5ecf891c786e656b12fb3c22d01da1e6f1c174ab68482c0d9c759c139",
+    "README.md": "bd5a3a9ff2b9683272599bc5fa585d56787d44b12ba9823ed7618b76750ef736",
+    "test_model_credentials.py": "8e7b2e40fc8e9f153c1aff95c743f7b8d7fdfaa958eda1b3e258f56e35fe34ae",
+    "test_prepare.py": "e01dd997d9b79dd2e05d8083c5ec872bac78bbf0c35d838bd714b5cffea07074",
+    "model-publisher/source.patch": "b221a2c03d2348e2a9849fbe6fa79333891faf96f002a61c6276f45b79653097",
+    "model-publisher/Dockerfile": "4f829c4a391ed2d4c7158b7955e7087a796e4f39a922c9172845d54b28a49b8c",
+    "model-publisher/manifest.json": "44a4dfec88190888aefb675757fa613b59ef3c31e7a22f061951230e080e5572",
+    "hindsight-publisher/source.patch": "c1c29fc1f41d8c4f281b52b1e8e7ad1841d9d8a8e22a09ac401c9911c53868d4",
+    "hindsight-publisher/Dockerfile": "05f9f4b91c02cdb66304d5e9b0e38d392a7ab83e533989a9ff42569c5829d7f1",
+    "hindsight-publisher/manifest.json": "70949992f638f5cbf914e41f6e09febe9d4747532c8b601db16dc785bb0a527b"
+  },
+  "ownChecks": {
+    "allManifestHashesMatched": true,
+    "prepareOnlyActuallyExecuted": true,
+    "twoPublisherSourcesByteExactReviewed": true,
+    "readonlyProxySourceByteExactReviewed": true,
+    "pureHelperCasesPassed": 4,
+    "testLogSha256": "b7bb244687e346b5516a7856c674df97c20595c68cb5c936f9a33b8ca32b5958",
+    "productionStartsStopsOrMutations": 0,
+    "modelRequests": 0
+  },
+  "assessment": [
+    "Pinned exact base images and per-role before/after hashes reproduce the reviewed source-only overlays. Independent prepare-only execution used stopped extraction containers and produced exact d830/64a/42 sources.",
+    "Proxy is correctly emitted as separate root-readonly code for the real bind; no claim that image copying replaces a bind. Runtime grants/routes/handlers are preserved.",
+    "Sanitized synthetic proof matches reviewed atomic4/proxy2/manualStopAPI3 results. No private credentials, DSNs, closed criteria or household payloads found in the explicit13-file payload.",
+    "No fresh complete image rebuild, bit-identical OCI identity, current installation completion or broad E4.16 acceptance is claimed."
+  ],
+  "limitations": [
+    "Current cutover is incomplete; this public recipe approval does not approve a runtime continuation.",
+    "Original auxiliary39-file recipe/history remains separately frozen; final installation evidence must bind later actual readback and retained failures."
+  ]
+}

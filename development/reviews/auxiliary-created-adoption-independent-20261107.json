@@ -1,0 +1,26 @@
+{
+  "contract": "EvaIndependentExistingCreatedAdoptionReview/v1",
+  "reviewer": "/root/independent_review",
+  "createdAt": "2026-11-06T23:22:29.431243+00:00",
+  "decision": "GO_SCOPED_CREATED_ADOPTION",
+  "installerSha256": "fc362b24973c6d1b1f694aa32168235f384ee9c4b4c4873d81c5ebe78737f1a5",
+  "planSha256": "f4bf6ea6f5188244c5853a5e521859d8ceee28a527cf55c4bb4ea7011c22bb94",
+  "freezeSha256": "74316fc9401f882af99cbb8fe01a270cc3894defd3340106c0119c79acd4f6fc",
+  "preflightSha256": "c43fbca68855183b45c7043e7c3bc064ac0619d004432bb618ea17d106abb2c7",
+  "memoryWrapperSha256": "a7f25723ecae5395ba1fb90d04d25821d84f8a86f76591b4631b0a90dc393cb8",
+  "ownTestsPassed": 6,
+  "ownTestLogSha256": "eedf3d5487e4bd89a7201c817e3682be5bed179550814f8f20eb5bab9ee217b1",
+  "verified": [
+    "Independent actual0587 readback identified exactly one HostConfig difference: existing OomKillDisable null versus false. All other normalized fields match.",
+    "Adapter changes only existing None to False, retains true distinct, rejects missing or unknown types including integer0/1, and preserves all other original HostConfig guards. Six independently repeated cases pass.",
+    "Adoption binds exact CID/image/Created/fullState/restart0 and rawConfig/HostConfig/Mounts/NetworkSettings hashes, originalDreceipt and old-containerabsence. Complete original validate_created checks source labels, config, storage, requested endpoints and underlying network generation before start.",
+    "OriginalA/C/D artifacts remain immutable; separate locked/exclusive adoption receipt persists before first start. Start dispatched once, unknown acknowledgement propagates without retry.",
+    "The source extracts exactly the reviewed D loop minus its first already-created model iteration, then its unchanged resume tail. No firstmodelstop/remove/create, hostbinding or nativeimage repetition. Remaining legacy roles retain original publicStopAPI and current-idle fences.",
+    "Memory wrapper changes only completion receipt to new adoption receipt and locates same runtimeplan in parent; original9bd2/d797 scripts and actual-generation/unknown-outcome fences retained."
+  ],
+  "limitations": [
+    "No runtime signal/start/mutation or model call by reviewer.",
+    "Approval covers exact hashes only; unknown outcomes require inspection, not rerunning original procedures.",
+    "Installed completion still requires actual source/profile/data/host readback and once-only synthetic memory verification/cleanup; no full E4.16 claim."
+  ]
+}

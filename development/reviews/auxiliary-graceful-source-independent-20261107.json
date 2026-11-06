@@ -1,0 +1,65 @@
+{
+  "contract": "EvaIndependentGracefulAuxiliarySourceReview/v1",
+  "reviewer": "/root/independent_review",
+  "createdAt": "2026-11-06T23:03:40.580707+00:00",
+  "decision": "GO_SOURCE_AND_ISOLATED_STOP_MECHANISM_ONLY",
+  "installationApproved": false,
+  "sources": {
+    "modelPublisher": "d830aae189e92b1e4ee2fc8eaf4b252e5fe8c24d9ef5805f4c9656d293d072ec",
+    "hindsightPublisher": "64a4e2a47889eab1eefae7c48dbbd5e136289982855356b4e4851b6becac13ca",
+    "proxy": "42c873ec421ec2a666df4d999420e2d34f028f37fdb7109f4572ca312d6782d7"
+  },
+  "images": {
+    "modelPublisher": "sha256:7181557887eda752ae0413390bfd16e384206740d6f3de90fffd9facf181029d",
+    "hindsightPublisher": "sha256:b9b2903e11b507f12b5efc4952304d41d9df53ae41e497c9dfc4f645651701fb",
+    "proxyTestBase": "sha256:0f489223c0f42bbac07f120ffe7c82107f260c8090a6dde06b80d35813164a9c"
+  },
+  "independentChecks": {
+    "publisherUnitCases": 33,
+    "proxyExistingContractCases": 10,
+    "publisherActualImageConfigurationAndBaseLayersPreserved": true,
+    "proxyMainOnlyChange": true,
+    "productionSignals": 0,
+    "modelOrBrowserCalls": 0
+  },
+  "findings": [],
+  "reasoning": [
+    "Publisher signal handlers request loop termination, preserve the current atomic publication and lock protocol, restore previous handlers and leave once mode unchanged. Four isolated actual PID1 cases demonstrate old interrupted cleanup and new completed fsync/rename before exit zero.",
+    "Proxy handlers and authorization are unchanged. Shutdown runs in another thread; server_close joins non-daemon admitted request threads. Actual isolated idle and blocked-upstream cases terminate zero only after admitted work completes.",
+    "The separate actual-unless-stopped public Stop API proof binds SIGINT and infinite timeout, one dispatch, exit130 and at least eleven seconds stable inactivity for the three old images. This establishes a bounded legacy mechanism; it does not authorize production dispatch."
+  ],
+  "requiredFinishPlanFences": [
+    "Separate exclusive continuation receipt preserves original A/C and SDK receipts; never rerun their installation or first stop/image legs.",
+    "Bind actual three legacy container generations and restart policy. Public Engine stop signal SIGINT with t=-1 once per known generation; no kill escalation. Unknown acknowledgement requires read-only inspection, never repeat stop blindly.",
+    "Preserve old proxy source bytes/inode until retired; new source requires an exact root-controlled read-only mount and phase-aware source/health pins. Image COPY alone cannot replace the existing source bind.",
+    "Recheck claims/native/document/browser idle state and generation before each effect; verify stable inactive old generation before replacement.",
+    "Require final exact proxy image/source binding, complete finish-controller freeze and separate reviewer approval before production continuation.",
+    "Once-only post-install memory wrapper must bind the new finish-success receipt and actual final generations."
+  ],
+  "evidence": {
+    "graceful-signal/atomic-signal-proofs.json": "a99599f157774addee364733d38c580c59b4067b172352b08a1f848ce87bba0a",
+    "graceful-signal/proxy-graceful-proofs.json": "93e22dbb0135be449294f689fd6bd3144015f0f7085b4348888edc1e35d54f6f",
+    "graceful-signal/independent-graceful-source-readback.json": "1c2c5c837cfa28b73048b31fd18066d8ec4d26cd51d2332c727558a74fa74220",
+    "graceful-signal/independent-new-publisher-unit.log": "a09d78ce6dcbc8a7cea7ca798f2edca9f9611974632b8f5443cdde22a3632acb",
+    "graceful-signal/independent-new-proxy-contract.log": "c0aa59278af9e5b3ec71b4e0f9701f042eadd4fd3ef664ccc36b0f49cde1d932",
+    "legacy-pid1-stop-api-policy-root/summary.json": "adbdcc3bb9e58f93ba8782fd246d64c61235c0af231e385e8b2d28c412aa42fa",
+    "legacy-pid1-stop-api-policy-root/model-created.json": "e89c210357a9a833054001a1f2b27457a19694eeca1a61deb116e89ff6759ff1",
+    "legacy-pid1-stop-api-policy-root/model-dispatch.json": "4a899dd17ca9fc9dfb3635e2dce152cad19b01efa2aa308a157d1a860aeb97e5",
+    "legacy-pid1-stop-api-policy-root/model-stopped.json": "ddb4277686c563deb690f030b27e1f3503f224645949d3702ce4a78d85b24440",
+    "legacy-pid1-stop-api-policy-root/model-verified.json": "12b1f50656f2955e32b6c714c45056dfd1511f66942d5d280c6089d55a495fc7",
+    "legacy-pid1-stop-api-policy-root/hindsight-created.json": "f8e78cb55ce0c6d571f53800eeab739184e328f1fda1b1303c0e513351d1aa58",
+    "legacy-pid1-stop-api-policy-root/hindsight-dispatch.json": "9be51f72de65de2e1ee8d31ddcd593ba75e18ab0a1bfada8b5a21c9be65b8a9d",
+    "legacy-pid1-stop-api-policy-root/hindsight-stopped.json": "56ba2af2dea74d0b1f4cd736b44a333d366d979e25cbf9d3cf80069e0556e797",
+    "legacy-pid1-stop-api-policy-root/hindsight-verified.json": "817096d42d689549382ff420ad5e41b2e11f4101087a3c9d8bba7b3152e6dd07",
+    "legacy-pid1-stop-api-policy-root/proxy-created.json": "ce8e5b8af8eca2d34e47178c669c267a7f84d0f1eda6d833d17737d5c46ad177",
+    "legacy-pid1-stop-api-policy-root/proxy-dispatch.json": "61019bb68aa05cb85ee0758b97138382e86f88e157d2d2e1072e810def6fcfef",
+    "legacy-pid1-stop-api-policy-root/proxy-stopped.json": "2b172c64eacc2dba11373f02dd3655347e06484aa319799f6236a239b4163098",
+    "legacy-pid1-stop-api-policy-root/proxy-verified.json": "3f088feeba1b71260617a6ca3312585e6d62c499c7ca9d0b62546094d435b965"
+  },
+  "limitations": [
+    "No production signal or runtime mutation by reviewer.",
+    "No final proxy replacement-image/finish-plan installation approval in this record.",
+    "SIGTERM proof uses isolated kill delivery; final controller must retain the reviewed public stop API and durable unknown-acknowledgement fences.",
+    "AUX installation and full E4.16 acceptance remain incomplete."
+  ]
+}

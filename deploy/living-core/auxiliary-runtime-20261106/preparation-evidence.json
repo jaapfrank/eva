@@ -1,0 +1,51 @@
+{
+  "contract": "EvaAuxiliaryPublicPreparationReproduction/v1",
+  "preparedOnly": true,
+  "activated": false,
+  "nativeOverlayContextAllFiveFilesByteIdentical": true,
+  "publisherFinalSourceByteIdentical": true,
+  "lockAndInstallerTemplatesByteIdentical": true,
+  "newAuxiliaryManifestMetadataWillBindFreshBuild": true,
+  "hashes": {
+    "hindsight/codex_llm.py": "31b57848b68771c6c6724f8f10310b6ff118d661b25bbed9bffcc78437100d00",
+    "hindsight/hindsight_entrypoint.py": "1eb080d29331ef0f95a460ab7847e388ac58ef531ca849513bfe55d81eb01aca",
+    "hindsight/RECORD": "25871cbae194581343a610bf80c36f0b3f01a722204dd0c11613d48eca4cf5b0",
+    "hindsight/manifest.json": "4aebc21d29a89d77bac167b01376d869dc292f0f0d643cac5140a3f64e62196d",
+    "hindsight/Dockerfile": "bbabda90f82cefcb07fe8eebe9ac15f32e8dc752cceae39002cb1baeb86ded2a",
+    "eva2-shared-chrome/requirements.lock": "56411f4d1114ee529cf244d54c2d3c91b6348914c5b0ae506b614766d124da3e",
+    "eva2-shared-chrome/install.py": "5ac0889adb860a204dcbdb621ae9864c529c5bbc5e67584f7e1ea8b2cf6c1ea1",
+    "eva2-shared-chrome/prepare-runtime.py": "9c5f3a818f36b7a0c276793c17ea0033cd912ce87ccc5e60c06b1b0a1d3b9ba4",
+    "eva2-shared-chrome/cleanup.py": "23da177bf59dbcdfeb30d126edd1be8ae4c519a06d51a2522913ace20f2f9bc4",
+    "eva2-document-goal-worker-au006/requirements.lock": "56411f4d1114ee529cf244d54c2d3c91b6348914c5b0ae506b614766d124da3e",
+    "eva2-document-goal-worker-au006/install.py": "5ac0889adb860a204dcbdb621ae9864c529c5bbc5e67584f7e1ea8b2cf6c1ea1",
+    "eva2-document-goal-worker-au006/prepare-runtime.py": "9c5f3a818f36b7a0c276793c17ea0033cd912ce87ccc5e60c06b1b0a1d3b9ba4",
+    "eva2-document-goal-worker-au006/cleanup.py": "23da177bf59dbcdfeb30d126edd1be8ae4c519a06d51a2522913ace20f2f9bc4",
+    "eva2-managed-b-slot3-model-access-lease-1/publisher": "aede53f5616f0164ad266f03f00d5c1e60ff80c46e8e5cc7af1f3aceb626e28a",
+    "eva2-managed-b-slot3-model-access-lease-1/requirements.lock": "b8e49113962dfd3ae326a7de2668910d45991ef7a0aa9b75846b1f97c04fb818",
+    "eva2-managed-b-slot3-model-access-lease-1/install.py": "5ac0889adb860a204dcbdb621ae9864c529c5bbc5e67584f7e1ea8b2cf6c1ea1",
+    "eva2-managed-b-slot3-model-access-lease-1/prepare-runtime.py": "9c5f3a818f36b7a0c276793c17ea0033cd912ce87ccc5e60c06b1b0a1d3b9ba4",
+    "eva2-managed-b-slot3-model-access-lease-1/cleanup.py": "23da177bf59dbcdfeb30d126edd1be8ae4c519a06d51a2522913ace20f2f9bc4",
+    "eva2-managed-b-slot3-hindsight-access-lease-1/publisher": "d1df67cf7cf55ce7edbdc373024e1a0442cfe1db4f882b7027b45ff3a6d01450",
+    "eva2-managed-b-slot3-hindsight-access-lease-1/requirements.lock": "b8e49113962dfd3ae326a7de2668910d45991ef7a0aa9b75846b1f97c04fb818",
+    "eva2-managed-b-slot3-hindsight-access-lease-1/install.py": "5ac0889adb860a204dcbdb621ae9864c529c5bbc5e67584f7e1ea8b2cf6c1ea1",
+    "eva2-managed-b-slot3-hindsight-access-lease-1/prepare-runtime.py": "9c5f3a818f36b7a0c276793c17ea0033cd912ce87ccc5e60c06b1b0a1d3b9ba4",
+    "eva2-managed-b-slot3-hindsight-access-lease-1/cleanup.py": "23da177bf59dbcdfeb30d126edd1be8ae4c519a06d51a2522913ace20f2f9bc4"
+  },
+  "publicPrepareTests": {
+    "passed": 6,
+    "seconds": 0.012
+  },
+  "externalNativeRecipeWholeManifestVerified": true,
+  "nativeCopiedSourcesSnapshotSha256": {
+    "bundle_filter.py": "bee00098e78ec77e71b6fca29021686ced0ccdf727bae76e80b2c5c39bcc082a",
+    "extract_baseline.py": "6cbeb1de5f660acd63c0fa7f28f9bbe6070664133f5d94e81efcbad0d3a98841",
+    "prepare_native.py": "1ad91a23c72ff04997e27f29671c7f350450ba4000b4c1cabaad375d38a256c8",
+    "prepare_overlays.py": "15ec0e515418e361e99586e88619f8e4b8b19698e4caad80f36f6aed248600e9",
+    "trixie-security.InRelease": "d0dbede32d80c3e9462e037ede87b138bdd5e44be10145acf46c9f643388836d",
+    "trixie.InRelease": "0584fba32e13e0ab8285fb16c27adea1ec03a73669c18702821094fd6ca86675",
+    "vendor-inputs.json": "7c13408428e82d48d4abf98815771c3e4a73af4969ea14aab12434215ad407fa"
+  },
+  "nativeCandidateImage": "sha256:625111da5ebbc116258e8c8e14030109f0f1a40430801fc010576d067284c6e9",
+  "nativeColdStartBoundaryFixed": true,
+  "historicalNativeCandidate": "sha256:8e588615d56327c96262996273f1e56bfad66d23a148b5fc5bd4a32bc10f060e"
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "EvaAuxiliaryFiveRoleInstallerIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T22:09:45.085494+00:00",
+  "decision": "GO",
+  "installerSha256": "10be424bcdec9466db0769072d25c2ffec033aae80febc11213e4d18f8a42203",
+  "planSha256": "73d928b9452215bbd5cb267d3fff03fecb921a88ec6984333b295eda105b7258",
+  "reviewFreezeSha256": "2344c9cc8ba017b704e3bcc93b7184f401ba21bca504a3f29eab863e26f39193",
+  "preflightSha256": "4594a02326d3c7a048236b99a5fddeb87ba5de7399efce94887dff4fce8e8801",
+  "helperSha256": {
+    "snapshot_contract.py": "2d78a3fdbc2baf2ee23ec0ef5a5bdaa728ca4d36cd272c220b5b774c24f41266",
+    "lifecycle_api.py": "521037ca9d2b4f9c5632a837f6fa97d10f3a74c2db880de62e0119f42d3050ad",
+    "readiness_reference.py": "1d1afafc178a51c2b90da8eb2bfc4c66bdffc670e5a99aa10851cb2bf09371a8",
+    "readiness-probe.py": "2e90dee0d3c9ae536f63f8b86dd2fd2a7b80e02d1c496850f6bf6ffa6de764bd",
+    "native-database-probe.py": "7e38f96b18fcf6ac9ad0ef616396f3a2e63dedea54ee95c62cb61015a9124e17",
+    "scheduled-eligibility-readonly.py": "346f3c89d86c744bd4384f020823b80dfbbebdaf36ed0007d6d5e28df2e73b0f",
+    "effective-profile-probe.py": "1bb933185b8497b33a0fccd2b4fd85fe7da23b9cea4a02850fd7f67b7703f050",
+    "native-runtime-probe.py": "6b442d1f217ab8913cdb1df63e811d6389227bba152c7350071402430f5e664a",
+    "profile-probe.py": "37078235bdd35295849b3f10842133e2a024006ef0a74a125cfd56e849e16fee",
+    "document_waiting_readonly.py": "2f181b1b4bc247c985c0ca3fa78812dfc5964bbfe9cc95c92ac293887b288774",
+    "chrome_idle_readonly.py": "225e8f701aeaa9f61ccd86af07e7fdc67d4b622d475f291b433506acc643d18e",
+    "install.py": "10be424bcdec9466db0769072d25c2ffec033aae80febc11213e4d18f8a42203",
+    "prepare_plan.py": "aa9b3aca9f586a289a6b8074e0c824f9309fc89dbefbebd24e4bd15f95aeb061",
+    "run-live-memory-canary.py": "584e609d2515c2be1d54053eef35b54f12eb053a88b5b7f3936941cc034a3d30"
+  },
+  "candidateImages": {
+    "eva2-shared-chrome": "sha256:0f489223c0f42bbac07f120ffe7c82107f260c8090a6dde06b80d35813164a9c",
+    "eva2-document-goal-worker-au006": "sha256:e8e4948430bf10e2b041c42e96f371dd19640978d9e369fafa653a1f55215443",
+    "eva2-managed-b-slot3-model-access-lease-1": "sha256:81d6901692824b0ae0aa9e65aca7e3c4aae3fd2c7b05ebb5216d46d255e2e13d",
+    "eva2-managed-b-slot3-hindsight-access-lease-1": "sha256:dcafff965787617ff91bad30ca3959caa89433bff836f7d0ec1dabc539c4d44d",
+    "hindsight": "sha256:625111da5ebbc116258e8c8e14030109f0f1a40430801fc010576d067284c6e9"
+  },
+  "coldStartReviewSha256": "6958fd4af3d89350cd9589e9426a42ce78a579a7e7c3b3457bf6a5fe08fb84a8",
+  "auxFourCandidateReviewSha256": "5bd0dace01b20d36444c92e90b9c810efcb29105166f4b889837d9f71fc280cd",
+  "hostThreeActualReviewSha256": "4859d541440cadb69b70038990e4fa4807cb13b701ab929a22d984179bb1e002",
+  "independentPureTests": {
+    "passed": 22,
+    "seconds": 0.18,
+    "logSha256": "a5ea002a80000485fefa8f17ea23e66a58f7a18b88ccd6d5bf6f3a52f9790038"
+  },
+  "independentRetentionStatusSha256": "9b6e03a5fd7ccb33f97ec48bc35c87e9230463fcbfa90e197d381186e0cc3f19",
+  "findings": [],
+  "resolvedEarlyFindings": [
+    "FullcreatedConfig/HostConfig/mounts/4sourceLabels/requestedEndpoints+underlyingNetworkID/subnet validated BEFORE any start, also lostcreateACK. Unknownorchangedpayload remainsunstarted.",
+    "Fresh0claims/native/document/browser/state-awareoriginalcoreworkergenerations repeated beforeEACHgracefulsignal, includingstoppedcore readonlyprobe; no reliance oninitialpreflightalone.",
+    "ExactoriginalStartedAt retained through stoppedguards/resume/readback. HostPID/Invocation/execmonotonic+knownexit bound before/afterhoststop."
+  ],
+  "reviewedBoundaries": [
+    "CurrentHost3PID3513612/managedinterpreter/Ubuntu3.12.3u0.17/binarye50d and4sourceRoots reboundexplicitly,62criteria9history1handoff immutable. Nooldhostvenv orobsoletePIDreuse.",
+    "Exactly4closedauxnames directlocalDockerAPI andexistingSDK Hindsight-onlyleg. Existingpermanentimageallowlist unchanged. Core/workercontainerimages unchanged; no schema migration/data reset.",
+    "Snapshotauthority explicitlymarksoldCompose metadatahistorical; exactrootownedoperatorJSON/sourcehashlabels bindactualconfig/image/mount/network. Normalizations only3None/emptyDNS,mount/bindfullmultisets andownCIDgeneratedhostname.",
+    "DynamicIPv4 allowedonlyoriginalknownnetworks/subnets withIPAMNone; everyNetworkID/gateway/prefix/MAC/alias/driveropts/priority strict. Chrome172.30.0.10 remainsstatic. No hostnetwork,privilege,mount orgrant widening.",
+    "Durablereceipt beforeeffects, oneSIGTERM/stop/create/start dispatch. UnknownACK reinspection adopts onlymatchingfullsourcegeneration; no signal/create/start repetition. Unknownfailure leavesphase/evidence forreview, not fakefalseverdict or externalworkreplay.",
+    "ExistingHindsightSDK is firstwhileoldleasebindingvalid; validatesactualcallbackCID/image/StartedAt/Composehash/effectiveaccess-only andc7rows/schema/compaction beforeauxreplacement/resume.",
+    "Allfourauxsource/package/nativeTLS/mount/network readbacks pluscurrentlease0HTTPconstructorhealth andcoreworker4profiles/evaluatorownedlistener/10authorities2legacy required beforefinalsuccess.",
+    "Readonlylive22:06:39expiredtraces0 independentlyconfirmed afterordinaryretentionsweep; finalfullpreflightalso0expired/eligiblefacts/cronnow+15min/corework/leases/unknown/doc/browser. No purge,predicateorretentionchange."
+  ],
+  "postInstallCanary": {
+    "wrapperSha256": "584e609d2515c2be1d54053eef35b54f12eb053a88b5b7f3936941cc034a3d30",
+    "reviewedExistingAdapterSha256": "9bd2b0fb97219ef9440d039c122aea5f0af2386c2ae04411f50886c7270aad5a",
+    "scope": "Singleonce-onlysyntheticnamespace existingcore\u2192nativeadapter, pre-dispatchdurablereceipt/no replay, ownedbankmetadatausage+21tablecleanup; rootexecutesonlyaftercompleteactivation. No reviewerpaidcalls."
+  },
+  "limits": [
+    "Rootalone executesexactapproval afterinlinefreshgates. Reviewerhasnotinstalled/stopped/restarted/purged orchangedlivecredentials.",
+    "Directauxphase hasno broadautomaticrollback/retry; retainedbaselineimages/snapshots enable separatelyreviewedcompensation ifneeded. ExistingSDKcompensationdoesnotmakeunknowncallbackfailuresemanticfalse.",
+    "No allOSS/E4.16/autonomousmaintenance/familyacceptance closure."
+  ]
+}

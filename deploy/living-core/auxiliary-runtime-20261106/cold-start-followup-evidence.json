@@ -1,0 +1,41 @@
+{
+  "contract": "EvaAccessOnlyColdStartPublicFollowup/v1",
+  "historicalImage": "sha256:8e588615d56327c96262996273f1e56bfad66d23a148b5fc5bd4a32bc10f060e",
+  "candidateImage": "sha256:625111da5ebbc116258e8c8e14030109f0f1a40430801fc010576d067284c6e9",
+  "beforeSourceSha256": "2036418fb745261a9419f319ae5d18d7f767ace9f49c4a3a38f6ee638f21f6a0",
+  "afterSourceSha256": "31b57848b68771c6c6724f8f10310b6ff118d661b25bbed9bffcc78437100d00",
+  "beforeUnsafeFileReadAndAccountLog": {
+    "syntheticOnly": true,
+    "unsafeModeRejected": true,
+    "legacyLoaderReadBeforeStrictRejection": true,
+    "accountIdentifierLoggedBeforeStrictRejection": true,
+    "externalRequests": 0
+  },
+  "afterUnsafeFileReadAndAccountLog": {
+    "syntheticOnly": true,
+    "unsafeModeRejected": true,
+    "legacyLoaderReadBeforeStrictRejection": false,
+    "accountIdentifierLoggedBeforeStrictRejection": false,
+    "externalRequests": 0
+  },
+  "changedMethods": [
+    "__init__"
+  ],
+  "originalFullOAuthReadTryAndManagerAstUnchanged": true,
+  "allOtherNativeMethodsAstUnchanged": true,
+  "existingNativeCases": {
+    "rootPassed": 25,
+    "uid1000Passed": 21,
+    "rootOnlySkippedForUid1000": 4
+  },
+  "newColdStartCases": {
+    "rootPassed": 13,
+    "uid1000Passed": 13
+  },
+  "allFourAuxiliaryCandidatesUnchanged": true,
+  "publisherAndCoreReaderEvidenceUnchanged": true,
+  "wholeFileSystemUnchangedOutsideFourOwnedFiles": true,
+  "externalModelRequests": 0,
+  "installed": false,
+  "oldEvidenceRetainedUnder": "history/pre-cold-start-*"
+}

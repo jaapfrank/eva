@@ -1,0 +1,39 @@
+{
+  "schema": "EvaHindsightColdStartAndPublicRecipeIndependentSupplement/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T22:00:57.039412+00:00",
+  "decision": "GO_REVISED_NATIVE_CANDIDATE_AND_PUBLIC_REPRODUCTION_ONLY",
+  "nativeImage": "sha256:625111da5ebbc116258e8c8e14030109f0f1a40430801fc010576d067284c6e9",
+  "nativeSourceSha256": "31b57848b68771c6c6724f8f10310b6ff118d661b25bbed9bffcc78437100d00",
+  "privateCandidateV2FreezeSha256": "36795b0b4b26c9ef9b148d62f13b66d7214ab3018c0b8104e663db235a34930a",
+  "publicArtifactManifestSha256": "a49066a0323adf60019115c3b2cd732c857fa9ac1d3a18f3770ce3761f5472f4",
+  "publicPayloadFiles": 38,
+  "totalPublicFilesIncludingManifest": 39,
+  "proofSha256": {
+    "cold-start-final-actual-image-test-results.json": "578b173447c288d2aba27251dda83c25b5b447183324f20bb6f80ec06d105e3c",
+    "filesystem-preservation-cold-start-final.json": "386023f976aac06dec869bff27fc9d1356150b1e8d626713ed3dca40c19077bc",
+    "cold-start-unrelated-methods-proof.json": "01b464d2840bdabbacd7400090f4049a62eeac8375a34e4d8bb9b3b23141b18b",
+    "independent-cold-start-results.json": "c894909a8b74bdea8e701ead4f0e407be9f2f16c3194813bd6465ed3802037c6",
+    "independent-cold-record-readback.json": "6718de5c499e4eaf470dbccd0b17edc9a2bfd6d3f40fd3d2f013bfefb3714a8c"
+  },
+  "priorHandoffReviewSha256": "d1c66c63a02f68e1d6d5e469d9b64ebdda73677bf4e44963b611419cf12d5678",
+  "priorAuxFourReviewSha256": "5bd0dace01b20d36444c92e90b9c810efcb29105166f4b889837d9f71fc280cd",
+  "priorPublicReviewSha256": "7f614d40bd591f072d94e6fd7693990679b3e775ef4b5b0f5fe37b1770614389",
+  "resolvedFinding": "Previousforcedaccess-onlyconstructor ranlegacycredentialreads/accountlogging beforestrictowned-filevalidation. Revisedforcedflag1 branch constructs emptylazyAuthManager and executesstrictsnapshot first; no legacyloader oraccountlog on success or rejection.",
+  "independentChecks": [
+    "Exactold2036418\u2192new31b578diff affects onlyconstructorselection. ActualAuthManagerconstructor inspected: fields+lazyHTTPobject only, no credentialIO/log. Forcedflag1 rejection preservesnativeProviderUnavailableError/staticdiagnostic.",
+    "Actual625image independentlypasses13coldstartspycases asroot and13asproductionUID1000: valid/unsafe/missing/unavailable/link/oversize/deepJSON/refresh/expiry states nolegacyread/log/refresh. FullOAuthflag0 retainsupstreamread+refresh/log route.",
+    "Actual625image386hashednativeRECORDentries independentlyverified; actualDockerConfig equals installed59base. Exactfourfilesystemdeltas and45471filecomparison preserved; allothermethods remainidentical to prior reviewed per-attemptguard.",
+    "All38publicpayloadhashes and unchangedpublichelperprovenance checked. Sixpreviouschangedpublicfiles byte-boundunderhistory/pre-cold-start-*; oldreviews explicitlyhistorical, not relabelled625. Fivepublicpreparednativecontextfiles independentlybyteequalreviewed625context."
+  ],
+  "agentProofsReviewed": [
+    "Original25root/21UID1000+4root-onlyskips remaingreen on625; fourAUXimages/publisher33/core3transitionprovenance unchanged.",
+    "Oldunsafe-coldstartspyfailure retained; no productionunsafecredentials/modelrequests used."
+  ],
+  "limitations": [
+    "Onlynewnativecandidate625 supersedes8e for futureinstallation; old8eGO is historical. FourAUXcandidatebytes remainunderexistingapproval.",
+    "No freshfullpublicimagebuild/bitidenticalOCIclaim; preparedcontexts andexactsourcepayload reproduction verified.",
+    "NoinstallationGO: finalfrozen625installer/source/hostgeneration andpositivezeroexpired-trace/currentclaims/nativeidle/schedule/browser gates stillrequired. Retentionpolicy/predicate remainsunchanged.",
+    "No modelcalls/liveeffects/credentialchanges byreviewer; no E4.16/familyacceptance/allOSSclosure."
+  ]
+}
