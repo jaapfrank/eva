@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Hindsight1.2.0/Python3.11.18 en kern/workerPython3.12.16 met PydanticAI/Graph2.66, OpenAI3.46, genai-prices0.2.1 en zes Debian-beveiligingsrevisies zijn live gecontroleerd. Ook Node22.23.4 is nu geïnstalleerd en onafhankelijk teruggelezen voor vier hostdiensten en hun Windows-browserworker; bestaande toegang, zeven browseracties en 115 Telegramregistraties blijven behouden. Volgende oplevering: Node26/filesystemMCP2.2 veilig installeren; de zes bestaande bestandsacties en drie documentacties zijn door de echte gateway getest, extra rechten zijn uitgesloten. De aangetoonde fout bij intrekking van Hindsight-toegang is afzonderlijk in reparatie; publicatie is hersteld/getest, de native cachefix wordt nog niet live geclaimd. Daarna resterende actieve afhankelijkheden per compatibele groep; bestaande spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
+    "nextAction": "De kritieke Hindsight/PydanticAI-kern, Node22.23.4 voor vier hostdiensten en Windows-browserworker, en de drie Python-hostpakketomgevingen zijn geïnstalleerd en onafhankelijk teruggelezen. Bron/configuratie en bevoegdheden blijven behouden; de gezichtsbrug gebruikt dezelfde CPU-extractor, modellen en profielgegevens. Volgende oplevering: AUX5/Hindsight-toegangsreparatie veilig installeren en werkelijk controleren; de volledige tokenintrekkingsroute en vier ondersteunende kandidaten zijn beoordeeld. Daarna Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties. Overige actieve afhankelijkheden volgen per compatibele groep; de spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
-    "executionStep": "Host Node security release delivered live; finish reviewed Node/MCP and native access revocation batches",
+    "executionStep": "Host library environments delivered live; install reviewed auxiliary/native revocation batch then Node/MCP",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-06T20:20:47.019064+00:00",
+    "checkedAt": "2026-11-06T21:30:09.535045+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -8848,7 +8848,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Hindsight1.2.0/Python3.11.18 en kern/workerPython3.12.16 met PydanticAI/Graph2.66, OpenAI3.46, genai-prices0.2.1 en zes Debian-beveiligingsrevisies zijn live gecontroleerd. Ook Node22.23.4 is nu geïnstalleerd en onafhankelijk teruggelezen voor vier hostdiensten en hun Windows-browserworker; bestaande toegang, zeven browseracties en 115 Telegramregistraties blijven behouden. Volgende oplevering: Node26/filesystemMCP2.2 veilig installeren; de zes bestaande bestandsacties en drie documentacties zijn door de echte gateway getest, extra rechten zijn uitgesloten. De aangetoonde fout bij intrekking van Hindsight-toegang is afzonderlijk in reparatie; publicatie is hersteld/getest, de native cachefix wordt nog niet live geclaimd. Daarna resterende actieve afhankelijkheden per compatibele groep; bestaande spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
+                "nextAction": "De kritieke Hindsight/PydanticAI-kern, Node22.23.4 voor vier hostdiensten en Windows-browserworker, en de drie Python-hostpakketomgevingen zijn geïnstalleerd en onafhankelijk teruggelezen. Bron/configuratie en bevoegdheden blijven behouden; de gezichtsbrug gebruikt dezelfde CPU-extractor, modellen en profielgegevens. Volgende oplevering: AUX5/Hindsight-toegangsreparatie veilig installeren en werkelijk controleren; de volledige tokenintrekkingsroute en vier ondersteunende kandidaten zijn beoordeeld. Daarna Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties. Overige actieve afhankelijkheden volgen per compatibele groep; de spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8886,7 +8886,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-06T20:20:47.019064+00:00",
+                "checkedAt": "2026-11-06T21:30:09.535045+00:00",
                 "progress": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
                 "latestEvidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
                 "scopedTelegramRepairAuthorization": {
@@ -8951,20 +8951,20 @@
                   "status": "in_progress",
                   "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                   "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                  "currentOutcome": "Node22.23.4 installed and independently read back for four host units and existing Windows browser worker; next existing Node26/MCP family",
+                  "currentOutcome": "Three host dependency environments installed with original sources, authority and face CPU/profile boundaries retained",
                   "hindsightInstalled": "1.2.0",
                   "hindsightTarget": "1.2.0",
                   "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                   "ownerActionRequired": false,
                   "fullCardCompleted": false,
-                  "checkedAt": "2026-11-06T20:20:47.019064+00:00",
+                  "checkedAt": "2026-11-06T21:30:09.535045+00:00",
                   "hindsightBuilt": true,
                   "hindsightLiveUpgradeInstalled": true,
                   "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                   "actualAstraSelectionAndExplicitZeroProven": true,
                   "focusedIndependentMemoryTestsPassed": 136,
                   "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                  "installationPending": "Node26/filesystemMCP2.2 safe image-only cutover; native credential cache invalidation and auxiliary role updates; remaining actual role closures",
+                  "installationPending": "AUX5/native credential cache invalidation, then Node26/filesystemMCP2.2 and remaining actual role closures",
                   "hindsightTechnicalDeliveryComplete": true,
                   "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                   "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -8982,7 +8982,9 @@
                     "genai-prices": "0.2.1",
                     "hindsight-api-slim": "1.2.0",
                     "hostNode": "22.23.4",
-                    "browserWindowsNode": "22.23.4"
+                    "browserWindowsNode": "22.23.4",
+                    "hostMcp": "1.30.0",
+                    "hostPythonUbuntuPackage": "3.12.3-1ubuntu0.17"
                   },
                   "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                   "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -9012,7 +9014,9 @@
                     "nativeCachedAccessTokenRevocationReproduced": true,
                     "nativeConsumerFixedInstalled": false,
                     "originalOAuthAuthorityPreserved": true,
-                    "publisherReview": "development/reviews/model-credential-publisher-failure-independent-20261106.json"
+                    "publisherReview": "development/reviews/model-credential-publisher-failure-independent-20261106.json",
+                    "fullPublisherConsumerHandoffBuiltTestedReviewed": true,
+                    "fullHandoffReview": "development/reviews/access-only-publisher-consumer-independent-20261106.json"
                   },
                   "hostNodeUpdate20261106": {
                     "status": "installed_independently_verified",
@@ -9032,6 +9036,37 @@
                     "originalTelegramRowsPreserved": 115,
                     "existingBrowserToolsPreserved": 7,
                     "globalExecutablesUnchanged": true
+                  },
+                  "hostPythonUpdate20261106": {
+                    "status": "installed_independently_verified",
+                    "installed": true,
+                    "roles": [
+                      "evaluation",
+                      "browser lifecycle",
+                      "local face bridge"
+                    ],
+                    "packageFamilies": [
+                      33,
+                      67,
+                      62
+                    ],
+                    "officialWheelHashesVerified": 78,
+                    "focusedTests": 155,
+                    "baselineSkipRetained": 1,
+                    "baselineCollectionFailureRetained": 1,
+                    "mcpCompatibleBranch": "1.30.0",
+                    "hostUbuntuPythonAlreadyCurrent": "3.12.3-1ubuntu0.17",
+                    "candidateReview": "development/reviews/host-python-three-role-candidates-independent-20261106.json",
+                    "installerReview": "development/reviews/host-python-three-role-installer-independent-20261106.json",
+                    "originalSourceConfigAndFaceCpuPreserved": true,
+                    "fullE416Complete": false,
+                    "technicalDeliveryComplete": true,
+                    "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/host-python-three-installed.json",
+                    "installedReview": "development/reviews/host-python-three-role-installed-independent-20261106.json",
+                    "existingAuthorityCount": 10,
+                    "legacyAcceptedReleases": 2,
+                    "applicationSourceFilesPreserved": 35,
+                    "oldEnvironmentsPreserved": true
                   }
                 }
               },
@@ -15649,7 +15684,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Hindsight1.2.0/Python3.11.18 en kern/workerPython3.12.16 met PydanticAI/Graph2.66, OpenAI3.46, genai-prices0.2.1 en zes Debian-beveiligingsrevisies zijn live gecontroleerd. Ook Node22.23.4 is nu geïnstalleerd en onafhankelijk teruggelezen voor vier hostdiensten en hun Windows-browserworker; bestaande toegang, zeven browseracties en 115 Telegramregistraties blijven behouden. Volgende oplevering: Node26/filesystemMCP2.2 veilig installeren; de zes bestaande bestandsacties en drie documentacties zijn door de echte gateway getest, extra rechten zijn uitgesloten. De aangetoonde fout bij intrekking van Hindsight-toegang is afzonderlijk in reparatie; publicatie is hersteld/getest, de native cachefix wordt nog niet live geclaimd. Daarna resterende actieve afhankelijkheden per compatibele groep; bestaande spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
+              "nextAction": "De kritieke Hindsight/PydanticAI-kern, Node22.23.4 voor vier hostdiensten en Windows-browserworker, en de drie Python-hostpakketomgevingen zijn geïnstalleerd en onafhankelijk teruggelezen. Bron/configuratie en bevoegdheden blijven behouden; de gezichtsbrug gebruikt dezelfde CPU-extractor, modellen en profielgegevens. Volgende oplevering: AUX5/Hindsight-toegangsreparatie veilig installeren en werkelijk controleren; de volledige tokenintrekkingsroute en vier ondersteunende kandidaten zijn beoordeeld. Daarna Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties. Overige actieve afhankelijkheden volgen per compatibele groep; de spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -15687,7 +15722,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-06T20:20:47.019064+00:00",
+              "checkedAt": "2026-11-06T21:30:09.535045+00:00",
               "progress": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
               "latestEvidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
               "scopedTelegramRepairAuthorization": {
@@ -15752,20 +15787,20 @@
                 "status": "in_progress",
                 "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                 "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                "currentOutcome": "Node22.23.4 installed and independently read back for four host units and existing Windows browser worker; next existing Node26/MCP family",
+                "currentOutcome": "Three host dependency environments installed with original sources, authority and face CPU/profile boundaries retained",
                 "hindsightInstalled": "1.2.0",
                 "hindsightTarget": "1.2.0",
                 "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                 "ownerActionRequired": false,
                 "fullCardCompleted": false,
-                "checkedAt": "2026-11-06T20:20:47.019064+00:00",
+                "checkedAt": "2026-11-06T21:30:09.535045+00:00",
                 "hindsightBuilt": true,
                 "hindsightLiveUpgradeInstalled": true,
                 "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                 "actualAstraSelectionAndExplicitZeroProven": true,
                 "focusedIndependentMemoryTestsPassed": 136,
                 "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                "installationPending": "Node26/filesystemMCP2.2 safe image-only cutover; native credential cache invalidation and auxiliary role updates; remaining actual role closures",
+                "installationPending": "AUX5/native credential cache invalidation, then Node26/filesystemMCP2.2 and remaining actual role closures",
                 "hindsightTechnicalDeliveryComplete": true,
                 "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                 "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -15783,7 +15818,9 @@
                   "genai-prices": "0.2.1",
                   "hindsight-api-slim": "1.2.0",
                   "hostNode": "22.23.4",
-                  "browserWindowsNode": "22.23.4"
+                  "browserWindowsNode": "22.23.4",
+                  "hostMcp": "1.30.0",
+                  "hostPythonUbuntuPackage": "3.12.3-1ubuntu0.17"
                 },
                 "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                 "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -15813,7 +15850,9 @@
                   "nativeCachedAccessTokenRevocationReproduced": true,
                   "nativeConsumerFixedInstalled": false,
                   "originalOAuthAuthorityPreserved": true,
-                  "publisherReview": "development/reviews/model-credential-publisher-failure-independent-20261106.json"
+                  "publisherReview": "development/reviews/model-credential-publisher-failure-independent-20261106.json",
+                  "fullPublisherConsumerHandoffBuiltTestedReviewed": true,
+                  "fullHandoffReview": "development/reviews/access-only-publisher-consumer-independent-20261106.json"
                 },
                 "hostNodeUpdate20261106": {
                   "status": "installed_independently_verified",
@@ -15833,6 +15872,37 @@
                   "originalTelegramRowsPreserved": 115,
                   "existingBrowserToolsPreserved": 7,
                   "globalExecutablesUnchanged": true
+                },
+                "hostPythonUpdate20261106": {
+                  "status": "installed_independently_verified",
+                  "installed": true,
+                  "roles": [
+                    "evaluation",
+                    "browser lifecycle",
+                    "local face bridge"
+                  ],
+                  "packageFamilies": [
+                    33,
+                    67,
+                    62
+                  ],
+                  "officialWheelHashesVerified": 78,
+                  "focusedTests": 155,
+                  "baselineSkipRetained": 1,
+                  "baselineCollectionFailureRetained": 1,
+                  "mcpCompatibleBranch": "1.30.0",
+                  "hostUbuntuPythonAlreadyCurrent": "3.12.3-1ubuntu0.17",
+                  "candidateReview": "development/reviews/host-python-three-role-candidates-independent-20261106.json",
+                  "installerReview": "development/reviews/host-python-three-role-installer-independent-20261106.json",
+                  "originalSourceConfigAndFaceCpuPreserved": true,
+                  "fullE416Complete": false,
+                  "technicalDeliveryComplete": true,
+                  "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/host-python-three-installed.json",
+                  "installedReview": "development/reviews/host-python-three-role-installed-independent-20261106.json",
+                  "existingAuthorityCount": 10,
+                  "legacyAcceptedReleases": 2,
+                  "applicationSourceFilesPreserved": 35,
+                  "oldEnvironmentsPreserved": true
                 }
               }
             },

@@ -1,0 +1,68 @@
+{
+  "schema": "EvaHostPythonThreeRoleCandidateIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T20:51:54.475239+00:00",
+  "decision": "GO_CANDIDATES_ONLY",
+  "roles": {
+    "evaluator": {
+      "families": 33,
+      "manifestFiles": 1925,
+      "sourceModules": 21
+    },
+    "browser": {
+      "families": 67,
+      "manifestFiles": 6322,
+      "sourceModules": 8
+    },
+    "face": {
+      "families": 62,
+      "manifestFiles": 9003,
+      "cpuModelRuntimeChanged": false
+    }
+  },
+  "proofSha256": {
+    "official-wheel-manifest.json": "4dda6fb96af97b5d25b83ef58b357bea162e86319aa5132ce9882765dfa2e7f2",
+    "candidate-locations.json": "6b28a92596f1e0d7df33f5f6566b9e751f65f8a75b9f406ed67a0e73ed527ac5",
+    "source-module-closure-comparison.json": "083f3ee520637de36c61ff604c3fde657bbd70fc87fd1378a3ae60b008f2d0aa",
+    "evaluator-actual-source-import-comparison.json": "d91fbcc8800b3e934bd9c36edad82974c9e8dfcf675984e9b841f7ac2558250b",
+    "evaluator-authority-comparison.json": "ead535940c54d85e4bd5078cb219793b85b0d3eaa18784c3ae8375aef13bf623",
+    "evaluator-individual-focused-comparison.json": "7d7044486c9909600dbba7de09a3cdd8cbdbff0d33df5076619183f19cd094c6",
+    "regression-inputs.json": "c2adf63d3a18f4c5de2cafe40e2634e69c0a3d93c182b27fea489fbd8e1e2fdb",
+    "mcp-stdio-both-version-matrix.json": "fbec7ebceaa31a5fb350ef9ca665d0e20c610f21d42c798e112bbce9112dcaf3",
+    "independent-candidate-source-test-readback.json": "8d22b992cf7643b81383ccd6d84ed858451321678057e974ae2fde3b4a27e3a5",
+    "independent-mcp-cross-version.json": "67fa67a03c77d9f8851d664b85378b90bb1a653a90b5bb267d97fb63f328f774",
+    "independent-manifests-families.json": "f1fefdc02f4a532ad64c2fdaafd1101af029a3fd8297d0f218dc33a0b72a4af6",
+    "ubuntu-signed-metadata-refresh.log": "9a5dfd8256d8ec7c17caa300aad88e0d62b5eb9b6cfcd8d833da4b1d71059831",
+    "ubuntu-current-package-policy.txt": "9617a374a0d76ee008c7e094659772fb7bbe32395909b04b93bf3c70cec86b7f"
+  },
+  "candidateLocksSha256": {
+    "evaluator": "f531b149cc44272834cf5ec32e38569cad33b9a1aabbc5a2daeea9f3d67bff81",
+    "browser": "8777f68682691bb2363fc8b25fcfb14767858cf1e7a548a94e26b68030cdca96",
+    "face": "4b29e09e6e3bdbd9ccfd1406c1cdab706f37c061462b18bddb41f29bc63f9733"
+  },
+  "candidateManifestsSha256": {
+    "evaluator": "87e3a8def41af9bcc91c532381fb6dc1ee260e3bbd9ebf17f0b227dac3ebf905",
+    "browser": "9c526d39bde8c1ad6d999bd6d6816208615aefcf3f72dd44c72851f093f6335e",
+    "face": "34a684b1338a427677fdd3d145048a21b9724cd2b7866c9c9ade125751c70ee7"
+  },
+  "findings": [],
+  "independentChecks": [
+    "All78actualwheelSHA256s match capturedofficialPyPIversionmetadata and files.pythonhosted URLs; threeactualcandidate distribution/version sets exactlockedsets, pipcheckclean, baselinefamiliesidentical with no additions/removals.",
+    "All1925/6322/9003 candidate manifest sourcefiles independently rehashed; actual21/8/9Evaimports preserve exact origins+bytes from currentrole source roots.",
+    "Actualcandidate focusedtests independently repeated: evaluatorauthority24pass, browser18pass, face19pass. No product code or sealedcriteria injection.",
+    "BothactualcrossversionMCPstdio directions independently pass with publicClientSession/FastMCP: exact2synthetictools, invalidarg rejectedbeforeeffect,1sumcall, sessionclosed and noHTTP."
+  ],
+  "agentProofsReviewed": [
+    "Evaluator118pass+1skip baseline and candidate across independentfiles; samebroaderhandoffcollectionfailure from immutablehostmissing procedure_references retained, not repaired by importinguninstalled productmodules.",
+    "Test-onlytoolsCLIbridge only forwards canonical/digest from actualfrozencomponent_release_import module; oldercollectionfailures retained.",
+    "Actual10reviewauthorities+2legacyreadableacceptances validate in bothvenvs without newauthority. Four evaluator source roots preserved.",
+    "CapturedUbuntu refreshedsignedmetadata shows exactinstalled3.12.3-1ubuntu0.17 equalscandidate; no unsafe comparison of distroversion to upstreammicrorelease.",
+    "MCP1.30.0 stayspublicv1APIcompatible; newermajorremoves requiredFastMCP/streamablehttp_client. No blindmajorupgrade/grantchange."
+  ],
+  "limitations": [
+    "Candidateenvs are separate manageddirectories; no liveExecStart/PYTHONPATH/config/venv changes by reviewer. Freshinstaller/idleclaims/browserownership/faceactiveprocessing/currentgeneration source and authority/history gates remain separate.",
+    "Facehostbridge dependencies tested; separate faceCPUmodel runtime/providers/weights/profiles unchanged. No inference/householdimage used.",
+    "Existingimmutablehostmissingprocedure_references remains knownbaseline coverage limit, not a claim everyhandofftest passed.",
+    "No provider/model/externalHTTPcalls and no allOSS/E4.16/familyacceptance closure."
+  ]
+}

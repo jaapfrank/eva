@@ -1,0 +1,53 @@
+{
+  "schema": "EvaAccessOnlyCredentialFullHandoffIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T20:43:00.161528+00:00",
+  "verdict": "GO_EXACT_PUBLISHER_SOURCE_AND_NATIVE_CONSUMER_CANDIDATE_HANDOFF",
+  "nativeCandidateImage": "sha256:8e588615d56327c96262996273f1e56bfad66d23a148b5fc5bd4a32bc10f060e",
+  "sourceHashes": {
+    "publisher": "d1df67cf7cf55ce7edbdc373024e1a0442cfe1db4f882b7027b45ff3a6d01450",
+    "publisherTests": "37bbcf0e89782902ac2c666c2d6bfd2bdc839ab70b3d50ce2d1b7dfa8b1aac10",
+    "nativeConsumer": "2036418fb745261a9419f319ae5d18d7f767ace9f49c4a3a38f6ee638f21f6a0",
+    "nativeEntrypoint": "1eb080d29331ef0f95a460ab7847e388ac58ef531ca849513bfe55d81eb01aca",
+    "nativeTests": "e0f63ad61980a6b600221c20fb9d8a3d3d27aea124c4bafcc7afe2043b8456c9"
+  },
+  "proofSha256": {
+    "auth-failure/final-source-freeze.json": "7a3de2f4068722151db3b984f37b01ad08130fa666ea74ba5b21bbe06fe59be6",
+    "auth-failure/role-source-bindings.json": "4d5958351da9ad9c839e2e2e6bc32826459d979e1d51702cf55be576636a91a9",
+    "auth-failure/core-handoff/results.json": "8c3c415df91e0758bf66c7e4e07c9d1e9fe35b4752ee78370e20287d8da013d6",
+    "auth-failure/core-handoff/run.py": "e215c63b2c0f9cb09da9c333193f04db4f8cb8c28715135f38cab21af88e31cb",
+    "auth-failure/core-handoff/reader.py": "273bb2832b835f1cd251e705808c906d67f80e5355b2bc934934d08e9272dcb3",
+    "hindsight-consumer/filesystem-preservation-final.json": "8c3636420918cba5542eca03070f60357e898c8cdc4f0eb677d980a745f2b77d",
+    "hindsight-consumer/independent-handoff-results.json": "ceb77891df99916576b5e2fea771416428f9825dbd515ad227909ae065c52464",
+    "hindsight-consumer/independent-revocation-between-attempts.log": "9804b5bfa47d1755dbe6c36e5421e5d386ae4be98487b731edfaa16edc93242e",
+    "hindsight-consumer/independent-record-readback.json": "e69cea7b2f76a80872c570e95b4f25f178e7e27ae5404f3a8fb94e39402c44e5"
+  },
+  "findings": [],
+  "independentTests": {
+    "publisher": {
+      "passed": 33,
+      "seconds": 0.55
+    },
+    "actualNativeImageMockPublicCallRoot": 25,
+    "actualNativeImageMockPublicCallUid1000": {
+      "passed": 21,
+      "rootOnlySkipped": 4
+    },
+    "additionalNegative": "At productionUID1000, first503 triggers atomicunavailable publication: no secondHTTP attempt, token/accountcache cleared and refresh0.",
+    "actualNativeRecordEntriesVerified": 386
+  },
+  "reviewedBehavior": [
+    "Publisher chooses exactconsumer directory/file contract for unavailablemarker, preserveslockinode and neverrepairs unsafe lock. DeclaredJWTexpiry is denialonly; opaque expiryunknown, no authenticity/refreshauthority granted. DeepJSON/JWT RecursionError now caught narrowly, no STOP/Cancel/BaseException suppression.",
+    "Nativeconsumer reads bounded owned0700directory+0600auth+stablelock snapshot before each publiccall and each physicalretry, including alreadycached fresh tokens. File/lock/directoryidentity and link/ownership/mode checks failclosed, clear token/account/refresh and expose static errors.",
+    "Candidateentrypoint forces access-onlyflag1; unexpectedrefreshauthority rejected, direct refresh forbidden,401/403 terminalwithoutrefresh/retry. FullOAuthflag0withoriginalrefresh retains upstreamroute for otherdeployments.",
+    "Auth/accountheaders refreshedperattempt while otherheaders/sessionids remain exact; original upstreamstreamtimeouts/deadlines/cancellation behavior retained.",
+    "ActualcoreUID65532 publicPydanticAgent+leaseReader lifecycle3concurrentpublisher scenarios reviewed: A\u2192B1mockHTTP, unavailable/expired0HTTP; transportclosed and unopenedstream remainsNULL. Rolepublishervariants preserve unrelated AST.",
+    "Final nativeimage filesystemproofbinds exact4delta consumer/entrypoint/RECORD/proofmanifest only, Config/allunrelatedmetadata preserved; independentactual386RECORDchecks+sourcehashespass."
+  ],
+  "limitations": [
+    "Candidatehandoff verifiedusing mockHTTP/networknone and syntheticfixtures only; reviewer0external/model/refreshcalls.",
+    "No installation GO in this report. Final combinedauximages/installer/actualsourceprofile/idle/history/STOP/data gates are separate.",
+    "Old29casepublisherreview remains historical and is superseded for current33case source; old7471 nativeimageproof not used for final8e588binding.",
+    "Does not close allautonomous maintenance/E4.16 orfamilyacceptance."
+  ]
+}

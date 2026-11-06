@@ -1,0 +1,25 @@
+{
+  "schema": "EvaHostPythonInstalledEvidenceClaimReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T21:35:25.832220+00:00",
+  "decision": "GO_EXACT_EVIDENCE_ONLY",
+  "evidencePath": "development/evidence/reassessment/maintenance-updates-20261106/host-python-three-installed.json",
+  "evidenceSha256": "0dcb329a9ebc39a8c39e6f24157d54b842212963cae56526fc79e09c8aa4be15",
+  "actualInstalledReviewSha256": "4859d541440cadb69b70038990e4fa4807cb13b701ab929a22d984179bb1e002",
+  "independentlyRecomputedPackageChanges": {
+    "evaluator": 15,
+    "browser": 49,
+    "face": 44
+  },
+  "checks": [
+    "Installedreview/actualactivation/installer/planSHAlinks exact; readbackclaims match independentlyverified threevenvs/35source/4evalroots/9history/1handoff/10authorities2legacy andbrowser/face/unrelatedcontainers boundaries.",
+    "15/49/44versiondeltas independentlycomputed onexactretained33/67/62familysets.78officialwheelclosure source alreadyindependentlyverified.",
+    "118+18+19 focusedpasses perbaseline/candidate,1skip+samebaselinecollectionfailure and4MCPmatrixcases clearlydistinguished; no falsefullsuitegreen.",
+    "13compensationtests and8historicalstopcases describe source-boundguardproof; actualrollback/continuation notclaimedused.",
+    "No productionprivatepaths/credentials/rawpersondata/closedcriteria; managedruntimepaths andservice names are technicalpublicscope.",
+    "Developmentmodelrequests/messages0,credits/CodexusageNULL; otherhouseholdusageunknown,fullE4.16false."
+  ],
+  "limits": [
+    "No livechecks/restarts/modelcalls repeated. Canonical/index was not independentlyre-audited inthis exactone-fileclaimreview; parent owns scopedstaging andexistingcanonicalchecks."
+  ]
+}

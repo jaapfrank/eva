@@ -1,0 +1,35 @@
+{
+  "schema": "EvaThreeHostPythonInstallerIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T21:21:35.151663+00:00",
+  "decision": "GO",
+  "installerSha256": "90ac17114eb6f9cdc8e9d5f1ae93aa5589cdcb2cbca1b9876ebe0396d98bd1fa",
+  "planSha256": "fa6e847658dbc47049345adb5b6bccd8656c2405127fc6e3321157ae8d3514c6",
+  "candidateReviewSha256": "820499ff8c7dc1504d3be4e7c35113d65e5d22ad5479d41d60162366b2ce996b",
+  "preflightSha256": "b57fdaa39d44fe47b0c1825a8963b5c12b77499c81c516655977a66d2339c53c",
+  "independentCompensationTests": {
+    "passed": 13,
+    "seconds": 0.54,
+    "logSha256": "e275b3c321e2583052541b0383af38771c5356b8795c30980e55e9bd428de0dc"
+  },
+  "independentStopCasesSha256": "917fa369b9eea8f6b2c13f1350db2038b9796adb910b36e07947ef63e92a4519",
+  "resolvedFindings": [
+    "Unconfirmed draining-phase stop failure can no longer invoke automaticcompensation or restart. Originalfailurecopy andreceipt remainimmutableevidence.",
+    "Everydownservice beforestart/compensation mustmatch confirmedoldstop or actualargv/env/PID/invocation-boundnewgeneration; unknownactive/down generation or dependentcgroup processes blocks compensation.",
+    "Directreadonly physicalbrowserpair generation and persistedStopped/binding/currentboot gates run beforecompensationeffects, evenifcontrollerdown; activecontroller additionallymust pass HTTPstoppedownershipcheck."
+  ],
+  "reviewedBoundaries": [
+    "Exactlythreeexistingrootunits change onlyExecStart interpreter throughnewrootdropins; originalenv/source/config/venvs retained, same4evaluatorPYTHONPATHroots.",
+    "35actualsourcehashes/9historyreceipts/1repairhandoff/config/probes pinned. HostPythonUbuntu executablehash unchanged; exactcandidatevenv source/symlink/ownership manifest revalidated.",
+    "0work/leases/unknown, noisolatedhostwork/children/establishedrequests, own3LISTENsockets, actual10reviewauthorities+2legacyacceptances gate preflight. Browserpair physicallystopped; faceCPU/models/profilehealth exact without inference.",
+    "EffectiveinfinitegracefulStop/noSIGKILL/KillModemixed verified beforeone stop; actualstopfunction bytes equal previouslytested strictfunction. Confirmedexit0/SIGTERM15/Vite143 only, no genericfailedwaiver.",
+    "Successfulnewprocess actualargv/env/PID/invocation recorded beforepermittingknown-generation compensation. Newprocesswithoutknownregistration remainsinspection-only.",
+    "Compensation removes onlyexactownhashdropins; source/config/history/browser/claims/known-generations idle gates precede effects, baselineactualownedlisteners/authority/health reverified. No externalaction replay."
+  ],
+  "limitations": [
+    "Approval authorizes onlycoordinator execution of exacthashes withfreshinlinechecks; reviewer has not stopped/restarted/installed.",
+    "Historicalstop-function-source-equivalence record still names its earlier parentinstaller; finalactualfunctionhash independentlymatched, historicalevidence not rewritten.",
+    "Compensation is bounded operationalrestoration, not a fabricated semanticfailureverdict or general autonomousrepair claim.",
+    "Currentknown immutablehostmissingprocedure_references coverage limitation remains, unchanged candidate source review applies. FullE4.16/familyacceptance open."
+  ]
+}

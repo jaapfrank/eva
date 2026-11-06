@@ -1,0 +1,110 @@
+{
+  "contract": "EvaThreeHostPythonInstalledMaintenance/v1",
+  "checkedAt": "2026-11-06T21:23:04.713858+00:00",
+  "state": "installed_runtime_source_health_verified",
+  "technicalDeliveryComplete": true,
+  "fullE416Complete": false,
+  "hostInterpreter": {
+    "python": "3.12.3",
+    "ubuntuPackage": "3.12.3-1ubuntu0.17",
+    "signedPackageListsRefreshed": true,
+    "alreadyCurrent": true,
+    "interpreterBinaryChanged": false
+  },
+  "roles": [
+    {
+      "role": "evaluator",
+      "service": "eva-component-evaluation.service",
+      "packageFamiliesPreserved": 33,
+      "packageVersionChanges": 15,
+      "removedPackages": 0,
+      "newPackageFamilies": 0,
+      "oldEnvironmentPreserved": true,
+      "actualNewEnvironment": "/opt/eva2/managed-runtimes/host-python-20261106/evaluator/venv"
+    },
+    {
+      "role": "browser",
+      "service": "eva-owner-browser.service",
+      "packageFamiliesPreserved": 67,
+      "packageVersionChanges": 49,
+      "removedPackages": 0,
+      "newPackageFamilies": 0,
+      "oldEnvironmentPreserved": true,
+      "actualNewEnvironment": "/opt/eva2/managed-runtimes/host-python-20261106/browser/venv"
+    },
+    {
+      "role": "face",
+      "service": "eva2-local-face-bridge.service",
+      "packageFamiliesPreserved": 62,
+      "packageVersionChanges": 44,
+      "removedPackages": 0,
+      "newPackageFamilies": 0,
+      "oldEnvironmentPreserved": true,
+      "actualNewEnvironment": "/opt/eva2/managed-runtimes/host-python-20261106/face/venv"
+    }
+  ],
+  "uniqueOfficialWheelHashesVerified": 78,
+  "installedVersions": {
+    "pydantic": "2.14.3",
+    "sqlalchemy": "2.1.8",
+    "pydantic-ai-slim": "2.66.0 where already installed",
+    "openai": "3.46.0 where already installed",
+    "mcp": "1.30.0 evaluator compatible1branch",
+    "pip": "26.3"
+  },
+  "sourceFilesPreserved": 35,
+  "applicationConfigurationsChanged": 0,
+  "systemdRuntimeEntrypointsUpdated": 3,
+  "systemdGracefulStopPolicy": {
+    "timeout": "infinity",
+    "sendSIGKILL": false,
+    "killMode": "mixed"
+  },
+  "originalEvaluationSourceRootsPreserved": 4,
+  "authorityCountPreserved": 10,
+  "legacyAcceptedReleasesValidated": 2,
+  "historicalReceiptFilesPreserved": 9,
+  "runtimeHandoffsPreserved": 1,
+  "browserPairSameImageGenerationStopped": true,
+  "faceCpuRuntimeModelsAndProfilesUnchanged": true,
+  "faceRecognitionInferencePerformed": false,
+  "actualSocketOwnershipVerified": 3,
+  "unrelatedCoreWorkerHindsightContainersUnchanged": true,
+  "tests": {
+    "evaluatorBaselineAndCandidatePassed": 118,
+    "evaluatorBaselineAndCandidateSkipped": 1,
+    "broaderHandoffCollectionFailureUnchanged": "immutable host source does not contain procedure_references; no product module injected",
+    "browserBaselineAndCandidatePassed": 18,
+    "faceBaselineAndCandidatePassed": 19,
+    "mcpStdioOldNewClientServerCombinations": 4,
+    "compensationFencesPassed": 13,
+    "originalStopCasesPassed": 8,
+    "testOnlyCliFixture": "forwards canonical/digest from actual frozen source only"
+  },
+  "compensation": {
+    "automaticOnlyForKnownIdleGeneration": true,
+    "unknownStopsNeverRedispatched": true,
+    "unknownDownGenerationInspectionOnly": true,
+    "activeBrowserBlocksCompensation": true,
+    "sourceOldEnvironmentsRetained": true,
+    "actualRollbackNeeded": false,
+    "continuationNeeded": false
+  },
+  "independentInstalledReview": "development/reviews/host-python-three-role-installed-independent-20261106.json",
+  "independentInstalledReviewSha256": "4859d541440cadb69b70038990e4fa4807cb13b701ab929a22d984179bb1e002",
+  "activationReceiptSha256": "380cab2bd74707d8c3f01f67345c1a79ea783cd4999ca4977de74031061fcdf1",
+  "installerSha256": "90ac17114eb6f9cdc8e9d5f1ae93aa5589cdcb2cbca1b9876ebe0396d98bd1fa",
+  "planSha256": "fa6e847658dbc47049345adb5b6bccd8656c2405127fc6e3321157ae8d3514c6",
+  "reproducibility": "deploy/host-runtime/python-libraries-20261106/wheel-manifest.json",
+  "reproductionScope": "All78wheel bytes and3offline contexts verified; no fresh complete host build claimed",
+  "developmentUse": {
+    "modelRequests": 0,
+    "messagesSent": 0,
+    "credits": null,
+    "codexAgentUsage": null
+  },
+  "evaRuntimeUse": {
+    "otherHouseholdUsageNotMeasuredByThisEvidence": true,
+    "householdAcceptanceClaimed": false
+  }
+}

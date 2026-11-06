@@ -1,0 +1,80 @@
+{
+  "schema": "EvaThreeHostPythonInstalledAndPublicRecipeIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T21:27:08.748067+00:00",
+  "decision": "GO_INSTALLED_AND_SCOPED_PUBLIC_CLOSURES",
+  "installerSha256": "90ac17114eb6f9cdc8e9d5f1ae93aa5589cdcb2cbca1b9876ebe0396d98bd1fa",
+  "planSha256": "fa6e847658dbc47049345adb5b6bccd8656c2405127fc6e3321157ae8d3514c6",
+  "activationReceiptSha256": "380cab2bd74707d8c3f01f67345c1a79ea783cd4999ca4977de74031061fcdf1",
+  "independentReadbackSha256": "4e7843f437d59ee868b3c8811fa88409fc5e5265a1aa808c023b4a8cd70aab09",
+  "unrelatedContainersReadbackSha256": "d83ab68698b71ef4d3cc5fe380a96593ecf4d1324010c693a7aa9ab1e2a89234",
+  "candidateReviewSha256": "820499ff8c7dc1504d3be4e7c35113d65e5d22ad5479d41d60162366b2ce996b",
+  "installerReviewSha256": "9cd09ef5ab9065c1f4dec90fd646a5859c65c12e583af7d0bd2ff02e7057f7c0",
+  "publicWhitelistSha256": {
+    "deploy/host-runtime/python-libraries-20261106/README.md": "005e6d1570f0f35aca9d7e0390903df3a5030f1229c880cb26e38e0e067e13bc",
+    "deploy/host-runtime/python-libraries-20261106/browser-requirements.lock": "8777f68682691bb2363fc8b25fcfb14767858cf1e7a548a94e26b68030cdca96",
+    "deploy/host-runtime/python-libraries-20261106/evaluator-requirements.lock": "f531b149cc44272834cf5ec32e38569cad33b9a1aabbc5a2daeea9f3d67bff81",
+    "deploy/host-runtime/python-libraries-20261106/face-requirements.lock": "4b29e09e6e3bdbd9ccfd1406c1cdab706f37c061462b18bddb41f29bc63f9733",
+    "deploy/host-runtime/python-libraries-20261106/prepare_contexts.py": "86837f478e7d79b760119062963b7f36c7cf18262fa7b401ffeeecf7f4711c5c",
+    "deploy/host-runtime/python-libraries-20261106/wheel-manifest.json": "d501c804c1f37b5cd29545f2b2ba549bb22836ee08d21ed8b142f6fa224acd5a"
+  },
+  "actualInstalled": {
+    "roles": {
+      "evaluator": {
+        "newArgvAndEnvVerified": true,
+        "managedVenvPrefixExact": true,
+        "ownedListener": true,
+        "distributions": 33,
+        "mcp": "1.30.0"
+      },
+      "browser": {
+        "newArgvAndEnvVerified": true,
+        "managedVenvPrefixExact": true,
+        "ownedListener": true,
+        "distributions": 67,
+        "mcp": null
+      },
+      "face": {
+        "newArgvAndEnvVerified": true,
+        "managedVenvPrefixExact": true,
+        "ownedListener": true,
+        "distributions": 62,
+        "mcp": null
+      }
+    },
+    "hostPythonUbuntuPackage": "3.12.3-1ubuntu0.17",
+    "actualInterpreterExeAndHashExact": true,
+    "actualSourceFilesUnchanged": 35,
+    "evaluatorSourceRootsPreserved": 4,
+    "historicalReceiptsUnchanged": 9,
+    "runtimeHandoffsUnchanged": 1,
+    "authorityCount": 10,
+    "legacyAcceptedReleasesStillValidated": 2,
+    "browserPairBothStoppedUnchanged": true,
+    "face": {
+      "cpuExecutionUnchanged": true,
+      "modelHashesUnchanged": 2,
+      "enrolledProfiles": 24,
+      "profileRevisionUnchanged": true,
+      "inferenceRequested": false
+    },
+    "coreWorkerHindsightIdsImagesStartedAtUnchanged": true,
+    "originalVenvDistributionVersionsUnchanged": true,
+    "compensationOrContinuationNeeded": false
+  },
+  "independentChecks": [
+    "ActualsystemdPID/procargv/env/interpreter plusprocess-ownedLISTENsocket and exactnewdropin/sourceconfig onall3; infinitegraceful stop/SendSIGKILLno/KillModemixed effective.",
+    "Re-ran approvedreadonlybase/dropin/health/authority checks: ownedserviceHTTPreadiness, currentbrowserStopped/pair, exactfaceCPU2models24profiles/hash/revision, unchanged35source/9history/1handoff.",
+    "ActualnewvenvPython prefix/package map equals frozen33/67/62runtime inventories; evaluatorMCP1.30.0. Baselineoldvenvdistributionversion maps alsoindependently match. No claim of separatefullbyteexportofoldvenvs.",
+    "Actualcore4db/worker c2bd/Hindsight59containerIDs/images/StartedAt match independentlyreviewednativegeneration.",
+    "Public6file recipe read/privacychecked; manifest roles+78wheelmetadata equalapprovedprivateclosure. Publicverifycommand independentlypassesall78actualwheelhashes; allthreeexistingpreparedcontexts locks/wheels independentlyrehashmatch. No source/credentialcopied or serviceinstallation in publicpreparer."
+  ],
+  "findings": [],
+  "limits": [
+    "Publicrecipe materializes lockedclosures only; no freshhostbuild/bitidenticalvenvbuild claim.",
+    "Initialreviewaggregationusedwrongcandidate-packages wrapper shape; correctedreader, no product/runtimefailure or retryofexternalactions.",
+    "No modelcalls/messages/browseractions/faceinference/restarts byreviewer. Installerverification uses readonlyinternalhealth/authority only; broaderEva runtimeusage notmeasured here.",
+    "Knownbaselineimmutablehostmissingprocedure_references remains explicit; no newproductmodule injected tohidecollectionfailure.",
+    "No allOSS/E4.16/familyacceptance/autonomousmaintenancecompletion claim."
+  ]
+}
