@@ -1,0 +1,30 @@
+{
+  "schema": "EvaHostNodePublicRecipeIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "decision": "GO_SCOPED_PUBLIC_RECIPE_AND_INSTALLED_EVIDENCE",
+  "timeUtc": "2026-11-06T20:20:48.618172+00:00",
+  "whitelistSha256": {
+    "deploy/host-runtime/node22-20261106/NodeSource-InRelease": "8bca19b3c17fe54c5405f5930be287efc752d64a00452dbdb6d3efdefb53c45e",
+    "deploy/host-runtime/node22-20261106/NodeSource-Packages": "f97bf35a2cb66a23450d887063d935db52022ec24579abf2617830b8a3c15525",
+    "deploy/host-runtime/node22-20261106/NodeSource-keyring.gpg": "7a96b125f721c99e07d3f45b279adbd6884ec4f3f06750f6b54df40cfae36836",
+    "deploy/host-runtime/node22-20261106/README.md": "b7b16770d992f2dea03a5f94fd4f827ff31b5692bb938568422d6c5116b3654b",
+    "deploy/host-runtime/node22-20261106/probes/actual-polling.test.mjs": "50a623e203c209824f079b4b46193ae7c407d378573909d6d20fbac03139c16d",
+    "deploy/host-runtime/node22-20261106/probes/synthetic-journal-cross-version.mjs": "8a7640aa30a42d5798689e646c8e0910c6d11f8b8116cc8cce50ae3e4c47891d",
+    "deploy/host-runtime/node22-20261106/vendor-manifest.json": "c50418cbea30d5a25519310fcbc3c119dbc1d5a6a5df9b8288a7f5464de19c65",
+    "deploy/host-runtime/node22-20261106/verify_vendor.py": "9dfa82e8f622220e915e33777e1bf1b7c5107f3eda2215d067d11d4b4b1cff08"
+  },
+  "installedEvidenceSha256": "faba65513cd31c93479dc04a776aba8435465866eb2b5ff142be5b030c4f1c9f",
+  "findings": [],
+  "boundedChecks": [
+    "Read all public8files including both portable synthetic probes; imports resolve existing actual deployment modules and contain no privatehostpaths/DSNs/tokens/closedcases/householdrecords. Signed vendor metadata contains public package records only.",
+    "Independently executed public verify_vendor.py on captured signeddeb and actual installedmanagedWinPE: gpgv/index/deb/Linuxbinary/Windowsbinary all pass. No package install or rebuild.",
+    "Vendor metadata/executable hashes exactly agree with earlier independently authenticated/installed reviewed candidates; publicWindows verification is SHA matching, historical Authenticode validation separately recorded.",
+    "Installed evidence exactly matches independent actualreadback fourunits/twobinaries45sources115rows/same7catalog/configonlyworkerCommand and old globalversions. Originalfailure and bounded nonreplay continuation preserved.",
+    "Historical23+7/Windows isolated contracts and4originalbroadharnessfailures distinguished; developer0modelcalls/costunknown/Codexusageunknown, no household acceptance orfullE416closure claim."
+  ],
+  "limits": [
+    "Vendor snapshot verifier intentionally does not assess freshness; no from-source Node or freshfullbuild reproduction claimed.",
+    "This review adds no live restart/browser/model/message activity.",
+    "Canonical board/finalindex review is separate if requested; scope approval includes only exact8publicrecipefiles, installed evidence and boundreview artifacts."
+  ]
+}

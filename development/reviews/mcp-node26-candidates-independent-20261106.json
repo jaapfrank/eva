@@ -1,0 +1,65 @@
+{
+  "schema": "EvaIndependentMcpNodeCandidateReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAtUtc": "2026-11-06T19:37:03.144442+00:00",
+  "verdict": {
+    "sourceFourFiles": "GO",
+    "fiveExactCandidateImages": "GO",
+    "installation": "NOT_APPROVED_PENDING_FRESH_INSTALLER_AND_OWNER_GATEWAY_END_TO_END_PROOF"
+  },
+  "sourceSha256": {
+    "src/eva/adapters/connectors/mcp_gateway.py": "2ecf87f86700c552d775c75e32c8147a8510358281fcff10a28ffa3449afab67",
+    "src/eva/adapters/connectors/mcp_filesystem_contract.py": "57e850d3de49496edbd76a38d72ffd64cbbbe05b28fefd3a89aa073c0fa81546",
+    "src/eva/providers/mcp_gateway.py": "6b4054d4df53e85a4a96daae7a908043ba639b4171ca2cd9a76790a8796b85be",
+    "development/tests/connectors/test_mcp_filesystem_contract.py": "7420cd1c0ad4cc951e75a532e6ebf1db6b6d680b17f0e511787ce3a3921c45ce"
+  },
+  "evidenceSha256": {
+    "mcp-candidate-proof/source-site-runtime-comparison.json": "7b4d9d22a985457721a7dff50f035df3a7ef55e71c2204e01b37b4fbe4578b3c",
+    "mcp-candidate-proof/candidate-profiles.private.json": "3f9911dcb11c9ae723734d35656c66701fa19587d24ef94aaae2989834007f9b",
+    "node26-full-filesystem-scoped-comparison.json": "8366d50b34be581451460deacfb8a1dcdefdbc147df1f73a2bd3f9c2e5e2af19",
+    "node26-actual-image-readback.json": "e98028f7e44e8e2613638c065559c66157ee09a9caba86eb38e5c5627bb4bb68",
+    "node26-actual-image-wire.json": "ad00e8474705dfbdb2de583d63f3d4b3cfe69d06e6f46a0fc9bbd6493cb00ba2",
+    "node26-actual-http-bridge.json": "be82b4931edec1668a6771431373434cb94ee8e956578b04a02e34b5ce35259d",
+    "mcp-adapter-actual-wire-comparison.json": "8534321153de9fe2fc5964077244396e9b48f9d1468b65ed6879c40b6adf21da",
+    "atomic-mcp-node-comparison.json": "f2f3602592c4b210970e41e71efabc9e5fd4bf3c1116ceaaf69c483a06844571",
+    "mcp-actual-images-postgres18-compatibility.json": "959db075d4def2138676bea2559b6b6b038d4d66a6eced01ce43b70f0595da6e",
+    "mcp-independent-five-image-readback.json": "84434835241e25ba4bdab32d2c61181801e0b88528c34bbeb02dd344a4aeba92",
+    "mcp-independent-libatomic-readback.json": "8bc41220e8c2b15f1c776560ea02a9c0a8cfba1bffa8832995723bda28dc11cd",
+    "mcp-19-independent-with-catalog-fixture.log": "a58f2b87f884a6153c543454b31f6f9b8ee3b2830ee8113118b1664de5f7d3ae",
+    "mcp-19-independent.log": "921b07e6f636af0cc1c89f44a6672c9e935041d49dd941c15d9efeb45a166b19"
+  },
+  "findings": [],
+  "independentChecks": {
+    "focusedActualCandidateCoreTests": {
+      "passed": 19,
+      "seconds": 2.21,
+      "runtimeSource": "/opt/eva/src",
+      "fixtureOnlyBridge": "tracked src/tools pure catalog_for import; no workingtree Eva product-source fallback",
+      "firstAttempt": "collection failed on absent provision_workspace_provider fixture helper; original failure retained"
+    },
+    "actualFiveImages": "Imported exact three candidate modules in both core and worker; actual Node --version in all three backend images",
+    "officialNodeChecksum": "HTTPS official published SHASUMS256 retrieved independently; full checksum-file SHA and linux-x64 archive checksum match captured provenance",
+    "rpm": "Actual three candidate rpm -qi identifies two Red Hat signature key IDs; rpm -V libatomic empty and exit0 for each; no standalone archive signature cryptographic re-verification claimed",
+    "filesystem": "Independently recomputed raw full manifests: each 269added/209removed/1249changed; no removal outside npm; only Node vendor/license, libatomic, package-manager metadata outside npm; 20784/20790/20791 remaining records identical including bytes/ownership/mode/link",
+    "profiles": "Four actual core/worker candidate profile dictionaries equal; isolated preview separate"
+  },
+  "contractReview": [
+    "Only original five sealed filesystem actions can be recognized, after exact whole known group signature and original binding-hash reconstruction. Newly advertised append/copy remain unavailable.",
+    "Route/gateway/visibility/enabled identity remains sealed. Current wire input/output schemas remain operative for runtime validation.",
+    "Integer head/tail domains reject booleans, negatives, fractional values and unsafe JavaScript integers. Partial/duplicate/changed catalog groups fail closed.",
+    "Helper is included in provider execution_sources, binding recognition logic to runtime profiles.",
+    "Outside-directory writes are refused by actual server before effect; this is not a planner-before-I/O refusal."
+  ],
+  "agentProofsReviewed": {
+    "actualContainedWire": "workspace9/atomic14/projects14 checks pass",
+    "actualStreamableHttpBridge": 7,
+    "postgres18CriticalContracts": 23,
+    "combinedGatewayTests": "116 pass/4 inherited missing-sqlite harness failures; baseline97 pass/same4 failures"
+  },
+  "limitations": [
+    "No installation performed or authorized by this report. Need fresh five-role idle/claims/config/profile/history and source-preservation installer review.",
+    "Additional central ContextForge/bootstrap/actual-owner-token end-to-end and no append/copy publication gate is being prepared and is not covered as completed.",
+    "No household data, private gateway export, provider calls or model calls by reviewer.",
+    "This candidate review does not close E4.16, E4.11, family acceptance, or all OSS maintenance."
+  ]
+}

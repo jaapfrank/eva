@@ -1,0 +1,38 @@
+{
+  "schema": "EvaMcpNodeCandidateRevision2IndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T20:08:48.688983+00:00",
+  "verdict": "GO_REVISED_SOURCE_IMAGES_AND_ISOLATED_OWNER_GATEWAY_CHAIN_ONLY",
+  "previousReviewSha256": "95f2cbe1d36b48ac8da15fbc8671f2d7121c6035ce9c957210e9004ffeb349f2",
+  "sourceFreezeSha256": "d300e8f92655d6b2525912e3c149885d4629aca56c383fa170e7e63b74104b00",
+  "sourceSha256": {
+    "src/eva/adapters/connectors/mcp_gateway.py": "2ecf87f86700c552d775c75e32c8147a8510358281fcff10a28ffa3449afab67",
+    "src/eva/adapters/connectors/mcp_filesystem_contract.py": "77a85cf147733d1904d061777fe313bc8773fd0136718b4751e9cd2a65d10079",
+    "src/eva/providers/mcp_gateway.py": "6b4054d4df53e85a4a96daae7a908043ba639b4171ca2cd9a76790a8796b85be",
+    "development/tests/connectors/test_mcp_filesystem_contract.py": "3eb8168c0984a5096caa58c51038dc8cd360b33124452fcf55c5e55e10790f7a"
+  },
+  "evidenceSha256": {
+    "mcp-candidate-proof-r2/source-site-runtime-comparison.json": "6614d9f468dd9425c24c4c38decc0d15abaef3bd71eca8e3a2ddb73274e9606b",
+    "mcp-candidate-proof-r2/native-security-preservation.json": "93ca1f87e2f6d50ae6ca22a4a6b18f3758be174224cb48820277e8e3881ab634",
+    "mcp-candidate-proof-r2/candidate-profiles.private.json": "201ed00cd544ea6d265341bb194e8e9c271f4960409243b2c5e4e04778226286",
+    "mcp-actual-owner-gateway-canary-summary.json": "745c31f9475b6f76734c5ccccbf0bc270a10281e0d953487e6ac42f43c3a4373",
+    "mcp-r2-21-independent.log": "c27adfea26676fdc973da8387ccff42a1de80b0ce68b20be6507bab86692d196"
+  },
+  "findings": [],
+  "independentChecks": [
+    "Compared previous reviewed image helper bytes against revised source: only existing sixth create_directory recognition and exact old signature added; no change to binding identity, whole-group signature or numeric-domain guards.",
+    "21 focused tests pass on actual revised core image in2.29s, same pure catalog fixture bridge. Exact three imported source hashes checked on both revised actual images.",
+    "Four core/worker candidate profiles match and preview remains distinct; native preservation proof binds305signed-owned files/metadata and14versions to installed parents.",
+    "Inspected all four frozen topology/consumer/namespace/relay scripts; verified their exact SHA against successful1526bc3b receipt and registry before/after equality for all consumers. Existing owner token/catalog mounts remain readonly, network namespaces pinned and host namespace rejected; opaque relay changes no requests."
+  ],
+  "ownerGatewayEvidence": [
+    "Actual factory counts9core/9worker/4goal preserved. All six already granted workspace actions exercised through actual owner-token gateway and independent readback on synthetic tmpfs.",
+    "Original registry remains14filesystem+four2tool atomic groups; append/copy neither published nor admitted; no sealed admission hash rewrite or automatic refresh configuration change.",
+    "Four original atomic routes reached through observe-only calls over readonly original mounts; expected missing-operation/journal failures do not prove successful real document creation. Positive atomic writes/repeat proof remains separate14checks per actual backend image on synthetic tmpfs."
+  ],
+  "limits": [
+    "No rerun of isolated owner-token canary by reviewer: frozen successful output/source/namespace and immutable registry bindings reviewed independently.",
+    "No live install, model calls or private household output. Revised candidate corea29e8315/worker c31a6709 supersede previous source-image GO; unchanged three backend images retain earlier bytebound review.",
+    "Installation requires separately reviewed fresh exact installer/claims/config/history and source/profile bindings; full family acceptance/E4.16 remain open."
+  ]
+}

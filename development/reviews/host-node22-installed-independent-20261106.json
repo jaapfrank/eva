@@ -1,0 +1,51 @@
+{
+  "schema": "EvaHostNodeInstalledIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "decision": "GO_INSTALLED_VERIFIED",
+  "timeUtc": "2026-11-06T20:18:04.609533+00:00",
+  "installerSha256": "3e61082251d2bc7a1f68362f8afcd83cc197dee841afb48ee604f7131d1e235c",
+  "planSha256": "76d50cd5f6a094f59c816c2d515aa9edadc251f02811947601967ed4d7025df4",
+  "continuationSha256": "34f173afb62d7d5c586362335e079889a1c671b337570497c26f488d31988049",
+  "continuationReceiptSha256": "304dd409ee2a2ea9d6c1b38a110a4bee237cbfd134c1b231488d71b0f65abfe2",
+  "originalFailedReceiptSha256": "e2de26372a246238e3af67937dfc57765f0bf680931f980bdabba56ff58f8867",
+  "independentPrivateReadbackSha256": "ad13df00710fc360d895c255406ce368211d92eef18cc2fcce7eb3c504159a0f",
+  "actualInstalled": {
+    "linuxVersion": "v22.23.4",
+    "linuxBinarySha256": "94efd062ed066c1a0b332e18249859c905e920eeada5df55d24c99b919629a90",
+    "windowsVersion": "v22.23.4",
+    "windowsBinarySha256": "dccc52de28d8df2ee22d2062424f8c563070d95d8ad70c54c4bf01d590dec14f",
+    "managedBinaryOwnershipMode": "root:root0755",
+    "units": 4,
+    "sourceHashesMatched": 45,
+    "originalTelegramRowsPreserved": 115,
+    "browserState": {
+      "state": "disconnected",
+      "busy": false,
+      "connected": false
+    },
+    "authenticatedCatalogCount": 7,
+    "ownerDashboardHttp": 200,
+    "projectStateHttp": 200
+  },
+  "independentChecks": [
+    "Read-only pinned-new helper and own /proc checks confirm all four actualMainPIDs/argv/exe under managedLinux binary, exact fragments/dropins/effectiveinfinity/noSIGKILL.",
+    "Installed Chrome config parsed against exact before snapshot: only workerCommand changed to managed Windows binary, owner/mode preserved; actual Windows PE --version succeeds from managedext4 path.",
+    "Actual authenticated Unix socket catalog canonicalSHA equals original7tool catalog; Chrome disconnected/notbusy/notconnected. No browser action or reconnect performed.",
+    "115 original Telegram row hashes still match; readonly integrity check passes. Exact45 product-source hashes retained.",
+    "Original failed activation receipt byte-identical; successful continuation receipt preserves no stop or staging replay.",
+    "Global Linux executable remainsv22.22.3. Installer and continuation contain no write to global Linux/ProgramFiles executables."
+  ],
+  "findings": [],
+  "limits": [
+    "Runtime installed and healthverified; no new paid/model/Telegram/browser-effect probe by reviewer or installer. Prior exact-binary isolated tests prove handoff contracts.",
+    "No general autonomous maintenance rollback closure, E4.16/family acceptance or allOSSclosure claim.",
+    "Any future failure of this generation needs bound inspection/continuation; original failed receipt remains historical evidence."
+  ],
+  "globalRuntimeReadback": {
+    "linuxVersion": "v22.22.3",
+    "windowsVersion": "v22.19.0",
+    "windowsSha256": "995a3fb3cefad590cd3f4b321532a4b9582fb9c6575320ed2e3e894caac3e362",
+    "writesByReviewedInstallers": 0,
+    "baselineVersionMatch": true
+  }
+}

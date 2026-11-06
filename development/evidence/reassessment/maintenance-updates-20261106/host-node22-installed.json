@@ -1,0 +1,104 @@
+{
+  "contract": "EvaHostNodeInstalledMaintenance/v1",
+  "checkedAt": "2026-11-06T20:17:12.318255+00:00",
+  "state": "installed_runtime_source_health_verified",
+  "technicalDeliveryComplete": true,
+  "fullE416Complete": false,
+  "versions": {
+    "hostLinuxBefore": "22.22.3",
+    "hostLinuxInstalled": "22.23.4",
+    "browserWindowsBefore": "22.19.0",
+    "browserWindowsInstalled": "22.23.4"
+  },
+  "roles": [
+    {
+      "service": "eva2-local-owner.service",
+      "actualExeBound": true,
+      "applicationArgvUnchanged": true,
+      "configDropinSha256": "4d311e14fd27d029a2f2a711b0e759fe30bf696f5ad6cdc2a464250572926413",
+      "gracefulStopTimeout": "infinity",
+      "sendSIGKILL": false
+    },
+    {
+      "service": "eva2-telegram.service",
+      "actualExeBound": true,
+      "applicationArgvUnchanged": true,
+      "configDropinSha256": "78bed0066a99646b156eb07b23dce300ac7f4ea03c596951b403e954d5470307",
+      "gracefulStopTimeout": "infinity",
+      "sendSIGKILL": false
+    },
+    {
+      "service": "eva-chrome-bridge.service",
+      "actualExeBound": true,
+      "applicationArgvUnchanged": true,
+      "configDropinSha256": "8bf2bd8e315f5ccf03eaa73148c3694b062ff72c3836b587a89d2feb9c72f01c",
+      "gracefulStopTimeout": "infinity",
+      "sendSIGKILL": false
+    },
+    {
+      "service": "eva2-project-dashboard.service",
+      "actualExeBound": true,
+      "applicationArgvUnchanged": true,
+      "configDropinSha256": "2aaa74f4df1fd874c51782bae417e994dde56e35752067b2bfc53bb83444555e",
+      "gracefulStopTimeout": "infinity",
+      "sendSIGKILL": false
+    }
+  ],
+  "linuxBinarySha256": "94efd062ed066c1a0b332e18249859c905e920eeada5df55d24c99b919629a90",
+  "windowsBinarySha256": "dccc52de28d8df2ee22d2062424f8c563070d95d8ad70c54c4bf01d590dec14f",
+  "windowsAuthenticode": "Valid",
+  "independentInstalledReview": "development/reviews/host-node22-installed-independent-20261106.json",
+  "independentInstalledReviewSha256": "663be21ad251209a404bda5618831d131761731c25a163bcbc2de867211e8d99",
+  "sourceFilesPreserved": 45,
+  "chromeConfigChange": "workerCommand only; all other values and owner/group/mode preserved",
+  "existingBrowserToolCatalogPreserved": 7,
+  "originalTelegramRowsPreserved": 115,
+  "journalIntegrityVerified": true,
+  "health": {
+    "unitsActive": 4,
+    "nodeVersion": "v22.23.4",
+    "browserStartupRevokesOldGrant": true,
+    "browserCatalogIdentical": true,
+    "dashboardHttp": 200,
+    "projectStateHttp": 200
+  },
+  "globalExecutableVersionsPreserved": {
+    "linux": "22.22.3",
+    "windowsProgramFiles": "22.19.0"
+  },
+  "scopedRuntimePrefix": "/opt/eva2/managed-runtimes/node-v22.23.4",
+  "noGlobalExecutableWrites": true,
+  "retainedFailure": {
+    "originalReceiptSha256": "e2de26372a246238e3af67937dfc57765f0bf680931f980bdabba56ff58f8867",
+    "reason": "Original Vite process handled SIGTERM with exit143; it was stopped with MainPID0 but failed the inactive-only guard",
+    "originalReceiptUnchanged": true,
+    "stopsRedispatched": false,
+    "runtimeStagingRepeated": false,
+    "continuationReviewed": true,
+    "continuationReceiptSha256": "304dd409ee2a2ea9d6c1b38a110a4bee237cbfd134c1b231488d71b0f65abfe2"
+  },
+  "verification": {
+    "focusedRoutesBaselinePass": 23,
+    "focusedRoutesCandidatePass": 23,
+    "chromeBoundaryBaselinePass": 7,
+    "chromeBoundaryCandidatePass": 7,
+    "actualWindowsHeadlessPublicContractBaselineAndCandidate": true,
+    "sqliteOldWriteNewReadWriteOldReadVerified": true,
+    "historicalBroadHarnessFailuresRetained": 4,
+    "historicalHarnessFailuresNotProductRegressions": true,
+    "syntheticOnly": true,
+    "ownerBrowserUntouched": true
+  },
+  "developmentUse": {
+    "modelCalls": 0,
+    "telegramMessagesSent": 0,
+    "creditCost": null,
+    "codexAgentUsage": null
+  },
+  "evaRuntimeUsage": {
+    "changedByThisEvidence": false,
+    "householdAcceptanceClaimed": false
+  },
+  "reproducibility": "deploy/host-runtime/node22-20261106/vendor-manifest.json",
+  "publicVerificationClaims": "Signed vendor bytes and exact managed executables verified; no from-source Node rebuild claimed"
+}

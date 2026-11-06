@@ -1,0 +1,31 @@
+{
+  "contract": "EvaHostNodeVendorSnapshot/v1",
+  "nodeVersion": "22.23.4",
+  "signedRepository": "https://deb.nodesource.com/node_22.x",
+  "packageUrl": "https://deb.nodesource.com/node_22.x/pool/main/n/nodejs/nodejs_22.23.4-1nodesource1_amd64.deb",
+  "packageSha256": "e40ba508b45b2782ed453047d8e73fb9c4dd5358b70644eb9cc0e059ea2c959d",
+  "packageBytes": 37816336,
+  "linuxBinarySha256": "94efd062ed066c1a0b332e18249859c905e920eeada5df55d24c99b919629a90",
+  "windowsBinaryUrl": "https://nodejs.org/dist/v22.23.4/win-x64/node.exe",
+  "windowsBinarySha256": "dccc52de28d8df2ee22d2062424f8c563070d95d8ad70c54c4bf01d590dec14f",
+  "windowsAuthenticode": {
+    "authenticodeStatus": "Valid",
+    "signer": "CN=OpenJS Foundation, O=OpenJS Foundation, L=San Francisco, S=California, C=US",
+    "signerThumbprint": "6018A47185244F3B175DAFC18D0D8EB47E3F84CF"
+  },
+  "vendorMetadata": {
+    "NodeSource-InRelease": "8bca19b3c17fe54c5405f5930be287efc752d64a00452dbdb6d3efdefb53c45e",
+    "NodeSource-Packages": "f97bf35a2cb66a23450d887063d935db52022ec24579abf2617830b8a3c15525",
+    "NodeSource-keyring.gpg": "7a96b125f721c99e07d3f45b279adbd6884ec4f3f06750f6b54df40cfae36836"
+  },
+  "installedNativeAptKeyPreviouslyTrusted": true,
+  "runtimeOnly": true,
+  "npmClosuresChanged": false,
+  "globalNodeExecutablesChanged": false,
+  "services": [
+    "eva2-local-owner.service",
+    "eva2-telegram.service",
+    "eva-chrome-bridge.service",
+    "eva2-project-dashboard.service"
+  ]
+}

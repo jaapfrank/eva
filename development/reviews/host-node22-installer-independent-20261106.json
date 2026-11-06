@@ -1,0 +1,29 @@
+{
+  "schema": "EvaHostNodeInstallerIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T20:12:45.379854+00:00",
+  "decision": "GO",
+  "installerSha256": "3e61082251d2bc7a1f68362f8afcd83cc197dee841afb48ee604f7131d1e235c",
+  "planSha256": "76d50cd5f6a094f59c816c2d515aa9edadc251f02811947601967ed4d7025df4",
+  "candidateReviewSha256": "194673e6ceb31280eb008219cab288a934fe4222616a52a392233506b67aefad",
+  "preflightSha256": "500692a48854b801ac447bea8f03b7fafb4bce87aa7cc5231c76111abe8381bf",
+  "resolvedFindings": [
+    "Before any mutation and again immediately before write, regular+nlink1+SHA and immutable candidate byte snapshot plus full JSON equality allow only exact managed Windows workerCommand replacement.",
+    "All four exact unit dropins now enforce infinite graceful stop and SendSIGKILL=no; effective properties/dropin order/original PIDs verified after daemonreload before stop."
+  ],
+  "independentFocusedTests": [
+    "AST-extracted actual bound_config_candidate: allowed workerCommand-only candidate accepted; changed candidate SHA denied; unrelated config field denied even if expected hash rebound."
+  ],
+  "reviewedBoundaries": [
+    "Exactly two reviewed binaries under root-owned0755 managed prefix; globals /usr/bin/node and ProgramFiles untouched.",
+    "Exactly four existing unit argv executable substitutions, preserved original fragments/dropins/source45hashes; original data, credentials and otherconfig retained.",
+    "Core exact ID/image pinned; readonly0work/0lease/0unknown probe repeated before and after stop.115terminalTelegramrowhashes preserved; browserdisconnected/idle and dashboardconnection gate before graceful drain.",
+    "Exclusive durable receipt gates single dispatch; failures preserve phase/evidence and require reviewed continuation, no replay.",
+    "Poststart actual binary/argv plus ownerUI/projectstate/authenticatedsame7toolcatalog readback and originaljournal retention required."
+  ],
+  "limitations": [
+    "Root alone may execute this exact approval; reviewer has not installed or restarted services.",
+    "Fresh checks execute again inside --install; any changed source/config/generation/claims invalidates preflight and must failclosed.",
+    "No full autonomous update recovery or E4.16/family acceptance closure claim."
+  ]
+}

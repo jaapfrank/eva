@@ -1,0 +1,52 @@
+{
+  "schema": "EvaHostNodeCandidatesIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T20:07:10.017371+00:00",
+  "verdict": {
+    "linuxNode22_23_4": "GO_CANDIDATE",
+    "windowsNode22_23_4": "GO_CANDIDATE",
+    "installation": "PENDING_EXACT_INSTALLER_AND_FRESH_LIVE_CLAIMS_BROWSER_OWNERSHIP_GATES"
+  },
+  "linuxBinarySha256": "94efd062ed066c1a0b332e18249859c905e920eeada5df55d24c99b919629a90",
+  "windowsBinarySha256": "dccc52de28d8df2ee22d2062424f8c563070d95d8ad70c54c4bf01d590dec14f",
+  "proofSha256": {
+    "candidate-provenance.json": "b74d007b937cc62c073efb35e21bd323bb8a90423ea084ec322027ba38f76c8a",
+    "windows-candidate-provenance.json": "b8f358e125ecb2c0bb3bd988560658c6e66c178bcbf8517cc1b81f34b566b6fe",
+    "actual-regressions.json": "3bfe661d8f9adee93aa8ddaa3aa79af5168533328996776f483a3ab40cbb5592",
+    "chrome-regressions.json": "35194580f8e4a3ba0c315b30b265a40b69c43242101dfd8ca36d5dfd81bf7ab6",
+    "windows-public-contract-v2.json": "2f8940144acaf18dca65b55e19bd383a7fce1dd0e27e86a4919ae609cfb78398",
+    "journal-postwrite-rollback.json": "8313c5d6d11cd2e5a6184a9a663663f4d2e756b1592dde62981276612e82b0ee",
+    "independent-candidate-regression.json": "5403b80e771adc1877989dbe0692e9dce3f22db1c43c346e77d6fafcc9428e42",
+    "independent-windows-public-contract.log": "1eab806c09554e1da29b11a47964d93493c68c8a009b0b2103c3090183f6cbe8"
+  },
+  "actualProductSourceSha256": {
+    "deploy/chrome-bridge/worker.cjs": "70a4b798490f3692dbf357ba7a7ad154d6b7f2a9fcda9ec2a1620a5291baddcf",
+    "deploy/chrome-bridge/gate.mjs": "73ed17eea9ea9fa356c1aea38675e7914d812a9e7229800aed1a3883e22343dc",
+    "deploy/chrome-bridge/process.mjs": "3ba1e5138e9ce028313fefc2658d9453b30016464a991b64b8dbda8d1ce21405",
+    "deploy/telegram-bridge/standalone.mjs": "3c16f0fb1a74febef7f7b7df378169fcd570bd29f3b76e07c6fe292ba889ae8e",
+    "deploy/dashboard/local-owner.mjs": "8853c535b89b5fd9b46c5b5f6744faa72d63158dddc59c6513cd8d4ec3d5926a"
+  },
+  "findings": [],
+  "independentChecks": [
+    "gpgv independently verifies captured NodeSource InRelease with pinned keyring and exact RSA fingerprint; SHA256 chain to Packages and exact version/size/deb independently checked.",
+    "Linux binary extracted in memory directly from signed-package archive matches exact candidate bytes.",
+    "Native PowerShell independently verifies Windows candidate Authenticode Valid/OpenJS Foundation plus exact binary SHA.",
+    "Seven actual Chrome gate/protocol/socket regression tests pass with Linux candidate.",
+    "Actual TransportJournal old-write/new-read-write/old-read-after-new repeated on reviewer-owned disposable SQLite database; uncertain effect retained, delivered effect not replayed, integrity check passes.",
+    "Actual production ChromeWorker/ChromeGate on Linux candidate and Windows candidate repeated against isolated headless Chromium and synthetic Windows-local HTTP fixture: seven tools, ordinary click, pending-action takeover, stale-grant denial, explicit reconnect all pass. No owner browser touched."
+  ],
+  "agentProofsReviewed": [
+    "23 actual local-owner/Telegram/polling/draft/reply/privacy regressions pass baseline and candidate; no outbound messages or live database use.",
+    "Seven Chrome tests and real isolated Windows public-contract tests pass both versions. Earlier failed fixture attempts preserved; fixes concern Windows-local loopback and advertised target schema only."
+  ],
+  "scope": [
+    "Four existing Linux host units and existing Windows worker are proposed runtime-only consumers; application/gate/worker code remains unchanged.",
+    "No service restart, install, messages or model calls by reviewer. Native Windows test spawned a separate headless temporary browser, not an existing owner browser.",
+    "First independent Windows attempt as administrator could not traverse root-private candidate path and performed no execution; rerun with root access succeeded."
+  ],
+  "limits": [
+    "Fresh installer must preserve unit argv/config/environment/credentials/journals and browser-disconnect/ownership rules; do not interrupt in-flight model/work/Telegram/browser actions.",
+    "Existing post-write journal rollback is proven; any install callback unknown remains inspection-only, never fabricated failed behavior or automatic effect replay.",
+    "No latest-version claim or complete OSS/E4.16/family acceptance claim."
+  ]
+}

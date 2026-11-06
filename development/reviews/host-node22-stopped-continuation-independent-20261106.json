@@ -1,0 +1,21 @@
+{
+  "schema": "EvaHostNodeStoppedContinuationIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "decision": "GO",
+  "timeUtc": "2026-11-06T20:16:31.710357+00:00",
+  "continuationSha256": "34f173afb62d7d5c586362335e079889a1c671b337570497c26f488d31988049",
+  "planSha256": "283f8a9b970fef31cc95549fecafc784e212d37d66e474696f32a40f943d3073",
+  "originalInstallerSha256": "3e61082251d2bc7a1f68362f8afcd83cc197dee841afb48ee604f7131d1e235c",
+  "originalReceiptSha256": "e2de26372a246238e3af67937dfc57765f0bf680931f980bdabba56ff58f8867",
+  "review": [
+    "Only exact original four completed stops admitted: MainPID0/no job, original ExecMainPID+InvocationID+exit timestamp exact; three inactive statuses0/SIGTERM and specific dashboard143 failed status. No generic failed-unit waiver.",
+    "AST-imports frozen original helpers before dispatch boundary. Original installer/plan/receipt/stopped snapshot remain exact; original receipt lock retained. No stop/runtime-staging/image dispatch replay.",
+    "ClaimsProbe regular/nlink1/source SHA now explicitly rechecked before executing readonly claims check; concrete independent finding resolved.45source/proofs, two stagedbinaries, exact four dropins and noSIGKILL/infinite-stop settings pinned.",
+    "Original115terminalTelegramrows and core ID/image preserved before one workerCommand-only config change; original start/health/catalog/source/newargv readback reused.",
+    "Exclusive continuation receipt gates one execution. Partial/unknown failure retained for inspection, no unconfirmed successful outcome."
+  ],
+  "limits": [
+    "Reviewer has not resumed or started services. Root repeats actual fresh stopped/claims preflight as part of exact approved continuation.",
+    "Approval is only bound existing143 stop and exact generation; any other exit, PID, invocation, source or claims change fails closed."
+  ]
+}
