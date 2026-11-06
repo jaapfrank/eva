@@ -1,0 +1,43 @@
+{
+  "nativeModelUsage": [
+    {
+      "provider": "local",
+      "model": "BAAI/bge-small-en-v1.5",
+      "status": "success",
+      "calls": 2,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cached_tokens": null,
+      "total_tokens": null,
+      "thoughts_tokens": null,
+      "duration_ms": 81
+    },
+    {
+      "provider": "local",
+      "model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "status": "success",
+      "calls": 1,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cached_tokens": null,
+      "total_tokens": null,
+      "thoughts_tokens": null,
+      "duration_ms": 41
+    },
+    {
+      "provider": "openai-codex",
+      "model": "gpt-6-astra",
+      "status": "success",
+      "calls": 2,
+      "input_tokens": 6520,
+      "output_tokens": 185,
+      "cached_tokens": 5376,
+      "total_tokens": 6705,
+      "thoughts_tokens": null,
+      "duration_ms": 8926
+    }
+  ],
+  "activeOperations": 0,
+  "cost": "unknown; no billing measurement available",
+  "scope": "development canary; not household Eva usage"
+}

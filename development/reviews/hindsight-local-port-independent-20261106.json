@@ -1,0 +1,37 @@
+{
+  "contract": "EvaHindsightCandidateLocalPortIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T16:42:56.868514+00:00",
+  "decision": "GO_FOR_SCOPED_PORT_AND_PACKAGE_PROVENANCE_NOT_INSTALL",
+  "image": "sha256:a2fcdf71867f9cdeaa95fc3f686c5fba7eddfae00a0865eee5255cb3f79c9158",
+  "checks": {
+    "uncachedInferenceAstIndependentlyIdentical": true,
+    "cacheBoundedSaltedHashScoresOnly": true,
+    "cancellationForwardedAndCheckedBeforeAfterHit": true,
+    "partialTimeoutExceptionNotCached": true,
+    "warmupAfterJoinedLoadersDtypeBeforeReadiness": true,
+    "sevenFocusedTestsIndependent": "7 passed in3.066s using explicitly loaded exact overlay source and candidate dependencies",
+    "packageEvidence": "Image verification binds202versions/no duplicates/386RECORD entries/moduleorigin/unchangedentrypoint; inspected receipt, no new image extraction by reviewer.",
+    "models": "Explicit actualeffectiveMiniLM reranker and bge-small embeddings required, new upstream defaults not assumed equivalent.",
+    "legacyParallel": "Must remain disabled; upstream per-batch deadline/cancellation retained.",
+    "nativeGC": "Upstream CPU implementation supersedes custom GC, no forced patch transplant."
+  },
+  "testHarnessAttempts": [
+    "Plain candidate buildvenv lacks installed hindsight package; no test collected.",
+    "Candidate site alone imports unpatched upstream: expected overlay-dependent4failures.",
+    "Explicit importlib loading of exact frozen cross_encoder overlay with candidate site dependencies:7passed. These are harness-source selection corrections, not product edits."
+  ],
+  "limits": [
+    "No installation GO; clone migration/postwrite roundtrip/actual service config/performance and final installer remain separate gates.",
+    "Completed full arithmetic may enter bounded cache if cancellation becomes set during final batch; wrapper then raises cancellation and returns no score. No partial result or exception is cached. Cache holds numeric computation only, never grants authority.",
+    "No private data/modelrequests or productfile edits by reviewer."
+  ],
+  "sha256": {
+    "candidate-build/local-runtime-overlay.json": "5614207632f1c271183738efe8ba20b898b372d4a0391acc7ec8d8c25f8585df",
+    "candidate-build/final-image-verification.json": "17d33d902cd6c1b384dd97ac67620e315e48b436feb78211a552f75e6a4abbcd",
+    "candidate-build/configuration-followup.json": "4dfd04d3096e9d0b94ff4b34e817c88e6d5a40cdf45e45274bc718264b08f084",
+    "candidate-build/test_local_overlay.py": "4e0ded320872f0788ba4749c923f1edf4dd0994e04ddac6df2adaa7e9566dad3",
+    "candidate-build/overlay/hindsight_api/engine/cross_encoder.py": "a4ee329dfd0eb14cc8c76e31f6ea8bdb7dec400647bdc582bf4132efbdbaf770",
+    "candidate-build/overlay/hindsight_api/engine/memory_engine.py": "a469904a5cd3340192ecdadfa2a2828a70d676fe7a9205652aa4b2e198668492"
+  }
+}

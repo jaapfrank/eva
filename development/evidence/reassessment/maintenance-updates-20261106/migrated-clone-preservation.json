@@ -1,0 +1,283 @@
+{
+  "contract": "EvaHindsightMigratedCloneDataPreservation/v1",
+  "checkedAt": "2026-11-06T16:34:01.870633+00:00",
+  "baselineDumpSha256": "f0169179dd0be77d756c5f38c7c49df594d3b613082e77f0d61f3aa97c86b2d5",
+  "baselineHead": "c4f7a91b2d38",
+  "migratedHead": "c7e2f9a4d1b8",
+  "allOriginalColumnsOf22DataTablesPreservedExceptDeclaredDerivedV1Structures": true,
+  "declaredDerivedChange": {
+    "table": "mental_models",
+    "column": "structured_content",
+    "v1CopiesCleared": 525,
+    "allFaithfulMarkdownContentPreserved": true
+  },
+  "originalSourceOperationRowsPreserved": 7042,
+  "rows": [
+    {
+      "table": "async_operations",
+      "baseline": {
+        "rows": 7042,
+        "sha256": "c6e11c85492dc77ba261c4a315f459f3e118e8ba92bff35c3d35e624315b0a3b"
+      },
+      "migrated": {
+        "rows": 7042,
+        "sha256": "c6e11c85492dc77ba261c4a315f459f3e118e8ba92bff35c3d35e624315b0a3b"
+      },
+      "equal": true
+    },
+    {
+      "table": "audit_log",
+      "baseline": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "migrated": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "table": "bank_stats_cache",
+      "baseline": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "migrated": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "table": "banks",
+      "baseline": {
+        "rows": 25,
+        "sha256": "dfb005242bd48356d61a3a17fade505c73a98f9f9007063e47b9cf49a28937c8"
+      },
+      "migrated": {
+        "rows": 25,
+        "sha256": "dfb005242bd48356d61a3a17fade505c73a98f9f9007063e47b9cf49a28937c8"
+      },
+      "equal": true
+    },
+    {
+      "table": "chunks",
+      "baseline": {
+        "rows": 651,
+        "sha256": "30be8fb5f371e2078da1f4a985f9f9bf923edb61f1915907e4c04a74e521f41d"
+      },
+      "migrated": {
+        "rows": 651,
+        "sha256": "30be8fb5f371e2078da1f4a985f9f9bf923edb61f1915907e4c04a74e521f41d"
+      },
+      "equal": true
+    },
+    {
+      "table": "directives",
+      "baseline": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "migrated": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "table": "documents",
+      "baseline": {
+        "rows": 2115,
+        "sha256": "6ac858d34a824e9d9f2546313a90416d88017f5609ebba66147e20c54528fa8d"
+      },
+      "migrated": {
+        "rows": 2115,
+        "sha256": "6ac858d34a824e9d9f2546313a90416d88017f5609ebba66147e20c54528fa8d"
+      },
+      "equal": true
+    },
+    {
+      "table": "entities",
+      "baseline": {
+        "rows": 1269,
+        "sha256": "dc90c4505a7dfea94b3af8694a5728caf2c54c106095548d436d0822af0133c0"
+      },
+      "migrated": {
+        "rows": 1269,
+        "sha256": "dc90c4505a7dfea94b3af8694a5728caf2c54c106095548d436d0822af0133c0"
+      },
+      "equal": true
+    },
+    {
+      "table": "entity_cooccurrences",
+      "baseline": {
+        "rows": 4278,
+        "sha256": "f0c2651cb7525b4d9b049f1c31604743797e88700ae12abd5107b5fafc0819b9"
+      },
+      "migrated": {
+        "rows": 4278,
+        "sha256": "f0c2651cb7525b4d9b049f1c31604743797e88700ae12abd5107b5fafc0819b9"
+      },
+      "equal": true
+    },
+    {
+      "table": "entity_maintenance_queue",
+      "baseline": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "migrated": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "table": "file_storage",
+      "baseline": {
+        "rows": 2,
+        "sha256": "70e717e88fc5bc83c2ad2922c38d20a28c667d78a895494f75d1d8e4ad82b3c3"
+      },
+      "migrated": {
+        "rows": 2,
+        "sha256": "70e717e88fc5bc83c2ad2922c38d20a28c667d78a895494f75d1d8e4ad82b3c3"
+      },
+      "equal": true
+    },
+    {
+      "table": "graph_maintenance_queue",
+      "baseline": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "migrated": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "table": "invalidated_memory_units",
+      "baseline": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "migrated": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "table": "knowledge_pages",
+      "baseline": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "migrated": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "table": "llm_requests",
+      "baseline": {
+        "rows": 44,
+        "sha256": "abd39689fb058ad2378066addde04833ed09df186b0547e48e44def75c24e0dd"
+      },
+      "migrated": {
+        "rows": 44,
+        "sha256": "abd39689fb058ad2378066addde04833ed09df186b0547e48e44def75c24e0dd"
+      },
+      "equal": true
+    },
+    {
+      "table": "memory_links",
+      "baseline": {
+        "rows": 41194,
+        "sha256": "a0bfcbb85720fe7005c0eed0a83406f0e67f5e303df173463ee16b2edaa5a037"
+      },
+      "migrated": {
+        "rows": 41194,
+        "sha256": "a0bfcbb85720fe7005c0eed0a83406f0e67f5e303df173463ee16b2edaa5a037"
+      },
+      "equal": true
+    },
+    {
+      "table": "memory_units",
+      "baseline": {
+        "rows": 1876,
+        "sha256": "ad69baaa7785132b22023b510a36fc89481e14efdfdde579f49e8610198bd47d"
+      },
+      "migrated": {
+        "rows": 1876,
+        "sha256": "ad69baaa7785132b22023b510a36fc89481e14efdfdde579f49e8610198bd47d"
+      },
+      "equal": true
+    },
+    {
+      "table": "mental_model_history",
+      "baseline": {
+        "rows": 557,
+        "sha256": "11a8c0737aa03d3866bf1fcb30548736e46041c3e69691accee505ed8303d474"
+      },
+      "migrated": {
+        "rows": 557,
+        "sha256": "11a8c0737aa03d3866bf1fcb30548736e46041c3e69691accee505ed8303d474"
+      },
+      "equal": true
+    },
+    {
+      "table": "mental_models",
+      "baseline": {
+        "rows": 526,
+        "sha256": "0989eab9c257c1ade80531277a7bf01caa332de323924f3133eea58a1e316afd"
+      },
+      "migrated": {
+        "rows": 526,
+        "sha256": "0989eab9c257c1ade80531277a7bf01caa332de323924f3133eea58a1e316afd"
+      },
+      "equal": true
+    },
+    {
+      "table": "observation_history",
+      "baseline": {
+        "rows": 431,
+        "sha256": "661326e83732aebb8be1cc9d6eea6a316af16077e2715d7b45509009e49d78ee"
+      },
+      "migrated": {
+        "rows": 431,
+        "sha256": "661326e83732aebb8be1cc9d6eea6a316af16077e2715d7b45509009e49d78ee"
+      },
+      "equal": true
+    },
+    {
+      "table": "unit_entities",
+      "baseline": {
+        "rows": 4499,
+        "sha256": "75d2c56908a436fe55a1c3c01395a315fcfb22487feee8761478f2bd9313430c"
+      },
+      "migrated": {
+        "rows": 4499,
+        "sha256": "75d2c56908a436fe55a1c3c01395a315fcfb22487feee8761478f2bd9313430c"
+      },
+      "equal": true
+    },
+    {
+      "table": "webhooks",
+      "baseline": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "migrated": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    }
+  ],
+  "productionChanged": false,
+  "externalProviderCalls": 0
+}

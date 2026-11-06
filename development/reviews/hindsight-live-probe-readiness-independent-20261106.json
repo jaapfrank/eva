@@ -1,0 +1,24 @@
+{
+  "contract": "EvaHindsightLiveProbeAndReadinessPinIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T17:36:07.208583+00:00",
+  "decisionByScope": {
+    "exactOneLiteralReadinessRebind": "GO",
+    "exactOnceSyntheticLiveProbeAfterInstall": "GO_WITH_EXISTING_DISPATCH_RECEIPT_AND_AFTER_COUNTS",
+    "productionInstall": "PENDING_INSTALLER_REVIEW"
+  },
+  "readiness": "Independentbytecomparison onlyone156496runnerpin->actual778bdepin, candidateSHA2e90. Actualcurrentcore+worker dockerexec hashesbothverified778bde; no predicate/exclusion/lease/claim modifications.",
+  "probe": "Exactfreshsyntheticnamespace, configGET404absencecontractcheckedupstream, currentinstalledEvaadapter source, select/nonselect measuredexactreceipt+GETonlyrecovery, positivepersonfilteredrecall, boundedallbankoperations terminalbeforeforget, ownbankonlydelete, whitelistedusagemetadata/NULL/costunknown, no householdsourceaccess.",
+  "conditions": [
+    "Persist exclusiveonce-dispatchreceipt beforelaunch and bindscript/image/currentadapterhash; no automaticreplay afterunknown failure or existingbank.",
+    "Aftercleanup independentlyprove ownbankrows/documents/memoryunits/operations/maintenancequeue/LLMhistory0 and no associated activewriter; transientterminalpoll is not a generic prevention of futurequeuework.",
+    "No providerroute/configchange, modelusage recorded as developmentverification, not household.",
+    "If failed, preserve result+ownsyntheticbank for read-onlydiagnosis; do not blindrerun/reuseoldoperation.",
+    "Ownfilteredpositive is not livecrosspersonnegative; scopedprivatealias/privacy regression evidence separate."
+  ],
+  "sha256": {
+    "live-adapter-canary.py": "9bd2b0fb97219ef9440d039c122aea5f0af2386c2ae04411f50886c7270aad5a",
+    "activation/readiness-pin-followup.json": "cdd00ead3eb464ab6fa229148fd24f93573cbdf1b1fc768b73f72dbd627defe0",
+    "activation/readiness-probe.candidate.py": "2e90dee0d3c9ae536f63f8b86dd2fd2a7b80e02d1c496850f6bf6ffa6de764bd"
+  }
+}

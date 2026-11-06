@@ -1,0 +1,16 @@
+{
+  "contract": "EvaHindsightPostwriteRollbackGuardProof/v1",
+  "passed": true,
+  "controlledQueuedInput": true,
+  "apiNoneProviderSubmissionRejectedBeforeQueue": true,
+  "beforeContentSha256": "23ece587980513bb08f8cd6c0d76a31e37ad63bd7251efbf356682f89f5468a1",
+  "afterContentSha256": "23ece587980513bb08f8cd6c0d76a31e37ad63bd7251efbf356682f89f5468a1",
+  "beforeStructureSha256": "975a2841118a27a63073877ba9b9943b69018d940eec5335f2a37f7f291cc8ec",
+  "afterStructureSha256": "975a2841118a27a63073877ba9b9943b69018d940eec5335f2a37f7f291cc8ec",
+  "modelCallsAdded": 0,
+  "retryCount": 0,
+  "nextRetryAt": null,
+  "pendingOrProcessing": 0,
+  "failureIsExplicitTerminal": true,
+  "scope": "Synthetic isolated database only"
+}

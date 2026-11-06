@@ -1,0 +1,50 @@
+{
+  "contract": "EvaHindsightRollbackGuardActivationProfileIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T16:57:27.712972+00:00",
+  "decisionByScope": {
+    "rollbackGuardSourceAndImageProvenance": "GO",
+    "activationEntrypointSource": "GO",
+    "activationDerivativeImage": "GO",
+    "productionInstall": "NOT_REVIEWED"
+  },
+  "rollbackImage": "sha256:e14e0d7d9fec06566dbf9f0c30e72df6b5c16b9d7cb52d76a654615f8c8078d4",
+  "checks": {
+    "originalRefreshAstIdenticalExceptSingleEarlyGuard": true,
+    "bankAndModelExactParameterizedQuery": true,
+    "connectionReleasedBeforeStaticNonPrivateFailure": true,
+    "dedicatedErrorClassTerminalInExistingClassifier": true,
+    "nonGuardErrorsUnchanged": true,
+    "missingNullLegacyV1AndOptoutPreserveOldBehavior": true,
+    "rollbackMigrationsFalseRequired": true,
+    "privateDsnReaderAstUnchanged": true,
+    "knownPythonpathOnlyAndVersionsBeforeMutation": true,
+    "explicitModelDefaultsPreserveExistingConfiguration": true,
+    "ldLibraryPathPreserved": true,
+    "legacyParallelForcedOff": true,
+    "guardIndependentTests": "8 passed in1.235s",
+    "profileIndependentTests": "8 passed in0.026s",
+    "actualImageProfileEvidence": "Inspected final68a derivative metadata/path/model/LD proof, realprivatefilereader and intercepted console--help, unknownpath/inlineDSN negatives failclosed; no database/modelstartup claimed."
+  },
+  "constraints": [
+    "Exactly one version of writers at a time; gate/drain nativejobs before rollback. Separate precheck is not a rowlock against concurrent newerwriters.",
+    "New or unknown structured versions cannot refresh under rollback; explicit degraded operation, never success. Keep content readable and erase/retain/recall functional. No general1.2featurebackportclaim.",
+    "ActualAPI/worker terminalclassification/no retry/leaseclosure and samepostwriteDB rollback/forward evidence remains rootcanary gate.",
+    "Candidate image default migrations=true must be evaluated with actual retained Compose env: explicitfalseoverridesimage; live migration must be deliberate and receiptbound. Rollback exactenvfalse.",
+    "Activationderivative image must bind final entrypoint hash plus exacta2base and unchanged source/packages beforefinalimageGO."
+  ],
+  "sha256": {
+    "rollback-compat/memory_engine.py": "e4fef0424f2a3a5f5224570b90da8a63b5616dca731f99e860ab9a178c4ba119",
+    "rollback-compat/source.patch": "66c3e66108b20611711ccc961a6cbabc69ba57a476a12d671d99c721fa96bbb2",
+    "rollback-compat/manifest.json": "31f0be16c02a6d7e11ac8ce94f02b95ab5deeb263b5b2ef5c6649d0bfcab8f62",
+    "rollback-compat/image-verification.json": "2eb0dbb57461c75860624fd8b58cf1358731fcfafdfa967313dac13aa24ab284",
+    "rollback-compat/Dockerfile": "f3ea265cf8acf2f4e5003a970a6c31c373796f85384db258b3f0b7ad6654b71f",
+    "rollback-compat/test_guard.py": "ea89854ed4e1b1bf00a41b970f0e74d7f6d423a61efdbbd3f6c42ad007799140",
+    "activation-profile/manifest.json": "3e2ec94c668b28eb5bcbeaf1e0b8e00ed9c0e2a11ea0e85d9abc7ccbf5d1d58e",
+    "activation-profile/context/hindsight_entrypoint.py": "b4fff95866951e111fe5dc3de9c9e1aa50e8c006a322584417864778d64b3d99",
+    "activation-profile/context/Dockerfile": "08c50ab21f2d05a706e815193b5b855eceb0633da632ae0d451e308f2548e91b",
+    "activation-profile/test_profile.py": "4553ee38c789b4b2c3636e91dbb9454b1e961043763a4272a07747f09b69e2a7",
+    "activation-profile/image-verification.json": "8f9e8d00da4fe378e2a307a500a2569c618e117bb542b08e97ae67cde93337f0"
+  },
+  "activationImage": "sha256:68a135a99d96506bb627eaf1fddeea83104ee304db841edc0dd7bca33b8a0daa"
+}

@@ -1,0 +1,38 @@
+{
+  "contract": "EvaHindsightPublicBuildArtifactManifest/v1",
+  "files": {
+    "Dockerfile.activation": "5e678e59b74698883f2ebb97c6dfaf66f6117fab8c091cc118cd776d82b960d0",
+    "Dockerfile.rollback": "bf8a94f2cedca7443c10f0536a78f74f5454c904dd94864cb502023ee3fd6381",
+    "Dockerfile.runtime": "0ce37c9d530296f323776e175234ee77e81ebdd7757e2958960d247d0a532ac8",
+    "README.md": "32fd02bfe35668d2a69f471dbddb782cf999226ca5d1368ca4dafd93ef751ebb",
+    "UPSTREAM-LICENSE": "01fde0bedf83bdc185065d7af524a61690efe576a67f922eaff3a1280c17b63a",
+    "activation_entrypoint.py": "b4fff95866951e111fe5dc3de9c9e1aa50e8c006a322584417864778d64b3d99",
+    "build-toolchain.lock": "69421a027a20454d5051d6db7806702050adcf01fc9645fba36db7d1cc7df7c1",
+    "clean_runtime_prefix.py": "212cdda4bdc8bc22b3385404efb4d2704c4584886cfdebd3780c8a45ee641c1e",
+    "cross_encoder.py.patch": "bcd1acf2236f33a591f31c282f7bef205850f1747639bb1fbdd6b6f6af341b83",
+    "download_wheels.py": "90c5ab95ac91818152bbced62930de765017f8b46e3c1f7bef8e9cc7819dc2f4",
+    "install_offline_runtime.py": "e6c84883c861646019db37839a0ae535ad00d1f97916133b7cba712a7563d7ea",
+    "memory_engine.py.patch": "52a45d2d02925ad429ddc686077c7ca9fa989d4d80526bf86b06b55be8fadbdd",
+    "prepare_build.py": "8857ee7e8a87a8e5793c4b0aa780158d4b0fb77884d6d02c3a43209013bb0f00",
+    "prepare_sources.py": "3cdb4af0ca9795bb0289001b5feb9292a86304115e0ec1e7ffcea55b2d8a7fc1",
+    "rollback-memory-engine.patch": "c8369e7b05cbf556ced16a4026177ca99aeac00464843bbc2f15e9551cd484bc",
+    "runtime-cp311-linux-amd64.lock": "bee557a17d8f149a21d1128faf1442f08a7b81d013e6ff7d18b87dc62760e4db",
+    "source-build-manifest.json": "cce15e9d714e9770dc2a1befa51538c67fd35ab0b59f33630f8a403058c8783c",
+    "tests/test_activation_profile.py": "87784c4dadbbedb61d032185e52f9ba982be8e41e3d8065cce6e99138ee2f3e5",
+    "tests/test_local_overlay.py": "79cded0f672a73313226359b8bc7f4c07f4088b0e58d4bcd5703435170387969",
+    "tests/test_rollback_guard.py": "4c2511e4a4ed4bc7ba831c01ba2e980897dbe95f961710d004092690fa7f3e1d",
+    "wheel-closure-manifest.json": "19a954944ff99ee29f135edf13449ddad5b8569bf36a15eda97d8ba2e29a0e7e"
+  },
+  "binaryWheelsIncluded": false,
+  "privateDeploymentArtifactsIncluded": false,
+  "sourceReproductionVerified": true,
+  "ownWheelReproductionMatched": true,
+  "tests": {
+    "activationProfile": 8,
+    "rollbackGuard": 8,
+    "localOverlay": 7,
+    "result": "passed"
+  },
+  "freshFullImageRebuildPerformedFromPublicRecipe": false,
+  "freshBuildContextsVerifiedAgainstReviewedSources": true
+}

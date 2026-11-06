@@ -1,0 +1,15 @@
+{
+  "phase": "forward",
+  "scope": "Synthetic isolated database only; actual Eva memory adapter; no household data or external model call",
+  "checks": {
+    "postUpdateCorrectionAndErasurePreserved": true,
+    "postUpdateDreamReceiptPreserved": true,
+    "oldVersionCanStillWriteNewData": true,
+    "richV2ContentAndStructurePreservedThroughOldAndForward": true,
+    "terminalGuardFailureNoRetryAcrossRestart": true,
+    "noExternalModelCallsForStructuralTest": true
+  },
+  "bank": "eva-update-20261106-2d03ed4052786fdc7325dfaab5be9e9d",
+  "passed": true,
+  "elapsedSeconds": 0.104
+}

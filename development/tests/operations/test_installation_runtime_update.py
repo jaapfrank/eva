@@ -125,3 +125,27 @@ def test_update_follows_same_process_without_elapsed_time_failure(tmp_path, init
                             receipt=tmp_path / "receipt", run=run)
     assert result["status"] == "running_with_retained_mounts"
     assert len(dispatched) == 1
+
+
+def test_hindsight_image_update_retains_its_existing_database_and_security_configuration():
+    before = {"services": {"hindsight": {"image": "sha256:" + "a" * 64,
+        "environment": {"HINDSIGHT_API_DATABASE_URL_FILE": "/run/private-dsn"},
+        "volumes": [{"type": "bind", "source": "/retained/dsn", "target": "/run/private-dsn", "read_only": True}],
+        "security_opt": ["no-new-privileges:true"]}}}
+    after = deepcopy(before)
+    after["services"]["hindsight"]["image"] = "sha256:" + "b" * 64
+    assert image_update_services(before, after) == ["hindsight"]
+    for key, value in [("environment", {}), ("volumes", []), ("security_opt", [])]:
+        changed = deepcopy(after)
+        changed["services"]["hindsight"][key] = value
+        with pytest.raises(ValueError, match="cannot change"):
+            image_update_services(before, changed)
+
+
+@pytest.mark.parametrize("service", ["hindsight-postgres", "postgres", "unreviewed-provider"])
+def test_hindsight_allowlist_does_not_authorize_other_data_services(service):
+    before = {"services": {service: {"image": "sha256:" + "a" * 64}}}
+    after = deepcopy(before)
+    after["services"][service]["image"] = "sha256:" + "b" * 64
+    with pytest.raises(ValueError, match="only existing core"):
+        image_update_services(before, after)

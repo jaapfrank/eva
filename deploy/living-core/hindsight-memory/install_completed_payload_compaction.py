@@ -14,7 +14,7 @@ from hindsight_api.config import _get_raw_config
 async def run():
  data=json.load(sys.stdin)
  actual_version=hindsight_api.__version__
- if actual_version!="0.9.1":raise RuntimeError("Native version changed; review payload/retry contracts before installation")
+ if actual_version not in {"0.9.1", "1.2.0"}:raise RuntimeError("Native version changed; review payload/retry contracts before installation")
  schema=_get_raw_config().database_schema
  if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*",schema):raise RuntimeError("Native schema identifier is invalid")
  sql=data["sql"]

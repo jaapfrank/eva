@@ -1,0 +1,113 @@
+{
+  "contract": "EvaHindsightUpgradeInstalledIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T18:07:56.019305+00:00",
+  "decision": "GO_SCOPED_HINDSIGHT120_BUILT_REVIEWED_INSTALLED_AND_SYNTHETICALLY_USED",
+  "installed": {
+    "image": "sha256:68a135a99d96506bb627eaf1fddeea83104ee304db841edc0dd7bca33b8a0daa",
+    "version": "1.2.0",
+    "schemaHead": "c7e2f9a4d1b8",
+    "torch": "2.13.0+cpu",
+    "cudaAvailable": false,
+    "embedding": "BAAI/bge-small-en-v1.5",
+    "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "actualProcessProfileSourceAndPathVerified": true,
+    "operationRowRetentionDisabled": true,
+    "legacyParallelDisabled": true
+  },
+  "independentActualReadback": {
+    "nativeCLIProcessProfile": true,
+    "coreWorkerSameContainersImagesEnvMountSets": true,
+    "coreWorkerEntireSourceAndFourProfilesPreserved": true,
+    "hostActualPidArgvAndThreeSourceRootsMatchContinuation": true,
+    "unrelatedContainersImagesStartedAtRunningUnchanged": true,
+    "criteria62History9AndHandoffsUnchanged": true,
+    "nativeOriginal22TablesOldColumnsMatchPermittedMigrationTransformsAtActivation": true,
+    "extensionsAndCompactionTriggerPreserved": true,
+    "mountListOrderOnly": "InitialdirectlistcomparisonfailedbecauseDockerreorderedfullmountdictionaries; canonicalsetsidentical, nofielddifferenceorrelaxation."
+  },
+  "liveSyntheticProof": {
+    "exactOnceDispatchBound": true,
+    "actualInstalledEvaAdapter": true,
+    "positiveSelectedFactCount": 2,
+    "unselectedFactCount": 0,
+    "explicitZeroExtractionErrorsAndExactSourceReceipt": true,
+    "GETOnlyResultRecovery": true,
+    "personFilteredPositiveRecall": true,
+    "allOwnedNativeWritersTerminalBeforeForget": true,
+    "documentForgotten": true,
+    "ownedBankCleanup": {
+      "all21BankTablesZero": true,
+      "maintenanceQueuesAsyncChildrenAndLLMHistoryIncluded": true,
+      "readOnlyAfterCounts": true,
+      "cleanupRepeated": false
+    },
+    "usageScope": "Developmentverificationonly, householdruntimeexcluded",
+    "nativeCalls": 3,
+    "perCallUsage": [
+      {
+        "provider": "openai-codex",
+        "model": "gpt-6-astra",
+        "status": "success",
+        "input_tokens": 3251,
+        "output_tokens": 9,
+        "cached_tokens": 2688,
+        "thoughts_tokens": null,
+        "total_tokens": 3260,
+        "duration_ms": 2051
+      },
+      {
+        "provider": "openai-codex",
+        "model": "gpt-6-astra",
+        "status": "success",
+        "input_tokens": 4605,
+        "output_tokens": 146,
+        "cached_tokens": null,
+        "thoughts_tokens": null,
+        "total_tokens": 4751,
+        "duration_ms": 6082
+      },
+      {
+        "provider": "openai-codex",
+        "model": "gpt-6-astra",
+        "status": "success",
+        "input_tokens": 3269,
+        "output_tokens": 176,
+        "cached_tokens": 2688,
+        "thoughts_tokens": null,
+        "total_tokens": 3445,
+        "duration_ms": 5895
+      }
+    ],
+    "inputTokens": 11125,
+    "outputTokens": 331,
+    "reasoningTokens": null,
+    "cachedAggregate": null,
+    "knownCachedSubtotal": 5376,
+    "providerDurationMilliseconds": 14028,
+    "cost": "unknown"
+  },
+  "recoveryEvidence": {
+    "guarded091SamePostWriteDatabaseRoundtripPassedBeforeInstall": true,
+    "healthyGuardAlreadyInstalledAdoptedWithoutRedispatch": true,
+    "originalFailedActivationAndPhase1ReceiptsUnchanged": true,
+    "dnsContinuationOnlyUnconfiguredEmpty3FieldsNormalized": true,
+    "unknownNeverBlindlyReplayed": true
+  },
+  "scopeLimits": [
+    "E411historicalcleanup/E416completeautonomy/familyacceptance remain open; thisisboundedselectedOSSupgrade.",
+    "No coreworkerCPython16/dependencybatchinstallation claim: reviewedcandidates separateplannedactivation.",
+    "Nativecurrentdatahashproofbindsfrozenactivationbeforeintakeresumption; laternewhouseholdwritesarepreserved, not requiredbyte-equaltooldrowset.",
+    "Upstreamv2richmentalmodelrefresh unavailable underguarded0.9rollback; content/read/retain/recall/erasepreserved.",
+    "Actualsyntheticpositivepersonfilter isnotfreshcrosspersonnegative;136focusedinstalledcontracttests coverauthority/privacynegativeboundaries."
+  ],
+  "evidenceSha256": {
+    "independent-installed-readback.private.json": "8814fcfef3a9f88c956c2bec7aee985dd01feff035b8b5aebc321bb18e8b3874",
+    "activation/dns-continuation/continuation.private.json": "e9a5d52c3eabb3b45d1f14e13cefc48ff36ffa27ef42a8beaa8912e3feb1a232",
+    "activation/readback-phase2-d2223635.private.json": "78dd22c85378ec85b9a0c941e130e7358023af111bbc097931d262d5ad83d6cc",
+    "live-adapter-canary.py": "9bd2b0fb97219ef9440d039c122aea5f0af2386c2ae04411f50886c7270aad5a",
+    "live-adapter-canary.json": "5d6dc0b9d3fd445de5a516585d8b391f734fdde8d912e0b308e9f42e01d70c8a",
+    "live-cleanup-counts.json": "b66f852f2ddde03851bd444e25a25b1022e24b579f576694102dd42cbe86ae7e",
+    "live-canary-dispatch.private.json": "3482c583ea9a71baca3e2d98fc7682666efbf2015d747328073066c80baaa19d"
+  }
+}

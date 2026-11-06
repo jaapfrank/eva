@@ -1,0 +1,18 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE} AS build
+USER 0:0
+COPY pip /build-tools/pip
+COPY wheels /build/wheels
+COPY runtime-full.lock install.py cleanup.py /build/
+COPY overlay /build/overlay
+ENV PYTHONPATH=/build-tools:/app/api/.venv/lib/python3.11/site-packages:/app/api PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+RUN ["/usr/local/bin/python", "/build/install.py"]
+FROM ${BASE_IMAGE}
+USER 0:0
+COPY cleanup.py /opt/eva2/hindsight-upgrade-cleanup.py
+RUN ["/usr/local/bin/python", "/opt/eva2/hindsight-upgrade-cleanup.py"]
+COPY --from=build /app/api/.venv/ /app/api/.venv/
+COPY --from=build /build-proof.json /opt/eva2/hindsight-upgrade.json
+COPY --from=build /record-proof.json /opt/eva2/hindsight-upgrade-record.json
+ENV PYTHONPATH=/app/api/.venv/lib/python3.11/site-packages:/app/api HINDSIGHT_API_EMBEDDINGS_LOCAL_FORCE_CPU=true HINDSIGHT_API_RERANKER_LOCAL_FORCE_CPU=true HINDSIGHT_API_OPERATION_RETENTION_DAYS=0 HINDSIGHT_API_RUN_MIGRATIONS_ON_STARTUP=false EVA_HINDSIGHT_WARMUP_RERANKER=1 EVA_HINDSIGHT_EXACT_RERANK_CACHE=1 EVA_HINDSIGHT_PARALLEL_RERANK_BATCHES=0
+USER 1000:1000

@@ -1,0 +1,63 @@
+{
+  "contract": "EvaHindsightReviewedSourceBuild/v1",
+  "upstream": {
+    "repository": "https://github.com/vectorize-io/hindsight.git",
+    "tag": "v1.2.0",
+    "commit": "34a138684a899b6ec34175f7a2b633860466d289",
+    "license": "MIT; original text in UPSTREAM-LICENSE"
+  },
+  "localBaseImage": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+  "runtimePython": "3.11.16",
+  "buildToolPython": "3.11.18",
+  "wheelCount": 202,
+  "lockSha256": "bee557a17d8f149a21d1128faf1442f08a7b81d013e6ff7d18b87dc62760e4db",
+  "wheelManifestSha256": "19a954944ff99ee29f135edf13449ddad5b8569bf36a15eda97d8ba2e29a0e7e",
+  "nativePatches": {
+    "cross_encoder.py": {
+      "beforeSha256": "c0f4ad950f962e40a1e37dc2647ce58066ba57cfdf29f777cd52489ef7a0620c",
+      "afterSha256": "a4ee329dfd0eb14cc8c76e31f6ea8bdb7dec400647bdc582bf4132efbdbaf770",
+      "patchSha256": "bcd1acf2236f33a591f31c282f7bef205850f1747639bb1fbdd6b6f6af341b83"
+    },
+    "memory_engine.py": {
+      "beforeSha256": "9e5494e0569aa9dbcd573282aa5992a150df44001998355abd509730defbd45c",
+      "afterSha256": "a469904a5cd3340192ecdadfa2a2828a70d676fe7a9205652aa4b2e198668492",
+      "patchSha256": "52a45d2d02925ad429ddc686077c7ca9fa989d4d80526bf86b06b55be8fadbdd"
+    }
+  },
+  "rollbackPatch": {
+    "beforeSha256": "8b60ebc16dbc654f0245616e0dbe93864b7468e61615176772205d1e6bca7483",
+    "afterSha256": "e4fef0424f2a3a5f5224570b90da8a63b5616dca731f99e860ab9a178c4ba119",
+    "patchSha256": "c8369e7b05cbf556ced16a4026177ca99aeac00464843bbc2f15e9551cd484bc"
+  },
+  "entrypoint": {
+    "beforeSha256": "9a631ea035ee9cb7eb1636b38f87ff5c5e4a260b43b050039602b75890c9db46",
+    "afterSha256": "b4fff95866951e111fe5dc3de9c9e1aa50e8c006a322584417864778d64b3d99",
+    "privateFileReaderAstUnchanged": true
+  },
+  "observedReviewedImages": {
+    "runtime": "sha256:a2fcdf71867f9cdeaa95fc3f686c5fba7eddfae00a0865eee5255cb3f79c9158",
+    "activation": "sha256:68a135a99d96506bb627eaf1fddeea83104ee304db841edc0dd7bca33b8a0daa",
+    "rollback": "sha256:e14e0d7d9fec06566dbf9f0c30e72df6b5c16b9d7cb52d76a654615f8c8078d4"
+  },
+  "rebuildClaim": "Package/source bytes are checksum-bound. Docker creation timestamps can change rebuilt image IDs; a rebuilt image requires its own verification and deployment binding.",
+  "runtimeProfiles": {
+    "activation": "explicit BGE/MiniLM; CPU torch; parallel0; migrations true; original DSN reader unchanged",
+    "rollback": "old0.9.1 plus v2-preserving guard; migrations false; same database without restore"
+  },
+  "privateArtifactsExcluded": [
+    "credentials",
+    "DSNs",
+    "database snapshots",
+    "native rows",
+    "owner content",
+    "private criteria",
+    "live readiness marker data",
+    "binary wheels",
+    "private logs"
+  ],
+  "buildToolchainSha256": "69421a027a20454d5051d6db7806702050adcf01fc9645fba36db7d1cc7df7c1",
+  "ownWheelReproduction": {
+    "sha256": "dfc48839b656ebb42efd9334131744654b813663d78e7a8a337d3b23b7085275",
+    "independentRebuildWithPinnedBuildConstraintsMatched": true
+  }
+}

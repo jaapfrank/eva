@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "bank": "eva-update-20261106-2d03ed4052786fdc7325dfaab5be9e9d",
+  "operationId": "7b9a1d0b-dc2a-56b6-8be0-f2f10e0b7636",
+  "contentSha256": "0be92fe3289ab8c1bcef0ade1453bc974a04d614e3ed2554dd297f83c30a95e1",
+  "replayAndExactReceiptAfterNativeCompaction": true,
+  "noAdditionalOperationOnReplay": true,
+  "externalModelCalls": 0,
+  "actualRows": [
+    {
+      "operationType": "batch_retain",
+      "status": "completed",
+      "isChild": null,
+      "contentPresent": null,
+      "contentHashMatches": null,
+      "extractionErrors": 0
+    },
+    {
+      "operationType": "retain",
+      "status": "completed",
+      "isChild": true,
+      "contentPresent": false,
+      "contentHashMatches": true,
+      "extractionErrors": 0
+    }
+  ],
+  "nativeChildPayloadCompacted": true
+}

@@ -1,0 +1,20 @@
+{
+  "contract": "EvaHindsightDnsContinuationIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T18:00:23.643716+00:00",
+  "decision": "GO_EXACT_KNOWN_GUARD_ADOPTION_AND_PREAPPROVED_PHASE2",
+  "sidecarSha256": "2c33816f37a4787b5e7097c4f9b3981561b872ad6efc1bdce5695e30ffa58ca6",
+  "planSha256": "751ebb338bf73b088608778dbbc6d462c443f0e7d76d3074e76094185c0a09e5",
+  "preflightSha256": "ae16ff5b6e6f91659e100646369428c3ec5df8abaf4d4d954daceccd5b67f67d",
+  "checks": [
+    "Exactoriginalinstaller/plan/approval/failedactivation+phase1receipthashesunchanged verified. ExactcurrenthealthyguardID/StartedAt/rawHostConfighashindependentlymatched. Phase2fenceandcontinuationnevercreated.",
+    "Only3Dns/DnsOptions/DnsSearch Noneor[]normalized;all3ComposefilesDNSkeysabsent, nonemptyvaluesrefused. Independentpurefunctionpositive/deepcopy/3negativechecks passed; allotherHostConfigfields exact.",
+    "OnlyreviewedoriginalASTimports/functionsloaded;originaltop-levelworkflow/receiptcreationnotexecuted. Originalworkflowandphase1receiptlockheld; inspectionfromexclusivecopiedSDKreceipt. Adoptionrunnerrejectsupdate/stop/restart/down/rm and callbackforbidsrecoverydispatch; healthyguardreverifiedbefore/after.",
+    "SameoriginalnativeDB/head/hash/source/model/security/mount/env/claim/scheduledeligibilitygatesretained. Continueonlyneverattemptedphase2durablefence, thenapprovedhostpointer/resumesamecoreworker. Ownexclusivecontinuationjournal,unknownfailurepreservednoautomaticreplay."
+  ],
+  "limitations": [
+    "Originalphase1failure remains intact, sidecar is explicitresolutionevidence notretroactiverewrite.",
+    "No coreworkerdependencybatchapproval here.",
+    "Actualinstalled1.2readbackandonce-onlyliveprobe remain required."
+  ]
+}

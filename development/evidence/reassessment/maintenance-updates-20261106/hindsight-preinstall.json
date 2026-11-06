@@ -1,0 +1,35 @@
+{
+  "contract": "EvaHindsightUpgradePreinstallProof/v1",
+  "checkedAt": "2026-11-06T17:06:03.827835+00:00",
+  "built": true,
+  "installed": false,
+  "liveVersion": "0.9.1",
+  "targetVersion": "1.2.0",
+  "activationImage": "sha256:68a135a99d96506bb627eaf1fddeea83104ee304db841edc0dd7bca33b8a0daa",
+  "rollbackReferenceImage": "sha256:e14e0d7d9fec06566dbf9f0c30e72df6b5c16b9d7cb52d76a654615f8c8078d4",
+  "canaryArtifacts": {
+    "migrated-clone-preservation.json": "f1a8021721d12f3b7d55e45a216aee7afea25b8e2a3f69b31150cf468e4d6ffb",
+    "native-adapter-canary-candidate.json": "5443b2a182d0bdea9e64255a17a824a5c3436a48218e027d80d8fd0550960747",
+    "native-compaction-canary.json": "81948bf839a418baf44dc5390e2448f3f38bb13527b3fb1256c414c685ad6937",
+    "native-adapter-canary-old.json": "f7dcf1d488b9d14a72400787174f0590343e66506424d8e3f7a7ec1dee8d3ec5",
+    "native-adapter-canary-guard.json": "b20c550d705d7036bb2cf26ef6a9327fd36bff98eba214bd91d3c1be1140bbd5",
+    "native-adapter-canary-forward.json": "bf0b990256226c7c340e6c7b178c23bf5d88883b3a48b23d015e1bbfe65c3b7e",
+    "native-semantic-canary-2.json": "4efaf02923867a66b3a98cbe09b82ec9bc5e39c0d516f1e9654da16aa2d11582",
+    "native-semantic-usage.json": "99cd9ba97ce787833e9bbc618bc16210d5581b1e0e5c0e93cd632e320c35f1e3",
+    "rollback-guard-canary.json": "98fd0cb21b3bf45995789633191ee7c9627b040d00640d5dcca3b5e481c93200"
+  },
+  "independentMemoryRegressions": {
+    "passed": 136,
+    "source": "actual installed core9ba",
+    "review": "development/reviews/hindsight-installed-memory-regressions-independent-20261106.json"
+  },
+  "firstSemanticHarnessRun": {
+    "passed": false,
+    "qualityEvidenceValid": false,
+    "cause": "None-provider forward worker shared the synthetic database. Empty-selection assertion exposed it; stopped that worker and used a new bank/cohort without replaying earlier operations.",
+    "privateFailureEvidenceRetained": true
+  },
+  "installationGate": "Concrete installer review and fresh idle claims required",
+  "fullE416Completed": false,
+  "E411ResidualCleanupCompleted": false
+}

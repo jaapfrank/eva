@@ -249,3 +249,22 @@ def test_other_executor_image_change_during_readiness_is_not_overwritten(tmp_pat
         recover_runtime(**installation.arguments(), verify_behavior=regressed, before_recovery_dispatch=guard)
     assert len(installation.dispatches()) == 1
     assert "recovery" not in json.loads(installation.receipt.read_bytes())
+
+
+def test_hindsight_recovery_preserves_same_database_and_new_post_update_receipts(tmp_path):
+    installation = Installation(tmp_path)
+    # Exercise the existing durable route only for Hindsight; the retained
+    # database and receipts remain mounted across image compensation.
+    installation.before["services"] = {"hindsight": deepcopy(installation.before["services"]["core"])}
+    installation.after["services"] = {"hindsight": deepcopy(installation.after["services"]["core"])}
+    installation.live = {"hindsight": installation.container("hindsight", installation.before["services"]["hindsight"]["image"])}
+    result = update_runtime(**installation.arguments(), verify_behavior=probe)
+    assert set(result["services"]) == {"hindsight"}
+    installation.data.extend(["new source after upgrade", "new v2 document receipt"])
+    result = recover_runtime(**installation.arguments(), verify_behavior=regressed, before_recovery_dispatch=lambda: True)
+    assert result["status"] == "baseline_recovered_with_retained_mounts"
+    assert installation.data[-2:] == ["new source after upgrade", "new v2 document receipt"]
+    assert installation.live["hindsight"]["Mounts"] == installation.mounts
+    assert len(installation.dispatches()) == 2
+    assert all(call[-1] == "hindsight" for call in installation.dispatches())
+    assert not any(token in {"rm", "down", "volume", "restart", "exec"} for call in installation.calls for token in call)

@@ -1,6 +1,8 @@
 # Native memory payload lifecycle
 
-Provider addendum for the installed Hindsight **0.9.1** PostgreSQL implementation.
+Provider addendum for the Hindsight **0.9.1** and **1.2.0** PostgreSQL implementations.
+The same operation schema, source checks and conservative retry boundaries apply;
+unknown native versions still require a separate compatibility review.
 It compacts duplicate execution input after a retain parent and every sibling are
 completed, with explicit zero extraction errors on every child. It does not delete operations, results, errors, documents, memory units,
 original Eva sources, or pending/retry input. No new process or model call.

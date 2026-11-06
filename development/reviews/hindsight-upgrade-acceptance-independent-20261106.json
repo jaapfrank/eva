@@ -1,0 +1,91 @@
+{
+  "contract": "EvaHindsightUpgradeIndependentAcceptancePreparation/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T16:08:25.761029+00:00",
+  "decision": "PREPARATION_ONLY_NO_INSTALL_GO",
+  "scope": "Hindsight 0.9.1 custom to upstream 1.2.0: preserve existing Eva outcome and boundaries; no new framework, no product changes, no household/provider data export.",
+  "upstream": {
+    "url": "https://github.com/vectorize-io/hindsight/releases/tag/v1.2.0",
+    "releaseDate": "2026-11-03",
+    "tagCommitPrefix": "34a1386",
+    "observations": [
+      "Bank deletion fixes include LLM request history and maintenance queues; document deletion and derived data must still be independently checked.",
+      "Skipped consolidation retry can end cancelled with superseded_by; do not reinterpret as successful retain or proof all writers are settled.",
+      "ModelCallExtension can observe every model input/output; preserve disabled/unconfigured private telemetry and current provider routing.",
+      "New consolidation/index/shutdown fixes are potentially beneficial; preserve contracts rather than forcing old custom implementation."
+    ]
+  },
+  "criteria": {
+    "E411OriginalUnchanged": true,
+    "E411CurrentlyOpen": true,
+    "selectedUpgradeDoesNotCloseMemoryCleanupOrE416": true,
+    "original": "Only later-useful knowledge, separate chat history, exact person/source/date/correction/forget, evidence-based cleanup with measured storage/context, no second memory or classification model per turn."
+  },
+  "boundaries": [
+    {
+      "name": "identity-and-private-read",
+      "source": "src/eva/adapters/projection/hindsight.py:732-901,1773-2280",
+      "required": "Keep tenant/installation bank, principal/audience/project/observation partitions, current consent and linked-identity revocation. Retrieve source evidence before admission, including observations; provider tags alone are not authority. Fresh validation on cache hits, correction and erasure invalidation; no permissive SQL fallback on protocol errors."
+    },
+    {
+      "name": "revision-and-idempotency",
+      "source": "src/eva/adapters/projection/hindsight.py:1341-1375,1590-1682,1723-1771",
+      "required": "Same exact bank/items/source revision reuses operation identity and durable result after lost ack/restart; changed source revision differs. Wrong/missing operation identity rejected. Retry only exact pre-existing failed operation once; pending/processing/cancelled/unknown not blindly replayed. Preserve operation/result/error evidence and disable native operation-row GC unless a proved durable replacement owns replay."
+    },
+    {
+      "name": "dream-ack-before-compaction",
+      "source": "src/eva/adapters/projection/hindsight.py:1440-1547; src/eva/application/memory_background.py:645-774",
+      "required": "Persist exact immutable cohort+operation before POST; all actual children terminal, exact per-document source hash/metadata/tags/no raw original_text, explicit measured zero extraction errors and matching counts before acknowledgement. Missing/partial/unknown is not zero. GET-only receipt recovery before erasure, never replay to settle a possible writer."
+    },
+    {
+      "name": "forget-and-stop",
+      "source": "src/eva/application/memory_background.py:326-518,578-580,731-774",
+      "required": "Existing retention/erasure guard and durable lease serialize workers. Advance restore authority erasure generation before content deletion; exact target/person/source receipt. Remove document, derivative model and cache, preserve tombstones/proof. Refuse completion while any remote child can write. STOP/foreground/capacity prevent later background stages and no unmanaged reflection cron is introduced."
+    },
+    {
+      "name": "database-schema",
+      "source": "deploy/living-core/hindsight-memory/README.md; completed_payload_compaction.sql",
+      "required": "Inventory exact native schema/version/extensions/indexes and Eva triggers/functions before migration. Upgrade on private consistent clone. Completed-payload SQL is 0.9.1/schema-specific; do not blindly transplant. Preserve equivalent bounded success-only compaction or explicitly measured no-compaction with no premature source deletion; no sweeping historical unknown/error rows. Preserve original sources, operation results/errors/IDs, bank settings, tags, mental models, observations and tombstones."
+    }
+  ],
+  "isolatedCanary": [
+    "Bind exact live image/config/migrations/schema/custom-source/model settings and a private consistent database clone. Keep clone in root-private storage; isolated network/credentials prohibit household or new remote provider calls. Publish only counts/hash/boolean results; no source text.",
+    "First run migration and start/health against cloned data with automatic processing paused. Compare row identities/counts/hashes for retained historical operation/error/tombstone/source rows and current bank settings; distinguish intended schema transformations from data loss.",
+    "Use separate synthetic bank/person A+B and an explicitly controlled deterministic inference seam for structural canary: ordinary selected preference, unselected exchange, correction, typed work source; exact replay and lost-ack/restart; verify operation identity and actual extraction count. This tests protocol/state, not semantic model quality.",
+    "Exercise actual candidate service retention/recall with current approved local inference/provider route only when explicitly authorized: useful preference/correction, empty selection, source date, A/B privacy, current revoked consent, no raw text storage for dream; measure first/warm latency, usage/storage. If deterministic seam used, mark semantic live extraction unproven.",
+    "Test dream cohort interruption/partial ack and new unrelated member; restart recovery retains membership with no duplicate dispatch. Terminal parent plus pending/missing/failed child, unknown extraction counts, wrong hash/source/tag and cancelled/superseded status must never permit erase or source compaction.",
+    "Forget during pending retain stays leased/pending; settle via GET, then delete exactly scoped document+derived data and invalidate warmed recall. Restart and replay remain erased and do not resurrect facts from queued work/history/cache.",
+    "On candidate data create a fresh selected record, fresh correction, completed operation receipt and erasure tombstone AFTER migration; stop all writers and run old image on that SAME resulting database only after proved schema compatibility. Verify fresh records/receipts remain and erased data stays erased. If downgrade needs destructive schema/data restore, NO_GO automatic rollback; prepare reversible compatibility migration or reviewed forward fix before activation.",
+    "Activation later requires current all-claims/leases/model-assessments/memory-writers gate and post-stop gate, single dispatch receipt, exact image/config/environment/mount preservation and retained baseline. No blanket old-marker exclusions. Post-install authenticated source-bound recall/readback plus unchanged core/worker profiles where touched; no family-acceptance claim."
+  ],
+  "focusedRegressionFiles": [
+    "development/tests/projection/test_hindsight.py",
+    "development/tests/projection/test_hindsight_selection.py",
+    "development/tests/projection/test_dream_memory_batch.py",
+    "development/tests/projection/test_private_memory_aliases.py",
+    "development/tests/application/test_memory_background.py",
+    "development/tests/postgres/test_dream_memory_handoff.py",
+    "development/tests/postgres/test_memory_source_lifecycle.py",
+    "development/tests/postgres/test_pending_memory_erasure.py",
+    "development/tests/postgres/test_native_memory_payload_lifecycle.py",
+    "development/tests/postgres/test_memory_closed_reconciliation.py",
+    "development/tests/postgres/test_memory_erasure_status.py",
+    "development/tests/postgres/test_memory_reflection_status.py"
+  ],
+  "customOverlayDisposition": "Classify each GC/warmup/reranker cache/parallel and payload-compaction patch against exact upstream1.2 implementation. Remove superseded pieces after behavior/resource/source-proof comparison; retaining every0.9.1 patch is not acceptance. Never bypass source pins to apply old patches on changed upstream.",
+  "unknowns": [
+    "No live image or candidate clone inspected by this preparation reviewer.",
+    "No migration/downgrade compatibility claimed; sibling handles actual upstream migration inspection.",
+    "No new tests/model calls/installation performed; concrete bundle needs independent final review."
+  ],
+  "sourceSha256": {
+    "deploy/living-core/hindsight-memory/README.md": "3d36ba41eb985271fa7b2025a6de28e497b23a373ce4328990df0d79e333721a",
+    "deploy/living-core/hindsight-memory/completed_payload_compaction.sql": "57221857fe7690ea8fe690b2dd8f0f75ece6e16082caaa9560ef834ae3caf35e",
+    "deploy/living-core/hindsight-gc/README.md": "bb02238b0da54d8e157303aa829663818808fcf642f9379ec32adad3fe140df5",
+    "src/eva/adapters/projection/hindsight.py": "df4c190691f56ee503696ecdaea0434e2558594c0edf9d9699d977f4da2e0737",
+    "src/eva/application/memory_background.py": "de244b8b77900802ab041c000fb51895aec79fe240c6ea4d572b96e588f4f7c6",
+    "src/eva/application/memory_source_lifecycle.py": "91053c9d9c215c097216e1423547f8712f15ff7e4dd311fd8e09ae37638e3d26",
+    "development/design/product/selective-memory-task-scope-20261019.json": "6185e74c1bc0a43d1a8271662f2fcd15641476e5a6cc37c155c24a1693d064c0",
+    "development/reviews/e411-selective-memory-final-review-20261019.json": "9d26bad0b70016fd17a195035ab8e69072b1cacc24467b70efe1ee81af805379"
+  }
+}

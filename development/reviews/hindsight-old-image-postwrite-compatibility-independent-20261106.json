@@ -1,0 +1,56 @@
+{
+  "contract": "EvaHindsightPostWriteOldImageCompatibilityReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T16:19:03.951550+00:00",
+  "decision": "SOURCE_SUPPORTS_CANARY_NO_INSTALL_GO",
+  "scope": "Bounded actual0.9.1 source and exact1.2 migrations inspection; no database/container mutations or model requests.",
+  "findings": [
+    {
+      "source": "baseline-api/hindsight_api/engine/memory_engine.py:3742-3788",
+      "result": "Migration runner is gated by _run_migrations. Config HINDSIGHT_API_RUN_MIGRATIONS_ON_STARTUP=false parsed config.py3763 and passed server.py58/main.py268. False bypasses migration traversal of unknown new revision; inspect actual rollback config/startup and confirm no other provisioning path invoked."
+    },
+    {
+      "source": "baseline-api/hindsight_api/admin/cli.py:390",
+      "result": "Only runtime nonmigration reference to dropped memory_units_bm25 is admin restore REFRESH. Ordinary engine SQL need not have the matview; admin restore is not a rollback path and must not be used."
+    },
+    {
+      "source": "e8c1a4f7b2d9_drop_global_memory_units_vector_indexes.py",
+      "result": "Dropped global indexes are stated redundant to bank partial indexes, not columns. Verify actual old query/index plan and latency on retained banks and newly created bank after upgrade. Do not recreate global indexes merely to satisfy schema equality."
+    },
+    {
+      "source": "d1e2f3a4b5c6_drop_v1_mental_model_structured_content.py; baseline engine/memory_engine.py:13081-13091; engine/reflect/structured_doc.py:93-98",
+      "result": "Migration clears nonv2 structured JSON while preserving markdown. Old reader requires version1 but refresh catches v2 validation failure and parses stored markdown. Existing get/read can be compatible; old refresh can regenerate lossyv1. Test freshly produced v2 model content with nested lists/quotes/code and the actually used Eva style-model read+refresh; do not assume lossless future refresh for arbitrary rich markdown."
+    },
+    {
+      "source": "c7e2f9a4d1b8_clear_placeholder_memory_dates.py; baseline engine/retain/link_utils.py:460-469",
+      "result": "Migration changes unknown placeholder event_dates to NULL, not genuine finite source dates. Old temporal-link path explicitly skips None. Verify actual affected-row count/hashes and old recall/date rendering and new retain against such a bank; no need reconstruct invalid placeholders."
+    },
+    {
+      "source": "baseline worker/poller.py:1076-1099,1230-1261,1317-1335; engine/task_backend.py:288",
+      "result": "Worker initialization still happens with migration disabled. Old poller claims pending and recovers processing work, not just HTTP reads. Newer pending task payloads must be completed/drained before rollback or demonstrated parsable/behavior-equivalent by old worker; preserve cancelled/superseded/new operation metadata and never revive it implicitly."
+    }
+  ],
+  "mustTestOnSamePostWriteDatabase": [
+    "Old exact baseline image start with migration disabled, exact extensions/vector dimension/settings/weights retained; complete engine initialization, background scheduler and taskbackend readiness, not only process HTTPhealth.",
+    "Fresh candidate retain selected/notselected, correction and idempotent sameoperation replay; restart candidate then old image on same database. Old GET reads exact new receipts and source hashes, old recall returns latest permitted fact, old replay issues no duplicate extraction.",
+    "Old retain a NEW bounded synthetic revision into existing migrated bank and separately a newbank; ensure missing global index/view does not break writes or vectors/keyword recall or unreasonable latency.",
+    "Candidate mentalmodelv2 read and actual Eva style refresh under old engine preserve content/authority; rich markdown compatibility limitation explicitly measured. Preserve disabled unmanaged schedules.",
+    "Candidate erase with derived/cache/tombstone state persists across old startup, recall and pending-work recovery. No old snapshot restore, no tombstone/erasure-generation rewind.",
+    "No mixed old/new writers. Before switch all native pending/processing/consolidation work settled or exact compatible payload replay proven; unknown child/parent remains unknown. Prove no resurrection from failed/cancelled/superseded historical payloads.",
+    "After old operation, switch forward to candidate with migration configuration controlled; latest data/receipts/erasure remain valid and native head unchanged. Schema Alembic head remains candidate head while old engine temporarily reads/writes with migrations disabled."
+  ],
+  "conclusion": "Irreversible migration does not itself prove runtime backward incompatibility. Source makes a data-preserving oldimage rollback plausible without reverseDDL; only actual clone roundtrip establishes it. No blanket block or rollback-success claim from inspection.",
+  "sha256": {
+    "baseline-api/hindsight_api/engine/memory_engine.py": "8b60ebc16dbc654f0245616e0dbe93864b7468e61615176772205d1e6bca7483",
+    "baseline-api/hindsight_api/engine/reflect/structured_doc.py": "e2f06b8375c479bb6ded056fad48073b21b64317c6a5e3456e7d74eda2131576",
+    "baseline-api/hindsight_api/engine/retain/link_utils.py": "f19d79b45a09a832f0a8a53b551d2485de43bba449d83aa86cf6a3dc3a8cae9e",
+    "baseline-api/hindsight_api/admin/cli.py": "c0ca3f93a99c2f9674fa84b8f323b1fa32537163b5126ae63b02b851b06e6347",
+    "baseline-api/hindsight_api/worker/poller.py": "f845467c37cee58c21033a195a971a907cf92154172ad5194d5fcc258451cd53",
+    "baseline-api/hindsight_api/engine/task_backend.py": "1033b68c1eb612bdf1e4982d6dc0621cf658bc0ca7c619d9b0e6266a81a9819f",
+    "migration-source-graph.json": "93641014689c14cdabe35c49b91bf610744dd71233feab1b51730b22618460c7",
+    "upstream/hindsight-api-slim/hindsight_api/alembic/versions/d1e2f3a4b5c6_drop_v1_mental_model_structured_content.py": "00786a2fe77cd635c096ceacc69a11d05ca695cf1caed6b94cb74625241e3508",
+    "upstream/hindsight-api-slim/hindsight_api/alembic/versions/c7e2f9a4d1b8_clear_placeholder_memory_dates.py": "1254b3c517742c443ddc4aa5544fde9aa2f5552fbd2c2dc40a94c2ee3ca0a286",
+    "upstream/hindsight-api-slim/hindsight_api/alembic/versions/f3a5b7c9d1e2_drop_memory_units_bm25_matview.py": "9e56efe5a1890315d9ca3efc806bec31f174ef7ab74f40f701d71b8ae07625f9",
+    "upstream/hindsight-api-slim/hindsight_api/alembic/versions/e8c1a4f7b2d9_drop_global_memory_units_vector_indexes.py": "d7f354eedd2e324652eed69a2ae5c1c2ac082b32cab417795c2a3458d7231919"
+  }
+}

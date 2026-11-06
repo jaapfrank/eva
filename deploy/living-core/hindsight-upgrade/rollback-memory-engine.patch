@@ -1,0 +1,54 @@
+--- a/hindsight_api/engine/memory_engine.py
++++ b/hindsight_api/engine/memory_engine.py
+@@ -963,10 +963,15 @@
+     return out
+ 
+ 
++class _RollbackStructuredVersionError(ValueError):
++    """Newer structured memory must remain unchanged during bounded rollback."""
++
++
+ def _is_non_retryable_task_error(e: Exception) -> bool:
+     """Classify deterministic task failures that should skip worker retry."""
+     return (
+-        isinstance(e, asyncpg.exceptions.IntegrityConstraintViolationError)
++        isinstance(e, _RollbackStructuredVersionError)
++        or isinstance(e, asyncpg.exceptions.IntegrityConstraintViolationError)
+         or _is_oracledb_integrity_error(e)
+         or _is_invalid_embedding_dimension_error(e)
+     )
+@@ -12776,6 +12781,34 @@
+         """
+         started = time.time()
+         mental_model_id = mental_model["id"]
++
++        # A rollback may read newer documents, but must not regenerate their
++        # structured representation through the older v1 writer.
++        if os.environ.get("EVA_HINDSIGHT_ROLLBACK_PRESERVE_V2") == "1":
++            rollback_backend = await self._get_backend()
++            async with acquire_with_retry(rollback_backend) as rollback_conn:
++                rollback_row = await rollback_conn.fetchrow(
++                    f"SELECT structured_content FROM {fq_table('mental_models')} "
++                    f"WHERE bank_id = $1 AND id = $2",
++                    bank_id,
++                    mental_model_id,
++                )
++            rollback_structured = rollback_row["structured_content"] if rollback_row else None
++            if isinstance(rollback_structured, str):
++                try:
++                    rollback_structured = json.loads(rollback_structured)
++                except json.JSONDecodeError:
++                    raise _RollbackStructuredVersionError(
++                        "Mental model refresh unavailable during rollback: newer or unknown structured version."
++                    ) from None
++            if rollback_structured is not None and (
++                not isinstance(rollback_structured, dict)
++                or type(rollback_structured.get("version")) is not int
++                or rollback_structured.get("version") != 1
++            ):
++                raise _RollbackStructuredVersionError(
++                    "Mental model refresh unavailable during rollback: newer or unknown structured version."
++                )
+ 
+         trigger_data: dict[str, Any] = dict(mental_model.get("trigger") or {})
+         model_tags: list[str] | None = mental_model.get("tags")

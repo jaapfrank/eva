@@ -1,0 +1,29 @@
+{
+  "contract": "EvaHindsightImageComparatorIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T17:14:39.528350+00:00",
+  "decision": "GO_FOR_EXACT_SOURCE_OVERLAY_NOT_INSTALL",
+  "changes": "Add exact hindsight service literal to existing image-only service allowlist and static scope error text only. No other comparator/updater behavior changes.",
+  "boundariesPreserved": [
+    "Same existing services and all nonimage configuration exact equality, environment and source/storage/security retained.",
+    "Exact locallyavailable sha256imageIDs, no arbitraryserviceor databaseimage permission.",
+    "Existing durable receipt, one dispatch, guarded compensation, no rm/down/volume/restart/exec.",
+    "Recovery fake verifies newly addedpostupdate source+receipt in sameexistingdata retained; native actualoldnewcanary separate proof."
+  ],
+  "independentTests": {
+    "files": [
+      "development/tests/operations/test_installation_runtime_update.py",
+      "development/tests/operations/test_runtime_image_recovery.py"
+    ],
+    "passed": 39,
+    "failed": 0,
+    "seconds": 1.8,
+    "testEnvironment": "Existing trusted2.37gateenv; scopedcurrentimage_update source primary, isolated tmpfixtures, no productioneffects."
+  },
+  "sha256": {
+    "src/eva/operations/image_update.py": "5cce3ea0418e0af865ec9c06ba0a7226345690c9072fd6480e8084476d14c67d",
+    "development/tests/operations/test_installation_runtime_update.py": "407401e7dce5b16ec1b120b3462f0a946db4324230824371e4b239ded90dcd9a",
+    "development/tests/operations/test_runtime_image_recovery.py": "42daa0c4eb164e6e53b1e5ee76011e1f3c5639ba6f52ad9a7696f3d76b3e427d"
+  },
+  "limitation": "Productioninstaller/currentgates/cloneandnativeforwardproof stillpendingreview. This approval allows exactonefileoverlay in core+worker candidates only."
+}

@@ -1,0 +1,31 @@
+{
+  "contract": "EvaHindsightOwnedSyntheticBankCleanup/v1",
+  "bank": "eva-upgrade-live-20261106-5efbad3e1ebfc0c8c46357c23d8a1000",
+  "allOwnedBankRowsZero": true,
+  "perTableCounts": {
+    "async_operations.bank_id": 0,
+    "attachments.bank_id": 0,
+    "audit_log.bank_id": 0,
+    "bank_aliases.bank_id": 0,
+    "bank_stats_cache.bank_id": 0,
+    "banks.bank_id": 0,
+    "chunks.bank_id": 0,
+    "directives.bank_id": 0,
+    "documents.bank_id": 0,
+    "entities.bank_id": 0,
+    "entity_maintenance_queue.bank_id": 0,
+    "graph_maintenance_queue.bank_id": 0,
+    "invalidated_memory_units.bank_id": 0,
+    "knowledge_pages.bank_id": 0,
+    "llm_requests.bank_id": 0,
+    "memory_links.bank_id": 0,
+    "memory_units.bank_id": 0,
+    "mental_model_history.bank_id": 0,
+    "mental_models.bank_id": 0,
+    "observation_history.bank_id": 0,
+    "webhooks.bank_id": 0
+  },
+  "transactionReadOnly": true,
+  "householdDataTouched": false,
+  "cleanupRepeated": false
+}

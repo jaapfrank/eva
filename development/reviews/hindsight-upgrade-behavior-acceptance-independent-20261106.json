@@ -1,0 +1,64 @@
+{
+  "contract": "EvaHindsightUpgradeBehaviorIndependentAcceptance/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T17:16:33.587480+00:00",
+  "decision": "GO_FOR_BOUNDED_CANDIDATE_BEHAVIOR_AND_POSTWRITE_ROLLBACK_PENDING_INSTALLER",
+  "scope": "Combine independently reviewed source/tests with coordinator actualnativeAPI, structuraloldnewguardedforward, syntheticrealAstra selection/reflection/correction/forget. Does not close E411cleanup/E416/familyacceptance.",
+  "evidenceInterpretation": {
+    "nativeStructural": "ExactcurrentEvaadapter against1.2 and guarded0.9 on samefreshcanaryDB: source-revision correction, immutable source preservation, nativeoperation replay+receipt, scopedrecall, dream fullsourceevidence, forgotten document staysgone, oldversionnewnote readableforward. Richv2contentstructure preserved.",
+    "rollbackGuard": "Actualqueuednativeworker marks dedicatedguarderror terminalfailed, retry0/nextretryNone, no LLMrequests/contentchanges/pendingprocessing; ordinaryread/retain/recall/delete stayavailable. Newerstructuredrefresh explicitly unavailable underrollback.",
+    "realSemantic": "TwoactualAstra syntheticselection calls: usefulsource2selectedfacts; empty0+explicitzeroerrors; exactsourcereceiptrecoverywithoutreplay, personfilter recall, delete.",
+    "realReflection": "Existingadapter groundedreflection followed by NEW correctionexchange; originalclosedsource rewrite correctlyrefused. Beforehashbinds previousactualreflection, afterchanged withsourceproof. Actualcorrected sentence/listconstraints readback and forgetting removesderivativestylemirror.",
+    "retainedFailures": "Firstsemanticmultiple-worker harness and reflectionimmutable-source rewrite/raw-vs-strippedhash mistakes remain retained. Failedproofs not silentlymarkedpass, new namespaces/controlledworker used; no historicaloperation replay.",
+    "isolatedInstalledTests": "Independent136memorycontractcases exact9baactualcore +39imageupdate/recovery+16guard/profile+7sourceport; regressions scopebounded.",
+    "modelUsage": {
+      "nativeModelUsage": [
+        {
+          "provider": "openai-codex",
+          "model": "gpt-6-astra",
+          "status": "success",
+          "calls": 13,
+          "input_tokens": 60933,
+          "output_tokens": 1169,
+          "cached_tokens": 16000,
+          "total_tokens": 62102,
+          "thoughts_tokens": null,
+          "duration_ms": 52961
+        }
+      ],
+      "activeOperations": 0,
+      "cost": "unknown; no billing measurement available",
+      "scope": "ALL development synthetic native canaries in the separate canary database; household Eva usage excluded"
+    },
+    "noHouseholdExport": "Actualclone read/migration stays private/no remoteinference; realmodelcanaries use separate syntheticDB only. Reviewer0modelcalls."
+  },
+  "limitations": [
+    "No livepromotion claim; finalinstaller and effectivebaseline/config/currentallclaimsgates mustbeindependentlyreviewed.",
+    "Old0.9rollback is boundedservicecompatibility withv2refreshfailclosed, not allnative1.2featureparity.",
+    "No cost inferred, reasoningtokenNULL preserved; measureddeveloperusage excludedfromhouseholdruntime.",
+    "No E411historicalbadsourcecleanup/deletion authorized or completed by this upgrade."
+  ],
+  "evidenceSha256": {
+    "native-adapter-canary-candidate.json": "5443b2a182d0bdea9e64255a17a824a5c3436a48218e027d80d8fd0550960747",
+    "native-adapter-canary-old.json": "f7dcf1d488b9d14a72400787174f0590343e66506424d8e3f7a7ec1dee8d3ec5",
+    "native-adapter-canary-guard.json": "b20c550d705d7036bb2cf26ef6a9327fd36bff98eba214bd91d3c1be1140bbd5",
+    "native-adapter-canary-forward.json": "bf0b990256226c7c340e6c7b178c23bf5d88883b3a48b23d015e1bbfe65c3b7e",
+    "native-semantic-canary-2.json": "4efaf02923867a66b3a98cbe09b82ec9bc5e39c0d516f1e9654da16aa2d11582",
+    "native-semantic-canary.json": "0bdb97da3c3e5156a40f2732ed2e2cdd855b1f30fd33c3efc4fbe6f1c83dcfe8",
+    "native-semantic-usage.json": "99cd9ba97ce787833e9bbc618bc16210d5581b1e0e5c0e93cd632e320c35f1e3",
+    "native-reflection-canary.json": "a3c80521031131259888200ca1e8e116d72ebcdbb7529fcf77aff7110f9c7877",
+    "native-reflection-correction-canary-2.json": "e17059a94fd944508ba70fa5a7b20246b458963804b43fbd94f2ad22e007ee0f",
+    "native-development-usage.json": "298055d09463ea842842ee6093f6c88229743dda4b4ebd79ac032cb5a31f9b27",
+    "guard-queued-worker-canary.private.json": "dca056280033d8eff9abd0d3e2c9cb2c1de774aaba60847ba0e958cfea530a92",
+    "native-compaction-canary.json": "81948bf839a418baf44dc5390e2448f3f38bb13527b3fb1256c414c685ad6937"
+  },
+  "independentReviewSha256": {
+    "hindsight-upgrade-acceptance-independent-20261106.json": "a42da59085bc02714008444487400dee9caeb0128f1281152789e64b3fe18792",
+    "hindsight-old-image-postwrite-compatibility-independent-20261106.json": "37cd60ecd740c58922d0a8484558409ed6b38a409f54f63ba215491f55893114",
+    "hindsight-local-port-independent-20261106.json": "816a32353679157cb6833f1118cbeb91ff45ede7310f8fb2228b9f9e952f3301",
+    "hindsight-rollback-profile-independent-20261106.json": "26d201fe6447c84c3c0d0b6bea4b293f7adb5b219468113967ec104fd0e453f8",
+    "hindsight-installed-memory-regressions-independent-20261106.json": "317de2f5435a6c2e594cec5cdeab1b499c581501fa4af5d3f127e021b0f207d4",
+    "hindsight-image-comparator-independent-20261106.json": "071bfb9903f0d91a5d316b9135d4aaa4065551ea9f84b48d799261276902c777",
+    "remaining-core-dependencies-independent-20261106.json": "807d0e29fcc92e762b14731112eef15ae6b08eba265c2fc066f231dc81f82271"
+  }
+}

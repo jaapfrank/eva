@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: De modeladapter-upgrade is afgerond en live; deze stap niet opnieuw bouwen of installeren. E4.16 blijft open voor de volledige autonome fout→hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→beheerde toepassing→oorspronkelijke werking→later hergebruik. Oude gesloten native beoordelingsregistratie blijft bewijsgebonden en fail-closed; actuele toepassing vraagt een nieuwe bron-/release-/bevoegdheidsbinding onder ongewijzigde criteria. De bestaande twee contexttestfouten en historische supplycontroles blijven zichtbaar in het upgradebewijs; E4.11 blijft open voor geheugenresiduen.
+Volgende stap: Hindsight1.2.0 is live geïnstalleerd en onafhankelijk teruggelezen: originele bronnen/fouten behouden, echte selectie2/nulresultaat0/zoeken/vergeten slagen en alle proefdata zijn opgeruimd. PydanticAI/Graph2.66 zijn live. Volgende uitkomst: de beoordeelde kern-/workerbatch met Python3.12.16, OpenAI3.46 en genai-prices0.2.1 plus de bestaande veilige herstelroute daadwerkelijk installeren en live controleren; huidige kern draait nog Python3.12.14/OpenAI3.31. Daarna overige actieve componenten, ondersteunde native beveiligingspatches en hostpakketten per compatibele batch. E4.16-autonomie en E4.11-residuopruiming blijven open.
 
 ## Voortgang
 

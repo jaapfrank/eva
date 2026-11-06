@@ -1,0 +1,29 @@
+{
+  "contract": "EvaHindsightFrozenInstallerIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T17:45:39.268031+00:00",
+  "decision": "GO_FOR_EXACT_TWO_PHASE_HINDSIGHT_INSTALLATION",
+  "installerSha256": "9e8a62c4015202b9ea375f6e865927dd6e260622626af2bbeeefd4f77e6c092b",
+  "planSha256": "aa72589795203937a9080d2d35c87e471637f3606293fe4d1cff2e861f4af471",
+  "freezeSha256": "d4680a3e0ff10670fcd3185e315afc56f8b7f9b497ae87cd4d7f12f98fd845db",
+  "preflightSha256": "1b1b02abd9d7a68288c7f5c50f984494e227e82a5a720388a85945be74bef89c",
+  "checks": [
+    "Allfreeze/helpers/operator/config/sourceproof/history/criteria hashes verified. ExactexistingroleIDs/images/StartedAt current andhealthy independentlychecked.",
+    "Coreclaimsprefix retained with exactcurrentrunnerliteral; globalnative readonlyDB idle repeats pendingprocessing/unscheduled/expiredtracechecks and actualpinned1.2schedulereligibility nowplus15minutes.14cron is presence notdue; virtualoldfields exactnewmigrationbackfills, readOnlytransaction and noengineinitialization/enqueue/modelcall.",
+    "Firstguarded0.9image then1.2image; bothphaseconfigcomparisons differ ONLYhindsightimage. No database/schema snapshot restore; originals22tables/oldcolumns hashcompared with onlyexplicitv1JSON/dateNULL transformation.",
+    "Hostpublisherinstalledsnapshotpointeronly, allotherhostconfig/source/env preserved. Lastsorteddropin/exclusivecreation/fencedreceipt; exactcoreworkerstopandpoststopclaims, samecontainers/sources/fourprofilesresume.",
+    "9historyreceipts/62criteria pinned unchanged; allhistoricalruntimehandoffs terminal/blocked; isolatedworknoactive.",
+    "Existingfrozenbf8durableupdate/recoveryoperator provenance preserved. DOWNcandidate permits onegatedreceiptboundcompensation; healthyunknownbehavior remainsinspectiononly, no fabricatedFalseverdict/no replay.",
+    "Postinstallsemanticprobe separateexact9bd2source+once-dispatchreceipt+ownbankcleanupcounts, actualinstalledreadback stillrequired."
+  ],
+  "scopeExclusions": [
+    "No core/workerdependencyimageupgrade in THISinstaller; candidateCPython16 batch requires separate scopedreview/installapproval.",
+    "No fullE411cleanup/E416/familyacceptance and no broadallOSScomplete claim.",
+    "Unknownactivation/recovery staysretained inspectiononly; do notrerununconfirmedphases or restoreoldDB."
+  ],
+  "boundPriorReviews": {
+    "hindsight-upgrade-behavior-acceptance-independent-20261106.json": "035371775138f0cd4c4b687159bae1b1fd755d035230cd332735d5004546a73f",
+    "hindsight-rollback-profile-independent-20261106.json": "26d201fe6447c84c3c0d0b6bea4b293f7adb5b219468113967ec104fd0e453f8",
+    "hindsight-live-probe-readiness-independent-20261106.json": "526bc27184e2bde421a6f2fff2e722a1ea4b637572802d91521abc36c2e31be8"
+  }
+}

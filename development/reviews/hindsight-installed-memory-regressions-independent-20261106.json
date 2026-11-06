@@ -1,0 +1,56 @@
+{
+  "contract": "EvaHindsightInstalledMemoryFocusedIndependentRegression/v1",
+  "reviewer": "/root/independent_review",
+  "reviewedAt": "2026-11-06T17:01:22.317110+00:00",
+  "decision": "GO_FOR_AFFECTED_EVA_MEMORY_CONTRACT_REGRESSIONS",
+  "sourceImage": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+  "runtimeSources": {
+    "eva.adapters.projection.hindsight": {
+      "path": "/opt/eva/src/eva/adapters/projection/hindsight.py",
+      "sha256": "df4c190691f56ee503696ecdaea0434e2558594c0edf9d9699d977f4da2e0737"
+    },
+    "eva.application.memory_background": {
+      "path": "/opt/eva/src/eva/application/memory_background.py",
+      "sha256": "de244b8b77900802ab041c000fb51895aec79fe240c6ea4d572b96e588f4f7c6"
+    }
+  },
+  "sourceOrder": "/opt/eva/src:/frozen/development:/usr/local/lib/python3.12/site-packages:/test-tools; no workingtree productsource mounted or fallback",
+  "isolation": {
+    "network": "none",
+    "readOnly": true,
+    "capDropAll": true,
+    "newPrivileges": false,
+    "liveDataMounted": false,
+    "modelRequests": 0
+  },
+  "testFilesSha256": {
+    "development/tests/projection/test_dream_memory_batch.py": "b921a432e843bce716bcba71f80615374439472166e45f042c02fb24468e7793",
+    "development/tests/projection/test_hindsight_selection.py": "71adaa57e07572d1c34a5c3c96e77c44ac7763871ca9cfb27be3a3b93d3ad938",
+    "development/tests/projection/test_private_memory_aliases.py": "f75487c584016ef2ee48f615df040bbfabee16af4bbf525cad4a6fd02e76e00d",
+    "development/tests/application/test_memory_background.py": "bbf45e6a67f7db0055b47d0fcfa210a9e62dc6eb0b411cb0b6c354728852c6a7"
+  },
+  "result": {
+    "passed": 136,
+    "failed": 0,
+    "pytestSeconds": 12.5,
+    "wallSeconds": 14.428,
+    "log": "/var/lib/eva2/finalization-20261106/hindsight-upgrade/independent-installed-memory-regressions.log",
+    "logSha256": "f7362fae7640f3db7907191de00211d3975f9ec99b68a3f2b1d377ca1abf2ad6"
+  },
+  "coverage": "Exact dream cohort/operation/document/source/count evidence, read-only recovery/forget fencing, selection unknown versus measuredzero, privatealias consent/revocation/cacheauthority, background STOP/foreground/capacity/budget/erasure/restoreauthority/retry rules. Controlled protocol fakes, not a real nativeprovider integration.",
+  "additionalCanaryReceiptsInspected": {
+    "guard-queued-worker-canary.private.json": {
+      "sha256": "dca056280033d8eff9abd0d3e2c9cb2c1de774aaba60847ba0e958cfea530a92",
+      "passed": true
+    },
+    "native-adapter-canary-guard.json": {
+      "sha256": "b20c550d705d7036bb2cf26ef6a9327fd36bff98eba214bd91d3c1be1140bbd5",
+      "passed": true
+    }
+  },
+  "limits": [
+    "Native1.2actualAPI/migration/clone/newdata rollbackforward proof remains separate coordinator canary; these tests do not rerun privatehousehold data or semantic extraction.",
+    "No installationGO; finalexactinstaller/currentclaimsgates/profiles and forwardcanary stillneeded.",
+    "Frozen testsource retained, not modified to match new provider; actualoldcurrent image sources are primary."
+  ]
+}

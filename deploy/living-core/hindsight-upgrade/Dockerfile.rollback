@@ -1,0 +1,7 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+USER 0:0
+COPY memory_engine.py /app/api/hindsight_api/engine/memory_engine.py
+COPY manifest.json /opt/eva2/hindsight-rollback-compat.json
+ENV EVA_HINDSIGHT_ROLLBACK_PRESERVE_V2=1 HINDSIGHT_API_RUN_MIGRATIONS_ON_STARTUP=false
+USER 1000:1000

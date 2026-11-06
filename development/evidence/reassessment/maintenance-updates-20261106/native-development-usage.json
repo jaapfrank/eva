@@ -1,0 +1,19 @@
+{
+  "nativeModelUsage": [
+    {
+      "provider": "openai-codex",
+      "model": "gpt-6-astra",
+      "status": "success",
+      "calls": 13,
+      "input_tokens": 60933,
+      "output_tokens": 1169,
+      "cached_tokens": 16000,
+      "total_tokens": 62102,
+      "thoughts_tokens": null,
+      "duration_ms": 52961
+    }
+  ],
+  "activeOperations": 0,
+  "cost": "unknown; no billing measurement available",
+  "scope": "ALL development synthetic native canaries in the separate canary database; household Eva usage excluded"
+}

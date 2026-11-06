@@ -1,0 +1,94 @@
+{
+  "contract": "EvaHindsightInstalledTechnicalDelivery/v1",
+  "verifiedAt": "2026-11-06T18:09:11.530496+00:00",
+  "scope": "Hindsight native upgrade through existing Eva memory adapter; no full memory-cleanup, E4.16 autonomy or family-acceptance claim",
+  "beforeVersion": "0.9.1",
+  "installedVersion": "1.2.0",
+  "installedImage": "sha256:68a135a99d96506bb627eaf1fddeea83104ee304db841edc0dd7bca33b8a0daa",
+  "reviewedRollbackImage": "sha256:e14e0d7d9fec06566dbf9f0c30e72df6b5c16b9d7cb52d76a654615f8c8078d4",
+  "upstreamCommit": "34a138684a899b6ec34175f7a2b633860466d289",
+  "built": true,
+  "independentlyReviewed": true,
+  "installed": true,
+  "actuallyUsed": true,
+  "technicalDeliveryComplete": true,
+  "nativeHead": {
+    "before": "c4f7a91b2d38",
+    "after": "c7e2f9a4d1b8"
+  },
+  "dataPreservation": {
+    "original22TableColumnsCompared": true,
+    "originalOperationRowsPreserved": 7042,
+    "compactionTriggerAndExtensionsPreserved": true,
+    "originalSourceHashesAndErrorsPreserved": true,
+    "sameDatabaseNoRestore": true,
+    "declaredMigrationClearsDerivedV1StructuresButPreservesFaithfulMarkdown": true,
+    "privateCloneDerivedV1CopiesCleared": 525
+  },
+  "checks": {
+    "independentInstalledSourceMemoryRegressionsPassed": 136,
+    "nativePostwriteRollbackAndForwardReturnPassed": true,
+    "richV2GuardStopsBeforeModelOrWriteWithoutRetry": true,
+    "nativeCompactionExactReceiptAndReplayPassed": true,
+    "actualAstraSelectionFacts": 2,
+    "actualAstraEmptySelectionFacts": 0,
+    "sourceProofRecoveryRecallForgetPassed": true,
+    "all21SyntheticBankTablesEmptyAfterCleanup": true,
+    "coreWorkerImagesSourcesAndFourProfilesPreserved": true,
+    "unrelatedContainersAnd62Criteria9ReceiptsPreserved": true
+  },
+  "installationInterruption": {
+    "firstSystemInterpreterLaunchStoppedBeforeChanges": true,
+    "guardPostcheckStoppedOnEmptyDnsNullVsArrayRepresentation": true,
+    "resumedByIndependentlyReviewedSidecar": true,
+    "originalFailedReceiptsPreserved": true,
+    "guardNotRedispatched": true
+  },
+  "developmentUsageOnInstalledRuntime": {
+    "provider": "existing openai-codex",
+    "model": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "requests": 3,
+    "inputTokens": 11125,
+    "outputTokens": 331,
+    "totalTokens": 11456,
+    "providerDurationMilliseconds": 14028,
+    "cachedTokens": null,
+    "cachedTokensExplanation": "Partial per-call reporting; one cache value is NULL",
+    "reasoningTokens": null,
+    "cost": null,
+    "householdRuntimeUsageIncluded": false
+  },
+  "remainingMaintenance": {
+    "hindsightPythonInterpreter": "3.11.16 unchanged; supported security patch3.11.18 is a separate runtime batch",
+    "coreWorkerLatestPackageAndPythonBatch": "Reviewed candidate, not installed in this delivery",
+    "E411ResidualCleanupCompleted": false,
+    "fullE416Completed": false
+  },
+  "independentReview": "development/reviews/hindsight-installed-independent-20261106.json",
+  "independentReviewSha256": "66f3938445d8624624dc84893e3763b83a821d62fcf0e6f1393e833eeacef0cd",
+  "artifacts": {
+    "live-adapter-canary.json": "5d6dc0b9d3fd445de5a516585d8b391f734fdde8d912e0b308e9f42e01d70c8a",
+    "live-cleanup-counts.json": "b66f852f2ddde03851bd444e25a25b1022e24b579f576694102dd42cbe86ae7e",
+    "migrated-clone-preservation.json": "f1a8021721d12f3b7d55e45a216aee7afea25b8e2a3f69b31150cf468e4d6ffb",
+    "rollback-guard-canary.json": "98fd0cb21b3bf45995789633191ee7c9627b040d00640d5dcca3b5e481c93200",
+    "native-adapter-canary-forward.json": "bf0b990256226c7c340e6c7b178c23bf5d88883b3a48b23d015e1bbfe65c3b7e",
+    "native-reflection-correction-canary-2.json": "e17059a94fd944508ba70fa5a7b20246b458963804b43fbd94f2ad22e007ee0f"
+  },
+  "publicReproducibility": {
+    "directory": "deploy/living-core/hindsight-upgrade",
+    "manifestSha256": "44c9af18cf87f705277ee9f03beb3fb0e4a2421eb2cfb26bfdea2bbaf7c01793",
+    "focusedTestsPassed": 23,
+    "sourceOutputsReproduced": 4,
+    "ownWheelRebuiltIdentically": true,
+    "freshFullImageRebuildClaimed": false,
+    "review": "development/reviews/hindsight-public-recipe-independent-20261106.json"
+  },
+  "liveDashboardProjection": {
+    "checkedAt": "2026-11-06T18:20:27.814942+00:00",
+    "canonicalBoardSha256": "8a70b83eff806068ebcb1943e2c0c5220aed3d4aceb1dbc52292ae9618148f26",
+    "currentNextActionExact": true,
+    "taskCountsUnchanged": "103 total /83 completed /1 cancelled /19 open"
+  },
+  "sourceWhitespaceCheck": "Passed excluding unified patch artifacts, whose syntactically required empty context lines contain one leading space; exact patch application/source hashes independently verified."
+}

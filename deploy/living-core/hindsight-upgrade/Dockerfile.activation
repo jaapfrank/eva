@@ -1,0 +1,7 @@
+ARG RUNTIME_IMAGE
+FROM ${RUNTIME_IMAGE}
+USER 0:0
+COPY hindsight_entrypoint.py /opt/eva2/hindsight_entrypoint.py
+COPY manifest.json /opt/eva2/hindsight-activation-profile.json
+ENV HINDSIGHT_API_RUN_MIGRATIONS_ON_STARTUP=true
+USER 1000:1000

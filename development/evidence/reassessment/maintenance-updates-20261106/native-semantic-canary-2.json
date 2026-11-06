@@ -1,0 +1,31 @@
+{
+  "scope": "Synthetic only; actual installed Eva adapter plus Hindsight1.2.0 and existing Astra/medium provider route",
+  "checks": {
+    "actualNativeSelectionAndExactProof": {
+      "bank_id": "eva-update-sem2-20261106-290c132453b696104f4298e8e7f225d9",
+      "document_id": "synthetic-update-canary:exchange:semantic-positive",
+      "content_sha256": "96657de85069bf5c7877a73dcef2dd9a3245870464a6eb895779734cd5bf8db6",
+      "disposition": "retained",
+      "selected_fact_count": 2,
+      "operation_id": "d6c61db4-95cd-5af2-85ee-ddb04895c71a"
+    },
+    "modelResultRecoveredWithoutReplay": true,
+    "actualEmptySelectionExplicitZeroErrorsAndSourceProof": {
+      "bank_id": "eva-update-sem2-20261106-290c132453b696104f4298e8e7f225d9",
+      "document_id": "synthetic-update-canary:exchange:semantic-empty",
+      "content_sha256": "d87d3680146bd7ab0891a57de9e96fe87e53d32b5970b14519138ae3e8e24840",
+      "disposition": "not_selected",
+      "selected_fact_count": 0,
+      "operation_id": "20322f69-a357-513b-9700-1ad9dc4fbc7e"
+    },
+    "actualSelectedFactsRetrievedWithPersonFilter": true,
+    "actualSelectedDocumentForgotten": true
+  },
+  "externalProvider": "openai-codex",
+  "reasoningEffort": "medium",
+  "bank": "eva-update-sem2-20261106-290c132453b696104f4298e8e7f225d9",
+  "positiveOperationId": "d6c61db4-95cd-5af2-85ee-ddb04895c71a",
+  "positiveSeconds": 8.166,
+  "emptySeconds": 2.583,
+  "passed": true
+}
