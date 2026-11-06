@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: owner review preserves explicit technical completion without accepting the result
+ok 1 - owner review preserves explicit technical completion without accepting the result
+  ---
+  duration_ms: 5.795698
+  type: 'test'
+  ...
+# Subtest: explicit accepted Telegram trial closes its scope without accepting conversation scope
+ok 2 - explicit accepted Telegram trial closes its scope without accepting conversation scope
+  ---
+  duration_ms: 1.414681
+  type: 'test'
+  ...
+# Subtest: private conversation acceptance does not accept family use or product comparisons
+ok 3 - private conversation acceptance does not accept family use or product comparisons
+  ---
+  duration_ms: 2.133185
+  type: 'test'
+  ...
+# Subtest: review is current through the exact 60-minute boundary
+ok 4 - review is current through the exact 60-minute boundary
+  ---
+  duration_ms: 1.320379
+  type: 'test'
+  ...
+# Subtest: only a small future clock skew is tolerated
+ok 5 - only a small future clock skew is tolerated
+  ---
+  duration_ms: 0.259209
+  type: 'test'
+  ...
+# Subtest: missing, invalid or ambiguous review times are unknown
+ok 6 - missing, invalid or ambiguous review times are unknown
+  ---
+  duration_ms: 0.173197
+  type: 'test'
+  ...
+# Subtest: invalid or missing current time cannot assert freshness
+ok 7 - invalid or missing current time cannot assert freshness
+  ---
+  duration_ms: 1.426196
+  type: 'test'
+  ...
+# Subtest: explicit offsets and supported current-time representations agree
+ok 8 - explicit offsets and supported current-time representations agree
+  ---
+  duration_ms: 0.234493
+  type: 'test'
+  ...
+# Subtest: a later poll does not renew the original review
+ok 9 - a later poll does not renew the original review
+  ---
+  duration_ms: 0.143509
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 159.434445

@@ -1,0 +1,110 @@
+{
+  "contract": "EvaIndependentOwnerStatusVoiceReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T15:51:05.623563+00:00",
+  "decision": "GO",
+  "scope": "Owner status/withdrawal projections, guarded checker and project-only dashboard candidate; no voice implementation or restart",
+  "ownerInstruction": {
+    "path": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+    "sha256": "32a7eabe9bc7a20a6a38ee2e2b682fdbe605f3739f04376e79bfd54c1b1e3ce5"
+  },
+  "statusAssessment": {
+    "C3.1": "completed by explicit owner acceptance; consolidated existing devicechecks follow that declaration without a fresh per-device technical test claim.",
+    "E2.6": "cancelled/withdrawn, retained with original criteria/history; not counted as a completed function or open account action.",
+    "originalAll103CriteriaUnchanged": true,
+    "expectedCounts": {
+      "tasks": 103,
+      "completed": 83,
+      "withdrawn": 1,
+      "open": 19
+    }
+  },
+  "separateVoiceIncident": {
+    "evidence": "development/evidence/reassessment/owner-status-voice-20261106/voice-availability.json",
+    "sha256": "3dc02b3e96cd8d7d87ce4e7052756af3e582bdb8637db79e912a546d28bd528d",
+    "ownerConfirmedUsedDeviceTurnsBlueAndResponds": true,
+    "freshPhysicalTestOfSecondSpeakerClaimed": false,
+    "agentUnmuteRestartAudioOrModelRequests": false,
+    "doesNotCloseC3.6OrFamilyAcceptance": true,
+    "evidenceReadOnlyReview": true
+  },
+  "checkerUIReview": "GO: cancelled tasks require authorized withdrawal/no pending action; withdrawn disposition cannot be relabeled completed even with historic transport evidence. Counts83completed/1withdrawn/19open, exact103criteria preserved; current workE416, memoryE411, C3.6 and F2 remain open. Existing negative unfinished-device fixture now sets an actually unfinished device explicitly.",
+  "voiceRuntimeModifiedByReviewer": false,
+  "reviewedAt": "2026-11-06T15:56:12.032585+00:00",
+  "canonicalBoardSha256": "bdab9474513ae6ed10567d360c09f7f69461d6d61ec031948d6d0a3952a1dfbc",
+  "reviewedSourceHashes": {
+    "src/tools/check_current_workboard.py": "5f3e4756b67312351c3c6f1bee8939ed718eaab8f621310419c849ec3c041ee5",
+    "development/tests/operations/test_current_workboard.py": "659c43dd15fb5c4175e4e14c24af8cf077acd48cb82fb700a5f12e0bf8c45551",
+    "development/tools/project-dashboard/src/project-work-list.jsx": "bc28a5f6fdf7bcf99ad9c40cc7e7efb9eb1b9be2fb4b72199a729524910c67df",
+    "development/tools/project-dashboard/src/project-dashboard.jsx": "4f143f653f35c3bfb774dd02d058155461da4b4d239c0df24d7e22bae3e678e8",
+    "development/docs/WERKBORD.md": "523a0ac93ab08763e8ae5de69a312f92a46a9ddcae3d5548f49558fbee030bf3",
+    "development/design/product/execution-workboard-v1.json": "bdab9474513ae6ed10567d360c09f7f69461d6d61ec031948d6d0a3952a1dfbc"
+  },
+  "candidateProjectDistHashes": {
+    "index.html": "3116354148f85d9da4c13034d8ab03d3dd81753063286958ab0568d8123738c2",
+    "asset-manifest.json": "7d1d0209f1f126fbe2ebe6c1309887773d3d977627d7fe56d7e8d3067681abeb",
+    "results/au008-storingschecklist.html": "ac15973dcfffe3c86740b7d63f01996b50a6eb7c3556137fe31634d5b5195796",
+    "results/au007-beoordelingskaart.html": "543e181a91100a9c720e0bed52803493cb66ecb9fd3e8a4751d2a8978c308f84",
+    "assets/index-Dxklunuw.js": "bc0ba2e49cbb391efd9e8e8ec30dbf1eaa1ebea0f199fae946ac64b7f2a7230a",
+    "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e"
+  },
+  "verificationEvidenceSha256": "3acb4e7556e2f89de8f4bdc3282b9b94a4ca22082cb915cf3113a7fdc421e2ce",
+  "independentTests": {
+    "checker": {
+      "passed": 15,
+      "seconds": 0.58,
+      "log": "development/reviews/owner-status-voice-checker-independent-20261106.log",
+      "sha256": "08106afa14fe3a0a17aed781b0fe12ab4cb07508996485889514a03e1678bdc0"
+    },
+    "frontend": {
+      "passed": 9,
+      "log": "development/reviews/owner-status-voice-ui-independent-20261106.log",
+      "sha256": "2148d5ed36eb00b73f90f08955c64ae894e6a1618d266155596fa4cdce4602b5"
+    },
+    "actualReactServerRender": {
+      "script": "development/evidence/reassessment/owner-status-voice-20261106/verify-project-projection.cjs",
+      "sha256": "9a047dcf6ed5be984cb5e0a6b098ebf1b435609dd5de6cb0fe3238826e5e1e8f",
+      "passed": true,
+      "smallTaskFilterCounts": {
+        "all": 103,
+        "completed": 83,
+        "cancelled": 1,
+        "open": 19
+      },
+      "unfinishedParentsRemainOpen": [
+        "FE5",
+        "C1",
+        "I1",
+        "FE2"
+      ],
+      "unfinishedParentsWithAllTerminalChildrenRemainOpen": true,
+      "withdrawnNoAccountAction": true
+    }
+  },
+  "reviewFindingResolved": "Added bidirectional withdrawn->cancelled check and negative test preventing false completed-function count from retained old transport completionEvidence.",
+  "projectDashboardProcedureApproval": {
+    "approved": true,
+    "scope": "Only user eva2-project-dashboard.service and its exact project-dist bundle",
+    "candidateHashesAboveMandatory": true,
+    "requirements": [
+      "Capture current bundle hash/PID and exact core/worker/voice container IDs/images first; exclusive durable activation receipt.",
+      "Resolve and verify exact target/temp/backup paths, preserve previous full bundle at exact private backup, use same-filesystem atomic replacement.",
+      "Stop/restart only project-dashboard user service; no core/worker/voice/audio/unmute action.",
+      "After activation verify HTTPindex and all referenced asset hashes, canonicalprojectstate counts/status and unchanged runtime container identities.",
+      "If actual bundle verification fails, restore only retained exact old project bundle under same guarded receipt; no blind repeated activation."
+    ]
+  },
+  "currentRuntimeVoiceHealthProvenByThisReview": false,
+  "noNewVoiceOrModelUseByReviewer": true,
+  "parentOutcomeFinding": {
+    "identifiedBy": "/root",
+    "recordedAt": "2026-11-06T15:54:25.371324+00:00",
+    "status": "resolved",
+    "finding": "Child-only hasOpenActions could hide unfinished parent outcomes C1/I1/FE5/FE2 when all children are terminal. Preserve original parent acceptance semantics.",
+    "requiredRule": "parent status not completed OR at least one child status neither completed nor cancelled",
+    "previousAssetApprovalWithdrawn": true,
+    "previousReviewSha256": "4931ef991d719b9a065e80d38caace09f9c3cbefb3b91bd23f27d3e09797846f",
+    "oldBundleActivated": false,
+    "resolution": "hasOpenActions again keeps nonterminal parent open even when all children are completed/cancelled; only cancelled children are excluded from pending work. No parent acceptance criteria weakened."
+  }
+}

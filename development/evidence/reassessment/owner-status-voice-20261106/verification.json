@@ -1,0 +1,86 @@
+{
+  "contract": "EvaOwnerStatusProjectionVerification/v1",
+  "sourceHashes": {
+    "src/tools/check_current_workboard.py": "5f3e4756b67312351c3c6f1bee8939ed718eaab8f621310419c849ec3c041ee5",
+    "development/tests/operations/test_current_workboard.py": "659c43dd15fb5c4175e4e14c24af8cf077acd48cb82fb700a5f12e0bf8c45551",
+    "development/tools/project-dashboard/src/project-work-list.jsx": "bc28a5f6fdf7bcf99ad9c40cc7e7efb9eb1b9be2fb4b72199a729524910c67df",
+    "development/tools/project-dashboard/src/project-dashboard.jsx": "4f143f653f35c3bfb774dd02d058155461da4b4d239c0df24d7e22bae3e678e8",
+    "development/docs/WERKBORD.md": "523a0ac93ab08763e8ae5de69a312f92a46a9ddcae3d5548f49558fbee030bf3",
+    "development/design/product/execution-workboard-v1.json": "bdab9474513ae6ed10567d360c09f7f69461d6d61ec031948d6d0a3952a1dfbc"
+  },
+  "reactServerRender": {
+    "status": "passed",
+    "all": 103,
+    "completed": 83,
+    "cancelled": 1,
+    "open": 19,
+    "unfinishedParentsVisible": [
+      "FE5",
+      "C1",
+      "I1",
+      "FE2"
+    ],
+    "unfinishedParentWithTerminalChildrenVisible": true,
+    "withdrawalHasNoAccountAction": true
+  },
+  "frontendTests": {
+    "passed": 9,
+    "failed": 0
+  },
+  "projectBuild": {
+    "passed": true,
+    "output": "/home/administrator/project/Eva2/development/evidence/reassessment/owner-status-voice-20261106/project-dist",
+    "liveInstalled": false,
+    "existingProjectDistOwnedByRoot": true
+  },
+  "runtimeChanged": false,
+  "physicalTrialPerformed": false,
+  "boardValidation": {
+    "status": "valid",
+    "taskCount": 103,
+    "completed": 83,
+    "cancelled": 1,
+    "open": 19,
+    "activeTaskId": "E4.16"
+  },
+  "voiceAvailabilityIncident": {
+    "resolvedByOwnerConfirmation": true,
+    "codeOrRuntimeChanged": false,
+    "otherDevicePhysicallyTested": false,
+    "C36Completed": false,
+    "evidence": "voice-availability.json"
+  },
+  "checkerTests": {
+    "passed": 15,
+    "seconds": 0.67
+  },
+  "preservedInvariants": {
+    "all103IdsAndCriteria": true,
+    "E416Exact": true,
+    "E411Exact": true,
+    "currentWorkExact": true,
+    "housemateSummaryExact": true,
+    "allPriorDeliveryEntriesExact": true,
+    "mirroredDeliveryPlanExact": true
+  },
+  "parentVisibilityRegressionCorrection": {
+    "cause": "Child-only open predicate hid unfinished parent outcomes.",
+    "correction": "Preserve original unfinished parent OR unfinished child semantics; cancelled children do not count as open.",
+    "testedParents": [
+      "FE5",
+      "C1",
+      "I1",
+      "FE2"
+    ],
+    "allChildrenForcedTerminal": true
+  },
+  "candidateAssetHashes": {
+    "index.html": "3116354148f85d9da4c13034d8ab03d3dd81753063286958ab0568d8123738c2",
+    "asset-manifest.json": "7d1d0209f1f126fbe2ebe6c1309887773d3d977627d7fe56d7e8d3067681abeb",
+    "results/au008-storingschecklist.html": "ac15973dcfffe3c86740b7d63f01996b50a6eb7c3556137fe31634d5b5195796",
+    "results/au007-beoordelingskaart.html": "543e181a91100a9c720e0bed52803493cb66ecb9fd3e8a4751d2a8978c308f84",
+    "assets/index-Dxklunuw.js": "bc0ba2e49cbb391efd9e8e8ec30dbf1eaa1ebea0f199fae946ac64b7f2a7230a",
+    "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e"
+  },
+  "ssrTestSha256": "9a047dcf6ed5be984cb5e0a6b098ebf1b435609dd5de6cb0fe3238826e5e1e8f"
+}

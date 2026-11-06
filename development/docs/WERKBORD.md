@@ -10,7 +10,7 @@ Volgende stap: De modeladapter-upgrade is afgerond en live; deze stap niet opnie
 
 ## Voortgang
 
-**82/103** geregistreerde deeltaken afgerond. Geen percentage product- of gezinsacceptatie.
+**83/103** geregistreerde deeltaken afgerond; 1 door eigenaar ingetrokken en 19 open. Geen percentage product- of gezinsacceptatie.
 
 | Uitkomst | Stand | Nog niet bewezen |
 | --- | --- | --- |
@@ -27,14 +27,13 @@ Volgende stap: De modeladapter-upgrade is afgerond en live; deze stap niet opnie
 4. P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.
 5. P1-02/03/04/06 · Meet tokenverbruik per echte uitkomst en goedkope geen-veranderingpoort; meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.
 6. P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.
-7. P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.1→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers.
-8. P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele E2.6/C4.3 en extra futuristische UI pas daarna.
+7. P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.
+8. P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding.
 
 ## Open taken
 
 | Taak | Status |
 | --- | --- |
-| C3.1 · Doorpraten via beide speakers | planned |
 | C3.4 · Natuurlijk spreekritme zonder onbedoelde pauzes | planned |
 | C3.5 · Natuurlijke beurtgrenzen en behoud van zachte beginwoorden | planned |
 | C3.6 · Speaker herstelt na tijdelijke verbindingsuitval | planned |
@@ -50,11 +49,16 @@ Volgende stap: De modeladapter-upgrade is afgerond en live; deze stap niet opnie
 | E1.11 · Een afgesproken gezinsverantwoordelijkheid zelfstandig blijven dragen | planned |
 | E1.12 · Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien | in_progress |
 | E1.14 · Afgesproken continuïteit bij modeluitval en herstart aantonen | in_progress |
-| E2.6 · WhatsApp met eigen Eva-nummer en live bellen | geparkeerd |
 | E4.11 · Alleen belangrijke kennis als blijvend geheugen bewaren | in_progress |
 | E4.15 · Van zelfontdekte behoefte naar eigen uitvinding en later gebruik | in_progress |
 | E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen | in_progress |
 | E4.19 · Relevante updates zelfstandig ontdekken en beheerd toepassen | in_progress |
+
+## Door eigenaar ingetrokken
+
+Geen voltooide functie; oorspronkelijke criteria en bewijs blijven bewaard.
+
+- E2.6 · WhatsApp met eigen Eva-nummer en live bellen — ingetrokken; geen handeling nodig.
 
 ## Van jou
 

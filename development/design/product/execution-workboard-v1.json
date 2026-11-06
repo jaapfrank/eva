@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-11-04T21:12:40.203434+00:00",
+  "lastUpdated": "2026-11-06",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E4.16",
@@ -1660,6 +1660,25 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "C3.1 geaccepteerd; optioneel E2.6 ingetrokken — 6 november",
+            "state": "accepted",
+            "summary": "Eigenaar bevestigt dat doorpraten via beide speakers werkt en C3.1 afgerond is. E2.6 mag vervallen. Dit is een eigenaarstatuscorrectie, geen nieuwe technische proef of installatie.",
+            "remaining": "Overige spraakpunten, geheugenopschoning, volledige E4.16 en gezinsacceptatie blijven afzonderlijk open. De afzonderlijke beschikbaarheidsmelding is na fysieke bediening door eigenaar opgelost; geen proef op het andere apparaat of C3.6-afronding geclaimd. Oude opleverteksten blijven historische momentopnamen.",
+            "source": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+            "review": "development/reviews/owner-status-voice-20261106.json",
+            "checkedAt": "2026-11-06T15:45:49.236122+00:00",
+            "completedTaskIds": [
+              "C3.1"
+            ],
+            "withdrawnTaskIds": [
+              "E2.6"
+            ],
+            "ownerAcceptance": true,
+            "familyAcceptance": false,
+            "newProductFunctionCompleted": true,
+            "freshTechnicalTest": false
+          },
           {
             "title": "Modeladapter · PydanticAI2.66 geïnstalleerd en echt gebruikt — 6 november",
             "state": "verified",
@@ -3666,14 +3685,14 @@
               {
                 "id": "C3.1",
                 "title": "Doorpraten via beide speakers",
-                "status": "planned",
+                "status": "completed",
                 "kind": "aansluiten",
                 "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                 "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
                 "blocker": null,
                 "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
-                "checkedAt": "2026-10-17T13:21:29.304952+00:00",
-                "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                "checkedAt": "2026-11-06T15:45:49.236122+00:00",
+                "remaining": "Eigenaar bevestigt op 6 november dat C3.1 werkt en afgerond is. Geen nieuwe technische of fysieke proef uitgevoerd; oude fout- en meetgegevens blijven behouden.",
                 "ownerTrial": {
                   "status": "continuous_conversation_works_fluency_gap",
                   "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -3681,16 +3700,12 @@
                   "blocksIndependentWork": false,
                   "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                 },
-                "nextAction": "Geïnstalleerde cadans- en sessieherstelreparaties behouden; controleer doorpraten op beide speakers. Echte fysieke uitkomsten vastleggen, geen WSL-herstart als algemene voorwaarde.",
-                "ownerActionRequired": true,
+                "nextAction": "Geen afrondingshandeling nodig voor deze geaccepteerde functie. Nieuwe storingen worden afzonderlijk onderzocht.",
+                "ownerActionRequired": false,
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
-                  "steps": [
-                    "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
-                    "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
-                    "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
-                  ]
+                  "availableNow": false,
+                  "readyWhen": "Door eigenaar geaccepteerd; geen herhaalproef gevraagd.",
+                  "steps": []
                 },
                 "assignment": {
                   "activeWorkers": []
@@ -3698,14 +3713,14 @@
                 "deviceChecks": [
                   {
                     "title": "Doorpraten via woonkamer-speaker",
-                    "status": "planned",
+                    "status": "completed",
                     "kind": "aansluiten",
                     "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                     "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                     "blocker": null,
                     "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
-                    "checkedAt": "2026-10-17T13:21:29.304952+00:00",
-                    "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                    "checkedAt": "2026-11-06T15:45:49.236122+00:00",
+                    "remaining": "Eigenaar bevestigt op 6 november dat C3.1 werkt en afgerond is. Geen nieuwe technische of fysieke proef uitgevoerd; oude fout- en meetgegevens blijven behouden.",
                     "ownerTrial": {
                       "status": "continuous_conversation_works_fluency_gap",
                       "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -3713,16 +3728,12 @@
                       "blocksIndependentWork": false,
                       "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                     },
-                    "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
-                    "ownerActionRequired": true,
+                    "nextAction": "Geen afrondingshandeling nodig voor deze geaccepteerde functie. Nieuwe storingen worden afzonderlijk onderzocht.",
+                    "ownerActionRequired": false,
                     "ownerInstructions": {
-                      "availableNow": true,
-                      "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
-                      "steps": [
-                        "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
-                        "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
-                        "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
-                      ]
+                      "availableNow": false,
+                      "readyWhen": "Door eigenaar geaccepteerd; geen herhaalproef gevraagd.",
+                      "steps": []
                     },
                     "assignment": {
                       "activeWorkers": []
@@ -3735,29 +3746,50 @@
                       "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                    "technicalStatus": "existing_implementation_owner_accepted",
+                    "ownerStatusBefore20261106": {
+                      "status": "planned",
+                      "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                      "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+                      "ownerActionRequired": true,
+                      "ownerInstructions": {
+                        "availableNow": true,
+                        "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+                        "steps": [
+                          "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                          "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                          "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+                        ]
+                      },
+                      "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                    },
+                    "completionEvidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                    "independentReview": "development/reviews/owner-status-voice-20261106.json",
+                    "ownerAcceptance": {
+                      "accepted": true,
+                      "date": "2026-11-06",
+                      "source": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                      "basis": "direct_owner_statement",
+                      "freshTechnicalTest": false
+                    }
                   },
                   {
                     "title": "Doorpraten via tweede speaker",
-                    "status": "planned",
+                    "status": "completed",
                     "kind": "aansluiten",
                     "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                     "owner": "Codex",
-                    "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
-                    "ownerActionRequired": true,
+                    "nextAction": "Geen afrondingshandeling nodig voor deze geaccepteerde functie. Nieuwe storingen worden afzonderlijk onderzocht.",
+                    "ownerActionRequired": false,
                     "ownerInstructions": {
-                      "availableNow": true,
-                      "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
-                      "steps": [
-                        "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
-                        "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
-                        "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
-                      ]
+                      "availableNow": false,
+                      "readyWhen": "Door eigenaar geaccepteerd; geen herhaalproef gevraagd.",
+                      "steps": []
                     },
                     "blocker": null,
-                    "checkedAt": "2026-10-17T13:21:29.304952+00:00",
+                    "checkedAt": "2026-11-06T15:45:49.236122+00:00",
                     "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
-                    "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                    "remaining": "Eigenaar bevestigt op 6 november dat C3.1 werkt en afgerond is. Geen nieuwe technische of fysieke proef uitgevoerd; oude fout- en meetgegevens blijven behouden.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -3769,7 +3801,32 @@
                       "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                    "technicalStatus": "existing_implementation_owner_accepted",
+                    "ownerStatusBefore20261106": {
+                      "status": "planned",
+                      "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                      "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+                      "ownerActionRequired": true,
+                      "ownerInstructions": {
+                        "availableNow": true,
+                        "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+                        "steps": [
+                          "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                          "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                          "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+                        ]
+                      },
+                      "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                    },
+                    "completionEvidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                    "independentReview": "development/reviews/owner-status-voice-20261106.json",
+                    "ownerAcceptance": {
+                      "accepted": true,
+                      "date": "2026-11-06",
+                      "source": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                      "basis": "direct_owner_statement",
+                      "freshTechnicalTest": false
+                    }
                   }
                 ],
                 "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -3781,7 +3838,7 @@
                   "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                   "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                 },
-                "technicalStatus": "targeted_latency_improvements_installed_acceptance_open",
+                "technicalStatus": "existing_implementation_owner_accepted",
                 "ownerRegression20261017": {
                   "reportedAt": "2026-10-17T10:55:16.617204+00:00",
                   "status": "regression_corrections_installed_quality_open",
@@ -3935,6 +3992,31 @@
                   "status": "in_progress",
                   "startedAt": "2026-10-19T07:08:01.588667+00:00",
                   "owner": "voice_executor"
+                },
+                "ownerStatusBefore20261106": {
+                  "status": "planned",
+                  "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                  "nextAction": "Geïnstalleerde cadans- en sessieherstelreparaties behouden; controleer doorpraten op beide speakers. Echte fysieke uitkomsten vastleggen, geen WSL-herstart als algemene voorwaarde.",
+                  "ownerActionRequired": true,
+                  "ownerInstructions": {
+                    "availableNow": true,
+                    "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+                    "steps": [
+                      "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                      "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                      "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+                    ]
+                  },
+                  "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                },
+                "completionEvidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                "independentReview": "development/reviews/owner-status-voice-20261106.json",
+                "ownerAcceptance": {
+                  "accepted": true,
+                  "date": "2026-11-06",
+                  "source": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                  "basis": "direct_owner_statement",
+                  "freshTechnicalTest": false
                 }
               },
               {
@@ -4046,6 +4128,21 @@
                   "updatedAt": "2026-10-19T13:22:03.324164+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                   "ownerAcceptance": false
+                },
+                "currentAvailabilityIncident": {
+                  "status": "resolved_owner_confirmed",
+                  "date": "2026-11-06",
+                  "evidence": "development/evidence/reassessment/owner-status-voice-20261106/voice-availability.json",
+                  "nextAction": "Geen herstelhandeling meer nodig voor deze melding. Geen nieuwe fysieke proef op het andere apparaat of volledige C3.6-afronding geclaimd.",
+                  "ownerActionRequired": false,
+                  "codeOrRuntimeChanged": false,
+                  "doesNotReopenAcceptedTask": "C3.1",
+                  "doesNotCompleteTask": true,
+                  "initialObservation": "Beide Home Assistant-microfoons staan op mute; kern en mediadienst antwoorden200 en beide apparaten hebben een TCP-verbinding. Softwarefout niet aangetoond.",
+                  "observation": "Na fysieke bediening meldt eigenaar: Hij wordt blauw en reageert. Verse status: woonkamer-microfoon niet gedempt; overkapping-microfoon nog gedempt. Alleen het gebruikte apparaat fysiek bevestigd; koppeling aan woonkamer is uit de statuswijziging afgeleid.",
+                  "ownerConfirmation": "Hij wordt blauw en reageert",
+                  "freshPhysicalScope": "device_used_by_owner_only",
+                  "softwareFaultProven": false
                 }
               }
             ]
@@ -6832,7 +6929,10 @@
                 "latestEvidence": "development/evidence/product/e21-owner-navigation-installed-20261016.json",
                 "independentReview": "development/reviews/e21-owner-navigation-review-20261016.json",
                 "result": "Geïnstalleerd en onafhankelijk afgerond: één Eva-beheeromgeving met zes secties en echte bestaande backenddata. Gesprek opent de bestaande privéroute; geheugen, opdrachten, initiatief en verbindingsstatus zijn afzonderlijk bereikbaar. Projectbord blijft apart. Geen extra provider of volledige leerhistorie geclaimd.",
-                "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6."
+                "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
+                "ownerStatusBefore20261106": {
+                  "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6."
+                }
               },
               {
                 "id": "E2.2",
@@ -6873,7 +6973,10 @@
                 "latestEvidence": "development/evidence/product/e22-owner-memory-installed-20261016.json",
                 "independentReview": "development/reviews/e22-owner-memory-review-20261016.json",
                 "result": "E2.2 geïnstalleerd en onafhankelijk afgerond: eigen namen/onderwerpen en herinneringen zoeken, exact bronbewijs zien, bron en afleiding onderscheiden, huidige herziening bekijken, corrigeren en gericht vergeten. Bestaande opslag; privégegevens blijven bij de juiste persoon.",
-                "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open."
+                "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
+                "ownerStatusBefore20261106": {
+                  "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open."
+                }
               },
               {
                 "id": "E2.3",
@@ -6915,7 +7018,10 @@
                 "latestEvidence": "development/evidence/product/e23-conversation-work-installed-20261016.json",
                 "independentReview": "development/reviews/e23-conversation-work-review-20261016.json",
                 "result": "E2.3 geïnstalleerd en onafhankelijk afgerond: het privégesprek toont zijn eigen opdrachten; een werklink opent echte voortgang, opgeslagen resultaat en beschikbare exacte gespreksbron. Stoppen/hervatten via bestaande bediening. Korte terugmelding; volledig resultaat alleen op verzoek.",
-                "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open."
+                "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
+                "ownerStatusBefore20261106": {
+                  "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open."
+                }
               },
               {
                 "id": "E2.4",
@@ -6957,7 +7063,10 @@
                 "latestEvidence": "development/evidence/product/e24-initiative-learning-installed-20261016.json",
                 "independentReview": "development/reviews/e24-initiative-learning-review-20261016.json",
                 "result": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
-                "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open."
+                "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
+                "ownerStatusBefore20261106": {
+                  "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open."
+                }
               },
               {
                 "id": "E2.5",
@@ -6969,7 +7078,7 @@
                 "ownerActionRequired": false,
                 "existing": "Een bestaande model- en installatie/providerroute is beschikbaar.",
                 "gap": "Gewenste extra providers zijn nog niet als werkende optionele adapters aangetoond.",
-                "nextAction": "Gebruik de optionele modelinstellingen. Volgende geplande taak: E2.6 WhatsApp als optioneel kanaal.",
+                "nextAction": "Gebruik de bestaande optionele modelinstellingen. E2.6 is door eigenaar ingetrokken; hiervoor wordt geen actie gevraagd.",
                 "files": [
                   "src/eva/adapters/model",
                   "src/eva/providers",
@@ -7000,25 +7109,29 @@
                 "latestEvidence": "development/evidence/product/e25-optional-models-installed-20261016.json",
                 "independentReview": "development/reviews/e25-optional-models-review-20261016.json",
                 "result": "E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.",
-                "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open.",
+                "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
                 "localModelFeasibility20261021": {
                   "status": "researched_not_installed_or_trained",
                   "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                   "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
                   "originalCompletionPreserved": true
+                },
+                "ownerStatusBefore20261106": {
+                  "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open.",
+                  "nextAction": "Gebruik de optionele modelinstellingen. Volgende geplande taak: E2.6 WhatsApp als optioneel kanaal."
                 }
               },
               {
                 "id": "E2.6",
                 "title": "WhatsApp met eigen Eva-nummer en live bellen",
-                "status": "blocked",
+                "status": "cancelled",
                 "kind": "bouwen / afmaken",
                 "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
-                "owner": "Jaap · nummer/account; Codex · echte aansluitproef",
+                "owner": "Eigenaar · opdracht ingetrokken",
                 "ownerActionRequired": false,
                 "existing": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
                 "gap": "Werkelijke accountkoppeling, inkomend handsetgesprek en tekst-/resultaatterugmelding zijn nog niet bevestigd.",
-                "nextAction": "Hervat de echte WhatsApp-koppeling zodra de eigenaar Eva’s eigen nummer/account beschikbaar heeft.",
+                "nextAction": "Geen uitvoering of nummer-/account-/QR-handeling gevraagd; alleen hervatten na een nieuwe eigenaaropdracht.",
                 "files": [
                   "src/eva/adapters/connectors",
                   "src/eva/adapters/api",
@@ -7032,15 +7145,11 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-16T22:56:57.712549+00:00",
+                "checkedAt": "2026-11-06T15:45:49.236122+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
-                  "readyWhen": "Door eigenaar uitgesteld; nu geen nummer- of QR-handeling nodig.",
-                  "steps": [
-                    "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
-                    "Open Verbindingen, bewaar jouw eigen toegestane bellernummer en zet live bellen aan. Scan de koppelcode vanuit Eva’s aparte account."
-                  ],
-                  "blocksIndependentWork": false
+                  "readyWhen": "Door eigenaar ingetrokken; geen handeling nodig.",
+                  "steps": []
                 },
                 "ownerScopeExtension": "Live WhatsApp-bellen naar een eigen Eva-account/nummer. Bestaande Eva-identiteit, gesprekskern en spraakroute hergebruiken; live-audio-integratie afstemmen met de spraakuitvoerder.",
                 "result": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
@@ -7048,7 +7157,7 @@
                 "technicalChecks": "14 API-controles, 11 Go-transportcontroles met racecontrole (+5 bellerbewijsgevallen), 2 echte codecproeven, 5 mediasessiecontroles en gelijktijdige echte LiveKit-PCM-overdracht geslaagd. Geïnstalleerde gereedheid en browser gecontroleerd; geen modeloproepen.",
                 "completionEvidence": "development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
                 "independentReview": "development/reviews/e26-whatsapp-calling-review-20261016.json",
-                "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
+                "remaining": "Op 6 november door eigenaar ingetrokken. Werkelijke accountkoppeling en belproef blijven onbewezen; dit wordt niet als voltooide functie geteld.",
                 "scopeClarifications": [
                   {
                     "at": "2026-10-16T18:41:52.369506+00:00",
@@ -7072,9 +7181,35 @@
                   "installed": "Optioneel PCM-transport gebruikt /session/leased, bestaande LiveKit-owner/Eva-tracks, verlengen en gericht sluiten. Werkelijke /ready bevestigd; spraakcontainer-ID en image ongewijzigd.",
                   "inheritedLimit": "De bestaande spraakdienst sluit sessies na1800 seconden; een wijziging blijft bij de spraakuitvoerder. Geen extra eigen oproeplimiet toegevoegd."
                 },
-                "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk.",
-                "parked": true,
-                "parkedReason": "Eigenaar regelt Eva’s eigen nummer later (17 oktober 2026); verder werken aan uitvoerbare kaarten."
+                "blocker": null,
+                "parked": false,
+                "parkedReason": null,
+                "ownerStatusBefore20261106": {
+                  "status": "blocked",
+                  "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
+                  "nextAction": "Hervat de echte WhatsApp-koppeling zodra de eigenaar Eva’s eigen nummer/account beschikbaar heeft.",
+                  "ownerInstructions": {
+                    "availableNow": false,
+                    "readyWhen": "Door eigenaar uitgesteld; nu geen nummer- of QR-handeling nodig.",
+                    "steps": [
+                      "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
+                      "Open Verbindingen, bewaar jouw eigen toegestane bellernummer en zet live bellen aan. Scan de koppelcode vanuit Eva’s aparte account."
+                    ],
+                    "blocksIndependentWork": false
+                  },
+                  "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk.",
+                  "parked": true,
+                  "parkedReason": "Eigenaar regelt Eva’s eigen nummer later (17 oktober 2026); verder werken aan uitvoerbare kaarten.",
+                  "owner": "Jaap · nummer/account; Codex · echte aansluitproef"
+                },
+                "ownerDisposition": {
+                  "status": "withdrawn",
+                  "ownerAuthorized": true,
+                  "date": "2026-11-06",
+                  "evidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                  "reason": "Eigenaar geeft aan dat E2.6 mag vervallen.",
+                  "functionCompleted": false
+                }
               },
               {
                 "id": "E2.7",
@@ -9494,8 +9629,8 @@
           "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
           "P1-02/03/04/06 · Meet tokenverbruik per echte uitkomst en goedkope geen-veranderingpoort; meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
           "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
-          "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.1→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers.",
-          "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele E2.6/C4.3 en extra futuristische UI pas daarna."
+          "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
+          "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
         "updatedAt": "2026-11-06T15:36:25.987454+00:00",
@@ -9584,7 +9719,10 @@
                 "C3.5",
                 "C3.6"
               ],
-              "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. Alleen optioneel WhatsApp E2.6 wacht op eigen Eva-nummer en echte belproef; blokkeert kernwerk niet."
+              "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. E2.6 op 6 november door eigenaar ingetrokken; geen aansluiting of belproef geclaimd. C3.1 door eigenaar geaccepteerd; overige spraak- en gezinsacceptatie blijven afzonderlijk open.",
+              "ownerStatusBefore20261106": {
+                "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. Alleen optioneel WhatsApp E2.6 wacht op eigen Eva-nummer en echte belproef; blokkeert kernwerk niet."
+              }
             },
             {
               "id": "E3",
@@ -9796,7 +9934,22 @@
             "status": "installed_measured_targeted_repair",
             "updatedAt": "2026-10-20T09:51:06.774021+00:00"
           },
-          "latestEvidence": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json"
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
+          "currentAvailabilityIncident": {
+            "status": "resolved_owner_confirmed",
+            "date": "2026-11-06",
+            "evidence": "development/evidence/reassessment/owner-status-voice-20261106/voice-availability.json",
+            "nextAction": "Geen herstelhandeling meer nodig voor deze melding. Geen nieuwe fysieke proef op het andere apparaat of volledige C3.6-afronding geclaimd.",
+            "ownerActionRequired": false,
+            "codeOrRuntimeChanged": false,
+            "doesNotReopenAcceptedTask": "C3.1",
+            "doesNotCompleteTask": true,
+            "initialObservation": "Beide Home Assistant-microfoons staan op mute; kern en mediadienst antwoorden200 en beide apparaten hebben een TCP-verbinding. Softwarefout niet aangetoond.",
+            "observation": "Na fysieke bediening meldt eigenaar: Hij wordt blauw en reageert. Verse status: woonkamer-microfoon niet gedempt; overkapping-microfoon nog gedempt. Alleen het gebruikte apparaat fysiek bevestigd; koppeling aan woonkamer is uit de statuswijziging afgeleid.",
+            "ownerConfirmation": "Hij wordt blauw en reageert",
+            "freshPhysicalScope": "device_used_by_owner_only",
+            "softwareFaultProven": false
+          }
         },
         "upstreamReusePlan": {
           "source": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
@@ -9897,13 +10050,11 @@
           ],
           "parallelVoiceOrder": [
             "C3.5",
-            "C3.1",
             "C3.4",
             "C4.1",
             "C3.6"
           ],
           "optionalOrder": [
-            "E2.6",
             "C4.3"
           ],
           "activeTask": "E4.15",
@@ -10024,6 +10175,18 @@
             }
           ],
           "evidencePolicy": "Behoud oorspronkelijke criteria en geldig bestaand bewijs; gerichte hercontrole alleen bij gewijzigde oorzaak of ontbrekend bewijs. Echte gebruiksdagen en eigenaaracceptatie niet simuleren."
+        },
+        "ownerStatusCorrections20261106": {
+          "evidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+          "completedByOwnerAcceptance": [
+            "C3.1"
+          ],
+          "withdrawnByOwner": [
+            "E2.6"
+          ],
+          "taskCountUnchanged": 103,
+          "criteriaAndHistoricalEvidencePreserved": true,
+          "freshTechnicalTest": false
         }
       }
     },
@@ -10236,14 +10399,14 @@
             {
               "id": "C3.1",
               "title": "Doorpraten via beide speakers",
-              "status": "planned",
+              "status": "completed",
               "kind": "aansluiten",
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
               "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
               "blocker": null,
               "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
-              "checkedAt": "2026-10-17T13:21:29.304952+00:00",
-              "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+              "checkedAt": "2026-11-06T15:45:49.236122+00:00",
+              "remaining": "Eigenaar bevestigt op 6 november dat C3.1 werkt en afgerond is. Geen nieuwe technische of fysieke proef uitgevoerd; oude fout- en meetgegevens blijven behouden.",
               "ownerTrial": {
                 "status": "continuous_conversation_works_fluency_gap",
                 "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -10251,16 +10414,12 @@
                 "blocksIndependentWork": false,
                 "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "Geïnstalleerde cadans- en sessieherstelreparaties behouden; controleer doorpraten op beide speakers. Echte fysieke uitkomsten vastleggen, geen WSL-herstart als algemene voorwaarde.",
-              "ownerActionRequired": true,
+              "nextAction": "Geen afrondingshandeling nodig voor deze geaccepteerde functie. Nieuwe storingen worden afzonderlijk onderzocht.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
-                "steps": [
-                  "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
-                  "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
-                  "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
-                ]
+                "availableNow": false,
+                "readyWhen": "Door eigenaar geaccepteerd; geen herhaalproef gevraagd.",
+                "steps": []
               },
               "assignment": {
                 "activeWorkers": []
@@ -10268,14 +10427,14 @@
               "deviceChecks": [
                 {
                   "title": "Doorpraten via woonkamer-speaker",
-                  "status": "planned",
+                  "status": "completed",
                   "kind": "aansluiten",
                   "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                   "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                   "blocker": null,
                   "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
-                  "checkedAt": "2026-10-17T13:21:29.304952+00:00",
-                  "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                  "checkedAt": "2026-11-06T15:45:49.236122+00:00",
+                  "remaining": "Eigenaar bevestigt op 6 november dat C3.1 werkt en afgerond is. Geen nieuwe technische of fysieke proef uitgevoerd; oude fout- en meetgegevens blijven behouden.",
                   "ownerTrial": {
                     "status": "continuous_conversation_works_fluency_gap",
                     "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -10283,16 +10442,12 @@
                     "blocksIndependentWork": false,
                     "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                   },
-                  "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
-                  "ownerActionRequired": true,
+                  "nextAction": "Geen afrondingshandeling nodig voor deze geaccepteerde functie. Nieuwe storingen worden afzonderlijk onderzocht.",
+                  "ownerActionRequired": false,
                   "ownerInstructions": {
-                    "availableNow": true,
-                    "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
-                    "steps": [
-                      "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
-                      "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
-                      "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
-                    ]
+                    "availableNow": false,
+                    "readyWhen": "Door eigenaar geaccepteerd; geen herhaalproef gevraagd.",
+                    "steps": []
                   },
                   "assignment": {
                     "activeWorkers": []
@@ -10305,29 +10460,50 @@
                     "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                  "technicalStatus": "existing_implementation_owner_accepted",
+                  "ownerStatusBefore20261106": {
+                    "status": "planned",
+                    "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                    "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+                    "ownerActionRequired": true,
+                    "ownerInstructions": {
+                      "availableNow": true,
+                      "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+                      "steps": [
+                        "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                        "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                        "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+                      ]
+                    },
+                    "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                  },
+                  "completionEvidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                  "independentReview": "development/reviews/owner-status-voice-20261106.json",
+                  "ownerAcceptance": {
+                    "accepted": true,
+                    "date": "2026-11-06",
+                    "source": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                    "basis": "direct_owner_statement",
+                    "freshTechnicalTest": false
+                  }
                 },
                 {
                   "title": "Doorpraten via tweede speaker",
-                  "status": "planned",
+                  "status": "completed",
                   "kind": "aansluiten",
                   "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                   "owner": "Codex",
-                  "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
-                  "ownerActionRequired": true,
+                  "nextAction": "Geen afrondingshandeling nodig voor deze geaccepteerde functie. Nieuwe storingen worden afzonderlijk onderzocht.",
+                  "ownerActionRequired": false,
                   "ownerInstructions": {
-                    "availableNow": true,
-                    "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
-                    "steps": [
-                      "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
-                      "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
-                      "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
-                    ]
+                    "availableNow": false,
+                    "readyWhen": "Door eigenaar geaccepteerd; geen herhaalproef gevraagd.",
+                    "steps": []
                   },
                   "blocker": null,
-                  "checkedAt": "2026-10-17T13:21:29.304952+00:00",
+                  "checkedAt": "2026-11-06T15:45:49.236122+00:00",
                   "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
-                  "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                  "remaining": "Eigenaar bevestigt op 6 november dat C3.1 werkt en afgerond is. Geen nieuwe technische of fysieke proef uitgevoerd; oude fout- en meetgegevens blijven behouden.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -10339,7 +10515,32 @@
                     "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                  "technicalStatus": "existing_implementation_owner_accepted",
+                  "ownerStatusBefore20261106": {
+                    "status": "planned",
+                    "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                    "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+                    "ownerActionRequired": true,
+                    "ownerInstructions": {
+                      "availableNow": true,
+                      "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+                      "steps": [
+                        "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                        "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                        "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+                      ]
+                    },
+                    "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+                  },
+                  "completionEvidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                  "independentReview": "development/reviews/owner-status-voice-20261106.json",
+                  "ownerAcceptance": {
+                    "accepted": true,
+                    "date": "2026-11-06",
+                    "source": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                    "basis": "direct_owner_statement",
+                    "freshTechnicalTest": false
+                  }
                 }
               ],
               "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -10351,7 +10552,7 @@
                 "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                 "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
               },
-              "technicalStatus": "targeted_latency_improvements_installed_acceptance_open",
+              "technicalStatus": "existing_implementation_owner_accepted",
               "ownerRegression20261017": {
                 "reportedAt": "2026-10-17T10:55:16.617204+00:00",
                 "status": "regression_corrections_installed_quality_open",
@@ -10505,6 +10706,31 @@
                 "status": "in_progress",
                 "startedAt": "2026-10-19T07:08:01.588667+00:00",
                 "owner": "voice_executor"
+              },
+              "ownerStatusBefore20261106": {
+                "status": "planned",
+                "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+                "nextAction": "Geïnstalleerde cadans- en sessieherstelreparaties behouden; controleer doorpraten op beide speakers. Echte fysieke uitkomsten vastleggen, geen WSL-herstart als algemene voorwaarde.",
+                "ownerActionRequired": true,
+                "ownerInstructions": {
+                  "availableNow": true,
+                  "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+                  "steps": [
+                    "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                    "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                    "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+                  ]
+                },
+                "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+              },
+              "completionEvidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+              "independentReview": "development/reviews/owner-status-voice-20261106.json",
+              "ownerAcceptance": {
+                "accepted": true,
+                "date": "2026-11-06",
+                "source": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                "basis": "direct_owner_statement",
+                "freshTechnicalTest": false
               }
             },
             {
@@ -10616,6 +10842,21 @@
                 "updatedAt": "2026-10-19T13:22:03.324164+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                 "ownerAcceptance": false
+              },
+              "currentAvailabilityIncident": {
+                "status": "resolved_owner_confirmed",
+                "date": "2026-11-06",
+                "evidence": "development/evidence/reassessment/owner-status-voice-20261106/voice-availability.json",
+                "nextAction": "Geen herstelhandeling meer nodig voor deze melding. Geen nieuwe fysieke proef op het andere apparaat of volledige C3.6-afronding geclaimd.",
+                "ownerActionRequired": false,
+                "codeOrRuntimeChanged": false,
+                "doesNotReopenAcceptedTask": "C3.1",
+                "doesNotCompleteTask": true,
+                "initialObservation": "Beide Home Assistant-microfoons staan op mute; kern en mediadienst antwoorden200 en beide apparaten hebben een TCP-verbinding. Softwarefout niet aangetoond.",
+                "observation": "Na fysieke bediening meldt eigenaar: Hij wordt blauw en reageert. Verse status: woonkamer-microfoon niet gedempt; overkapping-microfoon nog gedempt. Alleen het gebruikte apparaat fysiek bevestigd; koppeling aan woonkamer is uit de statuswijziging afgeleid.",
+                "ownerConfirmation": "Hij wordt blauw en reageert",
+                "freshPhysicalScope": "device_used_by_owner_only",
+                "softwareFaultProven": false
               }
             }
           ]
@@ -13402,7 +13643,10 @@
               "latestEvidence": "development/evidence/product/e21-owner-navigation-installed-20261016.json",
               "independentReview": "development/reviews/e21-owner-navigation-review-20261016.json",
               "result": "Geïnstalleerd en onafhankelijk afgerond: één Eva-beheeromgeving met zes secties en echte bestaande backenddata. Gesprek opent de bestaande privéroute; geheugen, opdrachten, initiatief en verbindingsstatus zijn afzonderlijk bereikbaar. Projectbord blijft apart. Geen extra provider of volledige leerhistorie geclaimd.",
-              "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6."
+              "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
+              "ownerStatusBefore20261106": {
+                "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6."
+              }
             },
             {
               "id": "E2.2",
@@ -13443,7 +13687,10 @@
               "latestEvidence": "development/evidence/product/e22-owner-memory-installed-20261016.json",
               "independentReview": "development/reviews/e22-owner-memory-review-20261016.json",
               "result": "E2.2 geïnstalleerd en onafhankelijk afgerond: eigen namen/onderwerpen en herinneringen zoeken, exact bronbewijs zien, bron en afleiding onderscheiden, huidige herziening bekijken, corrigeren en gericht vergeten. Bestaande opslag; privégegevens blijven bij de juiste persoon.",
-              "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open."
+              "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
+              "ownerStatusBefore20261106": {
+                "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open."
+              }
             },
             {
               "id": "E2.3",
@@ -13485,7 +13732,10 @@
               "latestEvidence": "development/evidence/product/e23-conversation-work-installed-20261016.json",
               "independentReview": "development/reviews/e23-conversation-work-review-20261016.json",
               "result": "E2.3 geïnstalleerd en onafhankelijk afgerond: het privégesprek toont zijn eigen opdrachten; een werklink opent echte voortgang, opgeslagen resultaat en beschikbare exacte gespreksbron. Stoppen/hervatten via bestaande bediening. Korte terugmelding; volledig resultaat alleen op verzoek.",
-              "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open."
+              "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
+              "ownerStatusBefore20261106": {
+                "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open."
+              }
             },
             {
               "id": "E2.4",
@@ -13527,7 +13777,10 @@
               "latestEvidence": "development/evidence/product/e24-initiative-learning-installed-20261016.json",
               "independentReview": "development/reviews/e24-initiative-learning-review-20261016.json",
               "result": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
-              "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open."
+              "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
+              "ownerStatusBefore20261106": {
+                "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open."
+              }
             },
             {
               "id": "E2.5",
@@ -13539,7 +13792,7 @@
               "ownerActionRequired": false,
               "existing": "Een bestaande model- en installatie/providerroute is beschikbaar.",
               "gap": "Gewenste extra providers zijn nog niet als werkende optionele adapters aangetoond.",
-              "nextAction": "Gebruik de optionele modelinstellingen. Volgende geplande taak: E2.6 WhatsApp als optioneel kanaal.",
+              "nextAction": "Gebruik de bestaande optionele modelinstellingen. E2.6 is door eigenaar ingetrokken; hiervoor wordt geen actie gevraagd.",
               "files": [
                 "src/eva/adapters/model",
                 "src/eva/providers",
@@ -13570,25 +13823,29 @@
               "latestEvidence": "development/evidence/product/e25-optional-models-installed-20261016.json",
               "independentReview": "development/reviews/e25-optional-models-review-20261016.json",
               "result": "E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.",
-              "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open.",
+              "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
               "localModelFeasibility20261021": {
                 "status": "researched_not_installed_or_trained",
                 "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                 "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
                 "originalCompletionPreserved": true
+              },
+              "ownerStatusBefore20261106": {
+                "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open.",
+                "nextAction": "Gebruik de optionele modelinstellingen. Volgende geplande taak: E2.6 WhatsApp als optioneel kanaal."
               }
             },
             {
               "id": "E2.6",
               "title": "WhatsApp met eigen Eva-nummer en live bellen",
-              "status": "blocked",
+              "status": "cancelled",
               "kind": "bouwen / afmaken",
               "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
-              "owner": "Jaap · nummer/account; Codex · echte aansluitproef",
+              "owner": "Eigenaar · opdracht ingetrokken",
               "ownerActionRequired": false,
               "existing": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
               "gap": "Werkelijke accountkoppeling, inkomend handsetgesprek en tekst-/resultaatterugmelding zijn nog niet bevestigd.",
-              "nextAction": "Hervat de echte WhatsApp-koppeling zodra de eigenaar Eva’s eigen nummer/account beschikbaar heeft.",
+              "nextAction": "Geen uitvoering of nummer-/account-/QR-handeling gevraagd; alleen hervatten na een nieuwe eigenaaropdracht.",
               "files": [
                 "src/eva/adapters/connectors",
                 "src/eva/adapters/api",
@@ -13602,15 +13859,11 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-16T22:56:57.712549+00:00",
+              "checkedAt": "2026-11-06T15:45:49.236122+00:00",
               "ownerInstructions": {
                 "availableNow": false,
-                "readyWhen": "Door eigenaar uitgesteld; nu geen nummer- of QR-handeling nodig.",
-                "steps": [
-                  "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
-                  "Open Verbindingen, bewaar jouw eigen toegestane bellernummer en zet live bellen aan. Scan de koppelcode vanuit Eva’s aparte account."
-                ],
-                "blocksIndependentWork": false
+                "readyWhen": "Door eigenaar ingetrokken; geen handeling nodig.",
+                "steps": []
               },
               "ownerScopeExtension": "Live WhatsApp-bellen naar een eigen Eva-account/nummer. Bestaande Eva-identiteit, gesprekskern en spraakroute hergebruiken; live-audio-integratie afstemmen met de spraakuitvoerder.",
               "result": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
@@ -13618,7 +13871,7 @@
               "technicalChecks": "14 API-controles, 11 Go-transportcontroles met racecontrole (+5 bellerbewijsgevallen), 2 echte codecproeven, 5 mediasessiecontroles en gelijktijdige echte LiveKit-PCM-overdracht geslaagd. Geïnstalleerde gereedheid en browser gecontroleerd; geen modeloproepen.",
               "completionEvidence": "development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
               "independentReview": "development/reviews/e26-whatsapp-calling-review-20261016.json",
-              "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
+              "remaining": "Op 6 november door eigenaar ingetrokken. Werkelijke accountkoppeling en belproef blijven onbewezen; dit wordt niet als voltooide functie geteld.",
               "scopeClarifications": [
                 {
                   "at": "2026-10-16T18:41:52.369506+00:00",
@@ -13642,9 +13895,35 @@
                 "installed": "Optioneel PCM-transport gebruikt /session/leased, bestaande LiveKit-owner/Eva-tracks, verlengen en gericht sluiten. Werkelijke /ready bevestigd; spraakcontainer-ID en image ongewijzigd.",
                 "inheritedLimit": "De bestaande spraakdienst sluit sessies na1800 seconden; een wijziging blijft bij de spraakuitvoerder. Geen extra eigen oproeplimiet toegevoegd."
               },
-              "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk.",
-              "parked": true,
-              "parkedReason": "Eigenaar regelt Eva’s eigen nummer later (17 oktober 2026); verder werken aan uitvoerbare kaarten."
+              "blocker": null,
+              "parked": false,
+              "parkedReason": null,
+              "ownerStatusBefore20261106": {
+                "status": "blocked",
+                "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
+                "nextAction": "Hervat de echte WhatsApp-koppeling zodra de eigenaar Eva’s eigen nummer/account beschikbaar heeft.",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Door eigenaar uitgesteld; nu geen nummer- of QR-handeling nodig.",
+                  "steps": [
+                    "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
+                    "Open Verbindingen, bewaar jouw eigen toegestane bellernummer en zet live bellen aan. Scan de koppelcode vanuit Eva’s aparte account."
+                  ],
+                  "blocksIndependentWork": false
+                },
+                "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk.",
+                "parked": true,
+                "parkedReason": "Eigenaar regelt Eva’s eigen nummer later (17 oktober 2026); verder werken aan uitvoerbare kaarten.",
+                "owner": "Jaap · nummer/account; Codex · echte aansluitproef"
+              },
+              "ownerDisposition": {
+                "status": "withdrawn",
+                "ownerAuthorized": true,
+                "date": "2026-11-06",
+                "evidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+                "reason": "Eigenaar geeft aan dat E2.6 mag vervallen.",
+                "functionCompleted": false
+              }
             },
             {
               "id": "E2.7",
@@ -16064,8 +16343,8 @@
         "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
         "P1-02/03/04/06 · Meet tokenverbruik per echte uitkomst en goedkope geen-veranderingpoort; meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
         "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
-        "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.1→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers.",
-        "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele E2.6/C4.3 en extra futuristische UI pas daarna."
+        "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
+        "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
       "updatedAt": "2026-11-06T15:36:25.987454+00:00",
@@ -16154,7 +16433,10 @@
               "C3.5",
               "C3.6"
             ],
-            "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. Alleen optioneel WhatsApp E2.6 wacht op eigen Eva-nummer en echte belproef; blokkeert kernwerk niet."
+            "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. E2.6 op 6 november door eigenaar ingetrokken; geen aansluiting of belproef geclaimd. C3.1 door eigenaar geaccepteerd; overige spraak- en gezinsacceptatie blijven afzonderlijk open.",
+            "ownerStatusBefore20261106": {
+              "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. Alleen optioneel WhatsApp E2.6 wacht op eigen Eva-nummer en echte belproef; blokkeert kernwerk niet."
+            }
           },
           {
             "id": "E3",
@@ -16366,7 +16648,22 @@
           "status": "installed_measured_targeted_repair",
           "updatedAt": "2026-10-20T09:51:06.774021+00:00"
         },
-        "latestEvidence": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json"
+        "latestEvidence": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
+        "currentAvailabilityIncident": {
+          "status": "resolved_owner_confirmed",
+          "date": "2026-11-06",
+          "evidence": "development/evidence/reassessment/owner-status-voice-20261106/voice-availability.json",
+          "nextAction": "Geen herstelhandeling meer nodig voor deze melding. Geen nieuwe fysieke proef op het andere apparaat of volledige C3.6-afronding geclaimd.",
+          "ownerActionRequired": false,
+          "codeOrRuntimeChanged": false,
+          "doesNotReopenAcceptedTask": "C3.1",
+          "doesNotCompleteTask": true,
+          "initialObservation": "Beide Home Assistant-microfoons staan op mute; kern en mediadienst antwoorden200 en beide apparaten hebben een TCP-verbinding. Softwarefout niet aangetoond.",
+          "observation": "Na fysieke bediening meldt eigenaar: Hij wordt blauw en reageert. Verse status: woonkamer-microfoon niet gedempt; overkapping-microfoon nog gedempt. Alleen het gebruikte apparaat fysiek bevestigd; koppeling aan woonkamer is uit de statuswijziging afgeleid.",
+          "ownerConfirmation": "Hij wordt blauw en reageert",
+          "freshPhysicalScope": "device_used_by_owner_only",
+          "softwareFaultProven": false
+        }
       },
       "upstreamReusePlan": {
         "source": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
@@ -16467,13 +16764,11 @@
         ],
         "parallelVoiceOrder": [
           "C3.5",
-          "C3.1",
           "C3.4",
           "C4.1",
           "C3.6"
         ],
         "optionalOrder": [
-          "E2.6",
           "C4.3"
         ],
         "activeTask": "E4.15",
@@ -16594,6 +16889,18 @@
           }
         ],
         "evidencePolicy": "Behoud oorspronkelijke criteria en geldig bestaand bewijs; gerichte hercontrole alleen bij gewijzigde oorzaak of ontbrekend bewijs. Echte gebruiksdagen en eigenaaracceptatie niet simuleren."
+      },
+      "ownerStatusCorrections20261106": {
+        "evidence": "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json",
+        "completedByOwnerAcceptance": [
+          "C3.1"
+        ],
+        "withdrawnByOwner": [
+          "E2.6"
+        ],
+        "taskCountUnchanged": 103,
+        "criteriaAndHistoricalEvidencePreserved": true,
+        "freshTechnicalTest": false
       }
     },
     "goalRevision": {
@@ -18195,7 +18502,6 @@
       ],
       "awaitingActualUseEvidence": [],
       "otherExecutor": [
-        "C3.1",
         "C3.4",
         "C3.5",
         "C3.6",
@@ -18205,9 +18511,7 @@
         "F2.1",
         "F2.2"
       ],
-      "optionalExternalAccount": [
-        "E2.6"
-      ],
+      "optionalExternalAccount": [],
       "parkedByOwner": [
         "C4.3",
         "P2.1"
@@ -18226,7 +18530,13 @@
         "familyTrialBlocksIndependentWork": false,
         "supersedesPreviousAvailability": "New48hbehavior/source check found concrete functional blockers previously missed."
       },
-      "ownerReopenedCauseInvestigation": true
+      "ownerReopenedCauseInvestigation": true,
+      "withdrawnByOwner": [
+        "E2.6"
+      ],
+      "completedByOwnerAcceptance": [
+        "C3.1"
+      ]
     },
     "actualAutonomyObservation20261018": {
       "status": "needs_developer_work",
@@ -19125,7 +19435,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-06T13:40:23.527110+00:00",
+  "updatedAt": "2026-11-06T15:45:49.236122+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

@@ -1,0 +1,60 @@
+{
+  "contract": "EvaInstalledOwnerStatusProjectDashboard/v1",
+  "recordedAt": "2026-11-06T15:57:04.223657+00:00",
+  "status": "project_dashboard_installed_verified",
+  "installedAt": "2026-11-06T15:56:42.232922+00:00",
+  "scope": "Only project dashboard static bundle and user service; no core/worker/voice/model/microphone change",
+  "proof": {
+    "projectPid": "1467632",
+    "allHttpAssetHashesVerified": true,
+    "taskCount": 103,
+    "completed": 83,
+    "cancelled": 1,
+    "open": 19,
+    "ownerConfirmedVoiceIncidentResolved": true,
+    "coreWorkerVoiceIdentitiesUnchanged": true,
+    "previousBundleRetained": true
+  },
+  "installedBundleHashes": {
+    "index.html": "3116354148f85d9da4c13034d8ab03d3dd81753063286958ab0568d8123738c2",
+    "asset-manifest.json": "7d1d0209f1f126fbe2ebe6c1309887773d3d977627d7fe56d7e8d3067681abeb",
+    "results/au008-storingschecklist.html": "ac15973dcfffe3c86740b7d63f01996b50a6eb7c3556137fe31634d5b5195796",
+    "results/au007-beoordelingskaart.html": "543e181a91100a9c720e0bed52803493cb66ecb9fd3e8a4751d2a8978c308f84",
+    "assets/index-Dxklunuw.js": "bc0ba2e49cbb391efd9e8e8ec30dbf1eaa1ebea0f199fae946ac64b7f2a7230a",
+    "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e"
+  },
+  "runtimeIdentitiesPreserved": {
+    "eva2-managed-b-slot3-core": {
+      "containerId": "81676e3a0ed06f10e4e03ca2b2053332e06d323cc4835cda42055021cd4bc66c",
+      "image": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+      "startedAt": "2026-11-06T15:31:01.999754045Z"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "containerId": "4ea61d3f1fb25f9ad713e3507086955b447f40730346b9251cfe67a192480c79",
+      "image": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8",
+      "startedAt": "2026-11-06T15:31:14.095197537Z"
+    },
+    "eva2-household-speaker-1": {
+      "containerId": "58a74d77ed0962d8c7c95d3f2e40a00c0e7beb1e3ded9e251f028efa933493c9",
+      "image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "startedAt": "2026-11-06T13:23:31.321599019Z"
+    },
+    "eva2-owner-voice-media-1": {
+      "containerId": "727faba8eda26cac6474b3f000ea8d51995ab4193cddfb7a1a8482c7553c1060",
+      "image": "sha256:55eef88386767f8a63944fd47c107b76ac56326fcae1a9f81825056d1866abb1",
+      "startedAt": "2026-11-06T13:23:31.328758644Z"
+    }
+  },
+  "review": {
+    "path": "development/reviews/owner-status-voice-20261106.json",
+    "sha256": "81ae42c3dd5e56128de125695fe4ba1ae9d98ba8a7e711cee89f86afd9fe98df"
+  },
+  "privateActivationReceipt": {
+    "path": "/var/lib/eva2/finalization-20261106/owner-status-voice/dashboard-activation.json",
+    "sha256": "ed8ae73dedcedc1dc6f170c4048f1f88e7933e33f69bb1032c749cf58f45c983"
+  },
+  "voiceResult": "Owner physically disabled mute and confirms blue light and response; no voice code/firmware/service/configuration change by agent",
+  "modelRequestsByDevelopmentChecks": 0,
+  "developmentModelUsage": "Coordinator and independent-agent usage unknown; no provider-call total invented",
+  "householdRuntimeVoiceUsage": "Unknown; owner-confirmed actual response, no transcript or private conversation retained"
+}

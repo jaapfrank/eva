@@ -1,0 +1,100 @@
+{
+  "contract": "EvaIndependentOwnerStatusDashboardInstalledReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T15:58:00.286671+00:00",
+  "decision": "GO",
+  "scope": "Owner status/withdrawal and project-only dashboard installation; separate used-device voice confirmation",
+  "sourceReviewSha256": "81ae42c3dd5e56128de125695fe4ba1ae9d98ba8a7e711cee89f86afd9fe98df",
+  "publicInstalledEvidenceSha256": "aa9cfc4167df4eea7867fd284b7bffa39440846f5efd8ba3bcf40f0b375c2c1c",
+  "activationReceiptSha256": "ed8ae73dedcedc1dc6f170c4048f1f88e7933e33f69bb1032c749cf58f45c983",
+  "allSixHttpAssetsMatchReviewedCandidate": true,
+  "installedBundleHashes": {
+    "index.html": "3116354148f85d9da4c13034d8ab03d3dd81753063286958ab0568d8123738c2",
+    "asset-manifest.json": "7d1d0209f1f126fbe2ebe6c1309887773d3d977627d7fe56d7e8d3067681abeb",
+    "results/au008-storingschecklist.html": "ac15973dcfffe3c86740b7d63f01996b50a6eb7c3556137fe31634d5b5195796",
+    "results/au007-beoordelingskaart.html": "543e181a91100a9c720e0bed52803493cb66ecb9fd3e8a4751d2a8978c308f84",
+    "assets/index-Dxklunuw.js": "bc0ba2e49cbb391efd9e8e8ec30dbf1eaa1ebea0f199fae946ac64b7f2a7230a",
+    "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e"
+  },
+  "actualProjectPid": "1467632",
+  "ownedProjectListeningSocketVerified": true,
+  "canonicalBoardSha256": "bdab9474513ae6ed10567d360c09f7f69461d6d61ec031948d6d0a3952a1dfbc",
+  "liveCanonicalPlanAndNowExact": true,
+  "counts": {
+    "all": 103,
+    "completed": 83,
+    "cancelled": 1,
+    "open": 19
+  },
+  "statuses": {
+    "C3.1": "completed",
+    "E2.6": "cancelled",
+    "C3.6": "planned",
+    "E4.11": "in_progress",
+    "E4.16": "in_progress"
+  },
+  "coreWorkerVoiceRuntimeIdentityChecks": {
+    "eva2-managed-b-slot3-core": {
+      "containerId": "81676e3a0ed06f10e4e03ca2b2053332e06d323cc4835cda42055021cd4bc66c",
+      "image": "sha256:9ba125818a6b21ac7ee93c6095dddba2f69b12bbf09da66883929b761d2d710c",
+      "startedAt": "2026-11-06T15:31:01.999754045Z"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "containerId": "4ea61d3f1fb25f9ad713e3507086955b447f40730346b9251cfe67a192480c79",
+      "image": "sha256:1737fb6dce1528dffb7b99bcd72e8c493483f721e03014bf2f3ca72c04cfbeb8",
+      "startedAt": "2026-11-06T15:31:14.095197537Z"
+    },
+    "eva2-household-speaker-1": {
+      "containerId": "58a74d77ed0962d8c7c95d3f2e40a00c0e7beb1e3ded9e251f028efa933493c9",
+      "image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "startedAt": "2026-11-06T13:23:31.321599019Z"
+    },
+    "eva2-owner-voice-media-1": {
+      "containerId": "727faba8eda26cac6474b3f000ea8d51995ab4193cddfb7a1a8482c7553c1060",
+      "image": "sha256:55eef88386767f8a63944fd47c107b76ac56326fcae1a9f81825056d1866abb1",
+      "startedAt": "2026-11-06T13:23:31.328758644Z"
+    }
+  },
+  "originalCriteriaAndPriorHistoryPreserved": true,
+  "voiceAvailability": "Owner confirms used device turns blue and responds after physical unmute; no second-device physical revalidation or C3.6completion claimed.",
+  "noVoiceRestartAudioModelOrUnmuteByReviewer": true,
+  "runtimeProductInstallByReviewer": false,
+  "commitScope": "Only reviewed status/checker/UI source, generatedboard and scoped evidence; preserve unrelated dirty work.",
+  "previousProjectBundleByteExactPreserved": true,
+  "finalTestOnlyFollowup": {
+    "decision": "GO",
+    "source": "development/tests/operations/test_current_workboard.py",
+    "sha256": "f50855a09a4628894f22ab879501dc5a036df0725b4a64aed47bb549a0019c1b",
+    "evidence": "development/evidence/reassessment/owner-status-voice-20261106/ci-withdrawal-test-followup.json",
+    "evidenceSha256": "5e0a3a8f2ec13d85ffdc71201aafdbdf9ec7125e06e9a9e731b09f8c8eab9b17",
+    "assessment": "Dynamic completed/open partition replaces dated 83/19 constants; explicit withdrawal exclusion and authorization tests retained. No product, board or installed bundle change. Reported targeted 15-pass result retained without redundant rerun."
+  },
+  "stagedScopeReview": {
+    "decision": "GO",
+    "fileCount": 18,
+    "fileSha256": {
+      "development/design/product/execution-workboard-v1.json": "bdab9474513ae6ed10567d360c09f7f69461d6d61ec031948d6d0a3952a1dfbc",
+      "development/docs/WERKBORD.md": "523a0ac93ab08763e8ae5de69a312f92a46a9ddcae3d5548f49558fbee030bf3",
+      "development/evidence/reassessment/owner-status-voice-20261106/checker-tests.log": "5bd280812c2b3bc9ffb32a1012d91da69811ef479de897815fe60fa3a87a5f75",
+      "development/evidence/reassessment/owner-status-voice-20261106/ci-withdrawal-test-followup.json": "5e0a3a8f2ec13d85ffdc71201aafdbdf9ec7125e06e9a9e731b09f8c8eab9b17",
+      "development/evidence/reassessment/owner-status-voice-20261106/owner-instruction.json": "32a7eabe9bc7a20a6a38ee2e2b682fdbe605f3739f04376e79bfd54c1b1e3ce5",
+      "development/evidence/reassessment/owner-status-voice-20261106/project-dashboard-installed.json": "aa9cfc4167df4eea7867fd284b7bffa39440846f5efd8ba3bcf40f0b375c2c1c",
+      "development/evidence/reassessment/owner-status-voice-20261106/project-ssr.log": "64f203d020044a7c0823540768a7885536f28a636d6e4ef0874f5934513e32f2",
+      "development/evidence/reassessment/owner-status-voice-20261106/project-tests.log": "f48470ee1b450c29940bb142bfe387eedfa44f4832f5b7d4c9f7e8442c6d9130",
+      "development/evidence/reassessment/owner-status-voice-20261106/verification.json": "3acb4e7556e2f89de8f4bdc3282b9b94a4ca22082cb915cf3113a7fdc421e2ce",
+      "development/evidence/reassessment/owner-status-voice-20261106/verify-project-projection.cjs": "9a047dcf6ed5be984cb5e0a6b098ebf1b435609dd5de6cb0fe3238826e5e1e8f",
+      "development/evidence/reassessment/owner-status-voice-20261106/voice-availability.json": "3dc02b3e96cd8d7d87ce4e7052756af3e582bdb8637db79e912a546d28bd528d",
+      "development/reviews/owner-status-voice-20261106.json": "81ae42c3dd5e56128de125695fe4ba1ae9d98ba8a7e711cee89f86afd9fe98df",
+      "development/reviews/owner-status-voice-checker-independent-20261106.log": "08106afa14fe3a0a17aed781b0fe12ab4cb07508996485889514a03e1678bdc0",
+      "development/reviews/owner-status-voice-ui-independent-20261106.log": "2148d5ed36eb00b73f90f08955c64ae894e6a1618d266155596fa4cdce4602b5",
+      "development/tests/operations/test_current_workboard.py": "f50855a09a4628894f22ab879501dc5a036df0725b4a64aed47bb549a0019c1b",
+      "development/tools/project-dashboard/src/project-dashboard.jsx": "4f143f653f35c3bfb774dd02d058155461da4b4d239c0df24d7e22bae3e678e8",
+      "development/tools/project-dashboard/src/project-work-list.jsx": "bc28a5f6fdf7bcf99ad9c40cc7e7efb9eb1b9be2fb4b72199a729524910c67df",
+      "src/tools/check_current_workboard.py": "5f3e4756b67312351c3c6f1bee8939ed718eaab8f621310419c849ec3c041ee5"
+    },
+    "indexMatchesReviewedWorktree": true,
+    "diffCheckPassed": true,
+    "compiledBundlesAndFullBeforeBoardSnapshotExcluded": true,
+    "scope": "Owner-authorized C3.1 completion, E2.6 withdrawal, separate resolved mute incident, checker/UI projections and bounded evidence only. Other dirty work remains outside this index."
+  }
+}

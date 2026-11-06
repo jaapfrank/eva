@@ -84,6 +84,19 @@ def validate(root: Path, board):
         if old["status"] == "completed" and task["status"] != "completed":
             raise ValueError(f"accepted technical completion revoked: {task['id']}")
     for task in tasks:
+        if (task.get("ownerDisposition", {}).get("status") == "withdrawn"
+                and task["status"] != "cancelled"):
+            raise ValueError(f"withdrawn task must remain cancelled: {task['id']}")
+        if task["status"] == "cancelled":
+            disposition = task.get("ownerDisposition", {})
+            if (disposition.get("status") != "withdrawn"
+                    or disposition.get("ownerAuthorized") is not True
+                    or disposition.get("functionCompleted") is not False
+                    or task.get("ownerActionRequired") is not False
+                    or task.get("ownerInstructions", {}).get("availableNow") is not False
+                    or task.get("assignment", {}).get("activeWorkers")):
+                raise ValueError(f"withdrawal requires owner authority and no pending action: {task['id']}")
+            regular(root, disposition["evidence"])
         old = previous[task["id"]]
         if task["doneWhen"] != old["doneWhen"]:
             raise ValueError(f"original end condition changed: {task['id']}")
@@ -107,7 +120,8 @@ def validate(root: Path, board):
         raise ValueError("dashboard and workboard task projections disagree")
     regular(root, board["audit"]["goalRevision"]["document"])
     return {"status": "valid", "taskCount": len(tasks),
-            "completed": sum(t["status"] == "completed" for t in tasks), "activeTaskId": work["id"]}
+            "completed": sum(t["status"] == "completed" for t in tasks),
+            "cancelled": sum(t["status"] == "cancelled" for t in tasks), "activeTaskId": work["id"]}
 
 
 def render_human(board):
@@ -116,7 +130,9 @@ def render_human(board):
     dashboard = board["audit"]["projectDashboard"]
     overview = dashboard["deliveryOverview"]
     tasks = small_tasks(board)
-    unfinished = [task for task in tasks if task["status"] != "completed"]
+    unfinished = [task for task in tasks if task["status"] not in {"completed", "cancelled"}]
+    completed = sum(task["status"] == "completed" for task in tasks)
+    cancelled = [task for task in tasks if task["status"] == "cancelled"]
     lines = [
         "# Eva2 — actueel werk (compacte projectie)", "",
         "Automatisch uit development/design/product/execution-workboard-v1.json; geen tweede statusbron.", "",
@@ -124,7 +140,7 @@ def render_human(board):
         f"**{work['id']} · {work['title']}** — {work['status']}", "",
         f"Volgende stap: {work['nextAction']}", "",
         "## Voortgang", "",
-        f"**{len(tasks) - len(unfinished)}/{len(tasks)}** geregistreerde deeltaken afgerond. Geen percentage product- of gezinsacceptatie.", "",
+        f"**{completed}/{len(tasks)}** geregistreerde deeltaken afgerond; {len(cancelled)} door eigenaar ingetrokken en {len(unfinished)} open. Geen percentage product- of gezinsacceptatie.", "",
         "| Uitkomst | Stand | Nog niet bewezen |", "| --- | --- | --- |",
     ]
     for row in dashboard["housemateSummary"]["rows"]:
@@ -138,6 +154,9 @@ def render_human(board):
         if task.get("technicalStatus") == "completed":
             state = "Technisch klaar; praktijkbewijs open"
         lines.append(f"| {task['id']} · {task['title']} | {state} |")
+    if cancelled:
+        lines += ["", "## Door eigenaar ingetrokken", "", "Geen voltooide functie; oorspronkelijke criteria en bewijs blijven bewaard.", ""]
+        lines += [f"- {task['id']} · {task['title']} — ingetrokken; geen handeling nodig." for task in cancelled]
     lines += [
         "", "## Van jou", "", overview["ownerAction"]["detail"], "",
         "## Details en historie", "",

@@ -31,6 +31,7 @@ def test_unfinished_device_cannot_complete_function():
     merged = next(task for step in value["audit"]["deliveryPlan"]["implementationSlices"]
                  for task in step["remainingTasks"] if task.get("deviceChecks"))
     merged["status"] = "completed"
+    merged["deviceChecks"][0]["status"] = "planned"
     with pytest.raises(ValueError, match="unfinished device checks"):
         validate(ROOT, value)
 
@@ -77,4 +78,46 @@ def test_added_task_needs_completion_and_independent_evidence():
     task.pop("independentReview", None)
     task["status"] = "completed"
     with pytest.raises(ValueError, match="completion requires completionEvidence"):
+        validate(ROOT, value)
+
+
+def test_withdrawn_task_is_retained_without_completion_or_open_action():
+    from tools.check_current_workboard import render_human, small_tasks
+    value = board()
+    result = validate(ROOT, value)
+    tasks = small_tasks(value)
+    withdrawn = next(t for t in tasks if t["id"] == "E2.6")
+    assert withdrawn["status"] == "cancelled"
+    assert result["taskCount"] == 103
+    assert result["cancelled"] == 1
+    assert result["completed"] == sum(
+        t["status"] == "completed" for t in tasks if t["id"] != "E2.6"
+    )
+    open_count = sum(t["status"] not in {"completed", "cancelled"} for t in tasks)
+    assert open_count + result["completed"] + result["cancelled"] == result["taskCount"]
+    text = render_human(value)
+    open_section = text.split("## Open taken")[1].split("## Door eigenaar ingetrokken")[0]
+    assert "E2.6" not in open_section
+    assert "E2.6" in text.split("## Door eigenaar ingetrokken")[1]
+
+
+@pytest.mark.parametrize("tamper", ["authority", "action", "worker", "evidence"])
+def test_withdrawal_requires_owner_evidence_and_no_pending_work(tamper):
+    from tools.check_current_workboard import small_tasks
+    value = board()
+    task = next(t for t in small_tasks(value) if t["id"] == "E2.6")
+    if tamper == "authority": task["ownerDisposition"]["ownerAuthorized"] = False
+    if tamper == "action": task["ownerActionRequired"] = True
+    if tamper == "worker": task["assignment"]["activeWorkers"] = ["worker"]
+    if tamper == "evidence": task["ownerDisposition"]["evidence"] = "missing-owner-instruction.json"
+    with pytest.raises(ValueError):
+        validate(ROOT, value)
+
+
+def test_withdrawn_task_cannot_use_historical_transport_proof_to_claim_completion():
+    from tools.check_current_workboard import small_tasks
+    value = board()
+    task = next(t for t in small_tasks(value) if t["id"] == "E2.6")
+    task["status"] = "completed"
+    with pytest.raises(ValueError, match="withdrawn task must remain cancelled"):
         validate(ROOT, value)

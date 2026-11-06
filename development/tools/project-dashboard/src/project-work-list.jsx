@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 function taskProgressLabel(task) {
+  if (task.status === 'cancelled') return 'Door eigenaar ingetrokken';
   if (task.parked) return 'Geparkeerd';
-  if (task.status === 'completed') return 'Technisch afgerond';
+  if (task.status === 'completed') return task.ownerAcceptance?.accepted ? 'Door jou geaccepteerd' : 'Technisch afgerond';
   if (task.status === 'blocked') return task.ownerActionRequired
     ? 'Jouw handeling nodig' : 'Technische blokkade · Codex';
   if (task.assignment?.activeWorkers?.length) return 'Codex werkt eraan';
@@ -59,9 +60,10 @@ export function SmallTaskChecklist({ project, stale = false, initialFilter = 'al
     (slice.remainingTasks || []).map(task => ({ ...task, section: slice.outcome })))
     .sort((a, b) => Number(b.scopeOrigin === 'finalization-20261015') - Number(a.scopeOrigin === 'finalization-20261015'));
   const finished = tasks.filter(task => task.status === 'completed').length;
+  const cancelled = tasks.filter(task => task.status === 'cancelled').length;
   const visible = tasks.filter(task => {
     const done = task.status === 'completed';
-    return (filter === 'all' || (filter === 'done') === done) &&
+    return (filter === 'all' || (filter === 'done' && done) || (filter === 'cancelled' && task.status === 'cancelled') || (filter === 'open' && !done && task.status !== 'cancelled')) &&
       `${task.id} ${task.title} ${task.section} ${task.doneWhen}`.toLocaleLowerCase('nl')
         .includes(query.toLocaleLowerCase('nl'));
   });
@@ -70,13 +72,14 @@ export function SmallTaskChecklist({ project, stale = false, initialFilter = 'al
       <p>Groen = technisch afgerond. Rood = nog niet afgerond. Klik een taak voor de volgende stap en wat jij eventueel kunt doen.</p></div>
       <div className="checklist-totals" aria-label="Stand van kleine taken">
         <span className="checklist-total-done">✓ <b>{finished}</b> afgerond</span>
-        <span className="checklist-total-open">● <b>{tasks.length - finished}</b> nog open</span>
+        <span className="checklist-total-open">● <b>{tasks.length - finished - cancelled}</b> nog open</span>
+        <span>{cancelled} ingetrokken</span>
       </div></header>
     {stale && <p role="alert">Verbinding onderbroken: hieronder staat de laatst ontvangen takenlijst.</p>}
     <div className="checklist-controls"><label>Zoek een kleine taak<input type="search" value={query}
       onChange={event => setQuery(event.target.value)} placeholder="Taaknummer, speakers, automatisering…" /></label>
       <div className="checklist-filters" role="group" aria-label="Filter kleine taken">
-        {[['all', 'Alles'], ['open', 'Rood · nog open'], ['done', 'Groen · afgerond']].map(([value, title]) =>
+        {[['all', 'Alles'], ['open', 'Rood · nog open'], ['done', 'Groen · afgerond'], ['cancelled', 'Ingetrokken']].map(([value, title]) =>
           <button key={value} type="button" aria-pressed={filter === value}
             onClick={() => setFilter(value)}>{title}</button>)}
       </div></div>
@@ -84,15 +87,16 @@ export function SmallTaskChecklist({ project, stale = false, initialFilter = 'al
       De lijst wordt iedere vijf seconden uit het werkbord bijgewerkt; alleen “Codex werkt eraan” betekent dat er een uitvoerder is geregistreerd. Een open gebruiksproef blokkeert onafhankelijk bouwen niet.</p>
     <div className="checklist-rows">{visible.map(task => {
       const done = task.status === 'completed';
-      return <details key={task.id} className={`checklist-task ${done ? 'is-done' : 'is-open'}`}
-        data-checklist-task-id={task.id} data-checklist-state={done ? 'done' : 'open'}>
-        <summary><span className="checklist-mark" aria-hidden="true">{done ? '✓' : '●'}</span>
+      const cancelled = task.status === 'cancelled';
+      return <details key={task.id} className={`checklist-task ${done ? 'is-done' : cancelled ? 'is-cancelled' : 'is-open'}`}
+        data-checklist-task-id={task.id} data-checklist-state={done ? 'done' : cancelled ? 'cancelled' : 'open'}>
+        <summary><span className="checklist-mark" aria-hidden="true">{done ? '✓' : cancelled ? '—' : '●'}</span>
           <span className="checklist-task-heading"><strong>{task.id} · {task.title}</strong><small>{task.section}</small></span>
           <span className="checklist-status">{taskProgressLabel(task)}</span></summary>
         <div className="checklist-task-detail"><p><b>Klaar wanneer:</b> {task.doneWhen}</p>
           <DeviceChecks task={task} />
           <p><b>Verantwoordelijke:</b> {task.owner || 'Niet vastgelegd'}</p>
-          {!done && <TaskGuidance task={task} />}
+          {!done && !cancelled && <TaskGuidance task={task} />}{cancelled && <p>Door eigenaar ingetrokken; geen voltooide functie en geen handeling nodig.</p>}
         </div></details>;
     })}</div>
     {!visible.length && <p role="status">Geen kleine taken in dit filter.</p>}
@@ -107,14 +111,14 @@ export default function ProjectWorkList({ project }) {
   const groups = [...phases.map(phase => ({id:`finalization-${phase.id}`,title:`${phase.id} · ${phase.title}`})), ...project.capabilities, { id: 'project-wide', title: 'Vergelijking en eindoplevering' }];
   const matches = (slice) => `${slice.id} ${slice.outcome} ${(slice.remainingTasks || []).map(task => `${task.id} ${task.title} ${task.doneWhen}`).join(' ')}`.toLocaleLowerCase('nl').includes(query.toLocaleLowerCase('nl'));
   const smallTasks = slices.flatMap(slice => slice.remainingTasks || []);
-  const hasOpenActions = slice => slice.status !== 'completed' ||
-    (slice.remainingTasks || []).some(task => task.status !== 'completed');
+  const hasOpenActions = slice => !['completed', 'cancelled'].includes(slice.status) ||
+    (slice.remainingTasks || []).some(task => !['completed', 'cancelled'].includes(task.status));
   const completed = slices.filter(slice => slice.status === 'completed');
   const open = slices.filter(hasOpenActions);
   const visible = slices.filter(slice => matches(slice) && (mode === 'all' ||
     (mode === 'done' ? slice.status === 'completed' : hasOpenActions(slice))));
   return <section className="concrete-work" aria-label="Concrete taken per onderdeel">
-    <header><h2>Alle taken per onderdeel</h2><p><b>{open.length} opdrachten met open acties</b> · {completed.length} technisch afgerond, inclusief de basiskeuze; daar kan nog een beoordeling bij openstaan. De bestaande opdrachten en de concrete kaarten uit het afgesproken afrondingsplan staan hier samen. Het resterende werk bestaat uit <b>{smallTasks.filter(task => task.status !== 'completed').length} taken</b>; geen productpercentage.</p></header>
+    <header><h2>Alle taken per onderdeel</h2><p><b>{open.length} opdrachten met open acties</b> · {completed.length} technisch afgerond, inclusief de basiskeuze; daar kan nog een beoordeling bij openstaan. De bestaande opdrachten en de concrete kaarten uit het afgesproken afrondingsplan staan hier samen. Het resterende werk bestaat uit <b>{smallTasks.filter(task => !['completed', 'cancelled'].includes(task.status)).length} taken</b>; geen productpercentage.</p></header>
     <div className="work-list-controls"><label>Zoek taak of onderwerp<input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Bijvoorbeeld speakers, geheugen of T2" /></label><fieldset><legend>Toon</legend>{[['open', 'Open'], ['done', 'Afgerond'], ['all', 'Alles']].map(([value, label]) => <button key={value} aria-pressed={mode === value} onClick={() => setMode(value)}>{label}</button>)}</fieldset></div>
     <p className="work-list-help">Iedere kleine taak heeft een eigen nummer, status en eindvoorwaarde. De status komt uit dezelfde werklijst als die van Codex. Een open opdracht kan al werkende delen bevatten. Gepland of eerder gestart betekent niet dat er nu een agent aan werkt.</p>
     <div className="work-jump-links">{groups.map(group => <a key={group.id} href={`#work-group-${group.id}`}>{group.title}</a>)}</div>
@@ -127,7 +131,7 @@ export default function ProjectWorkList({ project }) {
         {!shown.length && <p className="work-empty">{mode === 'open' && !all.some(slice => slice.status !== 'completed') ? 'Geen open bouwopdracht binnen deze scope.' : 'Geen opdrachten in dit filter.'}{group.product?.complete && ' De eerder geaccepteerde scope blijft klaar.'}</p>}
         {shown.map(slice => {
           const done = slice.status === 'completed';
-          const openChild = (slice.remainingTasks || []).some(task => task.status !== 'completed');
+          const openChild = (slice.remainingTasks || []).some(task => !['completed', 'cancelled'].includes(task.status));
           const dependencies = (slice.dependsOn || []).filter(id => slices.some(item => item.id === id && item.status !== 'completed'));
           return <article className={`concrete-task ${done ? 'done' : 'open'}`} key={slice.id} data-slice-id={slice.id}>
             <div className="concrete-task-title"><span className="work-task-id">{slice.id}</span><h4>{slice.outcome}</h4><span className="work-state">{done ? `✓ Technisch afgerond${openChild ? ' · actie open' : ''}` : slice.status === 'planned' ? '○ Gepland' : '◐ Nog af te maken'}</span></div>
@@ -135,7 +139,7 @@ export default function ProjectWorkList({ project }) {
               <div><span className="small-task-state">{taskProgressLabel(task)}</span><strong>{task.id} · {task.title}</strong></div>
               <p><b>Klaar wanneer:</b> {task.doneWhen}</p><small>Verantwoordelijke: {task.owner} · {task.kind}</small>
               <DeviceChecks task={task} />
-              {task.status !== 'completed' && <details className="task-next-action"><summary>Volgende stap en jouw instructies</summary><TaskGuidance task={task} /></details>}
+              {!['completed', 'cancelled'].includes(task.status) && <details className="task-next-action"><summary>Volgende stap en jouw instructies</summary><TaskGuidance task={task} /></details>}
             </article>) : <p>De concrete resterende acties zijn nog niet vastgelegd. Deze opdracht is niet als afgerond geregistreerd.</p>}</div>}
             {done && <p>Technische afronding is geregistreerd; jouw acceptatie en de complete productfunctie worden afzonderlijk bijgehouden.</p>}
             {!done && dependencies.length > 0 && <p className="task-dependencies">Samenhang met nog open opdrachten: {dependencies.join(', ')}. Onafhankelijk werk kan doorgaan.</p>}

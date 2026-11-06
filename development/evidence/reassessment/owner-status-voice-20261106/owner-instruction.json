@@ -1,0 +1,375 @@
+{
+  "contract": "EvaOwnerStatusInstruction/v1",
+  "recordedDate": "2026-11-06",
+  "source": "Direct owner instruction relayed by coordinating agent in this task",
+  "ownerInstruction": {
+    "C3.1": "C3.1 werkt en is afgerond.",
+    "E2.6": "E2.6 mag vervallen."
+  },
+  "interpretation": {
+    "C3.1": "Owner acceptance of the existing consolidated two-speaker function, without a new technical trial.",
+    "E2.6": "Withdrawn optional requirement; retain original task and evidence without claiming the unproven connection works."
+  },
+  "freshTechnicalTestPerformed": false,
+  "sourceCodeChanged": false,
+  "runtimeChanged": false,
+  "taskCountBefore": 103,
+  "completedBefore": 82,
+  "originalTaskCriteria": {
+    "C3.1": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
+    "E2.6": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers."
+  },
+  "beforeTaskSnapshots": {
+    "C3.1": {
+      "id": "C3.1",
+      "title": "Doorpraten via beide speakers",
+      "status": "planned",
+      "kind": "aansluiten",
+      "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
+      "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
+      "blocker": null,
+      "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+      "checkedAt": "2026-10-17T13:21:29.304952+00:00",
+      "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+      "ownerTrial": {
+        "status": "continuous_conversation_works_fluency_gap",
+        "reportedAt": "2026-10-05T09:57:36.657632+00:00",
+        "report": "Doorpraten werkt. Eva spreekt erg traag en herkent het einde van de vraag laat; het rondje blijft draaien. Nog niet vloeiend zoals ChatGPT Voice.",
+        "blocksIndependentWork": false,
+        "currentCandidateStatus": "fluency_correction_not_yet_assessed"
+      },
+      "nextAction": "Geïnstalleerde cadans- en sessieherstelreparaties behouden; controleer doorpraten op beide speakers. Echte fysieke uitkomsten vastleggen, geen WSL-herstart als algemene voorwaarde.",
+      "ownerActionRequired": true,
+      "ownerInstructions": {
+        "availableNow": true,
+        "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+        "steps": [
+          "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+          "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+          "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+        ]
+      },
+      "assignment": {
+        "activeWorkers": []
+      },
+      "deviceChecks": [
+        {
+          "title": "Doorpraten via woonkamer-speaker",
+          "status": "planned",
+          "kind": "aansluiten",
+          "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
+          "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
+          "blocker": null,
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
+          "checkedAt": "2026-10-17T13:21:29.304952+00:00",
+          "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+          "ownerTrial": {
+            "status": "continuous_conversation_works_fluency_gap",
+            "reportedAt": "2026-10-05T09:57:36.657632+00:00",
+            "report": "Doorpraten werkt. Eva spreekt erg traag en herkent het einde van de vraag laat; het rondje blijft draaien. Nog niet vloeiend zoals ChatGPT Voice.",
+            "blocksIndependentWork": false,
+            "currentCandidateStatus": "fluency_correction_not_yet_assessed"
+          },
+          "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+          "ownerActionRequired": true,
+          "ownerInstructions": {
+            "availableNow": true,
+            "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+            "steps": [
+              "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+              "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+              "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+            ]
+          },
+          "assignment": {
+            "activeWorkers": []
+          },
+          "sourceTaskId": "C3.1",
+          "device": "Woonkamer",
+          "voiceResumption20261017": {
+            "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+            "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+            "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
+            "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+          },
+          "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+        },
+        {
+          "title": "Doorpraten via tweede speaker",
+          "status": "planned",
+          "kind": "aansluiten",
+          "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
+          "owner": "Codex",
+          "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+          "ownerActionRequired": true,
+          "ownerInstructions": {
+            "availableNow": true,
+            "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
+            "steps": [
+              "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+              "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+              "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
+            ]
+          },
+          "blocker": null,
+          "checkedAt": "2026-10-17T13:21:29.304952+00:00",
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
+          "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+          "assignment": {
+            "activeWorkers": []
+          },
+          "sourceTaskId": "C3.2",
+          "device": "Tweede speaker",
+          "voiceResumption20261017": {
+            "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+            "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+            "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
+            "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+          },
+          "technicalStatus": "targeted_latency_improvements_installed_acceptance_open"
+        }
+      ],
+      "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
+      "voiceMaintenanceEvidence": "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+      "voiceActivityEvidence": "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json",
+      "voiceResumption20261017": {
+        "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+        "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden. Spraakonderhoud 17 oktober: idle-afsluiting tijdens afspelen hersteld en geïnstalleerd; 98 gerichte checks geslaagd. Fysieke apparaatacceptatie blijft afzonderlijk. Dagoverzicht leest nu de gevraagde lokale kalenderdag; 28 databasechecks en twee kernproeven gecontroleerd. Openbare bron- en dekkingsgrenzen blijven gelden.",
+        "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
+        "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+      },
+      "technicalStatus": "targeted_latency_improvements_installed_acceptance_open",
+      "ownerRegression20261017": {
+        "reportedAt": "2026-10-17T10:55:16.617204+00:00",
+        "status": "regression_corrections_installed_quality_open",
+        "originalStatus": "owner_rejected_installed_conversation",
+        "report": "Eigenaar meldt het slechtste gesprek tot nu toe: zeer traag, slechte antwoorden en antwoorden die niet bij de vragen passen.",
+        "latestOwnerRequest": "Geen computerachtige betrouwbaarheidsverklaringen; eenvoudige onzekerheid en passende, gevarieerde denkreacties tijdens wachten.",
+        "updatedAt": "2026-10-17T11:22:17.788805+00:00",
+        "qualityAccepted": false,
+        "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+        "installed": "Native bescherming tegen eigen afspeelspraak, herstel gedeelde geheugenbronselectie, expliciete herkomst per gesprek en natuurlijke formulering/denkreactie met intacte geheugenzoeking.",
+        "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
+        "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
+        "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
+        "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie.",
+        "followthrough20261017": {
+          "startedAt": "2026-10-17T11:32:38.031782+00:00",
+          "status": "thinking_installed_barge_in_requires_physical_evidence",
+          "ownerInstruction": "Ga de andere problemen oplossen.",
+          "outcome": "Kortere stiltes, natuurlijke vraaggerichte tussenreacties en gewone gesproken onderbreking zonder eigen-spraakecho via dezelfde Eva.",
+          "existing": "Eén kern/geheugen/werkroute; reparaties vorige ronde geïnstalleerd; native output tijdelijk halfduplex.",
+          "routes": [
+            "initial memory preparation and contact model/tool continuation",
+            "native speaker capture/render and physical delivery acknowledgements"
+          ],
+          "doneWhen": "Gerichte proeven tonen kortere voorbereiding, werkelijk modelgekozen denkreacties en echoverwerping met behoud van nieuwe spraak; werkende wijzigingen geïnstalleerd met ongewijzigde persoons- en stopgrenzen. Fysieke gezinsacceptatie apart.",
+          "updatedAt": "2026-10-17T12:12:23.378466+00:00",
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-thinking-followthrough-20261017.json",
+          "ownerAccepted": false,
+          "result": "Vraaggerichte korte denkreacties beschikbaar via dezelfde Eva; volledige scopedmemory blijft vereist vóór inhoud. Gewone native onderbreking is nog niet hersteld: offlinecandidate verloor zachte spraak en is afgewezen.",
+          "remaining": "Fysiek gesprek op natuurlijk ritme en relevante antwoorden beoordelen; voor barge-in ontbreekt een gecontroleerde vergelijking van microfoon en afspeelreferentie.",
+          "audioEvidence": "development/evidence/product/subscription-voice-20261013/voice-barge-in-20261017.json",
+          "ownerAction": "Beschikbaarheid voor korte test bij echte speaker gevraagd; geen opname of afspelen gestart.",
+          "knownDevelopmentTokens": 55852,
+          "unknownUsageAttempts": 5
+        },
+        "ownerRepair20261017": {
+          "startedAt": "2026-10-17T12:23:03.569339+00:00",
+          "status": "installed_verified_owner_acceptance_and_latency_open",
+          "ownerAccepted": false,
+          "existing": "Eén Eva-kern en volledige scopedmemory; snelle lokale begroeting en native echobescherming.",
+          "gap": "Kernherstart verbrak eerste gesprek; extra voorbereidingsmodel vertraagt gewone vragen; gesproken inhoud wijkt volgens eigenaar af van passende opgeslagen kernantwoorden.",
+          "routes": [
+            "existing core preparation and ordinary speech control",
+            "native session authority and Codex speech rendering"
+          ],
+          "doneWhen": "Extra onnodige voorbereidingsronde verwijderd; aangetoonde renderer/lifecyclefouten gericht hersteld, gereviewd, getest en in actuele installatie aangebracht. Reële luisteracceptatie apart en geen fictieve snelheidsclaim.",
+          "ownerActionRequired": false,
+          "updatedAt": "2026-10-17T12:36:35.370029+00:00",
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+          "result": "Extra voorbereidingsmodel verwijderd; letterlijke tekstoverdracht per spraakaanbod en fence tegen laat oud antwoord geïnstalleerd. Juiste kernantwoorden en vijf opeenvolgende/onderbroken renderercontroles vastgesteld;316 verschillende gerichte softwarechecks geslaagd. Vier diensten en beide speakers operationeel.",
+          "remaining": "Gewone reactie nog6.4s tot kernantwoord in één proef; nieuw antwoord na onderbreken wachtte8.0s op oude providerbeurt. Fysiek ritme/relevantie nog niet geaccepteerd. Halfduplex en lease-afsluiting bij langere kernuitval blijven.",
+          "deployment": "Actieve live-voice leases voor elke dienstvervanging geteld: steeds nul. Dit is een preflight, geen permanente onderhoudslock.",
+          "knownDevelopmentTextTokens": 3394,
+          "developmentVoiceSessions": 4,
+          "developmentVoiceUsageKnown": false
+        },
+        "latencyFollowup20261017": {
+          "startedAt": "2026-10-17T12:57:10.827302+00:00",
+          "status": "targeted_improvements_installed_interrupt_latency_and_acceptance_open",
+          "ownerInstruction": "oke ga door",
+          "existing": "Letterlijke spraakoverdracht, late-antwoordfence en één gewone contactbeslissing na volledige scopedmemory geïnstalleerd.",
+          "gap": "Kernantwoord6.415s in losse proef; volgend antwoord na onderbreking8.038s tot eerste audio.",
+          "routes": [
+            "initial authorized memory and contact-provider preparation",
+            "existing render admission, cancellation and completion"
+          ],
+          "doneWhen": "Bewezen onnodige wachttijd verminderen zonder geheugen/context, authority, stop, letterlijke tekst of usageboekhouding te verzwakken; gerichte bestaande regressies en echte geïsoleerde meting vóór installatie op huidigeimages.",
+          "ownerAccepted": false,
+          "ownerActionRequired": false,
+          "updatedAt": "2026-10-17T13:21:29.304952+00:00",
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
+          "result": "Lokale modelresources/tokenizer vóór voice readiness geladen; begrensd exact numeriek hergebruik in bestaande geheugenrangschikking; na onderbreken300ms werkelijk ontvangen stilte vóór volgend spraakaanbod. Vier diensten geïnstalleerd/gecontroleerd, beide speakers gereed;177 verschillende gerichte checks geslaagd.",
+          "measured": "Exact herhaalde volledige geheugenopvraging3747→304ms, dezelfde geautoriseerde feiten; oorspronkelijke CPUrangschikking1925–2076ms→0.442ms bij exactcachehit. Geen winstclaim voor nieuwe vragen. Eerste lokale providerinitialisatie~636ms en tokenizer~402ms naar opstart verplaatst.",
+          "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
+          "developmentTextTokens": 6308,
+          "developmentTextRequests": 2,
+          "developmentVoiceSessions": 5,
+          "developmentSpeechRequests": 11,
+          "developmentVoiceUsageKnown": false,
+          "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
+        },
+        "liveCompletion20261018": {
+          "startedAt": "2026-10-18T02:19:46.999720+00:00",
+          "status": "installed_repairs_gpu_recovery_coordination",
+          "ownerInstruction": "Zorg dat het geheel werkt; live testen, problemen en eigenaardigheden oplossen; onderzoek of vraag wanneer kennis ontbreekt. Geen testscores als vervanging voor een goed gesprek.",
+          "existing": "Gedeelde Eva-kern/geheugen en bestaande speaker-/browserroutes. De eerdere claim van letterlijke generatieve audio is in deze ronde weerlegd en vervangen door bestaande HA-spraakuitvoer.",
+          "gap": "Eerdere beperkte proeven sluiten gebruikersroute/echte audio niet volledig; circa8s onderbrekingsvertraging; relevantie/natuurlijkheid en betrouwbare start/afscheid nog onvoldoende live aangetoond.",
+          "routes": [
+            "actual installed browser microphone/LiveKit/private-core/rendered audio",
+            "existing native speaker/shared-core/audio acknowledgements",
+            "existing pinned subscription realtime transport"
+          ],
+          "doneWhen": "Geconstateerde gespreksfouten gericht opgelost en geïnstalleerde hele route live gebruikt met echte audio: relevante sociale/eigen-activiteitsantwoorden, coherente vervolgvragen, behoud van eerste woorden, onderbreken en betrouwbaar afscheid/heropenen. Fysieke of menselijke waarneming die niet beschikbaar is gericht navragen; niet vervangen door softwaretesttelling.",
+          "ownerAccepted": false,
+          "ownerActionRequired": true,
+          "updatedAt": "2026-10-18T04:15:10.372575+00:00",
+          "result": "Werkelijke ontvangen audio en kerntekst komen overeen; eerste woorden, samengestelde invoer, dagantwoord, onderbreken en afscheid gericht hersteld. Bestaande Fenna-spraakuitvoer gebruikt dezelfde Eva-kern. Alle wijzigingen geïnstalleerd; post6 inhoud passend en afscheid gesloten.",
+          "currentInvestigation": "Live groet13,8s, dagbrug11s en dageindantwoord20,8s blijven te langzaam. Windows RTX5080 werkt; WSL NVML/CUDA geblokkeerd met dxg -75. Gecontroleerde WSL-herstart voorbereid; onderbreekt toolserver en andere WSL-processen, dus coördineren. Daarna pas GPU-rangschikking/livegesprek bewijzen.",
+          "liveScope": "Werkelijke browser, LiveKit, provider en Eva-kern, synthetische Nederlandse microfooninvoer en werkelijk ontvangen PCM vóór gedempte fysieke uitvoer; geen claim over menselijke luisteracceptatie of akoestische hardware.",
+          "measuredCoreTestTokens": 666883,
+          "testSourcesErased": 37,
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+          "restartExecuted": false,
+          "householdActionLatency": {
+            "status": "installed_live_action_and_complete_software_audio_verified",
+            "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
+            "finding": "Gerichte naam-/ruimte-/aliasselectie en brongebonden groepsleden voorkomen dubbele ontdekking; verkeerd gekopieerde reader-syntaxis is herstelbaar binnen bestaande autoriteit.",
+            "verification": "Geïnstalleerd en echt gebruikt: groepsactie met aparte verse statuscontrole; 8 bereikbare leden uit,2 onbereikbaar. Laatste volledige spraakproef: schakelack11,255s na coreverzoek (oorspronkelijk~33s), corefinal18,597s (oorspronkelijk~44s); eerste softwaresignaal7,040s na zineinde, finale audio20,763s en volledig klaar33,634s. Daglichtregel onveranderd hersteld; geen cleanup-lightwrite.",
+            "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd.",
+            "chatComparison": {
+              "status": "installed_live_comparison_verified",
+              "existing": "Bestaande huishoudelijke actie en volledige softwareaudio live bewezen; corewriteack11,255s/corefinal18,597s op vorige kandidaat.",
+              "defect": "Nog geen vergelijking met gewone chat; resterende tijd in gedeelde kern/geheugen/modelrondes nog te verklaren.",
+              "route": "Bestaande eigenaar-chat en huishoudelijke spraak; gelijke tekst, actuele bron en geverifieerde actie, met expliciet verschillende persoons-/geheugenscope.",
+              "doneWhen": "Echte chatmeting met uitvoer/readback naast spraak, volgende concrete vertraging gericht verbeteren en geïnstalleerd nameten zonder tweede Eva of veiligheids-/geheugenscope over te slaan.",
+              "outcome": "Zelfde lichtopdracht via echte eigenaar-chat en volledige software-spraak uitgevoerd en vers teruggelezen. Eerste spraakactie draagt een korte modelreactie zonder extra modelronde; geheugenberekening parallel verbeterd en geobserveerde templatefout gecorrigeerd.",
+              "measured": {
+                "chat_before_seconds": 37.467473,
+                "chat_after_seconds": 28.071695,
+                "voice_intermediate_first_signal_seconds": 33.927,
+                "voice_final_first_signal_seconds": 11.691799,
+                "voice_final_write_ack_seconds": 15.028094,
+                "voice_final_core_answer_seconds": 28.190309,
+                "voice_final_complete_audio_seconds": 38.138715
+              },
+              "evidence": "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+              "installedCoreImage": "sha256:bb95cec7b422cc770c11c47671530d02080b205288e1fd4cfa6004c4d3c6b363",
+              "installedMemoryImage": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+              "limits": "Losse metingen met andere persoonscontext en cache/load; laatste voice-geheugen warm. Eerste reactie na 11,7 seconden blijft lang. Geen fysieke microfoon/speaker- of eigenaaracceptatieclaim; eerdere snellere metingen behouden.",
+              "runtimeUsage": {
+                "modelAttempts": 25,
+                "toolCalls": 20,
+                "tokens": 255961,
+                "credits": "unknown"
+              },
+              "cleanup": "Alle vijf eigen diagnostische bronnen verwijderd; 47 oorspronkelijke eigenaar-events behouden; lampgroep en acht bereikbare leden uit, twee onbereikbaar; automatisering ongewijzigd.",
+              "ownerAcceptance": "not_claimed",
+              "completedAt": "2026-10-18T21:41:44.685106+00:00"
+            }
+          }
+        }
+      },
+      "executionOwner": "other_wsl_voice_executor",
+      "independentCoreWorkRequired": false,
+      "previousExecutionBoundary20261019": {
+        "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+        "ownerActionRequired": true
+      },
+      "voiceFluencyExecution": {
+        "scopeOrigin": "voice-fluency-20261019",
+        "status": "in_progress",
+        "startedAt": "2026-10-19T07:08:01.588667+00:00",
+        "owner": "voice_executor"
+      }
+    },
+    "E2.6": {
+      "id": "E2.6",
+      "title": "WhatsApp met eigen Eva-nummer en live bellen",
+      "status": "blocked",
+      "kind": "bouwen / afmaken",
+      "doneWhen": "WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers.",
+      "owner": "Jaap · nummer/account; Codex · echte aansluitproef",
+      "ownerActionRequired": false,
+      "existing": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
+      "gap": "Werkelijke accountkoppeling, inkomend handsetgesprek en tekst-/resultaatterugmelding zijn nog niet bevestigd.",
+      "nextAction": "Hervat de echte WhatsApp-koppeling zodra de eigenaar Eva’s eigen nummer/account beschikbaar heeft.",
+      "files": [
+        "src/eva/adapters/connectors",
+        "src/eva/adapters/api",
+        "src/eva/bootstrap",
+        "deploy"
+      ],
+      "dependsOn": [
+        "E2.1"
+      ],
+      "assignment": {
+        "activeWorkers": []
+      },
+      "scopeOrigin": "finalization-20261015",
+      "checkedAt": "2026-10-16T22:56:57.712549+00:00",
+      "ownerInstructions": {
+        "availableNow": false,
+        "readyWhen": "Door eigenaar uitgesteld; nu geen nummer- of QR-handeling nodig.",
+        "steps": [
+          "Regel een apart telefoonnummer voor Eva dat WhatsApp via sms of oproep kan verifiëren en registreer haar eigen WhatsApp-account. Koppel niet je persoonlijke account.",
+          "Open Verbindingen, bewaar jouw eigen toegestane bellernummer en zet live bellen aan. Scan de koppelcode vanuit Eva’s aparte account."
+        ],
+        "blocksIndependentWork": false
+      },
+      "ownerScopeExtension": "Live WhatsApp-bellen naar een eigen Eva-account/nummer. Bestaande Eva-identiteit, gesprekskern en spraakroute hergebruiken; live-audio-integratie afstemmen met de spraakuitvoerder.",
+      "result": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
+      "installationState": "installed",
+      "technicalChecks": "14 API-controles, 11 Go-transportcontroles met racecontrole (+5 bellerbewijsgevallen), 2 echte codecproeven, 5 mediasessiecontroles en gelijktijdige echte LiveKit-PCM-overdracht geslaagd. Geïnstalleerde gereedheid en browser gecontroleerd; geen modeloproepen.",
+      "completionEvidence": "development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
+      "independentReview": "development/reviews/e26-whatsapp-calling-review-20261016.json",
+      "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
+      "scopeClarifications": [
+        {
+          "at": "2026-10-16T18:41:52.369506+00:00",
+          "previousExecutorInterpretation": "16 oktober: WhatsApp moet spraakberichten kunnen koppelen aan de bestaande mediaverwerking. Geen nieuwe speaker-/spraakroute; deze blijft bij de andere uitvoerder.",
+          "ownerCorrection": "Eigenaar bedoelt live Eva bellen via WhatsApp, niet alleen spraakberichten. Eva krijgt een eigen account/nummer; geen zelfchat via de persoonlijke account van de eigenaar. Er is nog geen Business-account; eventueel aanmaken pas na bevestigde geschiktheid."
+        }
+      ],
+      "callingResearch": {
+        "confirmed": "Meta biedt WhatsApp Business Calling API voor inkomende en uitgaande gesprekken. De geïnstalleerde adapter heeft uitsluitend tekst-/spraakberichtafhandeling, geen live-audio-belsessie.",
+        "source": "https://github.com/purpshell/meowcaller/tree/c48c3e2a243c672c942cbf0c941d14161720d540",
+        "open": [
+          "Eigen nummer/account en echte WhatsApp-oproep ontbreken; platforminteroperabiliteit en verstaanbaarheid nog niet aangetoond."
+        ],
+        "ownerNumberAvailable": false,
+        "selectedRoute": "Eén geïnstalleerde, gepinde Hypermeow/Meowcaller-client; apart gewoon WhatsApp-account voor Eva. Geen Business Platform-account nodig voor dit protocoltransport."
+      },
+      "voiceIntegration": {
+        "existing": "De geïnstalleerde spraakservice biedt /session/leased, LiveKit-room/owner-token, verlengen en gericht stoppen; CodexMediaSession voert dezelfde Eva-gesprekken.",
+        "boundary": "WhatsApp levert/ontvangt audio als transportdeelnemer. Geen nieuw STT/TTS-model, identiteit, geheugen of speakerwijziging.",
+        "coordination": "Bestaande spraakinterface en huidige installatie gecontroleerd; bron- en installatiegrens onafhankelijk gereviewd. Geen actieve spraakchat geïdentificeerd; de vraag wie de huidige spraakuitvoerder is blijft onbeantwoord. Geen spraakcode of speaker gewijzigd.",
+        "installed": "Optioneel PCM-transport gebruikt /session/leased, bestaande LiveKit-owner/Eva-tracks, verlengen en gericht sluiten. Werkelijke /ready bevestigd; spraakcontainer-ID en image ongewijzigd.",
+        "inheritedLimit": "De bestaande spraakdienst sluit sessies na1800 seconden; een wijziging blijft bij de spraakuitvoerder. Geen extra eigen oproeplimiet toegevoegd."
+      },
+      "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk.",
+      "parked": true,
+      "parkedReason": "Eigenaar regelt Eva’s eigen nummer later (17 oktober 2026); verder werken aan uitvoerbare kaarten."
+    }
+  },
+  "workboardBeforeSha256": "1cbff70cfb10d12da0bfcd12fb6f1eb6810df78f585f6e863cd74491c5a78f8d",
+  "preservedOpenScopes": [
+    "E4.11",
+    "E4.16",
+    "F2.1",
+    "F2.2",
+    "C4.1"
+  ],
+  "currentBlueIndicatorIncident": "Handled separately by coordinator; this acceptance record is not a new device-health assertion."
+}

@@ -1,0 +1,18 @@
+{
+  "contract": "EvaWithdrawalCiTestFollowup/v1",
+  "date": "2026-11-06",
+  "file": "development/tests/operations/test_current_workboard.py",
+  "historicalTestSha256": "659c43dd15fb5c4175e4e14c24af8cf077acd48cb82fb700a5f12e0bf8c45551",
+  "newTestSha256": "f50855a09a4628894f22ab879501dc5a036df0725b4a64aed47bb549a0019c1b",
+  "scope": "Only replace fixed completed/open totals in the live-board regression with dynamic completed tally excluding E2.6 and open+completed+cancelled identity. Withdrawal, original103-task identity, evidence, no-action and negative completion guards retained.",
+  "tests": {
+    "command": "pytest -q -p no:cacheprovider development/tests/operations/test_current_workboard.py",
+    "passed": 15,
+    "failed": 0,
+    "seconds": 0.51
+  },
+  "productSourceChanged": false,
+  "boardChanged": false,
+  "uiOrBundleChanged": false,
+  "frozenVerificationAndReviewPreserved": true
+}

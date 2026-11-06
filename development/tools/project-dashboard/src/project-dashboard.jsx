@@ -148,8 +148,8 @@ function HumanUnderstandingOverview({ project, onWork }) {
       <p>Eva moet verwachtingen met echte uitkomsten vergelijken en daardoor haar latere gedrag aanpassen. Je ontwerp is verwerkt in deze zes bestaande taken.</p>
     </div><button className="board-link" onClick={onWork}>Bekijk de taken per onderdeel →</button></header>
     <ul className="hue-task-list">{tasks.map(task => {
-      const state = task.status === 'completed' ? 'completed' : task.status === 'in_progress' && task.assignment?.activeWorkers?.length ? 'in_progress' : 'open';
-      const label = state === 'completed' ? 'Afgerond' : state === 'in_progress' ? 'In uitvoering' : task.status === 'blocked' ? 'Open · geblokkeerd' : 'Nog open';
+      const state = task.status === 'cancelled' ? 'cancelled' : task.status === 'completed' ? 'completed' : task.status === 'in_progress' && task.assignment?.activeWorkers?.length ? 'in_progress' : 'open';
+      const label = state === 'cancelled' ? 'Door eigenaar ingetrokken' : state === 'completed' ? 'Afgerond' : state === 'in_progress' ? 'In uitvoering' : task.status === 'blocked' ? 'Open · geblokkeerd' : 'Nog open';
       return <li className={`hue-task ${state}`} key={task.id} data-hue-task-id={task.id} data-hue-status={task.status}>
         <div><span className="hue-task-id">{task.id}</span><strong>{task.title}</strong></div>
         <span className="hue-task-status">{label}</span>
@@ -164,6 +164,7 @@ function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onCompar
   const freshness = projectFreshness(overview.reviewedAt, Date.now());
   const smallTasks = (project.deliveryPlan?.implementationSlices || []).flatMap(slice => slice.remainingTasks || []);
   const finishedTasks = smallTasks.filter(task => task.status === 'completed').length;
+  const cancelledTasks = smallTasks.filter(task => task.status === 'cancelled').length;
   const runtimeKnown = !stale && Number.isFinite(Date.parse(runtime?.checkedAt));
   const runtimeReady = runtimeKnown && runtime.state === 'ready';
   const ownerAction = overview.ownerAction || {};
@@ -172,7 +173,7 @@ function DeliveryOverview({ project, runtime, stale, onWork, onHistory, onCompar
     <section className="owner-summary" aria-label="Project en installatie">
       <div className="owner-product-status"><span className="summary-kicker">PROJECT</span><h2>Eva is nog in ontwikkeling</h2>
         <p>{project.housemateSummary?.headline || "Actuele productstatus ontbreekt."}</p>
-        <div className="scope-counts"><span><b>{finishedTasks}/{smallTasks.length}</b> bouw- en bewijstaken afgerond</span></div>
+        <div className="scope-counts"><span><b>{finishedTasks}/{smallTasks.length}</b> bouw- en bewijstaken afgerond · {cancelledTasks} ingetrokken</span></div>
         <small>Dit is geen aantal afgeronde huisgenootfuncties of productpercentage.</small>
       </div>
       <div className={`owner-runtime-status ${runtimeReady ? 'reachable' : 'attention'}`}><span className="summary-kicker">INSTALLATIE · LOS VAN PROJECTVOORTGANG</span>

@@ -1,0 +1,102 @@
+{
+  "contract": "EvaVoiceAvailabilityDiagnosis/v1",
+  "recordedAt": "2026-11-06T15:49:13.273847+00:00",
+  "scope": "Read-only current voice availability after owner reports no blue light",
+  "devices": [
+    {
+      "device": "Woonkamer",
+      "mute": {
+        "state": "off",
+        "lastChanged": "2026-11-06T15:47:46.013448+00:00",
+        "readAt": "2026-11-06T15:49:13.156181+00:00"
+      },
+      "wakeWord": {
+        "state": "Hey Eva",
+        "lastChanged": "2026-10-05T00:10:00.936845+00:00",
+        "readAt": "2026-11-06T15:49:13.164291+00:00"
+      },
+      "satellite": {
+        "state": "idle",
+        "lastChanged": "2026-11-06T05:30:13.477042+00:00",
+        "readAt": "2026-11-06T15:49:13.172947+00:00"
+      }
+    },
+    {
+      "device": "Overkapping",
+      "mute": {
+        "state": "on",
+        "lastChanged": "2026-10-27T20:32:09.429035+00:00",
+        "readAt": "2026-11-06T15:49:13.180858+00:00"
+      },
+      "wakeWord": {
+        "state": "Hey Eva",
+        "lastChanged": "2026-10-05T00:10:00.964697+00:00",
+        "readAt": "2026-11-06T15:49:13.187275+00:00"
+      },
+      "satellite": {
+        "state": "idle",
+        "lastChanged": "2026-10-27T20:32:09.380765+00:00",
+        "readAt": "2026-11-06T15:49:13.194397+00:00"
+      }
+    }
+  ],
+  "readiness": {
+    "coreVoice": {
+      "httpStatus": 200,
+      "contract": "EvaVoiceSessionReady/v1",
+      "private_work_returns": true
+    },
+    "mediaVoice": {
+      "httpStatus": 200,
+      "ready": true
+    }
+  },
+  "installedVoiceRoles": {
+    "eva2-household-speaker-1": {
+      "containerId": "58a74d77ed0962d8c7c95d3f2e40a00c0e7beb1e3ded9e251f028efa933493c9",
+      "image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "running": true,
+      "startedAt": "2026-11-06T13:23:31.321599019Z"
+    },
+    "eva2-owner-voice-media-1": {
+      "containerId": "727faba8eda26cac6474b3f000ea8d51995ab4193cddfb7a1a8482c7553c1060",
+      "image": "sha256:55eef88386767f8a63944fd47c107b76ac56326fcae1a9f81825056d1866abb1",
+      "running": true,
+      "startedAt": "2026-11-06T13:23:31.328758644Z"
+    }
+  },
+  "nativeSpeakerPeerConnections": 2,
+  "nativeListenerPresent": true,
+  "currentInterpretation": "The initial read-only observation showed both microphones muted. After the requested physical unmute and Hey Eva test, the owner confirms the device turns blue and responds. The fresh snapshot observes Woonkamer unmuted. Current core/media are reachable; no software or service change was needed. Old standby timeout records are not evidence of a current failure.",
+  "action": "Owner asked to move physical mute switch out of mute and say Hey Eva on the device in use.",
+  "physicalResult": "resolved_owner_confirmed",
+  "voiceCodeConfigFirmwareOrInstallationChanged": false,
+  "microphoneUnmutedByAgent": false,
+  "audioRecordedOrPlayedByAgent": false,
+  "modelRequestsByAgent": 0,
+  "runtimeTaskReplay": false,
+  "initialObservation": {
+    "devices": [
+      {
+        "device": "Woonkamer",
+        "mute": "on",
+        "lastChanged": "2026-11-06T05:30:13.533059+00:00"
+      },
+      {
+        "device": "Overkapping",
+        "mute": "on",
+        "lastChanged": "2026-10-27T20:32:09.429035+00:00"
+      }
+    ],
+    "source": "Read-only Home Assistant states before owner action; both satellite states idle and wakeword Hey Eva",
+    "recordedBy": "/root"
+  },
+  "ownerConfirmation": {
+    "recordedAt": "2026-11-06T15:49:46.615180+00:00",
+    "report": "Hij wordt blauw en reageert",
+    "promptedAction": "Physical microphone switch out of mute, then Hey Eva",
+    "scope": "The device used by owner; no fresh physical test of the other speaker claimed."
+  },
+  "resolvedAt": "2026-11-06T15:49:46.615180+00:00",
+  "voiceIssueResolved": true
+}
