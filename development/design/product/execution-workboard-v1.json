@@ -841,19 +841,23 @@
   "lastUpdated": "2026-11-04T21:12:40.203434+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.16",
+  "activeTaskId": "E4.11",
   "currentWork": {
-    "id": "E4.16",
-    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+    "id": "E4.11",
+    "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
     "status": "in_progress",
-    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.",
+    "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
+    "nextAction": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
     "ownerActionRequired": false,
-    "startedAt": "2026-11-04T14:00:19.123526+00:00",
-    "previousHandoff": "development/archive/history/20261104-delivery-order/snapshot.json",
-    "executionStep": "Scoped dependency recovery verdict installed; next generalize trusted component descriptors",
+    "startedAt": "2026-11-06T14:50:32.440313+00:00",
+    "executionStep": "Actuele geheugenrestanten classificeren en onderbouwde opschoning afmaken",
     "originalCriteriaPreserved": true,
-    "fullCardCompleted": false
+    "fullCardCompleted": false,
+    "previousFocus": {
+      "taskId": "E4.16",
+      "evidence": "development/evidence/reassessment/open-source-updates-20261106/completion.json",
+      "reason": "Laatste directe eigenaarvraag betreft de tegenstrijdige geheugenstatus en noodzakelijke opschoning; E4.16 blijft open."
+    }
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -3223,13 +3227,13 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.16",
-          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "Alleen P0-03 reviewerherkomst is technisch opgeleverd: nieuwe reviews binden exact pakket, besluit, hostregistratie, beoordelingscode, baseline en bronbestemming. 241 gerichte cases en dezelfde 241 cases op een schone index zijn groen; bron en installatie onafhankelijk GO. Acht hostmodules bijgewerkt; kern/werker blijven op de P0-01/P0-02-images van 5 november. Twee oude v1-beoordelingen blijven historisch leesbaar en kunnen geen nieuwe uitvoering starten. Andere prioriteiten worden in deze opdracht niet opgepakt; volledige E4.16 en gezinsacceptatie blijven open.",
-          "detail": "De oorspronkelijke fout-/kandidaat-/beoordelings-/installatie-/hergebruikroute is nog niet voltooid. Geen kaart gesloten op tests of beschikbaarheid alleen.",
-          "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Eén P0-03-verbetering opgeleverd; volledige E4.16 blijft open",
-          "checkedAt": "2026-11-06T13:40:23.527110+00:00"
+          "taskId": "E4.11",
+          "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
+          "summary": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
+          "detail": "De dag-/droomgeheugenbasis blijft geïnstalleerd. Actuele technische opschoning en bruikbaar verwerkingsoverzicht zijn heropend; de eerdere begrensde afronding blijft exact in het historische bewijs.",
+          "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
+          "state": "Technische geheugenopschoning open; geen gegevens verwijderd",
+          "checkedAt": "2026-11-06T14:51:03.942527+00:00"
         },
         "next": {
           "taskId": "E4.15",
@@ -3281,9 +3285,9 @@
           {
             "name": "Geheugen",
             "state": "incomplete",
-            "label": "Geheugenbasis geaccepteerd · E4.11 technisch afgerond",
+            "label": "Geheugenbasis geïnstalleerd · E4.11 technische opschoning open",
             "result": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend.",
-            "remaining": "Geen open technische bouwvoorwaarde binnen E4.11. Expliciet behouden:35 oude onzekere/mislukte bronnen,80 onvoldoende gebonden uitvoerpayloads en224 ongeldige oude tijdlijnen. Geen blinde herhaling of verwijdering. Historisch verwerkingsoverzicht blijft een waarschuwing; zoeken en bronlijsten werken. Gezinsacceptatie en meerdaags nut blijven F2.1/F2.2; fysieke opslag-/token-/snelheidswinst onbekend.",
+            "remaining": "Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut.",
             "evidencePaths": [
               "development/design/product/execution-workboard-v1.json",
               "development/evidence/product/p2-published-results-20261006.json",
@@ -3304,9 +3308,11 @@
               "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
               "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
               "development/evidence/product/e411-selective-memory-completed-20261019.json",
-              "development/reviews/e411-selective-memory-final-review-20261019.json"
+              "development/reviews/e411-selective-memory-final-review-20261019.json",
+              "development/evidence/reassessment/memory-cleanup-20261106/current-status-audit.json",
+              "development/reviews/e411-memory-residuals-independent-scope-20261106.json"
             ],
-            "checkedAt": "2026-10-19T14:24:28.236415+00:00"
+            "checkedAt": "2026-11-06T14:50:32.440313+00:00"
           },
           {
             "name": "Eigen initiatief",
@@ -3423,7 +3429,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.16",
+        "currentStep": "E4.11",
         "steps": [
           {
             "number": 1,
@@ -8284,15 +8290,15 @@
               {
                 "id": "E4.11",
                 "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
-                "status": "completed",
+                "status": "in_progress",
                 "kind": "bouwen",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "scopeOrigin": "selective-memory-20261019",
                 "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
                 "existing": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend.",
-                "gap": "Geen open technische bouwvoorwaarde binnen E4.11. Expliciet behouden:35 oude onzekere/mislukte bronnen,80 onvoldoende gebonden uitvoerpayloads en224 ongeldige oude tijdlijnen. Geen blinde herhaling of verwijdering. Historisch verwerkingsoverzicht blijft een waarschuwing; zoeken en bronlijsten werken. Gezinsacceptatie en meerdaags nut blijven F2.1/F2.2; fysieke opslag-/token-/snelheidswinst onbekend.",
-                "nextAction": "Gebruik Eva normaal. In Eva-beheer → Geheugen staan geselecteerde herinneringen en het afzonderlijke bronarchief. Geen nieuwe geheugenproef of eigenaarhandeling nodig; gewone gezinsbeoordeling blijft apart.",
+                "gap": "Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut.",
+                "nextAction": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
                 "files": [
                   "src/eva/application/memory.py",
                   "src/eva/application/memory_background.py",
@@ -8316,11 +8322,11 @@
                 "dependsOn": [
                   "E2.2"
                 ],
-                "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+                "checkedAt": "2026-11-06T14:50:32.440313+00:00",
                 "assignment": {
                   "coordinator": "/root",
                   "activeWorkers": [],
-                  "scope": "E4.11 technisch afgerond en geïnstalleerd; spraak blijft bij de andere uitvoerder."
+                  "scope": "Actuele E4.11-nazorg: bewijsgebonden opschoning en bruikbaar verwerkingsoverzicht; bestaande geheugenroute en spraakeigendom behouden."
                 },
                 "ownerInstructions": {
                   "availableNow": true,
@@ -8329,10 +8335,10 @@
                   ],
                   "blocksIndependentWork": false
                 },
-                "latestEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+                "latestEvidence": "development/evidence/reassessment/memory-cleanup-20261106/current-status-audit.json",
                 "independentReview": "development/reviews/e411-selective-memory-final-review-20261019.json",
                 "installed": true,
-                "technicalCompletion": true,
+                "technicalCompletion": false,
                 "ownerClarification": {
                   "recordedAt": "2026-10-19T09:19:58.337471+00:00",
                   "source": "Directe eigenaarinstructie: gesprekken van die dag kort geheugen, in droomfase wat relevant en nieuw/veranderd is naar lang geheugen.",
@@ -8340,21 +8346,30 @@
                   "dreamConsolidation": "Nieuwe daginformatie bundelen, relevantie afwegen en vergelijken met bestaande kennis; nieuwe kennis toevoegen, gewijzigde kennis bijwerken, herhaling zonder nieuwe betekenis niet opnieuw toevoegen.",
                   "preserve": "Afspraak/correctie/lopende taak direct bruikbaar; persoonsgrenzen, bron/datum, stoppen, herstel en vergeten blijven werken. Tijdelijke bronnen pas laten vervallen na bewezen verwerking en noodzakelijke herkomstbinding.",
                   "reuse": "Bestaande coldworker/droomroute en Hindsight; geen tweede geheugen, planner, daemon of classificatiemodel per bericht.",
-                  "actualGap": "Dag-/droomoverdracht, bewijsgebonden bronlevenscyclus, historische dubbele-tekstopschoning, automatische toekomstige native-payloadcompactie en status-/wiscontracten zijn technisch afgerond. Onbewezen oude bronnen/payloads bewust behouden; foutgeschiedenis apart zichtbaar. Meerdaags nut en gezinsacceptatie blijven F2.1/F2.2.",
+                  "actualGap": "Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut.",
                   "fullDreamHandoffImplemented": true,
                   "newTaskAdded": false,
                   "implementedScope": "De bestaande enkele dag-/droomgeheugenketen inclusief gerichte historische afhandeling; geen tweede geheugen en geen classificatiemodel per bericht."
                 },
-                "latestReview": "development/reviews/e411-selective-memory-final-review-20261019.json",
+                "latestReview": "development/reviews/e411-memory-residuals-independent-scope-20261106.json",
                 "ownerAcceptance": false,
                 "familyAcceptance": false,
-                "completedAt": "2026-10-19T14:24:28.236415+00:00",
-                "completionEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
                 "knownLimitations": [
                   "Bewuste behoudsbesluiten en oude foutregistraties staan in het opleverbewijs; geen onbewezen oude gegevens gewist.",
                   "Volledige historische verwerking niet als gezond verklaard; geheugenzoeken afzonderlijk bereikbaar.",
                   "Geen fysieke database-, token- of snelheidswinst en geen gezinsacceptatie geclaimd."
-                ]
+                ],
+                "previousTechnicalCompletion": {
+                  "completedAt": "2026-10-19T14:24:28.236415+00:00",
+                  "technicalCompletion": true,
+                  "completionEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+                  "review": "development/reviews/e411-selective-memory-final-review-20261019.json",
+                  "boardGitCommit": "9df3f6ace2ed251578d70d6f7f523154c1d574cb",
+                  "originalCriteriaSha256": "36374b42a66d3b5d2af690f5864d801e082a5b8ffc60031caa7f99d98906978e",
+                  "meaning": "Begrensde technische dag-/droom-/compactieoplevering van 19 oktober blijft bewaard; dit is geen afronding van de actuele opschoningsscope."
+                },
+                "reopenedAt": "2026-11-06T14:50:32.440313+00:00",
+                "reopenedBy": "Directe eigenaarvraag 6 november: resterende ongeldige en overbodige geheugengegevens opruimen; anders als open werk registreren."
               },
               {
                 "status": "completed",
@@ -9426,7 +9441,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Alleen P0-03 reviewerherkomst is technisch opgeleverd: nieuwe reviews binden exact pakket, besluit, hostregistratie, beoordelingscode, baseline en bronbestemming. 241 gerichte cases en dezelfde 241 cases op een schone index zijn groen; bron en installatie onafhankelijk GO. Acht hostmodules bijgewerkt; kern/werker blijven op de P0-01/P0-02-images van 5 november. Twee oude v1-beoordelingen blijven historisch leesbaar en kunnen geen nieuwe uitvoering starten. Andere prioriteiten worden in deze opdracht niet opgepakt; volledige E4.16 en gezinsacceptatie blijven open.",
+        "nextAction": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -9714,7 +9729,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-06T13:40:23.527110+00:00",
+        "checkedAt": "2026-11-06T14:52:05.365156+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -9969,7 +9984,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.16",
+      "currentStep": "E4.11",
       "steps": [
         {
           "number": 1,
@@ -14830,15 +14845,15 @@
             {
               "id": "E4.11",
               "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
-              "status": "completed",
+              "status": "in_progress",
               "kind": "bouwen",
               "owner": "Codex",
               "ownerActionRequired": false,
               "scopeOrigin": "selective-memory-20261019",
               "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
               "existing": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend.",
-              "gap": "Geen open technische bouwvoorwaarde binnen E4.11. Expliciet behouden:35 oude onzekere/mislukte bronnen,80 onvoldoende gebonden uitvoerpayloads en224 ongeldige oude tijdlijnen. Geen blinde herhaling of verwijdering. Historisch verwerkingsoverzicht blijft een waarschuwing; zoeken en bronlijsten werken. Gezinsacceptatie en meerdaags nut blijven F2.1/F2.2; fysieke opslag-/token-/snelheidswinst onbekend.",
-              "nextAction": "Gebruik Eva normaal. In Eva-beheer → Geheugen staan geselecteerde herinneringen en het afzonderlijke bronarchief. Geen nieuwe geheugenproef of eigenaarhandeling nodig; gewone gezinsbeoordeling blijft apart.",
+              "gap": "Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut.",
+              "nextAction": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
               "files": [
                 "src/eva/application/memory.py",
                 "src/eva/application/memory_background.py",
@@ -14862,11 +14877,11 @@
               "dependsOn": [
                 "E2.2"
               ],
-              "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+              "checkedAt": "2026-11-06T14:50:32.440313+00:00",
               "assignment": {
                 "coordinator": "/root",
                 "activeWorkers": [],
-                "scope": "E4.11 technisch afgerond en geïnstalleerd; spraak blijft bij de andere uitvoerder."
+                "scope": "Actuele E4.11-nazorg: bewijsgebonden opschoning en bruikbaar verwerkingsoverzicht; bestaande geheugenroute en spraakeigendom behouden."
               },
               "ownerInstructions": {
                 "availableNow": true,
@@ -14875,10 +14890,10 @@
                 ],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+              "latestEvidence": "development/evidence/reassessment/memory-cleanup-20261106/current-status-audit.json",
               "independentReview": "development/reviews/e411-selective-memory-final-review-20261019.json",
               "installed": true,
-              "technicalCompletion": true,
+              "technicalCompletion": false,
               "ownerClarification": {
                 "recordedAt": "2026-10-19T09:19:58.337471+00:00",
                 "source": "Directe eigenaarinstructie: gesprekken van die dag kort geheugen, in droomfase wat relevant en nieuw/veranderd is naar lang geheugen.",
@@ -14886,21 +14901,30 @@
                 "dreamConsolidation": "Nieuwe daginformatie bundelen, relevantie afwegen en vergelijken met bestaande kennis; nieuwe kennis toevoegen, gewijzigde kennis bijwerken, herhaling zonder nieuwe betekenis niet opnieuw toevoegen.",
                 "preserve": "Afspraak/correctie/lopende taak direct bruikbaar; persoonsgrenzen, bron/datum, stoppen, herstel en vergeten blijven werken. Tijdelijke bronnen pas laten vervallen na bewezen verwerking en noodzakelijke herkomstbinding.",
                 "reuse": "Bestaande coldworker/droomroute en Hindsight; geen tweede geheugen, planner, daemon of classificatiemodel per bericht.",
-                "actualGap": "Dag-/droomoverdracht, bewijsgebonden bronlevenscyclus, historische dubbele-tekstopschoning, automatische toekomstige native-payloadcompactie en status-/wiscontracten zijn technisch afgerond. Onbewezen oude bronnen/payloads bewust behouden; foutgeschiedenis apart zichtbaar. Meerdaags nut en gezinsacceptatie blijven F2.1/F2.2.",
+                "actualGap": "Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut.",
                 "fullDreamHandoffImplemented": true,
                 "newTaskAdded": false,
                 "implementedScope": "De bestaande enkele dag-/droomgeheugenketen inclusief gerichte historische afhandeling; geen tweede geheugen en geen classificatiemodel per bericht."
               },
-              "latestReview": "development/reviews/e411-selective-memory-final-review-20261019.json",
+              "latestReview": "development/reviews/e411-memory-residuals-independent-scope-20261106.json",
               "ownerAcceptance": false,
               "familyAcceptance": false,
-              "completedAt": "2026-10-19T14:24:28.236415+00:00",
-              "completionEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
               "knownLimitations": [
                 "Bewuste behoudsbesluiten en oude foutregistraties staan in het opleverbewijs; geen onbewezen oude gegevens gewist.",
                 "Volledige historische verwerking niet als gezond verklaard; geheugenzoeken afzonderlijk bereikbaar.",
                 "Geen fysieke database-, token- of snelheidswinst en geen gezinsacceptatie geclaimd."
-              ]
+              ],
+              "previousTechnicalCompletion": {
+                "completedAt": "2026-10-19T14:24:28.236415+00:00",
+                "technicalCompletion": true,
+                "completionEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+                "review": "development/reviews/e411-selective-memory-final-review-20261019.json",
+                "boardGitCommit": "9df3f6ace2ed251578d70d6f7f523154c1d574cb",
+                "originalCriteriaSha256": "36374b42a66d3b5d2af690f5864d801e082a5b8ffc60031caa7f99d98906978e",
+                "meaning": "Begrensde technische dag-/droom-/compactieoplevering van 19 oktober blijft bewaard; dit is geen afronding van de actuele opschoningsscope."
+              },
+              "reopenedAt": "2026-11-06T14:50:32.440313+00:00",
+              "reopenedBy": "Directe eigenaarvraag 6 november: resterende ongeldige en overbodige geheugengegevens opruimen; anders als open werk registreren."
             },
             {
               "status": "completed",
@@ -15972,7 +15996,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Alleen P0-03 reviewerherkomst is technisch opgeleverd: nieuwe reviews binden exact pakket, besluit, hostregistratie, beoordelingscode, baseline en bronbestemming. 241 gerichte cases en dezelfde 241 cases op een schone index zijn groen; bron en installatie onafhankelijk GO. Acht hostmodules bijgewerkt; kern/werker blijven op de P0-01/P0-02-images van 5 november. Twee oude v1-beoordelingen blijven historisch leesbaar en kunnen geen nieuwe uitvoering starten. Andere prioriteiten worden in deze opdracht niet opgepakt; volledige E4.16 en gezinsacceptatie blijven open.",
+      "nextAction": "Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -16260,7 +16284,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-06T13:40:23.527110+00:00",
+      "checkedAt": "2026-11-06T14:52:05.365156+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

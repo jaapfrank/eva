@@ -1,0 +1,35 @@
+{
+  "sources": 2253,
+  "event_types": {
+    "MEMORY_RETAIN_QUEUED": 2253,
+    "MEMORY_RETAIN_ATTEMPTED": 2584,
+    "MEMORY_RETAIN_SUCCEEDED": 1982,
+    "MEMORY_REFLECTION_CLAIMED": 1412,
+    "MEMORY_RETAIN_ERASED": 142,
+    "MEMORY_RETAIN_RETRY_SCHEDULED": 223,
+    "MEMORY_RETAIN_NOT_SELECTED": 86,
+    "MEMORY_RETAIN_NEEDS_HELP": 103,
+    "MEMORY_RETAIN_RESULT_RECONCILED": 3
+  },
+  "valid": {
+    "no_signals": 277,
+    "up_to_date": 1712,
+    "needs_help": 38
+  },
+  "errors": {
+    "PeopleMemoryOverviewError:memory retention attempt is out of order": 194,
+    "PeopleMemoryOverviewError:erased memory source is not terminal": 1,
+    "RuntimeError:timeline time moved backwards": 2,
+    "PeopleMemoryOverviewError:memory retention success is out of order": 29
+  },
+  "modelCalls": 0,
+  "historicalInvalidSourceNewestAt": "2026-10-23T11:56:52+00:00",
+  "invalidTimelineLastEventNewestAt": "2026-10-25T00:12:26+00:00",
+  "invalidTerminalPhases": {
+    "memory_not_selected": 4,
+    "memory_retained": 211,
+    "memory_needs_help": 11
+  },
+  "invalidCreatedAfterPreviousClosure": 2,
+  "checkedAt": "2026-11-06T14:47:21.079064+00:00"
+}

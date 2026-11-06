@@ -1,0 +1,41 @@
+{
+  "contract": "EvaMemoryCleanupStatusCorrection/v1",
+  "recordedAt": "2026-11-06T14:52:29.957453+00:00",
+  "task": "E4.11",
+  "previousStatus": "completed",
+  "currentStatus": "in_progress",
+  "reason": "Historical preservation decisions were presented as no remaining technical work; current audit still has 226 invalid timelines, including two sources newer than prior closure. Owner explicitly requests remaining cleanup or a visible open task.",
+  "originalCriteriaUnchanged": true,
+  "newTaskAdded": false,
+  "otherTaskStatusesUnchanged": true,
+  "currentAudit": "development/evidence/reassessment/memory-cleanup-20261106/current-status-audit.json",
+  "independentScopeReview": "development/reviews/e411-memory-residuals-independent-scope-20261106.json",
+  "previousCompletionPreserved": {
+    "gitCommit": "9df3f6ace2ed251578d70d6f7f523154c1d574cb",
+    "evidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+    "review": "development/reviews/e411-selective-memory-final-review-20261019.json"
+  },
+  "dataDeleted": false,
+  "memorySourceOrInstallationChanged": false,
+  "remainingAcceptance": [
+    "Per-item scope, selected knowledge, cohort/operation receipts, erasure and current-work dependencies checked before removing anything.",
+    "Demonstrably redundant content removed/compacted; necessary source/STOP/idempotency evidence preserved.",
+    "Current processing status usable, with unresolved historical errors accurately distinguished.",
+    "No historical effects replayed and no family acceptance inferred."
+  ],
+  "preservedHistoricalHashes": {
+    "development/evidence/product/e411-selective-memory-completed-20261019.json": "4bf1e828fb8d83fff2223493228da258b79597c6cec4c0f7d06bf3b68400ce6a",
+    "development/reviews/e411-selective-memory-final-review-20261019.json": "9d26bad0b70016fd17a195035ab8e69072b1cacc24467b70efe1ee81af805379"
+  },
+  "dashboardVerified": {
+    "active": {
+      "id": "E4.11",
+      "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
+      "status": "in_progress",
+      "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt."
+    },
+    "memoryLabel": "Geheugenbasis geïnstalleerd · E4.11 technische opschoning open",
+    "memoryRemaining": "Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut."
+  },
+  "canonicalSha256": "5a248a8eb242b32580992456de517df295021e00fc24f88f27985f59432d15c0"
+}

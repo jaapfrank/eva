@@ -1,0 +1,129 @@
+{
+  "contract": "EvaIndependentE411StatusAndCleanupScopeReview/v1",
+  "recordedAt": "2026-11-06T14:47:55.262812+00:00",
+  "reviewer": "/root/independent_review",
+  "scope": "Read-only original selective-memory completion and remaining historical cleanup boundaries; no private contents or deletions",
+  "sourceEvidenceHashes": {
+    "development/design/product/selective-memory-task-scope-20261019.json": "6185e74c1bc0a43d1a8271662f2fcd15641476e5a6cc37c155c24a1693d064c0",
+    "development/evidence/product/e411-selective-memory-completed-20261019.json": "4bf1e828fb8d83fff2223493228da258b79597c6cec4c0f7d06bf3b68400ce6a",
+    "development/reviews/e411-selective-memory-final-review-20261019.json": "9d26bad0b70016fd17a195035ab8e69072b1cacc24467b70efe1ee81af805379",
+    "src/eva/adapters/postgres/memory_outbox.py": "3476349db333ade0304a6bc6e778b2d5cfbd0eda4f30edf637adeda94b006074",
+    "src/eva/adapters/postgres/people_memory_overview.py": "0c522a3eac2e3a737d72e6c34adc081244107c3d20b904ec59d1fe05abfdc084",
+    "src/eva/application/memory_source_lifecycle.py": "91053c9d9c215c097216e1423547f8712f15ff7e4dd311fd8e09ae37638e3d26",
+    "deploy/living-core/hindsight-memory/completed_payload_compaction.sql": "57221857fe7690ea8fe690b2dd8f0f75ece6e16082caaa9560ef834ae3caf35e"
+  },
+  "statusAssessment": {
+    "originalTechnicalCompletionDefensible": true,
+    "allMemoryHistoryCleanOrCorrectProven": false,
+    "reason": "Original criterion requires selective useful knowledge, separate source/history view, privacy/correction/forgetting, justified existing-data cleanup and measurable storage/context. It does not require erasing every failed event or making an invalid history green. October19completion explicitly preserves unresolved remnants and separate family acceptance.",
+    "currentDataAndInstalledLifecyclesVerifiedByThisReview": false,
+    "newOwnerCleanupOutcomeMustRemainOpen": true,
+    "currentCompletedStatusRecommended": false,
+    "recommendedCurrentStatus": "in_progress",
+    "registrationAdvice": "Reopen existingE4.11 for latest owner cleanup instruction, preserving original doneWhen exactly and October19completion/review as historical evidence. No new task or historical rewrite."
+  },
+  "originalMeasuredScope": {
+    "completedPayloadOperations": 1592,
+    "canonicalBytesBefore": 1915416,
+    "canonicalBytesAfter": 1657070,
+    "canonicalByteReduction": 258346,
+    "affectedKnowledgeRowsUnchanged": 472,
+    "physicalDiskBytesSaved": null,
+    "tokenReduction": null,
+    "generalFamilyAcceptance": false
+  },
+  "historicalResidualClassificationAsOfOctober19": [
+    {
+      "count": 35,
+      "kind": "34failed+1unknownsource",
+      "known": "Original audit found0indexedunits at39addresses from original38problem sources. Retained raw sources are not proven selected search knowledge; original errors/outcomes remain uncertain.",
+      "notProvenNow": "No fresh per-source native-unit, active-work or raw-retention check in this review.",
+      "safeDisposition": "Exact source/owner/hash inventory; use existing authorized forget lifecycle or prove duplicate compaction, preserving bounded content-free error/tombstone receipts. Never retry failed extraction to make history appear complete."
+    },
+    {
+      "count": 80,
+      "kind": "Old completed native execution payloads lacking complete source binding",
+      "known": "Static native operation payloads are not extra semantic search memory. Proven redundant text elsewhere was compacted; these80were deliberately excluded because provenance was insufficient.",
+      "notProven": "Cannot infer every payload duplicate, useless, inactive or safely deletable from age/completed label.",
+      "safeDisposition": "Prove per-row ownership/family/source/content dependencies first; preserve result/replay/error/authorization fields and exact hash proof. No generic payload deletion."
+    },
+    {
+      "count": 224,
+      "kind": "Historically invalid event chronology",
+      "known": "193attempt-order errors,29success-order errors,2backwards timestamps. Genuine processing-history integrity defects, not automatically corrupted current selected facts.",
+      "currentEffect": "Statusreader can returnunavailable historical_*_attention; selected memory/source lists remain separate routes.",
+      "safeDisposition": "Retain original events/hashes. Reconcile or explicitly segregate historical diagnostics from current processing with verifiable append-only classification; never rewrite timestamps/order or remove STOP/privacy authority receipts."
+    }
+  ],
+  "lifecycleCodeBoundaries": [
+    {
+      "path": "src/eva/adapters/postgres/memory_outbox.py:705",
+      "meaning": "Day-source compaction requires acknowledged completed dream cohort, full24hour context, exact receipts and protected-work-source exclusion."
+    },
+    {
+      "path": "src/eva/application/memory_source_lifecycle.py:29",
+      "meaning": "Compacted source proof binds identity, content/reply hashes, selection receipt and known selection outcome; no fabricated empty raw text."
+    },
+    {
+      "path": "src/eva/adapters/postgres/memory_outbox.py:1074",
+      "meaning": "Closed-result reconciliation is exact proof-bound and append-only; not a retry or generic success rewrite."
+    },
+    {
+      "path": "src/eva/adapters/postgres/memory_outbox.py:1176",
+      "meaning": "Existing explicit source-erasure path preserves typed erasure proof and person/scope identity."
+    },
+    {
+      "path": "src/eva/adapters/postgres/people_memory_overview.py:1134",
+      "meaning": "Malformed chronology creates explicit unavailable historical diagnosis; hash/source/unknown failures remain errors rather than harmless old history."
+    },
+    {
+      "path": "deploy/living-core/hindsight-memory/completed_payload_compaction.sql:34",
+      "meaning": "Native trigger compacts only exact marked closed retain families, completed parent and error-free children; unknown extraction errorcount is not zero."
+    }
+  ],
+  "concreteOpenCleanupOutcome": {
+    "title": "Historical memory remnants have a verified disposition and current processing status is usable",
+    "doneWhen": [
+      "Recount and classify35/80/224historical cohorts against actual current scoped databases and installed lifecycle; overlaps and changed counts explicit.",
+      "For every candidate raw fragment prove current ownership, hash binding, active-work/dream protection, selected-unit dependencies and allowed lifecycle.",
+      "Remove only proven unnecessary raw duplicates through existing compaction/forget controls; preserve original error/STOP/privacy/authorization/result receipts as minimal content-free proof.",
+      "Explicitly isolate/reconcile unavoidable historical malformed chronology without declaring original histories valid or blocking truthful current processing status.",
+      "Measure exact logical raw/payload bytes before/after; verify chosen memories, recall source references, corrections/forgetting and person boundaries remain valid.",
+      "Retained unresolved items remain visible with specific cause; no blanket deletion or invented zero/complete state."
+    ],
+    "registrationAdvice": "Reopen existingE4.11 for latest owner cleanup instruction, preserving original doneWhen exactly and October19completion/review as historical evidence. No new task or historical rewrite."
+  },
+  "limitations": [
+    "Historical figures are evidence snapshots, not fresh live counts.",
+    "Original reviews are assessed as evidence, not independently repeated October19tests.",
+    "No private conversations, hidden cases, credentials, code, task status, database row or installation changed."
+  ],
+  "testsOrStateChanges": false,
+  "currentMetadataAuditReviewed": {
+    "path": "development/evidence/reassessment/memory-cleanup-20261106/current-status-audit.json",
+    "sha256": "22db25763e48f6118178928f9e5f264c73a6de55d8967d93a362386a2ef36b81",
+    "checkedAt": "2026-11-06T14:47:21.079064+00:00",
+    "sourceCount": 2253,
+    "valid": {
+      "no_signals": 277,
+      "up_to_date": 1712,
+      "needs_help": 38
+    },
+    "invalidTotal": 226,
+    "errors": {
+      "PeopleMemoryOverviewError:memory retention attempt is out of order": 194,
+      "PeopleMemoryOverviewError:erased memory source is not terminal": 1,
+      "RuntimeError:timeline time moved backwards": 2,
+      "PeopleMemoryOverviewError:memory retention success is out of order": 29
+    },
+    "invalidTerminalPhases": {
+      "memory_not_selected": 4,
+      "memory_retained": 211,
+      "memory_needs_help": 11
+    },
+    "invalidCreatedAfterPreviousClosure": 2,
+    "countsReconciled": true,
+    "actualDatabaseQueriedByReviewer": false,
+    "interpretation": "Parent actual read-only metadata audit reviewed independently.211invalid timelines end in memory_retained; invalid chronology is not proof that selected knowledge is unnecessary. Two postclosure sources and erased_not_terminal require current lifecycle investigation."
+  }
+}

@@ -4,18 +4,18 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 ## Nu
 
-**E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
+**E4.11 · Alleen belangrijke kennis als blijvend geheugen bewaren** — in_progress
 
-Volgende stap: Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en onafhankelijk teruggelezen: voltooid bewezen gedragsfalen geeft expliciet negatief verdict; timeouts, onvolledige/ongeldige controles blijven onbekend. 55 gerichte tests slagen ook tegen werkelijk geïnstalleerde hostbron. Kern/worker, gegevens, criteria en bewaarde helperbewijzen ongewijzigd. Geen pakketupgrade of productie-rollback uitgevoerd. 277 Python-distributies officieel gecontroleerd, 214 met nieuwere stabiele versie; Node/OCI/hostgrenzen vastgelegd. Volgende stap binnen dezelfde E4.16-route: hostgebonden componentdescriptors vervangen de vaste Psycopg-pair/versie; daarna begrensde na-installatiecontrole en exacte updatefout→blijvend hersteldoel→Eva-kandidaat→onafhankelijke beoordeling→latere toepassing. Algemene autonome updater en volledige E4.16 blijven open.
+Volgende stap: Geheugenopschoning heropend op directe eigenaarvraag van 6 november. Actuele read-only controle: 226 ongeldige verwerkingstijdlijnen op 2253 bronnen, waarvan twee bronnen na de eerdere afronding; het historische aantal 224 is verouderd. Per restant bron-/cohort-/ontvangstbewijs, geselecteerde kennis, wissen en lopende werkbinding vaststellen. Alleen aantoonbaar overbodige inhoud gericht verwijderen/compacteren of uit de actieve verwerking nemen, met minimale noodzakelijke herkomst en STOP-/wis-/exactly-once-grenzen behouden. De 35 probleembronnen en 80 onvoldoende gebonden payloads zijn historische aantallen van 19 oktober en moeten actueel worden geclassificeerd. Het actuele verwerkingsoverzicht moet bruikbaar worden zonder oude ongeldige historie als gezond te verklaren. Geen blinde herhaling of verwijderlijst op basis van alleen een ongeldige status.
 
 ## Voortgang
 
-**83/103** geregistreerde deeltaken afgerond. Geen percentage product- of gezinsacceptatie.
+**82/103** geregistreerde deeltaken afgerond. Geen percentage product- of gezinsacceptatie.
 
 | Uitkomst | Stand | Nog niet bewezen |
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
-| Geheugen | Geheugenbasis geaccepteerd · E4.11 technisch afgerond | Geen open technische bouwvoorwaarde binnen E4.11. Expliciet behouden:35 oude onzekere/mislukte bronnen,80 onvoldoende gebonden uitvoerpayloads en224 ongeldige oude tijdlijnen. Geen blinde herhaling of verwijdering. Historisch verwerkingsoverzicht blijft een waarschuwing; zoeken en bronlijsten werken. Gezinsacceptatie en meerdaags nut blijven F2.1/F2.2; fysieke opslag-/token-/snelheidswinst onbekend. |
+| Geheugen | Geheugenbasis geïnstalleerd · E4.11 technische opschoning open | Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut. |
 | Eigen initiatief | Context hersteld · dagelijks vervolg nog open | Zonder aansturing passende eigen activiteiten voortzetten, resultaat terugbrengen en later gebruiken; dagelijks nut blijft onbewezen. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
@@ -51,6 +51,7 @@ Volgende stap: Gerichte dependency-terugvalcorrectie gebouwd, geïnstalleerd en 
 | E1.12 · Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien | in_progress |
 | E1.14 · Afgesproken continuïteit bij modeluitval en herstart aantonen | in_progress |
 | E2.6 · WhatsApp met eigen Eva-nummer en live bellen | geparkeerd |
+| E4.11 · Alleen belangrijke kennis als blijvend geheugen bewaren | in_progress |
 | E4.15 · Van zelfontdekte behoefte naar eigen uitvinding en later gebruik | in_progress |
 | E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen | in_progress |
 | E4.19 · Relevante updates zelfstandig ontdekken en beheerd toepassen | in_progress |
