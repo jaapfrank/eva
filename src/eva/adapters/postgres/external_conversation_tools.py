@@ -74,6 +74,7 @@ class PostgresExternalConversationTools:
         provider: AsyncToolPort,
         *,
         authorize_turn: Callable[[ConversationTurn], None] | None = None,
+        authorize_shared_turn: Callable[[ConversationTurn], None] | None = None,
         configuration_sha256: str | None = None,
         preparation_call_resolver: Callable[[ConversationTurn, ConversationActionCall, int], ConversationActionCall] | None = None,
     ) -> None:
@@ -89,6 +90,7 @@ class PostgresExternalConversationTools:
         self._planner = planner
         self._provider = provider
         self._authorize_turn = authorize_turn
+        self._authorize_shared_turn = authorize_shared_turn
         if configuration_sha256 is not None and not re.fullmatch(r"[0-9a-f]{64}", configuration_sha256):
             raise ValueError("provider configuration fingerprint is invalid")
         self._configuration_sha256 = configuration_sha256
@@ -97,7 +99,7 @@ class PostgresExternalConversationTools:
     def with_preparation_call_resolver(self, resolver):
         """Clone this route while preserving provider authority and durable identity."""
         return type(self)(self._engine, self._planner, self._provider,
-            authorize_turn=self._authorize_turn,
+            authorize_turn=self._authorize_turn, authorize_shared_turn=self._authorize_shared_turn,
             configuration_sha256=self._configuration_sha256,
             preparation_call_resolver=resolver)
 
@@ -831,6 +833,11 @@ class PostgresExternalConversationTools:
         require_initiative_context(turn)
         if self._authorize_turn is not None:
             self._authorize_turn(turn)
+        elif turn.audience.kind != "private_person":
+            # A shared dispatch grant does not opt into historical model context.
+            if self._authorize_shared_turn is None:
+                raise ConversationConflict("shared tool requires explicit audience authority")
+            self._authorize_shared_turn(turn)
 
     def _ensure_running(self, turn: ConversationTurn) -> None:
         check_cancellation()

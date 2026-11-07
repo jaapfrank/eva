@@ -1661,6 +1661,24 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "P1-04 · Privacy en bevoegdheid in gedeelde gesprekken",
+            "state": "installed",
+            "summary": "Geïnstalleerde beveiliging voor groepschat en gedeelde speakers, met vastgelegd kindbeleid.",
+            "result": "Telegram-groepen krijgen geen privéwerkcontext of uitvoeracties. Een gedeelde speaker gebruikt uitsluitend expliciet toegelaten functies. Bij een vervallen persoonlijke bevestiging wordt een privéwerkresultaat geblokkeerd. De 13 gerichte controles zijn geslaagd.",
+            "remaining": "Persoonlijke functies voor kinderen blijven gesloten totdat ouder- of voogdtoestemming, eigen gegevensafscherming en gebruik op dezelfde geïnstalleerde versie zijn aangetoond. Gezinsacceptatie blijft apart.",
+            "source": "development/evidence/reassessment/p1-04-shared-audience-safety-verified-20261107.json",
+            "review": "development/evidence/reassessment/p1-04-shared-audience-safety-verified-20261107.json",
+            "checkedAt": "2026-11-07T14:25:36.150885+00:00",
+            "installedAt": "2026-11-07T14:24:59.682790+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "P1-03 · Importgrenzen bij ontvangstbewijzen en onderzoek",
             "state": "installed",
             "summary": "Ontvangstbewijzen gebruiken gedeelde validatie. De host koppelt de bestaande zoekroute.",
@@ -3618,15 +3636,15 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "P1-03 · Importgrenzen bij ontvangstbewijzen en onderzoek",
+          "title": "P1-04 · Privacy en bevoegdheid in gedeelde gesprekken",
           "state": "installed",
-          "summary": "Ontvangstbewijzen gebruiken gedeelde validatie. De host koppelt de bestaande zoekroute.",
-          "result": "De werkmapcontrole daalde van 177 naar 169 signalen. Vier koppelingen verdwenen uit de code. Vier meldingen zijn met twee nauwkeurige afhankelijkheidsregels verklaard. De geïnstalleerde kern en werkuitvoerder gebruiken de gecontroleerde bronversies.",
-          "remaining": "De volledige controle meldt 169 bestaande signalen buiten deze correctie. De bevindingen zijn per risico en laadmoment vastgelegd.",
-          "source": "development/evidence/reassessment/p1-03-import-boundaries-verified-20261107.json",
-          "review": "development/evidence/reassessment/p1-03-import-boundaries-verified-20261107.json",
-          "checkedAt": "2026-11-07T14:00:23.993000+00:00",
-          "installedAt": "2026-11-07T14:00:14.761170+00:00",
+          "summary": "Geïnstalleerde beveiliging voor groepschat en gedeelde speakers, met vastgelegd kindbeleid.",
+          "result": "Telegram-groepen krijgen geen privéwerkcontext of uitvoeracties. Een gedeelde speaker gebruikt uitsluitend expliciet toegelaten functies. Bij een vervallen persoonlijke bevestiging wordt een privéwerkresultaat geblokkeerd. De 13 gerichte controles zijn geslaagd.",
+          "remaining": "Persoonlijke functies voor kinderen blijven gesloten totdat ouder- of voogdtoestemming, eigen gegevensafscherming en gebruik op dezelfde geïnstalleerde versie zijn aangetoond. Gezinsacceptatie blijft apart.",
+          "source": "development/evidence/reassessment/p1-04-shared-audience-safety-verified-20261107.json",
+          "review": "development/evidence/reassessment/p1-04-shared-audience-safety-verified-20261107.json",
+          "checkedAt": "2026-11-07T14:25:36.150885+00:00",
+          "installedAt": "2026-11-07T14:24:59.682790+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
           "controlledRuntimeVerificationPassed": true,
@@ -3655,12 +3673,12 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T14:00:23.993000+00:00",
-        "reviewedAt": "2026-11-07T14:00:23.993000+00:00",
+        "checkedAt": "2026-11-07T14:25:36.150885+00:00",
+        "reviewedAt": "2026-11-07T14:25:36.150885+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-11-07T08:27:00.930248+00:00",
-      "checkedAt": "2026-11-07T14:00:23.993000+00:00",
+      "checkedAt": "2026-11-07T14:25:36.150885+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3798,7 +3816,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T14:00:23.993000+00:00",
+      "lastUpdatedAt": "2026-11-07T14:25:36.150885+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3832,7 +3850,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T14:00:23.993000+00:00",
+      "updatedAt": "2026-11-07T14:25:36.150885+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -10463,13 +10481,14 @@
           "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
           "P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.",
           "P1-03 · Actuele importgrenzen gemeten. De actieve correcties bij ontvangstbewijzen en onderzoek zijn geïnstalleerd en teruggelezen. De werkmapcontrole telt 169 resterende signalen.",
-          "P1-04/06 · Voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe. Beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
+          "P1-04 · Groepsprivacy, expliciete speakerbevoegdheid en de geldigheid van persoonlijke werkteruggave zijn geïnstalleerd en getest. Het kindbeleid is vastgelegd. Persoonlijke kindfuncties blijven gesloten tot afzonderlijke toestemming en acceptatie.",
+          "P1-06 · Beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
           "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
           "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T14:00:23.993000+00:00",
+        "updatedAt": "2026-11-07T14:25:36.150885+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10748,7 +10767,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T14:00:23.993000+00:00",
+        "checkedAt": "2026-11-07T14:25:36.150885+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -11047,6 +11066,15 @@
           "result": "De werkmapcontrole daalde van 177 naar 169 signalen. Vier koppelingen verdwenen uit de code. Vier meldingen zijn met twee nauwkeurige afhankelijkheidsregels verklaard. De geïnstalleerde kern en werkuitvoerder gebruiken de gecontroleerde bronversies.",
           "remaining": "De volledige controle meldt 169 bestaande signalen buiten deze correctie. De bevindingen zijn per risico en laadmoment vastgelegd.",
           "evidence": "development/evidence/reassessment/p1-03-import-boundaries-verified-20261107.json"
+        },
+        "p104SharedAudienceSafety20261107": {
+          "priority": "P1-04",
+          "status": "installed_technical_delivery_complete",
+          "checkedAt": "2026-11-07T14:25:36.150885+00:00",
+          "result": "Telegram-groepen krijgen geen privéwerkcontext of uitvoeracties. Een gedeelde speaker gebruikt uitsluitend expliciet toegelaten functies. Bij een vervallen persoonlijke bevestiging wordt een privéwerkresultaat geblokkeerd. De 13 gerichte controles zijn geslaagd.",
+          "remaining": "Persoonlijke functies voor kinderen blijven gesloten totdat ouder- of voogdtoestemming, eigen gegevensafscherming en gebruik op dezelfde geïnstalleerde versie zijn aangetoond. Gezinsacceptatie blijft apart.",
+          "evidence": "development/evidence/reassessment/p1-04-shared-audience-safety-verified-20261107.json",
+          "policy": "development/docs/ARCHITECTUUR.md"
         }
       }
     },
@@ -17674,13 +17702,14 @@
         "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
         "P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.",
         "P1-03 · Actuele importgrenzen gemeten. De actieve correcties bij ontvangstbewijzen en onderzoek zijn geïnstalleerd en teruggelezen. De werkmapcontrole telt 169 resterende signalen.",
-        "P1-04/06 · Voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe. Beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
+        "P1-04 · Groepsprivacy, expliciete speakerbevoegdheid en de geldigheid van persoonlijke werkteruggave zijn geïnstalleerd en getest. Het kindbeleid is vastgelegd. Persoonlijke kindfuncties blijven gesloten tot afzonderlijke toestemming en acceptatie.",
+        "P1-06 · Beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
         "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
         "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T14:00:23.993000+00:00",
+      "updatedAt": "2026-11-07T14:25:36.150885+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17959,7 +17988,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T14:00:23.993000+00:00",
+      "checkedAt": "2026-11-07T14:25:36.150885+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -18258,6 +18287,15 @@
         "result": "De werkmapcontrole daalde van 177 naar 169 signalen. Vier koppelingen verdwenen uit de code. Vier meldingen zijn met twee nauwkeurige afhankelijkheidsregels verklaard. De geïnstalleerde kern en werkuitvoerder gebruiken de gecontroleerde bronversies.",
         "remaining": "De volledige controle meldt 169 bestaande signalen buiten deze correctie. De bevindingen zijn per risico en laadmoment vastgelegd.",
         "evidence": "development/evidence/reassessment/p1-03-import-boundaries-verified-20261107.json"
+      },
+      "p104SharedAudienceSafety20261107": {
+        "priority": "P1-04",
+        "status": "installed_technical_delivery_complete",
+        "checkedAt": "2026-11-07T14:25:36.150885+00:00",
+        "result": "Telegram-groepen krijgen geen privéwerkcontext of uitvoeracties. Een gedeelde speaker gebruikt uitsluitend expliciet toegelaten functies. Bij een vervallen persoonlijke bevestiging wordt een privéwerkresultaat geblokkeerd. De 13 gerichte controles zijn geslaagd.",
+        "remaining": "Persoonlijke functies voor kinderen blijven gesloten totdat ouder- of voogdtoestemming, eigen gegevensafscherming en gebruik op dezelfde geïnstalleerde versie zijn aangetoond. Gezinsacceptatie blijft apart.",
+        "evidence": "development/evidence/reassessment/p1-04-shared-audience-safety-verified-20261107.json",
+        "policy": "development/docs/ARCHITECTUUR.md"
       }
     },
     "goalRevision": {
@@ -18266,29 +18304,29 @@
       "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
-      "recordedAt": "2026-11-07T14:00:23.993000+00:00",
-      "checkedAt": "2026-11-07T14:00:23.993000+00:00",
+      "recordedAt": "2026-11-07T14:25:36.150885+00:00",
+      "checkedAt": "2026-11-07T14:25:36.150885+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "coreImage": "sha256:6433b57d7fb3e2f0a7fba32891af6768fc263170a97b78b047e0d22173fe7eee",
-      "workerImage": "sha256:1b3b60cb4a8b62a9211f7ab58681e9084ef111e5b83e21ec11c0d26e8c9007aa",
+      "coreImage": "sha256:3175727d0d9a8ba3719661848046f1e56384b67ff1d7428cd16e8a411e68f4dd",
+      "workerImage": "sha256:65bb577ce6f90e73148e5820b8a91dace5ee5fb9364ba1dee2f31495641d6bf0",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
       "readyStatus": "installed_technical_delivery_complete",
-      "evidence": "development/evidence/reassessment/p1-03-import-boundaries-verified-20261107.json",
-      "independentSourceReview": "development/evidence/reassessment/p1-03-import-boundaries-verified-20261107.json",
+      "evidence": "development/evidence/reassessment/p1-04-shared-audience-safety-verified-20261107.json",
+      "independentSourceReview": "development/evidence/reassessment/p1-04-shared-audience-safety-verified-20261107.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "De kern en werkuitvoerder gebruiken de gecontroleerde P1-03-bronwijzigingen met overeenkomende werkprofielen.",
+      "meaning": "De kern en werkuitvoerder gebruiken de gecontroleerde P1-04-beveiliging met overeenkomende werkprofielen.",
       "runtimeProfiles": {
         "digital_work": "matching",
         "household_research": "matching",
         "public_research": "matching",
         "shared_provider": "matching"
       },
-      "profileReadbackSha256": "c377cd60c2ec2c4fa06ab5ec20a7ce46eba7bde19f98fc45ffaf50fb0ad75063",
+      "profileReadbackSha256": "bba9e7677ecab792ced76424b35b88b4970c82ca3dfa7054e252a427d5acd2c4",
       "hostOverlaySourceHashes": {
         "component_evaluation_service.py": "496d3f1e9d2a02835c01a18b8359d17ef09f16aac134a5f5280be48f0e874020",
         "owned_package_handoff.py": "23f6e0995c0435ffbfc52a498ac8ad6ee3aba7e27537b13db0c6ed6cdfe7a38a",
@@ -18306,17 +18344,12 @@
         "authorityCount": 10,
         "installedEvidence": "development/reviews/p003-independent-20261106/installed-go.json"
       },
-      "sourceBaseCommitChecked": "8546bf27ab23d197088993f402f44f4c29bc889c",
+      "sourceBaseCommitChecked": "7f52abacd9b2a0773614f105c71b6c496127af4f",
       "installedSourceSha256": {
-        "application/connector_receipts.py": "609457caa37ecf80c56f2ad8ddaf77c6d0886020ac317f190dfaa84af41da69d",
-        "adapters/model/pydantic_conversation.py": "de07d162668b7ef8de8d921fa39e0e1cbf3da9c4e11531dffc1b2450577cf894",
-        "adapters/postgres/connector_results.py": "faf9adb9680a3f6d112db34f9fbe21268fdf89b4444eed27f829ebdd4869fbc2",
-        "adapters/postgres/conversation_actions.py": "a6aac798e3491ef778cf8acfb0c353682f5dd43b78893f6a91a77f38020d8a31",
-        "providers/mcp_discovery.py": "5c99d83ca623a099f3bc151499dd29abc653af8461a90f994b7d1219521ec422",
-        "providers/home_assistant_receipts.py": "53b1a2be9593c7e781891ff423e05fcfd256fd715659604e8b736b061ad117c6",
-        "bootstrap/background_research.py": "a761cc1ea7e35dcaa2c41005e17fbc7dd851bb0998d3ab057c45583d9f7ca161",
-        "bootstrap/delegated_digital_composition.py": "7d99aa621b0bcf20e0d9505c22153f1e55d21e2d0745007c6a22966021b6effa",
-        "bootstrap/runtime.py": "e935a7f6b47cad2a2c68633acab584276b38d77b9dfafa5e52964087643dcc3e"
+        "adapters/postgres/conversation_actions.py": "f4d42af4cd465da668b4ac1426f451d103c38ceeb1d8a928c9760d0ff5323f18",
+        "adapters/postgres/external_conversation_tools.py": "b4e7141362fc37cf7318f3a9b54c664fdc9283d4150612d82312c4e7d9ec3bf5",
+        "providers/home_assistant.py": "139d06285abbcede7bc743077cefc76016385911c7cc12e4214dc0cb29ba4175",
+        "bootstrap/runtime.py": "8e9a3b1069e9beaf57b9a302fff61fe885f1cd5a8a6da03370b16bd1f399e97e"
       }
     },
     "memoryGoal20260910": {

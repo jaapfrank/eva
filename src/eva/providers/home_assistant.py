@@ -285,14 +285,6 @@ class HomeAssistantProviderFactory:
             tuple(value.split(":", 1)) for value in settings.effect_allowlist
         )
         effect_principals = frozenset(settings.effect_principal_sha256_allowlist)
-        external_tools: list[ConversationExternalToolPort] = [
-            PostgresExternalConversationTools(
-                engine,
-                provider.conversation_read_planner(),
-                provider,
-                configuration_sha256=home_assistant_read_configuration_sha256(settings.endpoint_url),
-            )
-        ]
         household = HomeAssistantHouseholdTool(inventory_reader)
 
         def authorize_household(turn):
@@ -310,6 +302,19 @@ class HomeAssistantProviderFactory:
             ):
                 raise ConversationConflict("household inventory is unavailable for this audience")
 
+        def authorize_ordinary_home_control(turn):
+            if turn.audience.kind != "private_person":
+                authorize_household(turn)
+
+        external_tools: list[ConversationExternalToolPort] = [
+            PostgresExternalConversationTools(
+                engine,
+                provider.conversation_read_planner(),
+                provider,
+                authorize_shared_turn=authorize_ordinary_home_control,
+                configuration_sha256=home_assistant_read_configuration_sha256(settings.endpoint_url),
+            )
+        ]
         external_tools.append(PostgresExternalConversationTools(
             engine, household, household, authorize_turn=authorize_household,
             configuration_sha256=home_assistant_read_configuration_sha256(settings.endpoint_url),
@@ -323,6 +328,7 @@ class HomeAssistantProviderFactory:
                         principal_sha256_allowlist=effect_principals,
                     ),
                     provider,
+                    authorize_shared_turn=authorize_ordinary_home_control,
                 )
             )
         if automation is not None:

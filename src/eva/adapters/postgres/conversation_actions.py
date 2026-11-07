@@ -260,14 +260,17 @@ class PostgresConversationActions:
         return tuple(actions)
 
     def available_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
-        actions = list(self.action_names)
+        if turn.audience.kind == "telegram_group":
+            return ()
+        household = turn.audience.kind == "household"
+        actions = list(self._external_tool_by_action if household else self.action_names)
         for provider in self._external_tools:
             selector = getattr(provider, "available_action_names", None)
             available = getattr(provider, "available_for", None)
             if callable(selector):
                 blocked = set(provider.action_names) - set(selector(turn))
                 actions = [name for name in actions if name not in blocked]
-            elif callable(available) and not available(turn):
+            elif (callable(available) and not available(turn)) or (household and not callable(available)):
                 blocked = set(provider.action_names)
                 actions = [name for name in actions if name not in blocked]
         if turn.observation_binding is not None:
@@ -277,6 +280,12 @@ class PostgresConversationActions:
         return tuple(name for name in actions if guard is None or guard.action_allowed(name))
 
     def _step_tools(self, turn: ConversationTurn):
+        if turn.audience.kind == "telegram_group":
+            return ()
+        if turn.audience.kind == "household":
+            allowed = set(self.available_action_names(turn))
+            return tuple(provider for provider in self._external_tools
+                         if allowed.intersection(provider.action_names))
         from eva.application.initiative_execution import require_initiative_context
         native = require_initiative_context(turn)
         research_steps = self._native_research if native is not None else self._owner_research_steps
@@ -296,7 +305,8 @@ class PostgresConversationActions:
 
     def conversation_instructions(self, turn, available_names):
         values = []
-        for provider in self._external_tools:
+        providers = self._external_tools if turn.audience.kind == "private_person" else self._step_tools(turn)
+        for provider in providers:
             guidance = getattr(provider, "conversation_instructions", None)
             if callable(guidance):
                 values.extend(guidance(turn, available_names))
@@ -345,7 +355,9 @@ class PostgresConversationActions:
 
     def reuse_verified_action(self, turn):
         seen = set()
-        for provider in self._external_tool_by_action.values():
+        providers = (self._external_tool_by_action.values() if turn.audience.kind == "private_person"
+                     else self._step_tools(turn))
+        for provider in providers:
             if id(provider) in seen:
                 continue
             seen.add(id(provider))
@@ -413,6 +425,12 @@ class PostgresConversationActions:
         return ()
 
     def pending(self, turn: ConversationTurn) -> ConversationActionReceipt | None:
+        if turn.audience.kind != "private_person":
+            for provider in self._step_tools(turn):
+                receipt = provider.pending(turn)
+                if receipt is not None:
+                    return receipt
+            return None
         durable_goal_receipt = self._pending_durable_goal(turn)
         if durable_goal_receipt is not None:
             return durable_goal_receipt
@@ -476,7 +494,15 @@ class PostgresConversationActions:
         return None
 
     def active_context(self, turn: ConversationTurn) -> tuple[str, ...]:
+        from eva.adapters.postgres.conversation_grounding import recent_tool_context
         from eva.application.initiative_execution import require_initiative_context
+        from eva.application.provider_context import collect_provider_context
+
+        if turn.audience.kind == "telegram_group":
+            return ()
+        if turn.audience.kind == "household":
+            return (*collect_provider_context(self._step_tools(turn), turn),
+                    *recent_tool_context(self, turn))
         if require_initiative_context(turn) is not None:
             # The durable native claim is already supplied by guard.instructions().
             # Never relabel completed/stopped owner work as an active new goal.
@@ -606,9 +632,7 @@ class PostgresConversationActions:
             context.append(summary)
             if len(context) == 2:
                 break
-        from eva.application.provider_context import collect_provider_context
         context.extend(collect_provider_context(self._external_tools, turn))
-        from eva.adapters.postgres.conversation_grounding import recent_tool_context
         context.extend(recent_tool_context(self, turn))
         if self._durable_goal_provider is not None:
             goals = self._durable_goal_store(turn).waiting(
@@ -667,6 +691,9 @@ class PostgresConversationActions:
     def execute(
         self, turn: ConversationTurn, call: ConversationActionCall
     ) -> ConversationActionReceipt:
+        if (turn.audience.kind != "private_person"
+                and call.name not in self.available_action_names(turn)):
+            raise ConversationConflict("conversation action is unavailable for this audience")
         from eva.application.initiative_execution import authorize_initiative_action
         authorize_initiative_action(turn, call.name)
         from eva.application.initiative_execution import require_initiative_context

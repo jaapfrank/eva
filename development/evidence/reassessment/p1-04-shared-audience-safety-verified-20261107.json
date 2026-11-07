@@ -1,0 +1,101 @@
+{
+  "contract": "EvaSharedAudienceSafetyVerification/v1",
+  "priority": "P1-04",
+  "status": "installed_technical_delivery_complete",
+  "checkedAt": "2026-11-07T14:25:36.150885+00:00",
+  "policy": "development/docs/ARCHITECTUUR.md",
+  "policySha256": "d44caf2ecff1e253c2a5073b9d78b29daa5c1d125112aaa439322e35bffbb558",
+  "baselineCommit": "7f52abacd9b2a0773614f105c71b6c496127af4f",
+  "scope": "Imported instructions, cross-audience private context, shared execution grants, and expired personal speaker work-result authority.",
+  "corrections": {
+    "telegramGroup": "Exact group audience retains its shared conversation and recall. Private action context, effects, and prior action continuation are excluded.",
+    "sharedSpeaker": "Only tool routes with explicit audience authority are available. Existing actor grants remain necessary for Home Assistant basic reads and light or switch commands.",
+    "personalWorkReturn": "The host-generated speaker control identity must match its recorded session and confirmed principal before and after poll or authorize. An expired return suppresses the output and preserves an unacknowledged claim.",
+    "cameraAndVoiceIdentity": "Camera or voice recognition is not an authentication credential. Personal features for children stay closed pending verified guardian authorization, separate scope and separate acceptance.",
+    "childProfilesEnabledByThisDelivery": false,
+    "familyAcceptance": false
+  },
+  "verification": {
+    "testsPassed": 13,
+    "baselineCasesReproduced": 5,
+    "testExecutionSeconds": 7.38,
+    "testFiles": {
+      "development/tests/postgres/test_shared_audience_boundary.py": "f953eb326635ffc8715a95fccc5f18a534519ed8e2c870b0945674b8486ecd51",
+      "development/tests/api/test_shared_private_work_authority.py": "f8fe4b5e65c16d4490dcb75f07143e611b7a7285555f59810466ccbb09b4402d"
+    },
+    "postgresVersion": "16.13 in disposable network-isolated database",
+    "fixtureSchemaInstaller": "Current checkout schema installer used only in the disposable test snapshot for the existing context/erasure fixtures.",
+    "regressions": [
+      "Imported instructions cannot expose an existing private interest or cause a group effect.",
+      "Explicit household route remains available while a generic tool without shared authority is refused.",
+      "Both private-result poll and authorize recheck speaker confirmation, including expiry during the return.",
+      "Direct dashboard voice retains its distinct authenticated route.",
+      "Existing tests cover group opt-in, sender/device substitution, stream revocation, scoped STOP and erased source exclusion."
+    ],
+    "postInstallReadback": {
+      "liveScopedSpeakerCatalogues": 2,
+      "liveGroupPrivateContextAndActionCatalogueEmpty": true,
+      "stopAndForgetPresentInInstalledDashboard": true,
+      "externalRequests": 0
+    },
+    "physicalSpeakerAndChildAcceptancePerformed": false,
+    "runtimeModelRequestsFromVerification": 0,
+    "productionVerificationWrites": 0,
+    "developmentCredits": "unknown"
+  },
+  "historicalReadOnlyScope": {
+    "retainedGroupIngress": 3,
+    "earlierSamePrincipalInterest": 0,
+    "earlierSamePrincipalGoal": 0,
+    "coverage": "Only retained group ingress and earlier same-principal goal/interest records in the installed runtime scope. No content exported."
+  },
+  "installation": {
+    "activationSha256": "d7cc9a4002996495991b8addba230f21bc07eedf96209861e2acd9c5a50177ab",
+    "completedAt": "2026-11-07T14:24:59.682790+00:00",
+    "profileNames": [
+      "digital_work",
+      "household_research",
+      "public_research",
+      "shared_provider"
+    ],
+    "profileSha256": "bba9e7677ecab792ced76424b35b88b4970c82ca3dfa7054e252a427d5acd2c4",
+    "sourcesByRole": {
+      "core": {
+        "adapters/postgres/conversation_actions.py": "f4d42af4cd465da668b4ac1426f451d103c38ceeb1d8a928c9760d0ff5323f18",
+        "adapters/postgres/external_conversation_tools.py": "b4e7141362fc37cf7318f3a9b54c664fdc9283d4150612d82312c4e7d9ec3bf5",
+        "providers/home_assistant.py": "139d06285abbcede7bc743077cefc76016385911c7cc12e4214dc0cb29ba4175",
+        "bootstrap/runtime.py": "8e9a3b1069e9beaf57b9a302fff61fe885f1cd5a8a6da03370b16bd1f399e97e"
+      },
+      "delegated-work-worker": {
+        "adapters/postgres/conversation_actions.py": "f4d42af4cd465da668b4ac1426f451d103c38ceeb1d8a928c9760d0ff5323f18",
+        "adapters/postgres/external_conversation_tools.py": "b4e7141362fc37cf7318f3a9b54c664fdc9283d4150612d82312c4e7d9ec3bf5",
+        "providers/home_assistant.py": "139d06285abbcede7bc743077cefc76016385911c7cc12e4214dc0cb29ba4175"
+      }
+    },
+    "imageDigests": {
+      "eva2-managed-b-slot3-core": "sha256:3175727d0d9a8ba3719661848046f1e56384b67ff1d7428cd16e8a411e68f4dd",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:65bb577ce6f90e73148e5820b8a91dace5ee5fb9364ba1dee2f31495641d6bf0"
+    },
+    "phases": [
+      "pause_exact_evaluator_core_and_worker",
+      "existing_sdk_install_exact_two_images",
+      "resume_same_config_evaluator_once",
+      "actual_source_profiles_authorities_and_preservation"
+    ],
+    "oldPairMatched": true,
+    "planSha256": "2158db14c10172f169525b6445334c7e546b7a0b72c9057e94bf836307166e80",
+    "installerSha256": "21c897ee8f309815093eb9715736ea0a4902daeca3ef066ee28455d5245efddb",
+    "offlineImageAndProfileProofSha256": "5b5bb6602405ea6406944316dd09700c65599aec4577f7b5413c64628145747d",
+    "independentSourceAndInstallReview": "approved",
+    "initialPlanRejectedBeforeEffectsOnInheritedPins": true,
+    "revisedPlanRetainedExactPriorAndCandidateSourcePins": true,
+    "healthyCoreAndWorker": true,
+    "installedProfileCheckCompatible": true,
+    "sourceFilesChangedByRole": {
+      "core": 4,
+      "delegated-work-worker": 3
+    },
+    "voiceTransportAndSettingsRetained": true,
+    "localMethodOrderDiffKeptOutsideInstalledOverlay": true
+  }
+}

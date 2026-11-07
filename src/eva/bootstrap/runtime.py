@@ -418,7 +418,25 @@ class PostgresHindsightMemoryRuntime:
         service = self._delegated_work_owner_service
         if service is None:
             raise ValueError("private work return unavailable")
-        return service.private_return(turn, operation, **kwargs)
+        channel, _, session_id = turn.conversation_id.partition(":")
+        if (operation not in {"poll", "authorize"} or channel != "voice"
+                or turn.message_id != f"{turn.conversation_id}:{session_id}"):
+            return service.private_return(turn, operation, **kwargs)
+        # This server-generated control ID belongs to a speaker session
+        # promoted through private confirmation. Dashboard voice uses return:<id>.
+        verification = getattr(self, "_voice_identity", None)
+        data = None if verification is None else verification.data(session_id)
+        binding = None if data is None else data.get("session")
+        if (not isinstance(binding, dict)
+                or binding.get("session_id") != session_id
+                or binding.get("tenant_id") != turn.tenant_id
+                or binding.get("installation_id") != turn.installation_id
+                or verification.principal(binding) != turn.principal_id):
+            raise ValueError("Personal work return authority unavailable")
+        result = service.private_return(turn, operation, **kwargs)
+        if verification.principal(binding) != turn.principal_id:
+            raise ValueError("Personal work return authority changed")
+        return result
 
     def dashboard_workboard(self) -> WorkBoard:
         """Return only the board bound to this configured local operator."""
