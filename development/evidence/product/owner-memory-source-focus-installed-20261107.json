@@ -1,0 +1,51 @@
+{
+  "contract": "EvaOwnerMemorySourceFocusInstalledOutcome/v1",
+  "checkedAt": "2026-11-07T12:46:36.735427+00:00",
+  "scope": "Bring the existing owner-bound source editor into view when a source is opened.",
+  "before": {
+    "sourceReadSucceeded": true,
+    "sourcePanelTopPx": 3728,
+    "viewportHeightPx": 844,
+    "scrollMoved": false
+  },
+  "after": {
+    "sameSource": true,
+    "position": {
+      "top": 434,
+      "bottom": 462,
+      "height": 844,
+      "scroll": 4594,
+      "focused": true
+    },
+    "scrollBefore": 1264,
+    "editorInViewport": true,
+    "correctionVisible": true,
+    "forgetVisible": true,
+    "memoryWrites": 0
+  },
+  "isolatedBrowserProof": {
+    "passed": true,
+    "exactSourceRead": true,
+    "syntheticCorrectionAndErasure": true,
+    "hiddenAndRevokedViewClears": true,
+    "javascriptErrors": 0
+  },
+  "installation": {
+    "coreImage": "sha256:de93686938cc322c53ea15a601d6d816579eb3f0070ce079975fa87d26c316ca",
+    "workerImage": "sha256:3cf9703f1e08974d86cac3b1e4d6d8e0095bdf42ec99636d050cb3f0c7a176b3",
+    "startedAt": "2026-11-07T12:44:39.46495336Z",
+    "manifestSha256": "d6041b0c419b5c099ebdbd19a1338f250fbbbfb57d90d9b1a00b5c44f198881f",
+    "activationReceiptSha256": "421f6e2cefc56ff7b3bfa9ba8c06f780d2f1837b567c0c89a43684717018b9f4",
+    "sdkReceiptSha256": "667fa1a81b39754f9039953b54052302c31c4dea127eacd83b6ad9026a3e17ec",
+    "matchingRuntimeProfiles": [
+      "digital_work",
+      "household_research",
+      "public_research",
+      "shared_provider"
+    ]
+  },
+  "independentSourceReview": "approved",
+  "independentActivationPlanReview": "approved",
+  "independentInstalledMetadataReadback": "verified",
+  "conversationModelCallsByVerification": 0
+}

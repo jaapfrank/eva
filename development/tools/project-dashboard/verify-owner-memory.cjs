@@ -71,6 +71,11 @@ const fixtures = {
     await cards.first().getByRole('button', { name: 'Bron bekijken en aanpassen' }).click();
     const detail = page.getByRole('region', { name: 'Geheugenbron bekijken en aanpassen' });
     await detail.locator('.memory-full-content').waitFor();
+    const heading = detail.getByRole('heading', { name: 'Geselecteerde bron', exact: true });
+    assert.equal(await heading.evaluate(element => {
+      const { top, bottom } = element.getBoundingClientRect();
+      return document.activeElement === element && top >= 0 && bottom <= window.innerHeight;
+    }), true);
     if (server) {
       await detail.getByText('Afleiding van Eva · geen vastgesteld feit').waitFor();
       await detail.getByRole('button', { name: 'Informatie corrigeren' }).click();

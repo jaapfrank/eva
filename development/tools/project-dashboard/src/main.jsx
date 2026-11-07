@@ -203,12 +203,18 @@ function memorySourcesPayload(value) {
   return payload;
 }
 
-function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelectSource }) {
+function MemorySourceControl({ selection, generation, onClose, onChanged, onSelectSource }) {
+  const sourceId = selection.id;
+  const heading = React.useRef(null);
   const [detail, setDetail] = React.useState(null);
   const [text, setText] = React.useState('');
   const [mode, setMode] = React.useState('view');
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState('');
+  React.useEffect(() => {
+    heading.current.focus({ preventScroll: true });
+    heading.current.scrollIntoView({ block: 'start' });
+  }, [selection]);
   React.useEffect(() => {
     const controller = new AbortController();
     setDetail(null); setError('');
@@ -246,7 +252,7 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelec
     } finally { setBusy(false); }
   };
   return <section className="memory-source-control" aria-label="Geheugenbron bekijken en aanpassen">
-    <div className="memory-toolbar"><h3>Geselecteerde bron</h3><button disabled={busy} onClick={onClose}>Sluiten</button></div>
+    <div className="memory-toolbar"><h3 ref={heading} tabIndex={-1}>Geselecteerde bron</h3><button disabled={busy} onClick={onClose}>Sluiten</button></div>
     {error && <p role="alert">{error}</p>}
     {!detail && !error && <p role="status">Volledige bron ophalen…</p>}
     {detail && <>
@@ -287,11 +293,16 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelec
 
 function MemorySources({ selectedSource, onMemoryChanged }) {
   const [expanded, setExpanded] = React.useState(false);
-  React.useEffect(() => { if (selectedSource) setExpanded(true); }, [selectedSource]);
   // Keep only the visible page in component memory, never in a persistent store
   // or the shared query cache. Changing page/access first clears old content.
   const [selected, setSelected] = React.useState(null);
-  React.useEffect(() => { if (selectedSource) setSelected(selectedSource.id); }, [selectedSource]);
+  React.useEffect(() => {
+    if (selectedSource) {
+      setExpanded(true);
+      setSelected(selectedSource);
+    }
+  }, [selectedSource]);
+  const selectSource = id => setSelected({ id });
   const [generation, revalidateDetail] = React.useReducer(value => value + 1, 0);
   const [notice, setNotice] = React.useState('');
   const [cursors, setCursors] = React.useState([null]);
@@ -340,7 +351,7 @@ function MemorySources({ selectedSource, onMemoryChanged }) {
       <p>Dit is het bronarchief, geen lijst met wat Eva allemaal als blijvende kennis onthoudt. De compacte, relevante herinneringen staan hierboven. Niet elk bericht levert een herinnering op. Alleen jij kunt jouw bronnen hier bekijken.</p></div>
       <button onClick={() => { setResult({ state: 'loading', page: null }); refresh(); }}>Vernieuwen</button></div>
     {notice && <p role="status">{notice}</p>}
-    {selected && <MemorySourceControl key={selected} sourceId={selected} generation={generation} onClose={() => setSelected(null)} onSelectSource={setSelected}
+    {selected && <MemorySourceControl key={selected.id} selection={selected} generation={generation} onClose={() => setSelected(null)} onSelectSource={selectSource}
       onChanged={message => { setNotice(message); setSelected(null); refresh(); onMemoryChanged?.(); }} />}
     {result.state === 'loading' && <p role="status">Geheugenbronnen ophalen…</p>}
     {result.state === 'denied' && <p role="alert">Je eigenaarstoegang is niet meer geldig. De bronnen zijn verborgen.</p>}
@@ -352,7 +363,7 @@ function MemorySources({ selectedSource, onMemoryChanged }) {
           <span>{labels[source.retention_state]}{source.raw_state === 'compacted' ? ' · dagtekst vervallen' : ''}</span></div>
         <p className="memory-excerpt">{source.excerpt}</p>
         {source.truncated && <small>Fragment — deze bron is langer dan hier getoond.</small>}
-        <button onClick={() => { setNotice(''); setSelected(source.source_id); }}>Bekijken en aanpassen</button>
+        <button onClick={() => { setNotice(''); selectSource(source.source_id); }}>Bekijken en aanpassen</button>
       </li>)}</ol>
       <nav className="memory-pagination" aria-label="Pagina's met gespreksbronnen">
         <button disabled={cursors.length === 1} onClick={() => changePage(cursors.slice(0, -1))}>Vorige</button>
