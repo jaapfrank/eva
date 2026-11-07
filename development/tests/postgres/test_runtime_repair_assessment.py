@@ -7,6 +7,8 @@ from pathlib import Path
 import pytest
 
 from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+from eva.adapters.postgres.self_repair import current_repair_binding
+from eva.contracts.canonical_json import canonical_sha256
 from eva.bootstrap.native_initiative_work import admit_native_initiative
 from eva.bootstrap.runtime_repair_work import admit_repair_assessment
 from tests.postgres.test_autonomous_self_repair import database, postgres_engine, native_digital, costless_native, prepare, NOW
@@ -26,8 +28,8 @@ def setup(fixture,tmp_path):
     observation=replace(observation,frames=(('application/example.py','example:2',
         hashlib.sha256(path.read_bytes()).hexdigest()),))
     incident=repair.observe(turn,observation)['incident_id']
-    def phase(role='original_behavior_oracle',**kw):
-        return admit_repair_assessment(f.auth,f.service,incident_id=incident,role=role,target_id='8'*64,
+    def phase(role='original_behavior_oracle',*,target_id='8'*64,**kw):
+        return admit_repair_assessment(f.auth,f.service,incident_id=incident,role=role,target_id=target_id,
             sources={'application/example.py':observation.frames[0][2]},source_root=root,**kw)
     claim=f.interests.claim_next(tenant_id=turn.tenant_id,installation_id=turn.installation_id,now=NOW)
     return f,turn,journal,incident,phase,claim
@@ -88,3 +90,27 @@ def test_review_identity_binds_exact_candidate_and_comparison(native_digital,tmp
                  comparison_sha256='6'*64)['intent_id']==first['intent_id']
     second=phase('independent_review',candidate_sha256='7'*64,comparison_sha256='8'*64)
     assert second['status']=='adopted' and second['intent_id']!=first['intent_id']
+
+@pytest.mark.parametrize('runtime_role',['core','delegated-work-worker'])
+def test_single_role_assessment_uses_exact_frozen_scope(native_digital,tmp_path,runtime_role):
+    f,turn,_,incident,phase,builder=setup(native_digital,tmp_path)
+    finish(f,builder)
+    path=tmp_path/'source/application/example.py'
+    scope={'contract':'EvaRuntimeRepairTarget/v2','repair_services':[runtime_role],
+        'failure':current_repair_binding(f.auth,incident,now=NOW),
+        'installation':{service:{'image':'sha256:'+str(i)*64,'configuration_sha256':'9'*64}
+            for i,service in enumerate(('core','delegated-work-worker'),1)},
+        'sources':{'application/example.py':hashlib.sha256(path.read_bytes()).hexdigest()},
+        'excluded_paths':[]}
+    target_id=canonical_sha256(scope)
+    with pytest.raises(ValueError,match='differs from original failure'):
+        phase(repair_scope=scope,target_id='0'*64)
+    if runtime_role=='delegated-work-worker':
+        with pytest.raises(ValueError,match='source changed'):
+            phase(repair_scope=scope,target_id=target_id)
+        path.unlink()
+    assert phase(repair_scope=scope,target_id=target_id)['status']=='adopted'
+    claim=f.interests.claim_next(tenant_id=turn.tenant_id,installation_id=turn.installation_id,now=NOW)
+    work=finish(f,claim)
+    assert set(work.spec.grant.capability_ids)=={'write_programming_file','use_programming_tool'}
+    assert 'candidate_sha256' not in work.spec.task

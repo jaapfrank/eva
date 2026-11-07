@@ -608,6 +608,57 @@ class ComponentApplicationRuntime:
             return payload
         return payload["state"]
 
+    def _require_runtime_repair_authority(self, release):
+        binding = self.repair_call('binding', incident_id=release['repair_target']['failure']['incident_id'])
+        if binding != release['repair_target']['failure']:
+            raise ValueError('runtime repair source changed before application')
+        review = self.repair_call('work_metadata', incident_id=binding['incident_id'],
+            task_id=release['repair_review_work']['task_id'], require_running=False)
+        if review != release['repair_review_work']:
+            raise ValueError('independent repair review changed before application')
+
+    def _single_role_repair_command(self, release, run):
+        from eva.operations.runtime_repair_application import repair_dispatch_source, verify_repair_peer
+        from eva.operations.runtime_repair_target import repair_services
+
+        def ready():
+            return self.ready_to_apply(release['task_id']) == 'ready'
+
+        services = repair_services(release['repair_target'])
+        if len(services) != 1:
+            return run, ready
+        prefix = ['docker', 'compose', '--project-name', release['project']]
+        def dispatch_argv(key):
+            return (*prefix, '--file', str(release[key]), '--profile', '*',
+                    'up', '--detach', '--no-deps', '--no-build', '--pull', 'never', '--wait', *services)
+
+        initial_argv, recovery_argv = dispatch_argv('candidate'), dispatch_argv('installed')
+        recovery_source = None
+
+        def before_recovery():
+            nonlocal recovery_source
+            if not ready():
+                return False
+            self._require_runtime_repair_authority(release)
+            verify_repair_peer(release, run)
+            recovery_source = repair_dispatch_source(release, run, initial=False)
+            return True
+
+        def command(argv, **options):
+            if list(argv[:2]) == ['docker', 'compose'] and 'up' in argv:
+                if tuple(argv) not in (initial_argv, recovery_argv) or options.get('deadline', 15) is not None:
+                    raise ValueError('single-role repair dispatch scope differs')
+                if not ready():
+                    raise ValueError('single-role repair is not ready to dispatch')
+                self._require_runtime_repair_authority(release)
+                verify_repair_peer(release, run)
+                initial = tuple(argv) == initial_argv
+                observed_source = repair_dispatch_source(release, run, initial=initial, recovery_dispatch=not initial)
+                if not initial and observed_source != recovery_source:
+                    raise ValueError('selected repair generation changed during recovery readiness')
+            return run(argv, **options)
+        return command, before_recovery
+
     def apply_release(self, release):
         if release.get('kind') == 'owned_package':
             from eva.operations.owned_package_application import OwnedPackageRuntime
@@ -626,15 +677,13 @@ class ComponentApplicationRuntime:
             self.maintenance_call('current',origin=release['maintenance_target']['origin'])
             meta=self.maintenance_call('work_metadata',origin=release['maintenance_target']['origin'],task_id=release['maintenance_review_work']['task_id'],require_running=False)
             if meta!=release['maintenance_review_work']:raise ValueError('maintenance review changed before apply')
-        if release.get('kind') == 'runtime_repair':
-            binding = self.repair_call('binding', incident_id=release['repair_target']['failure']['incident_id'])
-            if binding != release['repair_target']['failure']:
-                raise ValueError('runtime repair source changed before application')
-            review = self.repair_call('work_metadata', incident_id=binding['incident_id'],
-                task_id=release['repair_review_work']['task_id'], require_running=False)
-            if review != release['repair_review_work']:
-                raise ValueError('independent repair review changed before application')
         verifier = self._behavior_verifier(release)
+        before_recovery = lambda: self.ready_to_apply(release['task_id']) == 'ready'
+        if release.get('kind') == 'runtime_repair':
+            from eva.operations.runtime_repair_application import record_repair_peer
+            self._require_runtime_repair_authority(release)
+            record_repair_peer(release, command)
+            command, before_recovery = self._single_role_repair_command(release, command)
         try:
             return update_runtime(project=release["project"], installed=release["installed"],
                                   candidate=release["candidate"], receipt=release["receipt"], run=command,
@@ -646,7 +695,7 @@ class ComponentApplicationRuntime:
             return recover_runtime(project=release["project"], installed=release["installed"],
                 candidate=release["candidate"], receipt=release["receipt"],
                 verify_behavior=verifier, run=command,
-                before_recovery_dispatch=lambda: self.ready_to_apply(release["task_id"]) == "ready")
+                before_recovery_dispatch=before_recovery)
 
     def _behavior_verifier(self, release):
         if release.get('kind')=='dependency_update':
@@ -692,10 +741,14 @@ class ComponentApplicationRuntime:
         verifier = self._behavior_verifier(release)
         if verifier is None:
             return None
-        from eva.operations.runtime_image_update import recover_runtime
+        from eva.operations.runtime_image_update import _command, recover_runtime
+        run = _command
+        before_recovery = lambda: self.ready_to_apply(release['task_id']) == 'ready'
+        if release.get('kind') == 'runtime_repair':
+            run, before_recovery = self._single_role_repair_command(release, run)
         return recover_runtime(project=release["project"], installed=release["installed"],
-            candidate=release["candidate"], receipt=release["receipt"], verify_behavior=verifier,
-            before_recovery_dispatch=lambda: self.ready_to_apply(release["task_id"]) == "ready")
+            candidate=release["candidate"], receipt=release["receipt"], verify_behavior=verifier, run=run,
+            before_recovery_dispatch=before_recovery)
 
     def _apply_saved_artifact(self, release):
         from eva.operations.reviewed_component_application import _save

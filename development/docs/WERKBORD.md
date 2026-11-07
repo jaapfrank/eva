@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig.
+Volgende stap: De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen.
 
 ## Voortgang
 

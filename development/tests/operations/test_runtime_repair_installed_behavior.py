@@ -29,7 +29,8 @@ def test_actual_container_source_and_image_behavior_are_checked_without_live_cre
             'cases':[case('valid','whatsapp:31612345678',True),case('other','telegram:1',False)]}
         oracle_ref=_put(tmp_path/'oracle.json',oracle)
         criteria=_put(tmp_path/'criteria.json',{'oracle':oracle_ref})
-        target={'target_id':identity,'sources':{path:'b'*64},'criteria':criteria,
+        target={'contract':'EvaRuntimeRepairTarget/v1','target_id':identity,
+            'sources':{path:'b'*64},'criteria':criteria,
             'failure':{'observation':{'error_type_sha256':'c'*64}},
             'installation':{s:{'image':image,'configuration_sha256':'d'*64} for s in ('core','delegated-work-worker')}}
         candidate={'files':[{'path':path,'candidate_sha256':digest}]}

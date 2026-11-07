@@ -12,7 +12,7 @@ import threading
 
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.reviewed_component_application import _artifact, _path, _save
-from eva.operations.runtime_repair_target import public_repair_target, _sha
+from eva.operations.runtime_repair_target import public_repair_target, repair_services, _sha
 from eva.operations.runtime_repair_evaluation import validate_repair_candidate, validate_repair_oracle
 
 
@@ -45,6 +45,19 @@ def validate_repair_review(target,candidate,comparison,review):
     if review['decision']=='accept' and comparison['state']!='awaiting_independent_review':
         raise ValueError('independent review cannot accept a failed comparison')
     return deepcopy(review)
+
+
+def _require_single_role_assessment(job, role, metadata, target_id):
+    if job is None or metadata.get('target_id') != target_id:
+        raise ValueError('independent assessment belongs to another repair target')
+    if role == 'original_behavior_oracle':
+        if (metadata.get('candidate_sha256') is not None
+                or metadata.get('comparison_sha256') is not None):
+            raise ValueError('original behavior assessment must be candidate-blind')
+    elif (role != 'independent_review'
+            or metadata.get('candidate_sha256') != job['candidate_sha256']
+            or metadata.get('comparison_sha256') != job.get('comparison_sha256')):
+        raise ValueError('independent review belongs to another snapshot')
 
 
 class RuntimeRepairDevelopment:
@@ -114,7 +127,10 @@ class RuntimeRepairDevelopment:
             target=self.targets.resolve(request['incident_id'])
             identity=target['target_id'];job=self.jobs.get(identity)
             role=meta['role']
+            services=repair_services(target)
             if request['action']=='describe':
+                if len(services)==1 and role is not None:
+                    _require_single_role_assessment(job,role,meta,identity)
                 self.artifacts.seed_sources(meta,target,source=self.targets.source)
                 if role=='independent_review':
                     if (job is None or meta['target_id']!=identity
@@ -155,6 +171,8 @@ class RuntimeRepairDevelopment:
                 'scope_sha256':self.scope_sha256,'incident_id':request['incident_id'],
                 'failure':binding,'task_id':meta['task_id'],'builder':meta,
                 'candidate':candidate_ref,'candidate_sha256':candidate_id,'state':'waiting_for_builder'}
+            if len(services)==1:
+                job['repair_services']=list(services)
             self._save(job);self.jobs[identity]=job
             return self._public(job)
 
@@ -168,9 +186,16 @@ class RuntimeRepairDevelopment:
     def _metadata(self,job,task):
         return self._call(job,'stage_metadata',task_id=task,require_running=False)
 
-    def _stage(self,job,role):
+    def _stage(self,job,role,target):
         kwargs={'role':role,'target_id':job['target_id'],'sources':job['sources'],
             'candidate_sha256':None,'comparison_sha256':None}
+        services=repair_services(target)
+        if len(services)==1:
+            if (job.get('repair_services')!=list(services) or target['target_id']!=job['target_id']
+                    or target['sources']!=job['sources']):
+                raise ValueError('single-role assessment target changed')
+            kwargs['repair_scope']={key:value for key,value in target.items()
+                if key not in {'target_id','installed','criteria'}}
         if role=='independent_review':
             kwargs.update(candidate_sha256=job['candidate_sha256'],comparison_sha256=job['comparison_sha256'])
         result=self._call(job,'admit_assessment',**kwargs)
@@ -186,6 +211,8 @@ class RuntimeRepairDevelopment:
         if not meta.get('work_succeeded') or not meta.get('usage_measured') or meta.get('role')!=role:
             job.update(state='blocked',reason='independent_stage_not_completed_with_measured_usage')
             return None
+        if 'repair_services' in job:
+            _require_single_role_assessment(job,role,meta,job['target_id'])
         # The host resolves a validated same-execution continuation. Persist the
         # actual successful attempt for artifacts and the final review proof.
         job[role+'_task_id']=meta['task_id']
@@ -252,7 +279,7 @@ class RuntimeRepairDevelopment:
             if not meta.get('work_succeeded') or not meta.get('usage_measured'):
                 job.update(state='blocked',reason='builder_not_completed_with_measured_usage');return 'blocked'
             job['sources']=target['sources']
-            if self._stage(job,'original_behavior_oracle'):job['state']='original_behavior_oracle'
+            if self._stage(job,'original_behavior_oracle',target):job['state']='original_behavior_oracle'
         elif state=='original_behavior_oracle':
             meta=self._completed_stage(job,state)
             if meta is None:return job['state']
@@ -276,8 +303,8 @@ class RuntimeRepairDevelopment:
             job['comparison_sha256']=canonical_sha256(report)
             job['state']='awaiting_independent_review' if report['state']=='awaiting_independent_review' else 'baseline_retained'
         elif state=='awaiting_independent_review':
-            self._current(job)
-            if self._stage(job,'independent_review'):job['state']='independent_review'
+            target=self._current(job)
+            if self._stage(job,'independent_review',target):job['state']='independent_review'
         elif state=='independent_review':
             self._current(job);meta=self._completed_stage(job,state)
             if meta is None:return job['state']

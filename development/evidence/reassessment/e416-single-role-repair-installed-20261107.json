@@ -1,0 +1,58 @@
+{
+  "contract": "EvaSingleRoleRepairBridgeInstalledOutcome/v1",
+  "status": "installed_independently_verified",
+  "scope": "Technical bridge for source-bound assessment, publication and application on one runtime role.",
+  "installedVerificationCompletedAt": "2026-11-07T08:24:48.934731+00:00",
+  "independentReadbackAt": "2026-11-07T08:25:57.026531+00:00",
+  "installedImages": {
+    "core": "sha256:e9394f80523aaf35ee1eacf7a9cd581210a859f428a226edec807c5f48014f45",
+    "delegated-work-worker": "sha256:3cf9703f1e08974d86cac3b1e4d6d8e0095bdf42ec99636d050cb3f0c7a176b3"
+  },
+  "sourceHashes": {
+    "src/eva/bootstrap/runtime_repair_host.py": "3bbe457972cbc8d50f31c6d89692df3f6847b44bb7bfa93c3f5cb51a16358e87",
+    "src/eva/bootstrap/runtime_repair_work.py": "a426e4d2d2ababf167dfb7fe4bc9c2f2c6e9afc2524c456dbc9e9118dbdfc013",
+    "src/eva/operations/component_application_runtime.py": "d83d9a4ca1dfe995e08da1b3f2f603cc5bb11ea8e7585e86bebd2be971808a0e",
+    "src/eva/operations/runtime_repair_application.py": "0709e8b5ae76a39dca0455efd37838cd10746ffdd434e3a1968b4ecda393935d",
+    "src/eva/operations/runtime_repair_artifacts.py": "931ca593ceb026988699e3c53178f91585eb0cf15a3ba6f613804a0c33be5727",
+    "src/eva/operations/runtime_repair_development.py": "f574a6eb295b7c495477799504340f998d9866dbef12ff9cc9e1628dd0d7831b",
+    "src/eva/operations/runtime_repair_evaluation.py": "a4d995bae8151e1c04630c615558e37dbf587ccbfec7a17eeca9ff3001f6458f",
+    "src/eva/operations/runtime_repair_publisher.py": "8512ae488aa3c60a4d966f813df812c343d2e9c7918324f0a6ffd9f5ef1edfd9",
+    "src/eva/operations/runtime_repair_target.py": "708d29ba5888fd79a9fab3e42a5b96ad20c1febe63535bc214d8dee48cf242c7"
+  },
+  "buildProofSha256": "7edb07cba546551a9bc0d37f16d500ee3c7c628e9271885aef255393ef8883df",
+  "activationPlanSha256": "e914e79c35a579fed88e1afbb3514dd68840081417dabba745ef7dcdb759167b",
+  "activationReceiptSha256": "969c7cf435a6d7a145d39f4c4cd4ace067d5fe2761962025cd3d1536ed9a72c7",
+  "sdkReceiptSha256": "40adcd05e8a13f74a10591fa805018ebc80c76d54f903909e6e49a4bbfca5b30",
+  "activationApprovalSha256": "8cd16db774d8f710ac455995db09588026e8eecbd775c442e02a0443123c5e99",
+  "sourceReview": "development/reviews/e416-single-role-source-independent-20261107.json",
+  "sourceReviewSha256": "c86142bf0978febbd7deb1125092b3b22845378b12658eaa07c245e810845f4f",
+  "independentInstalledReview": "development/reviews/e416-single-role-installed-independent-20261107.json",
+  "independentInstalledReviewSha256": "885afacb256eee0c6e14b981064be25c781996da4d92e44855d95e54e5e2ba12",
+  "matchingActualRuntimeProfiles": [
+    "digital_work",
+    "household_research",
+    "public_research",
+    "shared_provider"
+  ],
+  "digitalWorkerProgramSha256": "0834034459d3a75ad9fa419e026a9546ed42914a5bdcda72ac1591a737438fa7",
+  "pureInstalledResolver": {
+    "bothActualInstallationPinsRetained": true,
+    "contract": "EvaRuntimeRepairTarget/v2",
+    "criteriaOpened": false,
+    "peerSourcePositivelyAbsent": true,
+    "repairReceiptsCreated": 0,
+    "repairServices": [
+      "core"
+    ],
+    "selectedSourceSha256": "3a08c27ccea7c8dadf28cc1b9d284281c3ac80fd805be8437c47d124de430b0f",
+    "syntheticFailureBinding": true
+  },
+  "preservedCompanionGenerations": 23,
+  "preservedPrivateCriteriaCount": 62,
+  "preservedHistoricalReceipts": 9,
+  "preservedLegacyWorkMarkers": 103,
+  "historicalRepairReplayed": false,
+  "runtimeModelCallsForVerification": 0,
+  "fullE416Complete": false,
+  "autonomousLifecycleProven": false
+}

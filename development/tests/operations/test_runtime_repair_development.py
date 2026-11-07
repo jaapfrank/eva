@@ -7,7 +7,7 @@ import pytest
 
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.runtime_repair_development import RuntimeRepairDevelopment
-from eva.operations.runtime_repair_target import RuntimeRepairTargets
+from eva.operations.runtime_repair_target import RuntimeRepairTargets, repair_services
 
 BASELINE='def example(value):\n    return value.strip()\n'
 CANDIDATE="def example(value):\n    return '' if value is None else value.strip()\n"
@@ -15,7 +15,8 @@ PATH='application/example.py'
 
 
 @pytest.fixture
-def flow(tmp_path):
+def flow(tmp_path,request):
+    repair_role=getattr(request,'param',None)
     source_sha=hashlib.sha256(BASELINE.encode()).hexdigest()
     binding={'contract':'EvaCurrentRepairBinding/v1','incident_id':'self-repair:'+'a'*64,
         'incident_event_sha256':'b'*64,'scope_sha256':'c'*64,'mandate_sha256':'d'*64,
@@ -25,7 +26,7 @@ def flow(tmp_path):
     primary='work:eva-initiative:'+'f'*64
     meta={'contract':'EvaRuntimeRepairWorkMetadata/v1','incident_id':binding['incident_id'],
         'task_id':primary,'state':'call_started','role':None,'work_succeeded':False,'usage_measured':False}
-    calls=[];metadata={primary:meta};inputs={};published=[];holder={}
+    calls=[];metadata={primary:meta};inputs={};published=[];holder={};seeded=[]
     class Runtime:
         def repair_call(self,action,*,incident_id,**kwargs):
             calls.append((action,deepcopy(kwargs)))
@@ -42,10 +43,15 @@ def flow(tmp_path):
                 return {'status':'adopted','intent_id':'personal-interest:'+key}
             raise AssertionError(action)
     runtime=Runtime()
+    config_hash=('9'*64 if repair_role is None else canonical_sha256({
+        'top':{'volumes':{'retained':{'name':'unchanged-retained'}}},
+        'service':{'volumes':[{'type':'volume','source':'retained','target':'/data'}]}}))
     targets=RuntimeRepairTargets(tmp_path/'targets',binding=lambda _:deepcopy(binding),
-        installation=lambda:{role:{'image':'sha256:'+str(i)*64,'configuration_sha256':'9'*64}
+        installation=lambda:{role:{'image':'sha256:'+str(i)*64,'configuration_sha256':config_hash}
             for i,role in enumerate(('core','delegated-work-worker'),1)},
-        source=lambda *_:BASELINE.encode(),criteria=lambda scope:holder['controller'].criteria(scope))
+        source=lambda image,_:BASELINE.encode() if repair_role is None or image=='sha256:'+
+            ('1' if repair_role=='core' else '2')*64 else None,
+        criteria=lambda scope:holder['controller'].criteria(scope))
     target=targets.resolve(binding['incident_id']);identity=target['target_id']
     candidate={'contract':'EvaRuntimeRepairCandidate/v1','target_id':identity,'diagnosis':'Missing optional input',
         'files':[{'path':PATH,'baseline_sha256':source_sha,'candidate_sha256':hashlib.sha256(CANDIDATE.encode()).hexdigest(),
@@ -59,7 +65,9 @@ def flow(tmp_path):
     class Artifacts:
         def seed_sources(self,meta,target,*,source):
             assert set(target['sources'])=={PATH}
-            assert hashlib.sha256(source(target['installation']['core']['image'],PATH)).hexdigest()==target['sources'][PATH]
+            image=target['installation'][repair_services(target)[0]]['image']
+            assert hashlib.sha256(source(image,PATH)).hexdigest()==target['sources'][PATH]
+            seeded.append(meta['task_id'])
         def read(self,meta,name,**kwargs):return deepcopy({'candidate.json':candidate,'oracle.json':oracle,'review.json':review}[name])
         def seed_review(self,meta,offered):inputs[meta['task_id']]=deepcopy(offered)
     class Evaluator:
@@ -68,7 +76,8 @@ def flow(tmp_path):
             return {'contract':'EvaRuntimeRepairComparison/v1','target_id':identity,
                 'candidate_sha256':canonical_sha256(candidate),'criteria_sha256':targets.current(identity)['criteria']['sha256'],
                 'state':'awaiting_independent_review','expected_outcomes_outside_candidate':True,
-                'installed':False,'semantic_improvement_verified':False}
+                'installed':False,'semantic_improvement_verified':False,
+                **({'services':{repair_role:{}}} if repair_role is not None else {})}
     class Publisher:
         def publish_repair(self,*args):published.append(args);raise AssertionError('rejected review cannot publish')
     controller=RuntimeRepairDevelopment(tmp_path/'handoffs',runtime=runtime,targets=targets,
@@ -197,3 +206,29 @@ def test_resumed_builder_cannot_replace_original_identity(flow,change):
     with pytest.raises(ValueError):
         f.controller.request({**f.request,'task_id':task,'action':'submit'})
     assert not f.controller.jobs and not f.published
+
+@pytest.mark.parametrize('flow',['core','delegated-work-worker'],indirect=True)
+def test_role_scoped_oracle_is_bound_before_source_seed_and_stays_candidate_blind(flow):
+    f=flow
+    c=f.controller
+    assert c.request({**f.request,'action':'submit'})['accepted']
+    f.meta.update(state='succeeded',work_succeeded=True,usage_measured=True)
+    assert c.run_once()=='original_behavior_oracle'
+    kwargs=next(args for action,args in f.calls if action=='admit_assessment')
+    scope=kwargs['repair_scope']
+    assert canonical_sha256(scope)==f.identity and scope['repair_services']==[f.repair_role]
+    assert 'criteria' not in scope and kwargs['candidate_sha256'] is kwargs['comparison_sha256'] is None
+    oracle_task='work:eva-initiative:'+'1'*64
+    metadata=f.metadata[oracle_task]
+    meta_request={**f.request,'action':'describe','task_id':oracle_task}
+    metadata['target_id']='0'*64
+    with pytest.raises(ValueError,match='another repair target'):
+        c.request(meta_request)
+    metadata['target_id']=f.identity
+    metadata['candidate_sha256']='9'*64
+    with pytest.raises(ValueError,match='candidate-blind'):
+        c.request(meta_request)
+    assert f.seeded==[]
+    metadata['candidate_sha256']=None
+    assert c.request(meta_request)['repair_services']==[f.repair_role]
+    assert f.seeded==[oracle_task]

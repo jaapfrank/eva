@@ -10,7 +10,9 @@ import pytest
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.component_application_runtime import ComponentApplicationRuntime
 from eva.operations.reviewed_component_application import ReviewedComponentApplications, _verify_release
-from eva.operations.runtime_repair_application import completed_repair_proof
+from eva.operations.runtime_repair_application import (
+    completed_repair_proof, record_repair_peer, verify_installed_repair, verify_repair_peer,
+)
 from eva.operations.runtime_repair_development import _put
 from tests.operations.test_runtime_repair_development import flow
 
@@ -30,7 +32,8 @@ def accepted(flow):
     job=c.jobs[f.identity];directory=c.root/f.identity
     target=json.loads(Path(job['target']['path']).read_text())
     before={s:r['image'] for s,r in target['installation'].items()}
-    images={s:'sha256:'+str(i)*64 for i,s in enumerate(before,3)}
+    images={s:'sha256:'+str(i)*64 if f.repair_role in {None, s} else image
+            for i,(s,image) in enumerate(before.items(),3)}
     installed={'services':{s:{'image':image,'volumes':[{'type':'volume','source':'retained','target':'/data'}]}
         for s,image in before.items()},'volumes':{'retained':{'name':'unchanged-retained'}}}
     proposed=deepcopy(installed)
@@ -108,3 +111,163 @@ def test_review_stop_while_queued_prevents_every_updater_dispatch(accepted,monke
         assert status['state']=='unconfirmed'
         assert dispatched==[] and not Path(release['update_receipt']).exists()
     finally:apps.close()
+
+
+@pytest.mark.parametrize('flow', ['core', 'delegated-work-worker'], indirect=True)
+def test_single_role_release_and_application_fence_the_unchanged_peer(accepted, monkeypatch):
+    f, job, release, images = accepted
+    role = f.repair_role
+    peer, = images.keys() - {role}
+    checked = _verify_release(job['candidate_sha256'], release)
+    assert checked['candidate_images'] == {role: images[role]}
+    assert images[peer] == checked['repair_target']['installation'][peer]['image']
+    checked['task_id'] = job['task_id']
+
+    changed = deepcopy(release)
+    proposed = json.loads(Path(release['candidate']['path']).read_bytes())
+    proposed['services'][peer]['image'] = 'sha256:' + '8'*64
+    changed['candidate'] = _put(f.tmp_path/'changed-peer.json', proposed)
+    with pytest.raises(ValueError, match='retained configuration'):
+        _verify_release(job['candidate_sha256'], changed)
+
+    identifier = '7'*64
+    labels = {'com.docker.compose.project': checked['project'], 'com.docker.compose.service': peer,
+              'com.docker.compose.config-hash': 'peer-hash'}
+    current = {'Id': identifier, 'Image': images[peer], 'RestartCount': 0,
+               'State': {'Running': True, 'Pid': 20, 'StartedAt': '2026-11-07T00:00:00Z'},
+               'Config': {'Labels': labels, 'Env': ['B=2', 'A=1']},
+               'HostConfig': {'ReadonlyRootfs': True, 'Tmpfs': {}},
+               'Mounts': [{'Destination': '/data', 'Type': 'volume', 'Name': 'unchanged-retained', 'RW': True}],
+               'NetworkSettings': {'Networks': {}}}
+    selected_id = '5'*64
+    selected = deepcopy(current)
+    selected['Id'] = selected_id
+    selected['Image'] = checked['repair_target']['installation'][role]['image']
+    selected['Config']['Labels'].update({'com.docker.compose.service': role,
+                                         'com.docker.compose.config-hash': 'role-hash'})
+    dispatched = []
+
+    def run(argv, **options):
+        if argv[-4:] == ['ps', '--all', '-q', peer]:
+            return identifier
+        if argv[-4:] == ['ps', '--all', '-q', role] or argv[-3:] == ['ps', '-q', role]:
+            return selected_id
+        if argv == ['docker', 'inspect', identifier]:
+            return json.dumps([current])
+        if argv == ['docker', 'inspect', selected_id]:
+            return json.dumps([selected])
+        if argv[-3:] == ['config', '--hash', peer]:
+            return peer + ' peer-hash'
+        if argv[-3:] == ['config', '--hash', role]:
+            return role + ' role-hash'
+        if argv[:4] == ['docker', 'exec', selected_id, 'python']:
+            return json.dumps(source_hashes)
+        if 'up' in argv:
+            dispatched.append(argv[-1])
+            return ''
+        raise AssertionError(argv)
+
+    record_repair_peer(checked, run)
+    witness = verify_repair_peer(checked, run)
+    assert witness['service'] == peer and witness['container'] == identifier
+    # Docker's env order is presentation, but its process generation isn't.
+    current['Config']['Env'].reverse()
+    assert verify_repair_peer(checked, run) == witness
+
+    runtime = ComponentApplicationRuntime({'core_container': 'synthetic-core',
+        'scope_sha256': 'c'*64, 'runtime_repair_enabled': True})
+    monkeypatch.setattr(runtime, 'ready_to_apply', lambda _: 'ready')
+    monkeypatch.setattr(runtime, 'repair_call', lambda action, **kw:
+        checked['repair_target']['failure'] if action == 'binding' else checked['repair_review_work'])
+    command, before_recovery = runtime._single_role_repair_command(checked, run)
+    pending = {'contract': 'EvaImageUpdate/v1', 'project': checked['project'],
+        'status': 'dispatched_result_unknown',
+        'services': {role: {'previous_image': selected['Image'], 'candidate_image': images[role],
+                            'previous_container': selected_id, 'mounts': selected['Mounts']}}}
+    checked['receipt'].write_text(json.dumps(pending))
+    argv = ['docker', 'compose', '--project-name', checked['project'],
+        '--file', str(checked['candidate']), '--profile', '*', 'up', '--detach',
+        '--no-deps', '--no-build', '--pull', 'never', '--wait', role]
+    with pytest.raises(ValueError, match='dispatch scope'):
+        command([*argv, peer], deadline=None)
+    current['State']['Pid'] += 1
+    with pytest.raises(ValueError, match='peer changed'):
+        command(argv, deadline=None)
+    current['State']['Pid'] -= 1
+    monkeypatch.setattr(runtime, 'ready_to_apply', lambda _: 'cancelled')
+    with pytest.raises(ValueError, match='not ready'):
+        command(argv, deadline=None)
+    assert dispatched == []
+    monkeypatch.setattr(runtime, 'ready_to_apply', lambda _: 'ready')
+    selected['HostConfig']['ReadonlyRootfs'] = False
+    with pytest.raises(ValueError, match='read-only source'):
+        command(argv, deadline=None)
+    assert dispatched == []
+    selected['HostConfig']['ReadonlyRootfs'] = True
+    command(argv, deadline=None)
+    assert dispatched == [role]
+
+    pending['dispatch_callback_returned'] = True
+    pending['status'] = 'incomplete_inspect_retained_installation'
+    checked['receipt'].write_text(json.dumps(pending))
+    selected['State']['Running'] = False
+    with pytest.raises(ValueError, match='selected repair generation'):
+        before_recovery()
+    selected['State']['Running'] = True
+    selected['Image'] = images[role]
+    assert before_recovery() is True
+    selected['State']['Pid'] += 1
+    pending['status'] = 'recovery_result_unknown'
+    pending['recovery'] = {'dispatch_attempted': True}
+    checked['receipt'].write_text(json.dumps(pending))
+    recovery_argv = [str(checked['installed']) if item == str(checked['candidate']) else item for item in argv]
+    with pytest.raises(ValueError, match='generation changed during recovery'):
+        command(recovery_argv, deadline=None)
+    assert dispatched == [role]
+
+    from eva.operations.component_evaluation import EvaluationConfig
+    configuration = json.loads(Path(release['candidate']['path']).read_bytes())
+    source_hashes = {entry['path']: entry['candidate_sha256'] for entry in f.candidate['files']}
+    observation = {'target': 'candidate', 'images': {role: images[role]}, 'containers': {role: selected_id}}
+    evaluated = []
+    drift = False
+
+    class Executor:
+        def __init__(self, config):
+            assert config.image == images[role]
+
+        def _container(self, image, command, *, extra_mounts):
+            assert image == images[role]
+            binding = next(json.loads(path.read_bytes()) for path, dest in extra_mounts if dest == '/repair/binding.json')
+            case = next(case for case in f.oracle['cases'] if case['id'] == binding['case_id'])
+            evaluated.append(case['id'])
+            if drift:
+                selected['State']['Pid'] += 1
+            proof = {key: binding[key] for key in ('target_id', 'criteria_sha256', 'case_id')}
+            proof.update(contract='EvaRuntimeRepairCaseResult/v1', outcome=case['expected'],
+                         executed_sources=source_hashes)
+            return {'exit_code': 0, 'timed_out': False, 'stdout_truncated': False, 'stderr_truncated': False,
+                    'stdout': json.dumps(proof)}
+
+    config = EvaluationConfig(image=images[role], command=('python',))
+    evidence = verify_installed_repair(observation, release=checked, config=config, run=run, executor=Executor)
+    assert evidence['verified'] is True and evidence['unchanged_peer'] == witness
+    assert set(evidence['services']) == {role} and evaluated == ['original', 'normal']
+    drift = True
+    with pytest.raises(ValueError, match='generation changed during behavior'):
+        verify_installed_repair(observation, release=checked, config=config, run=run, executor=Executor)
+    behavior = {'contract': 'EvaImageBehaviorVerification/v1', 'project': release['project'],
+        'configuration_sha256': canonical_sha256(configuration), 'target': 'candidate',
+        'images': {role: images[role]}, 'containers': {role: selected_id},
+        'verified': True, 'evidence': evidence}
+    receipt = {'contract': 'EvaImageUpdate/v1', 'project': release['project'],
+        'status': 'behavior_verified_with_retained_mounts',
+        'services': {role: {'candidate_image': images[role], 'current_container': selected_id}},
+        'behavior_verification': behavior}
+    del evidence['unchanged_peer']
+    checked['receipt'].write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match='peer preservation'):
+        completed_repair_proof(job, release)
+    evidence['unchanged_peer'] = witness
+    checked['receipt'].write_text(json.dumps(receipt))
+    assert completed_repair_proof(job, release)['target_id'] == job['target_id']

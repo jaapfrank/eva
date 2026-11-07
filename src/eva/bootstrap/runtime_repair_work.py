@@ -14,8 +14,32 @@ from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES
 from eva.contracts.canonical_json import canonical_sha256
 
 
+def _assessment_runtime_role(scope, *, target_id, binding, sources):
+    if scope is None:
+        return 'core'
+    fields = {'contract', 'failure', 'installation', 'sources', 'excluded_paths', 'repair_services'}
+    if (not isinstance(scope, dict) or set(scope) != fields
+            or scope['contract'] != 'EvaRuntimeRepairTarget/v2'
+            or scope['failure'] != binding or scope['sources'] != sources
+            or canonical_sha256(scope) != target_id):
+        raise ValueError('single-role assessment target differs from original failure')
+    roles = ('core', 'delegated-work-worker')
+    selected, installation = scope['repair_services'], scope['installation']
+    if (not isinstance(selected, list) or len(selected) != 1 or selected[0] not in roles
+            or not isinstance(installation, dict) or set(installation) != set(roles)):
+        raise ValueError('exact single-role assessment installation required')
+    for entry in installation.values():
+        if (not isinstance(entry, dict) or set(entry) != {'image', 'configuration_sha256'}
+                or not isinstance(entry['image'], str) or not re.fullmatch(r'sha256:[0-9a-f]{64}', entry['image'])
+                or not isinstance(entry['configuration_sha256'], str)
+                or not re.fullmatch(r'[0-9a-f]{64}', entry['configuration_sha256'])):
+            raise ValueError('invalid single-role assessment installation binding')
+    return selected[0]
+
+
 def admit_repair_assessment(authority, service, *, incident_id, role, target_id, sources,
-                            candidate_sha256=None, comparison_sha256=None, source_root=None):
+                            candidate_sha256=None, comparison_sha256=None, source_root=None,
+                            repair_scope=None):
     """Queue a distinct bounded stage, never masquerade as an owner request.
 
     Host composition supplies the frozen target/source pins. No endpoint accepts
@@ -30,7 +54,11 @@ def admit_repair_assessment(authority, service, *, incident_id, role, target_id,
     if (not isinstance(target_id, str) or not re.fullmatch(r'[0-9a-f]{64}', target_id)
             or not isinstance(sources, dict) or not 1 <= len(sources) <= 8):
         raise ValueError('host-bound repair source scope required')
+    runtime_role = _assessment_runtime_role(repair_scope,
+        target_id=target_id, binding=binding, sources=sources)
     root = Path(source_root) if source_root is not None else Path(__file__).resolve().parents[1]
+    if not root.resolve(strict=True).is_dir():
+        raise ValueError('installed assessment source root required')
     frames = {frame['path']:frame['source_sha256'] for frame in binding['observation']['frames']}
     from eva.application.component_improvements import component_source
     from eva.application.self_repair import repairable_source
@@ -38,8 +66,16 @@ def admit_repair_assessment(authority, service, *, incident_id, role, target_id,
         if (not repairable_source(path) or frames.get(path) != digest
                 or not isinstance(digest, str) or not re.fullmatch(r'[0-9a-f]{64}', digest)):
             raise ValueError('repair assessment path is outside the observed host target')
-        target = component_source(root, path)
-        if (not target.is_file() or target.stat().st_size > MAX_REPAIR_SOURCE_BYTES
+        try:
+            target = component_source(root, path)
+        except FileNotFoundError:
+            if runtime_role != 'delegated-work-worker':
+                raise
+            # The trusted evaluator proved the worker bytes from the pinned
+            # immutable image. Core only attests its own absence here.
+            continue
+        if (runtime_role == 'delegated-work-worker' or not target.is_file()
+                or target.stat().st_size > MAX_REPAIR_SOURCE_BYTES
                 or hashlib.sha256(target.read_bytes()).hexdigest() != digest):
             raise ValueError('installed assessment source changed')
     # Validate existing model/worker admission before persisting another stage.

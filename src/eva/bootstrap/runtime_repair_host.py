@@ -159,8 +159,11 @@ def handle_host_repair_request(request,*,authority=None,service=None,store=None)
                 if action!='stage_metadata':
                     raise
                 return {'state':'awaiting_native_admission','task_id':request['task_id']}
-        if action=='admit_assessment' and set(request)==base|{
-                'role','target_id','sources','candidate_sha256','comparison_sha256'}:
+        assessment_fields={'role','target_id','sources','candidate_sha256','comparison_sha256'}
+        if action=='admit_assessment' and set(request) in (
+                base|assessment_fields, base|assessment_fields|{'repair_scope'}):
+            if 'repair_scope' in request and not isinstance(request['repair_scope'],dict):
+                raise ValueError('exact single-role assessment scope required')
             if service.digital_profile is None:
                 if settings is None:
                     raise ValueError('current native digital profile is required')
@@ -169,8 +172,9 @@ def handle_host_repair_request(request,*,authority=None,service=None,store=None)
                 # model request. The existing worker later owns usage/dispatch.
                 service.digital_profile=build_digital_runner(settings,store).profile
             from eva.bootstrap.runtime_repair_work import admit_repair_assessment
-            return admit_repair_assessment(authority,service,**{key:request[key] for key in
-                ('incident_id','role','target_id','sources','candidate_sha256','comparison_sha256')})
+            return admit_repair_assessment(authority,service,
+                **{key:request[key] for key in assessment_fields|{'incident_id'}},
+                repair_scope=request.get('repair_scope'))
         if action=='record_waiting' and set(request)==base|{'outcome','reason_code','handoff_sha256'}:
             if (request['outcome'] not in {'baseline_retained','rejected','blocked','cancelled'}
                     or not isinstance(request['reason_code'],str)

@@ -1,0 +1,71 @@
+{
+  "activationReceiptSha256": "969c7cf435a6d7a145d39f4c4cd4ace067d5fe2761962025cd3d1536ed9a72c7",
+  "actualBridgeSourcesByRole": {
+    "core": {
+      "bootstrap/runtime_repair_host.py": "3bbe457972cbc8d50f31c6d89692df3f6847b44bb7bfa93c3f5cb51a16358e87",
+      "bootstrap/runtime_repair_work.py": "a426e4d2d2ababf167dfb7fe4bc9c2f2c6e9afc2524c456dbc9e9118dbdfc013"
+    },
+    "delegated-work-worker": {
+      "bootstrap/runtime_repair_host.py": "3bbe457972cbc8d50f31c6d89692df3f6847b44bb7bfa93c3f5cb51a16358e87",
+      "bootstrap/runtime_repair_work.py": "a426e4d2d2ababf167dfb7fe4bc9c2f2c6e9afc2524c456dbc9e9118dbdfc013"
+    }
+  },
+  "actualEvaluatorModuleOriginSha256": {
+    "operations/component_application_runtime.py": "d83d9a4ca1dfe995e08da1b3f2f603cc5bb11ea8e7585e86bebd2be971808a0e",
+    "operations/runtime_repair_application.py": "0709e8b5ae76a39dca0455efd37838cd10746ffdd434e3a1968b4ecda393935d",
+    "operations/runtime_repair_artifacts.py": "931ca593ceb026988699e3c53178f91585eb0cf15a3ba6f613804a0c33be5727",
+    "operations/runtime_repair_development.py": "f574a6eb295b7c495477799504340f998d9866dbef12ff9cc9e1628dd0d7831b",
+    "operations/runtime_repair_evaluation.py": "a4d995bae8151e1c04630c615558e37dbf587ccbfec7a17eeca9ff3001f6458f",
+    "operations/runtime_repair_publisher.py": "8512ae488aa3c60a4d966f813df812c343d2e9c7918324f0a6ffd9f5ef1edfd9",
+    "operations/runtime_repair_target.py": "708d29ba5888fd79a9fab3e42a5b96ad20c1febe63535bc214d8dee48cf242c7"
+  },
+  "actualInstalledVerified": true,
+  "actualReadbackSha256": "c88eba2466ef12e666b4b8ab94529bfb9bc9cb29842286c4c55b5c807a387878",
+  "approved": true,
+  "autonomousLifecycleProven": false,
+  "contract": "EvaIndependentSingleRoleRepairBridgeInstalledReview/v1",
+  "digitalWorkerProgramSha256": "0834034459d3a75ad9fa419e026a9546ed42914a5bdcda72ac1591a737438fa7",
+  "fourProfileProofSha256": "52c56e78ac3a8b8ca5a34a001c2c2c10e1af7b56105ccd93e2b28b6c9b07b548",
+  "fullE416Completed": false,
+  "historicalReceiptsPreserved": 9,
+  "historicalRepairReplayed": false,
+  "installationApprovalSha256": "8cd16db774d8f710ac455995db09588026e8eecbd775c442e02a0443123c5e99",
+  "installedImageIds": {
+    "core": "sha256:e9394f80523aaf35ee1eacf7a9cd581210a859f428a226edec807c5f48014f45",
+    "delegated-work-worker": "sha256:3cf9703f1e08974d86cac3b1e4d6d8e0095bdf42ec99636d050cb3f0c7a176b3"
+  },
+  "legacyAcceptedReleasesValidated": 2,
+  "legacyWorkMarkersUnchanged": 103,
+  "matchingActualRuntimeProfiles": [
+    "digital_work",
+    "household_research",
+    "public_research",
+    "shared_provider"
+  ],
+  "planSha256": "e914e79c35a579fed88e1afbb3514dd68840081417dabba745ef7dcdb759167b",
+  "preservedCompanionGenerations": 23,
+  "privateCriteriaPreserved": 62,
+  "profileToolSha256": "970aebf7c75bdbf7e0e8446722817c6e7d54d8856bc25cd55f0216f4895cbee5",
+  "pureInstalledResolver": {
+    "bothActualInstallationPinsRetained": true,
+    "contract": "EvaRuntimeRepairTarget/v2",
+    "criteriaOpened": false,
+    "peerSourcePositivelyAbsent": true,
+    "repairReceiptsCreated": 0,
+    "repairServices": [
+      "core"
+    ],
+    "selectedSourceSha256": "3a08c27ccea7c8dadf28cc1b9d284281c3ac80fd805be8437c47d124de430b0f",
+    "syntheticFailureBinding": true
+  },
+  "remainingEvidence": "A fresh genuine failure through autonomous assessment, safe application and later reuse",
+  "reviewedAt": "2026-11-07T08:25:57.026531+00:00",
+  "reviewerLifecycleActions": 0,
+  "reviewerModelCalls": 0,
+  "reviewerProductionWrites": 0,
+  "sameEvaluatorConfigurationAndLastThreeSourceRoots": true,
+  "scope": "Installed single-role runtime repair bridge, shared worker compatibility and isolated resolver behavior",
+  "sdkReceiptSha256": "40adcd05e8a13f74a10591fa805018ebc80c76d54f903909e6e49a4bbfca5b30",
+  "sourceReviewSha256": "c86142bf0978febbd7deb1125092b3b22845378b12658eaa07c245e810845f4f",
+  "verifiedAuthorities": 10
+}

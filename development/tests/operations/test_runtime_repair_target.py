@@ -6,7 +6,7 @@ import pytest
 
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.reviewed_component_application import _save
-from eva.operations.runtime_repair_target import RuntimeRepairTargets, public_repair_target, repairable_source
+from eva.operations.runtime_repair_target import RuntimeRepairTargets, public_repair_target, repair_services, repairable_source
 
 
 @pytest.fixture
@@ -174,3 +174,73 @@ def test_per_module_and_combined_source_bytes_stay_within_original_total_budget(
         "diagnosis": "Synthetic total-bound regression", "files": entries}
     with pytest.raises(ValueError, match="candidate exceeds source bound"):
         validate_repair_candidate(target_info, candidate)
+
+@pytest.mark.parametrize('role',['core','delegated-work-worker'])
+def test_role_exclusive_cause_takes_precedence_over_innermost_shared_invariant(target,role):
+    registry,binding,installation,source,calls,criteria=target
+    initial=deepcopy(binding['observation']['frames'][0])
+    shared='application/shared_guard.py'
+    binding['observation']['frames'].append({**initial,'path':shared})
+    def read(image,path):
+        return source if path==shared or image==installation[role]['image'] else None
+    registry.source=read
+    saved=registry.prepare(binding['incident_id'])
+    assert saved['contract']=='EvaRuntimeRepairTarget/v2'
+    assert repair_services(saved)==(role,)
+    assert saved['installation']==installation
+    assert saved['sources']=={initial['path']:initial['source_sha256']}
+    assert saved['excluded_paths']==[shared]
+    assert registry.current(saved['target_id'])==saved and len(calls)==1
+    assert public_repair_target(saved)['repair_services']==[role]
+    assert str(criteria) not in str(public_repair_target(saved))
+
+
+def test_shared_target_keeps_legacy_shape_and_identity(target):
+    registry,binding,installation,_,_,_=target
+    frame=binding['observation']['frames'][0]
+    scope={'contract':'EvaRuntimeRepairTarget/v1','failure':binding,
+        'installation':installation,'sources':{frame['path']:frame['source_sha256']},'excluded_paths':[]}
+    resolved=registry.resolve(binding['incident_id'])
+    assert resolved=={**scope,'target_id':canonical_sha256(scope),'installed':False}
+    assert repair_services(resolved)==('core','delegated-work-worker')
+    assert 'repair_services' not in public_repair_target(resolved)
+
+
+def test_conflicting_role_exclusive_frames_cannot_select_one_peer(target):
+    registry,binding,installation,source,_,_=target
+    frame=binding['observation']['frames'][0]
+    extra={**frame,'path':'application/worker_only.py'}
+    binding['observation']['frames'].append(extra)
+    registry.source=lambda image,path: source if image==installation[
+        'core' if path==frame['path'] else 'delegated-work-worker']['image'] else None
+    with pytest.raises(ValueError,match='incompatible role-exclusive'):
+        registry.resolve(binding['incident_id'])
+
+
+def test_failed_peer_read_does_not_prove_absence(target):
+    registry,binding,installation,source,_,_=target
+    def read(image,path):
+        if image==installation['delegated-work-worker']['image']:
+            raise OSError('private IO error')
+        return source
+    registry.source=read
+    with pytest.raises(OSError):
+        registry.resolve(binding['incident_id'])
+
+def test_full_legacy_shared_scope_does_not_read_excluded_ninth_frame(target):
+    registry,binding,installation,source,_,_=target
+    frame=binding['observation']['frames'][0]
+    paths=[f'application/example_{i}.py' for i in range(9)]
+    binding['observation']['frames']=[{**frame,'path':path} for path in paths]
+    calls=[]
+    def read(image,path):
+        calls.append((image,path))
+        if path==paths[0]:
+            raise OSError('ninth path must stay excluded')
+        return source
+    registry.source=read
+    resolved=registry.resolve(binding['incident_id'])
+    scope={'contract':'EvaRuntimeRepairTarget/v1','failure':binding,'installation':installation,
+        'sources':{path:frame['source_sha256'] for path in paths[1:]},'excluded_paths':[paths[0]]}
+    assert resolved=={**scope,'target_id':canonical_sha256(scope),'installed':False}
+    assert len(calls)==16 and all(path!=paths[0] for _,path in calls)

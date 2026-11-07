@@ -53,12 +53,41 @@ def verified_failure_binding(value):
     return deepcopy(value)
 
 
+_REPAIR_ROLES = ("core", "delegated-work-worker")
+_SCOPE_FIELDS = frozenset({"contract", "failure", "installation", "sources", "excluded_paths"})
+
+
+def repair_services(target):
+    """Read the immutable role contract, retaining the exact legacy target shape."""
+    contract = target.get("contract")
+    if contract == "EvaRuntimeRepairTarget/v1" and "repair_services" not in target:
+        return _REPAIR_ROLES
+    services = target.get("repair_services")
+    if (contract == "EvaRuntimeRepairTarget/v2" and isinstance(services, list)
+            and len(services) == 1 and services[0] in _REPAIR_ROLES):
+        return tuple(services)
+    raise ValueError("runtime repair service scope differs")
+
+
+def _verified_installation(installation):
+    if not isinstance(installation, dict) or set(installation) != set(_REPAIR_ROLES):
+        raise ValueError("both actual runtime services are required")
+    for value in installation.values():
+        if (not isinstance(value, dict) or set(value) != {"image", "configuration_sha256"}
+                or not isinstance(value["image"], str)
+                or re.fullmatch(r"sha256:[0-9a-f]{64}", value["image"]) is None):
+            raise ValueError("installed repair runtime binding differs")
+        _sha(value["configuration_sha256"])
+    return installation
+
+
 class RuntimeRepairTargets:
     """Immutable host receipts, using the current application runtime as authority.
 
     `binding` must re-read original scoped PostgreSQL evidence/STOP/mandate.
     `installation` returns actual image/configuration pins for core and worker.
-    `source` reads bounded bytes from one of those immutable installed images.
+    `source` reads bounded bytes from one of those immutable installed images,
+    or returns None only for positively verified absence.
     All callbacks are host composition, never supplied in an HTTP/model request.
     """
     def __init__(self, root, *, binding, installation, source, criteria):
@@ -77,16 +106,7 @@ class RuntimeRepairTargets:
         self._lock = threading.Lock()
 
     def _installation(self):
-        current = self.installation()
-        if not isinstance(current, dict) or set(current) != {'core', 'delegated-work-worker'}:
-            raise ValueError('both actual runtime services are required')
-        for value in current.values():
-            if (not isinstance(value, dict) or set(value) != {'image', 'configuration_sha256'}
-                    or not isinstance(value['image'], str)
-                    or re.fullmatch(r'sha256:[0-9a-f]{64}', value['image']) is None):
-                raise ValueError('installed repair runtime binding differs')
-            _sha(value['configuration_sha256'])
-        return deepcopy(current)
+        return deepcopy(_verified_installation(self.installation()))
 
     def prepare(self, incident_id):
         with self._lock:
@@ -98,35 +118,61 @@ class RuntimeRepairTargets:
         if current['incident_id'] != incident_id:
             raise ValueError('host resolved another repair incident')
         installation = self._installation()
-        selected, excluded, total = {}, [], 0
+        observed, excluded = {}, []
+        singleton = set()
+        shared_count = 0
         for frame in reversed(current['observation']['frames']):
             path = frame['path']
-            if path in selected or path in excluded:
+            if path in observed or path in excluded:
                 continue
-            if not repairable_source(path) or len(selected) >= 8:
+            # A full legacy scope never reads an excluded ninth source.
+            if not repairable_source(path) or (not singleton and shared_count >= 8):
                 excluded.append(path)
                 continue
             versions = {}
             for service, runtime in installation.items():
                 raw = self.source(runtime['image'], path)
+                if raw is None:
+                    # A trusted image reader can explicitly attest absence.
+                    # Read failures, invalid files and symlinks never mean absent.
+                    continue
                 if not isinstance(raw, bytes) or not 1 <= len(raw) <= MAX_REPAIR_SOURCE_BYTES:
                     raise ValueError('bounded installed repair source required')
                 raw.decode('utf-8')
-                versions[service] = hashlib.sha256(raw).hexdigest()
-            # A patch drafted for one source must never overwrite another
-            # executor's different implementation. No implicit merge or rebase.
-            if set(versions.values()) != {frame['source_sha256']}:
+                versions[service] = (hashlib.sha256(raw).hexdigest(), len(raw))
+            if not versions or {v[0] for v in versions.values()} != {frame['source_sha256']}:
                 excluded.append(path)
                 continue
-            total += len(raw)
+            services = tuple(role for role in _REPAIR_ROLES if role in versions)
+            observed[path] = (services, *next(iter(versions.values())))
+            if len(services) == 1:
+                singleton.add(services)
+            else:
+                shared_count += 1
+
+        # Shared callers and invariant guards can appear inside a role-specific
+        # failure. Keep them as evidence and only let the builder change paths
+        # proven exclusive to the same observed runtime. A mixed incident has
+        # no unambiguous singleton role.
+        if len(singleton) > 1:
+            raise ValueError('failure spans incompatible role-exclusive repair sources')
+        services = next(iter(singleton), _REPAIR_ROLES)
+        selected, total = {}, 0
+        for path, (roles, digest, size) in observed.items():
+            if roles != services or len(selected) >= 8:
+                excluded.append(path)
+                continue
+            total += size
             if total > MAX_REPAIR_TOTAL_SOURCE_BYTES:
                 raise ValueError('repair source scope exceeds bound')
-            selected[path] = frame['source_sha256']
+            selected[path] = digest
         if not selected:
             raise ValueError('failure has no currently repairable source')
         scope = {'contract': 'EvaRuntimeRepairTarget/v1', 'failure': current,
                  'installation': installation, 'sources': dict(sorted(selected.items())),
                  'excluded_paths': sorted(excluded)}
+        if len(services) == 1:
+            scope.update(contract='EvaRuntimeRepairTarget/v2', repair_services=list(services))
         identity = canonical_sha256(scope)
         # Recheck authority and all runtime pins after source acquisition.
         if (verified_failure_binding(self.binding(incident_id)) != current
@@ -174,9 +220,9 @@ class RuntimeRepairTargets:
                 or info.st_uid != os.geteuid() or stat.S_IMODE(info.st_mode) & 0o077):
             raise ValueError('host repair target receipt changed')
         target = load_object(path)
-        fields = {'contract', 'failure', 'installation', 'sources', 'excluded_paths'}
+        services = repair_services(target)
+        fields = _SCOPE_FIELDS | ({'repair_services'} if len(services) == 1 else set())
         if (set(target) != fields | {'target_id', 'criteria', 'installed'}
-                or target['contract'] != 'EvaRuntimeRepairTarget/v1'
                 or target['target_id'] != identity or target['installed'] is not False
                 or canonical_sha256({k: target[k] for k in fields}) != identity):
             raise ValueError('host repair target identity changed')
@@ -195,9 +241,13 @@ class RuntimeRepairTargets:
 
 def public_repair_target(target):
     """No host criteria path or protected cases enter the developer's tool result."""
-    return {'contract': target['contract'], 'target_id': target['target_id'],
-            'incident_id': target['failure']['incident_id'], 'sources': deepcopy(target['sources']),
-            'criteria_sha256': None if 'criteria' not in target else target['criteria']['sha256'], 'installed': False}
+    public = {'contract': target['contract'], 'target_id': target['target_id'],
+              'incident_id': target['failure']['incident_id'], 'sources': deepcopy(target['sources']),
+              'criteria_sha256': None if 'criteria' not in target else target['criteria']['sha256'], 'installed': False}
+    services = repair_services(target)
+    if len(services) == 1:
+        public['repair_services'] = list(services)
+    return public
 
 
 def repair_builder_handoff(target):
@@ -209,8 +259,8 @@ def repair_builder_handoff(target):
     """
     _sha(target["target_id"])
     sources = target["sources"]
-    if (target.get("contract") != "EvaRuntimeRepairTarget/v1"
-            or not isinstance(sources, dict) or not 1 <= len(sources) <= 8):
+    repair_services(target)
+    if not isinstance(sources, dict) or not 1 <= len(sources) <= 8:
         raise ValueError("current repair source target required")
     file_schemas = []
     for path, digest in sorted(sources.items()):

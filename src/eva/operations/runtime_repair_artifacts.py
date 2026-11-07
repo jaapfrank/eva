@@ -103,10 +103,12 @@ class RuntimeRepairArtifacts:
 
     def seed_sources(self,metadata,target,*,source):
         from eva.application.self_repair import repairable_source
+        from eva.operations.runtime_repair_target import repair_services
+        image=target['installation'][repair_services(target)[0]]['image']
         files={}
         for path,digest in target['sources'].items():
             if not repairable_source(path):raise ValueError('protected source snapshot')
-            raw=source(target['installation']['core']['image'],path)
+            raw=source(image,path)
             if not isinstance(raw,bytes) or len(raw)>MAX_REPAIR_SOURCE_BYTES or hashlib.sha256(raw).hexdigest()!=digest:
                 raise ValueError('exact installed repair source snapshot required')
             files['repair/source/eva/'+path]=raw

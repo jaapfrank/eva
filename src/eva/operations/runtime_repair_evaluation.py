@@ -17,6 +17,7 @@ from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES, MAX_REPAIR_TOTA
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.operations.component_evaluation import ComponentEvaluator, EvaluationConfig
 from eva.operations.reviewed_component_application import _artifact
+from eva.operations.runtime_repair_target import repair_services
 
 
 _RUNNER = r'''
@@ -156,6 +157,20 @@ def _matches(outcome, expected):
     return canonical_sha256(outcome) == canonical_sha256(expected)
 
 
+def reproduces_original_failure(target, outcome):
+    """Bind a role-specific repair to the observed frame in its selected source."""
+    observed = target['failure']['observation']
+    if (outcome.get('kind') != 'error'
+            or outcome.get('error_type_sha256') != observed['error_type_sha256']):
+        return False
+    frames = observed['frames']
+    if target.get('contract') == 'EvaRuntimeRepairTarget/v2':
+        frames = [frame for frame in frames
+                  if target['sources'].get(frame['path']) == frame['source_sha256']]
+    return any({'path': frame['path'], 'function': frame['function']} in outcome.get('frames', ())
+               for frame in frames)
+
+
 class RuntimeRepairEvaluator:
     def __init__(self, targets, config, *, executor=ComponentEvaluator):
         if not isinstance(config, EvaluationConfig):
@@ -165,6 +180,7 @@ class RuntimeRepairEvaluator:
     def evaluate(self, identity, candidate):
         target = self.targets.current(identity)
         candidate = validate_repair_candidate(target, candidate)
+        services = repair_services(target)
         _, criteria = _artifact(target['criteria'])
         if (not isinstance(criteria, dict) or set(criteria) != {
                 'contract', 'target_id', 'original_failure_sha256', 'oracle', 'independent_work'}
@@ -202,8 +218,9 @@ class RuntimeRepairEvaluator:
                 source.write_text(entry['candidate_content']);source.chmod(0o444)
                 proposed[entry['path']] = source
             cache = {}
-            for service,runtime in target['installation'].items():
+            for service in services:
                 self.targets.current(identity)
+                runtime = target['installation'][service]
                 executor = self.executor(replace(self.config, image=runtime['image']))
                 legs = {}
                 for leg in ('baseline','candidate'):
@@ -234,11 +251,7 @@ class RuntimeRepairEvaluator:
                         result = cache[key];outcome = result['outcome']
                         executed.update(result['executed_sources'])
                         original = case['id'] == oracle_cases['original_case_id']
-                        observed = target['failure']['observation']
-                        reproduced = (outcome.get('kind') == 'error'
-                            and outcome.get('error_type_sha256') == observed['error_type_sha256']
-                            and any({'path':f['path'],'function':f['function']} in outcome.get('frames',())
-                                for f in observed['frames']))
+                        reproduced = reproduces_original_failure(target, outcome)
                         matched = _matches(outcome, case['expected'])
                         passed = reproduced if leg == 'baseline' and original else matched
                         eligible = eligible and passed

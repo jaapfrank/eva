@@ -1,0 +1,88 @@
+{
+  "approved": true,
+  "checks": {
+    "bothImageAndConfigurationPinsRetained": true,
+    "candidateBlindOriginalAssessmentBoundBeforeWorkspaceSeed": true,
+    "closedCriteriaPreserved": true,
+    "compensationRequiresKnownCandidateAndDurableRecoveryIntent": true,
+    "freshStopReadinessAndOriginalReviewAuthorityGuardSingletonUp": true,
+    "legacyEightSourceCutoffPreserved": true,
+    "legacyV1ReceiptIdentityAndSharedScopePreserved": true,
+    "originalOracleRequiresMatchingErrorAndSelectedOriginalFrameForV2": true,
+    "peerUnchangedAcrossSingletonBuildDispatchAndVerification": true,
+    "selectedRoleDerivedFromOriginalSourceShaAndPositivePeerAbsence": true,
+    "selectedSourceBoundaryAndGenerationCheckedAtEffectAndReadback": true,
+    "sourceIoErrorsAndShadowingRefused": true,
+    "unknownOrStaleScopeDoesNotAuthorizeReplay": true
+  },
+  "contract": "EvaIndependentRuntimeRepairSingleRoleSourceReview/v1",
+  "decision": "GO_source_candidate",
+  "evidenceSha256": {
+    "bridgePostgresAndPure": "68bf9d7db8459ea2cd8b826f89a5a299ce637fa79fd945e6abab02db6e41ba83",
+    "finalLegacyTargetCapAndBridgePure": "985925b48555c64112072f13a89a434df6d21fd075f9700e186f541ef0002cbe",
+    "publicationAndEvaluationIncludingIsolatedImages": "233d7c86a070c6dadf890f506cfffde376972bf1fefa416a36a98080c5c8a35f"
+  },
+  "fullE416Completed": false,
+  "independentTests": {
+    "applicationAndInstalledBehavior": {
+      "elapsedSeconds": 1.08,
+      "optInDockerSkipped": 1,
+      "passed": 5
+    },
+    "firstUnprivilegedRun": {
+      "cause": "Temporary workspace ownership requires the trusted host UID to set UID and GID 10001. The same fixtures passed with the required privileges.",
+      "failed": 5,
+      "passed": 50,
+      "skipped": 7
+    },
+    "runner": "Existing Ubuntu Python 3.12 host environment with a clean process environment and temporary synthetic fixtures",
+    "targetDevelopmentArtifactsEvaluation": {
+      "elapsedSeconds": 1.32,
+      "optInDockerSkipped": 7,
+      "passed": 55
+    }
+  },
+  "installed": false,
+  "lifecycleActionsByReviewer": 0,
+  "limitations": [
+    "The source inventory requires the supported read-only and unshadowed runtime source layout.",
+    "Application and recovery dispatch fences were exercised with synthetic command runners. Isolated actual-image tests executed selected-role original and regression behavior separately.",
+    "This review authorizes candidate preparation. Installation, actual four-profile compatibility after a release, genuine incident repair and later reuse need their own evidence."
+  ],
+  "productionDatabaseConnectionsByReviewer": 0,
+  "providerCallsByReviewer": 0,
+  "reviewedAt": "2026-11-07T08:13:07.733342+00:00",
+  "reviewedProducerTests": {
+    "finalLegacyCapAndBridgePurePassed": 39,
+    "isolatedDockerCasesInPublicationAndEvaluation": 3,
+    "postgres16_13AndBridgePurePassed": 57,
+    "postgresUsedOnlyDisposableUnixSocket": true,
+    "publicationAndEvaluationPassed": 22,
+    "selectedRoleOracleCases": [
+      "core",
+      "delegated-work-worker"
+    ]
+  },
+  "scope": "Exact resolver, assessment, isolated comparison, publication and application source for one verified runtime role",
+  "sourceHashes": {
+    "src/eva/bootstrap/runtime_repair_host.py": "3bbe457972cbc8d50f31c6d89692df3f6847b44bb7bfa93c3f5cb51a16358e87",
+    "src/eva/bootstrap/runtime_repair_work.py": "a426e4d2d2ababf167dfb7fe4bc9c2f2c6e9afc2524c456dbc9e9118dbdfc013",
+    "src/eva/operations/component_application_runtime.py": "d83d9a4ca1dfe995e08da1b3f2f603cc5bb11ea8e7585e86bebd2be971808a0e",
+    "src/eva/operations/runtime_repair_application.py": "0709e8b5ae76a39dca0455efd37838cd10746ffdd434e3a1968b4ecda393935d",
+    "src/eva/operations/runtime_repair_artifacts.py": "931ca593ceb026988699e3c53178f91585eb0cf15a3ba6f613804a0c33be5727",
+    "src/eva/operations/runtime_repair_development.py": "f574a6eb295b7c495477799504340f998d9866dbef12ff9cc9e1628dd0d7831b",
+    "src/eva/operations/runtime_repair_evaluation.py": "a4d995bae8151e1c04630c615558e37dbf587ccbfec7a17eeca9ff3001f6458f",
+    "src/eva/operations/runtime_repair_publisher.py": "8512ae488aa3c60a4d966f813df812c343d2e9c7918324f0a6ffd9f5ef1edfd9",
+    "src/eva/operations/runtime_repair_target.py": "708d29ba5888fd79a9fab3e42a5b96ad20c1febe63535bc214d8dee48cf242c7"
+  },
+  "testHashes": {
+    "development/tests/operations/test_runtime_repair_application.py": "afa28c00c0c3786cab76433feb5e7a1b861635eb4276e26a63ce86d4491e111d",
+    "development/tests/operations/test_runtime_repair_artifacts.py": "2786a6bae3b8484b055535a77441f11dab0508a1d780490738a2cd5c4f93ad4e",
+    "development/tests/operations/test_runtime_repair_development.py": "340141b012bb8ae1ac3437a544d81fcfd36d1d2afbd2cedef268c9b61a937200",
+    "development/tests/operations/test_runtime_repair_evaluation.py": "7a77498e569662cde697756d87b7254d90dda46241dd7ea3c5838cb4cf6c89e2",
+    "development/tests/operations/test_runtime_repair_installed_behavior.py": "d1ab917194fb9621817dc5e1108f39804688c684387d752b5ec13b632bd88371",
+    "development/tests/operations/test_runtime_repair_publisher.py": "e551e0dfe8c0290e9b2a74cd84082ec1d93fce752c72668cd4d57734f74234ab",
+    "development/tests/operations/test_runtime_repair_target.py": "bb2c56e2e28e4483ef02dee4b4e43ac2db57035aff2181eb59879eba5bcdc217",
+    "development/tests/postgres/test_runtime_repair_assessment.py": "76f050e83b3271df3a1550ad62f9cc2139acd6a74ce60c38e90ff8732d00c046"
+  }
+}
