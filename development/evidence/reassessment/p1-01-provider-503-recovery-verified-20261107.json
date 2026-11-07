@@ -1,0 +1,71 @@
+{
+  "contract": "EvaProvider503PrivateWorkRecoveryVerification/v1",
+  "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+  "priority": "P1-01",
+  "status": "technical_delivery_complete",
+  "scope": "Ordinary private digital task with verified read receipts and one authorized successor.",
+  "testedInstalledSource": {
+    "snapshotMatchesLiveCore": true,
+    "workerMatches": [
+      "adapters/model/openai_codex_provider.py",
+      "adapters/model/pydantic_conversation.py",
+      "adapters/postgres/delegated_work.py",
+      "adapters/postgres/external_conversation_tools.py",
+      "adapters/postgres/scheduled_work.py",
+      "bootstrap/delegated_digital_runner.py",
+      "operations/delegated_work_worker.py"
+    ],
+    "workerDiffers": [
+      "adapters/postgres/private_work_return.py"
+    ],
+    "images": {
+      "eva2-managed-b-slot3-core": "sha256:de93686938cc322c53ea15a601d6d816579eb3f0070ce079975fa87d26c316ca",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:3cf9703f1e08974d86cac3b1e4d6d8e0095bdf42ec99636d050cb3f0c7a176b3"
+    }
+  },
+  "installedRecoveryPolicy": {
+    "initiative_enabled": true,
+    "private_recovery_enabled": true,
+    "mandate_hash_matches": true,
+    "maximum_additional_attempts": 1,
+    "manual_successors_count": true,
+    "eligible_errors": [
+      "provider_unavailable"
+    ],
+    "prior_effects": "verified_reads_only",
+    "same_provider": true
+  },
+  "matchedDependencyVersions": {
+    "pydantic-ai-slim": "2.66.0",
+    "openai": "3.46.0",
+    "httpx2": "2.16.0",
+    "sqlalchemy": "2.1.8",
+    "psycopg": "3.3.8"
+  },
+  "test": {
+    "source": "development/tests/postgres/test_provider_failure_retry.py",
+    "sha256": "9a5502ddf1aeec772dfdf38f23cc8d5c49d497b562c7c33bc6fda0d8e9cccd01",
+    "testsPassed": 4,
+    "testSeconds": 21.5,
+    "database": "disposable PostgreSQL on the installed database image, Unix socket, no external network",
+    "http503": "Real installed provider adapter handled HTTP 503 via an in-process transport fixture; the resulting typed failure entered the normal worker pipeline.",
+    "originalFailureCode": "provider_unavailable",
+    "originalUsageAndReplyPreserved": true,
+    "originalResultRemainedUnavailable": true,
+    "recoveryVisibleAsScheduled": true,
+    "restart": "Fresh scheduler and worker instances over the same retained database.",
+    "oneBoundedSuccessorCompleted": true,
+    "originalReadCount": 6,
+    "verifiedReadContentsInResumedModelInput": 6,
+    "repeatConnectorDispatches": 0,
+    "ownerResultAcknowledgedOnce": true,
+    "unknownEffectAndStopPreventedRecovery": true
+  },
+  "liveModelRequests": 0,
+  "liveExternalEffects": 0,
+  "productionDataChanged": false,
+  "productDeploymentRequired": false,
+  "independentReview": "approved",
+  "fullE114HouseholdUseAccepted": false,
+  "fullE416Completed": false
+}

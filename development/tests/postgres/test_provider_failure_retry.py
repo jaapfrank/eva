@@ -37,12 +37,13 @@ from eva.bootstrap.delegated_digital_runner import DelegatedDigitalRunner
 from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
 from eva.contracts.delegated_work import DelegatedWorkUsage
 from eva.contracts.timestamps import parse_utc_timestamp
+from eva.operations.delegated_work_worker import DelegatedWorkWorker
 from eva.providers.mcp_autonomy import _SourceTurnLoader
 from tests.postgres.test_owner_initiatives import costless_native, NOW  # noqa: F401
 from tests.postgres import test_scheduled_failure_return as scheduled_fixture
 from tests.postgres.test_people_memory_overview import _upgrade
 from tests.support.scripted_pydantic_conversation import (
-    ScriptedCall, ScriptedPhase, ScriptedPydanticConversation,
+    ScriptedCall, ScriptedPhase, ScriptedPydanticConversation, tool_returns,
 )
 
 
@@ -80,7 +81,8 @@ def provider_failure(costless_native, tmp_path, request):
     authority, _, _, owner, _, policy_path, policy = costless_native
     engine = owner._engine
     clock = [NOW]
-    uncertain_effect = getattr(request, "param", None) == "uncertain_effect"
+    scenario = getattr(request, "param", None)
+    uncertain_effect = scenario == "uncertain_effect"
     source_name = "bootstrap/delegated_digital_runner.py"
     source = Path(importlib.import_module(DelegatedDigitalRunner.__module__).__file__)
     profile = DelegatedDigitalProfile(
@@ -141,24 +143,47 @@ def provider_failure(costless_native, tmp_path, request):
             return ToolProofObservation("verified", observed[request.operation_id],
                                        {"source": "fixture-readback"})
 
+    failure = CodexProviderError("unavailable")
+    if scenario == "http503":
+        from tests.model.test_codex_provider_http_failure_metadata import _sdk_http_failure
+        failure, observation = _sdk_http_failure(
+            {"error": {"code": "server_error", "type": "server_error"}}, {})
+        assert observation["response_status"] == 503
     scripted = ScriptedPydanticConversation(tuple(
         ScriptedPhase.deferred(ScriptedCall("read-" + str(i), "use_connector_tool",
                                            {"document": str(i)}))
         for i in range(6)
-    ) + (ScriptedPhase.failure(CodexProviderError("unavailable")),
+    ) + (ScriptedPhase.failure(failure),
          ScriptedPhase.text("This must not bypass incomplete usage.")))
     descriptor = ConversationToolDescriptor("use_connector_tool", "Read a document.",
         {"type": "object", "properties": {"document": {"type": "string"}},
          "required": ["document"], "additionalProperties": False})
-    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json",
-        model_backend=scripted.model, conversation_tools=(descriptor,))
     tools = PostgresExternalConversationTools(engine, Planner(), Provider(),
         authorize_turn=service.validate_authority)
-    runner = DelegatedDigitalRunner(store, profile,
-        source_loader=_SourceTurnLoader(engine, SimpleNamespace(
-            scope=owner._scope, authorize_turn=service.validate_authority)),
-        memory=Memory(), model=model, identity=IdentityProfile("Eva", "Helpful", ("Be honest",)),
-        connector_tools=(tools,), clock=lambda: clock[0])
+
+    def make_runner(backend):
+        model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json",
+            model_backend=backend.model, conversation_tools=(descriptor,))
+        return DelegatedDigitalRunner(store, profile,
+            source_loader=_SourceTurnLoader(engine, SimpleNamespace(
+                scope=owner._scope, authorize_turn=service.validate_authority)),
+            memory=Memory(), model=model, identity=IdentityProfile("Eva", "Helpful", ("Be honest",)),
+            connector_tools=(tools,), clock=lambda: clock[0])
+
+    runner = make_runner(scripted)
+    if scenario == "http503":
+        worker = DelegatedWorkWorker(store, runner, worker_id="fixture:original-http503",
+            release=profile.release, clock=lambda: clock[0])
+        assert asyncio.run(worker.run_once()) == "ambiguous"
+        failed = store.load(work_id, **service._owner)
+        assert failed.error_code == "provider_unavailable"
+        assert failed.usage.measurement == "partial"
+        assert scripted.remaining_phases == 1
+        assert dispatches == [str(i) for i in range(6)]
+        return SimpleNamespace(owner=owner, policy=policy, policy_path=policy_path,
+            engine=engine, clock=clock, profile=profile, store=store, service=service,
+            turn=turn, journal=journal, foreground=foreground, original=original,
+            failed=failed, dispatches=dispatches, make_runner=make_runner)
     claimed = store.claim_next(worker_id="fixture:provider-recovery",
         release=profile.release, now=clock[0])
     assert claimed.spec == original.spec
@@ -310,6 +335,69 @@ def test_one_separate_recovery_retains_unknown_old_usage_and_fresh_bounded_clock
         usage=DelegatedWorkUsage.unmeasured(), now=case.clock[0])
     for _ in range(2):
         ScheduledOwnerWork(case.service).run_once()
+    assert len(work_rows(case)) == 2 and len(recovery_requests(case)) == 1
+
+
+@pytest.mark.parametrize("provider_failure", ["http503"], indirect=True)
+def test_http_503_recovery_finishes_and_returns_once_after_scheduler_restart(provider_failure):
+    case = provider_failure
+    authorize_recovery(case)
+    original = dict(work_rows(case)[0])
+    failure = case.service.execute("get", case.turn, work_id=case.failed.spec.work_id,
+        request_key="owner-read-provider-failure")["work"]
+    assert failure["error_code"] == "provider_unavailable"
+    assert "niet bereikbaar" in failure["failure_description"]
+    assert failure["result_available"] is False
+
+    case.clock[0] += timedelta(seconds=45)
+    scheduler = ScheduledOwnerWork(case.service)
+    assert scheduler.schedule_provider_recovery() == "provider_recovery_scheduled"
+    request, = recovery_requests(case)
+    assert len(request["data"]["provider_recovery"]["verified_read_heads"]) == 6
+    waiting, = scheduler.list()["schedules"]
+    assert waiting["state"] == "scheduled"
+    assert waiting["resume_work_id"] == case.failed.spec.work_id
+    assert len(work_rows(case)) == 1
+    case.clock[0] += timedelta(seconds=2)
+    restarted_scheduler = ScheduledOwnerWork(case.service)
+    assert restarted_scheduler.run_once() == "dispatched"
+    child = case.store.load(work_rows(case)[1]["work_id"], **case.service._owner)
+    assert child.spec.generation == 2
+    assert child.spec.source == case.failed.spec.source
+    assert child.spec.source_ingress_sha256 == case.failed.spec.source_ingress_sha256
+    assert child.spec.execution_id == case.failed.spec.execution_id
+    assert child.spec.grant == case.failed.spec.grant
+    assert parse_utc_timestamp(child.spec.deadline) == (
+        case.clock[0] + timedelta(seconds=case.failed.spec.grant.timeout_seconds))
+
+    text = "The six verified document reads are complete."
+    provider = ScriptedPydanticConversation((ScriptedPhase.text(text),))
+    worker = DelegatedWorkWorker(case.store, case.make_runner(provider),
+        worker_id="fixture:restarted-http503", release=case.profile.release,
+        clock=lambda: case.clock[0])
+    assert asyncio.run(worker.run_once()) == "succeeded"
+    assert asyncio.run(worker.run_once()) == "idle"
+    assert len(provider.captures) == 1
+    retained = {part.tool_call_id: part.content for part in tool_returns(provider.captures[0].messages)
+                if part.tool_name == "use_connector_tool"}
+    assert set(retained) == {f"read-{index}" for index in range(6)}
+    for index in range(6):
+        receipt = retained[f"read-{index}"]
+        assert receipt["status"] == "verified"
+        assert receipt["proof"]["expected"] == {"document": str(index)}
+    assert case.dispatches == [str(i) for i in range(6)]
+    assert dict(work_rows(case)[0]) == original
+    assert case.journal.committed_reply(case.turn) == case.foreground
+
+    result = case.service.private_return(case.turn, "poll")["result"]
+    assert result["work_id"] == child.spec.work_id
+    assert result["outcome"] == "completed"
+    assert result["output"] == text
+    identity = {key: result[key] for key in ("work_id", "operation_id")}
+    assert case.service.private_return(case.turn, "authorize", **identity)["output_sha256"] == result["output_sha256"]
+    assert case.service.private_return(case.turn, "ack", **identity)["status"] == "acknowledged"
+    assert case.service.private_return(case.turn, "poll")["result"] is None
+    restarted_scheduler.run_once()
     assert len(work_rows(case)) == 2 and len(recovery_requests(case)) == 1
 
 

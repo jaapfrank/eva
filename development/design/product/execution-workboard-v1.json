@@ -1661,6 +1661,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "P1-01 · Gewone taak herstelt na provideruitval",
+            "state": "installed",
+            "summary": "De bestaande privéroute hervat een veilig verifieerbare taak na uitval en herstart.",
+            "result": "De gewone privétaak wachtte na HTTP 503 herkenbaar en werd na herstart één keer hervat. Eva gebruikte zes bewaarde leesresultaten zonder de leesacties te herhalen en meldde het resultaat één keer terug aan de oorspronkelijke eigenaarroute. STOP en een onzeker extern effect blokkeerden de hervatting.",
+            "remaining": "Dagelijks gebruik van een gezinsverantwoordelijkheid blijft de afzonderlijke E1.14-uitkomst.",
+            "source": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
+            "review": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
+            "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "Geheugenbron opent direct in beeld",
             "state": "installed",
             "summary": "De knop Bron bekijken en aanpassen brengt de gekozen bron in beeld en zet de focus op de kop.",
@@ -3565,15 +3582,14 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Geheugenbron opent direct in beeld",
+          "title": "P1-01 · Gewone taak herstelt na provideruitval",
           "state": "installed",
-          "summary": "De knop Bron bekijken en aanpassen brengt de gekozen bron in beeld en zet de focus op de kop.",
-          "result": "Dezelfde eerder gemelde bron is op het live dashboard geopend en op smalle schermbreedte gecontroleerd.",
-          "remaining": "",
-          "source": "development/evidence/product/owner-memory-source-focus-installed-20261107.json",
-          "review": "development/evidence/product/owner-memory-source-focus-installed-20261107.json",
-          "checkedAt": "2026-11-07T12:46:36.735427+00:00",
-          "installedAt": "2026-11-07T12:44:39.46495336Z",
+          "summary": "De bestaande privéroute hervat een veilig verifieerbare taak na uitval en herstart.",
+          "result": "De gewone privétaak wachtte na HTTP 503 herkenbaar en werd na herstart één keer hervat. Eva gebruikte zes bewaarde leesresultaten zonder de leesacties te herhalen en meldde het resultaat één keer terug aan de oorspronkelijke eigenaarroute. STOP en een onzeker extern effect blokkeerden de hervatting.",
+          "remaining": "Dagelijks gebruik van een gezinsverantwoordelijkheid blijft de afzonderlijke E1.14-uitkomst.",
+          "source": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
+          "review": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
+          "checkedAt": "2026-11-07T13:09:11.244255+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
           "controlledRuntimeVerificationPassed": true,
@@ -3602,12 +3618,12 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T12:57:43.498138+00:00",
-        "reviewedAt": "2026-11-07T12:57:43.498138+00:00",
+        "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+        "reviewedAt": "2026-11-07T13:09:11.244255+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-11-07T08:27:00.930248+00:00",
-      "checkedAt": "2026-11-07T12:57:43.498138+00:00",
+      "checkedAt": "2026-11-07T13:09:11.244255+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3745,7 +3761,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T12:57:43.498138+00:00",
+      "lastUpdatedAt": "2026-11-07T13:09:11.244255+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3779,7 +3795,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T12:57:43.498138+00:00",
+      "updatedAt": "2026-11-07T13:09:11.244255+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -7182,7 +7198,13 @@
                 },
                 "implementationStatus": "isolated_outage_restart_no_replay_verified_real_household_use_open",
                 "progress": "Bestaande voorzieningsroute gericht onder modeluitval, bronuitval, herstart, onbekend effect en STOP beproefd. Aanvullend twee gewone ticks vóór STOP met actieve voorziening/gezonde provider/open venster: geen herhaald effect. Beide ruwe bewijzen onafhankelijk beoordeeld; productie niet gewijzigd. Werkelijk gebruikte/adoptieve verantwoordelijkheid en meerdaags gezinsgebruik blijven open.",
-                "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json"
+                "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json",
+                "p101Private503Recovery20261107": {
+                  "status": "technical_delivery_complete",
+                  "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+                  "evidence": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
+                  "fullHouseholdContinuityAcceptance": false
+                }
               }
             ],
             "previousBoundedCompletion": {
@@ -10401,7 +10423,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T12:32:04.615912+00:00",
+        "updatedAt": "2026-11-07T13:09:11.244255+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10680,7 +10702,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T12:32:04.615912+00:00",
+        "checkedAt": "2026-11-07T13:09:11.244255+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -10955,6 +10977,14 @@
           "taskCountUnchanged": 103,
           "criteriaAndHistoricalEvidencePreserved": true,
           "freshTechnicalTest": false
+        },
+        "p101Private503Recovery20261107": {
+          "priority": "P1-01",
+          "status": "technical_delivery_complete",
+          "scope": "Gewone digitale privétaak met eerder geverifieerde leesacties.",
+          "result": "De gewone privétaak wachtte na HTTP 503 herkenbaar en werd na herstart één keer hervat. Eva gebruikte zes bewaarde leesresultaten zonder de leesacties te herhalen en meldde het resultaat één keer terug aan de oorspronkelijke eigenaarroute. STOP en een onzeker extern effect blokkeerden de hervatting.",
+          "evidence": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
+          "checkedAt": "2026-11-07T13:09:11.244255+00:00"
         }
       }
     },
@@ -14354,7 +14384,13 @@
               },
               "implementationStatus": "isolated_outage_restart_no_replay_verified_real_household_use_open",
               "progress": "Bestaande voorzieningsroute gericht onder modeluitval, bronuitval, herstart, onbekend effect en STOP beproefd. Aanvullend twee gewone ticks vóór STOP met actieve voorziening/gezonde provider/open venster: geen herhaald effect. Beide ruwe bewijzen onafhankelijk beoordeeld; productie niet gewijzigd. Werkelijk gebruikte/adoptieve verantwoordelijkheid en meerdaags gezinsgebruik blijven open.",
-              "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json"
+              "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json",
+              "p101Private503Recovery20261107": {
+                "status": "technical_delivery_complete",
+                "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+                "evidence": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
+                "fullHouseholdContinuityAcceptance": false
+              }
             }
           ],
           "previousBoundedCompletion": {
@@ -17573,7 +17609,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T12:32:04.615912+00:00",
+      "updatedAt": "2026-11-07T13:09:11.244255+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17852,7 +17888,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T12:32:04.615912+00:00",
+      "checkedAt": "2026-11-07T13:09:11.244255+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -18127,6 +18163,14 @@
         "taskCountUnchanged": 103,
         "criteriaAndHistoricalEvidencePreserved": true,
         "freshTechnicalTest": false
+      },
+      "p101Private503Recovery20261107": {
+        "priority": "P1-01",
+        "status": "technical_delivery_complete",
+        "scope": "Gewone digitale privétaak met eerder geverifieerde leesacties.",
+        "result": "De gewone privétaak wachtte na HTTP 503 herkenbaar en werd na herstart één keer hervat. Eva gebruikte zes bewaarde leesresultaten zonder de leesacties te herhalen en meldde het resultaat één keer terug aan de oorspronkelijke eigenaarroute. STOP en een onzeker extern effect blokkeerden de hervatting.",
+        "evidence": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
+        "checkedAt": "2026-11-07T13:09:11.244255+00:00"
       }
     },
     "goalRevision": {
