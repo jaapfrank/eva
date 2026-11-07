@@ -1,0 +1,62 @@
+{
+  "contract": "EvaRuntimeRepairLiveSourceSelection/v1",
+  "card": "E4.16",
+  "status": "in_progress_no_eligible_current_source",
+  "checkedAt": "2026-11-07T15:44:56.876483+00:00",
+  "previousIndependentComparison": "development/evidence/reassessment/e416-independent-reproduction-blocker-20261107.json",
+  "currentReleaseEvidence": "development/evidence/reassessment/p1-06-core-boundaries-verified-20261107.json",
+  "repairIncidents": {
+    "checkedAt": "2026-11-07T15:41:51.359390+00:00",
+    "count": 13,
+    "phases": {
+      "repair_investigating:waiting_for_proof": 13
+    },
+    "latestObservedAt": "2026-11-06T13:41:42+00:00",
+    "latestKnownCause": "provider credential rejection",
+    "verifiedClosures": 0,
+    "newIncidentSinceHistoricalReadback": false
+  },
+  "liveRepeatedWarning": {
+    "occurrencesInCheckedLogWindow": 984,
+    "stage": "document_authority",
+    "candidateCount": 1,
+    "sourceKind": "blocked provider-recovery schedule",
+    "reproducedReason": "scheduled failure history differs",
+    "recordedAt": "2026-10-30T12:09:46+00:00",
+    "events": [
+      "SCHEDULED_WORK_BLOCKED"
+    ],
+    "affectedFrame": {
+      "file": "adapters/postgres/scheduled_work_failure.py",
+      "line": 93,
+      "function": "load",
+      "sha256": "482e7f28883337c84e7431c5e96ef9f5389d31a3ec4e1b2c6807896c06b414c9"
+    },
+    "originalWorkState": "ambiguous_provider_unavailable",
+    "hasSourceEnvelope": false,
+    "hasReturnBinding": false,
+    "retryPermitted": false,
+    "reachesExistingRepairIntake": false,
+    "eligibleForAutonomousRepair": false,
+    "linkedOriginalWorkSourceReadback": {
+      "boundOriginalWorkFound": true,
+      "sourceEnvelopeInOriginalWork": true,
+      "originalIngressStillPresent": true,
+      "ingressScopeMatches": true,
+      "originalIngressCompacted": false,
+      "originalIngressErased": false,
+      "originalIngressMatchesWorkSpec": false
+    }
+  },
+  "independentReadOnlyAssessment": {
+    "reviewer": "independent_review",
+    "result": "No eligible current incident from retained inputs. Local delivery exception cannot reach the two current owner-bound failure intakes."
+  },
+  "productionWrites": 0,
+  "modelRequests": 0,
+  "replayedWork": 0,
+  "historicalResultsPreserved": true,
+  "newAutonomousInstallation": false,
+  "laterReuseProven": false,
+  "fullCardCompleted": false
+}

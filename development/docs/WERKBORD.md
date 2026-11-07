@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: De zaak van 26 oktober is onafhankelijk gereproduceerd en de bewaarde kandidaat werkt in de geïsoleerde vergelijking. De huidige zoekroute is al hersteld en een gewone live zoekopdracht gaf antwoord. Voor de volledige autonome kringloop ontbreekt nog een actuele, reproduceerbare interne fout met geldige bronbinding.
+Volgende stap: Gebruik één nieuwe echte interne fout met een geldige oorspronkelijke eigenaarstaak en actuele bron. Volg die via Eva’s eigen kandidaat en onafhankelijke beoordeling naar veilige installatie, controle en later hergebruik.
 
 ## Voortgang
 
