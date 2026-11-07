@@ -58,5 +58,42 @@
   "historicalResultsPreserved": true,
   "newAutonomousInstallation": false,
   "laterReuseProven": false,
-  "fullCardCompleted": false
+  "fullCardCompleted": false,
+  "ordinaryScheduleReadback": {
+    "startedAt": "2026-11-07T16:19:44.552248+00:00",
+    "checkedAt": "2026-11-07T16:21:27.727106+00:00",
+    "route": "Installed private owner dashboard and existing list_scheduled_work action",
+    "replyCommitted": true,
+    "verifiedReadReceipt": true,
+    "scheduleStateCounts": {
+      "blocked": 6,
+      "dispatched": 14
+    },
+    "elapsedSeconds": 13.449,
+    "modelUsage": {
+      "input_tokens": 29582,
+      "measurement": "measured",
+      "model_attempts": 2,
+      "output_tokens": 159,
+      "tool_calls": 1
+    },
+    "normalPrivateJournalEvents": {
+      "CONVERSATION_MODEL_ADMITTED": 2,
+      "CONVERSATION_MODEL_RECORDED": 2,
+      "INGRESS_COMMITTED": 1,
+      "MEMORY_RETAIN_QUEUED": 1,
+      "REPLY_COMMITTED": 1,
+      "DELEGATED_ACTION_PREPARED": 1,
+      "DELEGATED_ACTION_COMPLETED": 1
+    },
+    "externalEffects": 0,
+    "oldWorkRedispatched": false,
+    "newRepairIncident": false,
+    "checkedFailedWorkStatesWithin48Hours": 5,
+    "newestObservedFailedOrAmbiguousWorkCompletedAt": "2026-11-06T13:42:59+00:00",
+    "independentSourceScreening": "No source-bound current internal fault was established. The repeated delivery warning is on a locally caught background path.",
+    "independentRuntimeReadback": "Owner self-repair enabled and compatible digital grant. Running evaluator follows actual images. One historical blocked handoff; no sealed independent targets.",
+    "repairInstalled": false,
+    "laterReuseProven": false
+  }
 }
