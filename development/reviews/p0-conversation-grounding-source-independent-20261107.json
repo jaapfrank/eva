@@ -1,0 +1,55 @@
+{
+  "approved": true,
+  "baselineBehavior": "With a valid current quoted reply and an earlier retained source, the installed _retained_source copies current quote context while replacing the turn time, and raises the observed ConversationTurn ValueError. A plain follow-up retains the original source.",
+  "candidateSourceSha256": "3a08c27ccea7c8dadf28cc1b9d284281c3ac80fd805be8437c47d124de430b0f",
+  "contract": "EvaIndependentConversationGroundingSourceReview/v1",
+  "dashboard": {
+    "activeCard": "E4.16",
+    "activeCardStatus": "in_progress",
+    "canonicalBoardSha256": "718bd8c4eb0ca3737ec491b6305083369f6172c498dd863b993fb4d85dadc3a7",
+    "canonicalCheckedAt": "2026-11-07T07:39:32.720758+00:00",
+    "exactCanonicalDeliveryOverviewDeliveryPlanAndHousemateSummary": true,
+    "latestVisibleDeliveries": [
+      "Compose 5.7 and the E4.16 continuation correction",
+      "containerd daemon",
+      "ContextForge 1.1 and five connectors"
+    ],
+    "learningObservationSha256": "5f13beaa982bd99de8f3843eba20884118a3c065c9aeaa1774754a1964ae25af",
+    "liveProjectStateStatus": 200,
+    "privateSourcePayloadsExported": false
+  },
+  "focusedRegressionSourceSha256": "da52749c8c24193ada274ed9cdb5208a6c1647b73e29c912e9dda7966c3be0f9",
+  "independentProbe": {
+    "actualInstalledCorePythonUsed": true,
+    "baselineAndCandidateExactBytes": true,
+    "candidateReturnsExactRetainedTurn": true,
+    "connectorCalls": 0,
+    "currentQuoteAndDigestRemainOnCurrentTurn": true,
+    "databaseCalls": 0,
+    "lifecycleActions": 0,
+    "modelCalls": 0,
+    "plainFollowupUnchanged": true,
+    "refusedSourceCases": [
+      "another owner",
+      "erased",
+      "compacted",
+      "historical quoted context",
+      "retention expired"
+    ],
+    "syntheticInputOnly": true
+  },
+  "installationApproved": false,
+  "installedCandidateAndAutonomousLifecycleProven": false,
+  "installedCoreImage": "sha256:af0358d1e162b27f19fdef1aeece0acc0b6911d2e8534f82d8ae95f36438a926",
+  "observedInstalledGroundingSourceSha256": "d6a40f17d3e45246c40b55d243a520ca4dbe479c633a1c739e14b1276a357cbc",
+  "reviewedAt": "2026-11-07T07:40:30.979250+00:00",
+  "scope": "Exact P0-01 source patch for an observed pre-dispatch quoted-follow-up failure.",
+  "targetRoleScopeFinding": {
+    "actualCoreContainsObservedSource": true,
+    "actualWorkerSourceAbsent": true,
+    "futureRequiredScope": "Bind source paths to affected runtime roles through target, comparison, build and installed readback. Preserve independent criteria and unchanged peer image for a core-only source.",
+    "historicalAuthorityOrWorkReactivated": false,
+    "installedResolverReproducedCoreOnlyWorkerAbsence": true,
+    "installedResolverSourceSha256": "aacc3b148bfd577e549f3f7c2d43cc2ad67bb51a714548ce5f4fc516d78c5f99"
+  }
+}

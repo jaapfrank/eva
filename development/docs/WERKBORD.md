@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0, containerd en Compose 5.7.0 zijn live en onafhankelijk gecontroleerd. De E4.16-vervolgcorrectie is geïnstalleerd; bewijs van een nieuwe zelfstandige reparatie en later hergebruik ontbreekt nog. De bestaande spraakoverdracht blijft apart.
+Volgende stap: P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.
 
 ## Voortgang
 

@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0, containerd en Compose 5.7.0 zijn live en onafhankelijk gecontroleerd. De E4.16-vervolgcorrectie is geïnstalleerd; bewijs van een nieuwe zelfstandige reparatie en later hergebruik ontbreekt nog. De bestaande spraakoverdracht blijft apart.",
+    "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
-    "executionStep": "Verify a fresh autonomous E4.16 repair and later reuse",
+    "executionStep": "Verify and install the bounded P0-01 grounding correction",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-07T07:22:02.528619+00:00",
+    "checkedAt": "2026-11-07T07:39:32.720758+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -1660,6 +1660,58 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Compose 5.7 en E4.16-vervolgcorrectie geïnstalleerd",
+            "state": "installed",
+            "summary": "Compose 5.7 draait. De vervolgcorrectie is live in kern, worker en beoordelaar. Vier werkprofielen, de oorspronkelijke opslagregels en 103 historische werkregistraties zijn bevestigd.",
+            "result": "Compose 5.7 draait. De vervolgcorrectie is live in kern, worker en beoordelaar. Vier werkprofielen, de oorspronkelijke opslagregels en 103 historische werkregistraties zijn bevestigd.",
+            "remaining": "De volledige autonome reparatie en het latere hergebruik blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/e416-compose57-installed.json",
+            "review": "development/reviews/e416-compose-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T07:21:27.704340+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
+            "title": "Containerd-daemon bijgewerkt",
+            "state": "installed",
+            "summary": "De Ubuntu-daemon 2.2.1-0ubuntu1~24.04.4 draait. Docker en de 25 actieve containertaken behielden hun processen.",
+            "result": "De Ubuntu-daemon 2.2.1-0ubuntu1~24.04.4 draait. Docker en de 25 actieve containertaken behielden hun processen.",
+            "remaining": "De bestaande hulpprocessen worden vernieuwd bij een volgende veilige vervanging van hun containers.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/containerd-daemon-installed.json",
+            "review": "development/reviews/containerd-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T06:55:52.483178+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
+            "title": "ContextForge 1.1 en vijf connectoren geïnstalleerd",
+            "state": "installed",
+            "summary": "Zes rollen draaien met behoud van gegevens, bestaande catalogi, actierechten en de vier werkprofielen.",
+            "result": "Zes rollen draaien met behoud van gegevens, bestaande catalogi, actierechten en de vier werkprofielen.",
+            "remaining": "Het bestaande gebruik valt onder de normale toegangsgrenzen.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/contextforge-installed.json",
+            "review": "development/reviews/contextforge-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T06:26:37.849494+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false,
+            "installedAt": "2026-11-07T06:26:37.849494+00:00"
+          },
           {
             "title": "Fotobibliotheek bijgewerkt — 7 november",
             "state": "verified",
@@ -3441,17 +3493,16 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Fotobibliotheek bijgewerkt — 7 november",
-          "state": "verified",
-          "summary": "De bestaande fotobibliotheek draait in een eigen pakketmap met better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9. De werkelijk geladen native module en bestaande database zijn onafhankelijk teruggelezen. Telegram, accountbindingen, 115 transportregels en 29 gezichtregels met 24 actieve profielen zijn behouden.",
-          "remaining": "Werkelijke fotoanalyse is niet opnieuw beproefd. ContextForge/native bibliotheken, overige onderhoudsgroepen en de volledige autonome E4.16-kringloop blijven open.",
-          "source": "development/evidence/reassessment/maintenance-updates-20261106/photo-library-installed.json",
-          "review": "development/reviews/photo-library-installed-independent-20261107.json",
-          "checkedAt": "2026-11-07T04:19:09.047740+00:00",
-          "installedAt": "2026-11-07T04:08:21.597076+00:00",
+          "title": "Compose 5.7 en E4.16-vervolgcorrectie geïnstalleerd",
+          "state": "installed",
+          "summary": "Compose 5.7 draait. De vervolgcorrectie is live in kern, worker en beoordelaar. Vier werkprofielen, de oorspronkelijke opslagregels en 103 historische werkregistraties zijn bevestigd.",
+          "result": "Compose 5.7 draait. De vervolgcorrectie is live in kern, worker en beoordelaar. Vier werkprofielen, de oorspronkelijke opslagregels en 103 historische werkregistraties zijn bevestigd.",
+          "remaining": "De volledige autonome reparatie en het latere hergebruik blijven open.",
+          "source": "development/evidence/reassessment/maintenance-updates-20261106/e416-compose57-installed.json",
+          "review": "development/reviews/e416-compose-installed-independent-20261107.json",
+          "checkedAt": "2026-11-07T07:21:27.704340+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
-          "actuallyUsed": false,
           "controlledRuntimeVerificationPassed": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
@@ -3460,13 +3511,13 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "Gecontroleerde updates en E4.16-vervolgcorrectie live",
-          "summary": "Hindsight, PydanticAI, kern-/hulpdiensten, bestanden, Telegram, browser, gezichtsherkenning en dashboards zijn bijgewerkt en gecontroleerd.",
-          "detail": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0, containerd en Compose 5.7.0 zijn live en onafhankelijk gecontroleerd. De E4.16-vervolgcorrectie is geïnstalleerd; bewijs van een nieuwe zelfstandige reparatie en later hergebruik ontbreekt nog. De bestaande spraakoverdracht blijft apart.",
+          "title": "P0-01 · Antwoord op geciteerd bericht herstellen",
+          "summary": "Werkelijke antwoordfout gereproduceerd. De gerichte correctie wordt beproefd.",
+          "detail": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Eva online · software bijgewerkt · autonome herstelproef open",
-          "checkedAt": "2026-11-07T07:22:02.528619+00:00",
-          "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0, containerd en Compose 5.7.0 zijn live en onafhankelijk gecontroleerd. De E4.16-vervolgcorrectie is geïnstalleerd; bewijs van een nieuwe zelfstandige reparatie en later hergebruik ontbreekt nog. De bestaande spraakoverdracht blijft apart."
+          "state": "Eva online · bronreview geslaagd · installatie in voorbereiding",
+          "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+          "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open."
         },
         "next": {
           "taskId": "E4.15",
@@ -3478,12 +3529,12 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T07:22:02.528619+00:00",
-        "reviewedAt": "2026-11-06T23:40:53.344878+00:00",
+        "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+        "reviewedAt": "2026-11-07T07:39:32.720758+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-11-07T01:35:11.410279+00:00",
-      "checkedAt": "2026-11-07T02:32:05.073473+00:00",
+      "reviewedAt": "2026-11-07T07:39:32.720758+00:00",
+      "checkedAt": "2026-11-07T07:39:32.720758+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3519,7 +3570,7 @@
             "name": "Geheugen",
             "state": "incomplete",
             "label": "Geheugenbasis geïnstalleerd · E4.11 technische opschoning open",
-            "result": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend.",
+            "result": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend. Dromen bij rust: de laatste afgeronde groep verwerkte 11 bronnen op 5 november om 22.20 uur. Tussen 23.00 en 07.00 uur in de nacht van 6 op 7 november is geen afgeronde droom of reflectie geregistreerd. Op 7 november om 08.32 uur waren er geen nieuwe wachtende droombronnen. Onder Initiatief & leren toont het persoonlijke dashboard 19 reflecties, waarvan één met latere contextbinding. Het toont daar geen eigen AIDE²-verbeterstappen. De vaste nachtelijke contextvernieuwing staat op gepland.",
             "remaining": "Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut.",
             "evidencePaths": [
               "development/design/product/execution-workboard-v1.json",
@@ -3543,9 +3594,10 @@
               "development/evidence/product/e411-selective-memory-completed-20261019.json",
               "development/reviews/e411-selective-memory-final-review-20261019.json",
               "development/evidence/reassessment/memory-cleanup-20261106/current-status-audit.json",
-              "development/reviews/e411-memory-residuals-independent-scope-20261106.json"
+              "development/reviews/e411-memory-residuals-independent-scope-20261106.json",
+              "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json"
             ],
-            "checkedAt": "2026-11-06T14:50:32.440313+00:00"
+            "checkedAt": "2026-11-07T08:32:59.791570+01:00"
           },
           {
             "name": "Eigen initiatief",
@@ -3619,7 +3671,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T02:32:05.073473+00:00",
+      "lastUpdatedAt": "2026-11-07T07:39:32.720758+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3653,7 +3705,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T02:32:05.073473+00:00",
+      "updatedAt": "2026-11-07T07:39:32.720758+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -7250,6 +7302,12 @@
                 "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
                 "ownerStatusBefore20261106": {
                   "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open."
+                },
+                "learningDashboardObservation": {
+                  "evidence": "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json",
+                  "checkedAt": "2026-11-07T08:32:59.791570+01:00",
+                  "ownerVisibleReflections": 19,
+                  "ownerVisibleComponentSteps": 0
                 }
               },
               {
@@ -8718,7 +8776,12 @@
                   "meaning": "Begrensde technische dag-/droom-/compactieoplevering van 19 oktober blijft bewaard; dit is geen afronding van de actuele opschoningsscope."
                 },
                 "reopenedAt": "2026-11-06T14:50:32.440313+00:00",
-                "reopenedBy": "Directe eigenaarvraag 6 november: resterende ongeldige en overbodige geheugengegevens opruimen; anders als open werk registreren."
+                "reopenedBy": "Directe eigenaarvraag 6 november: resterende ongeldige en overbodige geheugengegevens opruimen; anders als open werk registreren.",
+                "learningDashboardObservation": {
+                  "evidence": "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json",
+                  "checkedAt": "2026-11-07T08:32:59.791570+01:00",
+                  "fixedNightlyContextRefresh": "planned"
+                }
               },
               {
                 "status": "completed",
@@ -9031,7 +9094,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Een echte nieuwe fout moet via de geïnstalleerde route volledig zelfstandig worden gerepareerd en de oplossing moet later zelfstandig worden hergebruikt. Dit bewijs ontbreekt nog.",
-                "nextAction": "Toon met een echte nieuwe fout aan dat Eva de volledige autonome herstelkringloop afrondt en de oplossing later zelfstandig hergebruikt. Gebruik de nu geïnstalleerde vervolgcorrectie en de bestaande onafhankelijke beoordeling. Herhaal geen oude onzekere uitvoering.",
+                "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -9069,7 +9132,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-07T07:22:02.528619+00:00",
+                "checkedAt": "2026-11-07T07:39:32.720758+00:00",
                 "progress": "De modeladapter, kritieke geheugenset en overige gecontroleerde runtime-updates zijn live. De vervolgcorrectie voor dezelfde hersteluitvoering is gebouwd, 21 regressietests slaagden en installatie op kern, worker en beoordelaar is onafhankelijk bevestigd. Vier werkprofielen en 103 historische werkmarkeringen bleven intact. De autonome kringloop is nog niet aangetoond.",
                 "latestEvidence": "development/evidence/reassessment/maintenance-updates-20261106/e416-compose57-installed.json",
                 "scopedTelegramRepairAuthorization": {
@@ -9512,6 +9575,19 @@
                     "fullE416Complete": false,
                     "checkedAt": "2026-11-07T07:22:02.528619+00:00"
                   }
+                },
+                "currentIncidentReadback": {
+                  "evidence": "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json",
+                  "checkedAt": "2026-11-07T08:32:59.791570+01:00",
+                  "waitingForProof": 13
+                },
+                "p001GroundingRepair20261107": {
+                  "status": "candidate_source_reviewed_installation_pending",
+                  "manualMaintenance": true,
+                  "observedRuntimeDefect": "Quoted follow-up borrowed current reply context into a reconstructed older retained source, failing validation before model or tool dispatch.",
+                  "autonomousRouteBlocker": "The current target, assessment and installation contracts require the observed source in both roles; the verified causal module exists only in core.",
+                  "fullE416Complete": false,
+                  "checkedAt": "2026-11-07T07:39:32.720758+00:00"
                 }
               },
               {
@@ -10188,7 +10264,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0, containerd en Compose 5.7.0 zijn live en onafhankelijk gecontroleerd. De E4.16-vervolgcorrectie is geïnstalleerd; bewijs van een nieuwe zelfstandige reparatie en later hergebruik ontbreekt nog. De bestaande spraakoverdracht blijft apart.",
+        "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -10200,7 +10276,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T07:22:02.528619+00:00",
+        "updatedAt": "2026-11-07T07:39:32.720758+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10479,7 +10555,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T07:22:02.528619+00:00",
+        "checkedAt": "2026-11-07T07:39:32.720758+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -14347,6 +14423,12 @@
               "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open. Statuscorrectie 6 november: de genoemde E2.6-vervolgtaak is door eigenaar ingetrokken en staat niet meer open; overige scopes behouden hun eigen kaartstatus.",
               "ownerStatusBefore20261106": {
                 "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open."
+              },
+              "learningDashboardObservation": {
+                "evidence": "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json",
+                "checkedAt": "2026-11-07T08:32:59.791570+01:00",
+                "ownerVisibleReflections": 19,
+                "ownerVisibleComponentSteps": 0
               }
             },
             {
@@ -15815,7 +15897,12 @@
                 "meaning": "Begrensde technische dag-/droom-/compactieoplevering van 19 oktober blijft bewaard; dit is geen afronding van de actuele opschoningsscope."
               },
               "reopenedAt": "2026-11-06T14:50:32.440313+00:00",
-              "reopenedBy": "Directe eigenaarvraag 6 november: resterende ongeldige en overbodige geheugengegevens opruimen; anders als open werk registreren."
+              "reopenedBy": "Directe eigenaarvraag 6 november: resterende ongeldige en overbodige geheugengegevens opruimen; anders als open werk registreren.",
+              "learningDashboardObservation": {
+                "evidence": "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json",
+                "checkedAt": "2026-11-07T08:32:59.791570+01:00",
+                "fixedNightlyContextRefresh": "planned"
+              }
             },
             {
               "status": "completed",
@@ -16128,7 +16215,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Een echte nieuwe fout moet via de geïnstalleerde route volledig zelfstandig worden gerepareerd en de oplossing moet later zelfstandig worden hergebruikt. Dit bewijs ontbreekt nog.",
-              "nextAction": "Toon met een echte nieuwe fout aan dat Eva de volledige autonome herstelkringloop afrondt en de oplossing later zelfstandig hergebruikt. Gebruik de nu geïnstalleerde vervolgcorrectie en de bestaande onafhankelijke beoordeling. Herhaal geen oude onzekere uitvoering.",
+              "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -16166,7 +16253,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-07T07:22:02.528619+00:00",
+              "checkedAt": "2026-11-07T07:39:32.720758+00:00",
               "progress": "De modeladapter, kritieke geheugenset en overige gecontroleerde runtime-updates zijn live. De vervolgcorrectie voor dezelfde hersteluitvoering is gebouwd, 21 regressietests slaagden en installatie op kern, worker en beoordelaar is onafhankelijk bevestigd. Vier werkprofielen en 103 historische werkmarkeringen bleven intact. De autonome kringloop is nog niet aangetoond.",
               "latestEvidence": "development/evidence/reassessment/maintenance-updates-20261106/e416-compose57-installed.json",
               "scopedTelegramRepairAuthorization": {
@@ -16609,6 +16696,19 @@
                   "fullE416Complete": false,
                   "checkedAt": "2026-11-07T07:22:02.528619+00:00"
                 }
+              },
+              "currentIncidentReadback": {
+                "evidence": "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json",
+                "checkedAt": "2026-11-07T08:32:59.791570+01:00",
+                "waitingForProof": 13
+              },
+              "p001GroundingRepair20261107": {
+                "status": "candidate_source_reviewed_installation_pending",
+                "manualMaintenance": true,
+                "observedRuntimeDefect": "Quoted follow-up borrowed current reply context into a reconstructed older retained source, failing validation before model or tool dispatch.",
+                "autonomousRouteBlocker": "The current target, assessment and installation contracts require the observed source in both roles; the verified causal module exists only in core.",
+                "fullE416Complete": false,
+                "checkedAt": "2026-11-07T07:39:32.720758+00:00"
               }
             },
             {
@@ -17285,7 +17385,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0, containerd en Compose 5.7.0 zijn live en onafhankelijk gecontroleerd. De E4.16-vervolgcorrectie is geïnstalleerd; bewijs van een nieuwe zelfstandige reparatie en later hergebruik ontbreekt nog. De bestaande spraakoverdracht blijft apart.",
+      "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -17297,7 +17397,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T07:22:02.528619+00:00",
+      "updatedAt": "2026-11-07T07:39:32.720758+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17576,7 +17676,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T07:22:02.528619+00:00",
+      "checkedAt": "2026-11-07T07:39:32.720758+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -20385,7 +20485,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-07T02:32:05.073473+00:00",
+  "updatedAt": "2026-11-07T07:39:32.720758+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -20467,8 +20567,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-07T02:32:05.073473+00:00",
-  "checkedAt": "2026-11-07T02:32:05.073473+00:00",
+  "lastUpdatedAt": "2026-11-07T07:39:32.720758+00:00",
+  "checkedAt": "2026-11-07T07:39:32.720758+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

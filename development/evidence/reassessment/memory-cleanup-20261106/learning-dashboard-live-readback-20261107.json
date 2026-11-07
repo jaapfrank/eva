@@ -1,0 +1,62 @@
+{
+  "contract": "EvaLearningAndRepairDashboardObservation/v1",
+  "source": "Installed core, scoped read-only event aggregate and authenticated personal dashboard history",
+  "observedAt": "2026-11-07T08:32:59.791570+01:00",
+  "nightWindow": {
+    "start": "2026-11-06T23:00:00+01:00",
+    "end": "2026-11-07T07:00:00+01:00"
+  },
+  "idleIntervalSeconds": 300,
+  "installationActivity": [
+    {
+      "event_type": "COMPONENT_ACTION_RECORDED",
+      "total": 97,
+      "latest": "2026-11-03 17:32:58+00:00",
+      "night": 0,
+      "week": 1
+    },
+    {
+      "event_type": "MEMORY_DREAM_BATCH_COMPLETED",
+      "total": 47,
+      "latest": "2026-11-05 21:20:17+00:00",
+      "night": 0,
+      "week": 4
+    },
+    {
+      "event_type": "MEMORY_DREAM_BATCH_NEEDS_HELP",
+      "total": 5,
+      "latest": "2026-11-06 00:10:05+00:00",
+      "night": 0,
+      "week": 2
+    },
+    {
+      "event_type": "MEMORY_REFLECTION_COMPLETED",
+      "total": 483,
+      "latest": "2026-11-05 21:22:04+00:00",
+      "night": 0,
+      "week": 3
+    }
+  ],
+  "lastCompletedDream": {
+    "occurred_at": "2026-11-05 21:20:17+00:00",
+    "source_count": 11
+  },
+  "pendingDreamSources": 0,
+  "repairIncidents": [
+    {
+      "phase": "repair_investigating",
+      "status": "waiting_for_proof",
+      "total": 13,
+      "latest": "2026-11-06 13:41:42+00:00"
+    }
+  ],
+  "ownerHistory": {
+    "contract": "EvaOwnerInitiativeHistory/v1",
+    "reflections": 19,
+    "reflectionLaterContextCount": 1,
+    "componentReceiptsVisible": 0,
+    "initiativeCards": 45
+  },
+  "runtimeModelRequestsByAudit": 0,
+  "runtimeWritesByAudit": 0
+}
