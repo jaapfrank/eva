@@ -1,0 +1,30 @@
+{
+  "approved": true,
+  "boundCompanionGenerations": 23,
+  "candidateComposeSha256": "09500c6705645d8a272166804ec65ce8dbec1ea09ce59eb6c96c02be14c20612",
+  "candidateCoreImage": "sha256:169a928eb51cb2ac8cc152b5fe1e19d77611772e67c608a33a1db82c089c007b",
+  "candidateOfflineProofSha256": "9aa460e7fd715beae36097121f1e24e1b57bc143101159287cc5c69a766b810b",
+  "candidateSourceSha256": "3a08c27ccea7c8dadf28cc1b9d284281c3ac80fd805be8437c47d124de430b0f",
+  "captureSha256": "e5f27135bca301068562f068dfd5720cda0705709ed96abf87525ee60389fd47",
+  "captureStdoutSha256": "6c4a0e5e0b459f1188972852403e5005a98703dad41c3cdfc9c06b02184203e0",
+  "contract": "EvaIndependentConversationGroundingCoreOnlyInstallationReview/v1",
+  "evaluatorPublisherUsesExistingFollowCurrentImages": true,
+  "expectedMatchingRuntimeProfiles": 4,
+  "independentArgvProbe": {
+    "exactCoreOnlyCommandAccepted": true,
+    "widenedCommandCasesRejected": 8
+  },
+  "installerSha256": "c4a6909e5288561fbce4954817207a846eb2a7223e4af4a5f2f069a8768987de",
+  "isolatedPostgresResultSha256": "f371d9de4989f4606fb1945876bb2c65c6055206940b167ea333ca8b4d4d52f4",
+  "isolatedPostgresTestsPassed": 16,
+  "pinnedMountSourceIdentities": 27,
+  "planSha256": "9fd856350e09e0e5b9339f41cfc53d8730fb1562ec8ae8b31599bdbe81c84bb4",
+  "preflightSha256": "411903b3e12d6e0a4d489483525dfd0043f2a732199fc8616efb41f4ff8da1ac",
+  "replayBoundary": "A retained dispatch is inspection-only. No worker update, external effect replay, or autonomous E4.16 closure is authorized.",
+  "reviewedAt": "2026-11-07T07:47:32.636738+00:00",
+  "reviewerLifecycleActions": 0,
+  "scope": "Single manual P0-01 SDK core image update. Only core and the exact idle evaluator are paused, and the evaluator resumes once with its original configuration.",
+  "sourceReviewSha256": "4f5e925226c15bf01d0e9aad1c73cd219a6bcae169eef372bad3a763d8e94a79",
+  "verifiedInputPins": 64,
+  "workerGenerationAndSecurityStateRemainBound": true
+}

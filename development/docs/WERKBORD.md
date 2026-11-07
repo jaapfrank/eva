@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.
+Volgende stap: De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig.
 
 ## Voortgang
 

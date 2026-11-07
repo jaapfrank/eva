@@ -1,0 +1,43 @@
+{
+  "contract": "EvaConversationGroundingInstalledOutcome/v1",
+  "status": "installed_independently_verified",
+  "installedAt": "2026-11-07T07:50:30.196779+00:00",
+  "installationVerifiedAt": "2026-11-07T07:51:16.891503+00:00",
+  "independentlyReadBackAt": "2026-11-07T07:53:56.068385+00:00",
+  "scope": "Manual P0 repair on the existing core. An older validated retained read receipt is available to the current quoted follow-up without copying the quote onto the historical source.",
+  "changedSource": "src/eva/adapters/postgres/conversation_grounding.py",
+  "coreSourceSha256": "3a08c27ccea7c8dadf28cc1b9d284281c3ac80fd805be8437c47d124de430b0f",
+  "baseCoreImage": "sha256:af0358d1e162b27f19fdef1aeece0acc0b6911d2e8534f82d8ae95f36438a926",
+  "installedCoreImage": "sha256:169a928eb51cb2ac8cc152b5fe1e19d77611772e67c608a33a1db82c089c007b",
+  "isolatedImageProofSha256": "9aa460e7fd715beae36097121f1e24e1b57bc143101159287cc5c69a766b810b",
+  "isolatedPostgresRegression": {
+    "passed": 16,
+    "seconds": 5.93,
+    "proofSha256": "f371d9de4989f4606fb1945876bb2c65c6055206940b167ea333ca8b4d4d52f4"
+  },
+  "activationReceiptSha256": "cf6e2d5eb1e947d1aa8f651f345db7f77da7ae3dfe27e32a9fd2b4dc2709802d",
+  "sdkReceiptSha256": "a68c01789554df316a5209e4b3be0a0b32c12a5038693c8ea280a24415aaa2a4",
+  "installedFixture": {
+    "correctedFixtureSourceSha256": "f858a7a6871cbe75646b17260be983f4f0e7cb7b42458b2228bd95cb9355dca0",
+    "databaseCalls": 0,
+    "externalToolDispatches": 0,
+    "firstFixtureFailure": "The first verifier expected a newline between the grounding prose and JSON. The installed fixture reran only after correcting this parser assumption.",
+    "firstFixtureFailureProofSha256": "b281063d03750d7c3607075d98d9e4bca4cbeb72d5ea0987ca437fbff9654c0a",
+    "historicalSourceExact": true,
+    "modelCalls": 0,
+    "networkCalls": 0,
+    "proofSha256": "e1ba3b2e457e21e2b91451581eb9156411f5c7802c95d290df56a3af06b1444f",
+    "quoteRetainedOnCurrentOnly": true,
+    "syntheticDataOnly": true,
+    "verifiedExistingReceiptRead": true
+  },
+  "workerGenerationAndConfigurationPreserved": true,
+  "evaluatorResumedSameConfigurationAndRoots": true,
+  "companionGenerationsPreserved": 23,
+  "matchingActualRuntimeProfiles": 4,
+  "legacyWorkMarkersPreserved": 103,
+  "independentReview": "development/reviews/p0-conversation-grounding-installed-independent-20261107.json",
+  "independentReviewSha256": "7f974388070b72b90dc6454f63f9801a954de92078384a684f89f64fc35ec288",
+  "autonomousRepairLifecycleProven": false,
+  "householdAcceptance": false
+}

@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
+    "nextAction": "De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
-    "executionStep": "Verify and install the bounded P0-01 grounding correction",
+    "executionStep": "Make autonomous repair handle the actual affected runtime role",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+    "checkedAt": "2026-11-07T07:54:53.344530+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -1660,6 +1660,24 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Antwoord op geciteerd bericht na bronraadpleging hersteld",
+            "state": "installed",
+            "summary": "De Eva-kern kan een oudere leesuitkomst gebruiken bij een nieuw geciteerd vervolgbericht. De oorspronkelijke bron en de toegang van het actuele bericht zijn afzonderlijk gecontroleerd.",
+            "result": "Alle 16 databaseproeven zijn geslaagd. De onafhankelijke proef op de geïnstalleerde kern bevestigt de oude leesuitkomst, het nieuwe citaat en de vier werkprofielen.",
+            "remaining": "Autonoom herstel van een bron die alleen in de kern aanwezig is, en later hergebruik, blijven open binnen E4.16.",
+            "source": "development/evidence/reassessment/p0-conversation-grounding-installed-20261107.json",
+            "review": "development/reviews/p0-conversation-grounding-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T07:53:56.068385+00:00",
+            "installedAt": "2026-11-07T07:50:30.196779+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "Compose 5.7 en E4.16-vervolgcorrectie geïnstalleerd",
             "state": "installed",
@@ -3493,14 +3511,15 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Compose 5.7 en E4.16-vervolgcorrectie geïnstalleerd",
+          "title": "Antwoord op geciteerd bericht na bronraadpleging hersteld",
           "state": "installed",
-          "summary": "Compose 5.7 draait. De vervolgcorrectie is live in kern, worker en beoordelaar. Vier werkprofielen, de oorspronkelijke opslagregels en 103 historische werkregistraties zijn bevestigd.",
-          "result": "Compose 5.7 draait. De vervolgcorrectie is live in kern, worker en beoordelaar. Vier werkprofielen, de oorspronkelijke opslagregels en 103 historische werkregistraties zijn bevestigd.",
-          "remaining": "De volledige autonome reparatie en het latere hergebruik blijven open.",
-          "source": "development/evidence/reassessment/maintenance-updates-20261106/e416-compose57-installed.json",
-          "review": "development/reviews/e416-compose-installed-independent-20261107.json",
-          "checkedAt": "2026-11-07T07:21:27.704340+00:00",
+          "summary": "De Eva-kern kan een oudere leesuitkomst gebruiken bij een nieuw geciteerd vervolgbericht. De oorspronkelijke bron en de toegang van het actuele bericht zijn afzonderlijk gecontroleerd.",
+          "result": "Alle 16 databaseproeven zijn geslaagd. De onafhankelijke proef op de geïnstalleerde kern bevestigt de oude leesuitkomst, het nieuwe citaat en de vier werkprofielen.",
+          "remaining": "Autonoom herstel van een bron die alleen in de kern aanwezig is, en later hergebruik, blijven open binnen E4.16.",
+          "source": "development/evidence/reassessment/p0-conversation-grounding-installed-20261107.json",
+          "review": "development/reviews/p0-conversation-grounding-installed-independent-20261107.json",
+          "checkedAt": "2026-11-07T07:53:56.068385+00:00",
+          "installedAt": "2026-11-07T07:50:30.196779+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
           "controlledRuntimeVerificationPassed": true,
@@ -3511,13 +3530,13 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "P0-01 · Antwoord op geciteerd bericht herstellen",
-          "summary": "Werkelijke antwoordfout gereproduceerd. De gerichte correctie wordt beproefd.",
-          "detail": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
+          "title": "E4.16 · Autonoom herstel voor het getroffen onderdeel",
+          "summary": "De antwoordfout is live opgelost. De autonome route vereist nog dezelfde bron in kern en worker.",
+          "detail": "De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Eva online · bronreview geslaagd · installatie in voorbereiding",
-          "checkedAt": "2026-11-07T07:39:32.720758+00:00",
-          "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open."
+          "state": "Eva online · antwoordfout hersteld · autonome herstelroute open",
+          "checkedAt": "2026-11-07T07:54:53.344530+00:00",
+          "nextAction": "De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig."
         },
         "next": {
           "taskId": "E4.15",
@@ -3529,12 +3548,12 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T07:39:32.720758+00:00",
-        "reviewedAt": "2026-11-07T07:39:32.720758+00:00",
+        "checkedAt": "2026-11-07T07:54:53.344530+00:00",
+        "reviewedAt": "2026-11-07T07:54:53.344530+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-11-07T07:39:32.720758+00:00",
-      "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+      "reviewedAt": "2026-11-07T07:54:53.344530+00:00",
+      "checkedAt": "2026-11-07T07:54:53.344530+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3671,7 +3690,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T07:39:32.720758+00:00",
+      "lastUpdatedAt": "2026-11-07T07:54:53.344530+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3705,7 +3724,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T07:39:32.720758+00:00",
+      "updatedAt": "2026-11-07T07:54:53.344530+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -9094,7 +9113,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Een echte nieuwe fout moet via de geïnstalleerde route volledig zelfstandig worden gerepareerd en de oplossing moet later zelfstandig worden hergebruikt. Dit bewijs ontbreekt nog.",
-                "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
+                "nextAction": "De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -9132,7 +9151,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+                "checkedAt": "2026-11-07T07:54:53.344530+00:00",
                 "progress": "De modeladapter, kritieke geheugenset en overige gecontroleerde runtime-updates zijn live. De vervolgcorrectie voor dezelfde hersteluitvoering is gebouwd, 21 regressietests slaagden en installatie op kern, worker en beoordelaar is onafhankelijk bevestigd. Vier werkprofielen en 103 historische werkmarkeringen bleven intact. De autonome kringloop is nog niet aangetoond.",
                 "latestEvidence": "development/evidence/reassessment/maintenance-updates-20261106/e416-compose57-installed.json",
                 "scopedTelegramRepairAuthorization": {
@@ -9582,12 +9601,17 @@
                   "waitingForProof": 13
                 },
                 "p001GroundingRepair20261107": {
-                  "status": "candidate_source_reviewed_installation_pending",
+                  "status": "installed_independently_verified",
                   "manualMaintenance": true,
                   "observedRuntimeDefect": "Quoted follow-up borrowed current reply context into a reconstructed older retained source, failing validation before model or tool dispatch.",
                   "autonomousRouteBlocker": "The current target, assessment and installation contracts require the observed source in both roles; the verified causal module exists only in core.",
                   "fullE416Complete": false,
-                  "checkedAt": "2026-11-07T07:39:32.720758+00:00"
+                  "checkedAt": "2026-11-07T07:53:56.068385+00:00",
+                  "installed": true,
+                  "installedEvidence": "development/evidence/reassessment/p0-conversation-grounding-installed-20261107.json",
+                  "independentInstalledReview": "development/reviews/p0-conversation-grounding-installed-independent-20261107.json",
+                  "matchingActualRuntimeProfiles": 4,
+                  "isolatedRegressionTestsPassed": 16
                 }
               },
               {
@@ -10264,7 +10288,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
+        "nextAction": "De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -10276,7 +10300,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T07:39:32.720758+00:00",
+        "updatedAt": "2026-11-07T07:54:53.344530+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10555,7 +10579,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+        "checkedAt": "2026-11-07T07:54:53.344530+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -16215,7 +16239,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Een echte nieuwe fout moet via de geïnstalleerde route volledig zelfstandig worden gerepareerd en de oplossing moet later zelfstandig worden hergebruikt. Dit bewijs ontbreekt nog.",
-              "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
+              "nextAction": "De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -16253,7 +16277,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+              "checkedAt": "2026-11-07T07:54:53.344530+00:00",
               "progress": "De modeladapter, kritieke geheugenset en overige gecontroleerde runtime-updates zijn live. De vervolgcorrectie voor dezelfde hersteluitvoering is gebouwd, 21 regressietests slaagden en installatie op kern, worker en beoordelaar is onafhankelijk bevestigd. Vier werkprofielen en 103 historische werkmarkeringen bleven intact. De autonome kringloop is nog niet aangetoond.",
               "latestEvidence": "development/evidence/reassessment/maintenance-updates-20261106/e416-compose57-installed.json",
               "scopedTelegramRepairAuthorization": {
@@ -16703,12 +16727,17 @@
                 "waitingForProof": 13
               },
               "p001GroundingRepair20261107": {
-                "status": "candidate_source_reviewed_installation_pending",
+                "status": "installed_independently_verified",
                 "manualMaintenance": true,
                 "observedRuntimeDefect": "Quoted follow-up borrowed current reply context into a reconstructed older retained source, failing validation before model or tool dispatch.",
                 "autonomousRouteBlocker": "The current target, assessment and installation contracts require the observed source in both roles; the verified causal module exists only in core.",
                 "fullE416Complete": false,
-                "checkedAt": "2026-11-07T07:39:32.720758+00:00"
+                "checkedAt": "2026-11-07T07:53:56.068385+00:00",
+                "installed": true,
+                "installedEvidence": "development/evidence/reassessment/p0-conversation-grounding-installed-20261107.json",
+                "independentInstalledReview": "development/reviews/p0-conversation-grounding-installed-independent-20261107.json",
+                "matchingActualRuntimeProfiles": 4,
+                "isolatedRegressionTestsPassed": 16
               }
             },
             {
@@ -17385,7 +17414,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "P0-01: herstel de bevestigde antwoordfout bij een geciteerd bericht na een eerdere bronraadpleging. De fout is op de actuele kern gereproduceerd. De correctie is gebouwd en de bronreview is geslaagd. Test en installeer de correctie via de bestaande route. De autonome reparatie van onderdelen die alleen in de kern draaien blijft open.",
+      "nextAction": "De P0-antwoordfout is hersteld op de draaiende kern. Binnen E4.16 volgt de brongebonden herstelroute voor onderdelen die alleen in de kern of worker bestaan. De huidige route vereist dezelfde bron in beide rollen. Daarna is een echte zelfstandige reparatie met onafhankelijke beoordeling, installatie en later hergebruik nodig.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -17397,7 +17426,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T07:39:32.720758+00:00",
+      "updatedAt": "2026-11-07T07:54:53.344530+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17676,7 +17705,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+      "checkedAt": "2026-11-07T07:54:53.344530+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -20485,7 +20514,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-07T07:39:32.720758+00:00",
+  "updatedAt": "2026-11-07T07:54:53.344530+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -20567,8 +20596,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-07T07:39:32.720758+00:00",
-  "checkedAt": "2026-11-07T07:39:32.720758+00:00",
+  "lastUpdatedAt": "2026-11-07T07:54:53.344530+00:00",
+  "checkedAt": "2026-11-07T07:54:53.344530+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

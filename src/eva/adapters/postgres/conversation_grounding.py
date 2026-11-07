@@ -1,5 +1,4 @@
 """Bounded prior tool evidence from this conversation's retained sources."""
-from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 import json
 
@@ -9,7 +8,7 @@ from eva.adapters.postgres.conversation_journal import PostgresConversationJourn
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.operational_timeline import operational_events as events
 from eva.application.cancellation import check_cancellation
-from eva.application.conversation import ConversationConflict
+from eva.application.conversation import ConversationConflict, ConversationTurn
 from eva.application.memory import ConversationMemoryDocument
 from eva.contracts.canonical_json import canonical_sha256
 
@@ -54,8 +53,17 @@ def _retained_source(timeline, current, ingress, now):
             or (document.retention_until is not None
                 and datetime.fromisoformat(document.retention_until.replace("Z", "+00:00")) <= now)):
         return None
-    return replace(current, message_id=message, text=ingress["text"],
-                   occurred_at=document.occurred_at)
+    return ConversationTurn(
+        tenant_id=document.tenant_id,
+        installation_id=document.installation_id,
+        principal_id=document.principal_id,
+        conversation_id=document.conversation_id,
+        message_id=message,
+        text=ingress["text"],
+        occurred_at=document.occurred_at,
+        audience=document.audience,
+        project_id=document.project_id,
+    )
 
 
 def _fragment(value, bound):

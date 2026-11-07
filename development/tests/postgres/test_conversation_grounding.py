@@ -16,6 +16,7 @@ from eva.adapters.postgres.external_conversation_tools import PostgresExternalCo
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline
 from eva.application.conversation import ConversationTurn, ConversationConflict, GroundedReply
+from eva.application.conversation_reply import ConversationReplyContext
 from eva.application.memory import ConversationMemoryDocument
 from eva.application.memory_audience import MemoryAudience, HouseholdConsentReference
 
@@ -104,6 +105,32 @@ def test_same_conversation_followup_keeps_actual_source_without_repeating_action
     assert rows[0]["recorded_status"] == "verified"
     assert x.checked and all(t == following for t in x.checked)
     # No provider exists: preparation, execution or observation would fail.
+    assert x.route._provider is None
+
+
+def test_quoted_followup_keeps_older_receipt_and_authorizes_current_turn(database):
+    x = fixture(database)
+    save(x)
+    quote = ConversationReplyContext(
+        source_ref=x.turn.conversation_id + ":intermediate",
+        text="Reference from a later message.",
+        occurred_at=(x.now - timedelta(seconds=1)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    )
+    following = current(x, reply_context=quote, reply_context_sha256=quote.context_sha256)
+    observed = []
+    historical_receipt = x.route.historical_receipt
+
+    def capture_receipt(turn, source, thread_id, admission):
+        observed.append((turn, source))
+        return historical_receipt(turn, source, thread_id, admission)
+
+    x.route.historical_receipt = capture_receipt
+    rows = records(x.actions.active_context(following))
+    assert len(rows) == 1
+    assert rows[0]["action"] == "read_forecast"
+    assert json.loads(rows[0]["observation"]["text"])["temperature"] == 14
+    assert observed == [(following, x.turn)]
+    assert x.checked and all(turn == following for turn in x.checked)
     assert x.route._provider is None
 
 
