@@ -1,0 +1,251 @@
+{
+  "contract": "EvaCoreBoundaryVerification/v1",
+  "priority": "P1-06",
+  "status": "installed_technical_delivery_complete",
+  "sourceBaseCommit": "7fe40164a4f345788e45423fb42ea32c5de664de",
+  "startedAt": "2026-11-07T14:28:36.621786+00:00",
+  "checkedAt": "2026-11-07T14:46:03.325694+00:00",
+  "scope": "Exact installed core and worker. Three active modules inspected; two bounded corrections.",
+  "responsibilityMap": {
+    "pydantic_conversation.py": {
+      "baselineLines": 5029,
+      "candidateLines": 5032,
+      "baselineImports": 74,
+      "baselineFunctions": 84,
+      "responsibilities": [
+        "Model context and receipt presentation for admission and history",
+        "Pydantic AI conversation phase",
+        "Legacy model and native research transport and terminal usage"
+      ],
+      "finding": "The legacy reader retained an event header after its frame. The metering reader used a different classification and could reject or miscount header-only streams. Non-object JSON and non-string explicit types leaked untyped exceptions.",
+      "correction": "Both legacy consumers use one framing and envelope rule. The header expires at the boundary, invalid envelopes raise typed provider errors and header-only terminal usage and research evidence agree. Pydantic AI conversation path unchanged."
+    },
+    "conversation_actions.py": {
+      "baselineLines": 3608,
+      "candidateLines": 3608,
+      "baselineImports": 32,
+      "baselineFunctions": 120,
+      "responsibilities": [
+        "Audience-bound tool routing and dispatch",
+        "Durable action replay and receipt construction",
+        "Storage for personal interest, prototype and release"
+      ],
+      "finding": "Current external and native continuation routes and scoped receipt recovery have distinct authority and lifecycle rules. No equivalent competing dispatch or store operation was demonstrated here.",
+      "correction": "None; no reordering, blanket store extraction or authority change."
+    },
+    "sensory_events.py": {
+      "baselineLines": 2500,
+      "candidateLines": 2496,
+      "baselineImports": 39,
+      "baselineFunctions": 66,
+      "responsibilities": [
+        "Sensory retention and durable review admission",
+        "Decision leases and initiative handoff",
+        "Prepared expression lifecycle and scoped cooldown"
+      ],
+      "finding": "Cooldown loaded and hash-validated the same previous message history twice, with another read for old preparations lacking entity IDs.",
+      "correction": "Use one verified snapshot for prior preparation, entity matching and original observation fallback. Keep urgency, time windows, audience, dispatch authorization and STOP."
+    }
+  },
+  "architecture": {
+    "filesChecked": 631,
+    "baselineFindings": 169,
+    "candidateFindings": 169,
+    "reportSha256": "af2067b964e3d2638d5dcbcbd40664673ee6244b664c62a1d1c802e84cf444e0",
+    "findingsInAuditedFiles": {
+      "pydantic_conversation.py": 0,
+      "conversation_actions.py": 0,
+      "sensory_events.py": 1
+    },
+    "retainedFinding": "Three existing provider-specific identifiers in sensory event store. No change to boundary rules."
+  },
+  "verification": {
+    "baselineRegressionsReproduced": {
+      "model": 5,
+      "postgres": 3
+    },
+    "checksPassed": 67,
+    "runs": {
+      "model-tests": {
+        "passed": 52,
+        "executionSeconds": 3.41
+      },
+      "interface-tests": {
+        "passed": 8,
+        "executionSeconds": 3.18
+      },
+      "postgres-tests": {
+        "passed": 7,
+        "executionSeconds": 11.78
+      }
+    },
+    "testLogSha256": {
+      "model-tests": "19b48b54f8e8a53bb844673a3d56f9f682108805a1874d3b857d0e051c893d67",
+      "interface-tests": "32d2537f2b1799b088be6a0fc658ad99a42387623e012c867323fe941b49195f",
+      "postgres-tests": "38c28607435083cffc56c9b87e603de258b9b737af2fe651aca15f4dad8ead24",
+      "model-baseline": "b290cf6082aec1debe38166ea0b59d8c4710880e3601cd0fe4e1e7acd0b4b263",
+      "postgres-baseline": "7f338cb79241e8d26e9ccd402306709ebf4103de985447399f3efac8e404cfae"
+    },
+    "changedTestFileSha256": {
+      "development/tests/model/test_hosted_research_usage.py": "ec030a7cb0a033a7f63f411a6aeea1f1de8d5da1be521708e69ba9b18a2b7317",
+      "development/tests/postgres/test_household_observation_initiative.py": "fcdd698f987b6e77afbced6e16804e5735c2e954ef81d707ecbbea36443e4b61"
+    },
+    "postgres": "16.13, disposable databases, isolated Unix socket",
+    "measuredTimelineReadsPerEligiblePrior": {
+      "before": 2,
+      "after": 1
+    },
+    "outOfWindowReads": 0,
+    "productionWritesFromVerification": 0,
+    "modelRequestsFromVerification": 0,
+    "developmentCredits": "unknown",
+    "productionLatencyAndUsageSavings": "not measured",
+    "liveBehaviorReadbackByRole": {
+      "core": {
+        "staleSseHeaderDidNotGenerateAction": true,
+        "headerOnlyUsage": [
+          2,
+          1
+        ],
+        "legacyCooldownHistoryReads": 1,
+        "databaseWrites": 0,
+        "modelRequests": 0
+      },
+      "delegated-work-worker": {
+        "staleSseHeaderDidNotGenerateAction": true,
+        "headerOnlyUsage": [
+          2,
+          1
+        ],
+        "legacyCooldownHistoryReads": 1,
+        "databaseWrites": 0,
+        "modelRequests": 0
+      }
+    }
+  },
+  "independentReview": {
+    "approved": true,
+    "reviewer": "independent_review",
+    "installerSha256": "159d1a9b85497bca1c2441a886242f22f729ed100463476044841447d77d826e",
+    "planSha256": "88a8ef9a4f352adab32c0d5032f7e081de76deaae9b6f1016b55d5798be1f3ba",
+    "reviewFreezeSha256": "87a860ddbab5b4e39e774873cb4455d63f8b95c81308bc155f52be10b9c26c50",
+    "preflightSha256": "c7992408968ad03a90252c5a368b692eb2180c7461ebd64b4e350741793f1c19",
+    "verifiedAdditionalTestLogSha256": {
+      "postgres-tests.log": "38c28607435083cffc56c9b87e603de258b9b737af2fe651aca15f4dad8ead24",
+      "postgres-baseline.log": "7f338cb79241e8d26e9ccd402306709ebf4103de985447399f3efac8e404cfae",
+      "interface-tests.log": "32d2537f2b1799b088be6a0fc658ad99a42387623e012c867323fe941b49195f"
+    },
+    "pinsVerified": 196,
+    "reviewScope": "Exact source, paired activation, runtime profile alignment and existing claim/STOP/receipt guards."
+  },
+  "installation": {
+    "activationSha256": "87e3283e25898148f6d506e454e43d7c12f81e8968b20c3545d33aa24440d6b8",
+    "approvalSha256": "66a6632bc4e6acea4d5460f3606a54caaccf2d1be7c79698b1acb6c49e7a42a4",
+    "planSha256": "88a8ef9a4f352adab32c0d5032f7e081de76deaae9b6f1016b55d5798be1f3ba",
+    "installerSha256": "159d1a9b85497bca1c2441a886242f22f729ed100463476044841447d77d826e",
+    "completedAt": "2026-11-07T14:45:42.368604+00:00",
+    "preflightCounts": {
+      "activeWork": 0,
+      "activeUnexpiredCheckpointLeases": 0,
+      "currentGenerationUnknownNullCheckpoints": 0
+    },
+    "state": "core_boundary_pair_source_and_profiles_verified",
+    "phases": [
+      {
+        "name": "pause_exact_evaluator_core_and_worker",
+        "state": "completed"
+      },
+      {
+        "name": "existing_sdk_install_exact_two_images",
+        "state": "completed"
+      },
+      {
+        "name": "resume_same_config_evaluator_once",
+        "state": "completed"
+      },
+      {
+        "name": "actual_source_profiles_authorities_and_preservation",
+        "state": "completed"
+      }
+    ],
+    "sourceBaseCommit": "7fe40164a4f345788e45423fb42ea32c5de664de",
+    "runtime": {
+      "core": {
+        "image": "sha256:50159f4cdfb6b478c8473de8a95f87456999dde04f953055cc9795b4629fbf32",
+        "healthy": true,
+        "restartCount": 0
+      },
+      "delegated-work-worker": {
+        "image": "sha256:9056172cfd4812954022e9fb0b6c22704e530af88168bb84aa30ff75f89104fe",
+        "healthy": true,
+        "restartCount": 0
+      }
+    },
+    "profiles": {
+      "digital_work": {
+        "worker_profile_release_sha256": "0f845686c68043f8d890bcef44a2a285d734b0c989b1b1c5aaf5531697216bc5",
+        "model_profile_release_sha256": "ced94a7e7e0991c5f596adf52db43b5de3422676a220026ee799d9ec29c16641",
+        "worker_program_sha256": "ce8589c859390c6df6f8ecf01c6900283c48a2d2050b5a3c192701b4c81ff3dd",
+        "engine_release_sha256": "4c8e1ed17e1c65e9dc67ad5d671df57377df54f73a3ec0ea9a76b82b76a1ae70",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+      },
+      "shared_provider": {
+        "worker_profile_release_sha256": "1495b2c255e7ab03620cae26167a364476c1b04b4ab30faae148093e89a55192",
+        "model_profile_release_sha256": "153cdf37955d2cb7a721e225d84e9ee169795270c96a337fa5f9de9c6443852e",
+        "worker_program_sha256": "d64811f5f9d37d8f4bd68fe03a8948df858f8c72e71aaf3ab62b48c8a7093282",
+        "engine_release_sha256": "4c8e1ed17e1c65e9dc67ad5d671df57377df54f73a3ec0ea9a76b82b76a1ae70",
+        "output_schema_sha256": "d45b0589c23a3066b6c3dc49bafb0c04cc5d12f49d9717b430263fd69631de2e"
+      },
+      "public_research": {
+        "worker_profile_release_sha256": "4b71e8bffd1c4f68bac632d0f9c7506c494f0546c81be0b33b38dccb8fefd8d7",
+        "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+        "worker_program_sha256": "bfc7716279473778a392058627db8c55911676701ed990b65bae8e716d6aec95",
+        "engine_release_sha256": "4c8e1ed17e1c65e9dc67ad5d671df57377df54f73a3ec0ea9a76b82b76a1ae70",
+        "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+      },
+      "household_research": {
+        "worker_profile_release_sha256": "e37be67b5da71b17163cf04f3026d77fa9ac4fc77c5150acd723904b75c23bc1",
+        "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+        "worker_program_sha256": "47077e03b4d8621a71eae72e602d010d7e4ea95a493ba06495b8b9d8961c6f37",
+        "engine_release_sha256": "4c8e1ed17e1c65e9dc67ad5d671df57377df54f73a3ec0ea9a76b82b76a1ae70",
+        "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+      }
+    },
+    "profileReadbackSha256": "1149c6a4d465dc60ffc2f44341a5d26322f406e22ef4d8cd98866cb14ecd0491",
+    "originalSources": {
+      "core": {
+        "adapters/model/pydantic_conversation.py": "de07d162668b7ef8de8d921fa39e0e1cbf3da9c4e11531dffc1b2450577cf894",
+        "adapters/postgres/sensory_events.py": "848a71f9bae8f2ebab53f1e3571e389dbcfd02464937d5ed9835dad34582cb3f"
+      },
+      "delegated-work-worker": {
+        "adapters/model/pydantic_conversation.py": "de07d162668b7ef8de8d921fa39e0e1cbf3da9c4e11531dffc1b2450577cf894",
+        "adapters/postgres/sensory_events.py": "848a71f9bae8f2ebab53f1e3571e389dbcfd02464937d5ed9835dad34582cb3f"
+      }
+    },
+    "installedSources": {
+      "core": {
+        "adapters/model/pydantic_conversation.py": "06e7cd1e6f7c09e7c812acdb1441eba99b939ecd9850d665c3290daee9acd206",
+        "adapters/postgres/sensory_events.py": "8e85a530bf38405f905213b54d0bd02d412f441bd3c9ec878d86a1cb7dc6ae6d"
+      },
+      "delegated-work-worker": {
+        "adapters/model/pydantic_conversation.py": "06e7cd1e6f7c09e7c812acdb1441eba99b939ecd9850d665c3290daee9acd206",
+        "adapters/postgres/sensory_events.py": "8e85a530bf38405f905213b54d0bd02d412f441bd3c9ec878d86a1cb7dc6ae6d"
+      }
+    },
+    "exactChangedSourcesPerImage": 2,
+    "offlineProofArtifactSha256": {
+      "core-before.offline.json": "c8c2311b9c36484f23a6ad86a8989f441d6ded60830c376d29063ea3ad333f7d",
+      "core-candidate.offline.json": "715d2698d4ecf0c7435c2a4b2f3b9d1166fe1bb259f319783f299998de6770f5",
+      "worker-before.offline.json": "ba5225cc1b74a21bc431c3e64bba772c40e1243dfb4773715330b538b08221af",
+      "worker-candidate.offline.json": "b638d665a65f4f38a8e5dce74273fe66fe13e19c3f79c4ec6f181237a0022f18",
+      "model-tests.log": "19b48b54f8e8a53bb844673a3d56f9f682108805a1874d3b857d0e051c893d67",
+      "model-baseline.log": "b290cf6082aec1debe38166ea0b59d8c4710880e3601cd0fe4e1e7acd0b4b263",
+      "offline-probe.py": "3aa607380c06cc91794494370c97f1de7b4b35028e0f6702ea005a07d70d9af5",
+      "arch-before.txt": "af2067b964e3d2638d5dcbcbd40664673ee6244b664c62a1d1c802e84cf444e0",
+      "arch-after.txt": "af2067b964e3d2638d5dcbcbd40664673ee6244b664c62a1d1c802e84cf444e0"
+    },
+    "packagesAndPythonUnchanged": true,
+    "repositoryHeadFullyInstalled": false,
+    "ownerOrFamilyAcceptance": false
+  }
+}

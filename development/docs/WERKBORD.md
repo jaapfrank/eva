@@ -28,7 +28,7 @@ Volgende stap: De zaak van 26 oktober is onafhankelijk gereproduceerd en de bewa
 5. P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.
 6. P1-03 · Actuele importgrenzen gemeten. De actieve correcties bij ontvangstbewijzen en onderzoek zijn geïnstalleerd en teruggelezen. De werkmapcontrole telt 169 resterende signalen.
 7. P1-04 · Groepsprivacy, expliciete speakerbevoegdheid en de geldigheid van persoonlijke werkteruggave zijn geïnstalleerd en getest. Het kindbeleid is vastgelegd. Persoonlijke kindfuncties blijven gesloten tot afzonderlijke toestemming en acceptatie.
-8. P1-06 · Beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.
+8. P1-06 · Modelberichten krijgen hun eigen gebeurtenistype en de controle op recente meldingen leest elke tijdlijn eenmaal. Beide correcties zijn geïnstalleerd en gecontroleerd.
 9. P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.
 10. P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.
 11. P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding.

@@ -467,7 +467,7 @@ def test_batch_bounds_and_tampered_source_or_private_member_are_rejected(postgre
 
 @pytest.mark.parametrize("age_minutes,same_entity,urgency,quiet", [
     (4, False, 1, True), (6, False, 1, False), (20, True, 3, True), (31, True, 3, False)])
-def test_existing_cooldowns_include_offered_shared_expression(postgres_engine, age_minutes, same_entity, urgency, quiet):
+def test_existing_cooldowns_include_offered_shared_expression(postgres_engine, monkeypatch, age_minutes, same_entity, urgency, quiet):
     tenant = f"household-offered-cooldown-{age_minutes}"
     originals = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant, installation_id="home")
     store = _shared(postgres_engine, tenant)
@@ -487,7 +487,17 @@ def test_existing_cooldowns_include_offered_shared_expression(postgres_engine, a
     originals.retain(next_signal)
     store.schedule_household_observation(next_signal, now=after)
     current = store.claim_next(now=after)
+    read_history = store._timeline.events
+    earlier_reads = []
+
+    def observe_history(thread_id):
+        if thread_id == claim.thread_id:
+            earlier_reads.append(thread_id)
+        return read_history(thread_id)
+
+    monkeypatch.setattr(store._timeline, "events", observe_history)
     store.complete(current, FreeWillDecision("respond", "Grounded later signal", urgency, "synthetic", "Later response"), now=after)
+    assert len(earlier_reads) == (1 if age_minutes <= 30 else 0)
     final = store._timeline.load(current.thread_id)
     assert final.phase == ("will_decided" if quiet else "expression_pending")
     data = store._timeline.events(current.thread_id)[-1].payload["data"]

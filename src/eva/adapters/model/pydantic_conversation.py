@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from eva.adapters.model.tool_namespaces import function_defer_loading
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 
 import asyncio
 import base64
@@ -319,8 +319,46 @@ def _descriptor_tool(descriptor: ConversationToolDescriptor) -> dict[str, Any]:
     }
 
 
+def _iter_sse_lines(
+    response: Iterable[bytes], label: str,
+) -> Iterator[tuple[bytes, str, str | None, dict[str, Any] | None]]:
+    """Use the same framing for content and usage on the legacy transport."""
+    total = 0
+    header: str | None = None
+    for raw in response:
+        total += len(raw)
+        if total > _MAX_STREAM_BYTES:
+            raise ConversationModelError(f"{label} response is too large")
+        try:
+            line = raw.decode("utf-8").rstrip("\r\n")
+        except UnicodeDecodeError as error:
+            raise ConversationModelError(f"{label} response is not UTF-8") from error
+        kind = None
+        data = None
+        if not line:
+            header = None
+        elif line.startswith("event: "):
+            header = line[7:] or None
+        elif line.startswith("data: "):
+            kind, header = header, None
+            if line != "data: [DONE]":
+                try:
+                    data = json.loads(line[6:])
+                except json.JSONDecodeError as error:
+                    raise ConversationModelError(f"{label} response contains invalid JSON") from error
+                if not isinstance(data, dict):
+                    raise ConversationModelError(f"{label} response event is not an object")
+                if "type" in data:
+                    kind = data["type"]
+                    if not isinstance(kind, str) or not kind:
+                        raise ConversationModelError(f"{label} response event type is invalid")
+                elif kind is not None:
+                    data["type"] = kind
+        yield raw, line, kind, data
+
+
 def _parse_legacy_conversation_events(
-    events: Iterator[tuple[str, dict[str, Any]]],
+    events: Iterator[tuple[str | None, dict[str, Any]]],
     *,
     started_at: float | None = None,
     tools_disabled: bool = False,
@@ -4139,39 +4177,29 @@ class PydanticConversationModel:
             hosted_search_ids.add(item_id)
 
         completed = False
-        for raw in response:
-            if isinstance(raw, bytes):
-                try:
-                    line = raw.decode("utf-8").rstrip("\r\n")
-                    data = (
-                        json.loads(line[6:])
-                        if line.startswith("data: ") and line != "data: [DONE]"
-                        else None
+        for raw, line, kind, data in _iter_sse_lines(response, "conversation"):
+            if completed:
+                if kind == "response.completed" and data is not None:
+                    raise ConversationModelError(
+                        "conversation provider returned multiple completions"
                     )
-                except (UnicodeDecodeError, json.JSONDecodeError):
-                    data = None
-                if completed:
-                    if (
-                        isinstance(data, dict)
-                        and data.get("type") == "response.completed"
-                    ):
-                        raise ConversationModelError(
-                            "conversation provider returned multiple completions"
-                        )
-                    if line not in {"", "data: [DONE]"}:
-                        raise ConversationModelError(
-                            "conversation provider returned data after completion"
-                        )
-                if hosted_search_ids is not None and isinstance(data, dict):
-                    kind = data.get("type")
+                if line not in {"", "data: [DONE]"}:
+                    raise ConversationModelError(
+                        "conversation provider returned data after completion"
+                    )
+            if data is not None:
+                if hosted_search_ids is not None:
                     if kind in {"error", "response.failed", "response.incomplete", "response.cancelled"}:
+                        # Preserve only allowlisted failure codes, never provider
+                        # messages or partially generated research content.
+                        _log_model_failure(CodexProviderError("protocol", provider_event=data), None)
                         raise ConversationModelError("research provider did not complete successfully")
                     if kind == "response.output_item.done":
                         retain_search(data.get("item"))
                     elif kind == "response.web_search_call.completed":
                         retain_search({"type": "web_search_call", "status": "completed",
                                        "id": data.get("item_id")})
-                if isinstance(data, dict) and data.get("type") == "response.completed":
+                if kind == "response.completed":
                     completed = True
                     completed_response = data.get("response")
                     if (
@@ -4282,34 +4310,12 @@ class PydanticConversationModel:
             return None
 
     @staticmethod
-    def _iter_sse_events(response: Any, label: str) -> Iterator[tuple[Any, Any]]:
-        total = 0
-        event_type: str | None = None
-        for raw in response:
-            total += len(raw)
-            if total > _MAX_STREAM_BYTES:
-                raise ConversationModelError(f"{label} response is too large")
-            try:
-                line = raw.decode("utf-8").rstrip("\r\n")
-            except UnicodeDecodeError as error:
-                raise ConversationModelError(
-                    f"{label} response is not UTF-8"
-                ) from error
-            if line.startswith("event: "):
-                event_type = line[7:]
-                continue
-            if not line.startswith("data: "):
-                continue
-            encoded = line[6:]
-            if encoded == "[DONE]":
-                continue
-            try:
-                data = json.loads(encoded)
-            except json.JSONDecodeError as error:
-                raise ConversationModelError(
-                    f"{label} response contains invalid JSON"
-                ) from error
-            yield data.get("type") or event_type, data
+    def _iter_sse_events(
+        response: Iterable[bytes], label: str,
+    ) -> Iterator[tuple[str | None, dict[str, Any]]]:
+        for _, _, kind, data in _iter_sse_lines(response, label):
+            if data is not None:
+                yield kind, data
 
     @staticmethod
     def _parse_sse(

@@ -14,6 +14,7 @@ from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
     CheckpointState,
     PostgresOperationalTimeline,
+    TimelineEvent,
     TimelineScope,
     insert_initial_timeline_thread,
     operational_checkpoints,
@@ -2366,7 +2367,12 @@ class PostgresSensoryEventStore:
         )
 
     def _event_from_thread(self, thread_id: str, *, latest: bool = False) -> SensoryEvent:
-        events = self._timeline.events(thread_id)
+        return self._observed_event(self._timeline.events(thread_id), latest=latest)
+
+    @staticmethod
+    def _observed_event(
+        events: tuple[TimelineEvent, ...], *, latest: bool = False,
+    ) -> SensoryEvent:
         if not events or events[0].event_type != "SENSORY_EVENT_OBSERVED":
             raise RuntimeError("sensory event admission is missing")
         observation = events[0]
@@ -2398,7 +2404,17 @@ class PostgresSensoryEventStore:
         )
 
     def _prepared_expression(self, thread_id: str) -> dict[str, object]:
-        for event in reversed(self._timeline.events(thread_id)):
+        data = self._prepared_expression_data(self._timeline.events(thread_id))
+        return {
+            key: data[key] for key in (
+                "expression", "source_event_id", "urgency",
+                "expression_expires_at_epoch", "expression_guard_sha256", "private_contact",
+            ) if key in data
+        }
+
+    @staticmethod
+    def _prepared_expression_data(events: tuple[TimelineEvent, ...]) -> dict[str, JsonValue]:
+        for event in reversed(events):
             if event.event_type != "PROACTIVE_EXPRESSION_PREPARED":
                 continue
             data = event.payload.get("data")
@@ -2411,18 +2427,9 @@ class PostgresSensoryEventStore:
                 isinstance(expression, str)
                 and expression.strip()
                 and isinstance(source_event_id, str)
-                and isinstance(urgency, int)
-                and not isinstance(urgency, bool)
+                and type(urgency) is int
             ):
-                return {
-                    "expression": expression,
-                    "source_event_id": source_event_id,
-                    "urgency": urgency,
-                    **({key: data[key] for key in ("expression_expires_at_epoch", "expression_guard_sha256")
-                        if key in data}),
-                    **({"private_contact": data["private_contact"]}
-                       if "private_contact" in data else {}),
-                }
+                return data
             break
         raise RuntimeError("proactive expression preparation is missing")
 
@@ -2446,28 +2453,17 @@ class PostgresSensoryEventStore:
             if age > timedelta(minutes=30):
                 continue
             try:
-                self._prepared_expression(state.thread_id)
+                events = self._timeline.events(state.thread_id)
+                prepared_data = self._prepared_expression_data(events)
             except RuntimeError:
                 continue
-            events = self._timeline.events(state.thread_id)
-            prepared_data = next(
-                (
-                    event.payload.get("data")
-                    for event in reversed(events)
-                    if event.event_type == "PROACTIVE_EXPRESSION_PREPARED"
-                ),
-                None,
-            )
-            prior_entity = (
-                prepared_data.get("entity_id")
-                if isinstance(prepared_data, dict)
-                else None
-            )
-            prior_entities = ({prior_entity} if isinstance(prior_entity, str) else set())
-            if isinstance(prepared_data, dict) and isinstance(prepared_data.get("entity_ids"), list):
-                prior_entities.update(value for value in prepared_data["entity_ids"] if isinstance(value, str))
+            prior_entity = prepared_data.get("entity_id")
+            prior_entities = {prior_entity} if isinstance(prior_entity, str) else set()
+            retained_entities = prepared_data.get("entity_ids")
+            if isinstance(retained_entities, list):
+                prior_entities.update(value for value in retained_entities if isinstance(value, str))
             if not prior_entities:
-                prior_entities = _observation_entity_ids(self._event_from_thread(state.thread_id))
+                prior_entities = _observation_entity_ids(self._observed_event(events))
             if entity_ids & prior_entities:
                 return True
             if decision.urgency < 3 and age <= timedelta(minutes=5):

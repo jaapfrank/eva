@@ -27,7 +27,10 @@ def terminal(output=(), status="completed", error=None):
 def run(monkeypatch, tmp_path, events, *, parser=None):
     model = module.PydanticConversationModel(auth_file=tmp_path / "never-read")
     monkeypatch.setattr(model, "_load_auth", lambda: ("offline-token", "offline-account"))
-    response = BytesIO("".join("data: " + json.dumps(event) + "\n\n" for event in events).encode())
+    response = BytesIO("".join(
+        event if isinstance(event, str) else "data: " + json.dumps(event) + "\n\n"
+        for event in events
+    ).encode())
     requests = []
     def open_response(*args, **kwargs):
         requests.append(args)
@@ -94,3 +97,39 @@ def test_ordinary_function_call_count_unchanged(monkeypatch, tmp_path, has_call)
         return "", ConversationActionCall("call-1", "example", {}) if has_call else None
     _, usage = run(monkeypatch, tmp_path, [terminal([search(), search("search-2")])], parser=ordinary_parser)
     assert usage.tool_calls == int(has_call)
+
+def test_header_only_events_keep_citation_and_usage_in_agreement(monkeypatch, tmp_path):
+    item = done(search(action="open_page"))
+    completion = terminal()
+    frames = [
+        f"event: {event.pop('type')}\ndata: {json.dumps(event)}\n\n"
+        for event in (item, completion)
+    ]
+    (_, cited, consulted), usage = run(monkeypatch, tmp_path, frames)
+    assert cited == ()
+    assert [source.url for source in consulted] == ["https://example.com"]
+    assert (usage.tool_calls, usage.input_tokens, usage.output_tokens) == (1, 20, 5)
+
+
+def test_untyped_frame_after_boundary_cannot_inherit_action_type(monkeypatch, tmp_path):
+    untyped = {"item": {"type": "function_call", "call_id": "test",
+                        "name": "test_action", "arguments": "{}"}}
+    frames = [
+        'event: response.output_item.done\ndata: {"item":{"type":"reasoning"}}\n\n',
+        untyped,
+        terminal(),
+    ]
+    parsed, usage = run(
+        monkeypatch, tmp_path, frames,
+        parser=module.PydanticConversationModel._parse_sse,
+    )
+    assert parsed == ("", None)
+    assert usage.tool_calls == 0
+
+
+@pytest.mark.parametrize("invalid", ["null", "[]", '{"type":{}}'])
+def test_invalid_event_shape_uses_typed_provider_error(monkeypatch, tmp_path, invalid):
+    frames = [f"data: {invalid}\n\n", terminal()]
+    with pytest.raises(ConversationModelError, match="event (is not an object|type is invalid)") as failure:
+        run(monkeypatch, tmp_path, frames)
+    assert failure.value.model_usage is None
