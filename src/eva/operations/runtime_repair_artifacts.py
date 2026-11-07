@@ -37,6 +37,10 @@ class RuntimeRepairArtifacts:
             raise ValueError('trusted existing programming workspace root required')
 
     def read(self,metadata,name,*,maximum=1048576):
+        return self.read_snapshot(metadata,name,maximum=maximum)[0]
+
+    def read_snapshot(self,metadata,name,*,maximum=1048576):
+        """Return parsed content and its exact guarded bytes from the same read."""
         if name not in {'candidate.json','oracle.json','review.json','blocked.json'}:
             raise ValueError('unknown repair artifact')
         # A running builder explicitly requests handoff only when its processes
@@ -67,7 +71,7 @@ class RuntimeRepairArtifacts:
                 ValueError('non-finite repair artifact')))
             if not isinstance(value,dict):
                 raise ValueError('repair artifact must be an object')
-            return value
+            return value,raw
         finally:
             for fd in reversed(descriptors):os.close(fd)
 

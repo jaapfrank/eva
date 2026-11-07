@@ -2,7 +2,7 @@
   "contract": "EvaScheduledFailureRepairContinuation/v1",
   "card": "E4.16",
   "startedAt": "2026-11-07T16:30:15.155792+00:00",
-  "checkedAt": "2026-11-07T18:15:33.811950+00:00",
+  "checkedAt": "2026-11-07T18:56:39.002054+00:00",
   "status": "independent_oracle_declined_missing_original_inputs_host_handoff_being_completed",
   "sameObservedFault": {
     "stage": "document_authority",
@@ -102,7 +102,7 @@
       "costUsdMicros": null
     },
     "developerUsage": "unknown",
-    "hostState": "blocked",
+    "hostState": "original_behavior_input_blocked",
     "newOwnerMessageRequired": false,
     "developerCandidateOrCriteriaAuthored": false,
     "autonomousInstallationProven": false,
@@ -129,6 +129,30 @@
       },
       "originalArtifactPreserved": true,
       "comparisonOrApplicationStarted": false
+    },
+    "oracleInputHandoff": {
+      "installed": true,
+      "installedAt": "2026-11-07T18:54:49.701223+00:00",
+      "planSha256": "630d14086490faba60bc18c0d4144bd656bde7ae51ae4b5ff5f8a1ae9bdb24da",
+      "installerSha256": "3ba032ee3ce77d39107724ab1c059dd0b7e6c53bf0afe78d9e597dd663aa32a4",
+      "approvalSha256": "207c26a974ed45e19a7043b60c02c7e313c79b17b676ce595ee4c0a944306e98",
+      "receiptSha256": "0f66443eb809e318481cedcc6dcdde8fda3e9ccd6acf88dc64c5b2f382791a3a",
+      "focusedTestsPassed": 39,
+      "postgresSupplementTestsPassed": 5,
+      "coreAndWorkerGenerationsUnchanged": true,
+      "originalCandidateAndBlockerUnchanged": true,
+      "successorAdmitted": false,
+      "currentState": "original_behavior_input_blocked",
+      "installedIndependentReview": "development/reviews/e416-oracle-original-path-installed-independent-20261107.json",
+      "installedIndependentReviewSha256": "5e41e19bcd1a05af26bb3327621f46c24c4809ce2945ed19b35517522d2ae17f",
+      "finalChangedRouteTestsPassed": 37,
+      "actualFullInputProofSha256": "4fdefc66cf5b8ceb27e956abeaa1ff0f75516b2085e896318da801bff5a98d0d",
+      "actualNoAdmissionInspectProofSha256": "b2c67ae6c97bf7f2fdb19396060429dffb5563cb3f73eb452d6d27c662d1a007",
+      "actualAutomaticScreeningPassed": true,
+      "sourceCompatibilityCorrections": [
+        "Exact existing paired v1 target retained; v2 unchanged",
+        "Both fixed original source path spellings accepted without using the model path for file access"
+      ]
     }
   }
 }

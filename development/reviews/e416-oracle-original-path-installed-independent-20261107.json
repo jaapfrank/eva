@@ -1,0 +1,43 @@
+{
+  "activationReceiptSha256": "0f66443eb809e318481cedcc6dcdde8fda3e9ccd6acf88dc64c5b2f382791a3a",
+  "actualNoAdmissionInspectionSha256": "b2c67ae6c97bf7f2fdb19396060429dffb5563cb3f73eb452d6d27c662d1a007",
+  "actualScratchPreparationAndSeedSha256": "4fdefc66cf5b8ceb27e956abeaa1ff0f75516b2085e896318da801bff5a98d0d",
+  "approved": true,
+  "assessmentSupplementOutcomeVerified": false,
+  "contract": "EvaIndependentOriginalPathOracleDiagnosticsInstalledReview/v1",
+  "decision": "verified_evaluator_only_original_path_diagnostics_installation",
+  "focusedOverlayTestsPassed": 37,
+  "fullE416Completed": false,
+  "independentApprovalSha256": "207c26a974ed45e19a7043b60c02c7e313c79b17b676ce595ee4c0a944306e98",
+  "installedReadbackSha256": "645bb0b13e41b2ef72db4b9d9f5a226f0275efe14a4d26a1e8a6d974efc9e109",
+  "retainedEarlierInstallations": {
+    "e416-oracle-input-handoff": {
+      "activationReceiptSha256": "f1d61d62d8e132ccdac023ea47ca5bfb066fe7d007e7494fca39bfc80fb523d2",
+      "approvalSha256": "605e111c77782c0c1bb0f78202cad31004cafdb93ec352a22dfcef857986a536",
+      "installedReadbackSha256": "805544d20e49412d2000d387b358092e66fa00c6aeb733fff1b2c6c0cfa5aa99"
+    },
+    "e416-oracle-paired-source": {
+      "activationReceiptSha256": "113f2b3bfb03490b0cc05e75edb503a2364f72e6f85bde44530b0782abf51748",
+      "approvalSha256": "4ec01c31b962eae08dd4a1bb7d479d5f28e0cff6f7b4dbf6e9895f2fe79cbd02",
+      "installedReadbackSha256": "74b509bfe46bd6d9fde3000e6cfb98605c3c8d7c08b440f5b060e26b6f10fdfd"
+    }
+  },
+  "reviewerLifecycleActions": 0,
+  "reviewerModelCalls": 0,
+  "scope": "Original blocked artifact source spelling for the paired v1 target in the existing evaluator",
+  "sourceHashes": {
+    "eva/operations/runtime_repair_artifacts.py": "3f668d93e3b36196d123517b927416fb187d73988b9e21fd5e0a50cd00ff1ba2",
+    "eva/operations/runtime_repair_development.py": "b2fe8319738ee3575937cac6fd8883b345e070e60ed9591ee23a07981734ad80",
+    "eva/operations/runtime_repair_diagnostics.py": "f59a860e95f23abc977a424480744d3d516f7258b1e1c4ea4af76a5681f694e6"
+  },
+  "verified": {
+    "coreWorkerGenerationsAndConfigurationUnchanged": true,
+    "editableTargetAndCandidatePreserved": true,
+    "exactInterpreterAndArgumentVector": true,
+    "exactNewFirstImportRootAndFourOriginalLowerRoots": true,
+    "immutablePinsUnchanged": 400,
+    "installedEvaluatorOwnsReadyListener": true,
+    "onlyDiagnosticsModuleChangedFromPriorOverlay": true,
+    "retainedPriorRootMaps": 6
+  }
+}

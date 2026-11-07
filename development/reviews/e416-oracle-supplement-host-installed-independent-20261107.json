@@ -1,0 +1,31 @@
+{
+  "activationReceiptSha256": "f1d61d62d8e132ccdac023ea47ca5bfb066fe7d007e7494fca39bfc80fb523d2",
+  "approved": true,
+  "assessmentSupplementOutcomeVerified": false,
+  "contract": "EvaIndependentOracleSupplementHostInstalledReview/v1",
+  "decision": "verified_evaluator_only_installation",
+  "focusedOverlayTestsPassed": 39,
+  "fullE416Completed": false,
+  "independentApprovalSha256": "605e111c77782c0c1bb0f78202cad31004cafdb93ec352a22dfcef857986a536",
+  "installedReadbackSha256": "805544d20e49412d2000d387b358092e66fa00c6aeb733fff1b2c6c0cfa5aa99",
+  "isolatedInstalledCoreRpcPostgresTestsPassed": 5,
+  "reviewerLifecycleActions": 0,
+  "reviewerModelCalls": 0,
+  "scope": "Source and installed boundary for the original-behavior assessment supplement",
+  "sourceHashes": {
+    "eva/operations/runtime_repair_artifacts.py": "3f668d93e3b36196d123517b927416fb187d73988b9e21fd5e0a50cd00ff1ba2",
+    "eva/operations/runtime_repair_development.py": "b2fe8319738ee3575937cac6fd8883b345e070e60ed9591ee23a07981734ad80",
+    "eva/operations/runtime_repair_diagnostics.py": "1add52222b2cd2e93fcb297cb1ae4bdb5021a7e0ecc9d6d162b80cccde28683e"
+  },
+  "verified": {
+    "candidateAndCriteriaUnchangedByInstallation": true,
+    "candidateOverlayFirstAndOriginalRootsUnchanged": true,
+    "coreAndWorkerGenerationsAndConfigurationUnchanged": true,
+    "exactInterpreterAndArgumentVector": true,
+    "installedEvaluatorOwnsReadyListener": true,
+    "retainedTerminalProgrammingReceipts": 18,
+    "unchangedImmutablePinCount": 374,
+    "unchangedOriginalRootCount": 4,
+    "unclassifiedReceiptsAtPreflight": 0
+  }
+}

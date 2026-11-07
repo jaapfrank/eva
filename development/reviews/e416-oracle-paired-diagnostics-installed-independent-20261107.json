@@ -1,0 +1,29 @@
+{
+  "activationReceiptSha256": "113f2b3bfb03490b0cc05e75edb503a2364f72e6f85bde44530b0782abf51748",
+  "approved": true,
+  "assessmentSupplementOutcomeVerified": false,
+  "contract": "EvaIndependentPairedOracleDiagnosticsInstalledReview/v1",
+  "decision": "verified_evaluator_only_paired_diagnostics_installation",
+  "focusedDiagnosticsTestsPassed": 15,
+  "fullE416Completed": false,
+  "independentApprovalSha256": "4ec01c31b962eae08dd4a1bb7d479d5f28e0cff6f7b4dbf6e9895f2fe79cbd02",
+  "installedReadbackSha256": "74b509bfe46bd6d9fde3000e6cfb98605c3c8d7c08b440f5b060e26b6f10fdfd",
+  "reviewerLifecycleActions": 0,
+  "reviewerModelCalls": 0,
+  "scope": "Original paired v1 target diagnostics compatibility in the existing evaluator",
+  "sourceHashes": {
+    "eva/operations/runtime_repair_artifacts.py": "3f668d93e3b36196d123517b927416fb187d73988b9e21fd5e0a50cd00ff1ba2",
+    "eva/operations/runtime_repair_development.py": "b2fe8319738ee3575937cac6fd8883b345e070e60ed9591ee23a07981734ad80",
+    "eva/operations/runtime_repair_diagnostics.py": "1ff84a80a5d1e02691051eb6b76bfada885745442bcbcd4283ebcfe2a20093a9"
+  },
+  "verified": {
+    "coreWorkerGenerationsAndConfigurationUnchanged": true,
+    "editableTargetAndCandidatePreserved": true,
+    "exactInterpreterAndArgumentVector": true,
+    "exactNewFirstImportRootAndFourOriginalLowerRoots": true,
+    "immutablePinsUnchanged": 386,
+    "installedEvaluatorOwnsReadyListener": true,
+    "onlyDiagnosticsModuleChangedFromPriorOverlay": true,
+    "retainedPriorRootMaps": 5
+  }
+}
