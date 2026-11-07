@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Hindsight 1.2.0, Pydantic AI 2.66.0 en ContextForge 1.1.0 zijn live geïnstalleerd en onafhankelijk gecontroleerd. De gatewayupdate behoudt de bestaande gegevens, rechten en werkprofielen. Het resterende WSL-onderhoud wordt apart geverifieerd: Compose 5.7 wordt nog niet geselecteerd omdat de bestaande worker een nieuw controlelabel nodig heeft. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.
+Volgende stap: Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0 en de nieuwe containerd-daemon zijn live en onafhankelijk gecontroleerd. Compose 5.7 wordt samen met de beoordeelde E4.16-correctie voorbereid om het controlelabel van de worker veilig mee te nemen. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.
 
 ## Voortgang
 

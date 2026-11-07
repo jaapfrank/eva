@@ -1,0 +1,14 @@
+{
+  "actualInstalledReviewSha256": "e94958ad6757cb7f0c961835e96b0cd7215474cc62fd48bdd2706fab830b4e79",
+  "approved": true,
+  "completionReceiptSha256": "a40cd355b4ac2f95eae5b363676fa8a2d25802d2453f473cb3846437ddbb5486",
+  "contract": "EvaIndependentContainerdPublicInstalledEvidenceBinding/v1",
+  "existingShimUpgradeNotClaimed": true,
+  "finalInstalledReviewSha256": "96f19fdca4554668355f9fd46facac9d0b6a3e22ed2516719613d849740cc351",
+  "independentPrivacyScanPassed": true,
+  "newLifecycleActions": 0,
+  "newProbes": 0,
+  "publicEvidenceMatchesInstalledAndSealedScope": true,
+  "publicInstalledEvidenceSha256": "43858610d527384d0a509cad88978badf4756ee39c91d9ef7c736d87a2927cf0",
+  "reviewedAt": "2026-11-07T06:57:35.158455+00:00"
+}

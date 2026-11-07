@@ -1,0 +1,28 @@
+{
+  "approved": true,
+  "candidateComposeProofSha256": "0b70047513f01dbd6474a4c165e32e2299f2e95cc77df4093ac8e47d416f0913",
+  "candidateImages": {
+    "core": "sha256:af0358d1e162b27f19fdef1aeece0acc0b6911d2e8534f82d8ae95f36438a926",
+    "worker": "sha256:9322d99e6013571ad500ee6930bd6ca2181ac545805766edb01770c0ec0a4138"
+  },
+  "candidateLifecycleActions": 0,
+  "contract": "EvaIndependentE416ComposePairedCandidateReview/v1",
+  "deploymentDraftSha256": "916ad2e7c62852c41e5f92c8f2efa4a9f04cc0e0462b920568e53a666df176b4",
+  "expectedProfileCount": 4,
+  "independentInstalledSdkRunnerTestsPassed": 5,
+  "inertComposeTransitionSha256": "bde644c0a2377944f2612852d2459ca5c745299583e7a5f2bfabb2cff4af6e23",
+  "installationApproved": false,
+  "offlineCandidateProfilesSha256": "5e58a548ed7b652830eb43d1fa02ef9b460d0411d1859735bf7f9f29f34aeb99",
+  "pairedSdkDraftSha256": "392aefcdee21b8595b184512e5598ce4ca2e96b206e19a460c7dcba75e7fd063",
+  "requiredBeforeInstallation": [
+    "Freeze and review the actual paired coordinator and exact host, process, claims and namespace bindings.",
+    "Verify all four actual installed profile pairs and exact post-switch Compose label bindings.",
+    "Preserve historical criteria and handoffs; unknown dispatch remains inspection-only."
+  ],
+  "reviewedAt": "2026-11-07T06:43:06.372543+00:00",
+  "scope": "Exact candidate build, closed argv draft, and isolated non-started Engine label/mount proof only.",
+  "sourceOnlyChangePerImage": true,
+  "testInterpreterCorrection": "The first system-Python invocation did not contain the installed eva module. The installed evaluator interpreter and four source roots passed all five tests.",
+  "verifiedDraftInputFiles": 20,
+  "workerCreateMountpointFalsePreserved": true
+}

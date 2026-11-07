@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0 en ContextForge 1.1.0 zijn live geïnstalleerd en onafhankelijk gecontroleerd. De gatewayupdate behoudt de bestaande gegevens, rechten en werkprofielen. Het resterende WSL-onderhoud wordt apart geverifieerd: Compose 5.7 wordt nog niet geselecteerd omdat de bestaande worker een nieuw controlelabel nodig heeft. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.",
+    "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0 en de nieuwe containerd-daemon zijn live en onafhankelijk gecontroleerd. Compose 5.7 wordt samen met de beoordeelde E4.16-correctie voorbereid om het controlelabel van de worker veilig mee te nemen. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
-    "executionStep": "ContextForge verified live; finish independent WSL platform maintenance",
+    "executionStep": "Containerd daemon verified live; prepare paired Compose and E4.16 activation",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-07T06:27:26.414462+00:00",
+    "checkedAt": "2026-11-07T06:56:40.391292+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -3460,13 +3460,13 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "Hindsight, Pydantic AI en ContextForge live bijgewerkt",
+          "title": "Kernonderdelen en containerd live bijgewerkt",
           "summary": "Hindsight, PydanticAI, kern-/hulpdiensten, bestanden, Telegram, browser, gezichtsherkenning en dashboards zijn bijgewerkt en gecontroleerd.",
-          "detail": "Hindsight 1.2.0, Pydantic AI 2.66.0 en ContextForge 1.1.0 zijn live geïnstalleerd en onafhankelijk gecontroleerd. De gatewayupdate behoudt de bestaande gegevens, rechten en werkprofielen. Het resterende WSL-onderhoud wordt apart geverifieerd: Compose 5.7 wordt nog niet geselecteerd omdat de bestaande worker een nieuw controlelabel nodig heeft. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.",
+          "detail": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0 en de nieuwe containerd-daemon zijn live en onafhankelijk gecontroleerd. Compose 5.7 wordt samen met de beoordeelde E4.16-correctie voorbereid om het controlelabel van de worker veilig mee te nemen. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Kern online · zes gatewayrollen gecontroleerd · WSL-onderhoud loopt",
-          "checkedAt": "2026-11-07T06:27:26.414462+00:00",
-          "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0 en ContextForge 1.1.0 zijn live geïnstalleerd en onafhankelijk gecontroleerd. De gatewayupdate behoudt de bestaande gegevens, rechten en werkprofielen. Het resterende WSL-onderhoud wordt apart geverifieerd: Compose 5.7 wordt nog niet geselecteerd omdat de bestaande worker een nieuw controlelabel nodig heeft. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open."
+          "state": "Eva online · containerd gecontroleerd · gekoppelde Compose-wissel in voorbereiding",
+          "checkedAt": "2026-11-07T06:56:40.391292+00:00",
+          "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0 en de nieuwe containerd-daemon zijn live en onafhankelijk gecontroleerd. Compose 5.7 wordt samen met de beoordeelde E4.16-correctie voorbereid om het controlelabel van de worker veilig mee te nemen. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open."
         },
         "next": {
           "taskId": "E4.15",
@@ -3478,7 +3478,7 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T06:27:26.414462+00:00",
+        "checkedAt": "2026-11-07T06:56:40.391292+00:00",
         "reviewedAt": "2026-11-06T23:40:53.344878+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -9031,7 +9031,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "De kritieke Hindsight/PydanticAI-kern, Node22.23.4 voor vier hostdiensten en Windows-browserworker, en de drie Python-hostpakketomgevingen zijn geïnstalleerd en onafhankelijk teruggelezen. Bron/configuratie en bevoegdheden blijven behouden; de gezichtsbrug gebruikt dezelfde CPU-extractor, modellen en profielgegevens. Volgende oplevering: AUX5/Hindsight-toegangsreparatie veilig installeren en werkelijk controleren; de volledige tokenintrekkingsroute en vier ondersteunende kandidaten zijn beoordeeld. Daarna Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties. Overige actieve afhankelijkheden volgen per compatibele groep; de spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
+                "nextAction": "Installeer de beoordeelde vervolgcorrectie veilig samen met Compose 5.7, behoud de alleen-lezen worker-invoer en controleer de vier werkelijk gebruikte werkprofielen. Bewijs daarna de volledige autonome kringloop met een echte nieuwe fout en later hergebruik. Herhaal geen oude onzekere uitvoering.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -9069,7 +9069,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-06T21:30:09.535045+00:00",
+                "checkedAt": "2026-11-07T06:56:40.391292+00:00",
                 "progress": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
                 "latestEvidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
                 "scopedTelegramRepairAuthorization": {
@@ -9134,20 +9134,20 @@
                   "status": "in_progress",
                   "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                   "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                  "currentOutcome": "ContextForge 1.1.0 en vijf vernieuwde connectoren draaien en zijn onafhankelijk gecontroleerd. Oorspronkelijke gegevens, catalogi en actierechten zijn behouden. De kern en werkprocessen zijn hervat met dezelfde configuratie.",
+                  "currentOutcome": "Hindsight, Pydantic AI, ContextForge en de containerd-daemon zijn live bijgewerkt en onafhankelijk gecontroleerd. Docker en de 25 draaiende containers bleven actief met hun bestaande hulpprocessen.",
                   "hindsightInstalled": "1.2.0",
                   "hindsightTarget": "1.2.0",
                   "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                   "ownerActionRequired": false,
                   "fullCardCompleted": false,
-                  "checkedAt": "2026-11-07T06:27:26.414462+00:00",
+                  "checkedAt": "2026-11-07T06:56:40.391292+00:00",
                   "hindsightBuilt": true,
                   "hindsightLiveUpgradeInstalled": true,
                   "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                   "actualAstraSelectionAndExplicitZeroProven": true,
                   "focusedIndependentMemoryTestsPassed": 136,
                   "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                  "installationPending": "WSL host platform maintenance; existing voice ownership boundary",
+                  "installationPending": "paired Compose and E4.16 correction activation; existing voice ownership boundary",
                   "hindsightTechnicalDeliveryComplete": true,
                   "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                   "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -9185,7 +9185,8 @@
                     "photoSqlite": "3.53.4",
                     "contextForge": "1.1.0",
                     "contextForgePython": "3.12.16",
-                    "contextForgeMcp": "2.3.0"
+                    "contextForgeMcp": "2.3.0",
+                    "containerdDaemon": "2.2.1-0ubuntu1~24.04.4"
                   },
                   "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                   "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -9451,6 +9452,31 @@
                     "compatibleCoreWorkerProfiles": 4,
                     "verificationModelCalls": 0,
                     "verificationToolCalls": 0
+                  },
+                  "composeMaintenance20261107": {
+                    "status": "paired_candidate_independently_reviewed_activation_pending",
+                    "installed": false,
+                    "currentlyInstalledCompose": "2.40.3-desktop.1",
+                    "targetCompose": "5.7.0",
+                    "pairedCandidateReview": "development/reviews/e416-compose-paired-candidate-independent-20261107.json",
+                    "workerBindCreateHostPath": false,
+                    "currentWorkerHashAcceptedByCurrentUpdater": true,
+                    "newWorkerHashRequiresPairedActivation": true,
+                    "installationApproved": false,
+                    "checkedAt": "2026-11-07T06:43:06.372543+00:00"
+                  },
+                  "containerdMaintenance20261107": {
+                    "status": "daemon_installed_independently_verified_existing_shims_retained",
+                    "installedDaemonVersion": "2.2.1-0ubuntu1~24.04.4",
+                    "packageDispatches": 1,
+                    "dockerGenerationPreserved": true,
+                    "containersPreserved": 527,
+                    "runningTasksPreserved": 25,
+                    "oldShimGenerationsPreserved": 25,
+                    "allExistingShimsUpdated": false,
+                    "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/containerd-daemon-installed.json",
+                    "independentInstalledReview": "development/reviews/containerd-installed-independent-20261107.json",
+                    "checkedAt": "2026-11-07T06:56:40.391292+00:00"
                   }
                 }
               },
@@ -10128,7 +10154,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0 en ContextForge 1.1.0 zijn live geïnstalleerd en onafhankelijk gecontroleerd. De gatewayupdate behoudt de bestaande gegevens, rechten en werkprofielen. Het resterende WSL-onderhoud wordt apart geverifieerd: Compose 5.7 wordt nog niet geselecteerd omdat de bestaande worker een nieuw controlelabel nodig heeft. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.",
+        "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0 en de nieuwe containerd-daemon zijn live en onafhankelijk gecontroleerd. Compose 5.7 wordt samen met de beoordeelde E4.16-correctie voorbereid om het controlelabel van de worker veilig mee te nemen. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -10140,7 +10166,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T06:27:26.414462+00:00",
+        "updatedAt": "2026-11-07T06:56:40.391292+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10419,7 +10445,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T06:27:26.414462+00:00",
+        "checkedAt": "2026-11-07T06:56:40.391292+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -16068,7 +16094,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "De kritieke Hindsight/PydanticAI-kern, Node22.23.4 voor vier hostdiensten en Windows-browserworker, en de drie Python-hostpakketomgevingen zijn geïnstalleerd en onafhankelijk teruggelezen. Bron/configuratie en bevoegdheden blijven behouden; de gezichtsbrug gebruikt dezelfde CPU-extractor, modellen en profielgegevens. Volgende oplevering: AUX5/Hindsight-toegangsreparatie veilig installeren en werkelijk controleren; de volledige tokenintrekkingsroute en vier ondersteunende kandidaten zijn beoordeeld. Daarna Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties. Overige actieve afhankelijkheden volgen per compatibele groep; de spraakoverdrachtgrens blijft gelden. Volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
+              "nextAction": "Installeer de beoordeelde vervolgcorrectie veilig samen met Compose 5.7, behoud de alleen-lezen worker-invoer en controleer de vier werkelijk gebruikte werkprofielen. Bewijs daarna de volledige autonome kringloop met een echte nieuwe fout en later hergebruik. Herhaal geen oude onzekere uitvoering.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -16106,7 +16132,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-06T21:30:09.535045+00:00",
+              "checkedAt": "2026-11-07T06:56:40.391292+00:00",
               "progress": "Modeladapter-upgrade afgerond, geïnstalleerd en onafhankelijk live teruggelezen: PydanticAI/Graph2.66.0, OpenAI3.31.0, genai-prices0.1.13. Publieke foutcontracten en twee compatibiliteitscorrecties toegepast; exact4updates/41gelijke lockblokken, vijf gewijzigde bronbestanden. Beide rollen gezond en vier werkprofielen gelijk. Echte tekst- en tooluitvoerproef slagen met231gemeten ontwikkeltokens en0externe effecten.",
               "latestEvidence": "development/evidence/reassessment/pydantic-stack-20261106/model-adapter-installed.json",
               "scopedTelegramRepairAuthorization": {
@@ -16171,20 +16197,20 @@
                 "status": "in_progress",
                 "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                 "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                "currentOutcome": "ContextForge 1.1.0 en vijf vernieuwde connectoren draaien en zijn onafhankelijk gecontroleerd. Oorspronkelijke gegevens, catalogi en actierechten zijn behouden. De kern en werkprocessen zijn hervat met dezelfde configuratie.",
+                "currentOutcome": "Hindsight, Pydantic AI, ContextForge en de containerd-daemon zijn live bijgewerkt en onafhankelijk gecontroleerd. Docker en de 25 draaiende containers bleven actief met hun bestaande hulpprocessen.",
                 "hindsightInstalled": "1.2.0",
                 "hindsightTarget": "1.2.0",
                 "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                 "ownerActionRequired": false,
                 "fullCardCompleted": false,
-                "checkedAt": "2026-11-07T06:27:26.414462+00:00",
+                "checkedAt": "2026-11-07T06:56:40.391292+00:00",
                 "hindsightBuilt": true,
                 "hindsightLiveUpgradeInstalled": true,
                 "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                 "actualAstraSelectionAndExplicitZeroProven": true,
                 "focusedIndependentMemoryTestsPassed": 136,
                 "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                "installationPending": "WSL host platform maintenance; existing voice ownership boundary",
+                "installationPending": "paired Compose and E4.16 correction activation; existing voice ownership boundary",
                 "hindsightTechnicalDeliveryComplete": true,
                 "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                 "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -16222,7 +16248,8 @@
                   "photoSqlite": "3.53.4",
                   "contextForge": "1.1.0",
                   "contextForgePython": "3.12.16",
-                  "contextForgeMcp": "2.3.0"
+                  "contextForgeMcp": "2.3.0",
+                  "containerdDaemon": "2.2.1-0ubuntu1~24.04.4"
                 },
                 "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                 "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -16488,6 +16515,31 @@
                   "compatibleCoreWorkerProfiles": 4,
                   "verificationModelCalls": 0,
                   "verificationToolCalls": 0
+                },
+                "composeMaintenance20261107": {
+                  "status": "paired_candidate_independently_reviewed_activation_pending",
+                  "installed": false,
+                  "currentlyInstalledCompose": "2.40.3-desktop.1",
+                  "targetCompose": "5.7.0",
+                  "pairedCandidateReview": "development/reviews/e416-compose-paired-candidate-independent-20261107.json",
+                  "workerBindCreateHostPath": false,
+                  "currentWorkerHashAcceptedByCurrentUpdater": true,
+                  "newWorkerHashRequiresPairedActivation": true,
+                  "installationApproved": false,
+                  "checkedAt": "2026-11-07T06:43:06.372543+00:00"
+                },
+                "containerdMaintenance20261107": {
+                  "status": "daemon_installed_independently_verified_existing_shims_retained",
+                  "installedDaemonVersion": "2.2.1-0ubuntu1~24.04.4",
+                  "packageDispatches": 1,
+                  "dockerGenerationPreserved": true,
+                  "containersPreserved": 527,
+                  "runningTasksPreserved": 25,
+                  "oldShimGenerationsPreserved": 25,
+                  "allExistingShimsUpdated": false,
+                  "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/containerd-daemon-installed.json",
+                  "independentInstalledReview": "development/reviews/containerd-installed-independent-20261107.json",
+                  "checkedAt": "2026-11-07T06:56:40.391292+00:00"
                 }
               }
             },
@@ -17165,7 +17217,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0 en ContextForge 1.1.0 zijn live geïnstalleerd en onafhankelijk gecontroleerd. De gatewayupdate behoudt de bestaande gegevens, rechten en werkprofielen. Het resterende WSL-onderhoud wordt apart geverifieerd: Compose 5.7 wordt nog niet geselecteerd omdat de bestaande worker een nieuw controlelabel nodig heeft. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.",
+      "nextAction": "Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0 en de nieuwe containerd-daemon zijn live en onafhankelijk gecontroleerd. Compose 5.7 wordt samen met de beoordeelde E4.16-correctie voorbereid om het controlelabel van de worker veilig mee te nemen. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -17177,7 +17229,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T06:27:26.414462+00:00",
+      "updatedAt": "2026-11-07T06:56:40.391292+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17456,7 +17508,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T06:27:26.414462+00:00",
+      "checkedAt": "2026-11-07T06:56:40.391292+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

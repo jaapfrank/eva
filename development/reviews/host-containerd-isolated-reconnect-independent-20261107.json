@@ -1,0 +1,21 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_ISOLATED_PROOF_SCOPE",
+  "proofManifestSha256": "f768fbd6d832e6ff86495c2521680d8d2b333b2e5adde23b8803b757314f9254",
+  "sourceSha256": "43faa7f231410fb1cf094c3f72aca03ab99086319142b9c8ca7edc02fa6f61b3",
+  "resultSha256": "e2e64819cad5581636878aa1e3800d2fa4cff5f3ed4fc901aeeb5f48b1d70ba4",
+  "verified": [
+    "All18 frozen proof file hashes match. The fixture uses an explicit private socket/root/state and ctr namespace for every task operation.",
+    "Old daemon to new daemon to old daemon preserved the exact same task and old shim PID/start ticks/executable/argv, network namespace and seed hash. Counter progressed3 to9 to13.",
+    "All27 recorded production process generations match before and after, including25 production shims.",
+    "Private task and three daemon processes are stopped. Synthetic rootfs/data/evidence remain retained.",
+    "Both binary identities report upstream containerd2.2.1. The proof concerns the distinct pinned old/new distribution binaries, rather than an upstream major-version change."
+  ],
+  "limitations": [
+    "This approves the isolated reconnect evidence. It does not authorize production daemon/package/configuration changes.",
+    "The old shim is intentionally retained. New shim creation, a complete shim upgrade and an actual Docker daemon handoff need their own bounded proof and installation review."
+  ],
+  "reviewerProductionActions": 0,
+  "reviewerProviderRequests": 0
+}

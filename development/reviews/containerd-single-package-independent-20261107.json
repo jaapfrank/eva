@@ -1,0 +1,30 @@
+{
+  "activeContainerTaskGenerations": 25,
+  "approved": true,
+  "capturedBaselineSha256": "2511533f51da2f14d9b797aa89db40b699dd0290c6585c6fd90fe38c1c1a986d",
+  "containerInventoryCount": 527,
+  "contract": "EvaIndependentContainerdSinglePackageInstallationReview/v1",
+  "controllerSha256": "7673b4345a73f2e1d1394f0bcf1dea241bc0bbcf518b756b724df1c21fd9e41b",
+  "dockerGenerationProtected": true,
+  "existingShimGenerations": 25,
+  "freshAdmissionPassed": true,
+  "freshReadOnlyPreflightSha256": "c4ff109ee9ed326f88c49be18c711c5f5afbc20e34f42de16bc4dbd8ba96d719",
+  "independentUnitTestsPassed": 23,
+  "installApproved": true,
+  "knownPackageEffects": [
+    "Containerd service restart and systemd manager reload through the pinned maintainer script.",
+    "The pinned man-db/noawait trigger maintains the manual page cache."
+  ],
+  "planSha256": "151cd7ce3e4ab32c1cf1fcc70dd8f2ce36c3ffadda8197209c2a8a2a20de0292",
+  "postIntentRefences": [
+    "Reobserve typed idle/readiness and exact Docker task/shim cohort.",
+    "Recheck package archive, installed inventory, expected file deltas, effective systemd stop settings and pinned trigger boundary."
+  ],
+  "protectedAndReadinessFileBindingsVerified": 59,
+  "returnBoundary": "Unknown dispatch requires inspection without replay. Existing .3 shim processes remain mapped and must not be reported as upgraded. Installed state requires separate actual readback.",
+  "reviewedAt": "2026-11-07T06:51:10.196949+00:00",
+  "reviewerLifecycleActions": 0,
+  "reviewerPackageInstalls": 0,
+  "scope": "One dispatch of the signed Ubuntu containerd package .4 with the old Compose selection retained.",
+  "signedArchiveProofSha256": "ff770a2135250b9d881c2a54f4667a801bec82d563a195a39dabe1118e550286"
+}
