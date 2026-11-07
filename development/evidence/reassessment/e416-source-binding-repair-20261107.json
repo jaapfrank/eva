@@ -1,0 +1,134 @@
+{
+  "contract": "EvaScheduledFailureRepairContinuation/v1",
+  "card": "E4.16",
+  "startedAt": "2026-11-07T16:30:15.155792+00:00",
+  "checkedAt": "2026-11-07T18:15:33.811950+00:00",
+  "status": "independent_oracle_declined_missing_original_inputs_host_handoff_being_completed",
+  "sameObservedFault": {
+    "stage": "document_authority",
+    "error": "scheduled failure history differs",
+    "sourcePath": "adapters/postgres/scheduled_work_failure.py",
+    "sourceSha256": "482e7f28883337c84e7431c5e96ef9f5389d31a3ec4e1b2c6807896c06b414c9",
+    "marker": "single SCHEDULED_WORK_BLOCKED before work admission",
+    "currentRecurring": true
+  },
+  "correctedPriorFinding": {
+    "priorEvidence": "development/evidence/reassessment/e416-live-source-binding-20261107.json",
+    "wrongComparison": "INGRESS_COMMITTED full envelope payload_sha256 versus work source_ingress_sha256",
+    "correctComparison": "canonical_sha256(INGRESS_COMMITTED.payload.data) versus work source_ingress_sha256",
+    "originalIngressMatchesWorkSpec": true,
+    "originalIngressCompacted": false,
+    "originalIngressErased": false,
+    "scopeMatches": true,
+    "oldWorkRetentionUntil": "2026-11-06T12:08:22Z",
+    "oldWorkRetentionExtended": false,
+    "oldWorkRetryAllowed": false
+  },
+  "prerequisites": {
+    "intake": "Existing repair service task observes real background fault using original source fences",
+    "workerSourceAlignment": "Exact existing core scheduled failure module and its existing pure channel predicate; actual defect preserved for Eva to repair"
+  },
+  "autonomousCandidateCreated": true,
+  "independentlyReviewed": false,
+  "autonomousInstallation": false,
+  "laterReuseProven": false,
+  "fullCardCompleted": false,
+  "prerequisiteVerification": {
+    "testsPassed": 15,
+    "seconds": 14.38,
+    "postgresActualRuntimeRole": true,
+    "independentReview": true,
+    "sourceSha256": "2dfb60cffa5f5e59c7751850054b8d9d6492990c4726427b77d989feb8682a0c",
+    "planSha256": "f4061ad4514402a1dae8c65807656b1da753667d212a989659e47044d33cd148",
+    "guard": "initial preflight zero active work/leases/unknown; later evaluator child blocked before first stop intent",
+    "originalContainersUnchanged": true,
+    "actualInstallationDispatched": true,
+    "installed": true,
+    "matchingProfiles": 4,
+    "oldWorkAndScheduleUnchanged": true,
+    "sourceRecordProofSha256": "296b0191579ae2970b7f0c219a250c307b9c7079f061483ac6a204dd07e12f13"
+  },
+  "currentAuthorityFinding": {
+    "sameCurrentFault": true,
+    "originalSourceHashValid": true,
+    "originalWorkRecoveryStopped": true,
+    "stopEventType": "PRIVATE_WORK_RECOVERY_STOPPED",
+    "automaticIntakeRefusedStoppedWork": true,
+    "separateCurrentOwnerMaintenanceAuthorizationRequired": false,
+    "latestDirectOwnerInstructionAuthorizesTechnicalMaintenance": true,
+    "freshAuthenticatedSourceBridge": "Unused owner-message bridge superseded by actual typed host observation; no owner message sent",
+    "unpromptedRepairProven": false,
+    "existingStandingSelfRepairMandateEnabled": true,
+    "existingStandingMandateCoversHostFault": true,
+    "originalWorkRecoveryRemainsStopped": true,
+    "unpromptedRepairIntakeProven": true
+  },
+  "hostFaultBinding": {
+    "installedAt": "2026-11-07T17:42:39.698239+00:00",
+    "planSha256": "7307819e51e899c8d6bfd2a3f1dfbed5f8684dde8860ad0e5fe8aca6760feb9f",
+    "receiptSha256": "7526fe7fe6937d94c81f19ca2bae11d4cf7da371627975a31fa8e128b94d5ec7",
+    "independentApprovalSha256": "4a4c4e48a397042e1807686381898c32ce290b439118f0736c04f85164a8fbe8",
+    "testsPassed": 28,
+    "testSeconds": 22.81,
+    "actualProfilesCompatible": true,
+    "oldWorkAndScheduleUnchanged": true,
+    "evaluatorRetained": true,
+    "realIncident": "self-repair:daeec6cae0281211ad76e5f57c9b61507e3c2713d4432997e2e5cd5f298347c5",
+    "automaticServiceObservation": true,
+    "events": [
+      "SELF_REPAIR_OBSERVED",
+      "SELF_REPAIR_INITIATIVE_ADMITTED"
+    ],
+    "newOwnerMessageSent": false,
+    "developerAuthoredCandidate": false,
+    "repairCompleted": false,
+    "installedIndependentReview": "development/reviews/e416-host-fault-binding-installed-independent-20261107.json",
+    "installedIndependentReviewSha256": "27e83c470e34c212ba90180e83215a1f2a70a88b82fd5fe28ffdda8d0f8b2442"
+  },
+  "autonomousRepair": {
+    "incidentId": "self-repair:daeec6cae0281211ad76e5f57c9b61507e3c2713d4432997e2e5cd5f298347c5",
+    "targetId": "3cecdc29de2c1b36c1eeeefe8e4a21890d6554e8df7ad0c68fdbd9059fd7a8fb",
+    "candidateSha256": "d7b58a2f0942541c185c1166f19d300700e8d76758c3cec1321b0c5aab33fc83",
+    "builderStartedAt": "2026-11-07T17:48:07+00:00",
+    "builderCompletedAt": "2026-11-07T17:54:38+00:00",
+    "builderStatus": "succeeded",
+    "builderRuntimeUsage": {
+      "measurement": "partial",
+      "completedModelResponses": 18,
+      "toolCalls": 17,
+      "inputTokens": 371897,
+      "outputTokens": 4485,
+      "totalTokens": 376382,
+      "costUsdMicros": null
+    },
+    "developerUsage": "unknown",
+    "hostState": "blocked",
+    "newOwnerMessageRequired": false,
+    "developerCandidateOrCriteriaAuthored": false,
+    "autonomousInstallationProven": false,
+    "laterReuseProven": false,
+    "independentOriginalBehavior": {
+      "workSucceeded": true,
+      "oracleCreated": false,
+      "behavioralTestsExecuted": false,
+      "blockedArtifactSha256": "8033df64bb3689f0b7fe7d0556dbd519b93b80715cf5d8e56d412faccde62596",
+      "missingControls": [
+        "source-bound dependencies",
+        "privacy-safe actual checkpoint/event shape or grounded producer source",
+        "original observed caller source"
+      ],
+      "completedAt": "2026-11-07T18:04:12+00:00",
+      "runtimeUsage": {
+        "measurement": "partial",
+        "completedModelResponses": 8,
+        "toolCalls": 7,
+        "inputTokens": 104642,
+        "outputTokens": 1452,
+        "totalTokens": 106094,
+        "costUsdMicros": null
+      },
+      "originalArtifactPreserved": true,
+      "comparisonOrApplicationStarted": false
+    }
+  }
+}

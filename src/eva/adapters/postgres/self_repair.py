@@ -1,6 +1,9 @@
 """Autonomous repair goals on Eva's existing operational and initiative journal."""
 from datetime import UTC, datetime
 from contextlib import nullcontext
+import hashlib
+import os
+import re
 
 import sqlalchemy as sa
 
@@ -12,6 +15,125 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.application.self_repair import repair_task
 from eva.contracts.canonical_json import canonical_sha256
+
+
+HOST_SCHEDULED_FAILURE_SOURCE = 'EvaHostScheduledFailureSource/v1'
+_SHA256 = re.compile(r'[0-9a-f]{64}')
+_PRIVATE_SOURCE_FIELDS = {'principal_id', 'conversation_id', 'message_id', 'ingress_sha256'}
+_HOST_SOURCE_FIELDS = {'contract', 'observation_sha256', 'privacy_source',
+                       'technical_provenance', 'technical_provenance_sha256'}
+_PROVENANCE_DIGESTS = {'scheduled_marker_sha256', 'predecessor_spec_sha256',
+                      'recovery_stop_sha256', 'source_ingress_data_sha256'}
+_PROVENANCE_FIELDS = _PROVENANCE_DIGESTS | {'schedule_id', 'recovery_stop_thread', 'work_id'}
+
+
+def _current_privacy_principal(owner, source):
+    principal = str(owner._owner)
+    if source['principal_id'] == principal:
+        return True
+    if source['conversation_id'] != source['principal_id']:
+        return False
+    bindings_file = os.environ.get('EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE', '').strip()
+    if not bindings_file:
+        return False
+    from eva.adapters.credentials.telegram_bindings import load_principal_bindings
+
+    try:
+        alias = load_principal_bindings(bindings_file).private_bridge_principal(
+            principal_id=principal, principal_binding_id=owner._binding
+        )
+    except (OSError, ValueError, RuntimeError):
+        return False
+    return alias is not None and alias == source['principal_id']
+
+
+def _host_source_current(connection, owner, source, *, observation_sha256, source_sha256):
+    from eva.adapters.postgres.current_catalog import delegated_work_runs
+
+    if set(source) != _HOST_SOURCE_FIELDS or source['observation_sha256'] != observation_sha256:
+        return False
+    privacy = source['privacy_source']
+    proof = source['technical_provenance']
+    principal = str(owner._owner)
+    if (not isinstance(privacy, dict) or set(privacy) != _PRIVATE_SOURCE_FIELDS
+            or not _current_privacy_principal(owner, privacy) or not isinstance(proof, dict)
+            or set(proof) != _PROVENANCE_FIELDS
+            or any(not isinstance(proof[key], str) or not _SHA256.fullmatch(proof[key])
+                   for key in _PROVENANCE_DIGESTS)
+            or any(not isinstance(proof[key], str) or not 1 <= len(proof[key]) <= 240
+                   for key in ('schedule_id', 'recovery_stop_thread', 'work_id'))
+            or source['technical_provenance_sha256'] != canonical_sha256(proof)
+            or source_sha256 != canonical_sha256(source)
+            or not repair_source_current(connection, owner._scope, privacy)):
+        return False
+    scope = owner._authority
+    c, e, w = operational_checkpoints.c, operational_events.c, delegated_work_runs.c
+    spec = w.spec_payload
+    with owner._engine.begin() as evidence:
+        evidence.exec_driver_sql("SET TRANSACTION READ ONLY")
+        PostgresOperationalTimeline(owner._engine, scope)._scope(evidence)
+        work = evidence.scalar(sa.select(spec).where(
+            w.tenant_id == scope.tenant_id, w.installation_id == scope.installation_id,
+            w.work_id == proof['work_id'], w.spec_sha256 == bytes.fromhex(proof['predecessor_spec_sha256']),
+            w.owner_principal_id == owner._owner, w.principal_binding_id == owner._binding,
+            w.state == 'ambiguous', w.error_code == 'provider_unavailable',
+            w.lease_owner.is_(None), w.lease_expires_at.is_(None), w.stop_requested_at.is_(None),
+            spec['source']['tenant_id'].astext == owner._tenant_id,
+            spec['source']['installation_id'].astext == owner._installation_id,
+            *(spec['source'][key].astext == privacy[key]
+              for key in ('principal_id', 'conversation_id', 'message_id')),
+        ))
+        if (not isinstance(work, dict) or canonical_sha256(work) != proof['predecessor_spec_sha256']
+                or work.get('source_ingress_sha256') != proof['source_ingress_data_sha256']
+                or not isinstance(work.get('execution_id'), str) or not work['execution_id']):
+            return False
+        execution = work['execution_id']
+        schedule = f'scheduled-work:{principal}:provider-recovery:' + hashlib.sha256(execution.encode()).hexdigest()
+        stop = 'private-work-recovery-stop:' + canonical_sha256({
+            'execution_id': execution, 'source_ingress_sha256': proof['source_ingress_data_sha256'],
+        })
+        if proof['schedule_id'] != schedule or proof['recovery_stop_thread'] != stop:
+            return False
+        successor = operational_events.alias('repair_provenance_successor').c
+        events = evidence.execute(sa.select(
+            e.thread_id, e.event_type, e.checkpoint_id, e.payload, e.payload_sha256
+        ).join(operational_checkpoints, sa.and_(
+            c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+            c.thread_id == e.thread_id, c.checkpoint_id == e.checkpoint_id, c.updated_at == e.occurred_at,
+        )).where(
+            e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+            e.sequence == 1, c.revision == 1, c.operation_id.is_(None),
+            sa.or_(sa.and_(e.thread_id == schedule, c.phase == 'blocked', c.status == 'needs_help'),
+                   sa.and_(e.thread_id == stop, c.phase == 'stopped', c.status == 'completed')),
+            ~sa.exists(sa.select(1).where(successor.tenant_id == e.tenant_id,
+                successor.installation_id == e.installation_id, successor.thread_id == e.thread_id,
+                successor.sequence > 1)),
+        )).all()
+    events = {event.thread_id: event for event in events}
+    if set(events) != {schedule, stop}:
+        return False
+    marker, stopped = events[schedule], events[stop]
+    data = marker.payload.get('data', {})
+    return (
+        marker.event_type == 'SCHEDULED_WORK_BLOCKED' and marker.checkpoint_id == schedule + ':blocked'
+        and canonical_sha256(marker.payload) == bytes(marker.payload_sha256).hex() == proof['scheduled_marker_sha256']
+        and data.get('work_id') == proof['work_id'] and data.get('operation') == 'resume'
+        and data.get('automatic_retry') is False
+        and stopped.event_type == 'PRIVATE_WORK_RECOVERY_STOPPED' and stopped.checkpoint_id == stop + ':stopped'
+        and canonical_sha256(stopped.payload) == bytes(stopped.payload_sha256).hex() == proof['recovery_stop_sha256']
+        and stopped.payload.get('data') == {
+            'execution_id': execution, 'source_ingress_sha256': proof['source_ingress_data_sha256'],
+            'work_id': proof['work_id'], 'spec_sha256': proof['predecessor_spec_sha256'],
+        }
+    )
+
+
+def _incident_source_current(connection, owner, data):
+    source = data['source']
+    if isinstance(source, dict) and source.get('contract') == HOST_SCHEDULED_FAILURE_SOURCE:
+        return _host_source_current(connection, owner, source,
+            observation_sha256=data['fingerprint'], source_sha256=data['source_sha256'])
+    return repair_source_current(connection, owner._scope, source)
 
 
 def current_repair_binding(authority, incident_id, *, now, _connection=None):
@@ -58,7 +180,7 @@ def current_repair_binding(authority, incident_id, *, now, _connection=None):
                 or not current_policy['enabled'] or current_policy.get('self_repair', {}).get('enabled') is not True
                 or canonical_sha256({k: v for k, v in current_policy.items() if k != 'enabled'}) != digest
                 or authority._admitted_digest(connection) != digest or data['mandate_sha256'] != digest
-                or not repair_source_current(connection, owner._scope, data['source'])):
+                or not _incident_source_current(connection, owner, data)):
             raise ValueError('repair source or mandate changed')
         original = parent.adoption['data']
         if (original.get('repair_incident_id') != incident_id
@@ -92,6 +214,10 @@ def current_repair_binding(authority, incident_id, *, now, _connection=None):
 
 def repair_source_current(connection, scope, source):
     """Fence the original private source against STOP and explicit erasure."""
+    if (not isinstance(source, dict) or set(source) != _PRIVATE_SOURCE_FIELDS
+            or any(not isinstance(value, str) or not value for value in source.values())
+            or not _SHA256.fullmatch(source['ingress_sha256'])):
+        return False
     e = operational_events.c
     row = connection.execute(sa.select(e.event_id, e.payload, e.payload_sha256).where(
         e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
@@ -154,6 +280,14 @@ class PostgresSelfRepair:
         source['ingress_sha256'] = bytes(row.payload_sha256).hex()
         return source if repair_source_current(connection, self.owner._scope, source) else None
 
+    def _failure_identity(self, observation):
+        return canonical_sha256({'owner': str(self.owner._owner), 'failure': observation.fingerprint})
+
+    @staticmethod
+    def _lock_incident(connection, thread):
+        connection.execute(sa.text('SELECT pg_advisory_xact_lock(hashtextextended(:key,0))'),
+                           {'key': thread})
+
     def observe(self, turn, observation):
         """One repair goal per source-version failure, never a copied private prompt."""
         if (turn.audience.kind != 'private_person' or turn.project_id is not None
@@ -165,52 +299,79 @@ class PostgresSelfRepair:
             return None
         digest = self._permission()
         now = self.clock()
-        identity = canonical_sha256({'owner': str(self.owner._owner),
-                                     'failure': observation.fingerprint})
-        thread = 'self-repair:' + identity
+        identity = self._failure_identity(observation)
         source = canonical_sha256({key: getattr(turn, key) for key in (
             'tenant_id', 'installation_id', 'principal_id', 'conversation_id', 'message_id')})
         with self.owner._engine.begin() as connection:
             self.owner._authorize(connection, now)
-            connection.execute(sa.text('SELECT pg_advisory_xact_lock(hashtextextended(:key,0))'),
-                               {'key': thread})
+            self._lock_incident(connection, 'self-repair:' + identity)
             source_ref = self._source(connection, turn)
             if self._permission() != digest or source_ref is None:
                 return None
-            row = connection.execute(sa.select(operational_checkpoints).where(
-                operational_checkpoints.c.tenant_id == self.owner._scope.tenant_id,
-                operational_checkpoints.c.installation_id == self.owner._scope.installation_id,
-                operational_checkpoints.c.thread_id == thread).with_for_update()).one_or_none()
-            if row is not None:
-                # Repeated sources are evidence, not another task or notification.
-                evidence = connection.execute(sa.select(operational_events.c.payload).where(
-                    operational_events.c.tenant_id == self.owner._scope.tenant_id,
-                    operational_events.c.installation_id == self.owner._scope.installation_id,
-                    operational_events.c.thread_id == thread)).scalars().all()
-                if (len(evidence) < 33 and not any(
-                        event['data'].get('source_sha256') == source for event in evidence)):
-                    transition_timeline_thread(connection, self.owner._scope, thread_id=thread,
-                        expected_revision=row.revision, checkpoint_id=thread + ':evidence:' + source,
-                        phase=row.phase, status=row.status, event_type='SELF_REPAIR_EVIDENCE_ADDED',
-                        occurred_at=now, data={'source_sha256': source})
+            return self._record_observation(connection, observation, identity, source_ref, source, digest, now)
+
+    def observe_host_scheduled_failure(self, connection, observation, source_ref):
+        """Use standing local repair authority and a verified host technical source."""
+        if (connection.engine is not self.owner._engine or not connection.in_transaction()
+                or connection.in_nested_transaction()
+                or self.service.conversation_scope != self.owner._scope
+                or not isinstance(source_ref, dict) or source_ref.get('contract') != HOST_SCHEDULED_FAILURE_SOURCE
+                or not any(path == 'adapters/postgres/scheduled_work_failure.py' and function.startswith('load:')
+                           for path, function, _ in observation.frames)):
+            return None
+        digest = self._permission()
+        now = self.clock()
+        identity = self._failure_identity(observation)
+        self.owner._authorize(connection, now)
+        # The host already holds the privacy anchor. Yield to any observer
+        # that took the incident lock first instead of waiting on its source.
+        if not connection.scalar(sa.text("SELECT pg_try_advisory_xact_lock(hashtextextended(:key,0))"),
+                                 {'key': 'self-repair:' + identity}):
+            return None
+        source = canonical_sha256(source_ref)
+        if (self._permission() != digest or not _host_source_current(connection, self.owner, source_ref,
+                observation_sha256=observation.fingerprint, source_sha256=source)):
+            return None
+        return self._record_observation(connection, observation, identity, source_ref, source, digest, now)
+
+    def _record_observation(self, connection, observation, identity, source_ref, source, digest, now):
+        thread = 'self-repair:' + identity
+        row = connection.execute(sa.select(operational_checkpoints).where(
+            operational_checkpoints.c.tenant_id == self.owner._scope.tenant_id,
+            operational_checkpoints.c.installation_id == self.owner._scope.installation_id,
+            operational_checkpoints.c.thread_id == thread).with_for_update()).one_or_none()
+        if row is not None:
+            if source_ref.get('contract') == HOST_SCHEDULED_FAILURE_SOURCE:
                 return {'incident_id': thread, 'created': False, 'admitted': False}
-            intent_id = 'personal-interest:' + identity
-            data = {'incident_id': thread, 'owner_principal_id': str(self.owner._owner),
-                    'fingerprint': observation.fingerprint, 'observation': observation.to_payload(),
-                    'source_sha256': source, 'source': source_ref,
-                    'mandate_sha256': digest, 'intent_id': intent_id}
-            insert_initial_timeline_thread(connection, self.owner._scope, thread_id=thread,
-                checkpoint_id=thread + ':observed', occurred_at=now, data=data,
-                event_type='SELF_REPAIR_OBSERVED', phase='repair_queued', status='active')
-            outcome = self._adopt(connection, data, observation, now=now)
-            if outcome['status'] in ('adopted', 'already_adopted'):
+            # Repeated sources are evidence, not another task or notification.
+            evidence = connection.execute(sa.select(operational_events.c.payload).where(
+                operational_events.c.tenant_id == self.owner._scope.tenant_id,
+                operational_events.c.installation_id == self.owner._scope.installation_id,
+                operational_events.c.thread_id == thread)).scalars().all()
+            if (len(evidence) < 33 and not any(
+                    event['data'].get('source_sha256') == source for event in evidence)):
                 transition_timeline_thread(connection, self.owner._scope, thread_id=thread,
-                    expected_revision=1, checkpoint_id=thread + ':adopted',
-                    phase='repair_investigating', status='waiting_for_proof',
-                    event_type='SELF_REPAIR_INITIATIVE_ADMITTED', occurred_at=now,
-                    data={'intent_id': intent_id})
-            return {'incident_id': thread, 'created': True,
-                    'admitted': outcome['status'] in ('adopted', 'already_adopted')}
+                    expected_revision=row.revision, checkpoint_id=thread + ':evidence:' + source,
+                    phase=row.phase, status=row.status, event_type='SELF_REPAIR_EVIDENCE_ADDED',
+                    occurred_at=now, data={'source_sha256': source})
+            return {'incident_id': thread, 'created': False, 'admitted': False}
+        intent_id = 'personal-interest:' + identity
+        data = {'incident_id': thread, 'owner_principal_id': str(self.owner._owner),
+                'fingerprint': observation.fingerprint, 'observation': observation.to_payload(),
+                'source_sha256': source, 'source': source_ref,
+                'mandate_sha256': digest, 'intent_id': intent_id}
+        insert_initial_timeline_thread(connection, self.owner._scope, thread_id=thread,
+            checkpoint_id=thread + ':observed', occurred_at=now, data=data,
+            event_type='SELF_REPAIR_OBSERVED', phase='repair_queued', status='active')
+        outcome = self._adopt(connection, data, observation, now=now)
+        if outcome['status'] in ('adopted', 'already_adopted'):
+            transition_timeline_thread(connection, self.owner._scope, thread_id=thread,
+                expected_revision=1, checkpoint_id=thread + ':adopted',
+                phase='repair_investigating', status='waiting_for_proof',
+                event_type='SELF_REPAIR_INITIATIVE_ADMITTED', occurred_at=now,
+                data={'intent_id': intent_id})
+        return {'incident_id': thread, 'created': True,
+                'admitted': outcome['status'] in ('adopted', 'already_adopted')}
 
     def _adopt(self, connection, data, observation, *, now):
         """Use the same one-active-initiative admission and current owner mandate."""
@@ -227,7 +388,7 @@ class PostgresSelfRepair:
             'authority': 'current_host_self_repair_mandate_required'}
         def revalidate():
             if (self._permission() != data['mandate_sha256']
-                    or not repair_source_current(connection, self.owner._scope, data['source'])):
+                    or not _incident_source_current(connection, self.owner, data)):
                 raise ValueError('automatic repair source or authorization changed')
         return adopt_private_initiative(connection, self.owner._scope, payload, now=now,
             revalidate=revalidate)
@@ -272,7 +433,7 @@ class PostgresSelfRepair:
                     phase='repair_authority_changed', status='needs_help',
                     event_type='SELF_REPAIR_AUTHORITY_CHANGED', occurred_at=now, data={})
                 return 'mandate_changed'
-            if not repair_source_current(connection, self.owner._scope, data['source']):
+            if not _incident_source_current(connection, self.owner, data):
                 transition_timeline_thread(connection, self.owner._scope, thread_id=row.thread_id,
                     expected_revision=row.revision, checkpoint_id=row.thread_id + ':source-unavailable',
                     phase='repair_source_unavailable', status='needs_help',

@@ -1,0 +1,79 @@
+{
+  "activationReceiptSha256": "7526fe7fe6937d94c81f19ca2bae11d4cf7da371627975a31fa8e128b94d5ec7",
+  "actualAutonomousIntake": {
+    "adoptionSource": "automatic_runtime_failure",
+    "incidentEventSha256": "a82b712c35665256c54a62a17f5b097d986b056378d07c2fe471793d314616bd",
+    "incidentEvents": [
+      "SELF_REPAIR_OBSERVED",
+      "SELF_REPAIR_INITIATIVE_ADMITTED"
+    ],
+    "incidentId": "self-repair:daeec6cae0281211ad76e5f57c9b61507e3c2713d4432997e2e5cd5f298347c5",
+    "observedFunctionAndLine": "load:93",
+    "observedSource": "adapters/postgres/scheduled_work_failure.py",
+    "observedSourceSha256": "482e7f28883337c84e7431c5e96ef9f5389d31a3ec4e1b2c6807896c06b414c9",
+    "originalIngressDataAndEnvelopeHashesVerified": true,
+    "originalScheduleWorkAndStopEvidenceVerified": true,
+    "ownerReportPresent": false,
+    "readOnlyVerification": true,
+    "sourceContract": "EvaHostScheduledFailureSource/v1",
+    "unprompted": true
+  },
+  "actualCoreAndWorkerHealthy": true,
+  "actualCoreAndWorkerRestartCounts": 0,
+  "actualInstalledSourcesByRole": {
+    "core": {
+      "adapters/postgres/self_repair.py": "934e4f7fd7e7f3e93fd71274a53b2ec84a6e9bdc634d1714ddd91678a9b1280a",
+      "application/self_repair.py": "365b0c6453d749727336eee6155fea68d3a4005670004121369ab4b72a066c59",
+      "bootstrap/self_repair.py": "75cabee0b86ee4db79beaeb6f2eb1138694e715c7f0c6d3a0892942a94f03d1b"
+    },
+    "delegated-work-worker": {
+      "adapters/postgres/self_repair.py": "934e4f7fd7e7f3e93fd71274a53b2ec84a6e9bdc634d1714ddd91678a9b1280a",
+      "application/self_repair.py": "365b0c6453d749727336eee6155fea68d3a4005670004121369ab4b72a066c59",
+      "bootstrap/self_repair.py": "75cabee0b86ee4db79beaeb6f2eb1138694e715c7f0c6d3a0892942a94f03d1b"
+    }
+  },
+  "actualInstalledVerified": true,
+  "approved": true,
+  "autonomousLifecycleProven": false,
+  "candidateProofSha256": "d9eda896ba46b91dab4698a6b4d5c613285c233948b4ccbcc4e4b4fd9a8b7555",
+  "contract": "EvaIndependentE416HostFaultBindingInstalledReview/v1",
+  "digitalWorkerProgramSha256": "aa1d7640ba058a7bcf65062537ecaf05f10b79aabcc77d28d7e81bd822c19021",
+  "evaluatorGenerationSha256": "68e39a371ef0c6abffd25efcb730117298daa4cd46c8a931703d646e9f3f1d6c",
+  "evaluatorSourceRootsPreserved": 4,
+  "focusedExactImageTests": {
+    "passed": 28,
+    "proofSha256": "36b750379dcf0f8b12e09b074391ba377d3883edc229ebe73944ccf73fd34dd8",
+    "seconds": 22.81
+  },
+  "fourProfileProofSha256": "9f1b0c28b13def632a0466aeac98ebddc1b3adf1bac680beac76074947d3a9ce",
+  "fullE416Completed": false,
+  "historicalReceiptsPreserved": 9,
+  "historicalRepairReplayed": false,
+  "installationApprovalSha256": "4a4c4e48a397042e1807686381898c32ce290b439118f0736c04f85164a8fbe8",
+  "installedImageIds": {
+    "core": "sha256:9cb0fc473423489b9fc953894e728e5e1502e5ae9209ac743c324c36a5e856c3",
+    "delegated-work-worker": "sha256:29648fd1b9f5790ebc72022ead475be6ac1bb49b77de0a8ce2bfd0a9c8a618b2"
+  },
+  "installerSha256": "b200e36aaaf47e8f522b5d6dcaee8476168ab9d47b7c11a96e47a9784d4a38c3",
+  "laterReuseProven": false,
+  "legacyWorkRowsUnchanged": 103,
+  "matchingActualRuntimeProfiles": [
+    "digital_work",
+    "household_research",
+    "public_research",
+    "shared_provider"
+  ],
+  "originalWorkScheduleAndStopPreserved": true,
+  "originalWorkScheduleAndStopProofSha256": "296b0191579ae2970b7f0c219a250c307b9c7079f061483ac6a204dd07e12f13",
+  "planSha256": "7307819e51e899c8d6bfd2a3f1dfbed5f8684dde8860ad0e5fe8aca6760feb9f",
+  "privateCriteriaPreserved": 62,
+  "remainingEvidence": "Eva-authored correction, independent comparison and review, guarded application, installed behavioral verification, and later use on a distinct genuine case.",
+  "reviewedAt": "2026-11-07T17:45:33.643920+00:00",
+  "reviewer": "independent_review",
+  "reviewerLifecycleActions": 0,
+  "reviewerModelCalls": 0,
+  "reviewerProductionWrites": 0,
+  "sameEvaluatorGenerationAndConfiguration": true,
+  "scope": "Installed standing-mandate host fault source binding and actual autonomous intake",
+  "sdkReceiptSha256": "fc613a1384536648df470e5f46c574c59af55e7e3a644b6ef22480a522bfece1"
+}
