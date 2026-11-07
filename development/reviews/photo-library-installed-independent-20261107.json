@@ -1,0 +1,25 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_INSTALLED_TECHNICAL_SCOPE",
+  "activationReceiptSha256": "4ac1497629cc23c4617bf0534ac68796bf5093a2b03ab6167d5d1fd03b438bea",
+  "independentActualReadbackSha256": "df57a4cf83a6756caeca42432f6f178c37b17398c27a1267e6396c59f1c38815",
+  "installerSha256": "d302dbde3bb6e8a0cc5a05904293215324eee0ab23629f6e62c5315d59528ced",
+  "planSha256": "bb818e430f048067926be891187bf61390634633fc8622cd5cfa487eddc13d9f",
+  "installerReviewSha256": "5d4a41126d06a0c599a513706b63ab90436d5a25b8c4642c1c74809e91ff6aae",
+  "verified": [
+    "Actual Telegram PID3042472/start ticks5312588 and exact invocation match the completed original receipt. The pending-start observation and readiness-only resume concern the same generation.",
+    "Actual native mapping selects the closed new prefix linux-x64.node with its bound hash. Existing database descriptor is open.",
+    "Effective dependency resolution is Node22.23.4, better-sqlite3 13.0.3, SQLite3.53.4 and dotenv18.0.9. Resolution metadata used an isolated in-memory SQLite database.",
+    "One root-owned selector, exact11 passive source files, original Node/grammy/static environment, credentials, data authorities and retained transport rows match the plan.",
+    "The Face service process remains UID1000 with telemetry disabled, the same backend revision and two model hashes. All29 stored face rows and24 active profiles remain bound."
+  ],
+  "limitations": [
+    "Owner photo analysis and household recognition remain unmeasured.",
+    "The earlier transient argv observation is retained as failure evidence and the existing readiness resume completed without a new stop or start.",
+    "Full E4.16 acceptance remains open."
+  ],
+  "reviewerApiRequests": 0,
+  "reviewerModelRequests": 0,
+  "reviewerLifecycleActions": 0
+}

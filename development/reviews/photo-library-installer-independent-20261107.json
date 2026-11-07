@@ -1,0 +1,29 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_SCOPED_FORWARD_INSTALLATION",
+  "installerSha256": "d302dbde3bb6e8a0cc5a05904293215324eee0ab23629f6e62c5315d59528ced",
+  "planSha256": "bb818e430f048067926be891187bf61390634633fc8622cd5cfa487eddc13d9f",
+  "freezeSha256": "5e14451915a150f869642281e6e703cdc0d25722149aa2cd860d1db24910441f",
+  "independentPreflightSha256": "ea5c1d12527de7e95922b4c63e342558a550bdba8117b7e6e282a9e71ed31a12",
+  "independentUid1000SyntheticProofSha256": "53f9471db9a541b632627469cf58775034417ecd2c2c5d5129756c0068d1adc3",
+  "faceSuccessReceiptSha256": "5083238c03c4ae7e11071c1ffb44cf3da6d10d2ffd6bbfeb3a91c0196d2f9eac",
+  "faceInstalledReviewSha256": "7e6dd51de8d70f94661c109bfbece68cf01d9b43300163bf3d473e077862053e",
+  "verified": [
+    "All frozen installer, plan, source and candidate-proof hashes match. Eleven copied library source files equal the retained original technical library.",
+    "Dependency provenance, isolated dotenv compatibility and locked native payload are bound. Independent UID1000 network-isolated old-write/new-read-write/old-read-write exercise passed three phases with unchanged schema and integrity, aborted transaction preservation and zero provider calls.",
+    "Independent14 installer/context tests passed. Independent six receipt-chain mutations were refused.",
+    "Independent fresh read-only preflight passed, binding actual Face/UI completion, selected CPU service,29 stored/24 active profiles and current Telegram generation/transport.",
+    "The selector changes one existing environment key. Exact root-owned closed payload verification and file/bottom-up-directory durability precede selection. Existing Node22/grammy/source/data/credentials remain bound.",
+    "Stop and start use reviewed generation, terminal exit, monotonic intent and ESRCH handling. Unknown outcomes retain receipts and inspection-only handling.",
+    "Forward readback checks actual native module mappings and existing open database descriptor. Dependency metadata uses an isolated in-memory database.",
+    "The retained original technical module provides a reviewed same-current-database return route. Actual rollback requires separate rollbackApproved authority and an exact successful forward receipt."
+  ],
+  "scopeLimits": [
+    "Real owner photo handling and household recognition remain unmeasured by these dependency checks.",
+    "This approval authorizes one exact forward installation. It does not authorize a rollback dispatch."
+  ],
+  "reviewerPhotoModelRequests": 0,
+  "reviewerLifecycleActions": 0,
+  "reviewerProductionDatabaseWrites": 0
+}

@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_SCOPED_PUBLICATION_COMMIT",
+  "finalWhitelistSha256": "0e5e8af7560f8a9ec10cffd9c5448d6fe170dcd288fbca340f6bf6a7bf3f1bd4",
+  "whitelistFiles": 15,
+  "recipeFiles": 10,
+  "recipeFreezeSha256": "b142a061c4f7ffdadf958628b88e5b7232fbdee8df42db5e7b14ca7789edff46",
+  "recipeManifestSha256": "46cc5cb947f49e2a8b273bf06fe9de535c9c0e621baa0b893f0e0a8e0a5e5b34",
+  "installedProofSha256": "cdd85864c9e9d5b27a937ea924f5bae4e3fdd10cf8f90e4745f240895aace840",
+  "actualInstalledReviewSha256": "9de4fe565b05702708d26a6b6b4a1be450c619b58766b34963eb70120fa278b6",
+  "canonicalWorkboardSha256": "3150a9b579f61e768aee5e781721ea7711b73b6356feab0af74cb2cf5a9a2c94",
+  "generatedWorkboardSha256": "9ce26b34e635f575238786d137d967a9d1365d48fd32424359224226233c01d7",
+  "verified": [
+    "All15 final-whitelist hashes match. Actual ten public recipe files equal the reviewed frozen candidate.",
+    "Independent recipe tests pass six cases, including rejection of unknown npm cache metadata. Only the complete recorded cache or its one exact hasInstallScript=true variant is accepted before restoring recorded bytes.",
+    "Independent byte comparison confirms all11 explicit source files and all111 vendor file/directory/link entries in the reproduced artifact match the reviewed runtime candidate. Reproduction proof binds npm signature verification and the exact dependency lock.",
+    "Recipe copies only explicit source inputs, disables install scripts, validates hashes/modes/links, and emits a separate artifact. No private library source contents or owner-specific configuration values are published.",
+    "Installed-proof generator binds exact successful receipt and independent installed review, validates resolution facts and refuses output replacement. Public proof equals the fixed reviewed generator payload.",
+    "Privacy scan and content review found no private host paths, credentials, authenticated DSNs or owner record payloads.",
+    "All103 card criteria and statuses plus execution-task criteria/statuses match HEAD. Validator reports103tasks/83completed/1cancelled/activeE4.16. Actual project-state plan and current view match canonical projections."
+  ],
+  "scope": "Commit only the15 final whitelist files and this review.",
+  "runtimeActionsRepeated": 0,
+  "reviewerModelRequests": 0
+}

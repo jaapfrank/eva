@@ -1,0 +1,19 @@
+{
+  "contract": "EvaPassivePhotoLibraryRecipe/v1",
+  "files": {
+    "prepare.py": "edd7e119d12a2cbe50c4c5a75e5b712eaa1a8e0b5e59d9bdf473c020b8ea9bec",
+    "test_prepare.py": "0614fae58fb50ccede336a4615db242b203c7cd7c46c46452568afabfa863a73",
+    "write_installed_proof.py": "f25b953fdb00f8fddfa7ba0f220eaf5c14a324b0be8646aabb8a0c5cc40abb4a",
+    "README.md": "7f1b00acc119d471aa34cd144916ff1571a2b9f16b3c8719b41233c63564aa39",
+    "package.json": "7c5f6e116aa61252a060e182a1a3564368700a94a28782a6e65057bac36dcf13",
+    "package-lock.json": "6cd47dbaef66b2556df90064a0c25f0c09203c5ee6589f7d8a7daaf93485a9a6",
+    "source-files.json": "185f6706ae932d3fd525e8ba5f14568f9c742372c3d652c74f7436363ec76904",
+    "vendor-files.json": "06ec0c242d3a9411be5a4768b28c3d97478a7a23b63ee1eafcb9dfbd3cd4a52a",
+    "npm-installed-lock.json": "24885ec9dee7857a7a41cab49d2e62510ecf578d779c30f574434330c2c97a85"
+  },
+  "sourceFiles": 11,
+  "vendorPackages": 3,
+  "targetNode": "22.23.4",
+  "targetNpm": "10.9.8",
+  "targetPlatform": "linux-x64"
+}

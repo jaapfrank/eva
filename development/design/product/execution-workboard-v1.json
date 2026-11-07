@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
+    "nextAction": "De fotobibliotheek gebruikt effectief better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9 in een eigen pakketmap. Dezelfde Telegram-accountbinding, 115 transportregels, database en 29 gezichtregels zijn onafhankelijk teruggelezen. Er zijn geen foto-, account- of modeltestverzoeken uitgevoerd. Volgende uitkomst: de ContextForge-gateway en werkelijk gebruikte providerbibliotheken bijwerken, inclusief de bewezen sessie- en herstelgrenzen. Behoud de huidige kern/worker als hun publieke koppeling compatibel is. Spraakoverdracht, hostonderhoud, E4.11-residuen en de volledige autonome E4.16-kringloop blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
-    "executionStep": "Face CPU/dashboard technical delivery complete; activate retained photo library update next",
+    "executionStep": "Photo library technical delivery complete; update compatible ContextForge provider family next",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+    "checkedAt": "2026-11-07T04:19:09.047740+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -1660,6 +1660,24 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Fotobibliotheek bijgewerkt — 7 november",
+            "state": "verified",
+            "summary": "De bestaande fotobibliotheek draait in een eigen pakketmap met better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9. De werkelijk geladen native module en bestaande database zijn onafhankelijk teruggelezen. Telegram, accountbindingen, 115 transportregels en 29 gezichtregels met 24 actieve profielen zijn behouden.",
+            "remaining": "Werkelijke fotoanalyse is niet opnieuw beproefd. ContextForge/native bibliotheken, overige onderhoudsgroepen en de volledige autonome E4.16-kringloop blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/photo-library-installed.json",
+            "review": "development/reviews/photo-library-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T04:19:09.047740+00:00",
+            "installedAt": "2026-11-07T04:08:21.597076+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "actuallyUsed": false,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "Gezichtsherkenning en dashboards bijgewerkt — 7 november",
             "state": "verified",
@@ -3423,14 +3441,14 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Gezichtsherkenning en dashboards bijgewerkt — 7 november",
+          "title": "Fotobibliotheek bijgewerkt — 7 november",
           "state": "verified",
-          "summary": "De bestaande gezichtsherkenning gebruikt InsightFace 2.1 en ONNX Runtime CPU 1.31.1 met uitgeschakelde telemetrie. De dashboardomgeving gebruikt de bijgewerkte React-, React Admin- en Vite-bibliotheken. Beide dashboards serveren de nieuwe bestanden. De modellen, alle 29 opgeslagen gezichtregels, 24 actieve profielen, besluiten en vier werkprofielen zijn onafhankelijk teruggelezen.",
-          "remaining": "Er zijn geen gezinsfoto’s gebruikt. Herkenning in het gezin, overige onderhoudsgroepen en de volledige autonome E4.16-kringloop blijven open.",
-          "source": "development/evidence/reassessment/maintenance-updates-20261106/face-ui-installed.json",
-          "review": "development/reviews/face-ui-installed-independent-20261107.json",
-          "checkedAt": "2026-11-07T03:58:00.207040+00:00",
-          "installedAt": "2026-11-07T03:48:45.370438+00:00",
+          "summary": "De bestaande fotobibliotheek draait in een eigen pakketmap met better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9. De werkelijk geladen native module en bestaande database zijn onafhankelijk teruggelezen. Telegram, accountbindingen, 115 transportregels en 29 gezichtregels met 24 actieve profielen zijn behouden.",
+          "remaining": "Werkelijke fotoanalyse is niet opnieuw beproefd. ContextForge/native bibliotheken, overige onderhoudsgroepen en de volledige autonome E4.16-kringloop blijven open.",
+          "source": "development/evidence/reassessment/maintenance-updates-20261106/photo-library-installed.json",
+          "review": "development/reviews/photo-library-installed-independent-20261107.json",
+          "checkedAt": "2026-11-07T04:19:09.047740+00:00",
+          "installedAt": "2026-11-07T04:08:21.597076+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
           "actuallyUsed": false,
@@ -3442,13 +3460,13 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "Gezichtsherkenning en dashboards opgeleverd; fotobibliotheek volgt",
+          "title": "Fotobibliotheek opgeleverd; gateway volgt",
           "summary": "Hindsight, PydanticAI, kern-/hulpdiensten, bestanden, Telegram, browser, gezichtsherkenning en dashboards zijn bijgewerkt en gecontroleerd.",
-          "detail": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
+          "detail": "De fotobibliotheek gebruikt effectief better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9 in een eigen pakketmap. Dezelfde Telegram-accountbinding, 115 transportregels, database en 29 gezichtregels zijn onafhankelijk teruggelezen. Er zijn geen foto-, account- of modeltestverzoeken uitgevoerd. Volgende uitkomst: de ContextForge-gateway en werkelijk gebruikte providerbibliotheken bijwerken, inclusief de bewezen sessie- en herstelgrenzen. Behoud de huidige kern/worker als hun publieke koppeling compatibel is. Spraakoverdracht, hostonderhoud, E4.11-residuen en de volledige autonome E4.16-kringloop blijven open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Kern online · face CPU en dashboard technisch opgeleverd · volgende updategroep in voorbereiding",
-          "checkedAt": "2026-11-07T03:58:00.207040+00:00",
-          "nextAction": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open."
+          "state": "Kern online · fotobibliotheek technisch opgeleverd · gateway in voorbereiding",
+          "checkedAt": "2026-11-07T04:19:09.047740+00:00",
+          "nextAction": "De fotobibliotheek gebruikt effectief better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9 in een eigen pakketmap. Dezelfde Telegram-accountbinding, 115 transportregels, database en 29 gezichtregels zijn onafhankelijk teruggelezen. Er zijn geen foto-, account- of modeltestverzoeken uitgevoerd. Volgende uitkomst: de ContextForge-gateway en werkelijk gebruikte providerbibliotheken bijwerken, inclusief de bewezen sessie- en herstelgrenzen. Behoud de huidige kern/worker als hun publieke koppeling compatibel is. Spraakoverdracht, hostonderhoud, E4.11-residuen en de volledige autonome E4.16-kringloop blijven open."
         },
         "next": {
           "taskId": "E4.15",
@@ -3460,7 +3478,7 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+        "checkedAt": "2026-11-07T04:19:09.047740+00:00",
         "reviewedAt": "2026-11-06T23:40:53.344878+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -9116,20 +9134,20 @@
                   "status": "in_progress",
                   "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                   "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                  "currentOutcome": "CPU-gezichtsherkenning en dashboardbibliotheken geïnstalleerd en onafhankelijk teruggelezen; fotobibliotheek is de volgende updategroep.",
+                  "currentOutcome": "Afzonderlijke fotobibliotheek is effectief geïnstalleerd en onafhankelijk teruggelezen. ContextForge/native bibliotheken zijn de volgende updategroep.",
                   "hindsightInstalled": "1.2.0",
                   "hindsightTarget": "1.2.0",
                   "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                   "ownerActionRequired": false,
                   "fullCardCompleted": false,
-                  "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+                  "checkedAt": "2026-11-07T04:19:09.047740+00:00",
                   "hindsightBuilt": true,
                   "hindsightLiveUpgradeInstalled": true,
                   "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                   "actualAstraSelectionAndExplicitZeroProven": true,
                   "focusedIndependentMemoryTestsPassed": 136,
                   "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                  "installationPending": "Photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
+                  "installationPending": "ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                   "hindsightTechnicalDeliveryComplete": true,
                   "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                   "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -9161,7 +9179,10 @@
                     "faceOnnxRuntimeCpu": "1.31.1",
                     "dashboardReact": "19.3.1",
                     "dashboardReactAdmin": "5.15.5",
-                    "dashboardVite": "8.3.6"
+                    "dashboardVite": "8.3.6",
+                    "photoDotenv": "18.0.9",
+                    "photoBetterSqlite3": "13.0.3",
+                    "photoSqlite": "3.53.4"
                   },
                   "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                   "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -9275,21 +9296,40 @@
                   "filesystemNodeInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-installed.json",
                   "filesystemNodeInstalledReview": "development/reviews/node-seven-installed-independent-20261107.json",
                   "photoLibraryMaintenance20261107": {
-                    "status": "inventoried_not_upgraded",
-                    "installed": false,
-                    "actuallyLoadedDependencies": {
+                    "status": "installed_independently_verified",
+                    "installed": true,
+                    "scope": "Retained photo-provider library only; own copied source/prefix proposed; actual DB/config/auth paths preserved; no Eva1 agent or alias",
+                    "requiresSeparateTestsReviewAndInstallation": false,
+                    "newGrammyPrefixDoesNotUpgradeThesePackages": true,
+                    "previouslyLoadedDependencies": {
                       "dotenv": "16.6.1",
                       "better-sqlite3": "11.10.0",
                       "bindings": "1.5.0",
                       "file-uri-to-path": "1.0.0"
                     },
-                    "updateTargetsPendingCompatibilityProof": {
+                    "compatibilityTargetsProven": {
                       "dotenv": "18.0.9",
                       "better-sqlite3": "13.0.3"
                     },
-                    "scope": "Retained photo-provider library only; own copied source/prefix proposed; actual DB/config/auth paths preserved; no Eva1 agent or alias",
-                    "requiresSeparateTestsReviewAndInstallation": true,
-                    "newGrammyPrefixDoesNotUpgradeThesePackages": true
+                    "technicalDeliveryComplete": true,
+                    "independentlyReviewed": true,
+                    "checkedAt": "2026-11-07T04:19:09.047740+00:00",
+                    "installedAt": "2026-11-07T04:08:21.597076+00:00",
+                    "actuallyLoadedDependencies": {
+                      "dotenv": "18.0.9",
+                      "better-sqlite3": "13.0.3",
+                      "sqlite": "3.53.4"
+                    },
+                    "installedDependencyClosure": {
+                      "dotenv": "18.0.9",
+                      "better-sqlite3": "13.0.3",
+                      "node-addon-api": "8.9.2"
+                    },
+                    "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/photo-library-installed.json",
+                    "installedReview": "development/reviews/photo-library-installed-independent-20261107.json",
+                    "requiredTestsReviewAndInstallationCompleted": true,
+                    "actualOwnerPhotoUseVerified": false,
+                    "originalDataAndSourcesPreserved": true
                   },
                   "telegramMaintenance20261107": {
                     "status": "installed_independently_verified",
@@ -10044,7 +10084,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
+        "nextAction": "De fotobibliotheek gebruikt effectief better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9 in een eigen pakketmap. Dezelfde Telegram-accountbinding, 115 transportregels, database en 29 gezichtregels zijn onafhankelijk teruggelezen. Er zijn geen foto-, account- of modeltestverzoeken uitgevoerd. Volgende uitkomst: de ContextForge-gateway en werkelijk gebruikte providerbibliotheken bijwerken, inclusief de bewezen sessie- en herstelgrenzen. Behoud de huidige kern/worker als hun publieke koppeling compatibel is. Spraakoverdracht, hostonderhoud, E4.11-residuen en de volledige autonome E4.16-kringloop blijven open.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -10056,7 +10096,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T03:58:00.207040+00:00",
+        "updatedAt": "2026-11-07T04:19:09.047740+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10335,7 +10375,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+        "checkedAt": "2026-11-07T04:19:09.047740+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -16087,20 +16127,20 @@
                 "status": "in_progress",
                 "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                 "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                "currentOutcome": "CPU-gezichtsherkenning en dashboardbibliotheken geïnstalleerd en onafhankelijk teruggelezen; fotobibliotheek is de volgende updategroep.",
+                "currentOutcome": "Afzonderlijke fotobibliotheek is effectief geïnstalleerd en onafhankelijk teruggelezen. ContextForge/native bibliotheken zijn de volgende updategroep.",
                 "hindsightInstalled": "1.2.0",
                 "hindsightTarget": "1.2.0",
                 "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                 "ownerActionRequired": false,
                 "fullCardCompleted": false,
-                "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+                "checkedAt": "2026-11-07T04:19:09.047740+00:00",
                 "hindsightBuilt": true,
                 "hindsightLiveUpgradeInstalled": true,
                 "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                 "actualAstraSelectionAndExplicitZeroProven": true,
                 "focusedIndependentMemoryTestsPassed": 136,
                 "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                "installationPending": "Photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
+                "installationPending": "ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                 "hindsightTechnicalDeliveryComplete": true,
                 "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                 "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -16132,7 +16172,10 @@
                   "faceOnnxRuntimeCpu": "1.31.1",
                   "dashboardReact": "19.3.1",
                   "dashboardReactAdmin": "5.15.5",
-                  "dashboardVite": "8.3.6"
+                  "dashboardVite": "8.3.6",
+                  "photoDotenv": "18.0.9",
+                  "photoBetterSqlite3": "13.0.3",
+                  "photoSqlite": "3.53.4"
                 },
                 "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                 "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -16246,21 +16289,40 @@
                 "filesystemNodeInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-installed.json",
                 "filesystemNodeInstalledReview": "development/reviews/node-seven-installed-independent-20261107.json",
                 "photoLibraryMaintenance20261107": {
-                  "status": "inventoried_not_upgraded",
-                  "installed": false,
-                  "actuallyLoadedDependencies": {
+                  "status": "installed_independently_verified",
+                  "installed": true,
+                  "scope": "Retained photo-provider library only; own copied source/prefix proposed; actual DB/config/auth paths preserved; no Eva1 agent or alias",
+                  "requiresSeparateTestsReviewAndInstallation": false,
+                  "newGrammyPrefixDoesNotUpgradeThesePackages": true,
+                  "previouslyLoadedDependencies": {
                     "dotenv": "16.6.1",
                     "better-sqlite3": "11.10.0",
                     "bindings": "1.5.0",
                     "file-uri-to-path": "1.0.0"
                   },
-                  "updateTargetsPendingCompatibilityProof": {
+                  "compatibilityTargetsProven": {
                     "dotenv": "18.0.9",
                     "better-sqlite3": "13.0.3"
                   },
-                  "scope": "Retained photo-provider library only; own copied source/prefix proposed; actual DB/config/auth paths preserved; no Eva1 agent or alias",
-                  "requiresSeparateTestsReviewAndInstallation": true,
-                  "newGrammyPrefixDoesNotUpgradeThesePackages": true
+                  "technicalDeliveryComplete": true,
+                  "independentlyReviewed": true,
+                  "checkedAt": "2026-11-07T04:19:09.047740+00:00",
+                  "installedAt": "2026-11-07T04:08:21.597076+00:00",
+                  "actuallyLoadedDependencies": {
+                    "dotenv": "18.0.9",
+                    "better-sqlite3": "13.0.3",
+                    "sqlite": "3.53.4"
+                  },
+                  "installedDependencyClosure": {
+                    "dotenv": "18.0.9",
+                    "better-sqlite3": "13.0.3",
+                    "node-addon-api": "8.9.2"
+                  },
+                  "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/photo-library-installed.json",
+                  "installedReview": "development/reviews/photo-library-installed-independent-20261107.json",
+                  "requiredTestsReviewAndInstallationCompleted": true,
+                  "actualOwnerPhotoUseVerified": false,
+                  "originalDataAndSourcesPreserved": true
                 },
                 "telegramMaintenance20261107": {
                   "status": "installed_independently_verified",
@@ -17015,7 +17077,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
+      "nextAction": "De fotobibliotheek gebruikt effectief better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9 in een eigen pakketmap. Dezelfde Telegram-accountbinding, 115 transportregels, database en 29 gezichtregels zijn onafhankelijk teruggelezen. Er zijn geen foto-, account- of modeltestverzoeken uitgevoerd. Volgende uitkomst: de ContextForge-gateway en werkelijk gebruikte providerbibliotheken bijwerken, inclusief de bewezen sessie- en herstelgrenzen. Behoud de huidige kern/worker als hun publieke koppeling compatibel is. Spraakoverdracht, hostonderhoud, E4.11-residuen en de volledige autonome E4.16-kringloop blijven open.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -17027,7 +17089,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T03:58:00.207040+00:00",
+      "updatedAt": "2026-11-07T04:19:09.047740+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17306,7 +17368,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+      "checkedAt": "2026-11-07T04:19:09.047740+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

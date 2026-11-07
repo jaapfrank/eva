@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.
+Volgende stap: De fotobibliotheek gebruikt effectief better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9 in een eigen pakketmap. Dezelfde Telegram-accountbinding, 115 transportregels, database en 29 gezichtregels zijn onafhankelijk teruggelezen. Er zijn geen foto-, account- of modeltestverzoeken uitgevoerd. Volgende uitkomst: de ContextForge-gateway en werkelijk gebruikte providerbibliotheken bijwerken, inclusief de bewezen sessie- en herstelgrenzen. Behoud de huidige kern/worker als hun publieke koppeling compatibel is. Spraakoverdracht, hostonderhoud, E4.11-residuen en de volledige autonome E4.16-kringloop blijven open.
 
 ## Voortgang
 

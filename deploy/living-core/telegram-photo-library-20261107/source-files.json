@@ -1,0 +1,17 @@
+{
+  "contract": "EvaPassivePhotoLibrarySourceManifest/v1",
+  "files": {
+    "src/bus.js": "35a88a80479f72c844a9ee5586dade0b4dee9eac953e62b70a01393bedfee4fa",
+    "src/telegramdialogue.js": "01d0305d2d85fa63d6229521cad25da621be6ac70bc943c0f9fb86f993eaf86c",
+    "src/util.js": "948bcdac971be7981d77027f0686187bcd48e3c1eba21176ccb829f90cb96ddd",
+    "src/executionledger.js": "0219d63292deff80aa86d8b49e62c849e34a5179bda84b3bf3507c2d3cd67aec",
+    "src/db.js": "ed9834e415019f61705b6cd3fb47539b3bd7684a56f68a64759b04885cafa73c",
+    "src/turnauthority.js": "8a092cf94a9d18af684f941f4f13b1b16a85cc25949b1ee80f13452529e59c62",
+    "src/voiceauthority.js": "df51fad15ca156292f3309cd1f458713c44ffc8003297aebe33c3fec6a74830e",
+    "src/config.js": "88e4b44561ccc9b2c7b70c5fc183bb3e78f930ed976839cec1a715c452b2c9f9",
+    "src/security/redaction.js": "4c09d048e4eb22aafe79d1dd38affd327d7c5026be5a0f1600d213bd82b63f77",
+    "src/brain/oauth.js": "245c09674ab63d7f53ad1c0b4a8b561776514a330d1a9d8349d4342214c58ef4",
+    "src/brain/llm.js": "9390dbc97d282a406a8d1a631c3b29f7aadfe7628419a1ed785ad4dcccc65ed6"
+  },
+  "sourceFileCount": 11
+}
