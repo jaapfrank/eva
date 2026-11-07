@@ -1,0 +1,80 @@
+{
+  "CPythonBuildEnvironment": {
+    "CFLAGS": "-O2 -fPIC -fstack-protector-strong -fcf-protection -D_FORTIFY_SOURCE=2",
+    "CPPFLAGS": "-I/build/devel/include",
+    "LDFLAGS": "-L/build/devel/lib64 -Wl,-z,relro,-z,now -Wl,-rpath,/opt/eva2/cpython31216/lib64",
+    "LD_LIBRARY_PATH": "/build/devel/lib64:/opt/eva2/cpython31216/lib64",
+    "PKG_CONFIG_PATH": "/build/devel/lib64/pkgconfig"
+  },
+  "archiveManifest": "native-artifacts.json",
+  "binaryArchives": 295,
+  "buildCpPython": [
+    "make",
+    "-j3",
+    "PROFILE_TASK=-m test --pgo test_array test_base64 test_binascii test_binhex test_binop test_bytes test_class test_cmath test_codecs test_collections test_complex test_csv test_decimal test_dict test_float test_fstring test_hashlib test_heapq test_int test_itertools test_json test_long test_math test_memoryview test_pickle test_re test_set test_sqlite3 test_struct test_xml_etree test_xml_etree_c test_zlib"
+  ],
+  "buildOnlyLibdir": "/build/devel/lib64",
+  "buildOnlyPrefix": "/build/devel",
+  "buildOnlySources": [
+    "gdbm-1.23-12.el10_0.src.rpm",
+    "mpdecimal-2.5.1-12.el10.src.rpm",
+    "readline-8.2-11.el10.src.rpm"
+  ],
+  "builderImage": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+  "configureCpPython": [
+    "./configure",
+    "--prefix=/opt/eva2/cpython31216",
+    "--libdir=/opt/eva2/cpython31216/lib64",
+    "--with-platlibdir=lib64",
+    "--enable-shared",
+    "--with-computed-gotos=yes",
+    "--with-dbmliborder=gdbm:ndbm:bdb",
+    "--with-system-expat",
+    "--with-system-libmpdec",
+    "--enable-loadable-sqlite-extensions",
+    "--with-ssl-default-suites=openssl",
+    "--with-builtin-hashlib-hashes=blake2",
+    "--without-static-libpython",
+    "--without-ensurepip",
+    "--enable-optimizations",
+    "--with-lto"
+  ],
+  "confirmedElfObjects": 76,
+  "confirmedNativeModules": 65,
+  "contract": "EvaContextForgeNativeSourceRebuildRecipe/v1",
+  "excludeDerivedBytecodeFromRuntimeArchive": true,
+  "installCpPython": [
+    "make",
+    "altinstall"
+  ],
+  "nativePrefixBitForBitBuildClaimed": false,
+  "psycopgCBuild": {
+    "command": [
+      "pip",
+      "wheel",
+      "--no-index",
+      "--no-deps",
+      "--no-build-isolation",
+      "--wheel-dir",
+      "wheels",
+      "psycopg_c-3.3.8.tar.gz"
+    ],
+    "pgConfig": "/usr/bin/pg_config",
+    "python": "/opt/eva2/cpython31216/bin/python3.12",
+    "requiredLibpq": "16.14",
+    "requiredWheelTag": "cp312-cp312-linux_x86_64"
+  },
+  "rebuildOutputsMustReceiveNewReviewIfBytesDiffer": true,
+  "requiredCompilerArchiveCount": 298,
+  "runtimeArchiveRoot": "opt/eva2/cpython31216",
+  "runtimeArtifactPrefix": "/opt/eva2/cpython31216",
+  "runtimePackageOwnership": [
+    "Use native UBI library packages only; no foreign ABI aliases.",
+    "Development headers and built development libraries never ship.",
+    "Runtime transactions must pass rpm -Uvh --test with normal dependency checking."
+  ],
+  "signatures": "Verify every archive using rpmkeys --checksig against the pinned UBI image keyring, and match exact bytes/hashes before installing or unpacking.",
+  "sourceArchives": 3,
+  "testSkips": 365,
+  "testsSelected": 8909
+}

@@ -1,0 +1,52 @@
+{
+  "candidateImageMapSha256": "ebbad4e106e22a305f9d5cfbd68db5328e1addc956fbbe167f952b07dddbbc93",
+  "completionReceiptSha256": "f9b28cbbba1436b6ab28581e62cb333cfd2305cf4857c8796e9717729c5fb30e",
+  "contract": "EvaContextForgeInstalledMaintenance/v1",
+  "database": {
+    "coveredRawMetricRowsRetiredByExistingPolicy": 36,
+    "forwardRepairRequiredAfterMigration": true,
+    "newSchemaHead": "c7e91a2b4d60",
+    "oldSchemaHead": "e4f5a6b7c8d9",
+    "originalBusinessDataGrantsAndCatalogsPreserved": true,
+    "originalTablesRetained": 71,
+    "preMigrationBackupRetained": true
+  },
+  "independentOwnerReadbackSha256": "3fe8d5a5ca681e5bb4927b2f0e6d637f1564ad116510cfded90b164fd8df022e",
+  "independentStructuralReadbackSha256": "1b6db24f80d7ea9ea4433454db04e6f6e6f40d784a292d2723093127f25d4738",
+  "installedAt": "2026-11-07T06:26:37.849494+00:00",
+  "installedReview": "development/reviews/contextforge-installed-independent-20261107.json",
+  "installedReviewSha256": "be5f6d5d98b5a9b1c6f416e4d2f690dda43d0903a5dde6e36076fe455d060bdd",
+  "originalActivationReceiptSha256": "af115af1077d1a3b6b82b9ff503676f807a4312d4daa7bdf0203cdfe3520ddf2",
+  "readback": {
+    "appendCopyAdmitted": false,
+    "compatibleCoreWorkerProfiles": 4,
+    "filesystemCatalogToolCount": 14,
+    "historicalWorkReplayed": false,
+    "metadataOnly": true,
+    "ownerFactoryActionCounts": [
+      9,
+      9,
+      4
+    ],
+    "verificationModelCalls": 0,
+    "verificationToolCalls": 0
+  },
+  "retainedContinuationReceiptSha256": "9106d0abd168417d16407f7dd134492b8d9383d7cfcba9eeea1e57fd2431806f",
+  "runtime": {
+    "authCacheBatchQueries": false,
+    "authCacheEnabled": false,
+    "autoRefreshServers": false,
+    "contextForge": "1.1.0",
+    "effectiveGatewaySourceFiles": 410,
+    "filesystemPackage": "2.2.0",
+    "gatewayReadOnlySourceBinds": 5,
+    "imageFamilies": 4,
+    "mcpPython": "2.3.0",
+    "node": "26.13.0",
+    "nodeMcpSdk": "1.32.2",
+    "pluginsEnabled": false,
+    "providerRoles": 6,
+    "python": "3.12.16"
+  },
+  "status": "installed_independently_verified"
+}

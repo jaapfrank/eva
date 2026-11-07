@@ -1,0 +1,430 @@
+--- a/mcpgateway/alembic/versions/9935d863930b_add_metrics_read_to_default_roles.py
++++ b/mcpgateway/alembic/versions/9935d863930b_add_metrics_read_to_default_roles.py
+@@ -132,15 +132,12 @@
+ 
+ 
+ def upgrade() -> None:
+-    """Backfill metrics:read permission into the platform_viewer role."""
+-    conn = op.get_bind()
+-    inspector = sa.inspect(conn)
+-    if "roles" not in inspector.get_table_names():
+-        print("roles table not found. Skipping migration.")
+-        return
++    """Keep existing Eva grants; new permission definitions remain metadata.
+ 
+-    for role_name, scope, permissions in ROLE_PERMISSION_ADDITIONS:
+-        _update_role_permissions(conn, role_name, scope, permissions, add=True)
++    This pinned permission-only migration intentionally performs no role writes.
++    Schema revisions still advance, and bootstrap preserves existing roles too.
++    """
++    return None
+ 
+ 
+ def downgrade() -> None:
+--- a/mcpgateway/alembic/versions/d8d7939e73e9_add_tools_preview_to_default_roles.py
++++ b/mcpgateway/alembic/versions/d8d7939e73e9_add_tools_preview_to_default_roles.py
+@@ -134,15 +134,12 @@
+ 
+ 
+ def upgrade() -> None:
+-    """Backfill tools.preview permission into the viewer, developer, and team_admin roles."""
+-    conn = op.get_bind()
+-    inspector = sa.inspect(conn)
+-    if "roles" not in inspector.get_table_names():
+-        print("roles table not found. Skipping migration.")
+-        return
++    """Keep existing Eva grants; new permission definitions remain metadata.
+ 
+-    for role_name, scope, permissions in ROLE_PERMISSION_ADDITIONS:
+-        _update_role_permissions(conn, role_name, scope, permissions, add=True)
++    This pinned permission-only migration intentionally performs no role writes.
++    Schema revisions still advance, and bootstrap preserves existing roles too.
++    """
++    return None
+ 
+ 
+ def downgrade() -> None:
+--- a/mcpgateway/auth.py
++++ b/mcpgateway/auth.py
+@@ -1084,6 +1084,7 @@
+             # Detach from session and return a copy of attributes
+             # since the session will be closed
+             return EmailUser(
++                id=user.id,
+                 email=user.email,
+                 password_hash=user.password_hash,
+                 full_name=user.full_name,
+--- a/mcpgateway/bootstrap_db.py
++++ b/mcpgateway/bootstrap_db.py
+@@ -389,7 +389,6 @@
+                         "tools.read",
+                         "plugins.read",
+                         "tools.execute",
+-                        "tools.preview",
+                         "resources.read",
+                         "prompts.read",
+                         "llm.read",
+@@ -437,7 +436,6 @@
+                         "tools.read",
+                         "plugins.read",
+                         "tools.execute",
+-                        "tools.preview",
+                         "resources.read",
+                         "prompts.read",
+                         "llm.read",
+@@ -483,7 +481,6 @@
+                         "teams.join",
+                         "tools.read",
+                         "tools.execute",
+-                        "tools.preview",
+                         "resources.read",
+                         "prompts.read",
+                         "llm.read",
+@@ -512,7 +509,6 @@
+                         "prompts.read",
+                         "llm.read",
+                         "a2a.read",
+-                        "metrics:read",
+                         "tokens.create",
+                         "tokens.read",
+                         "tokens.update",
+@@ -573,16 +569,9 @@
+                     # Check if role already exists
+                     existing_role = await role_service.get_role_by_name(str(role_def["name"]), str(role_def["scope"]))
+                     if existing_role:
+-                        # Converge permissions for system roles so schema changes are applied
+-                        expected_perms = set(cast(list[str], role_def["permissions"]))
+-                        current_perms = set(existing_role.permissions or [])
+-                        if existing_role.is_system_role and expected_perms != current_perms:
+-                            logger.info(f"Updating system role {SecurityValidator.sanitize_log_message(str(role_def['name']))} permissions")
+-                            existing_role.permissions = sorted(expected_perms)
+-                            db.commit()
+-                            db.refresh(existing_role)
+-                        else:
+-                            logger.info(f"System role {SecurityValidator.sanitize_log_message(str(role_def['name']))} already exists - skipping")
++                        # Eva maintenance preserves every existing permission and assignment.
++                        # New upstream permission definitions do not authorize new grants.
++                        logger.info("Preserving existing system role permissions")
+                         created_roles.append(existing_role)
+                         continue
+ 
+@@ -682,6 +671,15 @@
+     Args:
+         conn: Active SQLAlchemy connection
+     """
++    # Managed restarts must not infer that a null team means an orphan.
++    # Legacy reassignment is an explicit migration operation, never startup repair.
++    assignment_mode = os.environ.get("EVA_MCP_RESOURCE_ASSIGNMENT_MODE", "preserve")
++    if assignment_mode == "preserve":
++        logger.info("Preserving existing resource assignments during bootstrap")
++        return
++    if assignment_mode != "migrate-orphans":
++        raise ValueError("Invalid EVA_MCP_RESOURCE_ASSIGNMENT_MODE")
++
+     if not settings.email_auth_enabled:
+         logger.info("Email authentication disabled - skipping resource assignment")
+         return
+--- /dev/null
++++ b/mcpgateway/eva_mcp_pinning.py
+@@ -0,0 +1,150 @@
++"""Private candidate: public HTTPX2 transport for the existing MCP policy.
++
++Not a deployed provider or a new authority route. Policy parsing and destination
++admission below are preserved byte-for-byte from the existing helper.
++"""
++from __future__ import annotations
++import ipaddress
++import json
++import os
++from urllib.parse import urlsplit
++import httpx2
++
++def _policy():
++    raw = os.environ.get("EVA_MCP_PINNING_POLICY")
++    if raw is None:
++        return None
++    value = json.loads(raw)
++    fields = {"owner_networks", "blocked_addresses", "filesystem_origin", "filesystem_address"}
++    if not isinstance(value, dict) or set(value) not in (fields, fields | {"managed_endpoints"}):
++        raise ValueError("MCP pinning policy is invalid")
++    if (not isinstance(value["owner_networks"], list)
++            or not 1 <= len(value["owner_networks"]) <= 32
++            or not isinstance(value["blocked_addresses"], list)
++            or not value["blocked_addresses"]):
++        raise ValueError("MCP pinning network policy is invalid")
++    value["owner_networks"] = tuple(ipaddress.ip_network(x, strict=True) for x in value["owner_networks"])
++    if any(not network.is_private or network.is_loopback or network.is_link_local
++           or network.is_multicast or network.is_unspecified for network in value["owner_networks"]):
++        raise ValueError("MCP pinning owner network scope is invalid")
++    value["blocked_addresses"] = frozenset(ipaddress.ip_address(x) for x in value["blocked_addresses"])
++    value["filesystem_address"] = ipaddress.ip_address(value["filesystem_address"])
++    origin = urlsplit(value["filesystem_origin"])
++    if (origin.scheme != "http" or not origin.hostname or origin.username or origin.password
++            or origin.query or origin.fragment or origin.path not in {"", "/"}
++            or origin.port is None or not value["filesystem_address"].is_private
++            or value["filesystem_address"].is_loopback):
++        raise ValueError("MCP pinning filesystem origin is invalid")
++    value["filesystem_origin"] = (origin.scheme, origin.hostname, origin.port)
++    managed = value.get("managed_endpoints", [])
++    if not isinstance(managed, list) or len(managed) > 16:
++        raise ValueError("MCP managed endpoints are invalid")
++    admitted = []
++    for item in managed:
++        if (not isinstance(item, dict) or set(item) != {"endpoint", "resolved_ip"}
++                or not all(isinstance(item[key], str) and item[key] for key in item)):
++            raise ValueError("MCP managed endpoint is invalid")
++        endpoint = urlsplit(item["endpoint"])
++        address = ipaddress.ip_address(item["resolved_ip"])
++        endpoint_port = endpoint.port if endpoint.port is not None else (443 if endpoint.scheme == "https" else 80)
++        if (endpoint.scheme not in {"http", "https"} or not endpoint.hostname
++                or endpoint.username is not None or endpoint.password is not None
++                or endpoint.query or endpoint.fragment or not address.is_private
++                or address.is_loopback or address.is_link_local or address.is_multicast
++                or address.is_unspecified or address in value["blocked_addresses"]
++                or not 1 <= endpoint_port <= 65535):
++            raise ValueError("MCP managed endpoint is invalid")
++        admitted.append((endpoint.scheme, endpoint.hostname, endpoint_port,
++                         endpoint.path or "/", address))
++    value["managed_endpoints"] = tuple(admitted)
++    return value
++
++
++def _admit(url: str, metadata: dict, policy: dict) -> None:
++    target = urlsplit(url)
++    address = ipaddress.ip_address(metadata["resolved_ip"])
++    if isinstance(address, ipaddress.IPv6Address) and address.ipv4_mapped:
++        address = address.ipv4_mapped
++    port = target.port if target.port is not None else (443 if target.scheme == "https" else 80)
++    if (address in policy["blocked_addresses"] or address.is_loopback
++            or address.is_link_local or address.is_multicast or address.is_unspecified
++            or target.username or target.password or not 1 <= port <= 65535):
++        raise ValueError("MCP destination is outside the deployment policy")
++    if ((target.scheme, target.hostname, port) == policy["filesystem_origin"]
++            and address == policy["filesystem_address"]):
++        return
++    if (not target.query and not target.fragment
++            and (target.scheme, target.hostname, port, target.path or "/", address)
++            in policy["managed_endpoints"]):
++        return
++    if target.scheme == "https" and port == 443 and address.is_global:
++        return
++    if target.scheme in {"http", "https"} and any(address in network for network in policy["owner_networks"]):
++        return
++    raise ValueError("MCP destination is outside the deployment policy")
++
++
++class _PinnedTransport(httpx2.AsyncBaseTransport):
++    """Resolve once per request and send only the validated address."""
++
++    def __init__(self, policy: dict, **kwargs):
++        self._policy = policy
++        self._inner = httpx2.AsyncHTTPTransport(**kwargs)
++
++    async def handle_async_request(self, request: httpx2.Request) -> httpx2.Response:
++        from mcpgateway.common.validators import SecurityValidator
++
++        metadata = await SecurityValidator.validate_url_for_connection_pinning(
++            str(request.url), "MCP URL")
++        if not all(isinstance(metadata.get(key), str) and metadata[key]
++                   for key in ("resolved_ip", "hostname", "original_authority")):
++            raise ValueError("MCP destination has no validated address")
++        _admit(str(request.url), metadata, self._policy)
++        headers = request.headers.copy()
++        headers["Host"] = metadata["original_authority"]
++        extensions = dict(request.extensions)
++        extensions["sni_hostname"] = metadata["hostname"]
++        pinned = httpx2.Request(
++            request.method,
++            request.url.copy_with(host=metadata["resolved_ip"]),
++            headers=headers,
++            stream=request.stream,
++            extensions=extensions,
++        )
++        response = await self._inner.handle_async_request(pinned)
++        # MCP2 follows same-origin redirects itself, outside AsyncClient.send.
++        # Preserve the existing no-redirect boundary at the public transport.
++        if response.is_redirect:
++            await response.aclose()
++            raise httpx2.UnsupportedProtocol("MCP redirects are disabled", request=request)
++        return response
++
++    async def aclose(self) -> None:
++        await self._inner.aclose()
++
++
++class _PinnedClient(httpx2.AsyncClient):
++    def __init__(self, policy: dict, **kwargs):
++        if (kwargs.get("verify") is False or "transport" in kwargs
++                or "proxy" in kwargs or "mounts" in kwargs):
++            raise ValueError("MCP pinning requires verified direct transport")
++        limits = kwargs.get("limits", httpx2.Limits())
++        direct_limits = httpx2.Limits(
++            max_connections=limits.max_connections, max_keepalive_connections=0)
++        transport = _PinnedTransport(
++            policy, verify=kwargs.pop("verify", True), cert=kwargs.pop("cert", None),
++            trust_env=False, http2=False, limits=direct_limits,
++        )
++        kwargs.update(trust_env=False, follow_redirects=False, http2=False,
++                      limits=direct_limits, transport=transport)
++        super().__init__(**kwargs)
++
++    async def send(self, request, **kwargs):
++        # Public method, no dependency on HTTPX's private request internals.
++        kwargs["follow_redirects"] = False
++        return await super().send(request, **kwargs)
++
++
++def mcp_http_client(**kwargs):
++    policy = _policy()
++    return httpx2.AsyncClient(**kwargs) if policy is None else _PinnedClient(policy, **kwargs)
+--- a/mcpgateway/main.py
++++ b/mcpgateway/main.py
+@@ -10584,9 +10584,9 @@
+     auth_user_email, auth_token_teams, auth_is_admin = get_rpc_filter_context(request, user)
+     run_owner_email = auth_user_email
+     run_owner_team_ids = [] if auth_token_teams is None else list(auth_token_teams)
+-    if auth_is_admin and auth_token_teams is None:
+-        auth_user_email = None
+-    elif auth_token_teams is None:
++    # Keep verified owner identity for the service-level private-resource check.
++    # Unrestricted admin scope does not grant another owner's private tools.
++    if not auth_is_admin and auth_token_teams is None:
+         auth_token_teams = []
+ 
+     oauth_user_email = get_user_email(user)
+--- a/mcpgateway/services/gateway_service.py
++++ b/mcpgateway/services/gateway_service.py
+@@ -5286,19 +5286,16 @@
+                 Returns:
+                     httpx2.AsyncClient: Configured HTTPX async client
+                 """
+-                return httpx2.AsyncClient(
++                return __import__('mcpgateway.eva_mcp_pinning', fromlist=['mcp_http_client']).mcp_http_client(
+                     follow_redirects=False,
+                     headers=headers,
+                     timeout=timeout if timeout else get_httpx2_timeout(),
+                     auth=auth,
+-                    **pinned_target.client_kwargs(
+-                        verify=ssl_context if ssl_context else get_default_verify(),
+-                        limits=httpx2.Limits(
++                    verify=ssl_context if ssl_context else get_default_verify(), limits=httpx2.Limits(
+                             max_connections=settings.httpx_max_connections,
+                             max_keepalive_connections=settings.httpx_max_keepalive_connections,
+                             keepalive_expiry=settings.httpx_keepalive_expiry,
+                         ),
+-                    ),
+                 )
+ 
+             # Use isolated client for gateway health checks (each gateway may have custom CA cert)
+@@ -7732,19 +7729,16 @@
+             Returns:
+                 httpx2.AsyncClient: Configured HTTPX async client
+             """
+-            return httpx2.AsyncClient(
++            return __import__('mcpgateway.eva_mcp_pinning', fromlist=['mcp_http_client']).mcp_http_client(
+                 follow_redirects=False,
+                 headers=headers,
+                 timeout=timeout if timeout else get_httpx2_timeout(),
+                 auth=auth,
+-                **pinned_target.client_kwargs(
+-                    verify=get_default_verify(),
+-                    limits=httpx2.Limits(
++                verify=get_default_verify(), limits=httpx2.Limits(
+                         max_connections=settings.httpx_max_connections,
+                         max_keepalive_connections=settings.httpx_max_keepalive_connections,
+                         keepalive_expiry=settings.httpx_keepalive_expiry,
+                     ),
+-                ),
+             )
+ 
+         # Client auto-initializes on entry; no manual initialize() needed.
+@@ -7913,19 +7907,16 @@
+             else:
+                 ctx = None
+ 
+-            return httpx2.AsyncClient(
++            return __import__('mcpgateway.eva_mcp_pinning', fromlist=['mcp_http_client']).mcp_http_client(
+                 follow_redirects=False,
+                 headers=headers,
+                 timeout=timeout if timeout else get_httpx2_timeout(),
+                 auth=auth,
+-                **pinned_target.client_kwargs(
+-                    verify=ctx if ctx else get_default_verify(),
+-                    limits=httpx2.Limits(
++                verify=ctx if ctx else get_default_verify(), limits=httpx2.Limits(
+                         max_connections=settings.httpx_max_connections,
+                         max_keepalive_connections=settings.httpx_max_keepalive_connections,
+                         keepalive_expiry=settings.httpx_keepalive_expiry,
+                     ),
+-                ),
+             )
+ 
+         # Client auto-initializes on entry; no manual initialize() needed.
+@@ -8084,19 +8075,16 @@
+             else:
+                 ctx = None
+ 
+-            return httpx2.AsyncClient(
++            return __import__('mcpgateway.eva_mcp_pinning', fromlist=['mcp_http_client']).mcp_http_client(
+                 follow_redirects=False,
+                 headers=headers,
+                 timeout=timeout if timeout else get_httpx2_timeout(),
+                 auth=auth,
+-                **pinned_target.client_kwargs(
+-                    verify=ctx if ctx else get_default_verify(),
+-                    limits=httpx2.Limits(
++                verify=ctx if ctx else get_default_verify(), limits=httpx2.Limits(
+                         max_connections=settings.httpx_max_connections,
+                         max_keepalive_connections=settings.httpx_max_keepalive_connections,
+                         keepalive_expiry=settings.httpx_keepalive_expiry,
+                     ),
+-                ),
+             )
+ 
+         async with mcp_proxy_client(
+--- a/mcpgateway/services/tool_service.py
++++ b/mcpgateway/services/tool_service.py
+@@ -4257,19 +4257,16 @@
+                 # First-Party
+                 from mcpgateway.services.http_client_service import get_default_verify, get_httpx2_timeout  # pylint: disable=import-outside-toplevel
+ 
+-                return httpx2.AsyncClient(
++                return __import__('mcpgateway.eva_mcp_pinning', fromlist=['mcp_http_client']).mcp_http_client(
+                     follow_redirects=False,
+                     headers=headers,
+                     timeout=timeout if timeout else get_httpx2_timeout(),
+                     auth=auth,
+-                    **pinned_target.client_kwargs(
+-                        verify=get_default_verify(),
+-                        limits=httpx2.Limits(
++                    verify=get_default_verify(), limits=httpx2.Limits(
+                             max_connections=settings.httpx_max_connections,
+                             max_keepalive_connections=settings.httpx_max_keepalive_connections,
+                             keepalive_expiry=settings.httpx_keepalive_expiry,
+                         ),
+-                    ),
+                 )
+ 
+             with create_span(
+@@ -6306,19 +6303,16 @@
+                         # This ensures the underlying client waits at least as long as the tool configuration requires
+                         factory_timeout = timeout if timeout else get_httpx2_timeout(read_timeout=effective_timeout)
+ 
+-                        return httpx2.AsyncClient(
++                        return __import__('mcpgateway.eva_mcp_pinning', fromlist=['mcp_http_client']).mcp_http_client(
+                             follow_redirects=False,
+                             headers=headers,
+                             timeout=factory_timeout,
+                             auth=auth,
+-                            **pinned_target.client_kwargs(
+-                                verify=ctx if ctx else get_default_verify(),
+-                                limits=httpx2.Limits(
++                            verify=ctx if ctx else get_default_verify(), limits=httpx2.Limits(
+                                     max_connections=settings.httpx_max_connections,
+                                     max_keepalive_connections=settings.httpx_max_keepalive_connections,
+                                     keepalive_expiry=settings.httpx_keepalive_expiry,
+                                 ),
+-                            ),
+                         )
+ 
+                     async def connect_to_sse_server(server_url: str, headers: dict = headers):

@@ -1,0 +1,22 @@
+{
+  "actualRepoPreflightDestinationAbsent": true,
+  "approved": true,
+  "checks": [
+    "Closed exact staged file set with per-file bytes, owner, mode, link and content digest validation.",
+    "Same-directory identities before and after durable intent, no-clobber rename and directory sync before recording success.",
+    "Displaced source and destination parents during re-verification are refused without moving the staged tree.",
+    "Installed evidence names the measured autoRefreshServers flag and is gated on an independently verified completed installation receipt.",
+    "Recipe supports reviewed artifact reassembly; independent fresh-image rebuild is outside this evidence."
+  ],
+  "contract": "EvaIndependentContextForgePublicRecipePublicationReview/v1",
+  "independentTemporaryTestsPassed": 9,
+  "liveProbes": 0,
+  "publicEvidenceWriterSha256": "8ae63e2481ba92441bd5e998469f73734185f21ae5460a0df7824eba837aaf3b",
+  "publicationDispatched": false,
+  "publicationPlanSha256": "a1d6182fcb1f91be4ff706394e345c72ee36d80191772e04af26b49ed1362e78",
+  "publicationReviewFreezeSha256": "262f3dba719c0c0bab4b389d931ae024f9d38bcd7741d11d49d6710313c9badf",
+  "publicationScriptSha256": "042ef79f21b872df2df684dc0e26e60ab80679b82f0f001ce00d45c77878b1d9",
+  "reviewedAt": "2026-11-07T06:18:31.893467+00:00",
+  "scope": "The exact publication controller and staged recipe only. Actual installation approval remains a separate receipt-bound prerequisite.",
+  "verifiedStagedFiles": 19
+}

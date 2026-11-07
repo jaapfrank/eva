@@ -1,0 +1,30 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_SOURCE_BEHAVIOR_NATIVE_INPUT_CANDIDATE",
+  "freezeSha256": "3d38a5e35e6d08c2192f05c3a230c7e2fd5842b30858f4feeb01028560c601b3",
+  "priorFreezeSha256": "6274c0ac659be544087ab848ac35a70ecc253df387f2aa12a5261be996b2d21e",
+  "sourceRoot": "candidate-source-auth-r1/mcpgateway",
+  "sourceFileHashesVerified": 410,
+  "provenanceHashesVerified": 31,
+  "vendorDerivativeFiles": 8,
+  "independentAuthProofSha256": "b7fe8c7ce3bd363e6f86788693f1452f66400858c076b6ddc7554dba8a5f90e4",
+  "all298ArchiveHashesSha256": "c2b1ffeedc8aac50f90dea0cf4983692ca705da329aee00e745b1961fa2e43b7",
+  "verified": [
+    "Compared the assembled source family against the official1.1 wheel. Exactly8 files differ, including the single detached-user id=user.id preservation, existing owner/private-resource boundary, transport helper and grant-preserving bootstrap/migrations.",
+    "The historical seven-patch source root remains distinct. The explicit assembled root and23-check HTTP runner are now frozen.",
+    "Independent real network-isolated synthetic ASGI execution passed23 checks with both public auth cache flags disabled. It covers signature/expiry/required claims/user existence/idle and API exemption, scoped access, refresh rotation/revocation/CAS and personal-team denial.",
+    "Independent8 public transport tests pass. Stored real SDK2 TLS/lost-response proof records one physical tool POST/effect per case, GET-only recovery and uncertain outcomes retained.",
+    "Independent9 forward-only guard tests pass with the candidate dependency environment. An initial system interpreter attempt lacked SQLAlchemy and stopped during test collection.",
+    "Actual role metadata identifies one auth gateway and five translator roles. Cache flag changes are confined to the auth gateway. Existing plugin-disabled/cache-none/YAML bounds remain required.",
+    "Verified all141 wheel bytes and the built CPython prefix artifact hash. Stored reports cover65 extension imports,76 ELF closures and both matched psycopg3.3.8 implementations on private PG18.",
+    "Verified all298 current archive bytes/sizes against the new explicit manifest linked to298 successful signature records. Historical292 metadata report remains separate."
+  ],
+  "limits": [
+    "Actual final images, full source/site/native preservation, actual F8/C31 consumers and six-role configuration readbacks require separate review.",
+    "Installation is not approved by this candidate record.",
+    "Old1.0.8 refuses a known1.1 schema. Recovery after migration requires a verified forward runtime and retained data, without database restoration or downgrade inference."
+  ],
+  "reviewerProductionMutations": 0,
+  "reviewerModelRequests": 0
+}

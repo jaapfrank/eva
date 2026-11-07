@@ -1,0 +1,53 @@
+{
+  "actual": {
+    "appendCopyAdmitted": false,
+    "authCacheBatchQueries": false,
+    "authCacheEnabled": false,
+    "authorities": 10,
+    "autoRefreshServers": false,
+    "catalogBindingAndAdmissionHashesExactlyMatchPreviousProduction": true,
+    "catalogGroupsPerRole": [
+      14,
+      2,
+      2,
+      2,
+      2
+    ],
+    "contextForge": "1.1.0",
+    "databaseHead": "c7e91a2b4d60",
+    "effectiveGatewaySourceFiles": 410,
+    "knownRawMetricsRetiredByExistingPolicy": 36,
+    "legacyReleasesValidated": 2,
+    "matchingProfiles": 4,
+    "mcpPython": "2.3.0",
+    "originalBusinessDataAndPreResumeLegacyWorkVerified": true,
+    "originalConsumerGenerationsResumed": 3,
+    "originalTables": 71,
+    "ownerFactoryActionCounts": [
+      9,
+      9,
+      4
+    ],
+    "pluginsEnabled": false,
+    "protectedCriteria": 62,
+    "providerGenerations": 6,
+    "python": "3.12.16",
+    "retainedHistoryFiles": 9,
+    "retainedHostRoots": 4,
+    "sameConfigurationEvaluatorResumed": true
+  },
+  "approved": true,
+  "contract": "EvaIndependentContextForgeActiveInstalledReview/v1",
+  "finalPhaseInterruption": "The old wrapper incorrectly expected filesystem visibility for only two consumers. The existing three owner-authorized read-only registries each expose the same original 14 tools, while factory-admitted actions remain 9/9/4. All complete catalog binding hashes and admission hashes match earlier actual production.",
+  "newDeploymentDispatchApproved": false,
+  "observedPartialReceiptSha256": "9106d0abd168417d16407f7dd134492b8d9383d7cfcba9eeea1e57fd2431806f",
+  "ownerReadbackSha256": "3fe8d5a5ca681e5bb4927b2f0e6d637f1564ad116510cfded90b164fd8df022e",
+  "planSha256": "696f2125838cbf478737304733b42f4b087493d7306d44436e7d117fce5fa7cd",
+  "previousActualOwnerReadbackSha256": "196749de95dfdbde7fc01bb6a9c95f65af7b6c8061b2025e9be4b298373f435a",
+  "reviewedAt": "2026-11-07T06:24:26.369232+00:00",
+  "reviewerLifecycleActions": 0,
+  "scope": "Independent readback of the actual installed and active six-role deployment. A separate no-probe seal is required for the final journal phase.",
+  "structuralReadbackSha256": "1b6db24f80d7ea9ea4433454db04e6f6e6f40d784a292d2723093127f25d4738",
+  "verificationModelCalls": 0,
+  "verificationToolCalls": 0
+}

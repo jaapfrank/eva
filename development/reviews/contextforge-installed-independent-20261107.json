@@ -1,0 +1,22 @@
+{
+  "actualDatabaseHead": "c7e91a2b4d60",
+  "approved": true,
+  "bindingRecomputedFromExactFrozenEvidence": true,
+  "completedPhases": 7,
+  "completionReceiptSha256": "f9b28cbbba1436b6ab28581e62cb333cfd2305cf4857c8796e9717729c5fb30e",
+  "contract": "EvaIndependentContextForgeInstalledCompletionBinding/v1",
+  "independentActualReadbackReview": "development/reviews/contextforge-active-installed-independent-20261107.json",
+  "independentActualReadbackReviewSha256": "daa1d380fc81b730aae8b8a7604d99c47bd4085bc1ccf1c4110ab60d3ac03051",
+  "knownStopContinuationReceiptSha256": "9106d0abd168417d16407f7dd134492b8d9383d7cfcba9eeea1e57fd2431806f",
+  "noProbeSealerSha256": "62f9ddd9409debc5d7956b9a95db5da9a2d88f0e682e15eeb3adacaa1263d45f",
+  "originalActivationReceiptSha256": "af115af1077d1a3b6b82b9ff503676f807a4312d4daa7bdf0203cdfe3520ddf2",
+  "originalReceiptsPreserved": true,
+  "ownerReadbackSha256": "3fe8d5a5ca681e5bb4927b2f0e6d637f1564ad116510cfded90b164fd8df022e",
+  "planSha256": "696f2125838cbf478737304733b42f4b087493d7306d44436e7d117fce5fa7cd",
+  "reviewedAt": "2026-11-07T06:27:26.414462+00:00",
+  "reviewerLifecycleActions": 0,
+  "scope": "Completed actual installed readback and verified binding of the separate evidence-only completion record.",
+  "structuralReadbackSha256": "1b6db24f80d7ea9ea4433454db04e6f6e6f40d784a292d2723093127f25d4738",
+  "verificationModelCalls": 0,
+  "verificationToolCalls": 0
+}

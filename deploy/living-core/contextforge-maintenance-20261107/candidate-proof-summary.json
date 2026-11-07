@@ -1,0 +1,56 @@
+{
+  "actualConsumerActionCounts": [
+    9,
+    9,
+    4
+  ],
+  "actualGatewayColdStartsSeconds": [
+    18.197,
+    15.278
+  ],
+  "actualReadOnlyGatewaySourceHashes": 410,
+  "actualRuntimeRoles": 6,
+  "admittedFilesystemCount": 14,
+  "appendCopyAdmitted": false,
+  "authHttpCases": 23,
+  "candidateFreezeSha256": "420b608c45ed028404ac69f974464e1eee4b2693e0a6f376c4592444ab533cb0",
+  "contextForge": "1.1.0",
+  "contract": "EvaContextForgeMaintenancePreparedEvidence/v1",
+  "databasePreservationCases": 16,
+  "e416FullAutonomyClaimed": false,
+  "existingToolMetricRetentionUnchanged": true,
+  "filesystemPackage": "2.2.0",
+  "forwardOnlyRecoveryCases": 9,
+  "gatewayManualStopExitCode": 0,
+  "imageScopeProofSha256": "d3be5e04e5b1f132cf54a457da219a69d856c78cc368d9f633b9cba384021dee",
+  "independentReviewSha256": "9290f987e65e3310a08c8fe5db1ace04c7ea526ddb8fc77b1d78e2e26ceb6a9f",
+  "mcpPython": "2.3.0",
+  "modelCalls": 0,
+  "noNewEffectfulToolPostOnLostResponse": true,
+  "nodeActualVersion": "26.13.0",
+  "nodeSdk": "1.32.2",
+  "oldDatabaseTablesRetained": 71,
+  "privateCloneExactExistingHourlyGroups": 10,
+  "privateCloneOldToolMetricRowsCovered": 36,
+  "productionWrites": 0,
+  "providerRawMetadataCounts": [
+    16,
+    2,
+    2,
+    2,
+    2
+  ],
+  "python": "3.12.16",
+  "rawMetricsNotPublished": true,
+  "runtimeWheels": 141,
+  "signedRpmUpdateCounts": [
+    30,
+    37,
+    37,
+    37
+  ],
+  "status": "candidate_reviewed_not_claimed_installed",
+  "transportLostResponseCases": 4,
+  "uniqueCandidateImages": 4,
+  "wheelRecordFilesPerFamily": 16348
+}

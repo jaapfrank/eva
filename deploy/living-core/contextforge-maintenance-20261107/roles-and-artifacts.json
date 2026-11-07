@@ -1,0 +1,73 @@
+{
+  "applicationSourceRoot": "/app/mcpgateway",
+  "contract": "EvaContextForgeMaintenanceCandidate/v1",
+  "gatewayCodeBindDestinations": [
+    "/app/mcpgateway/bootstrap_db.py",
+    "/app/mcpgateway/main.py",
+    "/app/mcpgateway/eva_mcp_pinning.py",
+    "/app/mcpgateway/services/gateway_service.py",
+    "/app/mcpgateway/services/tool_service.py"
+  ],
+  "gatewayOnlyConfigurationDelta": {
+    "AUTH_CACHE_BATCH_QUERIES": "false",
+    "AUTH_CACHE_ENABLED": "false"
+  },
+  "installedStateClaimed": false,
+  "providerNode": {
+    "existingLink": "/usr/bin/node",
+    "filesystem": "2.2.0",
+    "sdk": "1.32.2",
+    "sha256": "0adde40d1b7dfa57c8bc83cbc319758c3ec6ebba21363bb2fa752ea6b267ad1b",
+    "target": "/opt/eva2/node-runtime/node",
+    "version": "26.13.0"
+  },
+  "runtimeFamilies": [
+    {
+      "baseImage": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "candidateImage": "sha256:10b255222b10e2e65541a9f1aea4cd70b233c21aefaa52eb52f2c21817cd9b0f",
+      "family": "gateway",
+      "roles": [
+        "eva2-mcp-gateway"
+      ]
+    },
+    {
+      "baseImage": "sha256:7514b03d3a44dcfbeb6c8c0ac891f61831c04b1600375c5166f6d38dc2f53403",
+      "candidateImage": "sha256:d6fd2e26ff9d5ce42168ee7ef7191b6078232806a196f36c5052d243ec59d26c",
+      "family": "filesystem",
+      "roles": [
+        "eva2-workspace-filesystem"
+      ]
+    },
+    {
+      "baseImage": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+      "candidateImage": "sha256:a24fcf2ef4fe514176f7410a3c073e179185da981c51fae42914c58c29cc721f",
+      "family": "atomic",
+      "roles": [
+        "eva2-document-workspace-au006",
+        "eva2-document-task-slot-1-20260913",
+        "eva2-document-task-slot-2-20260913"
+      ]
+    },
+    {
+      "baseImage": "sha256:2ddf544a399e5efeb04d7859edbd9c8df84699dbcf6747e78d476e52cae6e13e",
+      "candidateImage": "sha256:a10e866aa510e44db07569f257ee737704ea10adaa3e38bfe52ac76eac1e6efe",
+      "family": "projects",
+      "roles": [
+        "eva2-document-projects-20260922"
+      ]
+    }
+  ],
+  "unchangedAuthority": {
+    "appendCopyAdmitted": false,
+    "atomicGatewayGroups": 4,
+    "atomicToolsPerGroup": 2,
+    "autoRefreshServers": false,
+    "consumerFactoryActions": [
+      9,
+      9,
+      4
+    ],
+    "filesystemGatewayTools": 14,
+    "pluginsEnabled": false
+  }
+}

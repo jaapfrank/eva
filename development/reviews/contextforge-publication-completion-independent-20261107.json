@@ -1,0 +1,20 @@
+{
+  "approved": true,
+  "authorizationUsesOriginalImmutableJournalPolicyAndIndependentSeal": true,
+  "completedInstalledReviewSha256": "be5f6d5d98b5a9b1c6f416e4d2f690dda43d0903a5dde6e36076fe455d060bdd",
+  "completionReceiptSha256": "f9b28cbbba1436b6ab28581e62cb333cfd2305cf4857c8796e9717729c5fb30e",
+  "contract": "EvaIndependentContextForgeCompletedPublicationReview/v1",
+  "independentEvidenceRerenderByteIdentical": true,
+  "initialPublicationReviewSha256": "d9baceb2ac9417157bcc12980c5e576009a6cade9f9fb4f6ebf06f3e87b73651",
+  "liveProbes": 0,
+  "originalNoClobberPublicationImplementationUnchanged": true,
+  "publicEvidenceCheckedForPrivatePathsAndCredentialPatterns": true,
+  "publicEvidenceWriterSha256": "4f6fdabd5bb31645278ec20d55e1d7fbbf000f2fe2b74bc8396790d9715a5876",
+  "publicInstalledEvidenceSha256": "a1843f11b77d882c8249b9fb79092db5b20d286c9ebf56d2c6302e26294db4c7",
+  "publicationDispatched": false,
+  "publicationPlanSha256": "a1d6182fcb1f91be4ff706394e345c72ee36d80191772e04af26b49ed1362e78",
+  "publicationScriptSha256": "48bf5ccaa31fce08f763b28c56825ee695aa270b48551de64a24d44118fedf5b",
+  "publicationSupplementSha256": "05cf7aafef4db141b9081b7f3eda5d937c73adaf80319ee061b82ef86acadbcc",
+  "reviewedAt": "2026-11-07T06:31:26.747186+00:00",
+  "scope": "Exact nineteen-file public recipe and exact separately prepared public installed evidence."
+}

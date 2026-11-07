@@ -1,0 +1,34 @@
+{
+  "approved": true,
+  "archivedInitialFreezeSha256": "c8b9a6405f4b106887e40968d3adbb1c84a04af1007a6b7d1710083a978fb0f3",
+  "boundary": "Retain the SQLite forensic backup and original evidence. Unknown acknowledgements require inspection. The new schema head has no downgrade or restore approval. Installed-state verification is separate.",
+  "contract": "EvaIndependentContextForgeInstallerReview/v1",
+  "freezeSha256": "ee405cd84abb5d2f9aec0244226f1623e1aaa5026e8dad5d2998c3f3125974b9",
+  "independentTestsPassed": 60,
+  "installerSha256": "e7629651685d0ce8f5009eee69daafe7364152f3beb7a4af8f70d1fd99b76bf2",
+  "networkAuthorityProofSha256": "cef8fe948a4712e5e1ac7825d1584a2a300587f57abb8acae3e2eeea40ef2edd",
+  "networkReview": {
+    "gatewayStartRechecksNetworkGenerationAndReservations": true,
+    "nonPinnedPoolAddressesDeniedForBothSchemes": 131062,
+    "oldPidAndFullNetworksRecheckedAfterDurableStopIntent": true,
+    "originalGatewayDynamicRequestsRetained": 2,
+    "positiveStaticReservationsChecked": 6,
+    "stoppedNetworkLeaseFieldsAndRequestedMacBound": true
+  },
+  "planSha256": "696f2125838cbf478737304733b42f4b087493d7306d44436e7d117fce5fa7cd",
+  "preflight": {
+    "activeWork": 0,
+    "currentUnknownCheckpoints": 0,
+    "eligibleRawMetricsWithinProvenRetentionPolicy": 36,
+    "expiredNativeTraces": 0,
+    "legacyMarkersPreserved": 103,
+    "matchingRuntimeProfiles": 4,
+    "sqliteTables": 71,
+    "unexpiredCheckpointLeases": 0
+  },
+  "preflightSha256": "4296bde6eadfaf64cb03934d9b82fb3d1747bc14632aeb815a435abca92e6cd2",
+  "reviewedAt": "2026-11-07T05:58:43.517079+00:00",
+  "reviewerLifecycleActions": 0,
+  "scope": "Single forward installation dispatch for the exact ContextForge six-role plan, subject to its fresh preflight.",
+  "verifiedFreezeFiles": 71
+}

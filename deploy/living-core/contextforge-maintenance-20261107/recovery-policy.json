@@ -1,0 +1,26 @@
+{
+  "contract": "EvaContextForgeForwardOnlyRecoveryPolicy/v1",
+  "databaseRestoreOrDownmigration": false,
+  "knownSchemaHeads": {
+    "1.0.8": {
+      "layoutSha256": "923ff7101c1152f9a0fbc2633f379cd30181c5c89a513602912018d1a87e3501",
+      "revision": "e4f5a6b7c8d9"
+    },
+    "1.1.0": {
+      "layoutSha256": "aede405fa76d06b37e9f01a814738fce6ded74773f3ddd9a4860217585530e93",
+      "revision": "c7e91a2b4d60"
+    }
+  },
+  "oldRuntimeMayStartAfterNewHead": false,
+  "reason": "ContextForge 1.0.8 cannot enforce all session/JWT and personal-team semantics of 1.1.0; their absence cannot be established from SQLite alone. Retain the newer runtime and data for forward repair.",
+  "typedExistingMaintenance": {
+    "knownGatewayTimestampFields": [
+      "updated_at",
+      "last_seen"
+    ],
+    "oldBusinessDataGrantsAndCatalogsPreserved": true,
+    "rawMetricRemovalRequiresExactExistingRollupAndRetainedBackup": true,
+    "schemaTablesRetained": 71
+  },
+  "unknownGenerationOrAckReplay": false
+}

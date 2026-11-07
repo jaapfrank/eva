@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: De fotobibliotheek gebruikt effectief better-sqlite3 13.0.3, SQLite 3.53.4 en dotenv 18.0.9 in een eigen pakketmap. Dezelfde Telegram-accountbinding, 115 transportregels, database en 29 gezichtregels zijn onafhankelijk teruggelezen. Er zijn geen foto-, account- of modeltestverzoeken uitgevoerd. Volgende uitkomst: de ContextForge-gateway en werkelijk gebruikte providerbibliotheken bijwerken, inclusief de bewezen sessie- en herstelgrenzen. Behoud de huidige kern/worker als hun publieke koppeling compatibel is. Spraakoverdracht, hostonderhoud, E4.11-residuen en de volledige autonome E4.16-kringloop blijven open.
+Volgende stap: Hindsight 1.2.0, Pydantic AI 2.66.0 en ContextForge 1.1.0 zijn live geïnstalleerd en onafhankelijk gecontroleerd. De gatewayupdate behoudt de bestaande gegevens, rechten en werkprofielen. Het resterende WSL-onderhoud wordt apart geverifieerd: Compose 5.7 wordt nog niet geselecteerd omdat de bestaande worker een nieuw controlelabel nodig heeft. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.
 
 ## Voortgang
 

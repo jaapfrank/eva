@@ -1,0 +1,40 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_FINAL_IMAGE_AND_HELPER_CANDIDATE",
+  "candidateFreezeSha256": "420b608c45ed028404ac69f974464e1eee4b2693e0a6f376c4592444ab533cb0",
+  "previousSourceFamilyReviewSha256": "e2d0cb7123c26c1d605365c5eb5b47c3d6279f588af76b1e1e55944e34b14aa5",
+  "imageIdsByRole": {
+    "eva2-mcp-gateway": "sha256:10b255222b10e2e65541a9f1aea4cd70b233c21aefaa52eb52f2c21817cd9b0f",
+    "eva2-workspace-filesystem": "sha256:d6fd2e26ff9d5ce42168ee7ef7191b6078232806a196f36c5052d243ec59d26c",
+    "eva2-document-workspace-au006": "sha256:a24fcf2ef4fe514176f7410a3c073e179185da981c51fae42914c58c29cc721f",
+    "eva2-document-task-slot-1-20260913": "sha256:a24fcf2ef4fe514176f7410a3c073e179185da981c51fae42914c58c29cc721f",
+    "eva2-document-task-slot-2-20260913": "sha256:a24fcf2ef4fe514176f7410a3c073e179185da981c51fae42914c58c29cc721f",
+    "eva2-document-projects-20260922": "sha256:a10e866aa510e44db07569f257ee737704ea10adaa3e38bfe52ac76eac1e6efe"
+  },
+  "helperHashes": {
+    "database_preservation_readonly.py": "782e9ce314d19c2334b67b85937918b64956c266fdf286c5c21660ff68c108b9",
+    "provider_readiness.py": "cc1e9c68f828cf9d70662e3afb04b55dfc3dd812cd4bd863d20fd4bb23c4dfe4",
+    "consumer_readback.py": "c9d58e80477e41b4cdfa28df3ce272c87a2471d61182c0e170fb8fe2e84d7af5",
+    "consumer_factory_metadata.py": "2336861feade62f3bbe54efd2cc5fa3e9883c15a2c10a72fcd7270842ea3f66d",
+    "gateway_settings_readonly.py": "610338deddecdeafe9ac9f64f15a5e9d5b5609163b37968ba657dbf9c549cf93"
+  },
+  "independentArchivedDatabaseReadbackSha256": "7f2e5e62548c702997581c50c9394309b5c42a012b97f2def0de17862f0909d1",
+  "independentOldMetricsReadbackSha256": "480112a1ce8bfec0e0b4f75a168eaec8d9e9c7fab596d1693a56f90c431e3c84",
+  "verified": [
+    "All frozen helper, proof, read-only source and readiness hashes match. The four local image IDs are exact and direct Docker inspection matches each image Config to its actual base.",
+    "Bound filesystem/native proof covers the RPM multisets, verified wheel/RECORD closure, the public temporary CA removals and explicit restoration of the existing Node26 entrypoint after vendor RPM scriptlets.",
+    "Both archived actual gateway generations resolve all410 effective Python source hashes to the reviewed assembled source family. Two cache flags, plugins and discovery refresh are false. Five translator metadata probes bind the actual Node26 process and existing SDK/catalogs.",
+    "The isolated existing consumers verify9/9/4 owner actions, the original14 filesystem admissions and no append/copy grant. The final probe issues metadata reads only.",
+    "The R5 helper enforces empty OAuth/resources and other raw metric families, 24-hour eligibility through the120-second horizon, exact retained backup rederivation and narrow gateway timestamp windows. Replayed its read-only comparator against both actual archived starts:71 tables, raw deletes36 then0. Independent exact age-boundary mutation was rejected.",
+    "The older actual1.0.8 policy proof independently covers36 raw IDs/digests in10 existing hour groups. All243 hourly rows and all other70 table digests match.",
+    "The bound actual startup/stop evidence fits the per-role budgets. Previously reviewed auth23, transport lost-response4 and forward-only guard9 remain in scope."
+  ],
+  "installationRequirements": [
+    "Separate final installation review on the exact controller, plan and fresh actual preflight. Bind the R5 check to the actual stopped database, retained before backup and gateway start deadline.",
+    "Preserve old data, original criteria, grants, consumer generations and unknown-effect receipts. After the new head, use verified forward recovery without restoring the database or downgrading to the old gateway."
+  ],
+  "installationApproved": false,
+  "reviewerProductionActions": 0,
+  "reviewerModelRequests": 0
+}

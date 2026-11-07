@@ -1,0 +1,22 @@
+{
+  "acceptedComparisonDelta": "Allow an explicitly empty operational MAC on a proven stopped endpoint with the original requested MAC retained in the creation contract. All other endpoint fields remain bound by the original validator.",
+  "actualDatabaseTableCount": 71,
+  "actualEvaluatorKnownTerminalVerified": true,
+  "actualForensicBackupVerified": true,
+  "actualOldDatabaseHead": "e4f5a6b7c8d9",
+  "actualOriginalDatabaseAndWalUnchangedByReview": true,
+  "actualOriginalRunningProviderGenerationsVerified": 4,
+  "actualStoppedContainerGenerationsVerified": 5,
+  "approved": true,
+  "boundary": "Keep original journal and backup. Do not repeat original stops or backup. Use the original remaining phases under the original lock and a separate durable receipt. Unknown actions require inspection and the migration is forward-only.",
+  "continuationSha256": "4225d438c61e545e2b6e593da2101db8e18ad9b15eda2f73226aa2727f70a9e9",
+  "contract": "EvaIndependentContextForgeKnownStopContinuationReview/v1",
+  "independentMutationRefusalsPassed": 6,
+  "independentStoppedMacCasePassed": true,
+  "originalReceiptSha256": "af115af1077d1a3b6b82b9ff503676f807a4312d4daa7bdf0203cdfe3520ddf2",
+  "planSha256": "696f2125838cbf478737304733b42f4b087493d7306d44436e7d117fce5fa7cd",
+  "preflightSha256": "2e1f6f7eef0e05b93fc432f6af2a79c7ae1d3acc5aacf755b57608cc7eb55eb6",
+  "reviewedAt": "2026-11-07T06:07:27.415646+00:00",
+  "reviewerManagedLifecycleActions": 0,
+  "scope": "One forward-only continuation from the exact original known pause and first filesystem stop."
+}

@@ -1,0 +1,63 @@
+{
+  "contract": "EvaContextForgePublicRecipeReproductionReadback/v1",
+  "freshCompilerBitForBitRebuildClaimed": false,
+  "fullFreshImageRebuildClaimed": false,
+  "modelsCalled": 0,
+  "offlineContextSamples": [
+    {
+      "allStagedArtifactBytesRechecked": true,
+      "applicationSourceFiles": 697,
+      "assembledInputCount": 878,
+      "dockerfileSha256": "bc5760f421755d267275ba746a52ddf263ec746074def00cd8ef493905d43dff",
+      "family": "gateway",
+      "inputManifestSha256": "f8f27c26b7f5d66052aee99908bdc0f0e0b263a41f399317b3780dfa8e3513b0",
+      "signedRpmCount": 30,
+      "wheelCount": 141
+    },
+    {
+      "allStagedArtifactBytesRechecked": true,
+      "applicationSourceFiles": 696,
+      "assembledInputCount": 884,
+      "dockerfileSha256": "a30aa4c64c620265d46b62694cca516ac50b3a520bd562c50e514cc244d00464",
+      "family": "atomic",
+      "inputManifestSha256": "c88caa3ba75661e4c4d7eb36e5b9e98acb9a1fa03efcfa1635d3a414486beb61",
+      "signedRpmCount": 37,
+      "wheelCount": 141
+    }
+  ],
+  "productionActions": 0,
+  "readOnlyImageMetadataSamples": [
+    {
+      "applicationSourceOrigin": "/app/mcpgateway/__init__.py",
+      "applicationSources": 697,
+      "contextForge": "1.1.0",
+      "family": "gateway",
+      "image": "sha256:10b255222b10e2e65541a9f1aea4cd70b233c21aefaa52eb52f2c21817cd9b0f",
+      "mcp": "2.3.0",
+      "modelsCalled": 0,
+      "nativeRpmCount": 113,
+      "node": null,
+      "packages": 141,
+      "python": "3.12.16",
+      "toolsCalled": 0,
+      "verified": true,
+      "wheelRecords": 16348
+    },
+    {
+      "applicationSourceOrigin": "/app/mcpgateway/__init__.py",
+      "applicationSources": 696,
+      "contextForge": "1.1.0",
+      "family": "atomic",
+      "image": "sha256:a24fcf2ef4fe514176f7410a3c073e179185da981c51fae42914c58c29cc721f",
+      "mcp": "2.3.0",
+      "modelsCalled": 0,
+      "nativeRpmCount": 123,
+      "node": "26.13.0",
+      "packages": 141,
+      "python": "3.12.16",
+      "toolsCalled": 0,
+      "verified": true,
+      "wheelRecords": 16348
+    }
+  ]
+}

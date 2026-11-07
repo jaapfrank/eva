@@ -1,0 +1,2497 @@
+{
+  "applicationPython": {
+    "independentDigestSource": "https://www.python.org/downloads/release/python-31216/",
+    "runtimePrefix": "/opt/eva2/cpython31216; system RHEL Python untouched except signed vendor patch updates",
+    "sha256": "b5796915dc45ff745cfb4e990a7e7c93d6f546328a102ce31448d69ebc37575c",
+    "url": "https://www.python.org/ftp/python/3.12.16/Python-3.12.16.tar.xz",
+    "version": "3.12.16"
+  },
+  "architecture": "x86_64",
+  "compilerArchiveInputs": [
+    {
+      "bytes": 45867,
+      "file": "alternatives-1.30-2.el10.x86_64.rpm",
+      "sha256": "a1d7d87e90b39ad44f6d9c8b5511c6ac23e93efda8c0c11e021bd9e0ed3dec6f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/a/alternatives-1.30-2.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 140944,
+      "file": "audit-libs-4.0.3-5.el10.x86_64.rpm",
+      "sha256": "1870b304c30024710bbbbefcc5d21310fe87106731bec284be9cfb601a7ebde4",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/a/audit-libs-4.0.3-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 753832,
+      "file": "autoconf-2.71-13.el10.noarch.rpm",
+      "sha256": "8d358894e7306bb84d37bfd14b23589b34b4fc66b12234a9a983bb9e8c0c0467",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/a/autoconf-2.71-13.el10.noarch.rpm"
+    },
+    {
+      "bytes": 723321,
+      "file": "automake-1.16.5-20.el10.noarch.rpm",
+      "sha256": "47a8e1dad5bdac47944e6bbb0ce2468590058e42448ab2912b3537cebedc483f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/a/automake-1.16.5-20.el10.noarch.rpm"
+    },
+    {
+      "bytes": 8521,
+      "file": "basesystem-11-22.el10.noarch.rpm",
+      "sha256": "4cfaebbb851267b545345ae246b7d7ad98f02082aeeecc95d62cdb408d742215",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/b/basesystem-11-22.el10.noarch.rpm"
+    },
+    {
+      "bytes": 1902027,
+      "file": "bash-5.2.26-6.el10.x86_64.rpm",
+      "sha256": "4cf4d161e7b25f123cf9653293a02696373431c5ccfd0f94f05b23600595c00a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/b/bash-5.2.26-6.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 6713167,
+      "file": "binutils-2.41-63.el10.x86_64.rpm",
+      "sha256": "6c9a5b31e855a216845858b4c642f67fe31cfd3dff5aa5d63e8ecff963904c0c",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/b/binutils-2.41-63.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 820424,
+      "file": "binutils-gold-2.41-63.el10.x86_64.rpm",
+      "sha256": "da272acde4bce4b8421c3b5ac9940f0bd8a9f3d88176769e05687d59ce700552",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/b/binutils-gold-2.41-63.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 59954,
+      "file": "bzip2-1.0.8-25.el10.x86_64.rpm",
+      "sha256": "cd92b2d19a41f31e44d96f05feae0d5cfc0dad8cda3852062d2134832d044daa",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/b/bzip2-1.0.8-25.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 221775,
+      "file": "bzip2-devel-1.0.8-25.el10.x86_64.rpm",
+      "sha256": "293f2e3c03b902cb4c585ef1da13d20722953423a7815df10b605b85b5dedcc8",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/b/bzip2-devel-1.0.8-25.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 44297,
+      "file": "bzip2-libs-1.0.8-25.el10.x86_64.rpm",
+      "sha256": "4f02045e28faebeaa40d4e26116a744ad86205eed8503f1cbc27454fce8b54ad",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/b/bzip2-libs-1.0.8-25.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 1151022,
+      "file": "ca-certificates-2026.2.92_v9.0.319-100.3.el10_2.noarch.rpm",
+      "sha256": "efc9301eeeb3ab4be7481ae2a05107b0ac33077df6a9b5a7581f830c4e1d81c6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/ca-certificates-2026.2.92_v9.0.319-100.3.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 21385,
+      "file": "cmake-filesystem-3.31.8-1.el10.x86_64.rpm",
+      "sha256": "05abb6b55848549d2893e164158486eae6ef1c6dcdc595a2493b5028c56ed7cf",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/c/cmake-filesystem-3.31.8-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 1182809,
+      "file": "coreutils-9.5-8.el10_2.1.x86_64.rpm",
+      "sha256": "b15d96974729985a5c8be0f965b4861cec93c68fb01db0eacddd6399551af2b7",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/coreutils-9.5-8.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 2255550,
+      "file": "coreutils-common-9.5-8.el10_2.1.x86_64.rpm",
+      "sha256": "8021f6ecfa0a946dcc07b35a9f4a6ff8c960f0cc472d21df548cd8f4b51870dd",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/coreutils-common-9.5-8.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 657709,
+      "file": "coreutils-single-9.5-8.el10_2.1.x86_64.rpm",
+      "sha256": "dd0941ea9e7fb9c3c1cc008a9fa3ce03b8b062f0e556cb64e3a675fb20528b4b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/coreutils-single-9.5-8.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 303102,
+      "file": "cpio-2.15-3.el10.x86_64.rpm",
+      "sha256": "95a8f859d25a9db3902f2cb3ae39c5cc979b7ea4f81cbfccd76585b95614035b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/cpio-2.15-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 13449388,
+      "file": "cpp-14.3.1-4.4.el10.x86_64.rpm",
+      "sha256": "52a30ef8bfce05a3a5417f19eb141c566c33d17891c23af93d29b2744104ed7c",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/c/cpp-14.3.1-4.4.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 102557,
+      "file": "cracklib-2.9.11-8.el10.x86_64.rpm",
+      "sha256": "05b60f5f64a0ad329ec4b07c2ec4f9899c8209912f7d292fcb663ec34faccc1e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/cracklib-2.9.11-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 3827482,
+      "file": "cracklib-dicts-2.9.11-8.el10.x86_64.rpm",
+      "sha256": "b229f2ac449d7699d26fd66853626fbd13d68e84f572a6e6131513c0ad7d0207",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/cracklib-dicts-2.9.11-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 103561,
+      "file": "crypto-policies-20260216-1.git0e54016.el10_2.2.noarch.rpm",
+      "sha256": "470edc6e83c8b7c29527982b643ffb77d54472a29505dd366b4197183a91c82e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/crypto-policies-20260216-1.git0e54016.el10_2.2.noarch.rpm"
+    },
+    {
+      "bytes": 599593,
+      "file": "cryptsetup-libs-2.8.1-2.el10.x86_64.rpm",
+      "sha256": "bdbd7eaebb3cc3e1c00150b19e779066adf704c28a98fdfc11df04980400e742",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/cryptsetup-libs-2.8.1-2.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 229604,
+      "file": "curl-8.12.1-4.el10_2.7.x86_64.rpm",
+      "sha256": "34ae03f0764cbd616c882572ae8c6f29330b82763148ba46645e5d26c0f001d4",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/curl-8.12.1-4.el10_2.7.x86_64.rpm"
+    },
+    {
+      "bytes": 114248,
+      "file": "cyrus-sasl-lib-2.1.28-30.el10_2.x86_64.rpm",
+      "sha256": "6c61ebc24e3acb4f6adc12e16e982d9759ff22a0f86d9e15009dedf20c70244d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/c/cyrus-sasl-lib-2.1.28-30.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 8689,
+      "file": "dbus-1.14.10-5.el10.x86_64.rpm",
+      "sha256": "cac7abf4d1efb20a9deeb00e70418704f6ea027a8a6786c040715775262d0693",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/d/dbus-1.14.10-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 184654,
+      "file": "dbus-broker-36-5.el10_2.x86_64.rpm",
+      "sha256": "449e269c9f240b93535d194771ecf185785a7313679b9edaadcfaa7b98c347a7",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/d/dbus-broker-36-5.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 19267,
+      "file": "dbus-common-1.14.10-5.el10.noarch.rpm",
+      "sha256": "1299ce43ed298d52b9243dd332011e0f4de505d2902ba48a72234c16b95883bc",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/d/dbus-common-1.14.10-5.el10.noarch.rpm"
+    },
+    {
+      "bytes": 81607,
+      "file": "debugedit-5.1-8.el10.x86_64.rpm",
+      "sha256": "e6eb3e5b086cfdbb791b1d5e7c732892aacc6c6bcedbcc69620daf7a6c0f518e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/d/debugedit-5.1-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 34446,
+      "file": "default-fonts-core-sans-4.1-3.el10.noarch.rpm",
+      "sha256": "6491075f73d2aa3f37f410af0b2a78d48d5043e45016718b9bdf4a2e38851726",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/d/default-fonts-core-sans-4.1-3.el10.noarch.rpm"
+    },
+    {
+      "bytes": 150286,
+      "file": "device-mapper-1.02.210-2.el10.x86_64.rpm",
+      "sha256": "4b91ea309f354b8903dbde96b37f31075a4d8431fa09b86e3c142fb97660bc28",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/d/device-mapper-1.02.210-2.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 191487,
+      "file": "device-mapper-libs-1.02.210-2.el10.x86_64.rpm",
+      "sha256": "5471f1881ff34d68a495240a9af218b1a4f8249894c36b9f816e01f30feb3526",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/d/device-mapper-libs-1.02.210-2.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 423166,
+      "file": "diffutils-3.10-8.el10.x86_64.rpm",
+      "sha256": "a8e3e08d2fd19a3ef513875aa379a35e5e424272dbf4e0aad5702bb0c49bd95f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/d/diffutils-3.10-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 46817,
+      "file": "dnf-data-4.20.0-22.el10_2.noarch.rpm",
+      "sha256": "0a71b839a35c8405f650a945a232666275affaa4ebd360c8df70dd8f14f7e3ee",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/d/dnf-data-4.20.0-22.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 143444,
+      "file": "dwz-0.16-1.el10.x86_64.rpm",
+      "sha256": "7507fd411f201eccddeb200cc9c9dd5f85e47816e98a2fcc035ad257ffc8c956",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/d/dwz-0.16-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 88249,
+      "file": "ed-1.20-5.el10.x86_64.rpm",
+      "sha256": "37a2bc9b8d187293a0b5464ac113a0689d07e7f237854cfc6f8732486631fcdc",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/e/ed-1.20-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 25663,
+      "file": "efi-srpm-macros-6-6.el10.noarch.rpm",
+      "sha256": "740e9a91615c62a021be7c57d86e555f33bd19a78bcd914c5b67d22bdc913b23",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/e/efi-srpm-macros-6-6.el10.noarch.rpm"
+    },
+    {
+      "bytes": 594586,
+      "file": "elfutils-0.194-2.el10_2.x86_64.rpm",
+      "sha256": "9ccc9f461d7ef399dab7b301d0d5f55e6c3a414d90770381921272e66c8b6c16",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/e/elfutils-0.194-2.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 50760,
+      "file": "elfutils-debuginfod-client-0.194-2.el10_2.x86_64.rpm",
+      "sha256": "41d8283ea8b643836aa1885a79c55919885d2009bdf31d81b35c179877d9a483",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/e/elfutils-debuginfod-client-0.194-2.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 15020,
+      "file": "elfutils-default-yama-scope-0.194-2.el10_2.noarch.rpm",
+      "sha256": "f54b06a8a721b2dd0eb465070813411db4dcfc3b1c7678a579e9924085a9768b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/e/elfutils-default-yama-scope-0.194-2.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 212795,
+      "file": "elfutils-libelf-0.194-2.el10_2.x86_64.rpm",
+      "sha256": "596bf764721cc3e85b0f1389d8f5b5ee928b5074eb3de32f474978a69a01e3ad",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/e/elfutils-libelf-0.194-2.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 279624,
+      "file": "elfutils-libs-0.194-2.el10_2.x86_64.rpm",
+      "sha256": "14d73e7f16fe8ae56d5eed45b6b64996f0cea7643f82495deffdff8aaa6df412",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/e/elfutils-libs-0.194-2.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 10440,
+      "file": "emacs-filesystem-29.4-12.el10.noarch.rpm",
+      "sha256": "d0393cd2f6560ca0008dea881970c01026e4b4b50acd3bd090d9252dc4b26378",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/e/emacs-filesystem-29.4-12.el10.noarch.rpm"
+    },
+    {
+      "bytes": 131245,
+      "file": "expat-2.7.3-1.el10_2.7.x86_64.rpm",
+      "sha256": "1d7b15b93b70ac8fbbf633e14a0ced5bc90da2a74e21ca7df6959a02cf0d78da",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/e/expat-2.7.3-1.el10_2.7.x86_64.rpm"
+    },
+    {
+      "bytes": 63625,
+      "file": "expat-devel-2.7.3-1.el10_2.7.x86_64.rpm",
+      "sha256": "c33c8e21459af391fb2e65185fb3c9eda8d116487d8f788674c7127d9e783da6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/e/expat-devel-2.7.3-1.el10_2.7.x86_64.rpm"
+    },
+    {
+      "bytes": 55041,
+      "file": "file-5.45-9.el10.x86_64.rpm",
+      "sha256": "71a71774c3584c89e3728bcf1e1b97b789593142d0e33e0812a6458a8145f23d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/f/file-5.45-9.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 787330,
+      "file": "file-libs-5.45-9.el10.x86_64.rpm",
+      "sha256": "f945ed58b2c1b93058f894e8392aae1824ea4fd5a125f51cea945d9b116ae088",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/f/file-libs-5.45-9.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 5009601,
+      "file": "filesystem-3.18-17.el10.x86_64.rpm",
+      "sha256": "97a57519650f2122b30a51db9a858d977e866f7f6f2b439548cd5b89422fe821",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/f/filesystem-3.18-17.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 568096,
+      "file": "findutils-4.10.0-5.el10.x86_64.rpm",
+      "sha256": "5e55a857ccbe5a7878d5d60b70066d44cd5e51f63e38ff7a64b7462e9538fe30",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/f/findutils-4.10.0-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 10169,
+      "file": "fonts-filesystem-2.0.5-18.el10.noarch.rpm",
+      "sha256": "29e2f7ff5b92356bf92f4c8bb145e74296520f409c693354a0a0755a2a185be2",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/f/fonts-filesystem-2.0.5-18.el10.noarch.rpm"
+    },
+    {
+      "bytes": 29530,
+      "file": "fonts-srpm-macros-2.0.5-18.el10.noarch.rpm",
+      "sha256": "30f4bb66f9a360355287b807e26fd6e0b473970d3696df55f8be00bb0ad61b2b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/f/fonts-srpm-macros-2.0.5-18.el10.noarch.rpm"
+    },
+    {
+      "bytes": 23548,
+      "file": "forge-srpm-macros-0.4.0-6.el10.noarch.rpm",
+      "sha256": "0d7e4193cf9119bb4422ddfcab65a31891e71295075013c235de4ed22672071e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/f/forge-srpm-macros-0.4.0-6.el10.noarch.rpm"
+    },
+    {
+      "bytes": 1137365,
+      "file": "gawk-5.3.0-6.el10_2.1.x86_64.rpm",
+      "sha256": "15882a466a8ea7160191e644d182e1f9914d441ca9a4590b23c4d4362ad746a2",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/gawk-5.3.0-6.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 287723,
+      "file": "gawk-all-langpacks-5.3.0-6.el10_2.1.x86_64.rpm",
+      "sha256": "d6716be2146e00238aa140e8e29ae966511c7c220781b021a60ab595c660e5b3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/g/gawk-all-langpacks-5.3.0-6.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 39854147,
+      "file": "gcc-14.3.1-4.4.el10.x86_64.rpm",
+      "sha256": "ccba654a3d240e2a3a3c4a1c3c2f8b1adb841db4f69879c823613735476765d1",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/g/gcc-14.3.1-4.4.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 4564245,
+      "file": "gdb-minimal-16.3-3.1.el10_2.x86_64.rpm",
+      "sha256": "65457e7f8ba2b284a35c357c211c3047b39629b1abb5a8539d74aa77727319fc",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/g/gdb-minimal-16.3-3.1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 61329,
+      "file": "gdbm-libs-1.23-12.el10_0.x86_64.rpm",
+      "sha256": "9b3a0e96223cf82a4e1b30582738aef95b9866e7eeb71d3e6c8055c11700286b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/gdbm-libs-1.23-12.el10_0.x86_64.rpm"
+    },
+    {
+      "bytes": 3201387,
+      "file": "glib2-2.80.4-12.el10_2.22.x86_64.rpm",
+      "sha256": "c65fd718e376578cf857f809cb26de4adac985f60ccc57ad7d7eff5b7693f211",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/glib2-2.80.4-12.el10_2.22.x86_64.rpm"
+    },
+    {
+      "bytes": 2206293,
+      "file": "glibc-2.39-145.el10_2.x86_64.rpm",
+      "sha256": "58c3395be80343739e06e1b35f0aa95adc767d69d37d5dfbd9ab31bb3f8a3a7b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/glibc-2.39-145.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 334108,
+      "file": "glibc-common-2.39-145.el10_2.x86_64.rpm",
+      "sha256": "475a7bec99ece4f629afc0ce490bc1eabdee143eb4ddad606b7e28bccecf744d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/glibc-common-2.39-145.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 604908,
+      "file": "glibc-devel-2.39-145.el10_2.x86_64.rpm",
+      "sha256": "d9cc1aa957af9b76394b6ad2cfbd48531180cbb755d322faac45566db5ea29b8",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/g/glibc-devel-2.39-145.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 1745191,
+      "file": "glibc-gconv-extra-2.39-145.el10_2.x86_64.rpm",
+      "sha256": "284c8ee044b2943e1306ab11884b068d7dde011df1a7742d88b7677391461cd3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/glibc-gconv-extra-2.39-145.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 687054,
+      "file": "glibc-langpack-en-2.39-145.el10_2.x86_64.rpm",
+      "sha256": "022db96f8f5e07b95c224b6ce5f8b9a8fb1f2e6c6e7e6e060eaff0749d8c270f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/glibc-langpack-en-2.39-145.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 32385,
+      "file": "glibc-minimal-langpack-2.39-145.el10_2.x86_64.rpm",
+      "sha256": "76d27e5e92d5024a7419f26fa48840314d8b8df8207cbc8a2e8aeb54ad84582a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/glibc-minimal-langpack-2.39-145.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 326101,
+      "file": "gmp-6.2.1-12.el10.x86_64.rpm",
+      "sha256": "131e581b44ccbb50ab681733e33e66945ad25ebea8f97c1a448b5e1edd9fb390",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/gmp-6.2.1-12.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 1628542,
+      "file": "gnutls-3.8.10-5.el10_2.x86_64.rpm",
+      "sha256": "394734e369fee944cc07f58da4799e9c100eedf3d119dcb080ebb47c6522e112",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/gnutls-3.8.10-5.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 27259,
+      "file": "go-srpm-macros-3.8.0-1.el10.noarch.rpm",
+      "sha256": "33e3eadda3ec2ec6ba6b6ca1d255c2bdf4368b43b949870ea81c2d80e3cdc993",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/g/go-srpm-macros-3.8.0-1.el10.noarch.rpm"
+    },
+    {
+      "bytes": 116059,
+      "file": "gobject-introspection-1.79.1-6.el10.x86_64.rpm",
+      "sha256": "14f27ebd5d5e4332cce21a72234aec742e8f9f41f58908f12e653198520cd872",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/gobject-introspection-1.79.1-6.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 19478,
+      "file": "google-noto-fonts-common-20240401-5.el10.noarch.rpm",
+      "sha256": "73c91bab218282adc103545e21ecb5639de75a0c3911dcbb3dc88b7e3509dfcc",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/google-noto-fonts-common-20240401-5.el10.noarch.rpm"
+    },
+    {
+      "bytes": 288449,
+      "file": "google-noto-sans-mono-vf-fonts-20240401-5.el10.noarch.rpm",
+      "sha256": "54375bdf7187960b8032ff82d5d5fcec6aed205002832800d87d5347daf72476",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/google-noto-sans-mono-vf-fonts-20240401-5.el10.noarch.rpm"
+    },
+    {
+      "bytes": 609946,
+      "file": "google-noto-sans-vf-fonts-20240401-5.el10.noarch.rpm",
+      "sha256": "129c51355bdc075101bbf586cf13a61c5c3d0e2e44a437b9110f8d91bac03511",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/google-noto-sans-vf-fonts-20240401-5.el10.noarch.rpm"
+    },
+    {
+      "bytes": 663508,
+      "file": "google-noto-serif-vf-fonts-20240401-5.el10.noarch.rpm",
+      "sha256": "c9d2f009a4f4635df32a0226158134d69fd108d677425de793e5848639d5f716",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/google-noto-serif-vf-fonts-20240401-5.el10.noarch.rpm"
+    },
+    {
+      "bytes": 312193,
+      "file": "grep-3.11-10.el10.x86_64.rpm",
+      "sha256": "a1ae83808b43411db9adf15a055a8305888304e6b50dff672df221792dd4bf87",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/grep-3.11-10.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 1182753,
+      "file": "groff-base-1.23.0-10.el10.x86_64.rpm",
+      "sha256": "fe7aaba08cf90b86523b7435aa4caaf08942ec82b04129e44435a3013555c6b3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/groff-base-1.23.0-10.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 179994,
+      "file": "gzip-1.13-4.el10_2.x86_64.rpm",
+      "sha256": "f3e11fc91e4365c6ef727abb30c9a91c5a449d01a620c26940471e7f2f9d71ec",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/g/gzip-1.13-4.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 503825,
+      "file": "hunspell-1.7.2-9.el10.x86_64.rpm",
+      "sha256": "f48f147158a74b16ba87b9c01364b7a86e4c9634833c7c01f007b5e58d00dc9f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/h/hunspell-1.7.2-9.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 205663,
+      "file": "hunspell-en-0.20201207-11.el10.noarch.rpm",
+      "sha256": "174513c68cf471be52d7a681426587708d283e8c78cb41727e7107a0da69ce78",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/h/hunspell-en-0.20201207-11.el10.noarch.rpm"
+    },
+    {
+      "bytes": 232620,
+      "file": "hunspell-en-GB-0.20201207-11.el10.noarch.rpm",
+      "sha256": "49eb9c9aaa84552dfd70228c1022c55e295f936b517a3fa39ac908ae5cc46468",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/h/hunspell-en-GB-0.20201207-11.el10.noarch.rpm"
+    },
+    {
+      "bytes": 186940,
+      "file": "hunspell-en-US-0.20201207-11.el10.noarch.rpm",
+      "sha256": "72bb9f4d366fffbf721bc008ac4740ef9ec65e7d283455ea13f44274630adc3e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/h/hunspell-en-US-0.20201207-11.el10.noarch.rpm"
+    },
+    {
+      "bytes": 9609,
+      "file": "hunspell-filesystem-1.7.2-9.el10.x86_64.rpm",
+      "sha256": "b1e50712d113b11d037f5b229a2e67c37d3e4a12fe0ac48204684793a1fc2836",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/h/hunspell-filesystem-1.7.2-9.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 49616,
+      "file": "jansson-2.14-3.el10.x86_64.rpm",
+      "sha256": "b5d6eeea14961f64ece8b3bbefeb53a61424822ccbaedb833f7fc7e50f6707c5",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/j/jansson-2.14-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 48352,
+      "file": "json-c-0.18-3.el10.x86_64.rpm",
+      "sha256": "b71c78b0cd138ae7bf6a77572199e5ddabd81dacc48dcba5efbf317ddb42d41e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/j/json-c-0.18-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 176112,
+      "file": "json-glib-1.8.0-5.el10.x86_64.rpm",
+      "sha256": "09a387a2bdcc0b45ce6870ff427bb45d1bdfcd78aab741dbdb83d60a7f39bb9a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/j/json-glib-1.8.0-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 3789065,
+      "file": "kernel-headers-6.12.0-211.74.1.el10_2.x86_64.rpm",
+      "sha256": "74eb045ad0eda5d8c2aec91eca86a813494480e2c29ef5b9e5b1e5e5a026f79d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/k/kernel-headers-6.12.0-211.74.1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 9009,
+      "file": "kernel-srpm-macros-1.0-27.el10.noarch.rpm",
+      "sha256": "7005fc9cd4d2051a84f8f987853b3d4c57f30fb0da2d9b77633ad2a86ad8fedc",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/k/kernel-srpm-macros-1.0-27.el10.noarch.rpm"
+    },
+    {
+      "bytes": 35395,
+      "file": "keyutils-libs-1.6.3-5.el10.x86_64.rpm",
+      "sha256": "6f47ab7c2dfdac5ea0849a714b24e08cadb8a1a36ee3bfdffe8353c97352f8f7",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/k/keyutils-libs-1.6.3-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 77198,
+      "file": "kmod-libs-31-13.el10.x86_64.rpm",
+      "sha256": "95a460fe1216d2e27af8e5f1ac5cb11b1e14877837798dacb0fe2adf63ef31fd",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/k/kmod-libs-31-13.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 792241,
+      "file": "krb5-libs-1.21.3-10.el10_2.x86_64.rpm",
+      "sha256": "02be542c9b64742578ee8c3228fa0eca4aaed0e69a8f602f85dd18b1bbf9e15d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/k/krb5-libs-1.21.3-10.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 12204,
+      "file": "langpacks-core-en-4.1-3.el10.noarch.rpm",
+      "sha256": "d2bac949200cc9c4e0078f15b1487791bf125ffba8ef43e6557ba4868487562e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/langpacks-core-en-4.1-3.el10.noarch.rpm"
+    },
+    {
+      "bytes": 12190,
+      "file": "langpacks-en-4.1-3.el10.noarch.rpm",
+      "sha256": "8f2f0447997c04309d0ed0ce7e552ac803827bec38cf89108ffeffa46da7555b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/langpacks-en-4.1-3.el10.noarch.rpm"
+    },
+    {
+      "bytes": 12423,
+      "file": "langpacks-fonts-en-4.1-3.el10.noarch.rpm",
+      "sha256": "f81ecff85607d3344ce6e675171d6429b5c14c8340455ab43257fb2894390aa6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/langpacks-fonts-en-4.1-3.el10.noarch.rpm"
+    },
+    {
+      "bytes": 32638,
+      "file": "libacl-2.4.0-1.el10_2.x86_64.rpm",
+      "sha256": "192efc2255ae042f62cf40c78bd648e7712919865bbfcaa629420ae6e9ed4140",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libacl-2.4.0-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 430083,
+      "file": "libarchive-3.7.7-11.el10_2.x86_64.rpm",
+      "sha256": "558bde64fece0035815971b98ef9a1debe00e8813d75a658d265170c0597467e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libarchive-3.7.7-11.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 24436,
+      "file": "libattr-2.6.0-1.el10_2.x86_64.rpm",
+      "sha256": "54955655d65785b1b1cccebccb47fa460c72741bc077b6aa8b41b0b406877939",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libattr-2.6.0-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 133611,
+      "file": "libblkid-2.40.2-18.el10_2.20.x86_64.rpm",
+      "sha256": "4c23cddef435563dffda6bea6ce2085db8582257315b73d9dfc1bfdbb9b4ff70",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libblkid-2.40.2-18.el10_2.20.x86_64.rpm"
+    },
+    {
+      "bytes": 197769,
+      "file": "libbpf-1.7.0-1.el10.x86_64.rpm",
+      "sha256": "c4786e699e5ff0cea978470365e6da5326839166c4533ef523ea496766793efa",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libbpf-1.7.0-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 359598,
+      "file": "libbrotli-1.1.0-8.el10_2.1.x86_64.rpm",
+      "sha256": "4fcde75854c5395761ea87865f3dcb22bd82df14f338bc6e4d5f7bc3b56f5eea",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libbrotli-1.1.0-8.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 98662,
+      "file": "libcap-2.69-7.el10_2.1.x86_64.rpm",
+      "sha256": "2cec36ea2d64c8d9bce94e6b56b1597971e0c3375af24f7418e83b2d22066e18",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libcap-2.69-7.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 36851,
+      "file": "libcap-ng-0.8.4-6.el10.x86_64.rpm",
+      "sha256": "7c7d049f3e8cf99cef23063631598b3fb10eaaf16e6f35c6a0269c73ab987a36",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libcap-ng-0.8.4-6.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 37307,
+      "file": "libcbor-0.11.0-3.el10.x86_64.rpm",
+      "sha256": "fdf8446ec31ab2efddc92e0164946192bcec3b8290a3a810aa01418cdc3522c8",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libcbor-0.11.0-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 26641,
+      "file": "libcom_err-1.47.1-5.el10.x86_64.rpm",
+      "sha256": "14239c765f27bae315cff76fff1b049fbedfe2923f7e50989301317488b35918",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libcom_err-1.47.1-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 384461,
+      "file": "libcurl-8.12.1-4.el10_2.7.x86_64.rpm",
+      "sha256": "06976137109346d0d13b93539b4b4c42391548dfe692d49fdf32e7e37389f590",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libcurl-8.12.1-4.el10_2.7.x86_64.rpm"
+    },
+    {
+      "bytes": 309007,
+      "file": "libcurl-minimal-8.12.1-4.el10_2.7.x86_64.rpm",
+      "sha256": "d7143b5eff1e62d8ad2e519d155a395b9637404b11e9e5a980586fbc9114f67e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libcurl-minimal-8.12.1-4.el10_2.7.x86_64.rpm"
+    },
+    {
+      "bytes": 737991,
+      "file": "libdnf-0.73.1-15.el10_2.x86_64.rpm",
+      "sha256": "1a73150a790c2eeb875cb20e8c58cb791757a1d6b27e094144fefae43652743a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libdnf-0.73.1-15.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 36745,
+      "file": "libeconf-0.6.2-4.el10.x86_64.rpm",
+      "sha256": "a8f5889413d081126b82c25a4552063cdab6918afd6836e70c7e1c59ae5857a7",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libeconf-0.6.2-4.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 274092,
+      "file": "libevent-2.1.13-1.el10_2.x86_64.rpm",
+      "sha256": "ab7d30edcca15aacf17962e25430fad1bdb172c2ab05f27e67ca9f7ed14fdb03",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libevent-2.1.13-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 170423,
+      "file": "libfdisk-2.40.2-18.el10_2.20.x86_64.rpm",
+      "sha256": "0f310027da9ef7269e1d5b446125b8d9048fad71efc174168ac120f2967ef712",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libfdisk-2.40.2-18.el10_2.20.x86_64.rpm"
+    },
+    {
+      "bytes": 41615,
+      "file": "libffi-3.4.4-10.el10.x86_64.rpm",
+      "sha256": "b15814ae52e709480c797e5b5bbbc77f25e8483b3518c7997c201291b91fb928",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libffi-3.4.4-10.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 29841,
+      "file": "libffi-devel-3.4.4-10.el10.x86_64.rpm",
+      "sha256": "1adc20d5289e871e92d6e5b3660bc2ca1dc4325fa2077fa3796395db01c3bd8a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/libffi-devel-3.4.4-10.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 102913,
+      "file": "libfido2-1.14.0-7.el10.x86_64.rpm",
+      "sha256": "132ad4a76f742a97a670255869b9422e38dfa5a6885c474963242d4a0c50a088",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libfido2-1.14.0-7.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 149382,
+      "file": "libgcc-14.3.1-4.4.el10.x86_64.rpm",
+      "sha256": "70966d6875c258d00660fb0fa3fbfecf768d3753b432af6c46a28d3cb35dee7e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libgcc-14.3.1-4.4.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 377828,
+      "file": "libgomp-14.3.1-4.4.el10.x86_64.rpm",
+      "sha256": "daa27611297d11cde522b350ca2b9f9ccd8fe3c153c7206061417a314fa83dde",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libgomp-14.3.1-4.4.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 124963,
+      "file": "libidn2-2.3.7-3.el10.x86_64.rpm",
+      "sha256": "fb78a21b31e4f31b6e5850d408456468bc6b5ae2553efef635a32e36a1e1c004",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libidn2-2.3.7-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 245760,
+      "file": "libmodulemd-2.15.0-12.el10.x86_64.rpm",
+      "sha256": "4dcefa99abdd5763d3d3746a59a1e80a71c33ee8fb23176a9bb5799c043faf36",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libmodulemd-2.15.0-12.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 167161,
+      "file": "libmount-2.40.2-18.el10_2.20.x86_64.rpm",
+      "sha256": "deb26784e1bc939c7aebf179870e3ae7b118537f264e621b52775442469a3939",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libmount-2.40.2-18.el10_2.20.x86_64.rpm"
+    },
+    {
+      "bytes": 75330,
+      "file": "libmpc-1.3.1-7.el10.x86_64.rpm",
+      "sha256": "0ffe6cc4aa8936e1ed0d807c8bb059a864aa5cb687cde85f211f3d050a45a1a2",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/libmpc-1.3.1-7.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 80861,
+      "file": "libnghttp2-1.68.0-3.el10_2.2.x86_64.rpm",
+      "sha256": "3b2a80a595800a4086dc212b06e13aa54ca6552f157186582d8b255041812336",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libnghttp2-1.68.0-3.el10_2.2.x86_64.rpm"
+    },
+    {
+      "bytes": 143919,
+      "file": "libpeas1-1.36.0-8.el10.x86_64.rpm",
+      "sha256": "f980dc480608501f18abce77b801a7d4801ad94863b739b671710805f98e2efa",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libpeas1-1.36.0-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 41667,
+      "file": "libpkgconf-2.1.0-3.el10.x86_64.rpm",
+      "sha256": "3c771e6212564874eb7e6200f22cb2e05265e7319984590c0f4de3eb5733b75f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libpkgconf-2.1.0-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 267622,
+      "file": "libpq-16.14-1.el10_2.x86_64.rpm",
+      "sha256": "3d17af5d06734a065ccc7f89d4f7a6bc84eb14bdc91f4241d8615cf7f3291850",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libpq-16.14-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 125553,
+      "file": "libpq-devel-16.14-1.el10_2.x86_64.rpm",
+      "sha256": "571d3e1f86fd76506457035a93a8f2524de39a1150e6477fcf21c2b6294641eb",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/libpq-devel-16.14-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 68382,
+      "file": "libpsl-0.21.5-6.el10.x86_64.rpm",
+      "sha256": "788a2a36172ce893fe7ab6fec513eff4dc6c5d36737c25efec6bbf0253138ca6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libpsl-0.21.5-6.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 129792,
+      "file": "libpwquality-1.4.5-12.el10.x86_64.rpm",
+      "sha256": "36a6f5c84392c6b578bd8b0bd7c7e431f6ed371ec217887e2373cff3206cd016",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libpwquality-1.4.5-12.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 96508,
+      "file": "librepo-1.19.0-1.el10.x86_64.rpm",
+      "sha256": "8c5700d19727972b62da6c33c21822146ccc7e4a203f38f85950118351c69408",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/librepo-1.19.0-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 39774,
+      "file": "librhsm-0.0.3-16.el10.x86_64.rpm",
+      "sha256": "091be40b4f17a63631aa5d98981283e82743bed4a0a478a0a02272f1ed4620b0",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/librhsm-0.0.3-16.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 72946,
+      "file": "libseccomp-2.5.6-1.el10.x86_64.rpm",
+      "sha256": "2aec021802705c06a7598648e5013b197930e8ee6bcdadd3455a5c4ccb30f4e6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libseccomp-2.5.6-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 106104,
+      "file": "libselinux-3.10-1.el10.x86_64.rpm",
+      "sha256": "693218601d47f11c53783b691be37796519a9b2545d5fe5f1e1b40b50c7c4503",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libselinux-3.10-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 131392,
+      "file": "libsemanage-3.10-1.el10.x86_64.rpm",
+      "sha256": "a82fac6a60b3c1e494440c0b08023a9a715e3495e1bcfca54ec19329dca62f52",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libsemanage-3.10-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 363764,
+      "file": "libsepol-3.10-1.el10.x86_64.rpm",
+      "sha256": "807aadefeff5dde1b31cb32305c87a2bb1699b0732a228f79608b90387bc9e4b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libsepol-3.10-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 90837,
+      "file": "libsmartcols-2.40.2-18.el10_2.20.x86_64.rpm",
+      "sha256": "f0577273a348bf86c0cf36a8b21570d0a2fd9b6383425c70d1f55d35e98001f8",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libsmartcols-2.40.2-18.el10_2.20.x86_64.rpm"
+    },
+    {
+      "bytes": 445169,
+      "file": "libsolv-0.7.33-5.el10_2.x86_64.rpm",
+      "sha256": "612d24a8ae9627b10daea18070ee668388e29bc72eb862508a9f7001c8ea1e39",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libsolv-0.7.33-5.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 290062,
+      "file": "libssh-0.12.0-3.el10_2.x86_64.rpm",
+      "sha256": "e510adfbe957332cd1baf895238c6c179f6ce1460b92bb022d52772a11ba5cee",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libssh-0.12.0-3.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 14954,
+      "file": "libssh-config-0.12.0-3.el10_2.noarch.rpm",
+      "sha256": "0bed78001fd745ddac7a1efb8e46dae4df4379039530c3aab87bda051f43974d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libssh-config-0.12.0-3.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 948032,
+      "file": "libstdc++-14.3.1-4.4.el10.x86_64.rpm",
+      "sha256": "3c59b9e40bb8e9abf030101357ebac5c126cb8cd00ef43fda52fd37925e4075f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libstdc++-14.3.1-4.4.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 82685,
+      "file": "libtasn1-4.20.0-5.el10_2.x86_64.rpm",
+      "sha256": "a796b3ca8327e43b057f9ababd85a47825afc8d81b8b51d0a6cb3d81a77ab345",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libtasn1-4.20.0-5.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 617270,
+      "file": "libtool-2.4.7-13.el10.x86_64.rpm",
+      "sha256": "0be1d6a69b6c5e16547e3f5d8b66446618e511c02be44084063628d8751b79be",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/libtool-2.4.7-13.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 563527,
+      "file": "libunistring-1.1-10.el10.x86_64.rpm",
+      "sha256": "5f26d0b56853f176cfebd49cc641760c10bd7c6dc5ce49e6ddf1c51b49d55d90",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libunistring-1.1-10.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 85564,
+      "file": "libusb1-1.0.30-1.el10_2.x86_64.rpm",
+      "sha256": "7f63165809012881f1b0558019d34e84c71ed1648e04129af946a228844cf6a9",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libusb1-1.0.30-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 34725,
+      "file": "libuuid-2.40.2-18.el10_2.20.x86_64.rpm",
+      "sha256": "8e7c508316f4d5cd8cacf3b9652ade09ab1836e05ae98619a707b9af22c9500e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libuuid-2.40.2-18.el10_2.20.x86_64.rpm"
+    },
+    {
+      "bytes": 41413,
+      "file": "libuuid-devel-2.40.2-18.el10_2.20.x86_64.rpm",
+      "sha256": "ff43513277c66946163cb85305e9f6521db1069e65a1541d370db4369951eee0",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/libuuid-devel-2.40.2-18.el10_2.20.x86_64.rpm"
+    },
+    {
+      "bytes": 24849,
+      "file": "libverto-0.3.2-10.el10.x86_64.rpm",
+      "sha256": "96d5e8b4c749ca02b41fb59d102b0b6e1ac8d21362bbd919db45cc1aab8bfcf1",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libverto-0.3.2-10.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 127002,
+      "file": "libxcrypt-4.4.36-10.el10.x86_64.rpm",
+      "sha256": "aaf3d1f7a232c9e583d6c52904c9b640e0dd3de4be80219eab0de3d66601dac4",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libxcrypt-4.4.36-10.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 34028,
+      "file": "libxcrypt-devel-4.4.36-10.el10.x86_64.rpm",
+      "sha256": "5e98ac0095da4e23b8a7b0dfc8d6fc97b0fa0d6c5d7bb0d70fe1dbf97ae64eb6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/libxcrypt-devel-4.4.36-10.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 151250,
+      "file": "libxkbcommon-1.7.0-4.el10.x86_64.rpm",
+      "sha256": "295865e66c9ba6e216a2aa30002707364a8e45d4c977619f7ae8e9bd6f3f71be",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/libxkbcommon-1.7.0-4.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 715131,
+      "file": "libxml2-2.12.5-10.el10_2.4.x86_64.rpm",
+      "sha256": "3aa7530edec2ff558820ca18e213b42f98244b94cd72fd26615a90b89a514805",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libxml2-2.12.5-10.el10_2.4.x86_64.rpm"
+    },
+    {
+      "bytes": 65685,
+      "file": "libyaml-0.2.5-16.el10.x86_64.rpm",
+      "sha256": "b014ac5ab3d0be78278e0e96c00a030be08b62faa66b21394fb4eae85cff6eb3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libyaml-0.2.5-16.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 300621,
+      "file": "libzstd-1.5.5-9.el10.x86_64.rpm",
+      "sha256": "1ec63cdb7301033f1913018e9752d69befd7243854e851f15083e9ffc1d16ee6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/libzstd-1.5.5-9.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 136909,
+      "file": "lua-libs-5.4.6-7.el10.x86_64.rpm",
+      "sha256": "cd9382059d186745cfa30825f011e185e903b2939ee02c98318bb483448e69b6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/lua-libs-5.4.6-7.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 10752,
+      "file": "lua-srpm-macros-1-15.el10.noarch.rpm",
+      "sha256": "a39ab993ee3ea613f3a87dd6c0bb0441808dc5ad93e523a20bdcae7f654b85ad",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/l/lua-srpm-macros-1-15.el10.noarch.rpm"
+    },
+    {
+      "bytes": 71637,
+      "file": "lz4-libs-1.9.4-8.el10.x86_64.rpm",
+      "sha256": "ce7cbbd9a4e2bcafb47831530bff83068094926677f5d5e60f5ffa051783d353",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/l/lz4-libs-1.9.4-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 316657,
+      "file": "m4-1.4.19-11.el10.x86_64.rpm",
+      "sha256": "d65b945ffee05c0d6dcae6da23e12bd95bd9e2a378979927d42a25b77d1e323d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/m/m4-1.4.19-11.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 605276,
+      "file": "make-4.4.1-9.el10.x86_64.rpm",
+      "sha256": "1c7b61c065106c0eb3a958e55ffbe37734aebcf440b0c36435ca7eb41b8e0110",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/m/make-4.4.1-9.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 53284,
+      "file": "microdnf-3.10.1-1.el10.x86_64.rpm",
+      "sha256": "bf9e7299d8127e130463b04d0e7d1164bb19f44cea9326aee8d4e205860bf7b5",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/m/microdnf-3.10.1-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 93985,
+      "file": "mpdecimal-2.5.1-12.el10.x86_64.rpm",
+      "sha256": "9dcf5d5b162c4642c48c66ad371f89b1bca8d3b4921ef0fa947c5bce9afab8b8",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/m/mpdecimal-2.5.1-12.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 360839,
+      "file": "mpfr-4.2.1-8.el10.x86_64.rpm",
+      "sha256": "dab8b8a1c5b675f4e5e91db5e12f91e042592b816d7d69336dd860b20e53995c",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/m/mpfr-4.2.1-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 437267,
+      "file": "ncurses-6.4-15.20240127.el10_1.x86_64.rpm",
+      "sha256": "420a86b376c70f56cd06f8cea4614b7c4287223a4602b2d6e46e54cd7778e398",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/n/ncurses-6.4-15.20240127.el10_1.x86_64.rpm"
+    },
+    {
+      "bytes": 107361,
+      "file": "ncurses-base-6.4-15.20240127.el10_1.noarch.rpm",
+      "sha256": "bfd174abe13d38f5515ef5d960d2cf57ef5c09b21a8a7ff589f6c6c6fd6d6fe6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/n/ncurses-base-6.4-15.20240127.el10_1.noarch.rpm"
+    },
+    {
+      "bytes": 43314,
+      "file": "ncurses-c++-libs-6.4-15.20240127.el10_1.x86_64.rpm",
+      "sha256": "4cc6399ddd55664b59d770a6b3116b21294aa6675eba48615269a17f93674171",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/n/ncurses-c++-libs-6.4-15.20240127.el10_1.x86_64.rpm"
+    },
+    {
+      "bytes": 777237,
+      "file": "ncurses-devel-6.4-15.20240127.el10_1.x86_64.rpm",
+      "sha256": "3d6c68c2a9f6e74d31dd1e0c261ba0d235c29296b268a17fc5e89c7b44b1e25a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/n/ncurses-devel-6.4-15.20240127.el10_1.x86_64.rpm"
+    },
+    {
+      "bytes": 352152,
+      "file": "ncurses-libs-6.4-15.20240127.el10_1.x86_64.rpm",
+      "sha256": "a028e489c8b94812269f950affa4cca905658e31eca16f37d32f60cc26783762",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/n/ncurses-libs-6.4-15.20240127.el10_1.x86_64.rpm"
+    },
+    {
+      "bytes": 10638,
+      "file": "ocaml-srpm-macros-10-4.el10.noarch.rpm",
+      "sha256": "975a249c5b7a5886fd533216249908bc1d4f458c1311f06a4d24e7547b95235e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/o/ocaml-srpm-macros-10-4.el10.noarch.rpm"
+    },
+    {
+      "bytes": 9173,
+      "file": "openblas-srpm-macros-2-19.el10.noarch.rpm",
+      "sha256": "123676391c4eeea9c70007cfcab8e62fe3d19df71106b665ad46940c6dc8e7c6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/o/openblas-srpm-macros-2-19.el10.noarch.rpm"
+    },
+    {
+      "bytes": 244928,
+      "file": "openldap-2.6.10-1.el10.x86_64.rpm",
+      "sha256": "83235a7a5ff9d500f0ff34cc9bac1922f78429f6b584d30afdbf8988c2ef18b2",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/o/openldap-2.6.10-1.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 4443996,
+      "file": "openssl-devel-3.5.8-2.el10_2.x86_64.rpm",
+      "sha256": "69ea66fb869105d57fe97ad2ecae2f5b6f6621bdb659fed3cf80a54ad3d55fc3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/o/openssl-devel-3.5.8-2.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 14156,
+      "file": "openssl-fips-provider-3.0.7-11.el10_2.x86_64.rpm",
+      "sha256": "93604ae6c7ef3fc6195653722eaea877863f18b98d80412d4aaed1c38178de61",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/o/openssl-fips-provider-3.0.7-11.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 594864,
+      "file": "openssl-fips-provider-so-3.0.7-11.el10_2.x86_64.rpm",
+      "sha256": "e0f01c61a79c9c128dc2eabcd92b66e36e089885023305370e9188ecf3f591cf",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/o/openssl-fips-provider-so-3.0.7-11.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 2375173,
+      "file": "openssl-libs-3.5.8-2.el10_2.x86_64.rpm",
+      "sha256": "988479c9ac55bdb48027523ffb4b3833befca3d62395bb479a10c5f00f6423a7",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/o/openssl-libs-3.5.8-2.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 583951,
+      "file": "p11-kit-0.26.4-1.el10_2.x86_64.rpm",
+      "sha256": "3f569bf68505b5e24e87ccf273984f5db8bdf4b8a539bc6fc133a615eb3da2f3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/p11-kit-0.26.4-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 150655,
+      "file": "p11-kit-trust-0.26.4-1.el10_2.x86_64.rpm",
+      "sha256": "05a213cf13dc23e408c4647400fafba00c3931970e96e5f356bec2077add59d3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/p11-kit-trust-0.26.4-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 10941,
+      "file": "package-notes-srpm-macros-0.5-13.el10.noarch.rpm",
+      "sha256": "68a545338c74e9527b7f7906f20efcb2dcecaf5d172fa0b46325062f22045941",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/package-notes-srpm-macros-0.5-13.el10.noarch.rpm"
+    },
+    {
+      "bytes": 64026,
+      "file": "pam-libs-1.6.1-9.el10_2.1.x86_64.rpm",
+      "sha256": "3344c1cbb8ab88cf9cc94f9ea0588ee4cdfa4701299d907dd1f44e4864bf95ba",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/pam-libs-1.6.1-9.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 137658,
+      "file": "patch-2.7.6-26.el10.x86_64.rpm",
+      "sha256": "8fa7346dfe7b2844b4ec3510107950533472c5286bb550311ddd5ac143bcff82",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/patch-2.7.6-26.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 258235,
+      "file": "pcre2-10.44-1.5.el10_2.x86_64.rpm",
+      "sha256": "b605b10ebf3de1177a3b4a913fca7d81d6d7c097420e7fe301f1534df0e71dc3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/pcre2-10.44-1.5.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 159630,
+      "file": "pcre2-syntax-10.44-1.5.el10_2.noarch.rpm",
+      "sha256": "69fc76ca29c629965ed2afb14e8a68fdda808b1b2936b414f07c0cf2875b075d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/pcre2-syntax-10.44-1.5.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 26422,
+      "file": "perl-AutoLoader-5.74-515.el10_2.noarch.rpm",
+      "sha256": "bb19724c1172dc09ee19c26871152ae42fc415344f83ab2baa42aa096220a63c",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-AutoLoader-5.74-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 187565,
+      "file": "perl-B-1.89-515.el10_2.x86_64.rpm",
+      "sha256": "ca48fdc20045cda96b86bd23667ea8b3d7a0a6b7302a3f4f974df74273c61d43",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-B-1.89-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 32152,
+      "file": "perl-Carp-1.54-511.el10.noarch.rpm",
+      "sha256": "e33d8c709b3dbb274aaafcfe4226a7f4b3b134554a08ba16140dda9368f0655e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Carp-1.54-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 27265,
+      "file": "perl-Class-Struct-0.68-515.el10_2.noarch.rpm",
+      "sha256": "a09900d358c9980ff778ff8bfb75d13028bdb4065ab52fb508149f1c216a2303",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Class-Struct-0.68-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 61309,
+      "file": "perl-Data-Dumper-2.189-512.el10.x86_64.rpm",
+      "sha256": "12f7afba0d8e2fdca00a7a391b9c536026e8c8e7ca044b42a434917a1caf56a3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Data-Dumper-2.189-512.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 28853,
+      "file": "perl-Digest-1.20-511.el10.noarch.rpm",
+      "sha256": "f3fc3d8bc266271194c9c22ef75fee991dc188855dae762f8a0dde140d1ae3b3",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Digest-1.20-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 40871,
+      "file": "perl-Digest-MD5-2.59-6.el10.x86_64.rpm",
+      "sha256": "e71faadc86b93185a2c41fb80f54ab4d407b85eb011013c5d31079d7aff8cc30",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Digest-MD5-2.59-6.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 31339,
+      "file": "perl-DynaLoader-1.56-515.el10_2.x86_64.rpm",
+      "sha256": "f4dc0cae55a3873176c87a86ed39663c40365db8ee68061d2745dace46192b7b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-DynaLoader-1.56-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 1120252,
+      "file": "perl-Encode-3.21-511.el10.x86_64.rpm",
+      "sha256": "9bb023e78910e4a88076d9cef63094fbfec89dfc4d7dd2e8195288ed5f8cfe3d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Encode-3.21-511.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 19975,
+      "file": "perl-Errno-1.38-515.el10_2.x86_64.rpm",
+      "sha256": "1c56ee6d403bab3720410ab8b8a58884875613ae28b1932f624fbdeb592714d2",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Errno-1.38-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 34406,
+      "file": "perl-Exporter-5.78-511.el10.noarch.rpm",
+      "sha256": "7717ade5f90dab98aea4217afdc0ffff8971ddc79a1ba34e133d4dd719e7f499",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Exporter-5.78-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 35187,
+      "file": "perl-Fcntl-1.18-515.el10_2.x86_64.rpm",
+      "sha256": "07f375ba0edff5420b17ed4206f1c78bb318ffde39eb0dc9d8f06bdffae65edf",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Fcntl-1.18-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 22251,
+      "file": "perl-File-Basename-2.86-515.el10_2.noarch.rpm",
+      "sha256": "5dbe9129690efedfef04e1d257c526e7aee99db61bd91e71484bc62e4add4c16",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-File-Basename-2.86-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 18254,
+      "file": "perl-File-Compare-1.100.800-515.el10_2.noarch.rpm",
+      "sha256": "8f7c8e1e6499394357a806752f0caaede255dc7c110906975a123b1fdf7a86d2",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-File-Compare-1.100.800-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 25283,
+      "file": "perl-File-Copy-2.41-515.el10_2.noarch.rpm",
+      "sha256": "1bd7d31c421a7861d6cfb99daac3c2c56b6833c5385250e619071309b078a749",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-File-Copy-2.41-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 30655,
+      "file": "perl-File-Find-1.44-515.el10_2.noarch.rpm",
+      "sha256": "c9a14eeeeab44db8e1d545337b407b0e668651e3074f46d7e9dd7905abb9d0de",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-File-Find-1.44-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 35579,
+      "file": "perl-File-Path-2.18-512.el10.noarch.rpm",
+      "sha256": "de5f9cb446da59c4b6bacacf253a8be44ca8d094fe1e569189d99e762724ee5f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-File-Path-2.18-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 64128,
+      "file": "perl-File-Temp-0.231.100-512.el10.noarch.rpm",
+      "sha256": "d7cec8ac7e8a4fe82d09fb3f5fcddc7723b41b0baef680a250ae0f5c27f3709c",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-File-Temp-0.231.100-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 22138,
+      "file": "perl-File-stat-1.14-515.el10_2.noarch.rpm",
+      "sha256": "20dfe9203e8695f07b39fedf51a181a27593779a567fea769750f308731a28b5",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-File-stat-1.14-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 20546,
+      "file": "perl-FileHandle-2.05-515.el10_2.noarch.rpm",
+      "sha256": "b8cf07a92ebfc5f3f3ad2b104b3c5c523a8f2518c75ea0719cf29cbcbdebf622",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-FileHandle-2.05-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 69925,
+      "file": "perl-Getopt-Long-2.58-3.el10.noarch.rpm",
+      "sha256": "18bcc4a23330f281c9d882843d9a552aefea14012a4a5a71896a646e94f87bd6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Getopt-Long-2.58-3.el10.noarch.rpm"
+    },
+    {
+      "bytes": 20741,
+      "file": "perl-Getopt-Std-1.14-515.el10_2.noarch.rpm",
+      "sha256": "185c7418709f22db5a08fbd68236f1ed321b1e828fd2c678b456feacf27bf2b1",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Getopt-Std-1.14-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 61006,
+      "file": "perl-HTTP-Tiny-0.088-512.el10.noarch.rpm",
+      "sha256": "aaba92b1d9a41f453d92c4a37c236331595556d8b1ef3ba27efe79191b2ee348",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-HTTP-Tiny-0.088-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 87878,
+      "file": "perl-IO-1.55-515.el10_2.x86_64.rpm",
+      "sha256": "0d36b9c2e660ac67780743996304a396afdf33ef76d56785cf41dcb47097b846",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-IO-1.55-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 46270,
+      "file": "perl-IO-Socket-IP-0.42-512.el10.noarch.rpm",
+      "sha256": "fc53776bb07d9a12c61b2e2160abda314f0fb3e3bdccbeedc5d186a9bb9bf162",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-IO-Socket-IP-0.42-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 236244,
+      "file": "perl-IO-Socket-SSL-2.085-3.el10.noarch.rpm",
+      "sha256": "f78f083f60a73ca447d6727d11cd2182de85acc787369f378e6b1067dbe94eba",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-IO-Socket-SSL-2.085-3.el10.noarch.rpm"
+    },
+    {
+      "bytes": 27063,
+      "file": "perl-IPC-Open3-1.22-515.el10_2.noarch.rpm",
+      "sha256": "528428cfb77491ef21fb107294381feccc08943c031229e9aee66104aa75e6d5",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-IPC-Open3-1.22-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 34915,
+      "file": "perl-MIME-Base64-3.16-511.el10.x86_64.rpm",
+      "sha256": "b42ad237a9243106c919cfd59fe863b78912c6d49f7d7b7afa649b02550fac07",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-MIME-Base64-3.16-511.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 16659,
+      "file": "perl-Mozilla-CA-20231213-5.el10.noarch.rpm",
+      "sha256": "c73ab5645016c9965737ee0871cd91ca898ed6220e63c270d852b015f24e1ec6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Mozilla-CA-20231213-5.el10.noarch.rpm"
+    },
+    {
+      "bytes": 27863,
+      "file": "perl-NDBM_File-1.17-515.el10_2.x86_64.rpm",
+      "sha256": "82e12fae31f711c8a287d887afdd1969eac2541d6cf3b23a47d6e872b7a6c423",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-NDBM_File-1.17-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 389523,
+      "file": "perl-Net-SSLeay-1.94-8.el10.x86_64.rpm",
+      "sha256": "b81610e8911a065044d009316a4d76f9ea09e0810494b752d92273831d27f57b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Net-SSLeay-1.94-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 103719,
+      "file": "perl-POSIX-2.20-515.el10_2.x86_64.rpm",
+      "sha256": "b7d036db98860078d0755fa8790e69cfd6320f07d96db50b8edafaddfad5bb62",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-POSIX-2.20-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 91403,
+      "file": "perl-PathTools-3.91-512.el10.x86_64.rpm",
+      "sha256": "c32a4dfcd0782cbcd8560d4d5c19df5cea108d818d55461f377422f05bdd7c7d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-PathTools-3.91-512.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 22645,
+      "file": "perl-Pod-Escapes-1.07-511.el10.noarch.rpm",
+      "sha256": "c200e23d737f4f08e231c082ba9efa1151c142b95c2e93668a861ec6e8af6387",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Pod-Escapes-1.07-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 90523,
+      "file": "perl-Pod-Perldoc-3.28.01-512.el10.noarch.rpm",
+      "sha256": "a58c465c213515cfde8645985bbe1381d2d705c0da208a8629d292288247c186",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Pod-Perldoc-3.28.01-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 227878,
+      "file": "perl-Pod-Simple-3.45-511.el10.noarch.rpm",
+      "sha256": "14a770a6482afb5d6e59aeb6d9243018fbed2a775f584f1d5aad8bf57436419e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Pod-Simple-3.45-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 44178,
+      "file": "perl-Pod-Usage-2.03-511.el10.noarch.rpm",
+      "sha256": "526d436304ad58ac2ae714211b4e633ff1dfa5f481c4669c4b3aac36345c3069",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Pod-Usage-2.03-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 80199,
+      "file": "perl-Scalar-List-Utils-1.63-511.el10.x86_64.rpm",
+      "sha256": "0c49a699f11160173f7f96c864d64a05b0bed2ea6a6ec090aef3c3914de405dc",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Scalar-List-Utils-1.63-511.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 16679,
+      "file": "perl-SelectSaver-1.02-515.el10_2.noarch.rpm",
+      "sha256": "15683a0debfc26284f806085400578b9169b665e9a8d6a85b035d55401792ecb",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-SelectSaver-1.02-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 60108,
+      "file": "perl-Socket-2.038-511.el10.x86_64.rpm",
+      "sha256": "a0cabaab2498a22f30eb695efc836a0245907823487c07993236c4f725569a3b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Socket-2.038-511.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 103981,
+      "file": "perl-Storable-3.32-511.el10.x86_64.rpm",
+      "sha256": "c1606e0986462e8dee953955f864045b84e4efc568333c26e5bb2ab9a5102ae1",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Storable-3.32-511.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 19225,
+      "file": "perl-Symbol-1.09-515.el10_2.noarch.rpm",
+      "sha256": "435a6381ec6ab206fc580917fae0fa4b981c3348c98a2951b27fee452f1a5889",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Symbol-1.09-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 52067,
+      "file": "perl-Term-ANSIColor-5.01-512.el10.noarch.rpm",
+      "sha256": "1911e024055c4912acf9cb7b36dcafcaaf9011280baf0fb57f8c0f0557f1ee7a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Term-ANSIColor-5.01-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 25395,
+      "file": "perl-Term-Cap-1.18-511.el10.noarch.rpm",
+      "sha256": "1a74bbcf53f340c2db848c898d6a1eccb296503576bd803be46716a3f2d07f05",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Term-Cap-1.18-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 19126,
+      "file": "perl-Text-ParseWords-3.31-511.el10.noarch.rpm",
+      "sha256": "1888de997708159ded07c0a55ea8b843ca8f8b2a6499d7b7841969ac36825ca5",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Text-ParseWords-3.31-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 25047,
+      "file": "perl-Text-Tabs+Wrap-2024.001-511.el10.noarch.rpm",
+      "sha256": "939259f36c6068e64c071f6b9904e8013330a06ba7c07569a8db47723afdfeaa",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Text-Tabs+Wrap-2024.001-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 24871,
+      "file": "perl-Thread-Queue-3.14-511.el10.noarch.rpm",
+      "sha256": "a59b8e63eece83314001a522a88c2f5d33ce306b7381653fa7fa7461805a1b14",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Thread-Queue-3.14-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 38522,
+      "file": "perl-Time-Local-1.350-511.el10.noarch.rpm",
+      "sha256": "bc30eb0596ae24503e5baf578b84122b68e3ca8d012562a73406d4afdabfbd6b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Time-Local-1.350-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 143091,
+      "file": "perl-URI-5.27-3.el10_2.1.noarch.rpm",
+      "sha256": "c0203a91034072a91427ff92195c140497e367dc8170f3f64c7e2e17f60ca033",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-URI-5.27-3.el10_2.1.noarch.rpm"
+    },
+    {
+      "bytes": 80187,
+      "file": "perl-Unicode-Normalize-1.32-511.el10.x86_64.rpm",
+      "sha256": "60b19bf17c8597cc620e6437843e575e7d3181e46564bb1fe082be9858dcad69",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-Unicode-Normalize-1.32-511.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 21264,
+      "file": "perl-base-2.27-515.el10_2.noarch.rpm",
+      "sha256": "fd0c3533eecf3acaae4968dda7e7019498fc0b9aacc80bfa2c191a2bb8762c13",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-base-2.27-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 26066,
+      "file": "perl-constant-1.33-512.el10.noarch.rpm",
+      "sha256": "2004a0ea190e5bf30a12dae628333d4f31bf89c1611ae4283c77fcdadc921f07",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-constant-1.33-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 19017,
+      "file": "perl-if-0.61.000-515.el10_2.noarch.rpm",
+      "sha256": "6633dcfb384e9e62b81bb75e79dc8892cad5aa067193154f7a8dd07189e1351f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-if-0.61.000-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 78603,
+      "file": "perl-interpreter-5.40.2-515.el10_2.x86_64.rpm",
+      "sha256": "3e3e25218e1299a14cd9d48e83e666df212c1e828d433a53110f009d8da93d9d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-interpreter-5.40.2-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 134460,
+      "file": "perl-libnet-3.15-512.el10.noarch.rpm",
+      "sha256": "328e9e9c9c216a2bda6f205ff4637754914a6a21cb9fb792c6c3e7dd8adf8bde",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-libnet-3.15-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 2519373,
+      "file": "perl-libs-5.40.2-515.el10_2.x86_64.rpm",
+      "sha256": "5e1303edcc1c5fdbeed8a1264af4cebee983acb3b6a3735245e151496b3366fd",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-libs-5.40.2-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 18634,
+      "file": "perl-locale-1.12-515.el10_2.noarch.rpm",
+      "sha256": "a0a9d2e42da26f086046f0f708cc37819f2ab9d7c59dffaa014786d7cd0e8823",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-locale-1.12-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 35461,
+      "file": "perl-mro-1.29-515.el10_2.x86_64.rpm",
+      "sha256": "ec9938a15934801a5947a9022a65d73988cae13c77e4dfe926762f4e7aceb063",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-mro-1.29-515.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 51320,
+      "file": "perl-overload-1.37-515.el10_2.noarch.rpm",
+      "sha256": "3082541b29d0e0dcba0ab87b2515b60c173d0aa5d3fe76ce3ce8eb067dbe6668",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-overload-1.37-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 17884,
+      "file": "perl-overloading-0.02-515.el10_2.noarch.rpm",
+      "sha256": "9580567af6d1a37641677655dc51be300a8c4b026906254078a192ffad447268",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-overloading-0.02-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 17274,
+      "file": "perl-parent-0.241-512.el10.noarch.rpm",
+      "sha256": "f1f3a1a07d86b752c46d96da1ef18e2243732c6354c9a3fd1d17a7e224031d5f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-parent-0.241-512.el10.noarch.rpm"
+    },
+    {
+      "bytes": 130744,
+      "file": "perl-podlators-5.01-511.el10.noarch.rpm",
+      "sha256": "6b8001129818f1f4615a4704e679d380b736ae7333a837ba567967660320a6b2",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-podlators-5.01-511.el10.noarch.rpm"
+    },
+    {
+      "bytes": 9965,
+      "file": "perl-srpm-macros-1-57.el10.noarch.rpm",
+      "sha256": "e1194c5fe19a52e1d658c33a306af920d3321e5c559644ad59b10fd938afd978",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-srpm-macros-1-57.el10.noarch.rpm"
+    },
+    {
+      "bytes": 63350,
+      "file": "perl-threads-2.40-511.el10.x86_64.rpm",
+      "sha256": "801067dd51ea3f6a81020e84cd3f6e469fd68060526f3a4e42143c8074e2026a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-threads-2.40-511.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 49989,
+      "file": "perl-threads-shared-1.69-511.el10.x86_64.rpm",
+      "sha256": "722670920d53cafb2c3624d96b6b3221442f2efe014ead681957e8d36db0947a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-threads-shared-1.69-511.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 17977,
+      "file": "perl-vars-1.05-515.el10_2.noarch.rpm",
+      "sha256": "1f1137469608a6dd9d1f8fa8768874fa3f0a4f46dcc13a5957904d77e5802f81",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/perl-vars-1.05-515.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 49544,
+      "file": "pkgconf-2.1.0-3.el10.x86_64.rpm",
+      "sha256": "63c965654dfd260d755bd36bdb19ced0036aa4c1e2b64d726c95fad98b2dc041",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/pkgconf-2.1.0-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 15861,
+      "file": "pkgconf-m4-2.1.0-3.el10.noarch.rpm",
+      "sha256": "f6a99c6e64b9358a0b4db60e4fb2b5c858eb0487a504690e80d1b84b9d044995",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/pkgconf-m4-2.1.0-3.el10.noarch.rpm"
+    },
+    {
+      "bytes": 12216,
+      "file": "pkgconf-pkg-config-2.1.0-3.el10.x86_64.rpm",
+      "sha256": "b90a31630640ca9a05ba842032ccbe7ae786318bb808ffb49f252acdb1419235",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/pkgconf-pkg-config-2.1.0-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 71445,
+      "file": "popt-1.19-8.el10.x86_64.rpm",
+      "sha256": "88692bc75cf350d02534a9bd3b3228dbd839bdf14355557dfe4f1b3fcc8b805f",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/popt-1.19-8.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 390183,
+      "file": "procps-ng-4.0.4-11.el10.x86_64.rpm",
+      "sha256": "f6baf4ade9dca4a7d655d5982fe5f7df9a085d8bf90f0eb5cf37370ffbb79ee5",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/procps-ng-4.0.4-11.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 61540,
+      "file": "publicsuffix-list-dafsa-20240107-5.el10.noarch.rpm",
+      "sha256": "53b2a71e7240613288d9d4922d2c1886f785637d981f9498c0caadda77a686ee",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/publicsuffix-list-dafsa-20240107-5.el10.noarch.rpm"
+    },
+    {
+      "bytes": 13470,
+      "file": "pyproject-srpm-macros-1.18.5-1.el10.noarch.rpm",
+      "sha256": "be6807e0892d17a364e5a62f3390e407265b6d65bd7b0b333bfeaaf5ab93938d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/pyproject-srpm-macros-1.18.5-1.el10.noarch.rpm"
+    },
+    {
+      "bytes": 22970,
+      "file": "python-srpm-macros-3.12-11.el10.noarch.rpm",
+      "sha256": "e01231c44a1b39395e6913641c73f26c903993e36b609b551cd7e81edc710b5c",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/python-srpm-macros-3.12-11.el10.noarch.rpm"
+    },
+    {
+      "bytes": 16920,
+      "file": "python-unversioned-command-3.12.15-1.el10_2.noarch.rpm",
+      "sha256": "f0584629f888fd01415f0c462b66f9e6c7cc49e1addd80c196ce9407b278fef7",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/p/python-unversioned-command-3.12.15-1.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 34485,
+      "file": "python3-3.12.15-1.el10_2.x86_64.rpm",
+      "sha256": "dabfac337dfb781348ac7c8de04e93bc96f7a1f25eef68c6845afd7624759a3b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/python3-3.12.15-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 9926854,
+      "file": "python3-libs-3.12.15-1.el10_2.x86_64.rpm",
+      "sha256": "5341bd91eca916cf35f4c51c9329da0ea8f3023eff542500f0ac91044da078b4",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/python3-libs-3.12.15-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 1549827,
+      "file": "python3-pip-wheel-23.3.2-11.el10_2.noarch.rpm",
+      "sha256": "7793efe2d3c655a180c730e388e1bbb714d653275c4d8f9791063321d1be72fe",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/python3-pip-wheel-23.3.2-11.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 279223,
+      "file": "python3-pyparsing-3.1.1-7.el10.noarch.rpm",
+      "sha256": "0f6c1b2cbec52d3bba73695a89d1aa5347b5c8de50bac520996ef14c920270a5",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/p/python3-pyparsing-3.1.1-7.el10.noarch.rpm"
+    },
+    {
+      "bytes": 9362,
+      "file": "qt6-srpm-macros-6.10.1-1.el10.noarch.rpm",
+      "sha256": "522a13eafd1c8ddc7574fbc86573fc10f976d5db38f052f9e27b8aaf6aa6692a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/q/qt6-srpm-macros-6.10.1-1.el10.noarch.rpm"
+    },
+    {
+      "bytes": 222047,
+      "file": "readline-8.2-11.el10.x86_64.rpm",
+      "sha256": "c56e366b00eeaa24932db044dc5ff61417ec4f895add33821e9e06c4aea28b19",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/readline-8.2-11.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 354241,
+      "file": "redhat-mono-vf-fonts-4.1.0-1.el10.noarch.rpm",
+      "sha256": "2f7bd5afdec4358ec96ee8db68acf4a42cfbadd5bb8ee71c89365f10686fd57a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/redhat-mono-vf-fonts-4.1.0-1.el10.noarch.rpm"
+    },
+    {
+      "bytes": 63164,
+      "file": "redhat-release-10.2-21.el10.x86_64.rpm",
+      "sha256": "5d46abf20f01a22fdcfe6a5deaa5b935716e996deefd22b0c6fdb330d37fb1aa",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/redhat-release-10.2-21.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 83369,
+      "file": "redhat-rpm-config-295-1.el10.noarch.rpm",
+      "sha256": "d8e9f9d0ddb18f5c69e22cc7d27af8cca158b64ad96a1e80bd2d52df1e367ab9",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/r/redhat-rpm-config-295-1.el10.noarch.rpm"
+    },
+    {
+      "bytes": 365505,
+      "file": "redhat-text-vf-fonts-4.1.0-1.el10.noarch.rpm",
+      "sha256": "48728109c3bfbc93d6c75f1d337d9450344907bac4e0460398bd3014ff7c320e",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/redhat-text-vf-fonts-4.1.0-1.el10.noarch.rpm"
+    },
+    {
+      "bytes": 11162,
+      "file": "rootfiles-8.1-54.el10.noarch.rpm",
+      "sha256": "117bdde81001865c0c12de843f82415c246e927a071f6c6ba2cbcca86de3dbd0",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/rootfiles-8.1-54.el10.noarch.rpm"
+    },
+    {
+      "bytes": 580992,
+      "file": "rpm-4.19.1.1-23.el10.x86_64.rpm",
+      "sha256": "2cd3be229cc38c3d9db2202ef238c9142d289c20a086ff15e5f5bfa5f0ec3deb",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/rpm-4.19.1.1-23.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 83839,
+      "file": "rpm-build-4.19.1.1-23.el10.x86_64.rpm",
+      "sha256": "c6a620ac1754fad4672f97f7bfcc158bfd914be3ed0db982ee870995083ccb6d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/r/rpm-build-4.19.1.1-23.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 100791,
+      "file": "rpm-build-libs-4.19.1.1-23.el10.x86_64.rpm",
+      "sha256": "471c337f05e1a8310bf9a8a77e075ed61295d5c5813fcd3124bfdafa04474ee4",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/rpm-build-libs-4.19.1.1-23.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 323274,
+      "file": "rpm-libs-4.19.1.1-23.el10.x86_64.rpm",
+      "sha256": "add76e123806053dee40bcc3d49e726ab22f5cdc314d79927da81f4a7fe8abd1",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/rpm-libs-4.19.1.1-23.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 999189,
+      "file": "rpm-sequoia-1.10.2.1-1.el10_2.x86_64.rpm",
+      "sha256": "e6e1d68424db0181b3e9ed6f08209d783f410825cf07c33e0d03006cfbecd4e1",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/r/rpm-sequoia-1.10.2.1-1.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 16242,
+      "file": "rust-toolset-srpm-macros-1.92.0-2.el10_2.noarch.rpm",
+      "sha256": "148c972e92d46589405d43eae49d6dde4d11e360e361638664dd9c2be7a195df",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/r/rust-toolset-srpm-macros-1.92.0-2.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 332533,
+      "file": "sed-4.9-5.el10.x86_64.rpm",
+      "sha256": "ae0904a9bedb67923b8c1c2c6b4f387c30ad7ee172f3badc68f0ece6b97f4716",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/s/sed-4.9-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 156772,
+      "file": "setup-2.14.5-7.el10.noarch.rpm",
+      "sha256": "206fae73656417891f2c73570c1b3599044de31559e6060b62cc72e755c55ee4",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/s/setup-2.14.5-7.el10.noarch.rpm"
+    },
+    {
+      "bytes": 1416217,
+      "file": "shadow-utils-4.15.0-11.el10.x86_64.rpm",
+      "sha256": "d4c569664fee25bd6a3185d46f7e866a7a602271eabf3d99ff7f066c69004efc",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/s/shadow-utils-4.15.0-11.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 917262,
+      "file": "sqlite-3.46.1-6.el10_2.x86_64.rpm",
+      "sha256": "5f28431c71c16176bad2af3d9f393e6af5e01fcaabf45c8accc7010f62406fb6",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/s/sqlite-3.46.1-6.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 155578,
+      "file": "sqlite-devel-3.46.1-6.el10_2.x86_64.rpm",
+      "sha256": "4e1a10b4566f9cb389780293b6dfc6482c94f46e901d471cfa82a7cf820c1e8d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/s/sqlite-devel-3.46.1-6.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 768232,
+      "file": "sqlite-libs-3.46.1-6.el10_2.x86_64.rpm",
+      "sha256": "bcde066c462a933b9dee9fe3e0359beeaee3f5b790a10184d7c09f557958714b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/s/sqlite-libs-3.46.1-6.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 6051287,
+      "file": "systemd-257-23.el10_2.2.x86_64.rpm",
+      "sha256": "c3adce9ac50ec7f70ae5e808b377b26e06067779970c64096f24a86d3972cd41",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/s/systemd-257-23.el10_2.2.x86_64.rpm"
+    },
+    {
+      "bytes": 866891,
+      "file": "systemd-libs-257-23.el10_2.2.x86_64.rpm",
+      "sha256": "e6c963cbba8c9c65d322690d3bbf213af39768a1abe89f25873895051455017b",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/s/systemd-libs-257-23.el10_2.2.x86_64.rpm"
+    },
+    {
+      "bytes": 336130,
+      "file": "systemd-pam-257-23.el10_2.2.x86_64.rpm",
+      "sha256": "14ee94b1808f5d2c4dbc06e1b616abd02205cefa627834885d3997039bbd1284",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/s/systemd-pam-257-23.el10_2.2.x86_64.rpm"
+    },
+    {
+      "bytes": 48046,
+      "file": "systemd-rpm-macros-257-23.el10_2.2.noarch.rpm",
+      "sha256": "7a20f7702ba14de33c14ff144953490a33529d65abdaebcec12f02f8e37f216c",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/s/systemd-rpm-macros-257-23.el10_2.2.noarch.rpm"
+    },
+    {
+      "bytes": 71119,
+      "file": "systemtap-sdt-devel-5.4-3.el10.x86_64.rpm",
+      "sha256": "946607bab5223811a7e73a1bce58a1d66d0a9dbd19fa7e816e3f05dd07310735",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/s/systemtap-sdt-devel-5.4-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 71806,
+      "file": "systemtap-sdt-dtrace-5.4-3.el10.x86_64.rpm",
+      "sha256": "7dfea714df0d836eb8e83ea678131da8cc1aba2a5681bac1dc694942629e8000",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/s/systemtap-sdt-dtrace-5.4-3.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 895396,
+      "file": "tar-1.35-13.el10_2.x86_64.rpm",
+      "sha256": "b5cfc09fc17be8c272dfb6d00bbdb4c0606e16c1ad2d2535bdbb244b8c1f6d15",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/t/tar-1.35-13.el10_2.x86_64.rpm"
+    },
+    {
+      "bytes": 937604,
+      "file": "tzdata-2026f-1.el10_2.noarch.rpm",
+      "sha256": "3f7e1eb06e0fdccdc43224b352853a59c7f26b9fd15e4ac21007f1003d914ee1",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/t/tzdata-2026f-1.el10_2.noarch.rpm"
+    },
+    {
+      "bytes": 194487,
+      "file": "unzip-6.0-69.el10.x86_64.rpm",
+      "sha256": "74e180814ef67113a55ce7faad2d9f8b48e180aeb1dade0f18d0d00b7fed229a",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/u/unzip-6.0-69.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 574511,
+      "file": "util-linux-core-2.40.2-18.el10_2.20.x86_64.rpm",
+      "sha256": "8af36431f64dd309737f670e4e35340867eb44fde4f0d73273a7f560b1dff8c0",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/u/util-linux-core-2.40.2-18.el10_2.20.x86_64.rpm"
+    },
+    {
+      "bytes": 4108869,
+      "file": "valgrind-3.26.0-5.el10.x86_64.rpm",
+      "sha256": "3e77e21dd39f936f6629ec216481707a5acd4e3b32eaf0195ff04a7c710d4449",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/v/valgrind-3.26.0-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 57234,
+      "file": "valgrind-devel-3.26.0-5.el10.x86_64.rpm",
+      "sha256": "da3477fdb2165b1e5ef2362f33011710a8ab92b310b1704dd30a9f7e0b234663",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/v/valgrind-devel-3.26.0-5.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 43011,
+      "file": "which-2.21-44.el10_0.x86_64.rpm",
+      "sha256": "249eb3fb00ff0c87cd5de40ae84e868bd2b2acd17524892ea83d9ea501480355",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/w/which-2.21-44.el10_0.x86_64.rpm"
+    },
+    {
+      "bytes": 1028145,
+      "file": "xkeyboard-config-2.41-3.el10.noarch.rpm",
+      "sha256": "871c6faf56bf3733826ba6c17406417665e5760ac4a2ddf5855a0ee82a771878",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/x/xkeyboard-config-2.41-3.el10.noarch.rpm"
+    },
+    {
+      "bytes": 498643,
+      "file": "xz-5.6.2-4.el10_2.1.x86_64.rpm",
+      "sha256": "397ad3bdfe024aafd9f22c821a287c77befe430f32720105ae4b4506dcd10574",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/x/xz-5.6.2-4.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 71329,
+      "file": "xz-devel-5.6.2-4.el10_2.1.x86_64.rpm",
+      "sha256": "0afb6e7a69d0d9c5adf352050166c1dc5672ac6e1172b25ece7678a43b273fb0",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/x/xz-devel-5.6.2-4.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 120170,
+      "file": "xz-libs-5.6.2-4.el10_2.1.x86_64.rpm",
+      "sha256": "02dc4d009c501fe7c4bd1e2174071fcd08b8d1133697777dce5726b43fee4998",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/x/xz-libs-5.6.2-4.el10_2.1.x86_64.rpm"
+    },
+    {
+      "bytes": 276591,
+      "file": "zip-3.0-45.el10.x86_64.rpm",
+      "sha256": "ee766ff61fa76f3790f3a3419d68d0580bb0cbd803d2aa5418d1b73ed72d8dc9",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/z/zip-3.0-45.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 78296,
+      "file": "zlib-ng-compat-2.2.3-3.el10_1.x86_64.rpm",
+      "sha256": "4b6f5365701be1cc741a237c88b7f37477ba333b1abbc827596bc4c89bf04046",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/z/zlib-ng-compat-2.2.3-3.el10_1.x86_64.rpm"
+    },
+    {
+      "bytes": 36965,
+      "file": "zlib-ng-compat-devel-2.2.3-3.el10_1.x86_64.rpm",
+      "sha256": "2ea2be81a34e8cc0d8d131f8e87fe4680f4c7b9f2b2625f26745935c5ab60ec8",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/z/zlib-ng-compat-devel-2.2.3-3.el10_1.x86_64.rpm"
+    },
+    {
+      "bytes": 479397,
+      "file": "zstd-1.5.5-9.el10.x86_64.rpm",
+      "sha256": "5e88efcb985ea6d4a43e147178e751771eb6ad94260b1816068e318a91d61e3d",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/os/Packages/z/zstd-1.5.5-9.el10.x86_64.rpm"
+    },
+    {
+      "buildOnly": true,
+      "bytes": 1155510,
+      "file": "gdbm-1.23-12.el10_0.src.rpm",
+      "sha256": "fbb507a42a8edb9d0d0cbc7ec394d1fe7bb7c2f0456b98ce4fb5fa20036b3cbc",
+      "signatureRequired": true,
+      "type": "source"
+    },
+    {
+      "buildOnly": true,
+      "bytes": 3348959,
+      "file": "mpdecimal-2.5.1-12.el10.src.rpm",
+      "sha256": "92ce1e7def3d278230b4ed1cdae436769c4a2bd2185e418f9ae77e42d849e419",
+      "signatureRequired": true,
+      "type": "source"
+    },
+    {
+      "buildOnly": true,
+      "bytes": 3094627,
+      "file": "readline-8.2-11.el10.src.rpm",
+      "sha256": "55fe7cdfb4b7163853eb5a5e986fcf3fa24c92875951aa6a2e1aacfd913e172f",
+      "signatureRequired": true,
+      "type": "source"
+    },
+    {
+      "bytes": 1024332,
+      "file": "annobin-plugin-gcc-13.02-2.el10.x86_64.rpm",
+      "sha256": "8eb269ab48fb538a0466d2ae0da2f96da11de5c2b431a64c14e404133d15c8df",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/a/annobin-plugin-gcc-13.02-2.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 70380,
+      "file": "gcc-plugin-annobin-14.3.1-4.4.el10.x86_64.rpm",
+      "sha256": "4cb1eaacdcdf3871002162e032aabe4104fcb800c42b4155583b7e30df50b7e7",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/g/gcc-plugin-annobin-14.3.1-4.4.el10.x86_64.rpm"
+    },
+    {
+      "bytes": 95746,
+      "file": "annobin-docs-13.02-2.el10.noarch.rpm",
+      "sha256": "ec9e27ffc47b322cfaac6b2885ffdd0446ecb9744f595808b8bc97500626d187",
+      "signatureRequired": true,
+      "type": "binary",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/appstream/os/Packages/a/annobin-docs-13.02-2.el10.noarch.rpm"
+    }
+  ],
+  "compilerWheelInputs": [
+    {
+      "file": "setuptools-83.0.0-py3-none-any.whl",
+      "name": "setuptools",
+      "requiresDist": [
+        "pytest!=8.1.*,>=6; extra == \"test\"",
+        "virtualenv>=13.0.0; extra == \"test\"",
+        "wheel>=0.44.0; extra == \"test\"",
+        "pip>=19.1; extra == \"test\"",
+        "packaging>=24.2; extra == \"test\"",
+        "jaraco.envs>=2.2; extra == \"test\"",
+        "pytest-xdist>=3; extra == \"test\"",
+        "jaraco.path>=3.7.2; extra == \"test\"",
+        "build[virtualenv]>=1.0.3; extra == \"test\"",
+        "filelock>=3.4.0; extra == \"test\"",
+        "ini2toml[lite]>=0.14; extra == \"test\"",
+        "tomli-w>=1.0.0; extra == \"test\"",
+        "pytest-timeout; extra == \"test\"",
+        "pytest-perf; sys_platform != \"cygwin\" and extra == \"test\"",
+        "jaraco.develop>=7.21; (python_version >= \"3.9\" and sys_platform != \"cygwin\") and extra == \"test\"",
+        "pytest-home>=0.5; extra == \"test\"",
+        "pytest-subprocess; extra == \"test\"",
+        "pyproject-hooks!=1.1; extra == \"test\"",
+        "jaraco.test>=5.5; extra == \"test\"",
+        "sphinx>=3.5; extra == \"doc\"",
+        "jaraco.packaging>=9.3; extra == \"doc\"",
+        "rst.linker>=1.9; extra == \"doc\"",
+        "furo; extra == \"doc\"",
+        "sphinx-lint; extra == \"doc\"",
+        "jaraco.tidelift>=1.4; extra == \"doc\"",
+        "pygments-github-lexers==0.0.5; extra == \"doc\"",
+        "sphinx-favicon; extra == \"doc\"",
+        "sphinx-inline-tabs; extra == \"doc\"",
+        "sphinx-reredirects; extra == \"doc\"",
+        "sphinxcontrib-towncrier; extra == \"doc\"",
+        "sphinx-notfound-page<2,>=1; extra == \"doc\"",
+        "pyproject-hooks!=1.1; extra == \"doc\"",
+        "towncrier<24.7; extra == \"doc\"",
+        "packaging>=24.2; extra == \"core\"",
+        "more_itertools>=8.8; extra == \"core\"",
+        "jaraco.text>=3.7; extra == \"core\"",
+        "importlib_metadata>=6; python_version < \"3.10\" and extra == \"core\"",
+        "tomli>=2.0.1; python_version < \"3.11\" and extra == \"core\"",
+        "wheel>=0.43.0; extra == \"core\"",
+        "jaraco.functools>=4; extra == \"core\"",
+        "more_itertools; extra == \"core\"",
+        "pytest-checkdocs>=2.14; extra == \"check\"",
+        "pytest-ruff>=0.2.1; sys_platform != \"cygwin\" and extra == \"check\"",
+        "ruff>=0.13.0; sys_platform != \"cygwin\" and extra == \"check\"",
+        "pytest-cov; extra == \"cover\"",
+        "pytest-enabler>=3.4; extra == \"enabler\"",
+        "pytest-mypy>=1.0.1; platform_python_implementation != \"PyPy\" and extra == \"type\"",
+        "mypy==1.18.*; extra == \"type\"",
+        "importlib_metadata>=7.0.2; python_version < \"3.10\" and extra == \"type\"",
+        "jaraco.develop>=7.21; sys_platform != \"cygwin\" and extra == \"type\""
+      ],
+      "sha256": "29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3",
+      "url": "https://files.pythonhosted.org/packages/5d/40/e1e72872c6354b306daef1703549e8e83b4d43cfea356311bf722a043752/setuptools-83.0.0-py3-none-any.whl",
+      "version": "83.0.0"
+    },
+    {
+      "file": "wheel-0.48.0-py3-none-any.whl",
+      "name": "wheel",
+      "requiresDist": [
+        "packaging>=24.0"
+      ],
+      "sha256": "3217dcc807155e45db462d7ef2431f5ddda0d7273b700d05a67b271ceb1287ab",
+      "url": "https://files.pythonhosted.org/packages/2e/29/69cfbb602cd91690c55d38ba9fe53e6a7e76a6fa647bf38f19c138d25449/wheel-0.48.0-py3-none-any.whl",
+      "version": "0.48.0"
+    },
+    {
+      "file": "packaging-26.3-py3-none-any.whl",
+      "name": "packaging",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+    }
+  ],
+  "contract": "EvaContextForgeNativeBuildInputs/v1",
+  "foreignAbiAliasesAllowed": false,
+  "psycopgCSource": {
+    "digestSource": "https://pypi.org/pypi/psycopg-c/3.3.8/json",
+    "sha256": "af81a99b02600e6c2cdf468509c04bb8208500ea60d63f70616e32ea9cb2758f",
+    "url": "https://files.pythonhosted.org/packages/5b/23/0074f50899d773aae857af496745cd898da868f8f2d9415591d51c391cec/psycopg_c-3.3.8.tar.gz",
+    "version": "3.3.8"
+  },
+  "runtimeBuildPip": {
+    "bytes": 1950951,
+    "file": "pip-26.3-py3-none-any.whl",
+    "officialRelease": "https://pypi.org/project/pip/26.3/",
+    "sha256": "f3b60b20ffaadd4415ed7957212a38ac63fa4c5fa375bd0f4a797777940fad13"
+  },
+  "runtimePrefixArtifact": {
+    "bytes": 28884167,
+    "file": "cpython31216-ubi-native-prefix.tar.gz",
+    "manifestSha256": "fc4b14f152ebaba48ee1a8892e75fa86d56f50baa675e1fd94f6d6a0f949086e",
+    "publicSourceRebuildRequiresFreshByteRebinding": true,
+    "sha256": "08533080a1de0e3d975a85b52c1a8e5a085307f536df70bff0c9f9d0e1950694"
+  },
+  "runtimePsycopgLibpq": "16.14",
+  "systemPythonAfterSignedVendorUpdates": "3.12.15",
+  "vendorPlatform": "Red Hat UBI 10.2",
+  "vendorSignaturesRequired": true
+}
