@@ -1,0 +1,47 @@
+{
+  "contract": "EvaIndependentTelegramOneUnitInstallerReview/v2",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T01:04:34.992663+00:00",
+  "decision": "GO_EXACT_AFTER_NODE_SEVEN_VERIFIED",
+  "approved": true,
+  "freezeSha256": "412bc8ac006cf240285b65c89b8cabbb5602678b1835474c8962c173f1eb545c",
+  "installerSha256": "da6f61cbf59f6c5e8c3b53c7550d33b4577e78132d5eed0782344d521af4fde5",
+  "planSha256": "a16882b54469e3c9681f6db073641f5f96dc935768294e75c1e517960f613579",
+  "rollbackSha256": "1d8b1c4fcee2b4693e7ca4a7b47f28c2f5c3e25301a1cc8f6aac1dde8f374d00",
+  "getMeSha256": "2817085d4239aadd4d833c9fc20ce9a8cd9e60bb50d39081cedf0053717744d4",
+  "correctiveSourceReviewSha256": "ac29fa95a2fd410cf11c42c16f34518187bb245fdfdd2a1c8fe19d324f39d6ba",
+  "nodeSevenInstalledReviewSha256": "bf3e4be739c291fe1e5fe3c5895a33ce5dabbd54fe1f895fbf8d17a0499e9006",
+  "freshReadonlyPreflightSha256": "894019fa6ee280f1d8526898b87167958adbc546b65b0dd57d58770f56db6ba2",
+  "ownGuardAndPrivacyTestsPassed": 27,
+  "ownTestLogSha256": "6a236cedc054a5af2cdb71e17a82f618154642c1a93fb67d8a32f4f2bce8fbb5",
+  "verified": [
+    "Node7actualdelivery is independentlyverified and unchangedTelegramfreeze412b remains exact. Freshreadonlypreflight matches115protectedterminalrows/processing0/source-ownerbindings withoutlifecycle orgetMe.",
+    "ExactcurrentTelegramPID/startTicks/Invocation/systemdexecgeneration, sameNode22/app/photo/source/credentials/environment are bound. Only existingmanifestenvironmentpointer and newroot-ownedimmutablegrammy1.46prefix change; noBottie/in-place/schema/ownergrant modification.",
+    "The correctedrunning/pending/known-terminalgenerationfences persist exactnormalExit0 identity and recheck beforepointerwrite/unlink/reload/start. Unknown/changed/failedgenerations remaininspection-only. File+directorydurableexclusiveintents prevent install/rollback/getMe replay.",
+    "Explicitrollback is bound to an exactsuccessfulactivationreceipt and sameactivenewgeneration. It restores only its ownexactdropinpointer, keeps allnewdatabase rows and does not restoreoldDBbytes; partialunknownactivation is not blanketrollback-authorized.",
+    "Separateonce-onlyreadonlygetMe verifies accountid from the pinnedtoken without printing identity/token/URL/error orsendingmessages. This helper may run only after the exactsuccessfulnewactivation; no reviewerrequest has been made."
+  ],
+  "getMeAuthorization": {
+    "helperSha256": "2817085d4239aadd4d833c9fc20ce9a8cd9e60bb50d39081cedf0053717744d4",
+    "maximumHelperGetMeRequests": 1,
+    "sendMessages": 0,
+    "allowedMethod": "getMe",
+    "requiresSuccessfulExactActivationReceiptShaArgument": true,
+    "requiresSameInstalledPidStartTicksInvocationAndExecGeneration": true,
+    "fixedOutputOnly": [
+      "status",
+      "accountBindingMatches"
+    ],
+    "rawAccountTokenUrlExceptionOrStackOutputAllowed": false,
+    "onUnknown": "retain durable receipt; no retry or replay",
+    "reviewerExecutesRequest": false,
+    "coordinatorExplicitAuthorization": true,
+    "normalTelegramRuntimeTrafficScope": "separate; not counted as helper verification usage"
+  },
+  "limitations": [
+    "Coordinator alone executes installation after closingNode7canon/Git; installer must repeat unchangedfreshpreflight and refuseanydrift/activeprocessing.",
+    "Actualinstalledgeneration/dependency/source/row/environmentreadback and authorizedgetMe fixedresult remain tobeverified afterward.",
+    "A partialunknownreceipt orunverifiedgetMe is retained withoutretry; any continuation requires separateexactreview.",
+    "No familyacceptance/fullE4.16/autonomousupdateclaim. Developmentmodelrequests0; credits/costunknown; actualruntimepollingtraffic separate."
+  ]
+}

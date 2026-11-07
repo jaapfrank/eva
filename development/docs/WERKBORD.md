@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Node26.13/filesystemMCP2.2 en beide bestaande consumenten zijn geïnstalleerd, onafhankelijk teruggelezen en hervat. De zes bestandsacties, drie documentacties, eigenaarcatalogi9/9/4, vier gelijke werkprofielen en alle oorspronkelijke gegevens-/STOP-/leasegrenzen zijn behouden; er zijn geen append/copyrechten toegevoegd. Volgende concrete uitkomst: de afzonderlijk beoordeelde Telegrambibliotheek installeren en dezelfde account-/opslagbinding controleren. Daarna Chrome, beeld-/dashboardbibliotheken en de overige werkelijk gebruikte pakketten afmaken. De behouden fotobibliotheek gebruikt nog oude dotenv/better-sqlite3 en krijgt een eigen begrensde update. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie en E4.11-residuen zijn nog open.
+Volgende stap: Telegram1.46.0 is volledig technisch opgeleverd: aparte pakketmap, dezelfde Node22.23.4 en bron-/eigenaarinstellingen,115 oorspronkelijke opslagregels exact behouden en dezelfde accountbinding éénmaal gecontroleerd zonder testbericht. De bestandsupdate is eveneens opgeleverd. Volgende concrete uitkomst: de bestaande Chrome-koppeling bijwerken met behoud van zeven acties, eigenaartab/grant/STOP en bestaande tijdslimieten. Daarna de beeld-/dashboardgroep, afzonderlijke fotobibliotheek en overige actieve pakketten afmaken. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.
 
 ## Voortgang
 

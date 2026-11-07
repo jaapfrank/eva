@@ -1,0 +1,66 @@
+{
+  "contract": "EvaIndependentTelegramGrammyInstalledReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T01:35:11.410279+00:00",
+  "decision": "GO_INSTALLED_SCOPED_DELIVERY",
+  "approved": true,
+  "activationReceiptSha256": "a0557528f37e13d476b410a529e408da30bcdc4e2156584c94490266c282797c",
+  "accountReceiptSha256": "dc911edc2e5b242cac6a5b80428ffce1046c4dfab091472baafb03682c497704",
+  "independentInstalledReadbackSha256": "6b438ebfe1126e1f8ba8e62dfa33374d0428ac2cb7a81ef72cfef8becc3c1bec",
+  "independentFinalSameGenerationProofSha256": "5b2f9d2f342a0351e897aa8e250f82b1769ac1d39643959f1a2a8cea3260fd80",
+  "accountHelperReviewSha256": "861c4e17ef946cf9942f7afd868bf0e38d3888c4b5edce675fcd770c22ce2fb1",
+  "actualRuntime": {
+    "service": "eva2-telegram.service",
+    "pid": 1518443,
+    "grammy": "1.46.0",
+    "managedNode": "22.23.4",
+    "currentGenerationSourceEnvironmentAndExeExact": true,
+    "rootOwnedImmutablePrefixPayloadHashesAndModesExact": true,
+    "onlyEnvironmentChange": "EVA_TELEGRAM_DEPENDENCY_MANIFEST",
+    "sameApplicationPhotoLibraryOwnerCredentialAndPrincipalBindings": true,
+    "oldPrefixAndGlobalNodePreserved": true,
+    "protectedTransportRows": 115,
+    "currentTransportRows": 115,
+    "allOldAndPostStopRowsAndSchemasPreserved": true,
+    "activeProcessing": 0,
+    "deliveryPending": 0,
+    "terminalGenerationAndSigtermDrainFencesRetained": true
+  },
+  "accountCheck": {
+    "state": "verified",
+    "accountBindingMatches": true,
+    "authorizedHelperGetMeCallsMaximum": 1,
+    "sendMessages": 0,
+    "fixedStatusBooleanOnly": true,
+    "unknownOutcomeReplayAllowed": false,
+    "sameActualPidStartTicksInvocationAndExecGenerationAsInstalledReadback": true,
+    "actualReceiptParentDurabilityVerified": true
+  },
+  "retainedFailureProofs": {
+    "originalTerminalInstallerReceiptSha256": "b19765f8c88cb34056637cd5db4efba1dad0e9d8e64b7aaff522cf6f1d5dd07f",
+    "knownStopReAdoptedWithoutStopOrStageReplay": true,
+    "originalForwardApprovalUnchanged": true,
+    "separateAccountApprovalPreserved": true
+  },
+  "assessment": [
+    "Independentactualprefix/source/exe/environment/ownercredential/115rowreadback6b438 passes, and a secondboundedreadonlycheck5b2f ties the rootverifiedaccountresult to exactlythesamelive1518443generation and unchangedprefix/env/rows. No service/API/model action by reviewer.",
+    "Theaccounthelper used exactsuccessfula055activation and dc911fixedverifiedresult; originalAST/accountguards remain unchanged except the reviewednested-installerdurabilityhook. One authorizedreadonlygetMe checkedthe existingbotbinding; noidentity/token/URL/errorbody/stackpublished and no testmessage sent.",
+    "Originaldrain/proc-disappearance race and durable-sidecarfixes remainseparatelyreviewed and preserved; the completedoriginalstop and prefixstage were not repeated. Explicitrollback keepsnewrows and restoresonlyitsownmanifestpointer; it wasnotused."
+  ],
+  "measuredDevelopmentVerification": {
+    "reviewerModelRequests": 0,
+    "reviewerAdditionalGetMeRequests": 0,
+    "coordinatorReadonlyGetMeHelperMaximum": 1,
+    "testMessages": 0,
+    "credits": null,
+    "cost": null,
+    "normalRuntimePollingAndHouseholdUsage": "separate; unknown"
+  },
+  "limitations": [
+    "Technicaldelivery is the existingTelegramdependencyhandoff and verifiedaccount/source/data preservation. No newreal-messageconversation or householdacceptance is claimed.",
+    "Threepublicpackage/lock/README metadata paths are still separately prepared for scopedCAS/commit; thisreviewdoesnotclaim thoseproposedmetadatafilesalreadyapplied.",
+    "No fullE4.16, autonomousupdate-loop or familyacceptancecompletionclaim. Anyunknownfutureoutcome requiresinspection ratherthanautomaticreplay."
+  ],
+  "fullE416Completed": false,
+  "reviewerLifecycleActions": 0
+}

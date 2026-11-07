@@ -1,1 +1,7 @@
-{"private":true,"type":"module"}
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "grammy": "1.46.0"
+  }
+}

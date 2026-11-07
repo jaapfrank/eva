@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Node26.13/filesystemMCP2.2 en beide bestaande consumenten zijn geïnstalleerd, onafhankelijk teruggelezen en hervat. De zes bestandsacties, drie documentacties, eigenaarcatalogi9/9/4, vier gelijke werkprofielen en alle oorspronkelijke gegevens-/STOP-/leasegrenzen zijn behouden; er zijn geen append/copyrechten toegevoegd. Volgende concrete uitkomst: de afzonderlijk beoordeelde Telegrambibliotheek installeren en dezelfde account-/opslagbinding controleren. Daarna Chrome, beeld-/dashboardbibliotheken en de overige werkelijk gebruikte pakketten afmaken. De behouden fotobibliotheek gebruikt nog oude dotenv/better-sqlite3 en krijgt een eigen begrensde update. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie en E4.11-residuen zijn nog open.",
+    "nextAction": "Telegram1.46.0 is volledig technisch opgeleverd: aparte pakketmap, dezelfde Node22.23.4 en bron-/eigenaarinstellingen,115 oorspronkelijke opslagregels exact behouden en dezelfde accountbinding éénmaal gecontroleerd zonder testbericht. De bestandsupdate is eveneens opgeleverd. Volgende concrete uitkomst: de bestaande Chrome-koppeling bijwerken met behoud van zeven acties, eigenaartab/grant/STOP en bestaande tijdslimieten. Daarna de beeld-/dashboardgroep, afzonderlijke fotobibliotheek en overige actieve pakketten afmaken. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
     "executionStep": "Host library environments delivered live; install reviewed auxiliary/native revocation batch then Node/MCP",
@@ -1660,6 +1660,24 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Telegrambibliotheek bijgewerkt — 7 november",
+            "state": "verified",
+            "summary": "De bestaande Telegrambrug gebruikt een aparte grammY1.46.0-pakketmap op Node22.23.4. Dezelfde account-/eigenaarbinding en alle115 oorspronkelijke opslagregels zijn onafhankelijk teruggelezen. Eén accountcontrole slaagt; er zijn geen testberichten gestuurd.",
+            "remaining": "De behouden fotobibliotheek wordt afzonderlijk bijgewerkt. Gewoon huishoudgebruik, overige afhankelijkheden en volledige E4.16-autonomie zijn hiermee niet afgesloten.",
+            "source": "development/evidence/reassessment/telegram-runtime-20261107/installed-delivery.json",
+            "review": "development/reviews/telegram-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T01:35:11.410279+00:00",
+            "installedAt": "2026-11-07T01:22:37.893962+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "actuallyUsed": false,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "Bestandsproviders en aansluiting bijgewerkt — 7 november",
             "state": "verified",
@@ -3387,9 +3405,9 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "Bestandsupdate opgeleverd; Telegram volgt",
+          "title": "Telegram opgeleverd; Chrome-koppeling volgt",
           "summary": "Kritieke Hindsight/PydanticAI-stack, native beveiligingsupdates, Node22.23.4-hostdiensten, drie Python-hostomgevingen en aanvullende AUX5/toegangsreparatie zijn geïnstalleerd en geverifieerd.",
-          "detail": "Node26.13/filesystemMCP2.2 en beide bestaande consumenten zijn geïnstalleerd, onafhankelijk teruggelezen en hervat. De zes bestandsacties, drie documentacties, eigenaarcatalogi9/9/4, vier gelijke werkprofielen en alle oorspronkelijke gegevens-/STOP-/leasegrenzen zijn behouden; er zijn geen append/copyrechten toegevoegd. Volgende concrete uitkomst: de afzonderlijk beoordeelde Telegrambibliotheek installeren en dezelfde account-/opslagbinding controleren. Daarna Chrome, beeld-/dashboardbibliotheken en de overige werkelijk gebruikte pakketten afmaken. De behouden fotobibliotheek gebruikt nog oude dotenv/better-sqlite3 en krijgt een eigen begrensde update. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie en E4.11-residuen zijn nog open.",
+          "detail": "Telegram1.46.0 is volledig technisch opgeleverd: aparte pakketmap, dezelfde Node22.23.4 en bron-/eigenaarinstellingen,115 oorspronkelijke opslagregels exact behouden en dezelfde accountbinding éénmaal gecontroleerd zonder testbericht. De bestandsupdate is eveneens opgeleverd. Volgende concrete uitkomst: de bestaande Chrome-koppeling bijwerken met behoud van zeven acties, eigenaartab/grant/STOP en bestaande tijdslimieten. Daarna de beeld-/dashboardgroep, afzonderlijke fotobibliotheek en overige actieve pakketten afmaken. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
           "state": "Kern online · AUX5 technisch opgeleverd · volgende updategroep in voorbereiding",
           "checkedAt": "2026-11-06T23:40:53.344878+00:00",
@@ -3409,8 +3427,8 @@
         "reviewedAt": "2026-11-06T23:40:53.344878+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-11-07T01:03:12.806385+00:00",
-      "checkedAt": "2026-11-07T01:07:50.723918+00:00",
+      "reviewedAt": "2026-11-07T01:35:11.410279+00:00",
+      "checkedAt": "2026-11-07T01:46:02.786148+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3546,7 +3564,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T01:07:50.723918+00:00",
+      "lastUpdatedAt": "2026-11-07T01:46:02.786148+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3580,7 +3598,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T01:07:50.723918+00:00",
+      "updatedAt": "2026-11-07T01:46:02.786148+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -9061,20 +9079,20 @@
                   "status": "in_progress",
                   "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                   "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                  "currentOutcome": "Five Node26 providers and both existing filesystem consumers installed, independently read back and resumed with unchanged authorization and data",
+                  "currentOutcome": "Node26/filesystem consumers and separate Telegram1.46 runtime installed and independently verified; same account, storage and authorization retained",
                   "hindsightInstalled": "1.2.0",
                   "hindsightTarget": "1.2.0",
                   "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                   "ownerActionRequired": false,
                   "fullCardCompleted": false,
-                  "checkedAt": "2026-11-07T01:07:50.723918+00:00",
+                  "checkedAt": "2026-11-07T01:46:02.786148+00:00",
                   "hindsightBuilt": true,
                   "hindsightLiveUpgradeInstalled": true,
                   "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                   "actualAstraSelectionAndExplicitZeroProven": true,
                   "focusedIndependentMemoryTestsPassed": 136,
                   "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                  "installationPending": "Telegram1.46 and ChromeMCP0.0.84; separate photo-library dotenv/better-sqlite3 closure; reviewed face CPU/dashboard candidates; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
+                  "installationPending": "ChromeMCP0.0.84; face CPU/dashboard; photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                   "hindsightTechnicalDeliveryComplete": true,
                   "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                   "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -9099,7 +9117,8 @@
                     "hindsightPython": "3.11.18",
                     "filesystemNode": "26.13.0",
                     "filesystemMcp": "2.2.0",
-                    "filesystemNodeMcpSdk": "1.32.2"
+                    "filesystemNodeMcpSdk": "1.32.2",
+                    "telegramGrammy": "1.46.0"
                   },
                   "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                   "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -9228,6 +9247,28 @@
                     "scope": "Retained photo-provider library only; own copied source/prefix proposed; actual DB/config/auth paths preserved; no Eva1 agent or alias",
                     "requiresSeparateTestsReviewAndInstallation": true,
                     "newGrammyPrefixDoesNotUpgradeThesePackages": true
+                  },
+                  "telegramMaintenance20261107": {
+                    "status": "installed_independently_verified",
+                    "installed": true,
+                    "candidatePrefixStaged": true,
+                    "targetGrammy": "1.46.0",
+                    "protectedTransportRows": 115,
+                    "existingSourceAndOwnerBindingsPreserved": true,
+                    "newManifestPublished": true,
+                    "newStartDispatched": true,
+                    "stopReplayAllowed": false,
+                    "pauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/telegram-known-stop-pause.json",
+                    "fullE416Complete": false,
+                    "originalStopReplayed": false,
+                    "technicalDeliveryComplete": true,
+                    "actualInstalledReceiptSha256": "a0557528f37e13d476b410a529e408da30bcdc4e2156584c94490266c282797c",
+                    "independentActualReadbackSha256": "6b438ebfe1126e1f8ba8e62dfa33374d0428ac2cb7a81ef72cfef8becc3c1bec",
+                    "accountBindingVerified": true,
+                    "controlledAccountChecks": 1,
+                    "realTestMessagesSent": 0,
+                    "installedEvidence": "development/evidence/reassessment/telegram-runtime-20261107/installed-delivery.json",
+                    "installedReview": "development/reviews/telegram-installed-independent-20261107.json"
                   }
                 }
               },
@@ -15948,20 +15989,20 @@
                 "status": "in_progress",
                 "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                 "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                "currentOutcome": "Five Node26 providers and both existing filesystem consumers installed, independently read back and resumed with unchanged authorization and data",
+                "currentOutcome": "Node26/filesystem consumers and separate Telegram1.46 runtime installed and independently verified; same account, storage and authorization retained",
                 "hindsightInstalled": "1.2.0",
                 "hindsightTarget": "1.2.0",
                 "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                 "ownerActionRequired": false,
                 "fullCardCompleted": false,
-                "checkedAt": "2026-11-07T01:07:50.723918+00:00",
+                "checkedAt": "2026-11-07T01:46:02.786148+00:00",
                 "hindsightBuilt": true,
                 "hindsightLiveUpgradeInstalled": true,
                 "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                 "actualAstraSelectionAndExplicitZeroProven": true,
                 "focusedIndependentMemoryTestsPassed": 136,
                 "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                "installationPending": "Telegram1.46 and ChromeMCP0.0.84; separate photo-library dotenv/better-sqlite3 closure; reviewed face CPU/dashboard candidates; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
+                "installationPending": "ChromeMCP0.0.84; face CPU/dashboard; photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                 "hindsightTechnicalDeliveryComplete": true,
                 "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                 "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -15986,7 +16027,8 @@
                   "hindsightPython": "3.11.18",
                   "filesystemNode": "26.13.0",
                   "filesystemMcp": "2.2.0",
-                  "filesystemNodeMcpSdk": "1.32.2"
+                  "filesystemNodeMcpSdk": "1.32.2",
+                  "telegramGrammy": "1.46.0"
                 },
                 "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                 "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -16115,6 +16157,28 @@
                   "scope": "Retained photo-provider library only; own copied source/prefix proposed; actual DB/config/auth paths preserved; no Eva1 agent or alias",
                   "requiresSeparateTestsReviewAndInstallation": true,
                   "newGrammyPrefixDoesNotUpgradeThesePackages": true
+                },
+                "telegramMaintenance20261107": {
+                  "status": "installed_independently_verified",
+                  "installed": true,
+                  "candidatePrefixStaged": true,
+                  "targetGrammy": "1.46.0",
+                  "protectedTransportRows": 115,
+                  "existingSourceAndOwnerBindingsPreserved": true,
+                  "newManifestPublished": true,
+                  "newStartDispatched": true,
+                  "stopReplayAllowed": false,
+                  "pauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/telegram-known-stop-pause.json",
+                  "fullE416Complete": false,
+                  "originalStopReplayed": false,
+                  "technicalDeliveryComplete": true,
+                  "actualInstalledReceiptSha256": "a0557528f37e13d476b410a529e408da30bcdc4e2156584c94490266c282797c",
+                  "independentActualReadbackSha256": "6b438ebfe1126e1f8ba8e62dfa33374d0428ac2cb7a81ef72cfef8becc3c1bec",
+                  "accountBindingVerified": true,
+                  "controlledAccountChecks": 1,
+                  "realTestMessagesSent": 0,
+                  "installedEvidence": "development/evidence/reassessment/telegram-runtime-20261107/installed-delivery.json",
+                  "installedReview": "development/reviews/telegram-installed-independent-20261107.json"
                 }
               }
             },
@@ -19892,7 +19956,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-07T01:07:50.723918+00:00",
+  "updatedAt": "2026-11-07T01:46:02.786148+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -19974,8 +20038,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-07T01:07:50.723918+00:00",
-  "checkedAt": "2026-11-07T01:07:50.723918+00:00",
+  "lastUpdatedAt": "2026-11-07T01:46:02.786148+00:00",
+  "checkedAt": "2026-11-07T01:46:02.786148+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

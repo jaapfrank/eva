@@ -1,0 +1,49 @@
+{
+  "contract": "EvaIndependentTelegramSeparateDurableAccountCheckReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T01:32:55.973034+00:00",
+  "decision": "GO_ONE_READONLY_GETME_ONLY",
+  "approved": true,
+  "helperSha256": "9e3666728e0ffef12db7c7f32dd239a180fa4c234d16f27da6739dcf9f4817ca",
+  "planSha256": "0fa91b60acebaa76045f8e00fa058f9320a5b0e55064051b820f241a80e2ad1e",
+  "freezeSha256": "fe275514813e7dce60fa2795cedd7750b50c87ea6c7e9ae45fc7dae631cf1c30",
+  "preflightSha256": "9aafb6620da2102aaba599db59a5d6e5b563fd1ab6f018be02e757218dcea32a",
+  "successfulActivationReceiptSha256": "a0557528f37e13d476b410a529e408da30bcdc4e2156584c94490266c282797c",
+  "independentActualReadbackSha256": "6b438ebfe1126e1f8ba8e62dfa33374d0428ac2cb7a81ef72cfef8becc3c1bec",
+  "originalCForwardApprovalRemainsUnchangedSha256": "32e52ce3d3b331219a48399630a7dd0dd747e2eec85958f6ba594d6998b4821e",
+  "ownDurabilityTestsPassed": 4,
+  "preservedPrivacyTestsPassed": 3,
+  "durabilityTestLogSha256": "cb9c41bcb40dfc5bc8e2e746ce1d623e68f7d87df3b502b111e1e8491fb881e1",
+  "privacyTestLogSha256": "75d0b5eee70d8fa44c8b2188b8c5541224947c9452711ff82e25f230617811ac",
+  "conditions": {
+    "method": "getMe",
+    "maximumHelperRequests": 1,
+    "sendMessages": 0,
+    "requiredExactReceiptShaArgument": "a0557528f37e13d476b410a529e408da30bcdc4e2156584c94490266c282797c",
+    "requiredActualPid": 1518443,
+    "requiredActualExecGeneration": {
+      "execMainPid": 1518443,
+      "startMonotonic": "43306820191",
+      "invocationId": "9f59a894c36d4391a02253c08d1a3fb7"
+    },
+    "resultFieldsOnly": [
+      "status",
+      "accountBindingMatches"
+    ],
+    "rawTokenAccountIdentityUrlErrorMessageOrStackAllowed": false,
+    "unknownOutcome": "retain D/request.private.json; never replay",
+    "serviceLifecycleAllowed": false
+  },
+  "verified": [
+    "ExactoldBAPI/account/privacyguards and NODE_CODE remain unchanged. The AST transform inserts exactly one durable_destination_save(m) immediately afteroriginalmain loads itsnestedinstaller, beforeplan/receipt/dispatch; removinghook yields identicaloriginalAST.",
+    "ApprovedC.bind_save_parent is hashbound and applied to the actuallygeneratednestedmodule. Everyinitial/update save fsyncs actualD/request receipt parent afteroriginalfile/rename durability beforeHTTPmayrun. Destinationfsyncfailure propagates and forbids externalaction.",
+    "Wrapper binds successfulCa055, currentPID1518443/execgeneration, originalB/Csource/plan/approval and produceractualreadback, consistentwith own6b438actualsource/prefix/env/115rows. Separateapproval doesnot mutateCforwardapproval32e5 (whosegetMepermissionremainsfalse).",
+    "Originalhelper repeats exactcurrentgeneration/source/prefix/credential/processing checks, ownsCcompletion/Drequest locks, createsdurableunknownintentbeforeHTTP, invokesonegrammygetMe and emitsonlyfixedstatus+boolean. Anyretainedunknownrequest prevents anothercall.",
+    "Own4durability/realnestedhook/ASTcases and3unchangednetwork-isolatedprivacycasespass; noactualAPIrequest byreviewer."
+  ],
+  "limitations": [
+    "Coordinatoralone may execute exacthelperonce with thespecifiedsuccessfulreceiptSHA; no message/send/polling/lifecycletest isauthorized.",
+    "No productionAPIresultorcompletedaccountbinding isclaimeduntil rootreports itsfixedresult. Normalservicepollingtraffic isseparate andunmeasured.",
+    "No fullE4.16/familyacceptance or automaticretryclaim."
+  ]
+}

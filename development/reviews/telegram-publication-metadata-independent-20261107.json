@@ -1,0 +1,35 @@
+{
+  "contract": "EvaIndependentTelegramPublicationMetadataReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T01:44:27.732531+00:00",
+  "decision": "GO_CLOSED_PUBLIC_METADATA",
+  "publicEvidenceSha256": "ef46b3c43f3146fecf79c99923a2fbfd6ce505e0c41693cd4940771bde8280ce",
+  "whitelistSha256": "c0c36bdc0c178d642e94a0f289c663199d055ac5cf17db8e7cf3aac9b74d5850",
+  "closedFileCount": 11,
+  "files": {
+    "deploy/telegram-bridge/package.json": "cc66d6dfce138edf6326733c8285a6cf3a756bbb9b3daf87247331f5f5f3aaef",
+    "deploy/telegram-bridge/package-lock.json": "d3e19441433e602cbd8d7c488709881fddbaedb991eaafe424c3e17391f7825d",
+    "deploy/telegram-bridge/README.md": "0147170fe76aa469ebb54a26740a1c005ddb33b2a8fd2c3b2c1fe306777a53f5",
+    "development/evidence/reassessment/telegram-runtime-20261107/installed-delivery.json": "ef46b3c43f3146fecf79c99923a2fbfd6ce505e0c41693cd4940771bde8280ce",
+    "development/reviews/chrome-telegram-candidate-independent-20261107.json": "ef396db90db035080d3d6b9e2407f997a0a4f6f08d5d924f581393d0e6508e19",
+    "development/reviews/telegram-account-check-helper-independent-20261107.json": "861c4e17ef946cf9942f7afd868bf0e38d3888c4b5edce675fcd770c22ce2fb1",
+    "development/reviews/telegram-installed-independent-20261107.json": "194741e7c3657442b5023f1c905db1d2952582217ba5f3d7f84567aa9ce91f81",
+    "development/reviews/telegram-installer-independent-20261107.json": "1590ab0bd22623177ab127240ddd159fd55920e9be67ca224e784ad311098607",
+    "development/reviews/telegram-installer-preliminary-independent-20261107.json": "677e956e6970627cd1045b1076a1f7e7cc53d28b937d06fded33b244f35637b6",
+    "development/reviews/telegram-known-stop-resume-independent-20261107.json": "74da0aa41c2a451103d7b8bdcb01eb7afb70f4b31eaff0d3920a9b5db5382727",
+    "development/reviews/telegram-terminal-generation-independent-20261107.json": "ac29fa95a2fd410cf11c42c16f34518187bb245fdfdd2a1c8fe19d324f39d6ba"
+  },
+  "independentInstalledReviewUnchangedSha256": "194741e7c3657442b5023f1c905db1d2952582217ba5f3d7f84567aa9ce91f81",
+  "verified": [
+    "All11closedfilehashesmatch:3package/lock/READMEsourceCAS,1credential-freeinstalledproof,7unchangedhistorical/finalscope reviews. Actual3sourcefiles equal exactpreviouslypinnedcandidates; no application/startup/source route modification.",
+    "PublicfactsbindCa055successfulreceipt,Ddc911verifiedaccountreceipt and finalactual194741review. ActualNode22.23.4/grammy1.46/115protectedrows/sameowner-source/accountbool and no-stop/stagereplay claims match independentreadback.",
+    "README gives separateimmutableprefix/hash/signaturevalidation/currentNode+separatenpmbuildtool/manifestonlyhandoff and sourceboundreturn; retainedphoto/Eva1source isexplicitlyseparate. No newwholebuild/realconversation/familyacceptance claim.",
+    "Zero-messagefieldnowexplicitlymeansrealTestMessagesSent0; normalruntimeUsage remainsnull. Developmentmodelrequests0/creditsnull and accountreadonlymaximum1 are scopedcorrectly.",
+    "No privatecredentials/token/accountidentity/rawAPIresponse/ownerconversation/closedcriteria published. Narrowsecretpatternscan clean; originalscope reviews remainhistorical and unchanged."
+  ],
+  "limitations": [
+    "Metadata-onlyfollowup; no repeatedruntime/APIcalls/tests, noindex/sourcechanges byreviewer.",
+    "Approval covers exact11-filelist plus thismetadatareview; coordinator owns canonicalprojections and finalscopedGitindex.",
+    "TheoriginalcombinedChrome/Telegramcandidate review ishistorical: itsChromeattachmentNO_GO is not a newChromeinstallationclaim. FullE4.16/project/familyacceptance remainopen."
+  ]
+}

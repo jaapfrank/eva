@@ -97,3 +97,28 @@ A saved receipt proves exact Telegram acceptance, not reading or answering. Unkn
 acceptance must be inspected without resending. See
 `development/evidence/product/telegram-family-contact-20261023.json` for the measured
 installed result and remaining latency/ordinary-ingress limits.
+
+### Separate grammY dependency prefix (7 November 2026)
+
+The transport uses Node 22.23.4 from
+`/opt/eva2/managed-runtimes/node-v22.23.4/linux-x64/bin/node`. Reproduce its
+locked JavaScript dependencies in a new, closed directory by copying this
+`package.json` and `package-lock.json`, then running that Node executable with
+npm 10.9.8 (`/usr/lib/node_modules/npm/bin/npm-cli.js ci --ignore-scripts --omit=dev`
+on the build host). The managed Node prefix deliberately contains only Node;
+keep npm as a separate build tool.
+Check the installed lock and npm signatures before selecting the directory;
+keep its files immutable after validation. This resolves grammY 1.46.0 without
+changing the transport's startup code.
+
+Select only the new manifest through `EVA_TELEGRAM_DEPENDENCY_MANIFEST`. The
+installed selection is
+`/opt/eva2/managed-runtimes/telegram-grammy-1.46.0-20261107/package.json`.
+Preserve the existing Node executable, working directory, owner bindings,
+credential sources, journal database and all other service settings. Coordinate
+an idle, graceful service handoff with the existing known-generation stop fence;
+keep uncertain deliveries for inspection and never resend them as a test. Retain
+the previous prefix and configuration for a separately verified return.
+
+The retained photo-provider library and its dependencies are separate from this
+grammY closure. This recipe neither updates Bottie's agent nor starts Eva1.

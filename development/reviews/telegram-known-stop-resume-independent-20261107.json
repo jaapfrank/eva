@@ -1,0 +1,27 @@
+{
+  "contract": "EvaIndependentTelegramKnownStopResumeReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T01:22:04.370165+00:00",
+  "decision": "GO_RESUME_ONLY_GETME_DEFERRED",
+  "approved": true,
+  "installerSha256": "ec53d5a95c47bfe52bb4c3190bed03d9e53b8dea38b350d63e9306a545e70267",
+  "planSha256": "263a06e0700be156a9e5795a8ef7017ded3d2f50e025f611b4784f7726d57600",
+  "freezeSha256": "e8d8aadf37419aacf39958c40580d702beb9dab92aab26b32aa6473a039abeeb",
+  "preflightSha256": "c296a0d63e5a3fb8466d32533ef1b43d4f415a81700cfe7ca9832f73f7e835a4",
+  "originalReceiptSha256": "b19765f8c88cb34056637cd5db4efba1dad0e9d8e64b7aaff522cf6f1d5dd07f",
+  "ownTestsPassed": 7,
+  "testLogSha256": "4be56aa116dbf5b0faeeb168a2e7c50b4baa5bff98b00f8c3d8821186b208e1b",
+  "getMeApproved": false,
+  "verified": [
+    "OriginalBinstaller/plan/contract/approval/errorreceipt and manager/rootreadonlyproofs remain exact. Existingstagedroot-ownedprefix is verified and not recopied; newdropin remainsabsent;115terminalrows preserved.",
+    "SamebootID and immutablePID1managerstop/done metadata bind originaldurableUTCstopintent to realmanagerstopmonotonic beforeexactsuccessfulterminalexit and done. No monotonicinstant is fabricated. ExactPID/startMonotonic/Invocation/exit0/exitMonotonic are adopted withoutresendingstop.",
+    "OnlyENOENT/ESRCHprocess disappearance causes a newexactsystemd generation observation; active/deactivating stayspending, changedgeneration/badexit/permissionfailures remainblocked. Own5transitioncasespass.",
+    "Reboundm.save calls originaldurablefilesave then fsyncs Path(m.RECEIPT).parent beforeeveryreturn/dispatch. Own2ordering/failurecases pass, fixing newCdestinationdirectory durability whileBsource remainsimmutable.",
+    "NewexclusiveCintent is durable before unchangedBpublish_dropin/start/readback phases. No stop orpackagestage is repeated; sameknown-downfence is rechecked beforepointer/reload/start."
+  ],
+  "limitations": [
+    "Thisapproval restoresTelegramserviceonly; getMe wrapper is deliberatelynotapproved until itsseparate rebound-save-parentcorrection and exactreview. Existingae493 wrappermustnotexecute.",
+    "No model/getMe/message/service action by reviewer. Coordinatoralone invokes exactresume afterunchangedfreshpreflight; unknownCreceipt forbidsretry.",
+    "Finalactualgeneration/dependency/source/row/owner/envreadback remainsrequired; no fullE4.16/householdacceptanceclaim."
+  ]
+}

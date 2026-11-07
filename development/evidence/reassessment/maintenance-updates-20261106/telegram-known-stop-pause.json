@@ -1,0 +1,19 @@
+{
+  "contract": "EvaTelegramKnownStopInspectionPause/v1",
+  "checkedAt": "2026-11-07T01:12:48.493010+00:00",
+  "state": "original_telegram_stopped_exit0_prefix_staged_no_pointer_or_start_dispatched",
+  "originalReceiptSha256": "b19765f8c88cb34056637cd5db4efba1dad0e9d8e64b7aaff522cf6f1d5dd07f",
+  "installerSha256": "da6f61cbf59f6c5e8c3b53c7550d33b4577e78132d5eed0782344d521af4fde5",
+  "planSha256": "a16882b54469e3c9681f6db073641f5f96dc935768294e75c1e517960f613579",
+  "cause": "The original process exited between the manager MainPID observation and /proc environment read; process lookup failed during graceful-stop polling.",
+  "originalTerminalGenerationReadBack": true,
+  "originalExitCode": 0,
+  "protectedTransportRows": 115,
+  "rowsAndSchemaPreserved": true,
+  "newDependencyManifestPublished": false,
+  "newServiceStartDispatched": false,
+  "stopReplayAllowed": false,
+  "testMessagesSent": 0,
+  "continuationRequiresExactKnownTerminalGenerationAndIndependentReview": true,
+  "technicalDeliveryComplete": false
+}

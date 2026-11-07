@@ -1,0 +1,55 @@
+{
+  "contract": "EvaIndependentChromeTelegramCandidateReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:05:59.920647+00:00",
+  "freezeSha256": "86ea765bcdb56b7d45409f10ec237ecfedf580f12c0b0f7b90a175064ef67494",
+  "summarySha256": "eac47621ca0bd7a59e2e6596bdd28b60ebad83326b2d6e3ffd42bf3fb3946304",
+  "decisionByScope": {
+    "telegramDependencyCandidate": "GO_CANDIDATE_ONLY",
+    "chromePublicSevenToolWorkerWithInjectedContext": "GO_BOUNDED_SYNTHETIC_CONTRACT",
+    "chromeActualExtensionAttachment": "NO_GO_PENDING_IPC_AUTHORITY_CLOSURE"
+  },
+  "installationApproved": false,
+  "independentChecks": {
+    "allFrozenSourceAndProofHashesMatch": true,
+    "chromeWorkerNegativeCases": 5,
+    "telegramPollingDrainCases": 1,
+    "telegramOriginalStandaloneCases": 7,
+    "actualPublicBotOldNewOldSyntheticJournalPhases": 3,
+    "physicalHttpRequests": 0,
+    "liveLifecycleOrBrowserActions": 0,
+    "modelRequests": 0
+  },
+  "evidence": {
+    "independent-small-tests.log": "c4f2e39345235cce04919f34261dc1333c69814229629001b38c86ae25edd676",
+    "independent-telegram-seven-tests.log": "a85caf4eb73f376e33a5b8a5690604b6c7f1d5927390488ea47a02f33ef6552a",
+    "independent-telegram-old-new-old.json": "cddbd815f09c524f04b6c48fb2564e482ee6195ec751ec517eabcb99288e0545",
+    "windows-seven-final-proof.json": "6bd27c621ec5c64de8914e8c44a00a8f4481ee20841a77ba76dbf01946e8e95f",
+    "chrome-candidate-signatures.json": "983259db9ff87586188b42b09d7d29d253d9a69f1e0313b83a5362b0d8969d65",
+    "telegram-candidate-signatures.json": "e7ce13491099e7a6ea5582b1b7bde5259f2681ec2f598f9024ccaba584319eeb"
+  },
+  "finding": {
+    "priority": "P1",
+    "scope": "new extension attach default IPC authority",
+    "file": "deploy/chrome-bridge/extension-attach.cjs",
+    "line": 11,
+    "detail": "The pinned0.0.84 createBrowserWithInfo invokes browser.bind before returning. Actual coreBundle BrowserServer.start creates a discoverable local PlaywrightPipeServer and serverRegistry descriptor when no host/port is passed. Its connection exposes the prelaunched browser through the general Playwright protocol, independent of Eva seven-tool filtering, current gate and worker shared-tab validation. Windows seven-action tests inject browser/context and do not execute this attachment/bind path.",
+    "minimalNextStep": "Avoid retaining an added general control endpoint. Consider immediately invoking public browser.unbind before returning from attach and before worker grant validation, with synthetic actual bound-browser/registry/no-reachable-IPC/cleanup/failure tests. Alternatively demonstrate an equivalent bounded attachment path that adds no authority. Do not use owner browser to test.",
+    "qualification": "No new TCP listener was found. This is a concrete added local IPC/control contract and an unverified boundary, not a claim that a remote or different-user exploit was demonstrated."
+  },
+  "telegramAssessment": [
+    "Only exact grammy dependency closure changes; existing standalone source, explicit immutable dependency-manifest handoff and source transport remain unchanged.",
+    "Own publicBot old/new/old journal proof preserves old delivered rows, rejects unbound private sender without payload storage, emits no physical HTTP and avoids duplicate sends; polling drain retains unfinished operation until completion.",
+    "Package signature reports bind98Chrome/10Telegram packages. Final installation must independently bind immutable prefix, existing115-row durable state and no outgoing Telegram replay."
+  ],
+  "chromeAssessment": [
+    "Public MCP createConnection and Client/InMemoryTransport replace private tool schema/backend APIs. Exact seven-name catalog and existing argument/nav/key/new-tab/explicit-connect restrictions remain. Hash/version-checked single attach shim is a bounded remaining private dependency.",
+    "Reviewed Windows synthetic seven-action/STOP/new-page/reconnect outcomes and Linux boundaries do not constitute actual owner extension attachment.",
+    "Observed candidate connect overhead was disclosed separately; no performance improvement claim."
+  ],
+  "limitations": [
+    "No runtime/source application or installation approval. Telegram can be deployed independently only through a separately reviewed current-generation installer.",
+    "CurrentChrome actual-extension route requires resolution of the finding before its candidateGO.",
+    "No household browser/profile/Telegram content, real send or paid provider was used by reviewer."
+  ]
+}

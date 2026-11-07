@@ -1,0 +1,31 @@
+{
+  "contract": "EvaIndependentTelegramInstallerPreliminaryReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:39:08.430367+00:00",
+  "decision": "NO_GO_PENDING_EXACT_STOPPED_GENERATION_FENCE",
+  "installationApproved": false,
+  "freezeSha256": "f8c395f4486d720e0b0afaa007da197ea671cfc828c7dc655a7cdc8b60e9c98d",
+  "installerSha256": "296b86c701c625e6f45b5114b524e28d9047158e15b07941635796375e1b2dff",
+  "planSha256": "a7f2ba9073ecd391666bef440faf2c8a20fb8b68c03d39ee5b419db312f35e7a",
+  "ownSyntheticCasesPassed": 17,
+  "testLogSha256": "b2b71a3cd36e6200d6eb6269d0ea37f167c335654412ad756bc24b9d13aefcba",
+  "finding": {
+    "priority": "P1",
+    "file": "install.py",
+    "function": "stop_original_once; publish_dropin_once; start_and_readback; rollback.main",
+    "detail": "Terminal stop checks accept inactive/MainPID0/Exit0 without binding ExecMainPID, ExecMainStartTimestampMonotonic and retainedInvocation to the previously authorized running generation. Immediate inactive skips the polling-loop identity checks. Later pointer/start phases test only generic inactive state.",
+    "independentReproductionSha256": "1627aac4d25efee4de48c2bb96a9b4ee253858d26d1fdf817a3aa742f34c5b1c",
+    "requestedBoundedFix": "Capture exact authorizedsystemd execution identity before stop; require sameknown successfuldown result after exit and immediately before dropin/unlink/start mutations in both forward and explicitrollback. Reject unknown/newfailed/down generations and retain intent without replay."
+  },
+  "otherwiseReviewed": [
+    "Manifest-only immutableprefix and existingNode22/source/ownerbinding handoff; no in-placeBottie or app rewrite.",
+    "Existing115-row terminal journal preserved, additive newrows retained, processing/deliverypending blocks and no database restore onrollback.",
+    "File+parentdirectory durableexclusive receipts fence unknown replay. Rollback is explicit only for successfulinstalledreceipt and exactactivenewgeneration.",
+    "getMe helper is separately once-only and readonly; fixedtwo-field status catches error without message/stack/URL, childstderrdiscarded. Synthetic token/identity privacy3cases pass; no actualgetMe executed by reviewer."
+  ],
+  "limitations": [
+    "Node7 must finish/stabilize before this separate service activation.",
+    "A revisedexactfreeze and ownnewstateguardcases are required; no blanketfailed/stop waiver or automaticretry.",
+    "No services, messages, ownerbrowser or paidprovider used by reviewer."
+  ]
+}
