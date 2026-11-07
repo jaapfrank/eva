@@ -1512,12 +1512,14 @@ def create_runtime_app() -> FastAPI:
             allow_insecure_http=settings.fanout_allow_insecure_http,
         )
     )
-    native_research = None
+    native_research = owner_research = None
     if callable(getattr(model, "research_configuration_sha256", None)):
         from eva.adapters.model.research_tools import NativeResearchTool
         from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
         research_adapter = NativeResearchTool(model, PostgresConversationActions._validated_research_arguments)
         native_research = PostgresExternalConversationTools(engine, research_adapter, research_adapter)
+        from eva.bootstrap.background_research import owner_research_tools
+        owner_research = owner_research_tools(engine, model)
     initiative_adopter = None
     if dashboard_owner_principal_id is not None:
         from eva.adapters.postgres.initiative_adoption import PostgresOwnerConversationInitiativeAdopter
@@ -1543,6 +1545,7 @@ def create_runtime_app() -> FastAPI:
         initiative_adopter=initiative_adopter,
         research=model,
         native_research=native_research,
+        owner_research=owner_research,
         file_batch=file_batch,
         validated_file_edit=validated_file_edit,
         repository_improvement=repository_improvement,

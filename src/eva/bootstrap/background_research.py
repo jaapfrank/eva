@@ -68,6 +68,21 @@ class AccountedResearch:
         return artifact
 
 
+def owner_research_tools(engine, research):
+    """Compose the ordinary research route at the host boundary."""
+    if not all(callable(getattr(research, name, None)) for name in (
+        "research_request_payload", "research_configuration_sha256",
+    )):
+        return None
+
+    from eva.adapters.model.research_tools import OwnerResearchContinuationTool
+    from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+
+    adapter = OwnerResearchContinuationTool(research, PostgresConversationActions._validated_research_arguments)
+    return PostgresExternalConversationTools(engine, adapter, adapter)
+
+
 def task_research_tools(engine, model, *, turn, journal, authorize, grant, profile):
     """Keep the existing durable receipt, cancellation and no-replay machinery."""
     from eva.adapters.model.research_tools import NativeResearchTool, OwnerResearchContinuationTool

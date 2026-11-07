@@ -940,7 +940,7 @@ class PydanticConversationModel:
         if not retains_action_body(receipt.call.name):
             return receipt.output
         if "ancestor_model_projection" in view:
-            from eva.adapters.postgres.connector_results import ancestor_action_presentation
+            from eva.application.connector_receipts import ancestor_action_presentation
             try:
                 _, output_view = ancestor_action_presentation(receipt, view["ancestor_model_projection"])
             except (ConversationConflict, TypeError, ValueError) as error:
@@ -962,7 +962,7 @@ class PydanticConversationModel:
     @staticmethod
     def _receipt_arguments(receipt: ConversationActionReceipt, *, ancestor: bool = False):
         if ancestor and receipt.model_output and "ancestor_model_projection" in receipt.model_output:
-            from eva.adapters.postgres.connector_results import ancestor_action_presentation
+            from eva.application.connector_receipts import ancestor_action_presentation
             try:
                 arguments, _ = ancestor_action_presentation(receipt, receipt.model_output["ancestor_model_projection"])
             except (ConversationConflict, TypeError, ValueError) as error:

@@ -190,6 +190,8 @@ class PostgresConversationActions:
         external_tools: tuple[ConversationExternalToolPort, ...] = (),
         native_research: ConversationExternalToolPort | None = None,
         initiative_adopter=None,
+        *,
+        owner_research: ConversationExternalToolPort | None = None,
     ) -> None:
         self._engine = engine
         self._initiative_adopter = initiative_adopter
@@ -213,14 +215,7 @@ class PostgresConversationActions:
             for action_name in provider.action_names
         }
         self._research = research
-        self._owner_research_steps = None
-        if research is not None and all(callable(getattr(research, name, None)) for name in (
-            "research_request_payload", "research_configuration_sha256",
-        )):
-            from eva.adapters.model.research_tools import OwnerResearchContinuationTool
-            from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
-            adapter = OwnerResearchContinuationTool(research, self._validated_research_arguments)
-            self._owner_research_steps = PostgresExternalConversationTools(engine, adapter, adapter)
+        self._owner_research_steps = owner_research
         self._file_batch = file_batch
         self._validated_file_edit = validated_file_edit
         if (repository_improvement is None) != (repository_improvement_model is None):

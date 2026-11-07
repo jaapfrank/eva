@@ -1,0 +1,194 @@
+{
+  "contract": "EvaImportBoundaryCorrectionVerification/v1",
+  "priority": "P1-03",
+  "checkedAt": "2026-11-07T14:00:23.993000+00:00",
+  "status": "installed_technical_delivery_complete",
+  "scope": "Current worktree and live core inventory; active receipt presentation and ordinary research composition boundaries.",
+  "baselineCommit": "8546bf27ab23d197088993f402f44f4c29bc889c",
+  "measurement": {
+    "checker": "src/tools/check_architecture.py",
+    "checkerSha256": "f851639f93f26d5f774b8d033c346320caf58e7e884767ff92f32d122a0d2691",
+    "worktreePolicyBeforeSha256": "5c67fef0b81382b1cdd31b3a4886c8a45482808a8b850a45e31620534a908d05",
+    "worktreePolicyAfterSha256": "a5da4ae8e9bd89034344191b95976a3490102165bfda04c3e8b1bba09b7ed960",
+    "pythonFilesCheckedBefore": 630,
+    "pythonFilesCheckedAfter": 631,
+    "beforeTotal": 177,
+    "afterCodeOnlyUnderOriginalPolicy": 173,
+    "afterScopedPolicyDeclarations": 169,
+    "beforeImportFindings": 163,
+    "afterImportFindings": 155,
+    "newFindings": 0,
+    "historical110UsedAsCurrentMeasure": false,
+    "fullRepositoryGateExit": 1,
+    "preExistingVoicePolicyChangesInLocalMeasurement": true,
+    "preExistingVoicePolicyChangesIncludedInPatch": false,
+    "installedCoreComparison": {
+      "liveCoreModulesBefore": 435,
+      "liveCoreModulesAfter": 436,
+      "beforeFindingsInPresentSource": 145,
+      "afterFindingsInPresentSource": 137,
+      "newFindings": 0,
+      "missingOtherRolePackagesExcluded": 2
+    },
+    "beforeByCode": {
+      "external_import_boundary": 60,
+      "local_import_boundary": 103,
+      "provider_specific_core_debt_new_file": 12,
+      "unexpected_package": 2
+    },
+    "afterByCode": {
+      "external_import_boundary": 59,
+      "local_import_boundary": 96,
+      "provider_specific_core_debt_new_file": 12,
+      "unexpected_package": 2
+    },
+    "importPlacement": [
+      {
+        "code": "external_import_boundary",
+        "placement": "functionLocal",
+        "count": 31
+      },
+      {
+        "code": "external_import_boundary",
+        "placement": "outsideFunctions",
+        "count": 28
+      },
+      {
+        "code": "local_import_boundary",
+        "placement": "functionLocal",
+        "count": 80
+      },
+      {
+        "code": "local_import_boundary",
+        "placement": "outsideFunctions",
+        "count": 16
+      }
+    ],
+    "remainingPriorityGroups": [
+      {
+        "group": "storage, authority or composition cross-imports",
+        "outsideFunctions": 8,
+        "functionLocal": 72,
+        "total": 80
+      },
+      {
+        "group": "external dependency declarations",
+        "outsideFunctions": 28,
+        "functionLocal": 31,
+        "total": 59
+      },
+      {
+        "group": "remaining local package imports",
+        "outsideFunctions": 8,
+        "functionLocal": 8,
+        "total": 16
+      }
+    ],
+    "unresolvedDynamicImportsFlagged": 0,
+    "riskMethod": "Storage, authority and composition crossings first; compare actual hotspot imports and source pins. Function-local placement signals lazy import sites, without asserting their execution from AST. External declarations require dependency or scope evidence. Lexical provider terms and resource ownership are separate categories.",
+    "selectedDynamicPath": "Exact closed receipt registry looked up only on demand. Live probe loaded the optional receipt policy and pure renderer without loading the PostgreSQL receipt store.",
+    "knownRemainingSensorySignal": "Three provider-specific terms identify existing Home Assistant observation, batch and delivery wire values; this finding is lexical and remains visible."
+  },
+  "codeChanges": [
+    {
+      "removed": [
+        "model adapter -> PostgreSQL receipt store (2 sites)",
+        "PostgreSQL result reader -> MCP provider parser"
+      ],
+      "newBoundary": "One pure application module owns the existing argument parser, retained reader schema, manifest and model receipt rendering. Adapter routes use the same validation."
+    },
+    {
+      "removed": [
+        "PostgreSQL conversation actions -> model research adapter construction"
+      ],
+      "newBoundary": "Host composition injects the owner research route. The previous two-method capability condition and initiative/owner dispatch separation remain tested."
+    },
+    {
+      "declared": [
+        "exact lazy retained-receipt policy registry (3 sites)",
+        "existing pinned tiktoken 0.14.0 (1 site)"
+      ],
+      "newBoundary": "The model allowlist adds only those two existing dependencies. The local tokenizer cache hash and optional provider scope remain enforced."
+    }
+  ],
+  "verification": {
+    "receiptAndOptionalPolicyTestsPassed": 25,
+    "postgresResearchAndStopTestsPassed": 6,
+    "testExecutionSeconds": 23.13,
+    "postgresVersion": "16.13",
+    "ownerResearchTestSource": "development/tests/postgres/test_owner_research_continuation.py",
+    "ownerResearchTestSha256": "c7150090a12a7150c2a32bb7d9b303d18cf0378fe0e1e6be6580e095a5996840",
+    "receiptBytesAndLegacySchemasVerified": true,
+    "restartNoReplayAndStopVerified": true,
+    "liveOptionalPolicyImportWithoutPostgresStoreVerified": true,
+    "livePinnedTokenizerLoadVerified": true,
+    "realProviderRequestsFromVerification": 0,
+    "productionVerificationWrites": 0,
+    "developmentCredits": "unknown"
+  },
+  "installation": {
+    "initialActivationSha256": "d76b2bd9a382a7d18215787127fb04382d84ab4b83b510d20cd428c38c895765",
+    "initialSdkReceiptSha256": "93074090408e521408431dfa922388df08e436b8203c4e2973cabdcba592e604",
+    "reconciliationReceiptSha256": "c3f5ecf53d520ff391e9b418a015108139c298ef1ed63a50dcd152ed37a7817e",
+    "completedAt": "2026-11-07T14:00:14.761170+00:00",
+    "profileNames": [
+      "digital_work",
+      "household_research",
+      "public_research",
+      "shared_provider"
+    ],
+    "profileSha256": "c377cd60c2ec2c4fa06ab5ec20a7ce46eba7bde19f98fc45ffaf50fb0ad75063",
+    "sourcesByRole": {
+      "core": {
+        "application/connector_receipts.py": "609457caa37ecf80c56f2ad8ddaf77c6d0886020ac317f190dfaa84af41da69d",
+        "adapters/model/pydantic_conversation.py": "de07d162668b7ef8de8d921fa39e0e1cbf3da9c4e11531dffc1b2450577cf894",
+        "adapters/postgres/connector_results.py": "faf9adb9680a3f6d112db34f9fbe21268fdf89b4444eed27f829ebdd4869fbc2",
+        "adapters/postgres/conversation_actions.py": "a6aac798e3491ef778cf8acfb0c353682f5dd43b78893f6a91a77f38020d8a31",
+        "providers/mcp_discovery.py": "5c99d83ca623a099f3bc151499dd29abc653af8461a90f994b7d1219521ec422",
+        "providers/home_assistant_receipts.py": "53b1a2be9593c7e781891ff423e05fcfd256fd715659604e8b736b061ad117c6",
+        "bootstrap/background_research.py": "a761cc1ea7e35dcaa2c41005e17fbc7dd851bb0998d3ab057c45583d9f7ca161",
+        "bootstrap/delegated_digital_composition.py": "7d99aa621b0bcf20e0d9505c22153f1e55d21e2d0745007c6a22966021b6effa",
+        "bootstrap/runtime.py": "e935a7f6b47cad2a2c68633acab584276b38d77b9dfafa5e52964087643dcc3e"
+      },
+      "delegated-work-worker": {
+        "application/connector_receipts.py": "609457caa37ecf80c56f2ad8ddaf77c6d0886020ac317f190dfaa84af41da69d",
+        "adapters/model/pydantic_conversation.py": "de07d162668b7ef8de8d921fa39e0e1cbf3da9c4e11531dffc1b2450577cf894",
+        "adapters/postgres/connector_results.py": "faf9adb9680a3f6d112db34f9fbe21268fdf89b4444eed27f829ebdd4869fbc2",
+        "adapters/postgres/conversation_actions.py": "a6aac798e3491ef778cf8acfb0c353682f5dd43b78893f6a91a77f38020d8a31",
+        "providers/mcp_discovery.py": "5c99d83ca623a099f3bc151499dd29abc653af8461a90f994b7d1219521ec422",
+        "providers/home_assistant_receipts.py": "53b1a2be9593c7e781891ff423e05fcfd256fd715659604e8b736b061ad117c6",
+        "bootstrap/background_research.py": "a761cc1ea7e35dcaa2c41005e17fbc7dd851bb0998d3ab057c45583d9f7ca161",
+        "bootstrap/delegated_digital_composition.py": "7d99aa621b0bcf20e0d9505c22153f1e55d21e2d0745007c6a22966021b6effa"
+      }
+    },
+    "imageDigests": {
+      "eva2-managed-b-slot3-core": "sha256:6433b57d7fb3e2f0a7fba32891af6768fc263170a97b78b047e0d22173fe7eee",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:1b3b60cb4a8b62a9211f7ab58681e9084ef111e5b83e21ec11c0d26e8c9007aa"
+    },
+    "phases": [
+      "verify_exact_already_running_images",
+      "resume_same_stopped_evaluator_once",
+      "actual_source_profiles_authorities_and_preservation"
+    ],
+    "oldPairMatched": true,
+    "planSha256": "75ab5957b86215491f01462323becc73488c3a3483bec5037b92de8fae021e04",
+    "installerSha256": "41eb1d3603b2d4316f30d381f481566c37ef2c139d69cdb5c6e13775088e984c",
+    "offlineImageAndProfileProofSha256": "ba9dfd1bb8322cd146145faaa212ab5894ec880d1c240570c52090bfb53e2dd3",
+    "independentSourceAndInstallReview": "approved",
+    "healthyCoreAndWorker": true,
+    "noActiveWorkOrUnexpiredClaimsAtGuard": true,
+    "installedProfileCheckCompatible": true,
+    "changedSourceFilesByRole": {
+      "core": 9,
+      "delegated-work-worker": 8
+    },
+    "preservedEvaluatorConfiguration": true,
+    "initialVerificationStoppedOnTwoUnexpectedResearchFingerprints": true,
+    "reconciliationProofSha256": "bfe53ab68d866c48dc09f6ba43fde775559c76ad11290cb51c5cea07b743c8c2",
+    "reconciliationScriptSha256": "7cafa234a90f8f683b6613099b6415c577468aadd2a181eb05c4670c2255030e",
+    "reverifiedSameRunningContainerGenerations": true,
+    "additionalComposeDispatches": 0,
+    "reviewedReceiptSourcePinsReboundWithoutChangingClaimQuery": true,
+    "evaluatorResumedOnceWithOriginalConfiguration": true
+  }
+}

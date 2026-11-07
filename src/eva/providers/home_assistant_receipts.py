@@ -17,8 +17,8 @@ OBSERVATION_ACTION_NAMES = frozenset({"home_assistant_request", "read_home_assis
 
 
 def receipt_presentation(receipt, view):
-    from eva.adapters.postgres.connector_results import (
-        _encoded, READER_PREFIX, SOURCE_RESPONSE_FIELDS, LEGACY_SOURCE_RESPONSE_FIELDS,
+    from eva.application.connector_receipts import (
+        encode_connector_result as _encoded, READER_PREFIX, SOURCE_RESPONSE_FIELDS, LEGACY_SOURCE_RESPONSE_FIELDS,
         retained_source_navigation,
     )
     output = receipt.output
@@ -121,7 +121,7 @@ def checkpoint_source_read(receipt):
                     or isinstance(row.get("coverage"), dict) and row["coverage"].get("complete") is False
                     or row.get("reason")):
                 return None
-    from eva.adapters.postgres.connector_results import SOURCE_RESPONSE_FIELDS
+    from eva.application.connector_receipts import SOURCE_RESPONSE_FIELDS
     metadata = {k: observation[k] for k in SOURCE_RESPONSE_FIELDS if k in observation}
     for k in ("total", "next_offset", "missing", "coverage", "requested",
               "configurations_read", "configurations_requested"):

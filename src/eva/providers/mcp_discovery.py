@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass, replace
-import json
 from threading import Lock
 from typing import Literal, Protocol
 
@@ -13,6 +12,11 @@ from eva.adapters.connectors.mcp_gateway import (
     McpGatewayToolAdapter,
     McpGatewayToolSpec,
     McpGatewayToolUnreachable,
+)
+from eva.application.connector_receipts import (
+    CONNECTOR_ACTION_NAME as _USE_ACTION,
+    CONNECTOR_ARGUMENT_MAX_BYTES as _MAX_ARGUMENT_BYTES,
+    parse_connector_arguments as _arguments,
 )
 from eva.application.cancellation import check_cancellation, run_cancellable
 from eva.application.conversation import (
@@ -23,7 +27,6 @@ from eva.application.conversation import (
     ConversationTurn,
 )
 from eva.application.orchestration import ToolDispatchResult, ToolProofObservation, ToolRequest
-from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.application.schema_validation import validate_schema_value
 from eva.adapters.connectors.browser_autostart import ManagedBrowserAutostart, managed_browser_session_id
@@ -35,8 +38,6 @@ _MANAGED_BROWSER_GATEWAY_HEALTH_INTERVAL_SECONDS = 60
 # /tools uses ContextForge's shared 100 rpm tier and may require multiple pages.
 # Twelve catalog reads per health cycle leave room for pagination and other work.
 _MANAGED_BROWSER_CATALOG_POLL_SECONDS = _MANAGED_BROWSER_GATEWAY_HEALTH_INTERVAL_SECONDS / 12
-_USE_ACTION = "use_connector_tool"
-_MAX_ARGUMENT_BYTES = 65_536
 _USE_DESCRIPTOR = ConversationToolDescriptor(
     name=_USE_ACTION,
     description=(
@@ -96,33 +97,6 @@ class McpConnectorRegistry(Protocol):
     ) -> McpExecutionBinding: ...
 
 
-def _unique_object(pairs: list[tuple[str, JsonValue]]) -> dict[str, JsonValue]:
-    output: dict[str, JsonValue] = {}
-    for key, value in pairs:
-        if key in output:
-            raise ValueError("duplicate argument key")
-        output[key] = value
-    return output
-
-
-def _arguments(call: ConversationActionCall) -> tuple[str, dict[str, JsonValue]]:
-    if call.name != _USE_ACTION or set(call.arguments) != {"tool_id", "arguments_json"}:
-        raise ConversationConflict("connector tool call has invalid fields")
-    tool_id, raw = call.arguments["tool_id"], call.arguments["arguments_json"]
-    if (
-        not isinstance(tool_id, str) or not tool_id.strip() or len(tool_id) > 240
-        or not isinstance(raw, str) or not 2 <= len(raw.encode("utf-8")) <= _MAX_ARGUMENT_BYTES
-    ):
-        raise ConversationConflict("connector tool arguments are invalid")
-    try:
-        value = json.loads(raw, object_pairs_hook=_unique_object)
-        if not isinstance(value, dict):
-            raise ValueError("arguments must be an object")
-        validate_json_value(value)
-    except (ValueError, TypeError, RecursionError) as error:
-        raise ConversationConflict("connector arguments_json must be one valid JSON object") from error
-    return tool_id, value
-
 
 class McpDiscoveryToolPlanner:
     action_names = (_USE_ACTION,)
@@ -149,7 +123,6 @@ class McpDiscoveryToolPlanner:
             receipt_output={**prepared.receipt_output,
                             "connector_id": binding.connector_id, "tool_id": binding.tool_id},
         )
-
 
 
 class McpDiscoveryToolAdapter:

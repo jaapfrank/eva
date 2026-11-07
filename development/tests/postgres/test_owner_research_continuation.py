@@ -15,6 +15,7 @@ from eva.application.conversation import (ConversationActionCall, ConversationCo
     ConversationTurn, IdentityProfile, LivingConversation)
 from eva.application.orchestration import ToolDispatchResult, ToolProofObservation
 from eva.application.research import ResearchArtifact, ResearchSource
+from eva.bootstrap.background_research import owner_research_tools
 from tests.postgres.test_operational_timeline import timeline_engine
 from tests.support.scripted_pydantic_conversation import (
     ScriptedCall, ScriptedPhase, ScriptedPydanticConversation, tool_returns)
@@ -65,7 +66,8 @@ def setup(engine, label, fail=False):
     journal.admit(turn)
     research,connector=Research(fail),Connector()
     tools=PostgresExternalConversationTools(engine,connector,connector)
-    actions=PostgresConversationActions(engine,research=research,external_tools=(tools,))
+    actions=PostgresConversationActions(engine, research=research, external_tools=(tools,),
+        owner_research=owner_research_tools(engine, research))
     return turn,journal,research,connector,tools,actions
 
 
@@ -97,7 +99,8 @@ def test_scripted_fetch_failure_can_research_then_save_and_recover(timeline_engi
     receipt=actions.pending_step(turn,step_index=1)
     assert receipt.output['result']['sources'][0]['url']==URL
     assert receipt.output['result']['model_usage']['output_tokens']==100
-    restarted=PostgresConversationActions(timeline_engine,research=research,external_tools=(tools,))
+    restarted=PostgresConversationActions(timeline_engine, research=research, external_tools=(tools,),
+        owner_research=owner_research_tools(timeline_engine, research))
     assert conversation(restarted).respond(turn,model_journal=journal).text=='De bronbevinding is bewaard.'
     assert research.calls==1 and connector.calls==['fetch_source','save_finding']
     assert not script.remaining_phases
@@ -147,7 +150,15 @@ def test_owner_continuation_rejects_initiative_review_without_dispatch(timeline_
             {**ARGS,'public_review':'public_unlinked'}),step_index=1)
     assert research.calls==0
     assert RESEARCH not in PostgresConversationActions(timeline_engine).continuation_action_names(turn)
-    legacy=PostgresConversationActions(timeline_engine,research=object())
+    class LegacyResearch:
+        def research_configuration_sha256(self):
+            return "c" * 64
+
+    legacy_research = LegacyResearch()
+    owner_tools = owner_research_tools(timeline_engine, legacy_research)
+    assert owner_tools is None
+    legacy = PostgresConversationActions(timeline_engine, research=legacy_research,
+        owner_research=owner_tools)
     assert RESEARCH in legacy.available_action_names(turn)
     assert RESEARCH not in legacy.continuation_action_names(turn)
 

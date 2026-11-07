@@ -71,6 +71,7 @@ _EXECUTION_SOURCES = (
     "providers/mcp_owner_authority.py",
     "adapters/postgres/mcp_connector_registry.py",
     "adapters/postgres/connector_results.py",
+    "application/connector_receipts.py",
     "providers/bundled.py", "providers/runtime.py", "providers/contracts.py",
     "providers/receipt_policies.py",
     "application/conversation.py", "adapters/model/tool_namespaces.py",
