@@ -1,0 +1,20 @@
+{
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:13:57.797565+00:00",
+  "status": "preliminary_stop_objection_corrected_not_a_proven_defect",
+  "actualDaemonVersion": "29.1.3",
+  "actualStopPoliciesSha256": "0806966c158a056db0e794eddb5c4c69f924a3c84f9f34b8aea1900b4eaf9edf",
+  "primarySource": "https://raw.githubusercontent.com/moby/moby/docker-v29.1.3/daemon/kill.go",
+  "sourceLines": "74-95",
+  "conclusion": "All eight actual stop targets use StopSignalNone and unless-stopped. Exact daemon source sets ExitOnNext and manually-stopped state for explicit SIGTERM in this configuration, so the preliminary autorestart objection is not supported. Parent independently selected a scoped public Stop API revision as explicit manual-stop contract; this is a deliberate clarity/protocol choice, not repair of a demonstrated restart defect.",
+  "liveSignalsByReviewer": 0,
+  "otherCompletedChecks": {
+    "snapshotCoreTestMethods": 21,
+    "fiveProviderPayloadsExactApprovedImageOnly": true,
+    "readonlyMountedSourceHashesMatched": 34
+  },
+  "remainingBeforeActivationApproval": [
+    "Review final public-stop/receipt-directory-fsync revision and targeted tests.",
+    "Fresh complete preflight must pass normal native retention; no purge/predicate relaxation."
+  ]
+}

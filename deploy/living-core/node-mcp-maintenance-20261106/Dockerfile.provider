@@ -1,0 +1,9 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+USER 0:0
+RUN ["/usr/bin/microdnf", "install", "-y", "--setopt=install_weak_deps=0", "libatomic-14.3.1-4.4.el10.x86_64"]
+RUN python3 -c 'from pathlib import Path; import hashlib,shutil; root=Path("/opt/eva2/filesystem-mcp"); node=Path("/usr/bin/node"); assert not root.is_symlink() and set(p.name for p in root.iterdir())=={"node_modules","package.json","package-lock.json"}; assert hashlib.sha256((root/"package-lock.json").read_bytes()).hexdigest()=="8bd59cb1eb1bcd93905955bb9b57e003d775a854a139c1568b7429d6f4b35263"; assert node.is_symlink() and node.resolve()==Path("/usr/bin/node-22"); shutil.rmtree(root/"node_modules"); node.unlink(); node.symlink_to("/opt/eva2/node-runtime/node")'
+COPY --chown=10001:10001 filesystem-mcp/ /opt/eva2/filesystem-mcp/
+COPY --chown=0:0 node-runtime/ /opt/eva2/node-runtime/
+RUN ["/usr/bin/node", "--version"]
+USER 10001:10001

@@ -1,0 +1,45 @@
+{
+  "schema": "EvaNodeMcpPublicClosureIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T22:02:41.108556+00:00",
+  "decision": "GO_EXACT_PUBLIC_RECIPE_AND_CANDIDATE_EVIDENCE_ONLY",
+  "privateWhitelistSha256": "eefb053da0339d579fcc7572304c9c00ab546a8030b1699386f902180d4da124",
+  "filesSha256": {
+    "deploy/living-core/node-mcp-maintenance-20261106/Dockerfile.core-source": "d59a11c490f992cb9bb66154c576de5b4cfc2c999ff87fa1de7cbda5178c3d18",
+    "deploy/living-core/node-mcp-maintenance-20261106/Dockerfile.provider": "21e1c1f59d473415a9018e766814b727eaaedc932139c758436ec52533ac1ad1",
+    "deploy/living-core/node-mcp-maintenance-20261106/README.md": "31d094b6afa2651ef600c99258c5c4873ae46191311b64cde1744bc1925c0b80",
+    "deploy/living-core/node-mcp-maintenance-20261106/manifest.json": "37a10f83a9e2b9bfd3b14c3a9ec966cec34d22ff01228359c4346fd5c02296c3",
+    "deploy/living-core/node-mcp-maintenance-20261106/package-lock.json": "d1cc437f004d692068e0f7949f7a63a73319db3a74d13340c60f079201f2c4e6",
+    "deploy/living-core/node-mcp-maintenance-20261106/package.json": "73da06dce48e02569ab88daaf8bc4333023e2c02e7c83ad4545820cdb6bd3477",
+    "deploy/living-core/node-mcp-maintenance-20261106/prepare_context.py": "848f0990077fc3e6ed3673d4c813f6c85256ab36427eb7d10b0a396d4a376150",
+    "deploy/living-core/node-mcp-maintenance-20261106/probe_core_source.py": "bcc2a5358895351ef834fa2f0144ce8d035eaba47e395781a60717e9fb5d0c81",
+    "deploy/living-core/node-mcp-maintenance-20261106/probe_provider.py": "f13eb3653dd1c076fd7eec7ca2f76d84b54d7154312be6a1c2305764a545b13a",
+    "deploy/living-core/node-mcp-maintenance-20261106/verify_payload.py": "195ed1381fa4d338dacdcd3684f533134e160ed622de690bb11ca4a2c1fce289",
+    "development/evidence/reassessment/maintenance-updates-20261106/node-candidate-profile-proof.json": "45e80a067d23dc3cb741c2fcd1c764773985ee6da7ca8b8615cb2192d10d91c5",
+    "development/evidence/reassessment/maintenance-updates-20261106/node-candidate-versions.json": "4a0ad03ee3f0e7eccbaf60e163b47ae8312ffcbd125e4ce73c6086b5f3e6f716",
+    "development/evidence/reassessment/maintenance-updates-20261106/node-owner-gateway-canary.json": "31316abf30802f86eb4557995b7a58fcd3d218b5cd28f1004ad82079ae4c0523",
+    "development/evidence/reassessment/maintenance-updates-20261106/node-public-context-reproduction.json": "01ba7c33096e29d1bcfddb182caf10b20b40dd9b004fa489e21f6630c30f87c7",
+    "development/evidence/reassessment/maintenance-updates-20261106/node-public-payload-verification.json": "1de9d4bdc141cb85b0d97b0241586cb8eb5d0f13e7b0ca24ab9c8be8bfab428d",
+    "development/evidence/reassessment/maintenance-updates-20261106/node-queue-profile-compatibility.json": "7e412fa3514733f57133cace411893a6b6ebc4c6d14173da631a67bba5081692",
+    "development/evidence/reassessment/maintenance-updates-20261106/node-regression.json": "10ebc654292c58012ae26f3da3bcd13b28a8dd396d7c161455d09ad78c43fec3",
+    "development/evidence/reassessment/maintenance-updates-20261106/node-source-overlay.json": "ed64de29c68f2e431a00cc4d0eaade55880f052a892bf8b9000f49edbea92e3e"
+  },
+  "fileCount": 18,
+  "sourceRevision2ReviewSha256": "b6dccf4d624cbda3efc065af25aaa87eeabed8711ae53653b3fce36b31e6d660",
+  "independentPublicVerifierReadbackSha256": "fbbbfe26b20d1850e7606622e0d35de99266f131539d81a82c96cbc9106d9459",
+  "findings": [],
+  "independentChecks": [
+    "Readall10publicrecipefiles+8sanitizedevidence; exact18SHAwhitelistunchanged, no productiontokens/DSNs/householdpayloads/closedcriteria/privateoperatorplans.",
+    "Independentlyexecuted publicverify_payload.py bothprovider(workspace7514) andcore(a29)branches againstactualreviewedimages; networknone/read-only/capdrop, no volumes/credentials/models/liveaction. All5actualimageproofs reviewed separately.",
+    "Independently compared actualpreparedpublicnpmcontext toreviewedprivatecontext:4062exactfile/link/mode/payloadrecords, plus3publiccorecontextsourcehashes exactR2. OfficialNode/license/sourcepins retained.",
+    "NodearchiveSHA andbinary/licenseSHA pinned; data-filteredextraction, npmci ignore-scripts/engine-strict andlockhash check. Corecopiesonly3exactsha-boundfiles; Dockerbefore/afterhashguards refuseunexpectedbaseline.",
+    "Publicclaims correctly distinguish3backendimages/fiveproviders,6existingfilesystemactions/9core+worker/4goal, immutable14publishedfilesystem+4times2atomiccatalogs, noappend/copygrants. AtomicoriginalROobserveproof notmisrepresented asproductiondocumentwrite.",
+    "8sanitizedproofs remaincandidate-only and sourcebound; no newwholeimagebuild/OCIidentity/RPMtimestampreproducibility claim."
+  ],
+  "limits": [
+    "Publicverifier is scopedpayloadsupplement, not replacement forprivatefullfilesystem/security/Config/mount/network/profile comparisons andfreshinstallerreview. Providerbranch preservesPythonversionmap/otherOptsource; fullPython/site/OSbytepreservation remains separatelyreviewedprivateevidence.",
+    "Unchanged3backendimages andsourceRevision2 candidates not installed bythisrecipe/review. FreshNode7freeze must followactualAUX/Hostgenerations andboundgoalworker-delta proof.",
+    "PrivateContextForge1.1preparation is outsideexact18filewhitelist andoutside thisNodebatchreview.",
+    "No model/providerrequests/householddata/livechanges byreviewer; no E4.16/familyacceptance/allOSSclosure."
+  ]
+}

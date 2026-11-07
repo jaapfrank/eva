@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Alle vijf Node26/bestandsproviders en de nieuwe kern-/workerimages zijn geplaatst. Kern en worker zijn gezond; hun volledige configuratie/opslag/netwerk en vier gelijke werkprofielen zijn teruggelezen. De eindcontrole verwachtte ten onrechte CLI-distributieversie2.40.3-desktop.1 als containerlabel; zowel oude als nieuwe labels zijn exact2.40.3. Alleen de al draaiende generatie beoordelen zonder herplaatsing, daarna de oorspronkelijke documentwerker en evaluator hervatten en de echte catalogusoverdracht controleren. Deze updategroep is nog niet technisch opgeleverd; volledige E4.16-autonomie en overige afhankelijkheden blijven open.",
+    "nextAction": "Node26.13/filesystemMCP2.2 en beide bestaande consumenten zijn geïnstalleerd, onafhankelijk teruggelezen en hervat. De zes bestandsacties, drie documentacties, eigenaarcatalogi9/9/4, vier gelijke werkprofielen en alle oorspronkelijke gegevens-/STOP-/leasegrenzen zijn behouden; er zijn geen append/copyrechten toegevoegd. Volgende concrete uitkomst: de afzonderlijk beoordeelde Telegrambibliotheek installeren en dezelfde account-/opslagbinding controleren. Daarna Chrome, beeld-/dashboardbibliotheken en de overige werkelijk gebruikte pakketten afmaken. De behouden fotobibliotheek gebruikt nog oude dotenv/better-sqlite3 en krijgt een eigen begrensde update. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie en E4.11-residuen zijn nog open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
     "executionStep": "Host library environments delivered live; install reviewed auxiliary/native revocation batch then Node/MCP",
@@ -1660,6 +1660,24 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Bestandsproviders en aansluiting bijgewerkt — 7 november",
+            "state": "verified",
+            "summary": "Vijf providers draaien Node26.13.0 met filesystemMCP2.2.0 en NodeMCP-SDK1.32.2. Kern en worker gebruiken de bijbehorende gecontroleerde adapter. Alle bestaande acties, rechten, bronbindingen en gegevens zijn behouden; de diensten en technische overdracht zijn onafhankelijk teruggelezen.",
+            "remaining": "Overige actieve afhankelijkheden volgen per compatibele groep. Gecontroleerde technische overdracht bewijst nog geen nieuwe huishoudelijke taak of volledige E4.16-autonomie.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/node-installed.json",
+            "review": "development/reviews/node-seven-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T01:03:12.806385+00:00",
+            "installedAt": "2026-11-07T00:58:34.769262+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "actuallyUsed": false,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "Toegangsfout hersteld en vier hulpdiensten bijgewerkt — 7 november",
             "state": "verified",
@@ -3369,9 +3387,9 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "Zeven update-images geplaatst; eindoverdracht loopt",
+          "title": "Bestandsupdate opgeleverd; Telegram volgt",
           "summary": "Kritieke Hindsight/PydanticAI-stack, native beveiligingsupdates, Node22.23.4-hostdiensten, drie Python-hostomgevingen en aanvullende AUX5/toegangsreparatie zijn geïnstalleerd en geverifieerd.",
-          "detail": "Alle vijf Node26/bestandsproviders en de nieuwe kern-/workerimages zijn geplaatst. Kern en worker zijn gezond; hun volledige configuratie/opslag/netwerk en vier gelijke werkprofielen zijn teruggelezen. De eindcontrole verwachtte ten onrechte CLI-distributieversie2.40.3-desktop.1 als containerlabel; zowel oude als nieuwe labels zijn exact2.40.3. Alleen de al draaiende generatie beoordelen zonder herplaatsing, daarna de oorspronkelijke documentwerker en evaluator hervatten en de echte catalogusoverdracht controleren. Deze updategroep is nog niet technisch opgeleverd; volledige E4.16-autonomie en overige afhankelijkheden blijven open.",
+          "detail": "Node26.13/filesystemMCP2.2 en beide bestaande consumenten zijn geïnstalleerd, onafhankelijk teruggelezen en hervat. De zes bestandsacties, drie documentacties, eigenaarcatalogi9/9/4, vier gelijke werkprofielen en alle oorspronkelijke gegevens-/STOP-/leasegrenzen zijn behouden; er zijn geen append/copyrechten toegevoegd. Volgende concrete uitkomst: de afzonderlijk beoordeelde Telegrambibliotheek installeren en dezelfde account-/opslagbinding controleren. Daarna Chrome, beeld-/dashboardbibliotheken en de overige werkelijk gebruikte pakketten afmaken. De behouden fotobibliotheek gebruikt nog oude dotenv/better-sqlite3 en krijgt een eigen begrensde update. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie en E4.11-residuen zijn nog open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
           "state": "Kern online · AUX5 technisch opgeleverd · volgende updategroep in voorbereiding",
           "checkedAt": "2026-11-06T23:40:53.344878+00:00",
@@ -3391,8 +3409,8 @@
         "reviewedAt": "2026-11-06T23:40:53.344878+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-11-04T14:00:19.123526+00:00",
-      "checkedAt": "2026-11-07T00:49:06.934844+00:00",
+      "reviewedAt": "2026-11-07T01:03:12.806385+00:00",
+      "checkedAt": "2026-11-07T01:07:50.723918+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3528,7 +3546,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T00:49:06.934844+00:00",
+      "lastUpdatedAt": "2026-11-07T01:07:50.723918+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3562,7 +3580,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T00:49:06.934844+00:00",
+      "updatedAt": "2026-11-07T01:07:50.723918+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -9043,20 +9061,20 @@
                   "status": "in_progress",
                   "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                   "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                  "currentOutcome": "Four supporting runtimes installed with access-only revocation and graceful stop; actual native canary passed and original data preserved",
+                  "currentOutcome": "Five Node26 providers and both existing filesystem consumers installed, independently read back and resumed with unchanged authorization and data",
                   "hindsightInstalled": "1.2.0",
                   "hindsightTarget": "1.2.0",
                   "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                   "ownerActionRequired": false,
                   "fullCardCompleted": false,
-                  "checkedAt": "2026-11-07T00:49:06.934844+00:00",
+                  "checkedAt": "2026-11-07T01:07:50.723918+00:00",
                   "hindsightBuilt": true,
                   "hindsightLiveUpgradeInstalled": true,
                   "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                   "actualAstraSelectionAndExplicitZeroProven": true,
                   "focusedIndependentMemoryTestsPassed": 136,
                   "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                  "installationPending": "Node7 seven images placed; exact metadata inspection/adoption and document/evaluator handoff pending; no redeploy",
+                  "installationPending": "Telegram1.46 and ChromeMCP0.0.84; separate photo-library dotenv/better-sqlite3 closure; reviewed face CPU/dashboard candidates; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                   "hindsightTechnicalDeliveryComplete": true,
                   "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                   "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -9078,7 +9096,10 @@
                     "hostMcp": "1.30.0",
                     "hostPythonUbuntuPackage": "3.12.3-1ubuntu0.17",
                     "auxiliaryPython": "3.12.16",
-                    "hindsightPython": "3.11.18"
+                    "hindsightPython": "3.11.18",
+                    "filesystemNode": "26.13.0",
+                    "filesystemMcp": "2.2.0",
+                    "filesystemNodeMcpSdk": "1.32.2"
                   },
                   "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                   "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -9089,8 +9110,8 @@
                   "nativeInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/native-security-installed.json",
                   "nativeIndependentInstalledReview": "development/reviews/debian13-native-installed-independent-20261106.json",
                   "filesystemMcpCandidate20261106": {
-                    "status": "images_placed_final_handoff_pending",
-                    "installed": false,
+                    "status": "installed_independently_verified",
+                    "installed": true,
                     "nodeTarget": "26.13.0",
                     "filesystemTarget": "2.2.0",
                     "existingFilesystemActionsVerified": 6,
@@ -9103,9 +9124,15 @@
                     "independentInstallerReview": "development/reviews/node-seven-installer-independent-20261107.json",
                     "unknownDispatchReplayed": false,
                     "imagesPlaced": true,
-                    "technicalDeliveryComplete": false,
+                    "technicalDeliveryComplete": true,
                     "metadataInspectionPauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-seven-metadata-inspection-pause.json",
-                    "actualCoreWorkerProfilesCompatible": true
+                    "actualCoreWorkerProfilesCompatible": true,
+                    "installedAt": "2026-11-07T00:58:34.769262+00:00",
+                    "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-installed.json",
+                    "installedReview": "development/reviews/node-seven-installed-independent-20261107.json",
+                    "originalAmbiguousRowsPreserved": 99,
+                    "originalExpiredNeverAttemptedNeedsHelpRowsPreserved": 4,
+                    "fullE416Complete": false
                   },
                   "credentialRevocationRepair20261106": {
                     "status": "installed_and_verified",
@@ -9182,7 +9209,26 @@
                   },
                   "auxiliaryRuntimeInstalled": true,
                   "auxiliaryInstalledEvidence": "development/evidence/reassessment/auxiliary-python-auth-20261106/installed.json",
-                  "auxiliaryInstalledReview": "development/reviews/auxiliary-five-role-installed-independent-20261107.json"
+                  "auxiliaryInstalledReview": "development/reviews/auxiliary-five-role-installed-independent-20261107.json",
+                  "filesystemNodeInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-installed.json",
+                  "filesystemNodeInstalledReview": "development/reviews/node-seven-installed-independent-20261107.json",
+                  "photoLibraryMaintenance20261107": {
+                    "status": "inventoried_not_upgraded",
+                    "installed": false,
+                    "actuallyLoadedDependencies": {
+                      "dotenv": "16.6.1",
+                      "better-sqlite3": "11.10.0",
+                      "bindings": "1.5.0",
+                      "file-uri-to-path": "1.0.0"
+                    },
+                    "updateTargetsPendingCompatibilityProof": {
+                      "dotenv": "18.0.9",
+                      "better-sqlite3": "13.0.3"
+                    },
+                    "scope": "Retained photo-provider library only; own copied source/prefix proposed; actual DB/config/auth paths preserved; no Eva1 agent or alias",
+                    "requiresSeparateTestsReviewAndInstallation": true,
+                    "newGrammyPrefixDoesNotUpgradeThesePackages": true
+                  }
                 }
               },
               {
@@ -15902,20 +15948,20 @@
                 "status": "in_progress",
                 "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                 "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                "currentOutcome": "Four supporting runtimes installed with access-only revocation and graceful stop; actual native canary passed and original data preserved",
+                "currentOutcome": "Five Node26 providers and both existing filesystem consumers installed, independently read back and resumed with unchanged authorization and data",
                 "hindsightInstalled": "1.2.0",
                 "hindsightTarget": "1.2.0",
                 "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                 "ownerActionRequired": false,
                 "fullCardCompleted": false,
-                "checkedAt": "2026-11-07T00:49:06.934844+00:00",
+                "checkedAt": "2026-11-07T01:07:50.723918+00:00",
                 "hindsightBuilt": true,
                 "hindsightLiveUpgradeInstalled": true,
                 "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                 "actualAstraSelectionAndExplicitZeroProven": true,
                 "focusedIndependentMemoryTestsPassed": 136,
                 "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                "installationPending": "Node7 seven images placed; exact metadata inspection/adoption and document/evaluator handoff pending; no redeploy",
+                "installationPending": "Telegram1.46 and ChromeMCP0.0.84; separate photo-library dotenv/better-sqlite3 closure; reviewed face CPU/dashboard candidates; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                 "hindsightTechnicalDeliveryComplete": true,
                 "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                 "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -15937,7 +15983,10 @@
                   "hostMcp": "1.30.0",
                   "hostPythonUbuntuPackage": "3.12.3-1ubuntu0.17",
                   "auxiliaryPython": "3.12.16",
-                  "hindsightPython": "3.11.18"
+                  "hindsightPython": "3.11.18",
+                  "filesystemNode": "26.13.0",
+                  "filesystemMcp": "2.2.0",
+                  "filesystemNodeMcpSdk": "1.32.2"
                 },
                 "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                 "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -15948,8 +15997,8 @@
                 "nativeInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/native-security-installed.json",
                 "nativeIndependentInstalledReview": "development/reviews/debian13-native-installed-independent-20261106.json",
                 "filesystemMcpCandidate20261106": {
-                  "status": "images_placed_final_handoff_pending",
-                  "installed": false,
+                  "status": "installed_independently_verified",
+                  "installed": true,
                   "nodeTarget": "26.13.0",
                   "filesystemTarget": "2.2.0",
                   "existingFilesystemActionsVerified": 6,
@@ -15962,9 +16011,15 @@
                   "independentInstallerReview": "development/reviews/node-seven-installer-independent-20261107.json",
                   "unknownDispatchReplayed": false,
                   "imagesPlaced": true,
-                  "technicalDeliveryComplete": false,
+                  "technicalDeliveryComplete": true,
                   "metadataInspectionPauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-seven-metadata-inspection-pause.json",
-                  "actualCoreWorkerProfilesCompatible": true
+                  "actualCoreWorkerProfilesCompatible": true,
+                  "installedAt": "2026-11-07T00:58:34.769262+00:00",
+                  "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-installed.json",
+                  "installedReview": "development/reviews/node-seven-installed-independent-20261107.json",
+                  "originalAmbiguousRowsPreserved": 99,
+                  "originalExpiredNeverAttemptedNeedsHelpRowsPreserved": 4,
+                  "fullE416Complete": false
                 },
                 "credentialRevocationRepair20261106": {
                   "status": "installed_and_verified",
@@ -16041,7 +16096,26 @@
                 },
                 "auxiliaryRuntimeInstalled": true,
                 "auxiliaryInstalledEvidence": "development/evidence/reassessment/auxiliary-python-auth-20261106/installed.json",
-                "auxiliaryInstalledReview": "development/reviews/auxiliary-five-role-installed-independent-20261107.json"
+                "auxiliaryInstalledReview": "development/reviews/auxiliary-five-role-installed-independent-20261107.json",
+                "filesystemNodeInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-installed.json",
+                "filesystemNodeInstalledReview": "development/reviews/node-seven-installed-independent-20261107.json",
+                "photoLibraryMaintenance20261107": {
+                  "status": "inventoried_not_upgraded",
+                  "installed": false,
+                  "actuallyLoadedDependencies": {
+                    "dotenv": "16.6.1",
+                    "better-sqlite3": "11.10.0",
+                    "bindings": "1.5.0",
+                    "file-uri-to-path": "1.0.0"
+                  },
+                  "updateTargetsPendingCompatibilityProof": {
+                    "dotenv": "18.0.9",
+                    "better-sqlite3": "13.0.3"
+                  },
+                  "scope": "Retained photo-provider library only; own copied source/prefix proposed; actual DB/config/auth paths preserved; no Eva1 agent or alias",
+                  "requiresSeparateTestsReviewAndInstallation": true,
+                  "newGrammyPrefixDoesNotUpgradeThesePackages": true
+                }
               }
             },
             {
@@ -19818,7 +19892,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-07T00:49:06.934844+00:00",
+  "updatedAt": "2026-11-07T01:07:50.723918+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -19900,8 +19974,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-07T00:49:06.934844+00:00",
-  "checkedAt": "2026-11-07T00:49:06.934844+00:00",
+  "lastUpdatedAt": "2026-11-07T01:07:50.723918+00:00",
+  "checkedAt": "2026-11-07T01:07:50.723918+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

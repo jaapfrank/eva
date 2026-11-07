@@ -1,0 +1,23 @@
+{
+  "contract": "EvaFilesystemMcpImportedSourceOverlay/v1",
+  "sourceRevision": 2,
+  "sourceFiles": {
+    "/opt/eva/src/eva/adapters/connectors/mcp_gateway.py": {
+      "before": "b92d60415a7118bbaa39f1cea1da7215cdb77b8b6aac0dcee72d43cbc0ae9662",
+      "after": "2ecf87f86700c552d775c75e32c8147a8510358281fcff10a28ffa3449afab67"
+    },
+    "/opt/eva/src/eva/adapters/connectors/mcp_filesystem_contract.py": {
+      "before": null,
+      "after": "77a85cf147733d1904d061777fe313bc8773fd0136718b4751e9cd2a65d10079"
+    },
+    "/opt/eva/src/eva/providers/mcp_gateway.py": {
+      "before": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+      "after": "6b4054d4df53e85a4a96daae7a908043ba639b4171ca2cd9a76790a8796b85be"
+    }
+  },
+  "alreadyAdmittedFilesystemActions": 6,
+  "actualCoreFactoryActions": 9,
+  "wheelSitePackagesAndRecordsPreserved": true,
+  "sourceAuthority": "actual imported /opt source bytes and execution profiles; wheel RECORD separately validates retained site-packages files",
+  "protectedProducerOrCriteriaModified": false
+}

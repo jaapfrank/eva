@@ -279,6 +279,7 @@ class McpGatewayProviderFactory:
     """Load only explicitly selected, hash-bound gateway tools."""
 
     provider_id = "mcp_gateway"
+    execution_sources = ("adapters/connectors/mcp_filesystem_contract.py",)
 
     @staticmethod
     def load_settings() -> McpGatewayProviderSettings | None:

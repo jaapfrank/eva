@@ -449,9 +449,20 @@ class McpGatewayToolAdapter:
                 selected = mcp_gateway_catalog_binding(row, contract=spec.contract)
                 actual_hash = canonical_sha256(selected)
                 if actual_hash != expected_hash:
-                    raise RuntimeError(
-                        "MCP gateway tool differs from the sealed catalog"
+                    from eva.adapters.connectors.mcp_filesystem_contract import (
+                        compatible_filesystem_admission,
                     )
+                    admission = compatible_filesystem_admission(
+                        row=row, rows=rows, selected=selected,
+                        expected_sha256=expected_hash,
+                        admitted_schema=spec.descriptor.input_schema,
+                        bindings=bindings,
+                    )
+                    if admission is None:
+                        raise RuntimeError(
+                            "MCP gateway tool differs from the sealed catalog"
+                        )
+                    actual_hash = canonical_sha256(admission)
                 verified[catalog_name] = actual_hash
                 input_schema = selected["input_schema"]
                 if not isinstance(input_schema, dict):

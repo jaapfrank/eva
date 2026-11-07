@@ -1,0 +1,100 @@
+{
+  "contract": "EvaNodeMcpPublicReproductionInputs/v1",
+  "date": "2026-11-06",
+  "providerTargets": {
+    "workspace": {
+      "baseImage": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+      "candidateImage": "sha256:7514b03d3a44dcfbeb6c8c0ac891f61831c04b1600375c5166f6d38dc2f53403",
+      "tag": "eva2-maintenance-node26-workspace:20261106",
+      "seconds": 35.621,
+      "logSha256": "829ec51f391dc1b26206b75d6297fcea74ca17b184fcb48d6a18298b2e2c6bfc"
+    },
+    "atomic": {
+      "baseImage": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+      "candidateImage": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+      "tag": "eva2-maintenance-node26-atomic:20261106",
+      "seconds": 25.424,
+      "logSha256": "26f5cbff272f65cffbaf9a732602ca292692ec6abc317fe507ae4b07c08c667b"
+    },
+    "projects": {
+      "baseImage": "sha256:81188c414ce5b20eb59f545f9651da5501576dcfbdd9edc3abd125d455f1cb6d",
+      "candidateImage": "sha256:2ddf544a399e5efeb04d7859edbd9c8df84699dbcf6747e78d476e52cae6e13e",
+      "tag": "eva2-maintenance-node26-projects:20261106",
+      "seconds": 32.324,
+      "logSha256": "72fb3f26256b35f9185d9905bd62af3e84a97dd3815d2f7b718374fdfc0e6838"
+    }
+  },
+  "coreTargets": {
+    "core": {
+      "baseImage": "sha256:4db9d39bfc2651eb32feba4d3dd3a6b7d2b27d6be3a30c94cf25f3545a04a1b6",
+      "candidateImage": "sha256:a29e831540e4d9628c8965ff4ad0d20b77b3b70401b180d40edc6f99fc9d1303",
+      "tag": "eva2-maintenance-mcp-source-core-r2:20261106",
+      "seconds": 10.744,
+      "logSha256": "cf21fd1d963663640e878a6aacca7baff8c67e83a5fa260d112546e63104bbc1"
+    },
+    "worker": {
+      "baseImage": "sha256:c2bd46136181764b296f84bb63fdda1d75e672229336754df2d7667c64d8019c",
+      "candidateImage": "sha256:c31a67092473816511d015b8b56a10a8e4504f0c50201c9dedc4ab827492bdf6",
+      "tag": "eva2-maintenance-mcp-source-worker-r2:20261106",
+      "seconds": 7.742,
+      "logSha256": "92c471f53988166b7dab0fc102cdc06b9d47e0008cbc71888b2ea9a0f0ed5087"
+    }
+  },
+  "sourceOverlay": {
+    "contract": "EvaFilesystemMcpImportedSourceOverlay/v1",
+    "sourceRevision": 2,
+    "sourceFiles": {
+      "/opt/eva/src/eva/adapters/connectors/mcp_gateway.py": {
+        "before": "b92d60415a7118bbaa39f1cea1da7215cdb77b8b6aac0dcee72d43cbc0ae9662",
+        "after": "2ecf87f86700c552d775c75e32c8147a8510358281fcff10a28ffa3449afab67"
+      },
+      "/opt/eva/src/eva/adapters/connectors/mcp_filesystem_contract.py": {
+        "before": null,
+        "after": "77a85cf147733d1904d061777fe313bc8773fd0136718b4751e9cd2a65d10079"
+      },
+      "/opt/eva/src/eva/providers/mcp_gateway.py": {
+        "before": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+        "after": "6b4054d4df53e85a4a96daae7a908043ba639b4171ca2cd9a76790a8796b85be"
+      }
+    },
+    "alreadyAdmittedFilesystemActions": 6,
+    "actualCoreFactoryActions": 9,
+    "wheelSitePackagesAndRecordsPreserved": true,
+    "sourceAuthority": "actual imported /opt source bytes and execution profiles; wheel RECORD separately validates retained site-packages files",
+    "protectedProducerOrCriteriaModified": false
+  },
+  "vendorNode": {
+    "contract": "EvaNodeLtsToolchainCandidate/v1",
+    "version": "v26.13.0",
+    "source": "https://nodejs.org/dist/v26.13.0/node-v26.13.0-linux-x64.tar.xz",
+    "sha256": "d28a96af6c38596f6d9d97c0ee531c13d238d757742387d1928de822d959e997",
+    "checksumSource": "https://nodejs.org/dist/v26.13.0/SHASUMS256.txt",
+    "checksumFileSha256": "9b0d4aa4d20a4f1afaf2cdcf99175ad90d1856d24c7d31dc46f72369b73e2d35",
+    "liveHostOrImageModified": false
+  },
+  "selectedVersions": {
+    "node": "26.13.0",
+    "filesystemServer": "2.2.0",
+    "atomicClientSdk": "1.32.2",
+    "unchangedPythonMcpClient": "1.29.0",
+    "unchangedContextForge": "1.0.8",
+    "additionalLibatomicRpm": "14.3.1-4.4.el10.x86_64"
+  },
+  "nodeBinarySha256": "0adde40d1b7dfa57c8bc83cbc319758c3ec6ebba21363bb2fa752ea6b267ad1b",
+  "nodeLicenseSha256": "8e603aa87c70d36e497004f0dec63111511cb61b7d65ace12e10ea791599286c",
+  "libatomicBinarySha256": "f7d222cd7a0211173c9b067d76c5d451df0f573c4af5948b24be92070fd4fd6f",
+  "packageLockSha256": "d1cc437f004d692068e0f7949f7a63a73319db3a74d13340c60f079201f2c4e6",
+  "existingBaseLockSha256": "8bd59cb1eb1bcd93905955bb9b57e003d775a854a139c1568b7429d6f4b35263",
+  "expectedReferenceNodeSymlink": "/usr/bin/node-22",
+  "alreadyAdmittedFilesystemActions": 6,
+  "actualCoreFactoryActions": 9,
+  "actualGoalFactoryActions": 4,
+  "backendToolSelection": {
+    "filesystem": 16,
+    "eachAtomic": 2,
+    "currentGatewayPublishedFilesystem": 14,
+    "atomicProviders": 4
+  },
+  "privateInputsIncluded": false,
+  "reproductionClaim": "Pinned application/runtime payload over retained immutable local bases. Image IDs and RPM transaction metadata timestamps are not claimed reproducible; this is not a whole dirty-worktree build."
+}

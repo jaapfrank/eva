@@ -1,0 +1,46 @@
+{
+  "contract": "EvaMcpSourceChangeQueueCompatibilitySummary/v1",
+  "currentToCandidateProfileChanges": {
+    "digital_work": [
+      "worker_program_sha256"
+    ],
+    "shared_provider": [],
+    "public_research": [],
+    "household_research": []
+  },
+  "states": {
+    "admitted": {
+      "count": 0,
+      "activeLeases": 0,
+      "attempted": 0,
+      "unstartedNoLeaseNoStop": 0,
+      "withinDeadlineAndRetention": 0
+    },
+    "call_started": {
+      "count": 0,
+      "activeLeases": 0,
+      "attempted": 0,
+      "unstartedNoLeaseNoStop": 0,
+      "withinDeadlineAndRetention": 0
+    },
+    "needs_help": {
+      "count": 4,
+      "activeLeases": 0,
+      "attempted": 0,
+      "unstartedNoLeaseNoStop": 4,
+      "withinDeadlineAndRetention": 0
+    },
+    "ambiguous": {
+      "count": 99,
+      "activeLeases": 0,
+      "attempted": 99,
+      "unstartedNoLeaseNoStop": 0,
+      "withinDeadlineAndRetention": 0
+    }
+  },
+  "currentSourceBoundRefresh": "Existing retire_one_unstarted_native only permits worker_program mismatch with identical other release fields, claim_count0/no call/no lease/no STOP/valid retention/current owner and timeline binding. This candidate changes only worker_program.",
+  "eligibleRetainedBlockedRows": 0,
+  "action": "No work/spec/timeline/grant mutation. Four expired never-attempted needs_help and99 attempted ambiguous historical rows remain retained; neither qualifies for this candidate refresh.",
+  "installerGate": "Refresh the same grouping plus active claims immediately before installation; drain or use existing exact no-call reconciliation for any newly admitted prior-program job, never rebind started/uncertain work.",
+  "sealedProducerCriteriaChanged": false
+}

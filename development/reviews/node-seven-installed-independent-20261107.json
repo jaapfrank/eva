@@ -1,0 +1,83 @@
+{
+  "contract": "EvaIndependentNodeSevenTargetInstalledReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T01:03:12.806385+00:00",
+  "decision": "GO_INSTALLED_SCOPED_DELIVERY",
+  "approved": true,
+  "completionReceiptSha256": "3a17d4f528c057741abb5cb1c0f5d3cef294a541383b3da623fefdd811225d7a",
+  "sdkInspectionReceiptSha256": "9b0dd0162453316f5efe8b335e62e317576718a327f0abd94c040718fe3d4243",
+  "actualImages": {
+    "eva2-managed-b-slot3-core": "sha256:a29e831540e4d9628c8965ff4ad0d20b77b3b70401b180d40edc6f99fc9d1303",
+    "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:c31a67092473816511d015b8b56a10a8e4504f0c50201c9dedc4ab827492bdf6",
+    "eva2-workspace-filesystem": "sha256:7514b03d3a44dcfbeb6c8c0ac891f61831c04b1600375c5166f6d38dc2f53403",
+    "eva2-document-workspace-au006": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+    "eva2-document-task-slot-1-20260913": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+    "eva2-document-task-slot-2-20260913": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+    "eva2-document-projects-20260922": "sha256:2ddf544a399e5efeb04d7859edbd9c8df84699dbcf6747e78d476e52cae6e13e"
+  },
+  "bindings": {
+    "independent-actual-installed-readback.private.json": "b9503be80d3ed837d752118a3f0399ee651b7b3275a1becaeed70042aa306b99",
+    "independent-actual-provider-versions.private.json": "10fafe57340d6b5529b791465f3b4032e69fff815429e7644514fe82c42c8f6b",
+    "independent-actual-operator-source-ownership.private.json": "7952d6fd437f7b6efc00a19be6df0adbc9504b8ff8374e47c56d8634131d1edf"
+  },
+  "actualOwnerCatalogProofSha256": "196749de95dfdbde7fc01bb6a9c95f65af7b6c8061b2025e9be4b298373f435a",
+  "currentFourProfileProofSha256": "7326ad24b53f38710d6fec3cc4a6e65298a8e68a26396ff9cfd96fe488643282",
+  "verified": {
+    "actualSevenGenerationIdsImagesAndStartedAtMatchBoundPlan": true,
+    "fiveRootOwnedOperatorSourcesFullConfigHostConfigStorageStaticNetworkAndLabelsExact": true,
+    "actualNodeVersion": "26.13.0",
+    "actualFilesystemMcpVersion": "2.2.0",
+    "actualNodeMcpSdkVersion": "1.32.2",
+    "providerPythonDistributionFamiliesUnchanged": 135,
+    "bothActualCoreWorkerThreeOptImportSourcesExact": true,
+    "coreSiteFilesPreserved": 7950,
+    "workerSiteFilesPreserved": 5112,
+    "stdlibFilesPreservedPerCoreWorker": 821,
+    "coreWorkerPython": "3.12.16",
+    "allFourSourceBoundRuntimeProfilesAgree": true,
+    "documentGoalSameContainerImageE8SourceMandateScopePreservedAndResumedHealthy": true,
+    "actualHostPid": "1268102",
+    "hostOwnedListenerInterpreterEnvironmentAndFourRootsPreserved": true,
+    "privateCriteriaExact": 62,
+    "historicalReceiptsExact": 9,
+    "runtimeHandoffExact": 1,
+    "actualReviewAuthorities": 10,
+    "legacyAcceptedReadOnlyReleases": 2,
+    "currentChromeProxy42AndAccessPublishers718B9Preserved": true,
+    "hindsight625GenerationConfigStorageNetworkPreserved": true,
+    "otherPostgresAndGatewayGenerationsPreserved": true,
+    "actualOwnerTokenFactoryActions": [
+      9,
+      9,
+      4
+    ],
+    "registryGroups": "14 original filesystem tools plus four groups of2 atomic tools",
+    "appendCopyNotPublishedOrAdmitted": true,
+    "gatewayAutoRefreshFalseFromActualProcessEnvironment": true,
+    "schemaOrHistoricalWorkWrites": 0,
+    "originalA_S_SdkReceiptsUnchanged": true,
+    "existingSevenImagesRedispatchedByAdoption": false
+  },
+  "measuredDevelopmentVerification": {
+    "reviewerModelRequests": 0,
+    "newPostInstallPaidModelCanaries": 0,
+    "newPostInstallWritingCanaries": 0,
+    "actualReadOnlyOwnerCatalogPassed": true,
+    "credits": null,
+    "cost": null,
+    "householdRuntimeUsage": "unknown"
+  },
+  "assessment": [
+    "Ownfinalsuccess-gatedreadback validates currentsevenfrozenCID/image/StartedAt generations before andafter verification. Corecallbackfullsource/site/stdlib/RECORD/nativeTLS/config/contracts are reused with the originalfullcompanioncomparison in its legitimate finalgoal_resumedstage. Completedproofs are read-only, not overwritten.",
+    "Separate actualfiveprovider probes confirmNode26.13/filesystem2.2/SDK1.32.2 through actualPATH, exactNodebinary/lock/libatomic revisions. Every root-owned nonsymlink operator source and payload binding is validated against currentfullsnapshots.",
+    "Actualevaluator4roots/env/source/ownedlistener/10authorities+2legacy readback and unchanged62criteria9historyhandoffchecks pass. Actualthreeownerconsumer catalogs/permissionsread-onlyproof passes9/9/4 with noappend/copypublication orautomaticcatalogrefresh.",
+    "Initialstop-health and exactComposeCLI/label harnessfailures remain preserved. Separateapprovedcontinuations adopt existinghealthyimages; copiedSDKreceipt verifiesretainedmounts withoutimagereplacement or compensationdispatch."
+  ],
+  "limitations": [
+    "This delivers the reviewedNode/MCPdependencyandadaptermaintenance scope. It does not close fullE4.16, E4.11memorycleanup or householdacceptance.",
+    "Earlierpositivewrite/STOP/crash/owner-chain trials were isolatedsyntheticproofs; this finalinstalledcheck deliberately adds no householdwrite or modelrequest.",
+    "No generalautonomousupdate/unconditionalrollback or newpermissionclaim; anyfutureunknownoutcome requiresinspection ratherthanreplay."
+  ],
+  "fullE416Completed": false,
+  "reviewerLifecycleActions": 0
+}

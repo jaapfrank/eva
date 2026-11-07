@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Alle vijf Node26/bestandsproviders en de nieuwe kern-/workerimages zijn geplaatst. Kern en worker zijn gezond; hun volledige configuratie/opslag/netwerk en vier gelijke werkprofielen zijn teruggelezen. De eindcontrole verwachtte ten onrechte CLI-distributieversie2.40.3-desktop.1 als containerlabel; zowel oude als nieuwe labels zijn exact2.40.3. Alleen de al draaiende generatie beoordelen zonder herplaatsing, daarna de oorspronkelijke documentwerker en evaluator hervatten en de echte catalogusoverdracht controleren. Deze updategroep is nog niet technisch opgeleverd; volledige E4.16-autonomie en overige afhankelijkheden blijven open.
+Volgende stap: Node26.13/filesystemMCP2.2 en beide bestaande consumenten zijn geïnstalleerd, onafhankelijk teruggelezen en hervat. De zes bestandsacties, drie documentacties, eigenaarcatalogi9/9/4, vier gelijke werkprofielen en alle oorspronkelijke gegevens-/STOP-/leasegrenzen zijn behouden; er zijn geen append/copyrechten toegevoegd. Volgende concrete uitkomst: de afzonderlijk beoordeelde Telegrambibliotheek installeren en dezelfde account-/opslagbinding controleren. Daarna Chrome, beeld-/dashboardbibliotheken en de overige werkelijk gebruikte pakketten afmaken. De behouden fotobibliotheek gebruikt nog oude dotenv/better-sqlite3 en krijgt een eigen begrensde update. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie en E4.11-residuen zijn nog open.
 
 ## Voortgang
 

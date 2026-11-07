@@ -1,0 +1,151 @@
+{
+  "contract": "EvaNodeMcpInstalledDelivery/v1",
+  "state": "installed_runtime_verified_independently_approved",
+  "installedAt": "2026-11-07T00:58:34.769262+00:00",
+  "scope": "Five existing stdio-provider runtimes plus the existing filesystem compatibility adapter in both core and worker; same current authorizations.",
+  "targetImageCount": 7,
+  "providers": {
+    "filesystem": {
+      "image": "sha256:7514b03d3a44dcfbeb6c8c0ac891f61831c04b1600375c5166f6d38dc2f53403",
+      "nodeVersion": "v26.13.0",
+      "filesystemPackageVersion": "2.2.0",
+      "actualAtomicImportedSdkVersion": "1.32.2",
+      "npmPackageRecords": 104,
+      "nodeSha256": "0adde40d1b7dfa57c8bc83cbc319758c3ec6ebba21363bb2fa752ea6b267ad1b",
+      "lockSha256": "d1cc437f004d692068e0f7949f7a63a73319db3a74d13340c60f079201f2c4e6",
+      "sourcePayloadSha256": "3699eee63314cd5f1c8c19993ff2f12de8cacc44a56e957fe78a03f593264a61"
+    },
+    "atomic_workspace": {
+      "image": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+      "nodeVersion": "v26.13.0",
+      "filesystemPackageVersion": "2.2.0",
+      "actualAtomicImportedSdkVersion": "1.32.2",
+      "npmPackageRecords": 104,
+      "nodeSha256": "0adde40d1b7dfa57c8bc83cbc319758c3ec6ebba21363bb2fa752ea6b267ad1b",
+      "lockSha256": "d1cc437f004d692068e0f7949f7a63a73319db3a74d13340c60f079201f2c4e6",
+      "sourcePayloadSha256": "357a7c70770f28bb72a2cbf25987f98a2b6ec3a1c83154a948503417d3f389f9"
+    },
+    "atomic_slot1": {
+      "image": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+      "nodeVersion": "v26.13.0",
+      "filesystemPackageVersion": "2.2.0",
+      "actualAtomicImportedSdkVersion": "1.32.2",
+      "npmPackageRecords": 104,
+      "nodeSha256": "0adde40d1b7dfa57c8bc83cbc319758c3ec6ebba21363bb2fa752ea6b267ad1b",
+      "lockSha256": "d1cc437f004d692068e0f7949f7a63a73319db3a74d13340c60f079201f2c4e6",
+      "sourcePayloadSha256": "910e68af5d0b8e4a3c6dee636d5e3468b79b3665cce58c7c3fb038d27e865a68"
+    },
+    "atomic_slot2": {
+      "image": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+      "nodeVersion": "v26.13.0",
+      "filesystemPackageVersion": "2.2.0",
+      "actualAtomicImportedSdkVersion": "1.32.2",
+      "npmPackageRecords": 104,
+      "nodeSha256": "0adde40d1b7dfa57c8bc83cbc319758c3ec6ebba21363bb2fa752ea6b267ad1b",
+      "lockSha256": "d1cc437f004d692068e0f7949f7a63a73319db3a74d13340c60f079201f2c4e6",
+      "sourcePayloadSha256": "e89d19ac1f9ec130c716d5cc7047b0f797f5a91d44ea860666ea4addba5da300"
+    },
+    "atomic_projects": {
+      "image": "sha256:2ddf544a399e5efeb04d7859edbd9c8df84699dbcf6747e78d476e52cae6e13e",
+      "nodeVersion": "v26.13.0",
+      "filesystemPackageVersion": "2.2.0",
+      "actualAtomicImportedSdkVersion": "1.32.2",
+      "npmPackageRecords": 104,
+      "nodeSha256": "0adde40d1b7dfa57c8bc83cbc319758c3ec6ebba21363bb2fa752ea6b267ad1b",
+      "lockSha256": "d1cc437f004d692068e0f7949f7a63a73319db3a74d13340c60f079201f2c4e6",
+      "sourcePayloadSha256": "b43f9c6c38825aa388204824d4fdf6d86a156791d5e3c54d5750d050a678872e"
+    }
+  },
+  "coreWorkerImages": {
+    "core": "sha256:a29e831540e4d9628c8965ff4ad0d20b77b3b70401b180d40edc6f99fc9d1303",
+    "delegated-work-worker": "sha256:c31a67092473816511d015b8b56a10a8e4504f0c50201c9dedc4ab827492bdf6"
+  },
+  "runtimeGenerationBindingSha256": "f0e46c7cc1abc884773e875c55325dad5b00b2c908db49780d794c9aecc499d6",
+  "actualReadbackSha256": "c3f102a527b2ea0c33a9d2ed8c3051522fee133f91cb3f0801f86dbf65de3b8e",
+  "currentFourProfileProofSha256": "7326ad24b53f38710d6fec3cc4a6e65298a8e68a26396ff9cfd96fe488643282",
+  "fourProfilesMatchActualCoreAndWorker": true,
+  "digitalWorkerProgramSha256": "cc65fc9db7e78dd9b125035086c4f0e04d8689a4e652451077dfbfadd6cec769",
+  "currentProfileComparisonWasReusedWithoutRepeating": true,
+  "productSourceHashes": {
+    "src/eva/adapters/connectors/mcp_gateway.py": "2ecf87f86700c552d775c75e32c8147a8510358281fcff10a28ffa3449afab67",
+    "src/eva/adapters/connectors/mcp_filesystem_contract.py": "77a85cf147733d1904d061777fe313bc8773fd0136718b4751e9cd2a65d10079",
+    "src/eva/providers/mcp_gateway.py": "6b4054d4df53e85a4a96daae7a908043ba639b4171ca2cd9a76790a8796b85be"
+  },
+  "publicRecipeManifestSha256": "37a10f83a9e2b9bfd3b14c3a9ec966cec34d22ff01228359c4346fd5c02296c3",
+  "sourceAndPublicRecipeFileCount": 22,
+  "sourceAndPublicRecipeBindingSha256": "a24c87503671137b775c50929a0ce8845e184742065d436112e962161cc1cbd8",
+  "operatorProvenance": {
+    "fiveProvidersHaveExactRootControlledHashedSourceSnapshots": true,
+    "historicalComposeLabelsPreservedAsHistory": true,
+    "coreWorkerSdkImageOnlyBindingVerified": true,
+    "composeCliDistributionVersion": "2.40.3-desktop.1",
+    "measuredComposeContainerVersionLabel": "2.40.3",
+    "pluginSha256": "3e3e701906e4543f24e81eabb262ba6d525625a9b4747a1dde6892e0c369cc68",
+    "inertNeverStartedFixtureSha256": "1e4aa69a88f8f7fe7165179f4c15377b187d03564c499575175f14173ab7e13f",
+    "genericVersionSuffixNormalization": false
+  },
+  "hostHandoff": {
+    "evaluatorResumed": true,
+    "sameManagedInterpreter": true,
+    "fourPythonSourceRootsPreserved": true,
+    "onlyInstalledPublisherSnapshotPointerChanged": true,
+    "sameDocumentGoalContainerResumed": true,
+    "goalReadinessVerifiedBeforeEvaluatorHandoff": true
+  },
+  "actualOwnerGatewayCanary": {
+    "factoryActionCounts": {
+      "core": 9,
+      "worker": 9,
+      "goal": 4
+    },
+    "filesystemRegisteredTools": 14,
+    "atomicGatewayGroups": 4,
+    "toolsPerAtomicGroup": 2,
+    "allGroupsRequiredPresentBeforeAndAfter": true,
+    "sixPreviouslyAdmittedFilesystemActionsPreserved": true,
+    "appendAndCopyNewlyPublishedOrAdmitted": false,
+    "originalAdmissionHashesPreserved": true,
+    "originalOwnerTokenAndOtherOwnerDenialVerified": true,
+    "autoRefreshServers": false,
+    "effects": "Read-only directory verification and atomic observation only; no production creation claimed.",
+    "productionWrites": 0,
+    "modelProviderRequests": 0,
+    "privateResultSha256": "196749de95dfdbde7fc01bb6a9c95f65af7b6c8061b2025e9be4b298373f435a"
+  },
+  "preserved": {
+    "completeSourceImportOriginsVerified": true,
+    "siteFilesAndWheelRecordsByteExact": true,
+    "allExistingNativeSecurityVersionsAndTlsVerified": true,
+    "sourceBoundCriteria": 62,
+    "retainedAuthorityReceipts": 9,
+    "authorityContracts": 10,
+    "legacyAcceptedReleases": 2,
+    "queuedRowsReboundOrDeleted": 0,
+    "retainedAmbiguousRows": 99,
+    "retainedExpiredNeverAttemptedNeedsHelpRows": 4,
+    "dataRestores": 0,
+    "imageRedispatches": 0,
+    "originalStopReplays": 0
+  },
+  "modelUsage": {
+    "developmentProviderRequestsForThisNodeBatch": 0,
+    "runtimeProviderRequestsForNodeAcceptance": 0,
+    "earlierCoreAndMemoryCanariesIncluded": false
+  },
+  "retainedReceiptHashes": {
+    "originalPreReplacementReceipt": "0e35ad70f9f9c6c1ba5a29aafb3b188c2d3de9e94ed45bc1a93515729d1b4f60",
+    "originalSevenImagePlacementReceipt": "280d9b2c907a675bfa62d21b47e3f30660082ea10f1e1290f5efc2b9843b6e7b",
+    "originalSdkReceipt": "e234e6983dc08b952ce9f7ffac519f4eb5dede38e1df197ad08dfc1c92f89a17",
+    "successfulNoRedispatchCompletionReceipt": "3a17d4f528c057741abb5cb1c0f5d3cef294a541383b3da623fefdd811225d7a",
+    "sdkInspectOnlyVerificationReceipt": "9b0dd0162453316f5efe8b335e62e317576718a327f0abd94c040718fe3d4243"
+  },
+  "independentInstalledReview": {
+    "path": "development/reviews/node-seven-installed-independent-20261107.json",
+    "sha256": "bf3e4be739c291fe1e5fe3c5895a33ce5dabbd54fe1f895fbf8d17a0499e9006",
+    "approved": true
+  },
+  "remainingSeparateFamily": "ContextForge/Python/provider dependency closure remains separately prepared; this Node delivery does not claim those components upgraded.",
+  "fullE416AutonomousRepairAndReuseCompleted": false,
+  "householdAcceptanceClaimed": false,
+  "privateConfigsTokensConversationsOrPayloadsPublished": false
+}

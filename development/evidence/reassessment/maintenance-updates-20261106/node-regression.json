@@ -1,0 +1,35 @@
+{
+  "contract": "EvaNodeMcpMaintenanceRegressionSummary/v1",
+  "newContractTests": {
+    "passed": 21,
+    "failed": 0
+  },
+  "existingGatewayModules": {
+    "passed": 97,
+    "unchangedBaselineFailures": 4,
+    "failureCause": "Retained minimal distroless test environment omits libsqlite3.so.0; same four SQLite fixture paths before and after."
+  },
+  "postgres18OwnerStopLeaseExactlyOnceTests": {
+    "passed": 23,
+    "failed": 0,
+    "protectedBodiesModified": false
+  },
+  "containedProviderWireChecks": {
+    "workspace": 9,
+    "atomic": 14,
+    "projects": 14
+  },
+  "actualTranslatorHttpChecks": 7,
+  "completeOwnerFactoryActions": {
+    "core": 9,
+    "worker": 9,
+    "goal": 4
+  },
+  "noModelRequests": true,
+  "productionWrites": 0,
+  "sourceRevision": 2,
+  "limitations": [
+    "Atomic positive effects tested only in synthetic tmpfs; original state used readonly for actual-token gateway observation.",
+    "A final goal-consumer delta and fresh installer freeze are required after the preceding AUX batch; installation is not claimed."
+  ]
+}

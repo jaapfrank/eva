@@ -1,0 +1,137 @@
+{
+  "contract": "EvaActualOwnerGatewayNodeMaintenanceCanarySummary/v1",
+  "sourceRevision": 2,
+  "successfulRunId": "1526bc3b",
+  "privateReceiptSha256": "3972be530ea998b07784044087562d66e612c79d039d88474e9bcb4421d6354c",
+  "inputSha256": {
+    "run-isolated-owner-canary.py": "f6c582839c69abffd3ce8b6798d028b5bf7741352729a3a0e0f3a1e175d2357b",
+    "consumer-canary.py": "fb17a34ec63818388673c2fb02dd8ea3840a5443bb4df34f8047971fef660daa",
+    "private-relay.py": "3fb0a112bb1b35cb1feb6fbdbf29b47c5f4d3771ff4f254a2ea072de42a51dd7",
+    "namespace-addresses.py": "df6002e9cab671fa2b4b95108db011a07dbb7fb1d8ea30cb8b4f65837f6bd4b5"
+  },
+  "factoryActionCounts": {
+    "core": 9,
+    "worker": 9,
+    "goal": 4
+  },
+  "actualExistingFilesystemActions": 6,
+  "sameOriginalAdmissionHashes": true,
+  "ownerAndOtherOwnerBoundaryVerifiedForAllConsumers": true,
+  "workspaceSyntheticWriteAndIndependentReadbackThroughActualGateway": true,
+  "allSixWorkspaceActionsUsedThroughActualRpc": true,
+  "registryBeforeAndAfter": {
+    "core": {
+      "atomic-workspace": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "1d9bcf0be5f990f0b7d8dde5ef86566fc920e55f5eaba6df44d95ac3b4e203d3"
+      },
+      "filesystem": {
+        "toolCount": 14,
+        "publicSignatureBindingSha256": "0ca19eff89617ebb699f588443b26c3701fafb8c3b5128d6ea0de3306577ba1a"
+      },
+      "projects": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "b94f26db460ebb2c0526515589eb81da19e693f1bd2d359259e4472f077bf56c"
+      },
+      "slot1": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "bffa017465d96f4b6bf3fbfec6a924b4cb745cfafa6543a0da9cad84a8bdeb97"
+      },
+      "slot2": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "7c8099cdd80e6ba265983b1e7a50286e4e24c78ac571e8114c7194ab9bd34b83"
+      }
+    },
+    "worker": {
+      "atomic-workspace": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "1d9bcf0be5f990f0b7d8dde5ef86566fc920e55f5eaba6df44d95ac3b4e203d3"
+      },
+      "filesystem": {
+        "toolCount": 14,
+        "publicSignatureBindingSha256": "0ca19eff89617ebb699f588443b26c3701fafb8c3b5128d6ea0de3306577ba1a"
+      },
+      "projects": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "b94f26db460ebb2c0526515589eb81da19e693f1bd2d359259e4472f077bf56c"
+      },
+      "slot1": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "bffa017465d96f4b6bf3fbfec6a924b4cb745cfafa6543a0da9cad84a8bdeb97"
+      },
+      "slot2": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "7c8099cdd80e6ba265983b1e7a50286e4e24c78ac571e8114c7194ab9bd34b83"
+      }
+    },
+    "goal": {
+      "atomic-workspace": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "1d9bcf0be5f990f0b7d8dde5ef86566fc920e55f5eaba6df44d95ac3b4e203d3"
+      },
+      "filesystem": {
+        "toolCount": 14,
+        "publicSignatureBindingSha256": "0ca19eff89617ebb699f588443b26c3701fafb8c3b5128d6ea0de3306577ba1a"
+      },
+      "projects": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "b94f26db460ebb2c0526515589eb81da19e693f1bd2d359259e4472f077bf56c"
+      },
+      "slot1": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "bffa017465d96f4b6bf3fbfec6a924b4cb745cfafa6543a0da9cad84a8bdeb97"
+      },
+      "slot2": {
+        "toolCount": 2,
+        "publicSignatureBindingSha256": "7c8099cdd80e6ba265983b1e7a50286e4e24c78ac571e8114c7194ab9bd34b83"
+      }
+    }
+  },
+  "noAppendCopyPublishedOrAdmitted": true,
+  "automaticRegistryRefresh": false,
+  "automaticRefreshConfigurationChanged": false,
+  "registryOrSealedHashRewrite": false,
+  "atomicObserveProof": {
+    "core": {
+      "observeOnlyCalls": 3,
+      "applicationReplyCodes": [
+        "invalid_request",
+        "journal_open_failed",
+        "operation_not_found"
+      ],
+      "writesAttempted": false,
+      "existingWorkspaceAndJournalMounts": "readonly"
+    },
+    "worker": {
+      "observeOnlyCalls": 3,
+      "applicationReplyCodes": [
+        "invalid_request",
+        "journal_open_failed",
+        "operation_not_found"
+      ],
+      "writesAttempted": false,
+      "existingWorkspaceAndJournalMounts": "readonly"
+    },
+    "goal": {
+      "observeOnlyCalls": 4,
+      "applicationReplyCodes": [
+        "invalid_request",
+        "journal_open_failed",
+        "operation_not_found",
+        "operation_not_found"
+      ],
+      "writesAttempted": false,
+      "existingWorkspaceAndJournalMounts": "readonly"
+    }
+  },
+  "atomicPositiveWriteRepeatProof": "node26-actual-image-wire.json uses synthetic tmpfs and unchanged native broker;14 checks each atomic and projects image",
+  "productionStateEffects": 0,
+  "modelRequests": 0,
+  "limits": [
+    "Atomic original state was readonly; observe errors are expected operation_not_found, journal_open_failed or invalid_request, not a claim of successful production document creation.",
+    "This is an isolated candidate proof using original readonly tokens and binding identities; installed version readback remains an installation gate.",
+    "Earlier failed private harness attempts remain retained; no production state was modified."
+  ],
+  "opaquePrivateGatewayBackupUsed": true,
+  "privateConversationOrDocumentPayloadsInspectedOrPublished": false
+}

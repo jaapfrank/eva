@@ -1,0 +1,11 @@
+{
+  "contract": "EvaNodeMcpCandidateProfileSummary/v1",
+  "coreWorkerAllFourProfilesMatch": true,
+  "digitalHelperSourceRegistered": true,
+  "actualImportedSourcePrefix": "/opt/eva/src/eva",
+  "sourceRevision": 2,
+  "workerProgramSha256": "cc65fc9db7e78dd9b125035086c4f0e04d8689a4e652451077dfbfadd6cec769",
+  "previewModelRemainsIsolated": true,
+  "sealedCriteriaOrOwnerGrantsChanged": false,
+  "installed": false
+}

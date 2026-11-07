@@ -1,0 +1,11 @@
+{
+  "name": "eva2-filesystem-mcp-mutation-proof",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sealed disposable mutation provider for Eva2 recovery proofs",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@modelcontextprotocol/server-filesystem": "2.2.0",
+    "@modelcontextprotocol/sdk": "1.32.2"
+  }
+}

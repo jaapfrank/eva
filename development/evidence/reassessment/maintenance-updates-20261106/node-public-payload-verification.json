@@ -1,0 +1,107 @@
+{
+  "contract": "EvaNodeMcpPublicRecipeActualPayloadVerification/v1",
+  "results": {
+    "workspace": {
+      "seconds": 7.166,
+      "proof": {
+        "actualImage": "sha256:7514b03d3a44dcfbeb6c8c0ac891f61831c04b1600375c5166f6d38dc2f53403",
+        "contract": "EvaNodeMcpPublicPayloadVerification/v1",
+        "kind": "provider",
+        "liveAction": false,
+        "proof": {
+          "node": "v26.13.0",
+          "npmPackageJsonRecords": 104,
+          "onlyNewRpm": "libatomic14.3.1-4.4.el10",
+          "otherOptEvaFilesPreserved": 1,
+          "pythonPackagesPreserved": 135
+        },
+        "retainedBase": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+        "role": "workspace",
+        "verified": true
+      },
+      "logSha256": "e7cf40156d6895a94e9493ee2f4d596df2291dbc54f4bd79113989ab8d30daf6"
+    },
+    "atomic": {
+      "seconds": 3.621,
+      "proof": {
+        "actualImage": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a",
+        "contract": "EvaNodeMcpPublicPayloadVerification/v1",
+        "kind": "provider",
+        "liveAction": false,
+        "proof": {
+          "node": "v26.13.0",
+          "npmPackageJsonRecords": 104,
+          "onlyNewRpm": "libatomic14.3.1-4.4.el10",
+          "otherOptEvaFilesPreserved": 6,
+          "pythonPackagesPreserved": 135
+        },
+        "retainedBase": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+        "role": "atomic",
+        "verified": true
+      },
+      "logSha256": "f991cd2be1fca7e15c4a7bc7315e2cd5f2e54321e5241a43d8c61197cb15f7e7"
+    },
+    "projects": {
+      "seconds": 4.518,
+      "proof": {
+        "actualImage": "sha256:2ddf544a399e5efeb04d7859edbd9c8df84699dbcf6747e78d476e52cae6e13e",
+        "contract": "EvaNodeMcpPublicPayloadVerification/v1",
+        "kind": "provider",
+        "liveAction": false,
+        "proof": {
+          "node": "v26.13.0",
+          "npmPackageJsonRecords": 104,
+          "onlyNewRpm": "libatomic14.3.1-4.4.el10",
+          "otherOptEvaFilesPreserved": 7,
+          "pythonPackagesPreserved": 135
+        },
+        "retainedBase": "sha256:81188c414ce5b20eb59f545f9651da5501576dcfbdd9edc3abd125d455f1cb6d",
+        "role": "projects",
+        "verified": true
+      },
+      "logSha256": "c78cb5c4b0c9ed33c947fdf8354868f59a2cbf2ca025dea99b02ad294029ff63"
+    },
+    "core": {
+      "seconds": 12.341,
+      "proof": {
+        "actualImage": "sha256:a29e831540e4d9628c8965ff4ad0d20b77b3b70401b180d40edc6f99fc9d1303",
+        "contract": "EvaNodeMcpPublicPayloadVerification/v1",
+        "kind": "core",
+        "liveAction": false,
+        "proof": {
+          "actualImportedSources": "/opt/eva/src/eva",
+          "allWheelRecordsPreserved": true,
+          "siteFilesPreserved": 7950,
+          "sourceDeltas": 3,
+          "stdlibRegularFilesPreserved": 821
+        },
+        "retainedBase": "sha256:4db9d39bfc2651eb32feba4d3dd3a6b7d2b27d6be3a30c94cf25f3545a04a1b6",
+        "role": "core",
+        "verified": true
+      },
+      "logSha256": "267954eb1f3e5d9bd76718eb483968232f52520715b98e2193e667eb904c8efd"
+    },
+    "worker": {
+      "seconds": 9.892,
+      "proof": {
+        "actualImage": "sha256:c31a67092473816511d015b8b56a10a8e4504f0c50201c9dedc4ab827492bdf6",
+        "contract": "EvaNodeMcpPublicPayloadVerification/v1",
+        "kind": "core",
+        "liveAction": false,
+        "proof": {
+          "actualImportedSources": "/opt/eva/src/eva",
+          "allWheelRecordsPreserved": true,
+          "siteFilesPreserved": 5112,
+          "sourceDeltas": 3,
+          "stdlibRegularFilesPreserved": 821
+        },
+        "retainedBase": "sha256:c2bd46136181764b296f84bb63fdda1d75e672229336754df2d7667c64d8019c",
+        "role": "worker",
+        "verified": true
+      },
+      "logSha256": "134ffc4b54fa212ec9e235bf5bd6917ad6f439469db34177642b2b6f12d3cbd0"
+    }
+  },
+  "modelCalls": 0,
+  "privateInputs": false
+}

@@ -1,0 +1,39 @@
+{
+  "contract": "EvaNodeMcpCandidateVersions/v1",
+  "versions": {
+    "node": "26.13.0",
+    "filesystemServer": "2.2.0",
+    "atomicClientSdk": "1.32.2",
+    "unchangedPythonMcpClient": "1.29.0",
+    "unchangedContextForge": "1.0.8",
+    "additionalLibatomicRpm": "14.3.1-4.4.el10.x86_64"
+  },
+  "providerImages": {
+    "workspace": {
+      "baseImage": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+      "candidateImage": "sha256:7514b03d3a44dcfbeb6c8c0ac891f61831c04b1600375c5166f6d38dc2f53403"
+    },
+    "atomic": {
+      "baseImage": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+      "candidateImage": "sha256:1c394f4fc8e901b9aa2ec54c95aab6e9958bcb306cdd1d7f18b770f70405583a"
+    },
+    "projects": {
+      "baseImage": "sha256:81188c414ce5b20eb59f545f9651da5501576dcfbdd9edc3abd125d455f1cb6d",
+      "candidateImage": "sha256:2ddf544a399e5efeb04d7859edbd9c8df84699dbcf6747e78d476e52cae6e13e"
+    }
+  },
+  "coreImages": {
+    "core": {
+      "baseImage": "sha256:4db9d39bfc2651eb32feba4d3dd3a6b7d2b27d6be3a30c94cf25f3545a04a1b6",
+      "candidateImage": "sha256:a29e831540e4d9628c8965ff4ad0d20b77b3b70401b180d40edc6f99fc9d1303"
+    },
+    "worker": {
+      "baseImage": "sha256:c2bd46136181764b296f84bb63fdda1d75e672229336754df2d7667c64d8019c",
+      "candidateImage": "sha256:c31a67092473816511d015b8b56a10a8e4504f0c50201c9dedc4ab827492bdf6"
+    }
+  },
+  "sourceRevision": 2,
+  "alreadyAdmittedFilesystemActions": 6,
+  "noNewCapabilityGrant": true,
+  "status": "reviewed_candidate_not_installed"
+}

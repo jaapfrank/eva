@@ -1,0 +1,28 @@
+{
+  "contract": "EvaIndependentNodeExistingGenerationAdoptionReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:56:21.401870+00:00",
+  "decision": "GO_EXACT_INSPECT_ADOPT_AND_RESUME",
+  "approved": true,
+  "installerSha256": "c1492b601353b4de88583c5189d09e267d45e7b6b116313f6f20a5ea59bc0aaa",
+  "planSha256": "81e6b41a065153803f84db09deed0e50c5d882bd95f9d2134ee0c80199f76ee8",
+  "fullPreflightSha256": "b6ea0fe3f5fad7bc5d655e7bced3b4201523b0d037ac929b9aff041806d09179",
+  "originalSdkReceiptSha256": "e234e6983dc08b952ce9f7ffac519f4eb5dede38e1df197ad08dfc1c92f89a17",
+  "previousContinuationSha256": "280d9b2c907a675bfa62d21b47e3f30660082ea10f1e1290f5efc2b9843b6e7b",
+  "exactCliPluginSha256": "3e3e701906e4543f24e81eabb262ba6d525625a9b4747a1dde6892e0c369cc68",
+  "ownTestsPassed": 9,
+  "testLogSha256": "5b7a9b92a1c9153a8191e03f370a402497cf53601cbd2ace5b36d469570348cd",
+  "verified": [
+    "AlloriginalA/S/source/approval/error/SDKreceipts and copiedSDKreceipt hashes match. Newexclusivecontinuationreceipt and locks preserve originalhistory; existing7CID/image/StartedAt/healthy generations are explicitlypinned.",
+    "ClosedComposemetadata mapping is exactCLI2.40.3-desktop.1/plugin3e3e\u2192actualComposeLabel2.40.3, independently supported by inertneverstartedcreate-onlyfixture. No genericsuffixstrip or othermetadata/config relaxation.",
+    "Originalfullcorecallback retains source/import/site/RECORD/stdlib/package/nativeTLS/Config/HostConfig/mount/network/profileequal checks. Currentrootfour-profilecompatibleproof7326 is hashbound and reused under unchangedactualgeneration+source/config bindings; no redundantprofileexecution.",
+    "Existingrecover_runtime inspects byte-identicalcopiedSDKreceipt; before_recovery_dispatch alwaysFalse and a separate runner rejects everylifecyclecommand. OnlyComposeconfig/ps and container/imageinspect are permitted to SDK. Candidatebehavior must verify; unknown cannot compensate/recreate.",
+    "Afterreinspection, freshoriginalclaims/queue/nativeidle/retention/browser/document/sourceguards are rerun. Only originalsameDocE8 and evaluatorresume phases plus readonlyownercatalogexecute; no originalstops or 7imageplacementrepeat.",
+    "Freshfullreadonlypreflight passes7currentgenerations/fullcallback/10authorities/0claims/0leases/0pending/0eligibleschedules. Own9closedversion/plugin/path/readonlyrunner/no-dispatchcases pass."
+  ],
+  "limitations": [
+    "Reviewer performed no production lifecycle or modelrequests. Exactsidecar/plan only; anyunknownreceipt requiresinspection and separatecontinuation.",
+    "Finalindependent actualreadback must bind thisnewcompletionreceipt and actual7generations/profiles/host/AUX/ownercatalog; priorSsuccess-gatedscript cannot be run unchanged.",
+    "No newpermission, retentionwaiver, schemawrite, generalrollback or fullE4.16/familyacceptanceclaim."
+  ]
+}

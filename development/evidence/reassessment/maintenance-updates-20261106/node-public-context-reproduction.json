@@ -1,0 +1,10 @@
+{
+  "contract": "EvaNodeMcpPublicContextReproduction/v1",
+  "npmFileAndSymlinkRecordsReproduced": 4062,
+  "npmModesAndPayloadsExact": true,
+  "officialNodeAndLicenseExact": true,
+  "threeOptSourceFilesExact": true,
+  "privateConfigurationIncluded": false,
+  "candidateImagesNotRebuilt": true,
+  "meaning": "Prepared public inputs equal the exact reviewed image-build payloads; no claim of deterministic RPM transaction timestamps or imageIDs."
+}
