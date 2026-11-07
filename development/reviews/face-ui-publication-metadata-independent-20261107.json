@@ -1,0 +1,22 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_SCOPED_COMMIT",
+  "publicationWhitelistSha256": "9bfe009e68623b251ba6ee1271d19e26a6d40031478a52da554ce31eb4d98ead",
+  "whitelistFiles": 36,
+  "sourceAndPackagedAssetChanges": 21,
+  "installedEvidenceSha256": "a72354acf7d5c823951b615da877c2dda1ffd9ff00ef3a58fda737c81515c496",
+  "installedReviewSha256": "7e6dd51de8d70f94661c109bfbece68cf01d9b43300163bf3d473e077862053e",
+  "independentActualReadbackSha256": "e6805af80e27a3bbacf6d74b76cb29a33a0f84290e811b602455083b9f2f2734",
+  "continuationReceiptSha256": "5083238c03c4ae7e11071c1ffb44cf3da6d10d2ffd6bbfeb3a91c0196d2f9eac",
+  "canonicalWorkboardSha256": "e3935cfb384e6cad75d6fd65847d249b2b7ba07ac2d1a85cce106c84dd18af25",
+  "generatedWorkboardSha256": "708d9581e3c3d6b1b9d1fbe50f223e5d17bbf310b42249965fc026b9f48f4dfe",
+  "verified": [
+    "All whitelisted hashes match. The registered removal is absent from the published tree and its exact original bytes are retained.",
+    "Published package versions match the approved locked source. The installed proof binds the original partial receipt, completed continuation, independent actual readback, runtime profile proof and publication receipt.",
+    "Public proof contains status, counts and digests. The closed file list was checked for credential patterns and private record payloads.",
+    "All 103 delivery-card statuses and criteria, and the execution-task statuses and criteria, match HEAD. Workboard validator reports 103 tasks, 83 completed, one cancelled and E4.16 in progress.",
+    "Live project plan and current view match the canonical projections. Household acceptance remains open."
+  ],
+  "scope": "Commit only the 36 verified whitelist entries and this review."
+}

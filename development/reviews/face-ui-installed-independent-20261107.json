@@ -1,0 +1,22 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_INSTALLED_TECHNICAL_SCOPE",
+  "originalPartialReceiptSha256": "9a59348d570be6f8aa67e62d11d6cbd8ed99eda55f3bf7b6180657ba20a8bb73",
+  "continuationReceiptSha256": "5083238c03c4ae7e11071c1ffb44cf3da6d10d2ffd6bbfeb3a91c0196d2f9eac",
+  "independentActualReadbackSha256": "e6805af80e27a3bbacf6d74b76cb29a33a0f84290e811b602455083b9f2f2734",
+  "independentRuntimeProfileProofSha256": "ad0ef6134ac38428cd1c79c6a63449e3d76f68b51427cbcf216dec6d8117989e",
+  "canonicalWorkboardSha256": "ec423ad084fe3c9d1fdf28f47dd7caa65b2eaf8942057b12370054ce3b2b9f84",
+  "verified": [
+    "Both actual caller generations match the approved closed configuration: new core dashboard image, retained worker image and exact new face revision in both. All four runtime profiles agree with the expected profile set.",
+    "Face bridge runs as UID 1000 with the selected CPU prefix and telemetry disabled before initialization. Both existing model hashes, 29 stored rows and 24 active enrolled profiles match.",
+    "Exact source publication covers 17 files and four build directories. All 58 other UI sources and all retained originals match.",
+    "Evaluator is running with the four existing roots and bound authority. All 62 criteria, nine historical receipts, one handoff and 13 companion generations match.",
+    "The project dashboard serves the selected index and both referenced assets. Its live delivery plan and current view match the canonical JSON. The authenticated owner dashboard serves the selected three assets and rejects unauthenticated requests.",
+    "The original decision file fingerprint matches and the maintenance lock is absent after the recorded own-only release. Original partial receipt remains exact."
+  ],
+  "scopeLimit": "Technical package, service and projection verification. Household recognition and project acceptance are outside this readback.",
+  "reviewerLifecycleActions": 0,
+  "reviewerModelRequests": 0,
+  "householdImagesSent": 0
+}

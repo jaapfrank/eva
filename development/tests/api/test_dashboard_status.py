@@ -346,7 +346,7 @@ def test_dashboard_page_serves_the_packaged_react_admin_candidate() -> None:
     assert "EvaDashboardStatus/v1" in javascript
     assert "EvaDashboardIdentity/v1" in javascript
     assert "EvaWorkBoard/v1" in javascript
-    assert "Te doen" in javascript
+    assert "Ingepland" in javascript
     assert "Vandaag kreeg Eva haar eerste echte onderzoeker" not in javascript
 
 

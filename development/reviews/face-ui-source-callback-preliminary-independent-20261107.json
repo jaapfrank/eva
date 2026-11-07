@@ -1,0 +1,27 @@
+{
+  "contract": "EvaIndependentFaceUiSourceCallbackPreliminaryReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T02:04:02.982709+00:00",
+  "decision": "NO_GO_SOURCE_ANCESTOR_RACE",
+  "installationApproved": false,
+  "freezeSha256": "b85d34d31540c878769683117caa8b4922918ced7568d543a7b9b22d4897e9b3",
+  "moduleSha256": "dd94f9150e0a34cd1cfd63eef0dcb1ac363dc7d61c79f33e83c59b212543485c",
+  "payloadSha256": "5ca00544bbf0f4fea308b8c9e8408c0de34f497c4a76d4280ef822bfa86a7fc8",
+  "ownExistingBoundaryTestsPassed": 10,
+  "existingTestLogSha256": "f807600be99591771707f58ce4444a1f23e51625dd87a5c5a8874c1594f7cd94",
+  "independentRaceReproductionSha256": "c92df9c90e1e70f903a43f8c7110d27cce79120591f4b2d8fc1b2d9ef110ef0f",
+  "finding": {
+    "priority": "P1",
+    "function": "move_once/_parents",
+    "detail": "Authorizedsource/target resolution is checked before durable record and secondstoppedguard, then renameat2 uses AT_FDCWD plus absolute paths. A concurrentancestor rename\u2192outside-symlink afterthechecks redirects the syscall. Independenttemp-onlyfixture moved anoutsidefile intopreparedarea; onlysubsequentO_NOFOLLOWsource-parentfsync failed. Thus rejection occurs afterunauthorizedboundarymutation.",
+    "minimalCorrection": "Bind parentdirectoryfds beneath allowedroots using nofollow traversal and perform renameat2 with thosefds and basenames, keeping parentcreation and content/directorysync within the samepinnedauthority. Failbeforemove onancestor identity drift; coverbothsource anddestinationparent races. PreserveRENAME_NOREPLACE and allretainedbytes/parentjournal/guardcontracts."
+  },
+  "otherwiseReviewed": [
+    "Exact17sourcefiles+58unchangedUI+4directoryswaps are limitedtothepreviousreviewedcandidate scopes, with parent-ownedjournal/guard and no newdaemon/API/database/model route.",
+    "File/dirbytes,mode/uid/gid, completebackup prevalidation, no-clobberdestination, fsync-beforecompletion and later-editrefusal are retained. Existing10syntheticcases pass but donot coverancestor-swaprace."
+  ],
+  "limitations": [
+    "Onlyprivatecandidatecallbackreview; no actualrepository/runtime/source/artifactpublication by reviewer.",
+    "Exactparentactivation/durablejournal/stoppedgenerationguard and revisedcallbackboundaryproof remain separatelyrequired; no installGO."
+  ]
+}

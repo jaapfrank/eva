@@ -5,16 +5,23 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "vite build",
-    "verify:browser": "node verify-browser.cjs"
+    "verify:browser": "node verify-browser.cjs",
+    "prebuild": "node prepare-dependencies.mjs",
+    "verify:decoder": "node verify-decoder-compatibility.mjs"
   },
   "dependencies": {
-    "react": "19.2.8",
-    "react-admin": "5.15.1",
-    "react-dom": "19.2.8"
+    "react": "19.3.1",
+    "react-admin": "5.15.5",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "6.1.1",
+    "@vitejs/plugin-react": "6.2.1",
     "typescript": "7.0.2",
-    "vite": "8.2.2"
+    "vite": "8.3.6"
+  },
+  "overrides": {
+    "query-string": {
+      "decode-uri-component": "0.5.1"
+    }
   }
 }

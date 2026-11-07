@@ -1,0 +1,25 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": false,
+  "decision": "NO_GO_PENDING_EXACT_TERMINAL_FENCE",
+  "freezeSha256": "2619c92ae2aef58770350e5a783879a1ca6242770f2e2b4786a1578bae089572",
+  "installerSha256": "fff84c50c410dbbc53aaf0fc2282cf80fec3f78bea2fb4dfd6bcedf9ee923de9",
+  "planSha256": "8d68e0e1ebad7deb7b39ed50c226997ae804dfeebcbcc3aef088a581492b029c",
+  "writerFenceSha256": "cefa1410d8555678ccbfd18afc0a8d8f2f1226c8f81f6edcb1d0d74a45439448",
+  "findings": [
+    {
+      "file": "activation_contract.py",
+      "line": 69,
+      "detail": "unit_stopped does not bind terminal ExecMainPID to the original PID and compares exit monotonic only to old startup, not this activation stop intent. install.py omits ExecMainPID from UNIT_FIELDS and stop monotonic from stop journal. A pure synthetic terminal record with wrong ExecMainPID9999 instead of1234 and exit1100 before own hypothetical intent1200 is accepted.",
+      "required": "Capture exact terminal PID/start/invocation and durable own monotonic stop intent; recheck original running generation after intent immediately before stop, and require exit at/after intent. Retain unknown acknowledgement and changed generation as inspection-only."
+    }
+  ],
+  "verified": [
+    "All frozen helper hashes/modes and successful read-only preflight match.",
+    "Independent51 existing tests pass in0.366s, but lack the reproduced wrong terminal PID/own-intent cutoff negatives.",
+    "Writer reservation reuses actual existing JavaScript wx0600 lock; both saveDecision and processDecision refuse EEXIST before mutation/finally. First activation phase acquires after durable intent, exact inode/marker and data fingerprint; final phase releases only owned lock after restart/readbacks. No HTTP drain claim.",
+    "R3 callback and closed three-change configuration contracts, original source/package/native/profile preservation, no-replay journals and inspection-only failure behavior reviewed."
+  ],
+  "reviewerProductionActions": 0,
+  "reviewerModelRequests": 0
+}

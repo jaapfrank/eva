@@ -137,6 +137,7 @@ let denied = false, corrupt = false, genericFails = true, reads = 0;
       await claude.waitFor(); assert.equal(await form.getByLabel('API-sleutel', { exact: true }).inputValue(), '');
       await form.getByLabel('API-sleutel', { exact: true }).fill(secret);
       await page.getByRole('navigation', { name: 'Eva beheer' }).getByRole('link', { name: 'Overzicht', exact: true }).click();
+      await page.getByRole('heading', { name: 'Overzicht', exact: true }).waitFor();
       assert.equal(await page.getByRole('region', { name: 'Optionele modelverbindingen', exact: true }).count(), 0);
       await page.getByRole('navigation', { name: 'Eva beheer' }).getByRole('link', { name: 'Verbindingen', exact: true }).click();
       await claude.waitFor(); assert.equal(await form.getByLabel('API-sleutel', { exact: true }).inputValue(), '');

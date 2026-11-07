@@ -1,0 +1,20 @@
+{
+  "reviewer": "/root/independent_review",
+  "scope": "Bounded r2-to-r3 source-publication callback candidate delta",
+  "approved": true,
+  "decision": "GO_CANDIDATE_ONLY",
+  "sourceSha256": "739b2e523ce71acbd5f30fb3449eea986a8182cc8374670545ac6f2aa4f81e22",
+  "freezeSha256": "08e800bb0e5b99e15639d20023adf330066c21e07839b03d63220832ac24c273",
+  "priorReview": "development/reviews/face-ui-dirfd-callback-independent-20261107.json",
+  "verified": [
+    "Diff consists exclusively of four O_NONBLOCK additions to existing fd-relative regular-file opens.",
+    "Existing fstat regular-file and inode checks, O_NOFOLLOW ancestor walks, no-clobber rename and durability guards remain unchanged.",
+    "Independent unittest execution: 14 passed, 0.270 seconds; includes bounded FIFO rejection."
+  ],
+  "limitations": [
+    "Prior unchanged actual-payload preflight is reused; no new payload/vendor/browser tests.",
+    "This approves a callback candidate, not an installation. Parent must retain durable activation journal and exact stopped-unit guards."
+  ],
+  "runtimeMutations": false,
+  "modelRequests": 0
+}

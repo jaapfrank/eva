@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path, PurePosixPath
 import shutil
 
@@ -57,6 +58,26 @@ def _source_files() -> dict[str, bytes]:
     return files
 
 
+def _react_admin_version() -> str:
+    project = ROOT / "development/tools" / "project-dashboard"
+    try:
+        package = json.loads((project / "package.json").read_text(encoding="utf-8"))
+        lock = json.loads((project / "package-lock.json").read_text(encoding="utf-8"))
+        declared = package["dependencies"]["react-admin"]
+        locked = lock["packages"][""]["dependencies"]["react-admin"]
+        resolved = lock["packages"]["node_modules/react-admin"]["version"]
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise RuntimeError("dashboard React-admin dependency evidence is missing") from error
+    if (
+        not isinstance(resolved, str)
+        or re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", resolved) is None
+        or declared != resolved
+        or locked != resolved
+    ):
+        raise RuntimeError("dashboard React-admin dependency evidence differs")
+    return resolved
+
+
 def _sealed_manifest(files: dict[str, bytes]) -> bytes:
     package_lock = (
         ROOT / "development/tools" / "project-dashboard" / "package-lock.json"
@@ -69,7 +90,7 @@ def _sealed_manifest(files: dict[str, bytes]) -> bytes:
             for name, content in sorted(files.items())
         },
         "package_lock_sha256": _sha256(package_lock),
-        "react_admin": "5.15.1",
+        "react_admin": _react_admin_version(),
         "schema_version": 1,
     }
     return (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode("utf-8")

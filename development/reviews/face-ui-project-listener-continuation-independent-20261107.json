@@ -1,0 +1,19 @@
+{
+  "reviewer": "/root/independent_review",
+  "decision": "GO_EXACT_EVALUATOR_ONLY_CONTINUATION",
+  "approved": true,
+  "installerSha256": "3bab55c87a2f101548418fecdbeed39c3b965540dcdf9243dad0f23098ef9d94",
+  "planSha256": "823714eecbe78bdfbc1839aaaa9eb993545894f7e42c2c94dc565fdd4c7cb641",
+  "freezeSha256": "48991a9ea5907324fb3704bb27bcbb15f0aeaf0f0cf08ecc3058ee1c7d8fbe1e",
+  "originalReceiptSha256": "9a59348d570be6f8aa67e62d11d6cbd8ed99eda55f3bf7b6180657ba20a8bb73",
+  "preflightSha256": "acad648e16e2bc88e30349733872d5e37af029ce8daa43cf9f49e8f49301d42b",
+  "independentPartialReadbackSha256": "a92f4253aee1c9f5cf2639284bcada551248ab99246989105f77cd09ca8c7c87",
+  "verified": [
+    "All frozen source, plan, test and preflight hashes match. Independent seven tests passed.",
+    "The immutable original receipt records one project start. Typed current systemd start time, boot-bound journal, exact PID/invocation/argv/environment, owned listener and three served files confirm the existing generation.",
+    "The original evaluator stop proof remains exact. The continuation records a new monotonic evaluator start intent, rechecks the known stopped generation, and verifies the new generation after the one dispatch.",
+    "The original lock inode, owner and marker remain bound. The continuation performs final readback before releasing only that lock.",
+    "Exclusive activation locking and a separate durable continuation receipt fence retries. Original project, container, face and source actions are not repeated."
+  ],
+  "reviewerProductionActions": 0
+}

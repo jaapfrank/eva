@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.
+Volgende stap: Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.
 
 ## Voortgang
 

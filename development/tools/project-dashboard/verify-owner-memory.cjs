@@ -12,7 +12,7 @@ const learning = text => ({ kind: 'belief', interpretation: text, outcome: 'open
 const fixtures = {
   status: { contract: 'EvaDashboardStatus/v1', read_only: true, runtime: { ready: true, state: 'ready' } },
   identity: { contract: 'EvaDashboardIdentity/v1', read_only: true, identity: { display_name: 'Eva', identity_id: 'synthetic', language: 'nl', pack_sha256: '0'.repeat(64), pack_version: 1, state: 'current', temperament: ['warm'], voice_style: { maximum_paragraphs: 3, name: 'warm', qualities: ['helder'] } } },
-  'memory-sources': { contract: 'EvaOwnerMemorySources/v1', read_only: true, meaning: 'Synthetic sources', sources: [{ source_id: sid, occurred_at: at, excerpt: 'Synthetic private source', truncated: false, retention_state: 'retained' }], next_cursor: null },
+  'memory-sources': { contract: 'EvaOwnerMemorySources/v1', read_only: true, meaning: 'Synthetic sources', sources: [{ source_id: sid, occurred_at: at, excerpt: 'Synthetic private source', truncated: false, retention_state: 'retained', raw_state: 'available' }], next_cursor: null },
 };
 (async () => {
   let origin = process.env.EVA_DASHBOARD_ORIGIN, server, changed = false, denied = false;
@@ -48,7 +48,7 @@ const fixtures = {
           res.end(JSON.stringify({ contract: 'EvaOwnerMemoryChange/v1', source_id: id, state: operation === 'correct' ? 'correction_queued' : 'erased' })); return;
         }
         const text = id === next ? 'Mila werkt graag zelfstandig.' : 'Mila vraagt misschien graag hulp.';
-        res.end(JSON.stringify({ contract: 'EvaOwnerMemorySourceView/v1', source_id: id, content: text, occurred_at: at, retention_state: 'retained', origin: 'human-understanding', kind: 'inference', trust: 'model_inference_unconfirmed', learning: learning(text), current_learning: learning(changed ? 'Mila werkt graag zelfstandig.' : text), current_source_id: changed ? next : sid, can_forget: true, erasure_scope: 'memory_document' })); return;
+        res.end(JSON.stringify({ contract: 'EvaOwnerMemorySourceView/v1', source_id: id, content: text, occurred_at: at, retention_state: 'retained', raw_state: 'available', origin: 'human-understanding', kind: 'inference', trust: 'model_inference_unconfirmed', learning: learning(text), current_learning: learning(changed ? 'Mila werkt graag zelfstandig.' : text), current_source_id: changed ? next : sid, can_forget: true, erasure_scope: 'memory_document' })); return;
       }
       if (fixtures[resource]) { res.end(JSON.stringify(fixtures[resource])); return; }
       res.writeHead(404); res.end('{}');

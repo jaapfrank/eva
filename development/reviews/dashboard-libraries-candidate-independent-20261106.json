@@ -1,0 +1,38 @@
+{
+  "schema": "EvaDashboardLibraryCandidateIndependentReview/v1",
+  "reviewer": "/root/independent_review",
+  "timeUtc": "2026-11-06T22:35:51.373024+00:00",
+  "decision": "GO_EXACT_PRIVATE_CANDIDATE_ONLY",
+  "freezeSha256": "f55fb1b0609a6fe7285255dd8932a5368873c97aa239e3512e29d496c980ac76",
+  "proposedEightFilesSha256": {
+    "package.json": "735a7145008d501bfa17c720738993aecb0648c483b16a9e98fe0f1b286e1e37",
+    "package-lock.json": "2287bec4a01511e1cc9f176650a6e824f32335c03f8265736a0e16084fa0943b",
+    "prepare-dependencies.mjs": "b0351ba20911097b2893e600b9974d598d88b50cdb1984b53f34932bac115bba",
+    "verify-decoder-compatibility.mjs": "4d5a08e3c5389c5dd9e8ca2f3cf4ca3b93a5069312d36cee75763e984f463d84",
+    "verify-owner-memory.cjs": "15700b0b4bda8c478249bc230e663239dabf3431437204d8d1c1dd23af33f2cc",
+    "verify-owner-navigation.cjs": "1bf01f8727289746d9435c97c15534fc2e46685ea4a8b8a9366fe1366961f7d4",
+    "verify-owner-model-providers.cjs": "a51feadc155296519d1a87c69705d4966042c4ced5f2a3822ee689255a8956ab",
+    "README.md": "dc56360b8d1bf38b3bb4ec579166bd5c81347e599dcd4aab30f8316e4cd9c078"
+  },
+  "originalSourceManifestSha256": "f09771174a5f30acd20da8e495bfaec72c6ce6a22f1e9991082e242211637120",
+  "independentOfflineReproductionSha256": "2eba71e535bcb6019ff079855c3278ace0ceee2b0cdbc9a5fefaf12a91401f39",
+  "independentUnitLogSha256": "d78c20c5ecb7cf7c28dbbe59ae41c2bb95360c47667e274ac0b04ffc82b6d9cf",
+  "findings": [],
+  "independentChecks": [
+    "Freshreviewer-ownedcopycontains onlyoriginal64trackedsourcepaths plusproposedfiles, no existingnode_modules/buildoutputs/undeclaredexploratoryhelpers. Offline npmci ignore-scripts succeeds fromlockedcache; no networkpackagefetch.",
+    "ActualmanagedNode22.23.4 builds owner+project fromfreshdependencies; automaticprebuild executedidempotentexactinteropfix; package-lockSHA unchanged andactualquery-stringafterSHA matchesreviewedfc1.",
+    "DirectCommonJS+actualVitebundleddecoder17cases andboundedmalformedchildpass; no algorithmrewrite. Twenty-twounitcases independentlypass.",
+    "Onlydependencyversions/lock, twoexactcompatibilityscripts,3syntheticbrowserfixturetiming/datafixes andREADMEmaintenance text proposed; allotherproductcomponents/Viteconfig retain originalhashes.",
+    "Reviewedfixturechangesagainstactualoriginaltrackedsource: raw_state added whereexistingcontractrequires; archive explicitlyexpanded; providersecret-unmount assertion awaitsactualdestinationheading. Behavior/assertions retained andsamefixturefixes appliedbaseline/candidate.",
+    "Version-boundprepare-dependencies requiresquery7.1.3/decoder0.5.1 ESmodule andexactbefore-or-afterSHA; onlyrequiredefaultinterop linechanges. Unknownsource/version refuses; sourcealgorithm untouched."
+  ],
+  "agentEvidenceReviewed": [
+    "Sixexistingbrowserroutes passincluding memorycorrection/forget+privacy/sourceunmount, navigation/mobile, learning, work, optionalproviderform andcanonicalprojectstatus/mobile.",
+    "Existingfixturefailures retained; snapshotnpmaudit0doesnotclaimallfuturesecurityissueseliminated."
+  ],
+  "limitations": [
+    "No repoapplication/liveinstallation orprovider/modelcalls byreviewer; this iscandidate-only, nofamilyacceptance/E4.16closure.",
+    "Finalownerassetsmustbeoverlayedoverpost-Node7ACTUALcorebase, preservingnewMCP/auth/nativechanges. ProjectdashboardactualViteruntime+source/compiledassets mustmatchnewclosure atseparatelyreviewedcutover, notjustbuildgreen.",
+    "Installation requiresactiveUI/corework/model/lease/browserguards, originalsource/config/status/privatecredentials preserved andactualassets/profile/readiness readback; publicJSsourcechanges requireexactscopedstaging."
+  ]
+}

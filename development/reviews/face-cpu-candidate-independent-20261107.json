@@ -1,0 +1,53 @@
+{
+  "contract": "EvaIndependentExistingFaceCpuCandidateReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-06T23:58:19.668034+00:00",
+  "decision": "GO_CANDIDATE_ONLY",
+  "installationApproved": false,
+  "freezeSha256": "a2b8ba82b9a62e2f4e00f23c51302cce3768336ea06a69d986ce4abe7fae1f29",
+  "proposedRecipeFiles": {
+    "wheel-manifest.json": "7494365ef1a32df9d25b213b10471871c0e6a39649a9915c3d45ef6b53bfa498",
+    "prepare_context.py": "b6aa71ea0c0a4514c8088fbe070150f8e196772632469c30febc0216cdedf6fb",
+    "requirements.lock": "312671dd268722020e111e5f6ff20ed62b05978cfcff5306ff070223c084bd98",
+    "README.md": "ea904d0943901e371b2398a715d8f17fc8fb7766824ae068bb6b4c6eb3adfeb8",
+    "runtime-environment.json": "ded8d16c10138df39a68a78bd2332eff2a70bdf8ddf099dad44924f7020acc31"
+  },
+  "backendRevision": "sha256:b6c809ead5eab29e7a051cb941c40adf92194f71829561b3754ac895e9a8450d:cpu",
+  "evidence": {
+    "actual-numerical-comparison.json": "8098d26c41b75e34919e693890bc5366e74729c05e4e10cbd2c609942acba823",
+    "existing-matcher-comparison.json": "96bcb3411bae452294e42ca4380183e3fa149dd7b9f7de53b26c8e6bc1857eec",
+    "actual-bridge-http-comparison.json": "5e83e996e09a9088159a48f4e032f4cc19852885256110716d2f16892a0c6b66",
+    "independent-candidate-closure-check.json": "efafd9b2d345975bfcf864af6bc9700bb4e5b10c14f167f2506bb35ebd422f69"
+  },
+  "independentChecks": {
+    "recipeFilesRehashed": 5,
+    "officialWheelBytesRehashed": 24,
+    "prepareOnlyContextReproduced": true,
+    "pipCheckPassed": true,
+    "unchangedExtractorSha256": "2b23b5dd7f2d6b1b25af52c306c3609dee77ccecea02013cfb81725e3d36f9ba",
+    "bothExistingModelHashesVerified": true,
+    "runtime23LockDerivedExactlyFrom24ArtifactLockExcludingPip": true,
+    "backendRevisionCanonicalHashVerified": true,
+    "reviewerInferenceAndProviderCalls": 0,
+    "runtimeSelectionOrProfilesChanged": false
+  },
+  "assessment": [
+    "The existing single-shot CPU extractor and two existing models remain byte-identical. Exact23-runtime-family closure and separate pip artifact reproduce offline without a second service or model store.",
+    "Reviewed public+blank offline numerical proof preserves face1/no-face0,512dimensions and bounding boxes/detection score; embedding cosine0.999927359 is a bounded technical comparison, not household accuracy/performance acceptance.",
+    "Reviewed ten original-matcher outputs and actual HTTP bridge/client proof use public fixture and synthetic gallery, preserve wrong-bearer denial, withhold embeddings, keep profile bytes unchanged and do not enable model downloads or GUI routes. Existing ambiguous candidate semantics are retained, not newly accepted as identity authentication.",
+    "Official ONNX Runtime1.31.1 privacy documentation confirms native telemetry defaults on and its process-wide ORT_DISABLE_TELEMETRY=1 opt-out must precede initialization. Recipe explicitly includes this environment contract; a later API call alone is insufficient.",
+    "Backend revision truthfully scopes unchanged source/model bytes, runtime-only library lock and required privacy environment; host vendor interpreter security revision is observed separately."
+  ],
+  "requiredActualRolloutGates": [
+    "Wait for actual post-Node7 core generation; use guarded existing bridge/core configuration update with same truthful :cpu revision on both sides. Preserve4source-bound runtime profiles as applicable and family profile/model storage.",
+    "Set ORT_DISABLE_TELEMETRY=1 in the service environment before Python/ORT imports; independently read back actual parent environment and inherited one-shot child environment. Missing opt-out must fail rollout; do not rely on late InsightFace import behavior.",
+    "Verify actual selected executable/closure/source/two models, CPUExecutionProvider-only execution, current host interpreter revision and owned authenticated bridge listener. No household inference needed for installation proof.",
+    "Retain old CPU environment/configuration and exact original model/profile bytes for source-bound rollback; no model/face enrollment write or shared GPU environment mutation."
+  ],
+  "privacySource": "https://github.com/microsoft/onnxruntime/blob/v1.31.1/docs/Privacy.md",
+  "limitations": [
+    "Candidate-only review: no live install, service selection, household gallery use or reviewer inference.",
+    "Model licensing/household consent/recognition accuracy are not expanded by this library update; no new weights or terms adopted.",
+    "Full E4.16 and family acceptance remain open."
+  ]
+}

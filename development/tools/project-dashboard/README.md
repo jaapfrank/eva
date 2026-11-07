@@ -24,6 +24,31 @@ without peer overrides and already supplies the admin, data, authentication,
 routing, forms and access-control building blocks required by later dashboard
 slices.
 
+## Dependency maintenance — 6 November 2026
+
+The maintained build pins React/ReactDOM19.3.1, React-admin5.15.5,
+Vite8.3.6 and its React plugin6.2.1; TypeScript stays7.0.2.
+The existing lock fixes every transitive artifact. No optional provider is enabled
+by building or testing the dashboard.
+
+React-admin still needs query-string7.1.3. Its old decoder dependency is affected
+by [the upstream denial-of-service advisory](https://github.com/advisories/GHSA-qr28-fpjm-wq7f).
+The scoped npm override selects the official decoder0.5.1. That decoder publishes
+an ESM default while query-string uses CommonJS. `prepare-dependencies.mjs` binds
+both exact versions and the original/adjusted consumer hashes, then changes only
+the consumer import to the public default export. It preserves the upstream
+algorithm and refuses unknown versions or bytes. The `prebuild` step runs this
+idempotent compatibility bridge before both owner and project builds.
+
+After `npm ci --ignore-scripts`, run `npm run verify:decoder` and both normal
+build commands below. The regression covers direct and bundled decoding,
+roundtrips, duplicate query values and bounded malformed advisory input.
+Synthetic browser checks retain memory correction/forgetting, source unmount,
+optional credential clearing and mobile-layout assertions. Their source fixtures
+include the existing required `raw_state`; the archive opens explicitly, and
+navigation assertions wait for the actual destination to render.
+Installation and acceptance status remain in the canonical project workboard.
+
 ## Product navigation — E2.1
 
 Open `http://127.0.0.1:44711/internal/v1/dashboard` on the Eva computer through

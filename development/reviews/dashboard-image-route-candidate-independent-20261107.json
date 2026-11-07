@@ -1,0 +1,44 @@
+{
+  "contract": "EvaIndependentDashboardImageRouteCandidateReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:23:10.753969+00:00",
+  "decision": "GO_IMAGE_AND_ROUTE_CANDIDATE_ONLY",
+  "installationApproved": false,
+  "freezeSha256": "4aefb4882373e373f587ab7e13fd571079017c9e94f5156eb89c57f25e52ecf8",
+  "candidateImage": "sha256:f8fdd529de7908e0d63a2083fb3039bba10765ef16dc8401120e01d17801aa32",
+  "baseImage": "sha256:a29e831540e4d9628c8965ff4ad0d20b77b3b70401b180d40edc6f99fc9d1303",
+  "evidence": {
+    "dashboard-image-delta-proof.json": "85f18e221f2f8359db82653f819c0f7fa55db6b9a1828f527fe0346add3239e2",
+    "overlay-context/Dockerfile": "eae9453c1922e759b36532c9c1fcee2fff97fb5e9949b891169d116515eb1283",
+    "overlay-context/source-manifest.json": "4ef2599d02ea3dedeee19bf56e425de0a248030957addd7d0e4fa0f64e4878dd",
+    "independent-actual-image-readback.json": "d70bf39c303daf236ab542421dff5603065d8d174ee0a0a1f388085315dcdc38",
+    "independent-actual-image-route.log": "f975bac3010952f7e04de220b65bda9369413109fade8b1e572db9be019183a2",
+    "packaged-route-label-compatibility.json": "640bc828b05074ae6479cda7fab7474ef077079d684c88e6c8a6d7ea10f4e0fc"
+  },
+  "independentActualImageChecks": {
+    "network": "none",
+    "filesystem": "read-only",
+    "fullPayloadReadbackExactlyMatchesFrozen": true,
+    "siteFilesUnchanged": 7950,
+    "stdlibFilesUnchanged": 821,
+    "distributionsUnchanged": 48,
+    "python": "3.12.16",
+    "mcpThreeImportedSourceBindingsUnchanged": true,
+    "runtimeSourceDeltas": 4,
+    "originalUnreferencedBundlePreserved": true,
+    "actualPackagedApiRouteTestPassed": true,
+    "providerCalls": 0,
+    "productionRuntimeMutations": 0
+  },
+  "assessment": [
+    "Exact before/after assertions constrain the Docker overlay to previously reviewed loader and sealed frontend assets. An unchanged CSS file is copied byte-identically; four actual runtime files differ, including the new JS asset. No dependency/interpreter/MCP/profile rewrite.",
+    "Independent execution of exact actual-image full-source/site/stdlib/package/import probe reproduces frozen readback byte-for-byte. Comparison with exact Nodea29 candidate confirms7950site/821stdlib/48distribution maps unchanged and exactly four source deltas.",
+    "Independent networkless actual-image API route test passes all existing entry/assets/CSP/self-origin/no-secret/no-inline/cache/content-type assertions.",
+    "Full33104-byte original test file and33106-byte proposed file differ only one label assertion Te doen\u2192Ingepland. Current unchanged product source already uses Ingepland. Earlier original-assertion failure is retained for both old-dependency rebuild and candidate; no security/privacy assertion relaxed."
+  ],
+  "limitations": [
+    "Candidate-only private image/assets; no source application, service restart or installGO.",
+    "Actual deployment must bind the current post-Node7 baseline and preserve all current7image/AUX/native/profile/source contracts. A later baseline change requires precise rebase/readback.",
+    "This proves packaged API serving behavior, not household acceptance or fullE4.16 completion. Project-serving dependency/runtime update remains separately required."
+  ]
+}

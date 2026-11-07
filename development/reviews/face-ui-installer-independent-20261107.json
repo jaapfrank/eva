@@ -1,0 +1,22 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_SCOPED_INSTALLATION",
+  "installerSha256": "8ce953259e4a2932fb7b56802d7a7476886246dad3ded6066d14885d1958e08c",
+  "planSha256": "034086293c610bb550c2b5842cc154fe88bd658c92c09a4ffe3782da1b61bf3a",
+  "freezeSha256": "66b2aafab5d8f6cacffdbcaf7e7f5f38aee56f2ac02586ca0f4bc12308d656bc",
+  "terminalContractSha256": "16de954bcf7dfa2d0879060864f0dfa0346bb107ae5f122a16a328575286589c",
+  "writerFenceSha256": "cefa1410d8555678ccbfd18afc0a8d8f2f1226c8f81f6edcb1d0d74a45439448",
+  "preflightSha256": "9bd68eca75a5db63a1aa2ecd2b0ca3804100f7646b44e95c6e5bf8eb4efff675",
+  "supersedesPreliminaryReviewSha256": "1235c72368688c8283b4369f50065364147bdb1fb513c65b9747daeec4029265",
+  "verified": [
+    "Exact frozen installer, plan, preflight and all 27 helper bytes and modes match.",
+    "Terminal observation binds original ExecMainPID, nonempty invocation, and monotonic start; exit must follow the durable stop intent.",
+    "Running generation, process start ticks, argv and environment are rechecked after intent before the single stop. The observed terminal tuple is rechecked after start intent. Process disappearance remains pending until exact terminal proof.",
+    "Role-specific evaluator exit zero, face SIGTERM and established project exits remain explicit.",
+    "The previously reviewed writer reservation and source/configuration boundaries remain in force.",
+    "Independent run: 55 tests passed in 0.508 seconds."
+  ],
+  "scope": "One exact forward --install-approved dispatch with current guard checks. Any unknown phase requires inspection.",
+  "reviewerProductionActions": 0
+}

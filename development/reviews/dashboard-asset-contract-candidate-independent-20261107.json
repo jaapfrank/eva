@@ -1,0 +1,38 @@
+{
+  "contract": "EvaIndependentDashboardAssetContractCandidateReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:15:20.155378+00:00",
+  "decision": "GO_CANDIDATE_ONLY",
+  "installationApproved": false,
+  "freezeSha256": "7b585c2025d1eb3defc9be35ff5d9507c7314fc99820ce40336a08fc5c60fa06",
+  "priorEightFileFreezeSha256": "f55fb1b0609a6fe7285255dd8932a5368873c97aa239e3512e29d496c980ac76",
+  "priorReviewSha256": "27af4d3bc59da2822d66557b1416d7b71566a297a3d1a636aaee44bdb51a543c",
+  "sourceBindings": {
+    "src/tools/build_dashboard_assets.py": {
+      "baselineSha256": "3ab5935a8bf2121f9e0ad672a739eaa5211146743a49d4d6f1f2c1d2b91d5589",
+      "candidateSha256": "e02899e8dc7a18abfad38d6cdd560a90410f88fe8f5438334d1c02c13005a240"
+    },
+    "src/eva/adapters/api/dashboard_assets.py": {
+      "baselineSha256": "fac0f9b3a0281b9999865c4e00ab6aa0b23810f8ec3005a4b068f79f247c8929",
+      "candidateSha256": "c50a65bcb374e6f19b70bd676fc2d646193e3b9ceb28c0fe933f5204a59521b1"
+    },
+    "development/tests/tools/test_build_dashboard_assets.py": {
+      "baselineSha256": "05923685591ca1a6d06468ed91abce294ef33c3d6728318a850a0f12a4da63fb",
+      "candidateSha256": "4ee18aae204b4c5e24ea82d52ab37fb7936a2cf051ab7a90a625005b26fb60ae"
+    }
+  },
+  "independentTestsPassed": 17,
+  "testLogSha256": "7b5ab41a6447fb409d2fa009970d63ddec9af5939138fddb27339e8dad9ad520",
+  "verified": [
+    "Three exact candidate/baseline source hashes match; original eight-file candidate is unchanged.",
+    "Build manifest derives exact React-admin dependency from declaration, root lock entry and resolved package version; ranges, missing dependency and drift fail. Actual private packaged manifest version5.15.5 and package-lock hash match the previously reviewed candidate.",
+    "Runtime loader accepts a well-formed pinned-version string and lowercase64hex lock hash, rather than a hardcoded stale release. Existing full file-inventory, path, size and SHA256 checks remain unchanged.",
+    "Own17targeted tests pass, including missing/range/resolution mismatch, malformed evidence and actual asset tamper. Four packaged asset/manifest hashes independently match freeze.",
+    "Dependency version evidence remains trusted-build metadata. The runtime validates its structure and asset hashes; it does not independently prove which node_modules produced an arbitrary signed-looking manifest. The actual reviewed build binds those inputs explicitly."
+  ],
+  "limitations": [
+    "Private assets only; no repository/runtime application and no installationGO.",
+    "Actual rollout must use post-Node7 current core and its preserved authentication/MCP/native/profile source bindings, and separately update the project-serving runtime closure as required.",
+    "No household acceptance or full E4.16 claim; no model calls or service lifecycle changes by reviewer."
+  ]
+}

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import hashlib
 from importlib.resources import files
 import json
+import re
 from pathlib import PurePosixPath
 from types import MappingProxyType
 from typing import Mapping
@@ -56,7 +57,10 @@ def _load() -> tuple[str, Mapping[str, DashboardAsset]]:
         }
         or manifest.get("contract") != "EvaDashboardAssets/v1"
         or manifest.get("schema_version") != 1
-        or manifest.get("react_admin") != "5.15.1"
+        or not isinstance(manifest.get("react_admin"), str)
+        or re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", manifest["react_admin"]) is None
+        or not isinstance(manifest.get("package_lock_sha256"), str)
+        or re.fullmatch(r"[0-9a-f]{64}", manifest["package_lock_sha256"]) is None
         or not isinstance(manifest.get("files"), dict)
     ):
         raise RuntimeError("dashboard asset manifest has an invalid contract")

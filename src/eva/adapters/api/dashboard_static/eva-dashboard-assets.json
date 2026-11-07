@@ -2,20 +2,20 @@
   "contract": "EvaDashboardAssets/v1",
   "entry": "index.html",
   "files": {
-    "assets/index-BHMtJ2dm.js": {
-      "sha256": "36b7f02d378ceca4e324f93405a48963f7225381c1976fe9ddf2ecdb393b136a",
-      "size": 899601
-    },
     "assets/index-DANnjSm4.css": {
       "sha256": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
       "size": 64865
     },
+    "assets/index-DWckJeRA.js": {
+      "sha256": "6f5183ffc74e50dd492c16615b10e3c2de5e4333e9278239c53af71effee8674",
+      "size": 944626
+    },
     "index.html": {
-      "sha256": "32e3e9aaef1a9cdb115e673275a9d91dbff8be5850478de1a9f3c537670a7f2d",
+      "sha256": "87ac8a313ce5decbfeadb9d56715069305fa417dabb218d4e0620e047ef99bf5",
       "size": 435
     }
   },
-  "package_lock_sha256": "f9224012ffda153c49955e571cfd9cc4ba9311c0b29baadd26ad0b7d7ad94e09",
-  "react_admin": "5.15.1",
+  "package_lock_sha256": "2287bec4a01511e1cc9f176650a6e824f32335c03f8265736a0e16084fa0943b",
+  "react_admin": "5.15.5",
   "schema_version": 1
 }

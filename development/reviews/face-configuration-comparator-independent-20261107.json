@@ -1,0 +1,33 @@
+{
+  "contract": "EvaIndependentFaceConfigurationComparatorReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:26:49.259611+00:00",
+  "decision": "GO_PRIVATE_COMPARATOR_ONLY",
+  "installationApproved": false,
+  "freezeSha256": "57e6435a995b4b1dd2b09c93c06d3453cc87a0c02468a4b35d2c5b2f87b4e13d",
+  "sourceHashes": {
+    "face_configuration_contract.py": "73d7c2c329a423a2f38c07ed29f82a2eb8e41a0058cce668b568eafcd747aa38",
+    "test_face_configuration_contract.py": "ee5441bb13f16824c19e9d71a1cc15df64ce82ff8c9c7484dbd72fc07a59bce4",
+    "core_contract.py": "6a334789b13848569c3fc79db645ec5eff84d03cafd8c9b732b60214d121ec3b",
+    "snapshot_contract.py": "8425bb7757176250554c190667527afbebffb9b2adca1470ec16ac8bcab6bda7",
+    "test_core_contract.py": "7bc5badeca9ff1c32293f8db8c4d2954bf9531a73d2ee924c95abdff8fd9d1c0",
+    "unit-core-baseline.private.json": "9e574e8a73fc43e1086bb3127d59446272ba4022fa2fc13768140b653c25b2b2",
+    "contract-tests.stderr": "496af5afb73b37538086ede476eb9922f58f6cd89445868a21eddb56cbb2f30e"
+  },
+  "ownTestsPassed": 17,
+  "testLogSha256": "badad40c0babee6b057b67afba36f47f85da10874c0d0dc9703df256eb660b2c",
+  "assessment": [
+    "Helper permits exactly one existing EVA_LOCAL_FACE_REVISION72f3\u2192b6c8 environment value, rejects missing/duplicate/unknown and any other added/changed environment entry. Beforeimagebinding is exact; workerimage must remain unchanged.",
+    "A deepcopied beforeConfig is adjusted only for that revision, then unchanged reviewedcore_contract revalidates allremainingConfig/HostConfig/storage/network/metadata/source constraints. Existing image-onlyupdater and productAPI remain unchanged.",
+    "Own17inherited/newnegativecases pass, including wrongrole/image/env/authority/security/network/staticmetadata refusals. No actualconfig or runtime modification is included."
+  ],
+  "requiredLaterRollout": [
+    "Use exactsuccessfulNode7currentgenerations and explicitapprovedcoreimage plus unchangedactualworkerimage; helper itself is not an imageapproval or dispatchauthority.",
+    "Coordinate actualface service and bothcallers on the same truthful:cpu revision; validate ORT_DISABLE_TELEMETRY=1 in parent and one-shot child beforeORTimports.",
+    "Preserve profiles/twoexistingmodels/oldruntime and allcurrentlease/STOP/privacy/sourceprofileboundaries; freshguards and separateexactinstallerreview remain mandatory."
+  ],
+  "limitations": [
+    "Privatehelpercandidateonly, noactivationplan/installGO, no household inference or providercalls.",
+    "No fullE4.16 or recognition/familyacceptanceclaim."
+  ]
+}

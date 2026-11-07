@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
+    "nextAction": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
-    "executionStep": "Chrome technical delivery complete; activate reviewed face CPU and dashboard batch next",
+    "executionStep": "Face CPU/dashboard technical delivery complete; activate retained photo library update next",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+    "checkedAt": "2026-11-07T03:58:00.207040+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -1660,6 +1660,24 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Gezichtsherkenning en dashboards bijgewerkt — 7 november",
+            "state": "verified",
+            "summary": "De bestaande gezichtsherkenning gebruikt InsightFace 2.1 en ONNX Runtime CPU 1.31.1 met uitgeschakelde telemetrie. De dashboardomgeving gebruikt de bijgewerkte React-, React Admin- en Vite-bibliotheken. Beide dashboards serveren de nieuwe bestanden. De modellen, alle 29 opgeslagen gezichtregels, 24 actieve profielen, besluiten en vier werkprofielen zijn onafhankelijk teruggelezen.",
+            "remaining": "Er zijn geen gezinsfoto’s gebruikt. Herkenning in het gezin, overige onderhoudsgroepen en de volledige autonome E4.16-kringloop blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/face-ui-installed.json",
+            "review": "development/reviews/face-ui-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+            "installedAt": "2026-11-07T03:48:45.370438+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "actuallyUsed": false,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "Bestaande browserkoppeling bijgewerkt — 7 november",
             "state": "verified",
@@ -3405,14 +3423,14 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Bestaande browserkoppeling bijgewerkt — 7 november",
+          "title": "Gezichtsherkenning en dashboards bijgewerkt — 7 november",
           "state": "verified",
-          "summary": "PlaywrightMCP0.0.84 draait in een afgesloten eigen pakketmap met de zeven bestaande browseracties. Node22.23.4, bron-/accountbindingen, toegang, STOP en tijdgrenzen zijn behouden. De geïnstalleerde dienst en catalogus zijn onafhankelijk teruggelezen.",
-          "remaining": "De browser staat losgekoppeld. Werkelijk eigenaargebruik en gezinsacceptatie zijn hiermee niet aangetoond. Overige actieve updates en volledige E4.16-autonomie blijven open.",
-          "source": "development/evidence/reassessment/maintenance-updates-20261106/chrome-installed.json",
-          "review": "development/reviews/chrome-installed-independent-20261107.json",
-          "checkedAt": "2026-11-07T02:52:06.809726+00:00",
-          "installedAt": "2026-11-07T02:49:17.003837+00:00",
+          "summary": "De bestaande gezichtsherkenning gebruikt InsightFace 2.1 en ONNX Runtime CPU 1.31.1 met uitgeschakelde telemetrie. De dashboardomgeving gebruikt de bijgewerkte React-, React Admin- en Vite-bibliotheken. Beide dashboards serveren de nieuwe bestanden. De modellen, alle 29 opgeslagen gezichtregels, 24 actieve profielen, besluiten en vier werkprofielen zijn onafhankelijk teruggelezen.",
+          "remaining": "Er zijn geen gezinsfoto’s gebruikt. Herkenning in het gezin, overige onderhoudsgroepen en de volledige autonome E4.16-kringloop blijven open.",
+          "source": "development/evidence/reassessment/maintenance-updates-20261106/face-ui-installed.json",
+          "review": "development/reviews/face-ui-installed-independent-20261107.json",
+          "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+          "installedAt": "2026-11-07T03:48:45.370438+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
           "actuallyUsed": false,
@@ -3424,13 +3442,13 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "Browserupdate opgeleverd; face CPU en dashboard volgen",
-          "summary": "Hindsight1.2, PydanticAI2.66, de kern-, hulp-, Node-/Python-hostdiensten, bestandsproviders, Telegram en browserkoppeling zijn bijgewerkt en gecontroleerd.",
-          "detail": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
+          "title": "Gezichtsherkenning en dashboards opgeleverd; fotobibliotheek volgt",
+          "summary": "Hindsight, PydanticAI, kern-/hulpdiensten, bestanden, Telegram, browser, gezichtsherkenning en dashboards zijn bijgewerkt en gecontroleerd.",
+          "detail": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Kern online · browserupdate technisch opgeleverd · volgende updategroep in voorbereiding",
-          "checkedAt": "2026-11-07T02:52:06.809726+00:00",
-          "nextAction": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open."
+          "state": "Kern online · face CPU en dashboard technisch opgeleverd · volgende updategroep in voorbereiding",
+          "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+          "nextAction": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open."
         },
         "next": {
           "taskId": "E4.15",
@@ -3442,7 +3460,7 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+        "checkedAt": "2026-11-07T03:58:00.207040+00:00",
         "reviewedAt": "2026-11-06T23:40:53.344878+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -9098,20 +9116,20 @@
                   "status": "in_progress",
                   "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                   "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                  "currentOutcome": "Chrome0.0.84 technisch geïnstalleerd en onafhankelijk teruggelezen; nu bestaande face CPU-/dashboardomgeving bijwerken.",
+                  "currentOutcome": "CPU-gezichtsherkenning en dashboardbibliotheken geïnstalleerd en onafhankelijk teruggelezen; fotobibliotheek is de volgende updategroep.",
                   "hindsightInstalled": "1.2.0",
                   "hindsightTarget": "1.2.0",
                   "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                   "ownerActionRequired": false,
                   "fullCardCompleted": false,
-                  "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+                  "checkedAt": "2026-11-07T03:58:00.207040+00:00",
                   "hindsightBuilt": true,
                   "hindsightLiveUpgradeInstalled": true,
                   "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                   "actualAstraSelectionAndExplicitZeroProven": true,
                   "focusedIndependentMemoryTestsPassed": 136,
                   "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                  "installationPending": "Face CPU/dashboard; photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
+                  "installationPending": "Photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                   "hindsightTechnicalDeliveryComplete": true,
                   "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                   "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -9138,7 +9156,12 @@
                     "filesystemMcp": "2.2.0",
                     "filesystemNodeMcpSdk": "1.32.2",
                     "telegramGrammy": "1.46.0",
-                    "chromePlaywrightMcp": "0.0.84"
+                    "chromePlaywrightMcp": "0.0.84",
+                    "faceInsightFace": "2.1",
+                    "faceOnnxRuntimeCpu": "1.31.1",
+                    "dashboardReact": "19.3.1",
+                    "dashboardReactAdmin": "5.15.5",
+                    "dashboardVite": "8.3.6"
                   },
                   "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                   "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -9312,6 +9335,38 @@
                     "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/chrome-installed.json",
                     "installedReview": "development/reviews/chrome-installed-independent-20261107.json",
                     "sourcePublished": true
+                  },
+                  "faceUiMaintenance20261107": {
+                    "status": "installed_independently_verified",
+                    "built": true,
+                    "installed": true,
+                    "installerApproved": true,
+                    "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+                    "preliminaryReview": "development/reviews/face-ui-installer-preliminary-independent-20261107.json",
+                    "preserveStoredFaceRows": 29,
+                    "preserveActiveArcfaceProfiles": 24,
+                    "targetCpuOnnxRuntime": "1.31.1",
+                    "targetCpuInsightFace": "2.1",
+                    "targetDashboardReact": "19.3.1",
+                    "targetDashboardReactAdmin": "5.15.5",
+                    "targetDashboardVite": "8.3.6",
+                    "sourcePublicationDispatched": true,
+                    "lifecycleDispatched": true,
+                    "fullE416Complete": false,
+                    "coreWorkerAndFaceInstalled": true,
+                    "projectDashboardRunningNewGeneration": true,
+                    "evaluatorResumePending": false,
+                    "ownedDecisionLockHeld": false,
+                    "fullBatchInstalled": true,
+                    "originalPartialReceiptSha256": "9a59348d570be6f8aa67e62d11d6cbd8ed99eda55f3bf7b6180657ba20a8bb73",
+                    "technicalDeliveryComplete": true,
+                    "independentlyReviewed": true,
+                    "decisionDataUnchanged": true,
+                    "installedAt": "2026-11-07T03:48:45.370438+00:00",
+                    "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/face-ui-installed.json",
+                    "installedReview": "development/reviews/face-ui-installed-independent-20261107.json",
+                    "oldDataAndModelsPreserved": true,
+                    "householdRecognitionVerified": false
                   }
                 }
               },
@@ -9989,7 +10044,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
+        "nextAction": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -10001,7 +10056,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T02:52:06.809726+00:00",
+        "updatedAt": "2026-11-07T03:58:00.207040+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10280,7 +10335,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+        "checkedAt": "2026-11-07T03:58:00.207040+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -16032,20 +16087,20 @@
                 "status": "in_progress",
                 "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                 "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                "currentOutcome": "Chrome0.0.84 technisch geïnstalleerd en onafhankelijk teruggelezen; nu bestaande face CPU-/dashboardomgeving bijwerken.",
+                "currentOutcome": "CPU-gezichtsherkenning en dashboardbibliotheken geïnstalleerd en onafhankelijk teruggelezen; fotobibliotheek is de volgende updategroep.",
                 "hindsightInstalled": "1.2.0",
                 "hindsightTarget": "1.2.0",
                 "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                 "ownerActionRequired": false,
                 "fullCardCompleted": false,
-                "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+                "checkedAt": "2026-11-07T03:58:00.207040+00:00",
                 "hindsightBuilt": true,
                 "hindsightLiveUpgradeInstalled": true,
                 "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                 "actualAstraSelectionAndExplicitZeroProven": true,
                 "focusedIndependentMemoryTestsPassed": 136,
                 "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                "installationPending": "Face CPU/dashboard; photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
+                "installationPending": "Photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                 "hindsightTechnicalDeliveryComplete": true,
                 "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                 "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -16072,7 +16127,12 @@
                   "filesystemMcp": "2.2.0",
                   "filesystemNodeMcpSdk": "1.32.2",
                   "telegramGrammy": "1.46.0",
-                  "chromePlaywrightMcp": "0.0.84"
+                  "chromePlaywrightMcp": "0.0.84",
+                  "faceInsightFace": "2.1",
+                  "faceOnnxRuntimeCpu": "1.31.1",
+                  "dashboardReact": "19.3.1",
+                  "dashboardReactAdmin": "5.15.5",
+                  "dashboardVite": "8.3.6"
                 },
                 "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                 "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -16246,6 +16306,38 @@
                   "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/chrome-installed.json",
                   "installedReview": "development/reviews/chrome-installed-independent-20261107.json",
                   "sourcePublished": true
+                },
+                "faceUiMaintenance20261107": {
+                  "status": "installed_independently_verified",
+                  "built": true,
+                  "installed": true,
+                  "installerApproved": true,
+                  "checkedAt": "2026-11-07T03:58:00.207040+00:00",
+                  "preliminaryReview": "development/reviews/face-ui-installer-preliminary-independent-20261107.json",
+                  "preserveStoredFaceRows": 29,
+                  "preserveActiveArcfaceProfiles": 24,
+                  "targetCpuOnnxRuntime": "1.31.1",
+                  "targetCpuInsightFace": "2.1",
+                  "targetDashboardReact": "19.3.1",
+                  "targetDashboardReactAdmin": "5.15.5",
+                  "targetDashboardVite": "8.3.6",
+                  "sourcePublicationDispatched": true,
+                  "lifecycleDispatched": true,
+                  "fullE416Complete": false,
+                  "coreWorkerAndFaceInstalled": true,
+                  "projectDashboardRunningNewGeneration": true,
+                  "evaluatorResumePending": false,
+                  "ownedDecisionLockHeld": false,
+                  "fullBatchInstalled": true,
+                  "originalPartialReceiptSha256": "9a59348d570be6f8aa67e62d11d6cbd8ed99eda55f3bf7b6180657ba20a8bb73",
+                  "technicalDeliveryComplete": true,
+                  "independentlyReviewed": true,
+                  "decisionDataUnchanged": true,
+                  "installedAt": "2026-11-07T03:48:45.370438+00:00",
+                  "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/face-ui-installed.json",
+                  "installedReview": "development/reviews/face-ui-installed-independent-20261107.json",
+                  "oldDataAndModelsPreserved": true,
+                  "householdRecognitionVerified": false
                 }
               }
             },
@@ -16923,7 +17015,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
+      "nextAction": "Gezichtsherkenning en beide dashboards zijn bijgewerkt en onafhankelijk teruggelezen. Alle 29 opgeslagen gezichtregels, 24 actieve profielen en modellen zijn behouden. De vier werkprofielen van kern en werkuitvoerder sluiten aan. De beoordelingsdienst draait weer en de eigen schrijfvergrendeling is vrijgegeven. Volgende uitkomst: de afzonderlijke fotobibliotheek bijwerken, met behoud van Telegram, bestaande database en ongewijzigde eigenaarbinding. Daarna ContextForge/native bibliotheken en overige actieve onderdelen. Gezinsacceptatie, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -16935,7 +17027,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T02:52:06.809726+00:00",
+      "updatedAt": "2026-11-07T03:58:00.207040+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17214,7 +17306,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+      "checkedAt": "2026-11-07T03:58:00.207040+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

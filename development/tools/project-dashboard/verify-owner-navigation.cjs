@@ -11,7 +11,7 @@ const fixtures = {
   identity: { contract: 'EvaDashboardIdentity/v1', read_only: true, identity: { display_name: 'Eva', identity_id: 'synthetic', language: 'nl', pack_sha256: '0'.repeat(64), pack_version: 1, state: 'current', temperament: ['warm'], voice_style: { maximum_paragraphs: 3, name: 'warm', qualities: ['helder'] } } },
   'memory-view': { contract: 'EvaOwnerMemoryView/v1', owner: { display_name: 'Jij' }, mentioned_names: [], memories: [], complete_directory: false },
   'people-memory': { contract: 'EvaPeopleMemoryOverview/v1', read_only: true, contains_raw_content: false, people: { dynamic_account: 'no_extra_account' }, sharing: { state: 'private_only' }, memory: { state: 'up_to_date' } },
-  'memory-sources': { contract: 'EvaOwnerMemorySources/v1', read_only: true, meaning: 'Synthetic sources', sources: [{ source_id: '00000000-0000-0000-0000-000000000001', occurred_at: '2026-10-16T00:00:00Z', excerpt: 'Synthetic private source', truncated: false, retention_state: 'retained' }], next_cursor: null },
+  'memory-sources': { contract: 'EvaOwnerMemorySources/v1', read_only: true, meaning: 'Synthetic sources', sources: [{ source_id: '00000000-0000-0000-0000-000000000001', occurred_at: '2026-10-16T00:00:00Z', excerpt: 'Synthetic private source', truncated: false, retention_state: 'retained', raw_state: 'available' }], next_cursor: null },
   work: { contract: 'EvaDelegatedWorkOwnerResult/v1', operation: 'list', jobs: [], truncated: false },
   'initiatives/history': { contract: 'EvaOwnerInitiativeHistory/v1', learning: { reflections: [], components: [], current_styles: [] }, cards: [], checked_at: '2026-10-16T00:00:00Z', latest_review: { updated_at: '2026-10-16T00:00:00Z', phase: 'review', state: 'silence', reason: 'Synthetic deliberate silence', blocker: null, intent_id: null } },
   components: { contract: 'EvaComponentObservations/v1', checked_at: '2026-10-16T00:00:00Z', components: [{ id: 'telegram', label: 'Telegram', state: 'unknown', detail: 'Not measured', observed_at: null }] },
@@ -61,7 +61,7 @@ const fixtures = {
       assert.equal(await nav.getByRole('link', { name: label, exact: true }).getAttribute('aria-current'), 'page');
       if (label === 'Gesprek') assert.equal(await page.getByRole('link', { name: 'Open gesprek →' }).getAttribute('href'), base + '/conversation');
       if (label === 'Personen & geheugen') {
-        await page.getByRole('heading', { name: 'Jouw geheugenbronnen' }).waitFor();
+        await page.locator('summary#memory-heading').click();
         if (server) await page.getByText('Synthetic private source', { exact: true }).waitFor();
       }
       if (label === 'Opdrachten & resultaten') await page.getByRole('region', { name: 'Mijn hulpopdrachten', exact: true }).waitFor();
@@ -78,6 +78,7 @@ const fixtures = {
       denyPeople = true;
       await nav.getByRole('link', { name: 'Personen & geheugen', exact: true }).click();
       await page.getByText(/Dit geheugenoverzicht is nu niet beschikbaar/).waitFor();
+      await page.locator('summary#memory-heading').click();
       await page.getByText('Synthetic private source', { exact: true }).waitFor();
       await nav.getByRole('link', { name: 'Opdrachten & resultaten', exact: true }).click();
       await page.getByRole('region', { name: 'Mijn hulpopdrachten', exact: true }).waitFor();

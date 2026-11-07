@@ -1,0 +1,30 @@
+{
+  "contract": "EvaIndependentFaceUiDirfdCallbackCandidateReview/v2",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T02:15:51.260891+00:00",
+  "decision": "GO_CANDIDATE_CALLBACK_ONLY",
+  "installationApproved": false,
+  "freezeSha256": "b77e4f5c744dd055122b94e88a4a5ff378e6ca3a1e4ce363ca4c9c924364f8a9",
+  "moduleSha256": "3ccc98c58b3a63932d48d3030f8d746e7162ad703a0a7e381aff4fbc3660886a",
+  "payloadSha256": "5ca00544bbf0f4fea308b8c9e8408c0de34f497c4a76d4280ef822bfa86a7fc8",
+  "supersededFindingReviewSha256": "7fd5cd7429e3039d6534bfe11283ec3965cb346f77448af75b21f5efce63c738",
+  "ownBoundaryTestsPassed": 13,
+  "bindings": {
+    "independent-tests.log": "28c0d6e4fe7342bdc148155d5e3c42454856d7019f388311f284b28679bbc073",
+    "independent-ancestor-race-retest.json": "789ac4c23783acb9555835aaafae76e8f28175de7cbce0f4648d3d71c476d1fd",
+    "independent-actual-readonly-preflight.json": "a589022817d9a9cfc0c49c87d1c0cd948ab88bdb40dfaa21a4bc565988b45dcb"
+  },
+  "verified": [
+    "Theoriginalsource-ancestor escape and equivalenttarget-ancestor case are independentlyretested: bothfailbeforeoutsidefilemutation. No-followdescriptortraversal fromslash anchorsroots/parents; mkdir/openat/renameat2 and contents/parentfsync usepinnedfds, sourceidentityandmappingrechecked acrossguard/move.",
+    "Existingdestinationnoreplace, backupall-before-rollback, no later-work overwrite and file/directorydurability-beforecompletion remain. Originaldd94/b85 preserved.",
+    "Actualreadonlyverify_before passes exact17sourcefiles/58unchangedUI/4directorypayloads includingprepared65605NPMentries; own13isolatedboundarytests pass. No newfrontend/browser/inference tests repeated."
+  ],
+  "callerRequirements": [
+    "Parentmustprovide synchronousdurablejournal and exactstoppedunit/generationguard beforeeverymove; partialreceipt mustfencereplay and unknownoutcomes requireinspection.",
+    "Exactparentactivationplan/currentbaseline/configuration/profile/retention/recovery review remainsseparate. No database/model/lifecycle/API authorization is provided bythiscallback."
+  ],
+  "limitations": [
+    "Candidatehelperonly; no repo/artifact publication or runtime mutation by reviewer.",
+    "Thiscloses the concreteancestor-path finding; no fullE4.16/familyacceptanceclaim."
+  ]
+}
