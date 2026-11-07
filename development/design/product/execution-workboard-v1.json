@@ -3639,9 +3639,9 @@
           {
             "name": "Eigen initiatief",
             "state": "incomplete",
-            "label": "Context hersteld · dagelijks vervolg nog open",
-            "result": "Eigen uitvoering en aflevering zijn eerder bewezen met technische hulp. Nu krijgt ook gewone latere oriëntatie de inhoud van drie eigen resultaten terug; bronnen en data blijven zichtbaar.",
-            "remaining": "Zonder aansturing passende eigen activiteiten voortzetten, resultaat terugbrengen en later gebruiken; dagelijks nut blijft onbewezen.",
+            "label": "Nieuwe initiatiefbeoordelingen geblokkeerd",
+            "result": "De laatste bevestigde spontane privémelding kwam op 24 oktober om 17.03 uur. Een terugmelding over eigen werk werd nog op 26 oktober om 16.40 uur afgeleverd. De privébeoordeling van 30 oktober liep vast met HTTP 429; de huishoudbeoordeling van 24 oktober bleef ook open. Het geregistreerde modelverbruik is voor beide onbekend.",
+            "remaining": "De twee afgebroken beoordelingen sluiten via de eigenaarroute zodra de eigenaar dit bevestigt. Daarna controleren of een nieuwe gewone beoordeling de route weer doorloopt. Dagelijks passend initiatief en nut blijven open.",
             "evidencePaths": [
               "development/evidence/product/i1-private-contribution-readback-20261002.json",
               "development/evidence/product/i2-self-chosen-research-installed-20261005.json",
@@ -3657,9 +3657,10 @@
               "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
               "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
               "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-              "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json"
+              "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+              "development/evidence/product/initiative-continuity-live-readback-20261107.json"
             ],
-            "checkedAt": "2026-10-18T21:19:30.157725+00:00"
+            "checkedAt": "2026-11-07T08:32:27.193500+00:00"
           },
           {
             "name": "Zelfstandig werk",

@@ -16,7 +16,7 @@ Volgende stap: De rolgebonden herstelroute draait in de kern, worker en beoordel
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geïnstalleerd · E4.11 technische opschoning open | Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut. |
-| Eigen initiatief | Context hersteld · dagelijks vervolg nog open | Zonder aansturing passende eigen activiteiten voortzetten, resultaat terugbrengen en later gebruiken; dagelijks nut blijft onbewezen. |
+| Eigen initiatief | Nieuwe initiatiefbeoordelingen geblokkeerd | De twee afgebroken beoordelingen sluiten via de eigenaarroute zodra de eigenaar dit bevestigt. Daarna controleren of een nieuwe gewone beoordeling de route weer doorloopt. Dagelijks passend initiatief en nut blijven open. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
 ## Prioriteitsvolgorde (gegenereerd)

@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-11-07T08:32:27.193500+00:00",
+  "scope": "Owner-scoped initiative histories and delivery receipts on the installed Eva2 runtime",
+  "readOnly": true,
+  "observationWindowDays": 28,
+  "privateReviewCounts": {
+    "opened": 249,
+    "closedWithWillDecision": 239,
+    "silenceWithoutAdoption": 212,
+    "silenceWithAdoption": 18,
+    "spontaneousPrivateTelegramDeliveries": 9,
+    "uncertain": 10
+  },
+  "latestSpontaneousPrivateTelegramDeliveryAt": "2026-10-24T15:03:41+00:00",
+  "ownerInitiativeTelegramResultDeliveries": 11,
+  "latestOwnerInitiativeTelegramResultDeliveryAt": "2026-10-26T15:40:18+00:00",
+  "unresolvedReviews": {
+    "private": {
+      "phase": "will_usage_uncertain",
+      "since": "2026-10-30T12:24:13+00:00",
+      "httpStatus": 429,
+      "usage": null,
+      "verifiedEvents": 4
+    },
+    "household": {
+      "phase": "will_usage_uncertain",
+      "since": "2026-10-24T16:12:22+00:00",
+      "httpStatus": null,
+      "usage": null,
+      "verifiedEvents": 4,
+      "hasRequiredProspectiveRecoveryLocalReturnProof": false
+    }
+  },
+  "recoveryPreflight": {
+    "bothSourceBindingsAndHistoryHashesVerified": true,
+    "bothRevisionsAndCheckpointsMatched": true,
+    "externalEffectEventInEitherHistory": false,
+    "ownerRecoveryExecuted": false,
+    "newModelCallsDuringReadback": 0,
+    "telegramMessagesSentDuringReadback": 0
+  },
+  "interpretation": [
+    "A nonterminal private review holds the next scheduled review in that lane.",
+    "The current household review lacks a mandatory local return proof for its narrow prospective recovery.",
+    "HTTP 429 leaves the underlying limit and actual usage unresolved.",
+    "Delivery receipts establish accepted transport, without establishing whether the owner read a message."
+  ],
+  "verifiedSource": [
+    "src/eva/adapters/postgres/sensory_events.py",
+    "src/eva/adapters/postgres/owner_initiatives.py",
+    "src/eva/adapters/postgres/initiative_delivery.py"
+  ]
+}
