@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen.",
+    "nextAction": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
     "executionStep": "Observe a fresh real autonomous repair and later reuse",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-07T08:27:00.930248+00:00",
+    "checkedAt": "2026-11-07T08:56:30.100689+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -1660,6 +1660,24 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Providerfouten starten geen zelfreparatie meer",
+            "state": "installed",
+            "summary": "Eva behoudt de oorspronkelijke fout bij een bekende gebruikslimiet of provideruitval.",
+            "result": "De rolgebonden herstelroute draait. De kern geeft bekende providerlimieten en provideruitval door via de bestaande foutroute, zodat Eva daarvoor geen eigen reparatietaak start. Vijf gerichte tests, onafhankelijke nacontrole en vier overeenkomende werkprofielen bevestigen deze correctie.",
+            "remaining": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.",
+            "source": "development/evidence/reassessment/e416-provider-failure-routing-installed-20261107.json",
+            "review": "development/evidence/reassessment/e416-provider-failure-routing-installed-20261107.json",
+            "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+            "installedAt": "2026-11-07T08:53:08.084066016Z",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "Rolgebonden herstelroute van Eva geïnstalleerd",
             "state": "installed",
@@ -3529,15 +3547,15 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Rolgebonden herstelroute van Eva geïnstalleerd",
+          "title": "Providerfouten starten geen zelfreparatie meer",
           "state": "installed",
-          "summary": "Eva kan de herstelroute beperken tot de kern of worker waar de foutbron aantoonbaar aanwezig is. De route bindt de andere rol aan haar bestaande versie en controleert die rond de wissel.",
-          "result": "Afgesloten proeven voor beide rollen zijn geslaagd. De live bronselectie, vier overeenkomende werkprofielen en bewaarde herstelbewijzen zijn onafhankelijk gecontroleerd.",
-          "remaining": "De volledige E4.16-kringloop vereist nog een nieuwe werkelijke fout, zelfstandige reparatie en later hergebruik.",
-          "source": "development/evidence/reassessment/e416-single-role-repair-installed-20261107.json",
-          "review": "development/reviews/e416-single-role-installed-independent-20261107.json",
-          "checkedAt": "2026-11-07T08:25:57.026531+00:00",
-          "installedAt": "2026-11-07T08:24:48.934731+00:00",
+          "summary": "Eva behoudt de oorspronkelijke fout bij een bekende gebruikslimiet of provideruitval.",
+          "result": "De rolgebonden herstelroute draait. De kern geeft bekende providerlimieten en provideruitval door via de bestaande foutroute, zodat Eva daarvoor geen eigen reparatietaak start. Vijf gerichte tests, onafhankelijke nacontrole en vier overeenkomende werkprofielen bevestigen deze correctie.",
+          "remaining": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.",
+          "source": "development/evidence/reassessment/e416-provider-failure-routing-installed-20261107.json",
+          "review": "development/evidence/reassessment/e416-provider-failure-routing-installed-20261107.json",
+          "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+          "installedAt": "2026-11-07T08:53:08.084066016Z",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
           "controlledRuntimeVerificationPassed": true,
@@ -3549,12 +3567,12 @@
         "now": {
           "taskId": "E4.16",
           "title": "E4.16 · Een nieuwe echte autonome reparatie aantonen",
-          "summary": "De rolgebonden herstelroute draait. Een zelfstandige reparatie en later hergebruik zijn de volgende proef.",
-          "detail": "De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen.",
+          "summary": "Bekende providerfouten zijn gescheiden van Eva’s eigen herstelwerk.",
+          "detail": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Eva online · rolgebonden herstelroute geverifieerd",
-          "checkedAt": "2026-11-07T08:27:00.930248+00:00",
-          "nextAction": "De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen."
+          "state": "Eva online · providerfoutafhandeling geverifieerd",
+          "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+          "nextAction": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik."
         },
         "next": {
           "taskId": "E4.15",
@@ -3566,12 +3584,12 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T08:27:00.930248+00:00",
-        "reviewedAt": "2026-11-07T08:27:00.930248+00:00",
+        "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+        "reviewedAt": "2026-11-07T08:56:30.100689+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-11-07T08:27:00.930248+00:00",
-      "checkedAt": "2026-11-07T08:27:00.930248+00:00",
+      "checkedAt": "2026-11-07T08:56:30.100689+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3709,7 +3727,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T08:27:00.930248+00:00",
+      "lastUpdatedAt": "2026-11-07T08:56:30.100689+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3743,7 +3761,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T08:27:00.930248+00:00",
+      "updatedAt": "2026-11-07T08:56:30.100689+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -9132,7 +9150,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Een echte nieuwe fout moet via de nu geïnstalleerde herstelroute volledig zelfstandig worden afgehandeld. Onafhankelijke beoordeling, gedragscontrole na installatie en later zelfstandig hergebruik moeten worden aangetoond.",
-                "nextAction": "De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen.",
+                "nextAction": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -9170,9 +9188,9 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-07T08:27:00.930248+00:00",
-                "progress": "De rolgebonden herstelroute is gebouwd, beproefd en onafhankelijk op de geïnstalleerde versie gecontroleerd. De selectie gebruikt de waargenomen bronhash en aantoonbare afwezigheid bij de andere rol. Vier werkprofielen, 62 criteria, 9 historische ontvangstbewijzen en 103 werkmarkeringen zijn bevestigd. Een nieuwe echte autonome herstelkringloop met later hergebruik staat nog open.",
-                "latestEvidence": "development/evidence/reassessment/e416-single-role-repair-installed-20261107.json",
+                "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+                "progress": "De rolgebonden herstelroute draait. De kern geeft bekende providerlimieten en provideruitval door via de bestaande foutroute, zodat Eva daarvoor geen eigen reparatietaak start. Vijf gerichte tests, onafhankelijke nacontrole en vier overeenkomende werkprofielen bevestigen deze correctie. Een volledige autonome reparatie met later hergebruik staat open.",
+                "latestEvidence": "development/evidence/reassessment/e416-provider-failure-routing-installed-20261107.json",
                 "scopedTelegramRepairAuthorization": {
                   "at": "2026-10-27T07:47:07.435768+00:00",
                   "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -9650,6 +9668,13 @@
                     "public_research",
                     "shared_provider"
                   ]
+                },
+                "providerFailureRouting20261107": {
+                  "status": "installed_independently_verified",
+                  "evidence": "development/evidence/reassessment/e416-provider-failure-routing-installed-20261107.json",
+                  "installedAt": "2026-11-07T08:53:08.084066016Z",
+                  "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+                  "fullCardCompleted": false
                 }
               },
               {
@@ -10326,7 +10351,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen.",
+        "nextAction": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -10338,7 +10363,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T08:27:00.930248+00:00",
+        "updatedAt": "2026-11-07T08:56:30.100689+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10617,7 +10642,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T08:27:00.930248+00:00",
+        "checkedAt": "2026-11-07T08:56:30.100689+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -16277,7 +16302,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Een echte nieuwe fout moet via de nu geïnstalleerde herstelroute volledig zelfstandig worden afgehandeld. Onafhankelijke beoordeling, gedragscontrole na installatie en later zelfstandig hergebruik moeten worden aangetoond.",
-              "nextAction": "De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen.",
+              "nextAction": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -16315,9 +16340,9 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-07T08:27:00.930248+00:00",
-              "progress": "De rolgebonden herstelroute is gebouwd, beproefd en onafhankelijk op de geïnstalleerde versie gecontroleerd. De selectie gebruikt de waargenomen bronhash en aantoonbare afwezigheid bij de andere rol. Vier werkprofielen, 62 criteria, 9 historische ontvangstbewijzen en 103 werkmarkeringen zijn bevestigd. Een nieuwe echte autonome herstelkringloop met later hergebruik staat nog open.",
-              "latestEvidence": "development/evidence/reassessment/e416-single-role-repair-installed-20261107.json",
+              "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+              "progress": "De rolgebonden herstelroute draait. De kern geeft bekende providerlimieten en provideruitval door via de bestaande foutroute, zodat Eva daarvoor geen eigen reparatietaak start. Vijf gerichte tests, onafhankelijke nacontrole en vier overeenkomende werkprofielen bevestigen deze correctie. Een volledige autonome reparatie met later hergebruik staat open.",
+              "latestEvidence": "development/evidence/reassessment/e416-provider-failure-routing-installed-20261107.json",
               "scopedTelegramRepairAuthorization": {
                 "at": "2026-10-27T07:47:07.435768+00:00",
                 "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -16795,6 +16820,13 @@
                   "public_research",
                   "shared_provider"
                 ]
+              },
+              "providerFailureRouting20261107": {
+                "status": "installed_independently_verified",
+                "evidence": "development/evidence/reassessment/e416-provider-failure-routing-installed-20261107.json",
+                "installedAt": "2026-11-07T08:53:08.084066016Z",
+                "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+                "fullCardCompleted": false
               }
             },
             {
@@ -17471,7 +17503,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen.",
+      "nextAction": "Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -17483,7 +17515,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T08:27:00.930248+00:00",
+      "updatedAt": "2026-11-07T08:56:30.100689+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17762,7 +17794,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T08:27:00.930248+00:00",
+      "checkedAt": "2026-11-07T08:56:30.100689+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

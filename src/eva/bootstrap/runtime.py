@@ -759,12 +759,17 @@ class PostgresHindsightMemoryRuntime:
         turn: ConversationTurn,
         recent_messages: tuple[RecentConversationMessage, ...] = (),
     ) -> GroundedReply:
+        from eva.adapters.model.contracts import (
+            ConversationModelRateLimited, ConversationModelUnavailable,
+        )
         from eva.application.initiative_execution import current_initiative
         if current_initiative() is not None:
             return self._respond_admitted(turn, recent_messages)
         with self._cold_path.foreground():
             try:
                 return self._respond_admitted(turn, recent_messages)
+            except (ConversationModelRateLimited, ConversationModelUnavailable):
+                raise
             except Exception as error:
                 from eva.bootstrap.self_repair import repair_failed_turn
                 reply = repair_failed_turn(self, turn, error)

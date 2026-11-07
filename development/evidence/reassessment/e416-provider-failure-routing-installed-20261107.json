@@ -1,0 +1,47 @@
+{
+  "contract": "EvaProviderFailureRoutingInstalledOutcome/v1",
+  "checkedAt": "2026-11-07T08:56:30.100689+00:00",
+  "installedAt": "2026-11-07T08:53:08.084066016Z",
+  "outcome": "Typed model-provider rate limits and unavailability propagate without creating a self-repair goal.",
+  "observedTrigger": {
+    "observedAt": "2026-11-04T23:37:05+00:00",
+    "originalFailure": "ConversationModelRateLimited",
+    "repairWorkGenerations": 2,
+    "bothRepairAttemptsRateLimited": true,
+    "toolCallsInEachRepairAttempt": 0,
+    "repairResultAvailable": false
+  },
+  "installedScope": {
+    "changedModule": "src/eva/bootstrap/runtime.py",
+    "beforeSourceSha256": "72d2e37b73fd694fa8d8110cae9da557610d06ffcba8e00604288bbead850b1e",
+    "installedSourceSha256": "094b7cd5646ac2678cbf1a9663621a992b40fa4ef84b7cc86c29ca70e9f5e99d",
+    "beforeCoreImage": "sha256:e9394f80523aaf35ee1eacf7a9cd581210a859f428a226edec807c5f48014f45",
+    "coreImage": "sha256:0e9a9e12d90fe5afb5baf2bb3563ffc2d989937439b1968cc6d0c2271f47e084",
+    "retainedWorkerImage": "sha256:3cf9703f1e08974d86cac3b1e4d6d8e0095bdf42ec99636d050cb3f0c7a176b3",
+    "workerGenerationPreserved": true,
+    "evaluatorReadyWithSameConfiguration": true,
+    "matchingRuntimeProfiles": [
+      "digital_work",
+      "household_research",
+      "public_research",
+      "shared_provider"
+    ]
+  },
+  "verification": {
+    "focusedTests": "development/tests/bootstrap/test_self_repair_intake.py",
+    "focusedTestsPassed": 5,
+    "testSeconds": 2.0,
+    "originalTypedExceptionPreserved": true,
+    "internalFailuresStillEnterRepairIntake": true,
+    "stopAndCancellationStillDeclined": true,
+    "independentSourceReview": "approved",
+    "independentActivationPlanReview": "approved",
+    "independentInstalledReadback": "verified",
+    "modelCallsForVerification": 0,
+    "historicalAttemptsReplayed": false,
+    "newAutonomousRepairClosed": false
+  },
+  "activationPlanSha256": "72ee10c82a3e4ce0565b009627aa2f1b496dcb22495525a191f37e717a8e2e25",
+  "activationReceiptSha256": "15fae462f944713e30c8aaeac145da9b8c3d13bc5a1a5239f1db367a1652eb9d",
+  "sdkReceiptSha256": "40a86998ae7ea8119717a8abd8613336280d776a36cc5c735df0c626c6bef7d8"
+}

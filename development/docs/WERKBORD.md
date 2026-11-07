@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: De rolgebonden herstelroute draait in de kern, worker en beoordelaar. De volgende E4.16-stap is een nieuwe werkelijke fout via de bestaande autonome route laten herstellen en later zelfstandig hergebruik aantonen. Behoud de afzonderlijke beoordeling, STOP, bronbinding en bestaande herstelbewijzen.
+Volgende stap: Volg de eerstvolgende echte interne fout door de bestaande autonome route tot onafhankelijke beoordeling, installatie en gedragscontrole. Bevestig daarna later zelfstandig hergebruik.
 
 ## Voortgang
 
