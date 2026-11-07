@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Telegram1.46.0 is volledig technisch opgeleverd: aparte pakketmap, dezelfde Node22.23.4 en bron-/eigenaarinstellingen,115 oorspronkelijke opslagregels exact behouden en dezelfde accountbinding éénmaal gecontroleerd zonder testbericht. De bestandsupdate is eveneens opgeleverd. Volgende concrete uitkomst: de bestaande Chrome-koppeling bijwerken met behoud van zeven acties, eigenaartab/grant/STOP en bestaande tijdslimieten. Daarna de beeld-/dashboardgroep, afzonderlijke fotobibliotheek en overige actieve pakketten afmaken. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.
+Volgende stap: Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.
 
 ## Voortgang
 

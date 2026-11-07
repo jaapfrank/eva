@@ -1,0 +1,12 @@
+{
+  "contract": "EvaPlaywrightNoBrowserServerPatch/v1",
+  "package": "playwright-core",
+  "version": "1.65.0-alpha-2026-10-30",
+  "path": "node_modules/playwright-core/lib/coreBundle.js",
+  "beforeSha256": "3c1b6ff9aa60fdf720ab73f8cdcdd647841eb3a266cfc1263a300664dd9a3fae",
+  "afterSha256": "14737329a4de238e487d682dfe7fcdc1c73cec02d96535b96d547d796a8d23d3",
+  "patchSha256": "f21859f0d8176e5f88943bf8ab15f848d6b1d0368ab3248285149fe851f1c8f3",
+  "defaultBehaviorUnchanged": true,
+  "newAuthorization": false,
+  "registrySignaturesScope": "Original package tarballs only; this explicit source derivative is separately hash-bound and reviewed."
+}

@@ -1,0 +1,75 @@
+{
+  "contract": "EvaChromeInstalledMaintenance/v1",
+  "status": "installed_independently_verified",
+  "installedAt": "2026-11-07T02:49:17.003837+00:00",
+  "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+  "playwrightMcp": "0.0.84",
+  "linuxAndWindowsNode": "22.23.4",
+  "runtimePrefix": "/opt/eva2/managed-runtimes/chrome-mcp-0.0.84-no-bind-20261107",
+  "activationReceiptSha256": "ca385638660d7c59884e919b8ee66033cb4956d8555cfbac5bed885b0d3a15c6",
+  "independentActualReadbackSha256": "377294c2c5eaff126c11f37e5196dad457513e76086e99ca3bc644d260cc2edf",
+  "installedReview": "development/reviews/chrome-installed-independent-20261107.json",
+  "installedReviewSha256": "4a3371a2cded5b863939c97eb5360c56d8d61add1555fb85738e44769cdbaeb9",
+  "sourcePublicationSha256": "d374328e9840d4d5b823405f8ee30f3e60b4fbba8c416558c7b95b497d98b1da",
+  "publishedFiles": {
+    "deploy/chrome-bridge/worker.cjs": "dc26b20e0133310995ec1f19b2234a336cd3c20d917a27518498b2bbb31fe7e6",
+    "deploy/chrome-bridge/package.json": "3a030cfd52771fb1485df216f069ebe35eb2c49025d00f8e8718ae7de19ec8d2",
+    "deploy/chrome-bridge/package-lock.json": "381feb992c95a452482f9f672f18006b3a220ca444796d221945929180a08dd0",
+    "deploy/chrome-bridge/extension-attach.cjs": "e3ef985d392dc3687be6663f00e696734d7364e1d1cc5e2ab11b373931b67038",
+    "deploy/chrome-bridge/extension-attach.json": "a359ac86a3c146ccbca36398159bd4eb5e1f7677c5a5286161ccb775dd42e7ec",
+    "deploy/chrome-bridge/worker-contract.test.mjs": "d73c4912fd46a5f184f645dd9747a5a6c6a42c601476df9296d2f7823ef08b33",
+    "deploy/chrome-bridge/core-no-bind.patch": "f21859f0d8176e5f88943bf8ab15f848d6b1d0368ab3248285149fe851f1c8f3",
+    "deploy/chrome-bridge/no-bind-manifest.json": "37bc180316b1edb082f8ad0510bb7dab8062fdfc87b52a43a1ef2ff047d58779",
+    "deploy/chrome-bridge/apply-native-no-bind.cjs": "c5dea96a1be307781908f4579c0aa6b1c9155537c31d1d1d2409ca9333c0ac15",
+    "deploy/chrome-bridge/README.md": "26b791da29e1be3d84eddd905f2950ae40984da94ccb15529f5fd1e083a6230f",
+    "deploy/chrome-bridge/no-bind-derivative.test.cjs": "946548bb1cc06486824df42e7113800eb7dd7cbea55b1685c81e137c7d2545db",
+    "deploy/chrome-bridge/native-bind-contract.cjs": "9f1575cf113c0919fe8c6cccab66d76e6b751fa4ca18faa648cb3a7ab00776ae"
+  },
+  "protocol": {
+    "existingActions": 7,
+    "ownerConfigurationChanges": [
+      "workerArgs[0]",
+      "workerArgs[1]",
+      "packagePath"
+    ],
+    "grantState": "disconnected",
+    "restoredGrants": 0,
+    "extensionConnections": 0,
+    "ownerBrowserActions": 0,
+    "gatewayRequestBudgetMilliseconds": 15000,
+    "outerVerificationBudgetMilliseconds": 20000,
+    "browserActionBudgetUnchanged": true,
+    "proxySourceSha256": "42c873ec421ec2a666df4d999420e2d34f028f37fdb7109f4572ca312d6782d7",
+    "tokenAndOwnerBindingsPreserved": true,
+    "completeClosedPrefixManifestsVerified": true,
+    "reviewedVendorDerivativeSeparateFromSignedOriginal": true
+  },
+  "guardedPause": {
+    "originalReceiptSha256": "ea948712df4b8c55160212dbd74d64273a2b7eeddd20515ad7a51cac35cfba4e",
+    "cause": "Docker mount array ordering varied while complete dictionaries and multiplicities were identical",
+    "independentSnapshots": 24,
+    "rawMountOrders": 3,
+    "sameJournalResumed": true,
+    "stageReplayed": false,
+    "disconnectReplayed": false,
+    "otherOriginalFencesPreserved": true,
+    "continuationReview": "development/reviews/chrome-mount-order-continuation-independent-20261107.json",
+    "historicalSourcePlanReceiptPreserved": true
+  },
+  "verification": {
+    "installerTestsPassed": 34,
+    "mountContinuationTestsPassed": 12,
+    "actualRunningGenerationVerified": true,
+    "actualCatalogueEntries": 7,
+    "actualCoreSourceBudgetVerified": true,
+    "ownerExtensionActuallyUsed": false,
+    "householdAcceptance": false,
+    "fullE416Complete": false
+  },
+  "usage": {
+    "developmentVerificationModelRequests": 0,
+    "runtimeOwnerBrowserActionsDuringVerification": 0,
+    "credits": null,
+    "cost": null
+  }
+}

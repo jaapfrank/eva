@@ -1,0 +1,25 @@
+{
+  "reviewer": "/root/independent_review",
+  "scope": "Chrome closed-prefix selection installer, without owner extension attachment",
+  "approved": false,
+  "decision": "NO_GO_PENDING_PREFIX_DURABILITY",
+  "installerSha256": "7e437138a35440acd2e5e8549b41064d18b4a3f9422aa6e2a89a413e3764c7de",
+  "planSha256": "ffd475da5e41b6f1fae50dfd4fa5acc93219ee5850fe7c1add33ed54aa3fc6cd",
+  "freezeSha256": "71e40a4f0389a712aebb3077d7043d8de28b5b7a3716481fa65d855ceb9ceacf",
+  "finding": {
+    "priority": "P1",
+    "file": "install.py",
+    "line": 89,
+    "detail": "stage copies and validates the payload, renames its directory, and fsyncs only the enclosing directory. No regular payload file or internal directory is fsynced before a durable success receipt and subsequent configuration selection. Persist payload contents and internal directory entries before publication; fsync failures must prevent publication/selection."
+  },
+  "verified": [
+    "All 21 frozen artifact hashes match.",
+    "Independent 29 transition tests passed in 0.136 seconds.",
+    "Known unit generation and terminal-exit bindings, ESRCH handling, no-replay states, durable config/receipt parents, owner epoch CAS and explicit rollback were reviewed.",
+    "Actual current server registers SIGTERM/SIGINT cleanup ending exit zero; current process catches both signals.",
+    "Full old/new tool catalogues and preserved 15-second gateway/20-second outer verification budgets remain bound; real owner extension use remains unproved."
+  ],
+  "productionActions": 0,
+  "modelRequests": 0,
+  "ownerBrowserActions": 0
+}

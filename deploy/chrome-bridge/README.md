@@ -14,9 +14,16 @@ zonder herhaling of nieuwe verbinding; de permanente registratie is teruggelezen
 niet als bewijs. De eerdere losse extensieclient is gestopt; geen bestaande
 tabdeling wordt stilzwijgend hergebruikt.
 
-`worker.cjs` hergebruikt Microsoft Playwright MCP **0.0.80**, met de exacte
-lockfile. De interne `playwright-core/lib/coreBundle`-API is versiegebonden;
-een upgrade vereist opnieuw testen. Geen patch van upstream broncode.
+`worker.cjs` gebruikt Microsoft Playwright MCP **0.0.84** met de exacte
+lockfile en de publieke `createConnection`- en MCP-clientcontracten voor de
+zeven acties. Alleen `extension-attach.cjs` blijft aan de exacte upstreambron
+gebonden. Een gecontroleerde, afzonderlijk geregistreerde wijziging laat de
+fabriek uitsluitend voor deze adapter géén extra Playwright-pipe/serverregister
+openen; de normale upstreamtak blijft gelijk. `no-bind-manifest.json` bindt de
+ongewijzigde tarballbron en de aangepaste bron met afzonderlijke hashes.
+De nieuwe eigenaarextensie is hierbij niet werkelijk aangeraakt: de nieuwe
+versie is met afzonderlijke headless browsers beproefd; een nieuwe tabdeling
+blijft een expliciete eigenaarshandeling.
 De officiële extensie kiest een bestaand Chrome-tabblad met **Allow & select**.
 De worker start die dialoog uitsluitend na een lokale eigenaarsklik. Er wordt
 geen extensietoken gebruikt, profiel gekopieerd of CDP-poort gepubliceerd.
@@ -47,7 +54,11 @@ automatisch worden herhaald.
 
 ## Installatie en verbinding
 
-`npm ci --ignore-scripts` installeert de vastgezette afhankelijkheden.
+`npm ci --ignore-scripts` installeert de vastgezette afhankelijkheden. Voer
+daarná expliciet `node apply-native-no-bind.cjs` uit en controleer de hashes
+voordat een nieuw runtimeprefix wordt gebruikt. De native wijziging is een
+zichtbare afgeleide van de ondertekende npm-tarball; de tarballhandtekening
+wordt niet als handtekening van de gewijzigde installatie voorgesteld.
 De WSL-gebruikersdienst `eva-chrome-bridge.service` draait `server.mjs` met een
 privéconfiguratie buiten de repository. Deze bevat Windows-node en workerpaden,
 `ownerPort`, `mcpSocket`, `packagePath` en `tokenFile`. WSL-start gebruikt

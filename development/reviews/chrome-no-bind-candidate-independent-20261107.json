@@ -1,0 +1,57 @@
+{
+  "contract": "EvaIndependentChromeNoBindCorrectiveCandidateReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:20:34.581741+00:00",
+  "decision": "GO_CORRECTED_CANDIDATE_ONLY",
+  "installationApproved": false,
+  "freezeSha256": "9288ad195868e7c92115d2ed711d6772110c0b45c4b8536399403bcf06a17aba",
+  "summarySha256": "02791ccf4a3344b2526433744d4e68b803c185e6b1a95d791a61bbf3c2d174e2",
+  "supersededFindingReviewSha256": "ef396db90db035080d3d6b9e2407f997a0a4f6f08d5d924f581393d0e6508e19",
+  "previousOriginalFreezePreserved": true,
+  "sourceHashes": {
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/worker.cjs": "dc26b20e0133310995ec1f19b2234a336cd3c20d917a27518498b2bbb31fe7e6",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/package.json": "3a030cfd52771fb1485df216f069ebe35eb2c49025d00f8e8718ae7de19ec8d2",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/package-lock.json": "381feb992c95a452482f9f672f18006b3a220ca444796d221945929180a08dd0",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/extension-attach.cjs": "e3ef985d392dc3687be6663f00e696734d7364e1d1cc5e2ab11b373931b67038",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/extension-attach.json": "a359ac86a3c146ccbca36398159bd4eb5e1f7677c5a5286161ccb775dd42e7ec",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/worker-contract.test.mjs": "d73c4912fd46a5f184f645dd9747a5a6c6a42c601476df9296d2f7823ef08b33",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/core-no-bind.patch": "f21859f0d8176e5f88943bf8ab15f848d6b1d0368ab3248285149fe851f1c8f3",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/no-bind-manifest.json": "37bc180316b1edb082f8ad0510bb7dab8062fdfc87b52a43a1ef2ff047d58779",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/apply-native-no-bind.cjs": "c5dea96a1be307781908f4579c0aa6b1c9155537c31d1d1d2409ca9333c0ac15",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/README.md": "26b791da29e1be3d84eddd905f2950ae40984da94ccb15529f5fd1e083a6230f",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/no-bind-derivative.test.cjs": "946548bb1cc06486824df42e7113800eb7dd7cbea55b1685c81e137c7d2545db",
+    "/var/lib/eva2/finalization-20261107/chrome-telegram-upgrade/chrome-candidate-no-bind/native-bind-contract.cjs": "9f1575cf113c0919fe8c6cccab66d76e6b751fa4ca18faa648cb3a7ab00776ae"
+  },
+  "independentChecks": {
+    "allFrozenInputsMatched": true,
+    "npmFilesCompared": 3844,
+    "exactlyOneNpmSourceFileChanged": "playwright-core/lib/coreBundle.js",
+    "patchedCoreSha256": "14737329a4de238e487d682dfe7fcdc1c73cec02d96535b96d547d796a8d23d3",
+    "ownTestsPassed": 9,
+    "testLogSha256": "485d8a86f75b21a9b9a3861f2da45b86ee1a25910aa5bd3ce467b44428818c2c",
+    "reviewerOwnerBrowserActions": 0,
+    "reviewerModelRequests": 0
+  },
+  "evidence": {
+    "native-bind-proof.cjs": "9f1575cf113c0919fe8c6cccab66d76e6b751fa4ca18faa648cb3a7ab00776ae",
+    "native-windows-bind-proof-r3.json": "605a612f38980524145abf08c3dc3fb9fb5dbf45ddf5629ab94fd6207951dc5c",
+    "windows-seven-no-bind-proof.json": "89709130afc96f8ff752cbf2bedb98cb7e66346f62b07a59e3b86c4c1918a6ae",
+    "no-bind-node-modules-preservation.json": "b72bdd56b42cb9b685ea59d6b9201c8ff957f3a361ffbbc3b2d308bd10a367e4"
+  },
+  "assessment": [
+    "One explicit vendor-factory expression skips browser.bind only when the adapter passes literal evaNoBind:true. Default upstream behavior remains unchanged; no alternative control endpoint is introduced. Source/version/hash guard requires the exact derivative before extension attachment.",
+    "The formerly identified added IPC route is absent before creation, rather than opened and later unbound. Actual isolated Windows native common-factory proof observes net.Server.listen without changing behavior: defaultfalse branch opens one browserpipe/registry endpoint and proves a second client can connect; true branch has zero listen/registry/discoverablepipes and still reads its synthetic page. Both clean up; this closes the concrete priorfinding.",
+    "Independent full npm-file comparison shows3844files with exactly one source delta. Original tarball signatures are accurately scoped to original artifacts; derivative patch/baseline/after hashes are explicit. Four own derivative tests reject unknown bytes/patch drift/hardlinks and prove exact reproducible/idempotent preparation; five worker boundary cases remain green.",
+    "Patched Windows seven-action/newpage/STOP/reconnect tests retain ownergate restrictions. Production route still requires explicit owner connect and same existing extension selection; tools cannot reconnect.",
+    "Telegram scope is unchanged from the separate original candidateGO; no need to repeat or relabel its evidence."
+  ],
+  "remainingActualRolloutGates": [
+    "Separate immutable-prefix preparation must run the exact reviewed vendor patch and verify all3844source/dependency hashes, with same managed Node22.23.4 and source/config ownership.",
+    "Separate current-generation installer review must preserve existing disconnected ownerstate, no browser/model/send actions or implicit reconnect; retain old prefixes/config/journal receipts.",
+    "Actual owner extension handshake has not been exercised on the new version. Keep this limitation explicit and require a fresh intentional owner selection when that route is used; synthetic common-factory evidence is not owner acceptance."
+  ],
+  "limitations": [
+    "Candidate-only approval; no repository/runtime application, service lifecycle, ownerbrowser use or installation approval by reviewer.",
+    "No new family acceptance, fullE4.16 completion, signed-derivative claim or browser-performance improvement claim."
+  ]
+}

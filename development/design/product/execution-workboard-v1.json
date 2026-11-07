@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Telegram1.46.0 is volledig technisch opgeleverd: aparte pakketmap, dezelfde Node22.23.4 en bron-/eigenaarinstellingen,115 oorspronkelijke opslagregels exact behouden en dezelfde accountbinding éénmaal gecontroleerd zonder testbericht. De bestandsupdate is eveneens opgeleverd. Volgende concrete uitkomst: de bestaande Chrome-koppeling bijwerken met behoud van zeven acties, eigenaartab/grant/STOP en bestaande tijdslimieten. Daarna de beeld-/dashboardgroep, afzonderlijke fotobibliotheek en overige actieve pakketten afmaken. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
+    "nextAction": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
-    "executionStep": "Host library environments delivered live; install reviewed auxiliary/native revocation batch then Node/MCP",
+    "executionStep": "Chrome technical delivery complete; activate reviewed face CPU and dashboard batch next",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-06T23:40:53.344878+00:00",
+    "checkedAt": "2026-11-07T02:52:06.809726+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -1660,6 +1660,24 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Bestaande browserkoppeling bijgewerkt — 7 november",
+            "state": "verified",
+            "summary": "PlaywrightMCP0.0.84 draait in een afgesloten eigen pakketmap met de zeven bestaande browseracties. Node22.23.4, bron-/accountbindingen, toegang, STOP en tijdgrenzen zijn behouden. De geïnstalleerde dienst en catalogus zijn onafhankelijk teruggelezen.",
+            "remaining": "De browser staat losgekoppeld. Werkelijk eigenaargebruik en gezinsacceptatie zijn hiermee niet aangetoond. Overige actieve updates en volledige E4.16-autonomie blijven open.",
+            "source": "development/evidence/reassessment/maintenance-updates-20261106/chrome-installed.json",
+            "review": "development/reviews/chrome-installed-independent-20261107.json",
+            "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+            "installedAt": "2026-11-07T02:49:17.003837+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "actuallyUsed": false,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "Telegrambibliotheek bijgewerkt — 7 november",
             "state": "verified",
@@ -3387,17 +3405,18 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Toegangsfout hersteld en vier hulpdiensten bijgewerkt — 7 november",
+          "title": "Bestaande browserkoppeling bijgewerkt — 7 november",
           "state": "verified",
-          "summary": "Hindsight1.2 controleert de huidige toegang vóór iedere modelverzending. Vier ondersteunende diensten gebruiken Python3.12.16; toegangsdiensten en browserproxy sluiten gecontroleerd af. De echte geheugenproef en onafhankelijke teruglezing slagen. Bron-, lease-, STOP-, netwerk- en persoonsgrenzen zijn behouden.",
-          "remaining": "Node26/filesystemMCP2.2 en overige actieve afhankelijkheden volgen. De volledige autonome E4.16-kringloop, E4.11-residuen en gezinsacceptatie blijven open.",
-          "source": "development/evidence/reassessment/auxiliary-python-auth-20261106/installed.json",
-          "review": "development/reviews/auxiliary-five-role-installed-independent-20261107.json",
-          "checkedAt": "2026-11-06T23:40:53.344878+00:00",
-          "installedAt": "2026-11-06T23:35:20.041048+00:00",
+          "summary": "PlaywrightMCP0.0.84 draait in een afgesloten eigen pakketmap met de zeven bestaande browseracties. Node22.23.4, bron-/accountbindingen, toegang, STOP en tijdgrenzen zijn behouden. De geïnstalleerde dienst en catalogus zijn onafhankelijk teruggelezen.",
+          "remaining": "De browser staat losgekoppeld. Werkelijk eigenaargebruik en gezinsacceptatie zijn hiermee niet aangetoond. Overige actieve updates en volledige E4.16-autonomie blijven open.",
+          "source": "development/evidence/reassessment/maintenance-updates-20261106/chrome-installed.json",
+          "review": "development/reviews/chrome-installed-independent-20261107.json",
+          "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+          "installedAt": "2026-11-07T02:49:17.003837+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
-          "actuallyUsed": true,
+          "actuallyUsed": false,
+          "controlledRuntimeVerificationPassed": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
           "ownerAcceptance": false,
@@ -3405,13 +3424,13 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "Telegram opgeleverd; Chrome-koppeling volgt",
-          "summary": "Kritieke Hindsight/PydanticAI-stack, native beveiligingsupdates, Node22.23.4-hostdiensten, drie Python-hostomgevingen en aanvullende AUX5/toegangsreparatie zijn geïnstalleerd en geverifieerd.",
-          "detail": "Telegram1.46.0 is volledig technisch opgeleverd: aparte pakketmap, dezelfde Node22.23.4 en bron-/eigenaarinstellingen,115 oorspronkelijke opslagregels exact behouden en dezelfde accountbinding éénmaal gecontroleerd zonder testbericht. De bestandsupdate is eveneens opgeleverd. Volgende concrete uitkomst: de bestaande Chrome-koppeling bijwerken met behoud van zeven acties, eigenaartab/grant/STOP en bestaande tijdslimieten. Daarna de beeld-/dashboardgroep, afzonderlijke fotobibliotheek en overige actieve pakketten afmaken. Spraak blijft bij de bestaande uitvoerder; volledige E4.16-autonomie, E4.11-residuen en gezinsacceptatie blijven open.",
+          "title": "Browserupdate opgeleverd; face CPU en dashboard volgen",
+          "summary": "Hindsight1.2, PydanticAI2.66, de kern-, hulp-, Node-/Python-hostdiensten, bestandsproviders, Telegram en browserkoppeling zijn bijgewerkt en gecontroleerd.",
+          "detail": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Kern online · AUX5 technisch opgeleverd · volgende updategroep in voorbereiding",
-          "checkedAt": "2026-11-06T23:40:53.344878+00:00",
-          "nextAction": "De aanvullende Hindsight-toegangsreparatie en vier Python3.12.16-hulpdiensten zijn geïnstalleerd, echt gebruikt en onafhankelijk teruggelezen. Verlopen/onbeschikbare toegang wordt vóór verzending geweigerd; de toegangsdiensten ronden atomaire publicatie af en de proxy sluit netjes af. Alle 24 oorspronkelijke native tabellen zijn behouden en alle 21 tabellen met eigen proefgegevens zijn leeg. Kern, worker en evaluator draaien weer; vier werkprofielen en bevoegdheden zijn gelijk. Volgende uitkomst: Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties installeren op deze actuele AUX-generatie, na één nieuwe DocE8-overdrachtsproef en afzonderlijke installatiebeoordeling. Daarna overige werkelijk gebruikte afhankelijkheden per compatibele groep. De bestaande spraakoverdracht, volledige E4.16-autonomie en E4.11-residuopruiming blijven open."
+          "state": "Kern online · browserupdate technisch opgeleverd · volgende updategroep in voorbereiding",
+          "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+          "nextAction": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open."
         },
         "next": {
           "taskId": "E4.15",
@@ -3423,12 +3442,12 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-06T23:40:53.344878+00:00",
+        "checkedAt": "2026-11-07T02:52:06.809726+00:00",
         "reviewedAt": "2026-11-06T23:40:53.344878+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-11-07T01:35:11.410279+00:00",
-      "checkedAt": "2026-11-07T01:46:02.786148+00:00",
+      "checkedAt": "2026-11-07T02:32:05.073473+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3564,7 +3583,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T01:46:02.786148+00:00",
+      "lastUpdatedAt": "2026-11-07T02:32:05.073473+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3598,7 +3617,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T01:46:02.786148+00:00",
+      "updatedAt": "2026-11-07T02:32:05.073473+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -9079,20 +9098,20 @@
                   "status": "in_progress",
                   "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                   "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                  "currentOutcome": "Node26/filesystem consumers and separate Telegram1.46 runtime installed and independently verified; same account, storage and authorization retained",
+                  "currentOutcome": "Chrome0.0.84 technisch geïnstalleerd en onafhankelijk teruggelezen; nu bestaande face CPU-/dashboardomgeving bijwerken.",
                   "hindsightInstalled": "1.2.0",
                   "hindsightTarget": "1.2.0",
                   "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                   "ownerActionRequired": false,
                   "fullCardCompleted": false,
-                  "checkedAt": "2026-11-07T01:46:02.786148+00:00",
+                  "checkedAt": "2026-11-07T02:52:06.809726+00:00",
                   "hindsightBuilt": true,
                   "hindsightLiveUpgradeInstalled": true,
                   "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                   "actualAstraSelectionAndExplicitZeroProven": true,
                   "focusedIndependentMemoryTestsPassed": 136,
                   "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                  "installationPending": "ChromeMCP0.0.84; face CPU/dashboard; photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
+                  "installationPending": "Face CPU/dashboard; photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                   "hindsightTechnicalDeliveryComplete": true,
                   "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                   "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -9118,7 +9137,8 @@
                     "filesystemNode": "26.13.0",
                     "filesystemMcp": "2.2.0",
                     "filesystemNodeMcpSdk": "1.32.2",
-                    "telegramGrammy": "1.46.0"
+                    "telegramGrammy": "1.46.0",
+                    "chromePlaywrightMcp": "0.0.84"
                   },
                   "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                   "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -9269,6 +9289,29 @@
                     "realTestMessagesSent": 0,
                     "installedEvidence": "development/evidence/reassessment/telegram-runtime-20261107/installed-delivery.json",
                     "installedReview": "development/reviews/telegram-installed-independent-20261107.json"
+                  },
+                  "chromeMaintenance20261107": {
+                    "status": "installed_independently_verified",
+                    "installed": true,
+                    "targetPlaywrightMcp": "0.0.84",
+                    "existingActions": 7,
+                    "existingNode": "22.23.4",
+                    "newRawBrowserControlBindingAllowed": false,
+                    "ownerAttachPerformed": false,
+                    "installerReview": "development/reviews/chrome-installer-independent-20261107.json",
+                    "fullE416Complete": false,
+                    "prefixesPrepared": true,
+                    "oldHostServiceStillRunning": false,
+                    "configSwitchDispatched": true,
+                    "pauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/chrome-mount-order-pause.json",
+                    "technicalDeliveryComplete": true,
+                    "independentlyReviewed": true,
+                    "installedAt": "2026-11-07T02:49:17.003837+00:00",
+                    "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+                    "actualNewGenerationVerified": true,
+                    "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/chrome-installed.json",
+                    "installedReview": "development/reviews/chrome-installed-independent-20261107.json",
+                    "sourcePublished": true
                   }
                 }
               },
@@ -9946,7 +9989,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De aanvullende Hindsight-toegangsreparatie en vier Python3.12.16-hulpdiensten zijn geïnstalleerd, echt gebruikt en onafhankelijk teruggelezen. Verlopen/onbeschikbare toegang wordt vóór verzending geweigerd; de toegangsdiensten ronden atomaire publicatie af en de proxy sluit netjes af. Alle 24 oorspronkelijke native tabellen zijn behouden en alle 21 tabellen met eigen proefgegevens zijn leeg. Kern, worker en evaluator draaien weer; vier werkprofielen en bevoegdheden zijn gelijk. Volgende uitkomst: Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties installeren op deze actuele AUX-generatie, na één nieuwe DocE8-overdrachtsproef en afzonderlijke installatiebeoordeling. Daarna overige werkelijk gebruikte afhankelijkheden per compatibele groep. De bestaande spraakoverdracht, volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
+        "nextAction": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
         "finishOrder": [
           "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -9958,7 +10001,7 @@
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-06T16:08:09.093414+00:00",
+        "updatedAt": "2026-11-07T02:52:06.809726+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10237,7 +10280,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-06T23:40:53.344878+00:00",
+        "checkedAt": "2026-11-07T02:52:06.809726+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -15989,20 +16032,20 @@
                 "status": "in_progress",
                 "ownerInstruction": "zorg ervoor dat je alles netjes update. Volgens mij is namelijk hindsight en pedantic ai erg belangrijk.",
                 "startedAt": "2026-11-06T16:08:09.093414+00:00",
-                "currentOutcome": "Node26/filesystem consumers and separate Telegram1.46 runtime installed and independently verified; same account, storage and authorization retained",
+                "currentOutcome": "Chrome0.0.84 technisch geïnstalleerd en onafhankelijk teruggelezen; nu bestaande face CPU-/dashboardomgeving bijwerken.",
                 "hindsightInstalled": "1.2.0",
                 "hindsightTarget": "1.2.0",
                 "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                 "ownerActionRequired": false,
                 "fullCardCompleted": false,
-                "checkedAt": "2026-11-07T01:46:02.786148+00:00",
+                "checkedAt": "2026-11-07T02:52:06.809726+00:00",
                 "hindsightBuilt": true,
                 "hindsightLiveUpgradeInstalled": true,
                 "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                 "actualAstraSelectionAndExplicitZeroProven": true,
                 "focusedIndependentMemoryTestsPassed": 136,
                 "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                "installationPending": "ChromeMCP0.0.84; face CPU/dashboard; photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
+                "installationPending": "Face CPU/dashboard; photo-library dotenv/better-sqlite3 closure; ContextForge/native Python closure; existing voice ownership boundary and host platform maintenance",
                 "hindsightTechnicalDeliveryComplete": true,
                 "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                 "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -16028,7 +16071,8 @@
                   "filesystemNode": "26.13.0",
                   "filesystemMcp": "2.2.0",
                   "filesystemNodeMcpSdk": "1.32.2",
-                  "telegramGrammy": "1.46.0"
+                  "telegramGrammy": "1.46.0",
+                  "chromePlaywrightMcp": "0.0.84"
                 },
                 "coreInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/core-python31216-installed.json",
                 "coreIndependentInstalledReview": "development/reviews/python31216-installed-independent-20261106.json",
@@ -16179,6 +16223,29 @@
                   "realTestMessagesSent": 0,
                   "installedEvidence": "development/evidence/reassessment/telegram-runtime-20261107/installed-delivery.json",
                   "installedReview": "development/reviews/telegram-installed-independent-20261107.json"
+                },
+                "chromeMaintenance20261107": {
+                  "status": "installed_independently_verified",
+                  "installed": true,
+                  "targetPlaywrightMcp": "0.0.84",
+                  "existingActions": 7,
+                  "existingNode": "22.23.4",
+                  "newRawBrowserControlBindingAllowed": false,
+                  "ownerAttachPerformed": false,
+                  "installerReview": "development/reviews/chrome-installer-independent-20261107.json",
+                  "fullE416Complete": false,
+                  "prefixesPrepared": true,
+                  "oldHostServiceStillRunning": false,
+                  "configSwitchDispatched": true,
+                  "pauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/chrome-mount-order-pause.json",
+                  "technicalDeliveryComplete": true,
+                  "independentlyReviewed": true,
+                  "installedAt": "2026-11-07T02:49:17.003837+00:00",
+                  "checkedAt": "2026-11-07T02:52:06.809726+00:00",
+                  "actualNewGenerationVerified": true,
+                  "installedEvidence": "development/evidence/reassessment/maintenance-updates-20261106/chrome-installed.json",
+                  "installedReview": "development/reviews/chrome-installed-independent-20261107.json",
+                  "sourcePublished": true
                 }
               }
             },
@@ -16856,7 +16923,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De aanvullende Hindsight-toegangsreparatie en vier Python3.12.16-hulpdiensten zijn geïnstalleerd, echt gebruikt en onafhankelijk teruggelezen. Verlopen/onbeschikbare toegang wordt vóór verzending geweigerd; de toegangsdiensten ronden atomaire publicatie af en de proxy sluit netjes af. Alle 24 oorspronkelijke native tabellen zijn behouden en alle 21 tabellen met eigen proefgegevens zijn leeg. Kern, worker en evaluator draaien weer; vier werkprofielen en bevoegdheden zijn gelijk. Volgende uitkomst: Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties installeren op deze actuele AUX-generatie, na één nieuwe DocE8-overdrachtsproef en afzonderlijke installatiebeoordeling. Daarna overige werkelijk gebruikte afhankelijkheden per compatibele groep. De bestaande spraakoverdracht, volledige E4.16-autonomie en E4.11-residuopruiming blijven open.",
+      "nextAction": "Chrome0.0.84 is met dezelfde zeven acties, Node22.23.4, persoons-/toestemmingsgrenzen en proxy geïnstalleerd en onafhankelijk teruggelezen. De browser blijft losgekoppeld; eigenaargebruik is niet geclaimd. Volgende uitkomst: de bestaande CPU-gezichtsherkenning en dashboardbibliotheken installeren na controle van actieve gesprekken, beoordelingen, werkclaims en alle vier runtimeprofielen. Daarna fotobibliotheek, ContextForge/native afhankelijkheden en overige gebruikte onderdelen. De spraakoverdracht, E4.11-residuen en volledige autonome E4.16-kringloop blijven open.",
       "finishOrder": [
         "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
@@ -16868,7 +16935,7 @@
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-06T16:08:09.093414+00:00",
+      "updatedAt": "2026-11-07T02:52:06.809726+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17147,7 +17214,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-06T23:40:53.344878+00:00",
+      "checkedAt": "2026-11-07T02:52:06.809726+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -19956,7 +20023,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-07T01:46:02.786148+00:00",
+  "updatedAt": "2026-11-07T02:32:05.073473+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -20038,8 +20105,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-07T01:46:02.786148+00:00",
-  "checkedAt": "2026-11-07T01:46:02.786148+00:00",
+  "lastUpdatedAt": "2026-11-07T02:32:05.073473+00:00",
+  "checkedAt": "2026-11-07T02:32:05.073473+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

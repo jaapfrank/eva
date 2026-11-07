@@ -1,0 +1,18 @@
+{
+  "contract": "EvaChromeMountOrderingInspectionPause/v1",
+  "checkedAt": "2026-11-07T02:32:05.073473+00:00",
+  "state": "prepared_prefixes_epoch_disconnected_before_stop_or_config_switch",
+  "retainedReceiptSha256": "ea948712df4b8c55160212dbd74d64273a2b7eeddd20515ad7a51cac35cfba4e",
+  "proxySameContainerAndStartedAt": true,
+  "readOnlyInspections": 24,
+  "uniqueMountOrderingRepresentations": 3,
+  "completeMountDictionariesMultisetExact": true,
+  "otherConfigHostNetworkFieldsUnchanged": true,
+  "proxyImageOrSourceChanged": false,
+  "oldChromeHostServiceStillRunning": true,
+  "newConfigPublished": false,
+  "stopOrStartDispatched": false,
+  "stageOrEpochDisconnectReplayAllowed": false,
+  "ownerBrowserAttachedOrActedOn": false,
+  "continuationRequiresClosedFullMountCanonicalizationAndReview": true
+}

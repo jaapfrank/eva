@@ -1,0 +1,29 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_INSTALLED_TECHNICAL_SCOPE",
+  "activationReceiptSha256": "ca385638660d7c59884e919b8ee66033cb4956d8555cfbac5bed885b0d3a15c6",
+  "actualReadbackSha256": "377294c2c5eaff126c11f37e5196dad457513e76086e99ca3bc644d260cc2edf",
+  "installerSha256": "5bf547a7e7be7d763348d58bcbd1d156de1e52773c7488a52f1978a6252e774a",
+  "planSha256": "ffd475da5e41b6f1fae50dfd4fa5acc93219ee5850fe7c1add33ed54aa3fc6cd",
+  "continuationReviewSha256": "bc2c804b8b522f3426c5eb219ace8a6088a62153efcae08d059f6cefe9b7ab29",
+  "verified": [
+    "Actual running systemd generation and /proc PID2295088/start ticks/argv/static environment match the completed receipt; executable is the preserved managed Node22.23.4.",
+    "Actual owner configuration differs only at workerArgs[0], workerArgs[1], packagePath; mode0600/owner1000, token fingerprint and Windows Node binary remain bound.",
+    "Actual closed no-bind prefix and retained old prefix match complete file/link/ownership/mode manifests; reviewed vendor no-bind derivative remains selected.",
+    "All47 source pins,9 historical receipts and1 handoff remain exact before repository publication.",
+    "Proxy42 source/generation/full Config/HostConfig/complete mount multiset/network remain unchanged; actual proxy health is healthy.",
+    "Actual owner gate remains disconnected/not busy with the completed new epoch. Read-only Unix tools/list returns all7 exact catalogue entries. No owner attach, grant restoration or browser action was performed.",
+    "Actual core provider source pins and gateway15-second/outer20-second verification budgets remain exact."
+  ],
+  "limitations": [
+    "Technical installation and metadata handoff are proved. Real owner extension attachment and household browser use remain unmeasured.",
+    "Repository publication must preserve the frozen old source evidence and accurately identify candidate/installed source boundaries.",
+    "Full E4.16 and household acceptance remain open."
+  ],
+  "reviewerModelRequests": 0,
+  "reviewerBrowserActions": 0,
+  "reviewerExtensionConnections": 0,
+  "reviewerLifecycleActions": 0,
+  "credits": null
+}

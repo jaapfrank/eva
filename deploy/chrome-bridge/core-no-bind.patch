@@ -1,0 +1,11 @@
+--- coreBundle.before.js
++++ coreBundle.js
+@@ -76188,7 +76188,7 @@
+     ownership = "own";
+   }
+   try {
+-    const { endpoint } = await browser.bind(bindOptions.title, { workspaceDir: bindOptions.workspaceDir });
++    const { endpoint } = bindOptions.evaNoBind === true ? {} : await browser.bind(bindOptions.title, { workspaceDir: bindOptions.workspaceDir });
+     return { browser, browserInfo: browserInfo(browser, config), endpoint, ownership };
+   } catch (error) {
+     await browser.close().catch(() => {

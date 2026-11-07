@@ -1,0 +1,24 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_EXACT_RESUME",
+  "helperSha256": "5f52b17e2df1462d9067c6baa7cfae514246e38a3c5beb477a17c69cf2387f98",
+  "planSha256": "5d0340d9e122cc35aa33237964db2a2e1763fd4e4be0bda76fbaae71b9724a4f",
+  "freezeSha256": "24d801b91dee9dbe8b95159bcbb4326038c410c04c25bbdce2a4c75ddfda852c",
+  "originalReceiptSha256": "ea948712df4b8c55160212dbd74d64273a2b7eeddd20515ad7a51cac35cfba4e",
+  "preflightSha256": "e921dd76dbd01529eae963a1a5a74b3b1701ff92559da6c7af84a0943943ae85",
+  "verified": [
+    "All frozen and retained artifact hashes match. Original installer/plan/approval and pre-resume receipt remain exact.",
+    "Independent comparison of 24 stored inspections found three Mounts orders but identical complete mount-dictionary multisets; Config, HostConfig, NetworkSettings and container generation are identical.",
+    "Wrapper applies only to the exact pinned proxy docker-inspect command inside original pins, checks all mount fields and multiplicities, then restores baseline order for the unchanged original checks. Other outputs/arguments/deadlines and failures are preserved.",
+    "Independent 12 targeted tests passed in 0.002 seconds, including duplicate mounts, nested attributes, RW/source/extra-field refusal and runner restoration.",
+    "Fresh read-only preflight passed with same disconnected epoch, both staged payloads exact and original idle/claims/source guards.",
+    "Original known epoch_disconnected resume uses the same exclusive durable journal; prefix staging and owner disconnect are not replayed."
+  ],
+  "limitations": [
+    "Approval permits only the specified original receipt resume. Unknown epoch, stop/start acknowledgement or generation remains inspection-only.",
+    "No owner extension attachment or browser action is authorized by this review."
+  ],
+  "reviewerLiveActions": 0,
+  "reviewerModelRequests": 0
+}

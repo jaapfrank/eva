@@ -1,0 +1,27 @@
+{
+  "reviewer": "/root/independent_review",
+  "approved": true,
+  "decision": "GO_SCOPED_INSTALLATION",
+  "installerSha256": "5bf547a7e7be7d763348d58bcbd1d156de1e52773c7488a52f1978a6252e774a",
+  "planSha256": "ffd475da5e41b6f1fae50dfd4fa5acc93219ee5850fe7c1add33ed54aa3fc6cd",
+  "freezeSha256": "5a59ebd5676098f73d00e22fa2b8c2476ca1a0dc21d37b3328944dd0d43a4e2b",
+  "preflightSha256": "45f87dae4f72cdb3221b50650c5e662ed2840e27575452084a53d456f163f5cd",
+  "supersedesPreliminaryReviewSha256": "6ceb1f7ee03502fb0c1b1f6eb5cfd4d9fe529ee4d02c840f448f30aafe39184a",
+  "sourceCandidateReviewSha256": "4a9bb9a7217b15a34f285d969fbcdf7616eb25e48ae0e9c211f5a346093abc58",
+  "verified": [
+    "All frozen hashes match; plan remains byte-identical to the reviewed three-pointer configuration change.",
+    "Prefix regular-file contents are fsynced before bottom-up directories, publication rename and parent fsync. Existing exact prefixes are synced before selection. Both file and directory fsync failures prevent publication/disconnection/selection.",
+    "Independent 34 transition tests passed in 0.225 seconds; previous real epoch races and actual Windows closed-prefix catalogue proofs remain bound.",
+    "Known systemd generation and normal terminal exit, ESRCH pending handling, durable intent records, epoch CAS and inspection-only unknown outcomes retain their reviewed contracts.",
+    "Fresh read-only preflight reports claims zero, proxy requests zero, disconnected owner gate and exact seven-tool catalogue. Gateway HTTP 15-second and outer verification 20-second budgets remain unchanged.",
+    "Actual current server catches TERM and INT and performs close before exit zero. Existing Node22, app sources, owner token, proxy generation/configuration and historical evidence remain pinned."
+  ],
+  "limits": [
+    "No owner extension attachment or real household browser action is proved by this maintenance installation.",
+    "Unknown acknowledgement, generation drift or callback outcome requires inspection, without redispatch.",
+    "Explicit old-prefix rollback code was reviewed but this approval does not dispatch or separately authorize rollback; a successful exact forward receipt and rollbackApproved authority remain required.",
+    "Full E4.16 and household acceptance remain open."
+  ],
+  "reviewerProductionActions": 0,
+  "reviewerModelRequests": 0
+}

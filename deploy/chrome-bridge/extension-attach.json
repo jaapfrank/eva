@@ -1,0 +1,9 @@
+{
+  "contract": "EvaPlaywrightExtensionAttachCompatibility/v1",
+  "packageVersion": "0.0.84",
+  "playwrightCoreVersion": "1.65.0-alpha-2026-10-30",
+  "coreBundleSha256": "14737329a4de238e487d682dfe7fcdc1c73cec02d96535b96d547d796a8d23d3",
+  "scope": "Only upstream extension attach and its config resolver; all tool schemas/calls use public MCP interfaces.",
+  "baseCoreBundleSha256": "3c1b6ff9aa60fdf720ab73f8cdcdd647841eb3a266cfc1263a300664dd9a3fae",
+  "nativePatch": "Only skip the new native browser.bind when this adapter supplies evaNoBind=true; default upstream behavior unchanged."
+}
