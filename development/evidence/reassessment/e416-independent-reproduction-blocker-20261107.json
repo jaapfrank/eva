@@ -54,5 +54,32 @@
   "modelCallsDuringReadback": 0,
   "productionWritesDuringReadback": 0,
   "historicalWorkReplayed": false,
-  "newInstallationOrLaterUseProven": false
+  "newInstallationOrLaterUseProven": false,
+  "historicalIsolatedComparison": {
+    "checkedAt": "2026-11-07T12:32:04.615912+00:00",
+    "candidateBlindFixtureSha256": "48684345dc217a317ede320e825cc95a41c67f9bdfcd5aa469480260a054f6de",
+    "historicalCandidateSha256": "4e1aec8ffe095cd08403e46b133b5fb03eceb98c782ab651ed6b5ac1c6838ed1",
+    "images": {
+      "core": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+      "delegated-work-worker": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b"
+    },
+    "originalValueErrorReproducedAt": "list_owned:1410",
+    "bothCandidateLegsRejectInvalidCursorAsCorrectableInput": true,
+    "validSearchStillReachedStorageBoundaryInAllLegs": true,
+    "databaseConnections": 0,
+    "externalEffects": 0,
+    "modelRequests": 0,
+    "historicalTasksRedispatched": 0,
+    "liveInstallationOrAutonomousClosure": false
+  },
+  "ordinaryLiveOwnerSearchProbe": {
+    "occurredAt": "2026-11-07T12:25:54+00:00",
+    "ownerDashboardRequests": 1,
+    "replyCommitted": true,
+    "newRepairIncidentsInProbeWindow": 0,
+    "modelAttempts": 2,
+    "toolCalls": 2,
+    "inputTokens": 26933,
+    "outputTokens": 130
+  }
 }

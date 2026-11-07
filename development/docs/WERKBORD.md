@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: De onafhankelijke reproductie van 26 oktober miste de oorspronkelijke zoekfunctie. De gewone zoekroute is inmiddels op de actieve versie gecontroleerd en handelt die fout af. Voor E4.16 ontbreekt een actuele, reproduceerbare interne fout met geldige bronbinding. Controleer voor één geldige zaak vooraf de bronsnapshot van de onafhankelijke uitvoerder en volg diezelfde zaak tot installatie en later gebruik.
+Volgende stap: De zaak van 26 oktober is onafhankelijk gereproduceerd en de bewaarde kandidaat werkt in de geïsoleerde vergelijking. De huidige zoekroute is al hersteld en een gewone live zoekopdracht gaf antwoord. Voor de volledige autonome kringloop ontbreekt nog een actuele, reproduceerbare interne fout met geldige bronbinding.
 
 ## Voortgang
 
