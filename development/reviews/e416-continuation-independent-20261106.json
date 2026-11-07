@@ -1,0 +1,48 @@
+{
+  "contract": "EvaIndependentRepairContinuationSourceReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T14:13:29.143398+00:00",
+  "decision": "GO",
+  "scope": "Follow retained same-execution stage continuations without granting new execution or replay; source review only",
+  "candidateHashes": {
+    "src/eva/bootstrap/runtime_repair_host.py": "bb196cd9b88a1d5f261b9a1978a45bdf5799e1daedcc12966b7d6f1835a78868",
+    "src/eva/operations/runtime_repair_development.py": "16fe42513ba299f7342332529bf17eb39e1606639b7200a1ce47c768a785cf60",
+    "development/tests/postgres/test_runtime_repair_host.py": "23300b1c33927151eabe4406742607fa41e29f807de2b7223816757a6e3a0e35",
+    "development/tests/postgres/test_runtime_repair_stage_independent.py": "e6767073af76389089a242c07187eeabc1130c37d16321d2af8a435085baec73",
+    "development/tests/operations/test_runtime_repair_development.py": "fb21bc194a31dc71df3512f2a98925d92db2bb104c3e72a80c141af0ec15efc4",
+    "development/tests/operations/test_runtime_repair_continuation_independent.py": "953f7d1fa60a09f754fea09a10aa19fe4367b8beef3d17aa7ef7158408a1c0c9"
+  },
+  "checks": [
+    "stage_metadata uses existing strict execution-chain verifier, scoped tenant/installation and same immutable execution source/grant/task identity.",
+    "Every retained chain row is reloaded under original owner authority; STOP, expiry, changed spec/state and branch/source mismatches fail closed.",
+    "work_metadata and require_running=True still require the exact original requested attempt.",
+    "Successful actual stage task_id is retained for both independent oracle/review artifacts and final review proof.",
+    "No task admission, provider dispatch, effect replay, historical blocked-job reset, criteria change or installation added.",
+    "Previously dirty producer assets and original builder execution-binding corrections remain intact."
+  ],
+  "independentTests": {
+    "passing": 21,
+    "elapsedSeconds": 41.1,
+    "postgres": "Real isolated disposable PostgreSQL16.13; no production DSN or provider request",
+    "negativeCases": [
+      "parentSTOP",
+      "childSTOP",
+      "parentexpiry",
+      "childexpiry",
+      "forgedchildsource",
+      "sameexecutionbranch"
+    ],
+    "artifactCase": "Oracle-work and review-work receipts plus durable job task IDs use the actual successful child.",
+    "log": "development/reviews/e416-continuation-independent-tests-20261106.log",
+    "logSha256": "eebb4c9e8c9b007faedbdf3ff527c473164d4b04939b57df9b75d21eb88a33bb",
+    "initialFixtureFailureLog": "development/reviews/e416-continuation-independent-initial-fixture-failures-20261106.log",
+    "initialFailureCause": "Four reviewer fixture mutations violated existing database STOP/time/attention constraints before product invocation. Corrected only fixtures to schema-valid rows; no product/DB contract weakened."
+  },
+  "limitations": [
+    "Source correction does not reactivate the historical blocked repair.",
+    "Old target has one changed source and is not current.",
+    "Actual new autonomous repair, installed original-behavior verification and later independent reuse remain unproven; E4.16 remains open."
+  ],
+  "installed": false,
+  "commitOrInstallPerformedByReviewer": false
+}

@@ -1,0 +1,29 @@
+{
+  "allUniqueMountSourcesIdentityBound": 27,
+  "approved": true,
+  "autonomousRepairLifecycleComplete": false,
+  "contract": "EvaIndependentE416BindPolicyContinuationReview/v1",
+  "independentInterimReadbackSha256": "70d81d2136a92dac0b887113bda5503ac89e4893b03c0199ad8d195aaa846161",
+  "inertActualEngineShapesMatchOriginal": true,
+  "installerSha256": "63bb198032eb04b75bcc12a7abb5ef1d674640d17d0115173603cb106a363884",
+  "knownInterimCandidateImagesRetained": true,
+  "normalCoreWorkerIntakeMayResumeAfterHealthyStart": true,
+  "oldComposeAndEvaluatorPausedUntilVerifiedCorrection": true,
+  "onlyNewComposePolicyChanges": {
+    "alreadyProtectedWorkerInputBindChanged": false,
+    "coreBindSourcesWithExplicitNoCreate": 19,
+    "originalLegacyBindsRetained": 14,
+    "workerBindSourcesWithExplicitNoCreate": 16
+  },
+  "originalActivationSha256": "9e22042b3a6b24a239329642c46cb3167f524cd281b74c6afe19df411186d29d",
+  "originalSdkSha256": "81139b73d51f245a397dcbd62c9bd415f71f08eebd425f9c4349421454ed1ae9",
+  "pinnedMobyParserProof": "https://github.com/moby/moby/blob/docker-v29.1.3/daemon/volume/mounts/linux_parser.go#L79-L88",
+  "planSha256": "c948db88eeabeda3008fb49ac7e94fa7854f36c2006d2057dda54b78c2e1842d",
+  "postStartVerifyOriginalFullSecurityStorageAndNetwork": true,
+  "preflightSha256": "a8e75461b76f3127cdf1d3e1e0df41f430b2c77a820a4cb9a31fbe8243f29529",
+  "reviewedAt": "2026-11-07T07:13:05.483160+00:00",
+  "reviewerLifecycleActions": 0,
+  "scope": "One independently reviewed correction of the exact two interim container configurations, then the unchanged host binding, selector, evaluator and verification phases. No original SDK or evaluator-stop replay.",
+  "shapeProofSha256": "1370a1f488df8cd90c85d42db028afe05d072cd294a87c326a28d0b6a7d64001",
+  "unknownDispatchRequiresInspection": true
+}

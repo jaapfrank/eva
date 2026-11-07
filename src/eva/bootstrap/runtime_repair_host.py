@@ -34,7 +34,10 @@ def _context(authority, service, store):
     try:
         authority=ProcedureReferenceProviderFactory.native_authority(engine,settings)
         owner=authority.owner
-        store=PostgresDelegatedWorkStore(engine,owner._authority,initiative_authority_loader=lambda:authority)
+        from eva.bootstrap.native_work_assets import configured_native_work_assets
+        store=PostgresDelegatedWorkStore(engine,owner._authority,
+            initiative_authority_loader=lambda:authority,
+            native_required_assets=configured_native_work_assets(producer=True))
         service=DelegatedWorkOwnerService(store,owner_principal_id=owner._owner,
             principal_binding_id=owner._binding,conversation_scope=owner._scope)
         yield authority,service,store,settings
@@ -79,7 +82,8 @@ def _work_metadata(authority,service,store,binding,task_id,*,require_running):
         ('completed_model_responses','tool_calls','input_tokens','output_tokens','total_tokens'))
         and usage['completed_model_responses']>0)
     return {'contract':'EvaRuntimeRepairWorkMetadata/v1','incident_id':binding['incident_id'],
-        'task_id':spec.work_id,'state':loaded.state,'role':role,'target_id':data.get('repair_target_id'),
+        'task_id':spec.work_id,'execution_id':spec.execution_id,
+        'state':loaded.state,'role':role,'target_id':data.get('repair_target_id'),
         'candidate_sha256':data.get('repair_candidate_sha256'),
         'comparison_sha256':data.get('repair_comparison_sha256'),
         'spec_sha256':spec.sha256,'source_ingress_sha256':spec.source_ingress_sha256,
@@ -90,6 +94,36 @@ def _work_metadata(authority,service,store,binding,task_id,*,require_running):
         'usage':usage,'usage_measured':measured,
         'work_succeeded':loaded.state in {'succeeded','verified'} and loaded.result is not None,
         'retention_until':format_required_utc_timestamp(loaded.retention_until)}
+
+
+def _stage_metadata(authority,service,store,binding,task_id,*,require_running):
+    """Inspect the retained execution without admitting or replaying any work."""
+    if require_running:
+        # A live tool call belongs to one exact attempt, never to a successor.
+        return _work_metadata(authority,service,store,binding,task_id,require_running=True)
+    from eva.adapters.postgres.delegated_work import delegated_work_runs
+    from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline
+    from eva.operations.component_application_runtime import _execution_chain
+    original=store.load(task_id,**service._owner)
+    with store.engine.begin() as connection:
+        PostgresOperationalTimeline(store.engine,store.scope)._scope(connection)
+        w=delegated_work_runs.c
+        rows=connection.execute(sa.select(w.work_id,w.spec_payload,w.state,
+            w.stop_requested_at,w.retention_until).where(
+                w.tenant_id==store.scope.tenant_id,
+                w.installation_id==store.scope.installation_id,
+                w.spec_payload['execution_id'].astext==original.spec.execution_id)).mappings().all()
+    chain=_execution_chain(rows,task_id,binding['scope_sha256'],canonical_sha256,strict=True)
+    if any(row['stop_requested_at'] is not None or row['state']=='stopped'
+            or row['retention_until']<=service.now() for row in chain):
+        raise ValueError('repair execution stopped or expired')
+    for row in chain:
+        retained=store.load(row['work_id'],**service._owner)
+        if (retained.spec.sha256!=canonical_sha256(row['spec_payload'])
+                or retained.state!=row['state'] or retained.stop_requested_at is not None
+                or retained.retention_until<=service.now()):
+            raise ValueError('repair execution changed during inspection')
+    return _work_metadata(authority,service,store,binding,chain[-1]['work_id'],require_running=False)
 
 
 def handle_host_repair_request(request,*,authority=None,service=None,store=None):
@@ -118,7 +152,8 @@ def handle_host_repair_request(request,*,authority=None,service=None,store=None)
                 raise ValueError('running-work constraint must be explicit')
             from eva.adapters.postgres.delegated_work import DelegatedWorkNotFound
             try:
-                return _work_metadata(authority,service,store,binding,request['task_id'],
+                metadata=_stage_metadata if action=='stage_metadata' else _work_metadata
+                return metadata(authority,service,store,binding,request['task_id'],
                     require_running=request['require_running'])
             except DelegatedWorkNotFound:
                 if action!='stage_metadata':

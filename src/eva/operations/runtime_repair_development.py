@@ -107,7 +107,8 @@ class RuntimeRepairDevelopment:
         binding=self.runtime.repair_call('binding',incident_id=request['incident_id'])
         meta=self.runtime.repair_call('work_metadata',incident_id=request['incident_id'],
             task_id=request['task_id'],require_running=True)
-        if meta['incident_id']!=binding['incident_id']:
+        if (meta['incident_id']!=binding['incident_id']
+                or meta['task_id']!=request['task_id']):
             raise ValueError('repair handoff work differs')
         with self.lock:
             target=self.targets.resolve(request['incident_id'])
@@ -130,7 +131,10 @@ class RuntimeRepairDevelopment:
                     from eva.operations.runtime_repair_target import repair_builder_handoff
                     response['builder_handoff'] = repair_builder_handoff(target)
                 return response
-            if role is not None or meta['task_id']!='work:eva-initiative:'+binding['intent_id'].removeprefix('personal-interest:'):
+            # A resume changes its attempt ID, never the host-verified execution.
+            # Older metadata may identify only the original, unresumed builder.
+            execution=meta.get('execution_id',meta['task_id'])
+            if role is not None or execution!='work:eva-initiative:'+binding['intent_id'].removeprefix('personal-interest:'):
                 raise ValueError('only the original builder may submit a repair')
             if request['action']=='status':
                 return {'state':'not_submitted','installed':False,'accepted':False} if job is None else self._public(job)
@@ -182,6 +186,9 @@ class RuntimeRepairDevelopment:
         if not meta.get('work_succeeded') or not meta.get('usage_measured') or meta.get('role')!=role:
             job.update(state='blocked',reason='independent_stage_not_completed_with_measured_usage')
             return None
+        # The host resolves a validated same-execution continuation. Persist the
+        # actual successful attempt for artifacts and the final review proof.
+        job[role+'_task_id']=meta['task_id']
         return meta
 
     def request_maintenance(self,request):

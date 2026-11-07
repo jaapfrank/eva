@@ -1,0 +1,89 @@
+{
+  "contract": "EvaIndependentRepairContinuationDependencyRevalidation/v1",
+  "reviewer": "/root/independent_review",
+  "decision": "GO_SAME_SOURCE_FOCUSED_REGRESSIONS",
+  "originalReview": "development/reviews/e416-continuation-independent-20261106.json",
+  "originalReviewSha256": "158bce28ecf99ef69ab7c91650f4e48d582185863a3763608fa0ddbc9c0d6b63",
+  "preparationSha256": "bed057285c91672b6f6b36526451e0ca8e096c9b0e33ae8c4069c4b6864b24ba",
+  "candidateHashes": {
+    "src/eva/bootstrap/runtime_repair_host.py": "bb196cd9b88a1d5f261b9a1978a45bdf5799e1daedcc12966b7d6f1835a78868",
+    "src/eva/operations/runtime_repair_development.py": "16fe42513ba299f7342332529bf17eb39e1606639b7200a1ce47c768a785cf60",
+    "development/tests/postgres/test_runtime_repair_host.py": "23300b1c33927151eabe4406742607fa41e29f807de2b7223816757a6e3a0e35",
+    "development/tests/postgres/test_runtime_repair_stage_independent.py": "e6767073af76389089a242c07187eeabc1130c37d16321d2af8a435085baec73",
+    "development/tests/operations/test_runtime_repair_development.py": "fb21bc194a31dc71df3512f2a98925d92db2bb104c3e72a80c141af0ec15efc4",
+    "development/tests/operations/test_runtime_repair_continuation_independent.py": "953f7d1fa60a09f754fea09a10aa19fe4367b8beef3d17aa7ef7158408a1c0c9"
+  },
+  "selectorCount": 21,
+  "selectors": [
+    "development/tests/postgres/test_runtime_repair_host.py::test_host_metadata_matches_actual_native_work_and_programming_namespace",
+    "development/tests/postgres/test_runtime_repair_host.py::test_host_history_replay_does_not_reopen_a_verified_completion",
+    "development/tests/postgres/test_runtime_repair_host.py::test_completion_rechecks_review_stop_inside_closing_transaction",
+    "development/tests/postgres/test_runtime_repair_host.py::test_resumed_metadata_keeps_original_execution_and_current_attempt",
+    "development/tests/postgres/test_runtime_repair_host.py::test_stage_metadata_follows_retained_native_continuation_without_replaying_parent",
+    "development/tests/postgres/test_runtime_repair_stage_independent.py::test_stage_never_borrows_success_from_invalid_execution[parent_stop]",
+    "development/tests/postgres/test_runtime_repair_stage_independent.py::test_stage_never_borrows_success_from_invalid_execution[child_stop]",
+    "development/tests/postgres/test_runtime_repair_stage_independent.py::test_stage_never_borrows_success_from_invalid_execution[parent_expired]",
+    "development/tests/postgres/test_runtime_repair_stage_independent.py::test_stage_never_borrows_success_from_invalid_execution[child_expired]",
+    "development/tests/postgres/test_runtime_repair_stage_independent.py::test_stage_never_borrows_success_from_invalid_execution[child_source]",
+    "development/tests/postgres/test_runtime_repair_stage_independent.py::test_stage_never_borrows_success_from_invalid_execution[branch]",
+    "development/tests/operations/test_runtime_repair_development.py::test_frozen_candidate_uses_separate_native_oracle_and_review_then_retains_rejected_baseline",
+    "development/tests/operations/test_runtime_repair_development.py::test_assessment_cannot_submit_or_read_another_candidate_snapshot",
+    "development/tests/operations/test_runtime_repair_development.py::test_repeated_host_failure_is_durable_and_does_not_starve_other_repairs",
+    "development/tests/operations/test_runtime_repair_development.py::test_actual_source_workspace_handoff_ends_builder_before_separate_assessment",
+    "development/tests/operations/test_runtime_repair_development.py::test_resumed_builder_keeps_original_execution_and_waits_for_its_own_result",
+    "development/tests/operations/test_runtime_repair_development.py::test_resumed_builder_cannot_replace_original_identity[execution]",
+    "development/tests/operations/test_runtime_repair_development.py::test_resumed_builder_cannot_replace_original_identity[missing_execution]",
+    "development/tests/operations/test_runtime_repair_development.py::test_resumed_builder_cannot_replace_original_identity[role]",
+    "development/tests/operations/test_runtime_repair_development.py::test_resumed_builder_cannot_replace_original_identity[task]",
+    "development/tests/operations/test_runtime_repair_continuation_independent.py::test_oracle_and_review_receipts_keep_actual_successful_continuation"
+  ],
+  "dependencyEnvironment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "versions": {
+      "pytest": "9.2.0",
+      "pydantic": "2.14.3",
+      "SQLAlchemy": "2.1.8",
+      "alembic": "1.20.1",
+      "psycopg": "3.3.8",
+      "psycopg-binary": "3.3.8",
+      "pydantic-ai-slim": "2.66.0",
+      "openai": "3.46.0",
+      "httpx2": "2.16.0"
+    }
+  },
+  "tests": {
+    "passed": 21,
+    "failed": 0,
+    "skipped": 0,
+    "pytestSeconds": 30.08,
+    "completeRunMeasuredSeconds": 32.609,
+    "log": "development/reviews/e416-continuation-updated-dependencies-tests-20261107.log",
+    "logSha256": "8cba373b13b2b2198de65d5185bf40b571a7fc7b5e436ed12f7de0c5cafbe8b3",
+    "privateResultSha256": "513bdc4cf8bd507bc8e3680d8e5f2a5055f9c5ecdb7a9da9250fea8e5ab9e43f",
+    "postgresImage": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "postgresServerVersionNum": 160013,
+    "networkMode": "none",
+    "publishedPorts": 0,
+    "prefixedDatabasesOnly": true,
+    "testProcessNetworkNamespaceIsolated": true,
+    "fixtureStoppedAndRemoved": true
+  },
+  "fixturePreparationFailure": {
+    "description": "Initial fixture attempts supplied a custom server socket. The image entrypoint clears PGHOST/PGHOSTADDR for its create-database step, so initialization failed before pytest. The corrected fixture maps a private host directory to the standard container socket directory.",
+    "firstFailureProofSha256": "ed87596d725aa76efd3eae2c30b304a4ffd1c10b8c541ea93cf6d86f7fcbd1c2",
+    "retainedInitializerLogSha256": "058a0c3338cb3d6392dbb1b489fc2f6ab0a975873e769c5e954d0581ebd49b92",
+    "candidateTestFailure": false,
+    "productionConnections": 0
+  },
+  "scope": [
+    "All six previously reviewed source/test hashes were exact before and after execution.",
+    "The same focused21 selectors cover valid same-execution continuation, original-attempt running identity, STOP, expiry, forged source/branch and durable actual-successful-child oracle/review artifacts.",
+    "The unrelated transport Timeline fixture was excluded as requested."
+  ],
+  "installed": false,
+  "actualAutonomousRepairOrLaterReuseProven": false,
+  "fullE416Complete": false,
+  "providerRequests": 0,
+  "productionDatabaseConnections": 0,
+  "sourceEdits": 0
+}

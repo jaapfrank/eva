@@ -111,3 +111,28 @@ def test_resumed_metadata_keeps_original_execution_and_current_attempt(native_di
     assert meta['execution_id']!=meta['task_id']
     assert meta['source_ingress_sha256']==previous.spec.source_ingress_sha256
     assert meta['role'] is None and not meta['work_succeeded']
+
+
+def test_stage_metadata_follows_retained_native_continuation_without_replaying_parent(native_digital):
+    from tests.postgres.test_native_repair_rate_limit_recovery import rejected
+    from eva.bootstrap.native_initiative_work import resume_one_rate_limited_repair
+    f, previous = rejected(native_digital)
+    assert resume_one_rate_limited_repair(f.service) == 'repair_resumed'
+    data = f.auth.timeline.events(f.claim.thread_id)[-1].payload['data']
+    child = f.store.load(data['work_id'], **f.service._owner)
+    now = f.service.now()
+    call = f.store.start_call(f.store.claim_next(worker_id='stage-metadata-test',
+        release=f.profile.release, now=now), now=now)
+    from eva.contracts.timestamps import format_required_utc_timestamp
+    outcome = result(call).model_copy(update={'completed_at': format_required_utc_timestamp(now)})
+    f.store.record_success(call, outcome, now=now)
+    incident = data['rate_limit_evidence']['incident_id']
+    # Controller stage inspection follows the existing execution; active tool
+    # access still names an exact attempt and may never inherit its child's state.
+    meta = rpc(f, incident, 'stage_metadata', task_id=previous.spec.work_id, require_running=False)
+    assert meta['task_id'] == child.spec.work_id
+    assert meta['execution_id'] == previous.spec.execution_id
+    assert meta['work_succeeded'] and meta['usage_measured']
+    exact = rpc(f, incident, 'work_metadata', task_id=previous.spec.work_id, require_running=False)
+    assert exact['task_id'] == previous.spec.work_id and not exact['work_succeeded']
+    assert f.store.load(previous.spec.work_id, **f.service._owner) == previous

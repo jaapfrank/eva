@@ -1,0 +1,81 @@
+{
+  "contract": "EvaE416ComposePairedRuntimeInstalled/v1",
+  "state": "installed_and_verified",
+  "completedAt": "2026-11-07T07:21:27.704340+00:00",
+  "compose": {
+    "before": "2.40.3-desktop.1",
+    "actualRootAndAdministrator": "5.7.0",
+    "artifactSha256": "7758048ad38e580f22559603312874fec8bb638d021a9e64182385fc17cc12a2",
+    "existingDockerSettingsPreserved": true
+  },
+  "actualRuntime": {
+    "core": {
+      "image": "sha256:af0358d1e162b27f19fdef1aeece0acc0b6911d2e8534f82d8ae95f36438a926",
+      "runtimeRepairHostSha256": "bb196cd9b88a1d5f261b9a1978a45bdf5799e1daedcc12966b7d6f1835a78868",
+      "newExplicitNoCreateBinds": 19,
+      "structuredBinds": 19,
+      "retainedLegacyBinds": 7
+    },
+    "delegated-work-worker": {
+      "image": "sha256:9322d99e6013571ad500ee6930bd6ca2181ac545805766edb01770c0ec0a4138",
+      "runtimeRepairHostSha256": "bb196cd9b88a1d5f261b9a1978a45bdf5799e1daedcc12966b7d6f1835a78868",
+      "newExplicitNoCreateBinds": 16,
+      "structuredBinds": 17,
+      "retainedLegacyBinds": 7
+    }
+  },
+  "mountPolicy": {
+    "newExplicitNoCreateBinds": 35,
+    "previousExplicitNoCreateBindPreserved": 1,
+    "originalStructuredMountsRestored": 36,
+    "originalLegacyBindsPreserved": 14,
+    "originalMountSourceIdentitiesRetained": 27,
+    "originalSecurityStorageNetworkFieldsVerified": true,
+    "workerNativeMountReadOnlyAndNoCreate": true
+  },
+  "actualMatchingRuntimeProfiles": [
+    "digital_work",
+    "household_research",
+    "public_research",
+    "shared_provider"
+  ],
+  "evaluator": {
+    "runtimeRepairDevelopmentSha256": "16fe42513ba299f7342332529bf17eb39e1606639b7200a1ce47c768a785cf60",
+    "effectiveSourceRoots": 4,
+    "existingAuthoritiesVerified": 10,
+    "legacyAcceptedReleasesValidated": 2
+  },
+  "preserved": {
+    "sealedCriteria": 62,
+    "historicalReceipts": 9,
+    "historicalHandoffs": 1,
+    "workMarkers": 103,
+    "companionGenerations": 23
+  },
+  "activeClaimsAtVerification": 0,
+  "runtimeWorkRebindings": 0,
+  "modelCallsForVerification": 0,
+  "autonomousRepairLifecycleComplete": false,
+  "completion": {
+    "originalActivationReceiptSha256": "9e22042b3a6b24a239329642c46cb3167f524cd281b74c6afe19df411186d29d",
+    "originalSdkReceiptSha256": "81139b73d51f245a397dcbd62c9bd415f71f08eebd425f9c4349421454ed1ae9",
+    "originalBindPolicyContinuationReceiptSha256": "8e6723bc572dfd4a53d511cb42d8dd06b238ef1727fae67fcd79f1df7563539f",
+    "completionReceiptSha256": "68fb4c6c4e980149b2c6ce76eae6b6d56997736e5f5d4e5f22a541581872d8a4",
+    "independentActualReadbackSha256": "22d0ecf35118e27c55e4774bfe61dc70a3318f323c7b5ae51c41e83124f53eae",
+    "originalReceiptsPreserved": true,
+    "originalSdkReplay": false,
+    "originalEvaluatorStopReplay": false,
+    "historicalRepairReplay": false,
+    "additionalLifecycleActionsForFinalReadbackAndSeal": 0,
+    "finalReadbackCorrection": "Ran the exact read-only queue reader with its dependent historical-marker digest suffix."
+  },
+  "independentActualReview": {
+    "path": "development/reviews/e416-compose-active-installed-independent-20261107.json",
+    "sha256": "746d31238f3322a983f314a2aa2d9b2546a9f4df9ceecae1c1c5a4be0adc13a6"
+  },
+  "reproductionRecipeSha256": "9674c05cbf732a488e5d0d388c9a2d36aa5f4e14e5fb08273041d202edff5130",
+  "independentCompletionReview": {
+    "path": "development/reviews/e416-compose-installed-independent-20261107.json",
+    "sha256": "bb908bdcf76554c86514f944aac9404dbaadf5da57e1e69523ea04da3a797a43"
+  }
+}

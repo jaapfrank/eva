@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0 en de nieuwe containerd-daemon zijn live en onafhankelijk gecontroleerd. Compose 5.7 wordt samen met de beoordeelde E4.16-correctie voorbereid om het controlelabel van de worker veilig mee te nemen. Spraakoverdracht en de volledige autonome E4.16-kringloop blijven open.
+Volgende stap: Hindsight 1.2.0, Pydantic AI 2.66.0, ContextForge 1.1.0, containerd en Compose 5.7.0 zijn live en onafhankelijk gecontroleerd. De E4.16-vervolgcorrectie is geïnstalleerd; bewijs van een nieuwe zelfstandige reparatie en later hergebruik ontbreekt nog. De bestaande spraakoverdracht blijft apart.
 
 ## Voortgang
 

@@ -1,0 +1,21 @@
+{
+  "actualInstalledReviewSha256": "746d31238f3322a983f314a2aa2d9b2546a9f4df9ceecae1c1c5a4be0adc13a6",
+  "actualInstalledVerified": true,
+  "actualReadbackSha256": "22d0ecf35118e27c55e4774bfe61dc70a3318f323c7b5ae51c41e83124f53eae",
+  "approved": true,
+  "autonomousLifecycleProven": false,
+  "bindPolicyContinuationReceiptSha256": "8e6723bc572dfd4a53d511cb42d8dd06b238ef1727fae67fcd79f1df7563539f",
+  "bindingRecomputedFromExactFrozenEvidence": true,
+  "completedPhases": 6,
+  "completionReceiptSha256": "68fb4c6c4e980149b2c6ce76eae6b6d56997736e5f5d4e5f22a541581872d8a4",
+  "contract": "EvaIndependentE416ComposeInstalledCompletionBinding/v1",
+  "installedCorrectionAndComposeSelectionVerified": true,
+  "noProbeSealerSha256": "d62456c853f84da553149a843dc72aafde7bdca1c81e2ee8d8eeff676919390e",
+  "originalActivationSha256": "9e22042b3a6b24a239329642c46cb3167f524cd281b74c6afe19df411186d29d",
+  "originalReceiptsPreserved": true,
+  "originalSdkSha256": "81139b73d51f245a397dcbd62c9bd415f71f08eebd425f9c4349421454ed1ae9",
+  "reviewedAt": "2026-11-07T07:22:02.528619+00:00",
+  "reviewerLifecycleActions": 0,
+  "reviewerModelCalls": 0,
+  "sidecarPlanSha256": "c948db88eeabeda3008fb49ac7e94fa7854f36c2006d2057dda54b78c2e1842d"
+}
