@@ -1,0 +1,27 @@
+{
+  "contract": "EvaIndependentNodeStoppedGoalContinuationReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:30:28.247203+00:00",
+  "decision": "GO_EXACT_STOPPED_GOAL_CONTINUATION",
+  "approved": true,
+  "installerSha256": "de28f83778ce41f728fefa67111d139736d0bf7d633084b9b3d982f95ae5b650",
+  "planSha256": "77392a0cf9a7afe381be8d6630066ca206003c1216598fe7e71e87de61091db3",
+  "originalInstallerSha256": "ec0e15a9a16458b998f4636a2f592c564a4146b486ecd41f3a47164ee2dd59d6",
+  "originalPlanSha256": "f7333f9acea9792d741b5064b5972da6f89276e1785a463dab702c80b073a295",
+  "originalReceiptSha256": "0e35ad70f9f9c6c1ba5a29aafb3b188c2d3de9e94ed45bc1a93515729d1b4f60",
+  "fullFreshPreflightSha256": "91c6c9ec7bc040d282232933ef9e80747dc1ad6baa69c6c78478d7dd24c90993",
+  "ownTestsPassed": 11,
+  "testLogSha256": "1f6b7b834d660022337aae57cc49d18fd033373e6e6cfa54697f3d8c384d5564",
+  "verified": [
+    "Originalinstaller/plan/approval/freeze/errorreceipt are exact and remain immutable. Source permits no originalhoststop or originalgoalstop dispatch; it adopts exactly the four recordedintent/result events and exactknownsuccessfulstoppedgenerations.",
+    "Only pausedOnly goal_stopped health assertion changes: exactDocE8CID/image/StartedAt/FinishedAt/restart0 plus exited/Exit0/noOOM/noDead/noError replace an inapplicable running-health expectation. Everyrunningrole still requireshealthy and fulloriginalConfig/HostConfig/storage/network/source fences.",
+    "After the original single goalstart, a read-onlypoll waits forhealthy while binding sameCID/image/restart0/running/noOOM/noError. Timeout/unknownstate fails withoutstart/restart/replay.",
+    "New exclusivecontinuationreceipt uses reviewedfile+parentdirectorydurability and locks originalreceipt. Only remainingworker/corestops and exactoriginalprovider/image/profile/host/read-onlyownercatalog phases execute.",
+    "Freshcompletepreflight passed unchangedsource/claims/retention/nativeidle/browser/document/host/authorityfences. Own11targetedstate/source/exit/health/readiness/nonredispatchcases pass."
+  ],
+  "limitations": [
+    "Approval applies only exactsidecar/plan and freshgates rerun beforedispatch; unknownpartialresults requireinspection and separatecontinuation.",
+    "No reviewerproduction lifecycle or modelcalls. Finalactual7target/source/profile/AUX/owner-catalogreadback remainsrequired.",
+    "No broadhealthwaiver, datamutation, permissionexpansion, fullE4.16 or familyacceptanceclaim."
+  ]
+}

@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: De Node26/filesystemMCP2.2-installatie is vóór vervanging gestopt op een toestandsfout in de installatiecontrole: een bewust gestopte documentwerker werd als draaiend beoordeeld. Alleen evaluator en documentwerker zijn gecontroleerd gestopt; kern, worker en alle providers blijven op hun oorspronkelijke gezonde generatie. Hervat uitsluitend de bewezen resterende stappen na gerichte correctie en onafhankelijke beoordeling; voer de oorspronkelijke installatie niet opnieuw uit. Hindsight1.2, PydanticAI2.66 en de eerdere updates blijven geïnstalleerd. Volledige E4.16-autonomie en overige afhankelijkheden blijven open.
+Volgende stap: Alle vijf Node26/bestandsproviders en de nieuwe kern-/workerimages zijn geplaatst. Kern en worker zijn gezond; hun volledige configuratie/opslag/netwerk en vier gelijke werkprofielen zijn teruggelezen. De eindcontrole verwachtte ten onrechte CLI-distributieversie2.40.3-desktop.1 als containerlabel; zowel oude als nieuwe labels zijn exact2.40.3. Alleen de al draaiende generatie beoordelen zonder herplaatsing, daarna de oorspronkelijke documentwerker en evaluator hervatten en de echte catalogusoverdracht controleren. Deze updategroep is nog niet technisch opgeleverd; volledige E4.16-autonomie en overige afhankelijkheden blijven open.
 
 ## Voortgang
 

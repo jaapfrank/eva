@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "De Node26/filesystemMCP2.2-installatie is vóór vervanging gestopt op een toestandsfout in de installatiecontrole: een bewust gestopte documentwerker werd als draaiend beoordeeld. Alleen evaluator en documentwerker zijn gecontroleerd gestopt; kern, worker en alle providers blijven op hun oorspronkelijke gezonde generatie. Hervat uitsluitend de bewezen resterende stappen na gerichte correctie en onafhankelijke beoordeling; voer de oorspronkelijke installatie niet opnieuw uit. Hindsight1.2, PydanticAI2.66 en de eerdere updates blijven geïnstalleerd. Volledige E4.16-autonomie en overige afhankelijkheden blijven open.",
+    "nextAction": "Alle vijf Node26/bestandsproviders en de nieuwe kern-/workerimages zijn geplaatst. Kern en worker zijn gezond; hun volledige configuratie/opslag/netwerk en vier gelijke werkprofielen zijn teruggelezen. De eindcontrole verwachtte ten onrechte CLI-distributieversie2.40.3-desktop.1 als containerlabel; zowel oude als nieuwe labels zijn exact2.40.3. Alleen de al draaiende generatie beoordelen zonder herplaatsing, daarna de oorspronkelijke documentwerker en evaluator hervatten en de echte catalogusoverdracht controleren. Deze updategroep is nog niet technisch opgeleverd; volledige E4.16-autonomie en overige afhankelijkheden blijven open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
     "executionStep": "Host library environments delivered live; install reviewed auxiliary/native revocation batch then Node/MCP",
@@ -3369,9 +3369,9 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "Node-update gecontroleerd gepauzeerd vóór vervanging",
+          "title": "Zeven update-images geplaatst; eindoverdracht loopt",
           "summary": "Kritieke Hindsight/PydanticAI-stack, native beveiligingsupdates, Node22.23.4-hostdiensten, drie Python-hostomgevingen en aanvullende AUX5/toegangsreparatie zijn geïnstalleerd en geverifieerd.",
-          "detail": "De Node26/filesystemMCP2.2-installatie is vóór vervanging gestopt op een toestandsfout in de installatiecontrole: een bewust gestopte documentwerker werd als draaiend beoordeeld. Alleen evaluator en documentwerker zijn gecontroleerd gestopt; kern, worker en alle providers blijven op hun oorspronkelijke gezonde generatie. Hervat uitsluitend de bewezen resterende stappen na gerichte correctie en onafhankelijke beoordeling; voer de oorspronkelijke installatie niet opnieuw uit. Hindsight1.2, PydanticAI2.66 en de eerdere updates blijven geïnstalleerd. Volledige E4.16-autonomie en overige afhankelijkheden blijven open.",
+          "detail": "Alle vijf Node26/bestandsproviders en de nieuwe kern-/workerimages zijn geplaatst. Kern en worker zijn gezond; hun volledige configuratie/opslag/netwerk en vier gelijke werkprofielen zijn teruggelezen. De eindcontrole verwachtte ten onrechte CLI-distributieversie2.40.3-desktop.1 als containerlabel; zowel oude als nieuwe labels zijn exact2.40.3. Alleen de al draaiende generatie beoordelen zonder herplaatsing, daarna de oorspronkelijke documentwerker en evaluator hervatten en de echte catalogusoverdracht controleren. Deze updategroep is nog niet technisch opgeleverd; volledige E4.16-autonomie en overige afhankelijkheden blijven open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
           "state": "Kern online · AUX5 technisch opgeleverd · volgende updategroep in voorbereiding",
           "checkedAt": "2026-11-06T23:40:53.344878+00:00",
@@ -3392,7 +3392,7 @@
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-11-04T14:00:19.123526+00:00",
-      "checkedAt": "2026-11-07T00:24:37.855736+00:00",
+      "checkedAt": "2026-11-07T00:49:06.934844+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3528,7 +3528,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T00:24:37.855736+00:00",
+      "lastUpdatedAt": "2026-11-07T00:49:06.934844+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3562,7 +3562,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T00:24:37.855736+00:00",
+      "updatedAt": "2026-11-07T00:49:06.934844+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -9049,14 +9049,14 @@
                   "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                   "ownerActionRequired": false,
                   "fullCardCompleted": false,
-                  "checkedAt": "2026-11-07T00:24:37.855736+00:00",
+                  "checkedAt": "2026-11-07T00:49:06.934844+00:00",
                   "hindsightBuilt": true,
                   "hindsightLiveUpgradeInstalled": true,
                   "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                   "actualAstraSelectionAndExplicitZeroProven": true,
                   "focusedIndependentMemoryTestsPassed": 136,
                   "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                  "installationPending": "Node7 guarded continuation after known host/document stop; no image replaced; core/worker remain on previous healthy generation; then remaining active closures",
+                  "installationPending": "Node7 seven images placed; exact metadata inspection/adoption and document/evaluator handoff pending; no redeploy",
                   "hindsightTechnicalDeliveryComplete": true,
                   "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                   "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -9089,7 +9089,7 @@
                   "nativeInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/native-security-installed.json",
                   "nativeIndependentInstalledReview": "development/reviews/debian13-native-installed-independent-20261106.json",
                   "filesystemMcpCandidate20261106": {
-                    "status": "installation_paused_before_replacement",
+                    "status": "images_placed_final_handoff_pending",
                     "installed": false,
                     "nodeTarget": "26.13.0",
                     "filesystemTarget": "2.2.0",
@@ -9101,7 +9101,11 @@
                     "candidateReview": "development/reviews/mcp-node26-revision2-independent-20261106.json",
                     "guardedPauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-seven-guarded-pause.json",
                     "independentInstallerReview": "development/reviews/node-seven-installer-independent-20261107.json",
-                    "unknownDispatchReplayed": false
+                    "unknownDispatchReplayed": false,
+                    "imagesPlaced": true,
+                    "technicalDeliveryComplete": false,
+                    "metadataInspectionPauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-seven-metadata-inspection-pause.json",
+                    "actualCoreWorkerProfilesCompatible": true
                   },
                   "credentialRevocationRepair20261106": {
                     "status": "installed_and_verified",
@@ -15904,14 +15908,14 @@
                 "versionEvidence": "development/evidence/reassessment/maintenance-updates-20261106/upstream-versions.json",
                 "ownerActionRequired": false,
                 "fullCardCompleted": false,
-                "checkedAt": "2026-11-07T00:24:37.855736+00:00",
+                "checkedAt": "2026-11-07T00:49:06.934844+00:00",
                 "hindsightBuilt": true,
                 "hindsightLiveUpgradeInstalled": true,
                 "hindsightCloneMigrationAndPostwriteRollbackProven": true,
                 "actualAstraSelectionAndExplicitZeroProven": true,
                 "focusedIndependentMemoryTestsPassed": 136,
                 "preinstallEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-preinstall.json",
-                "installationPending": "Node7 guarded continuation after known host/document stop; no image replaced; core/worker remain on previous healthy generation; then remaining active closures",
+                "installationPending": "Node7 seven images placed; exact metadata inspection/adoption and document/evaluator handoff pending; no redeploy",
                 "hindsightTechnicalDeliveryComplete": true,
                 "hindsightInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/hindsight-installed.json",
                 "hindsightIndependentInstalledReview": "development/reviews/hindsight-installed-independent-20261106.json",
@@ -15944,7 +15948,7 @@
                 "nativeInstalledEvidence": "development/evidence/reassessment/maintenance-updates-20261106/native-security-installed.json",
                 "nativeIndependentInstalledReview": "development/reviews/debian13-native-installed-independent-20261106.json",
                 "filesystemMcpCandidate20261106": {
-                  "status": "installation_paused_before_replacement",
+                  "status": "images_placed_final_handoff_pending",
                   "installed": false,
                   "nodeTarget": "26.13.0",
                   "filesystemTarget": "2.2.0",
@@ -15956,7 +15960,11 @@
                   "candidateReview": "development/reviews/mcp-node26-revision2-independent-20261106.json",
                   "guardedPauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-seven-guarded-pause.json",
                   "independentInstallerReview": "development/reviews/node-seven-installer-independent-20261107.json",
-                  "unknownDispatchReplayed": false
+                  "unknownDispatchReplayed": false,
+                  "imagesPlaced": true,
+                  "technicalDeliveryComplete": false,
+                  "metadataInspectionPauseEvidence": "development/evidence/reassessment/maintenance-updates-20261106/node-seven-metadata-inspection-pause.json",
+                  "actualCoreWorkerProfilesCompatible": true
                 },
                 "credentialRevocationRepair20261106": {
                   "status": "installed_and_verified",
@@ -19810,7 +19818,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-07T00:24:37.855736+00:00",
+  "updatedAt": "2026-11-07T00:49:06.934844+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -19892,8 +19900,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-07T00:24:37.855736+00:00",
-  "checkedAt": "2026-11-07T00:24:37.855736+00:00",
+  "lastUpdatedAt": "2026-11-07T00:49:06.934844+00:00",
+  "checkedAt": "2026-11-07T00:49:06.934844+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

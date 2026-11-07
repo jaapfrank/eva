@@ -1,0 +1,40 @@
+{
+  "contract": "EvaNodeSevenMetadataInspectionPause/v1",
+  "checkedAt": "2026-11-07T00:49:06.934844+00:00",
+  "state": "seven_images_placed_core_worker_healthy_final_handoff_pending",
+  "retainedOriginalInstallerReceiptSha256": "0e35ad70f9f9c6c1ba5a29aafb3b188c2d3de9e94ed45bc1a93515729d1b4f60",
+  "retainedContinuationReceiptSha256": "280d9b2c907a675bfa62d21b47e3f30660082ea10f1e1290f5efc2b9843b6e7b",
+  "retainedSdkReceiptSha256": "e234e6983dc08b952ce9f7ffac519f4eb5dede38e1df197ad08dfc1c92f89a17",
+  "allFiveProviderReplacementsCompleted": true,
+  "newCoreWorker": {
+    "core": {
+      "id": "1c178ee3f637942ddb11e5c33c7dd36b80c297e766729b75533d6c4cd4bb2358",
+      "image": "sha256:a29e831540e4d9628c8965ff4ad0d20b77b3b70401b180d40edc6f99fc9d1303",
+      "startedAt": "2026-11-07T00:44:39.736096956Z",
+      "healthy": true,
+      "fullConfigHostMountNetworkMatch": true,
+      "composeVersionLabel": "2.40.3"
+    },
+    "delegated-work-worker": {
+      "id": "97b6ee8e7e97523cc6614c6fd32e8b1e6d4e0879e8f1c7941bdcfd28bcc05c20",
+      "image": "sha256:c31a67092473816511d015b8b56a10a8e4504f0c50201c9dedc4ab827492bdf6",
+      "startedAt": "2026-11-07T00:44:51.806284454Z",
+      "healthy": true,
+      "fullConfigHostMountNetworkMatch": true,
+      "composeVersionLabel": "2.40.3"
+    }
+  },
+  "allFourInstalledProfilesMatch": true,
+  "profileProofSha256": "7326ad24b53f38710d6fec3cc4a6e65298a8e68a26396ff9cfd96fe488643282",
+  "onlyObservedConfigPredicateMismatch": "plan expected CLI-distribution version2.40.3-desktop.1; both baseline and actual labels are exactly2.40.3",
+  "pending": [
+    "Inspect already running exact candidate without deployment replay",
+    "Resume same original document-goal worker once",
+    "Resume evaluator with prepared unchanged-source host configuration",
+    "Actual owner catalog and independent installed readback"
+  ],
+  "dataReset": false,
+  "originalTasksReplayed": false,
+  "technicalDeliveryComplete": false,
+  "fullE416Complete": false
+}
