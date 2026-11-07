@@ -1,0 +1,26 @@
+{
+  "contract": "EvaNodeSevenGuardedInstallationPause/v1",
+  "checkedAt": "2026-11-07T00:24:37.855736+00:00",
+  "state": "paused_before_any_image_replacement",
+  "installerSha256": "ec0e15a9a16458b998f4636a2f592c564a4146b486ecd41f3a47164ee2dd59d6",
+  "planSha256": "f7333f9acea9792d741b5064b5972da6f89276e1785a463dab702c80b073a295",
+  "retainedDispatchReceiptSha256": "0e35ad70f9f9c6c1ba5a29aafb3b188c2d3de9e94ed45bc1a93515729d1b4f60",
+  "independentInstallerReview": "development/reviews/node-seven-installer-independent-20261107.json",
+  "normalNativeRetentionFencePassed": true,
+  "knownCompletedActions": [
+    "host evaluator graceful stop",
+    "existing document-goal worker graceful stop exit0"
+  ],
+  "unperformedActions": [
+    "core/worker stop",
+    "provider replacement",
+    "core/worker image replacement"
+  ],
+  "observedCause": "companions() incorrectly demands running-health=healthy from the known intentionally stopped document-goal worker; stopped Docker health is unhealthy",
+  "coreAndWorkerOriginalGenerationsStillHealthy": true,
+  "originalFiveProvidersUnchanged": true,
+  "dataOrGrantChanges": 0,
+  "retryOrUnknownDispatchReplay": false,
+  "continuationNeedsSeparateExactStateReview": true,
+  "fullE416Completed": false
+}

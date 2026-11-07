@@ -1,0 +1,43 @@
+{
+  "contract": "EvaIndependentNodeSevenTargetInstallerReview/v1",
+  "reviewer": "/root/independent_review",
+  "at": "2026-11-07T00:19:26.188153+00:00",
+  "decision": "GO_EXACT_SEVEN_TARGET_INSTALLER",
+  "approved": true,
+  "installerSha256": "ec0e15a9a16458b998f4636a2f592c564a4146b486ecd41f3a47164ee2dd59d6",
+  "planSha256": "f7333f9acea9792d741b5064b5972da6f89276e1785a463dab702c80b073a295",
+  "freezeSha256": "907ef182deb007ba50e8108b639efa82ff750d63c41ac9feb9bcc33d551b343c",
+  "fullFreshPreflightSha256": "0251cafa43e632304e091a62fa42f7fbe0226057cd5d94ccd0baa174c42418df",
+  "independentChecks": {
+    "pureTestMethodsPassed": 34,
+    "testLogSha256": "66927d88f536a2626e05c7949faa2da6f0b69d775610df6642d7ff1e26a75083",
+    "retentionReadOnlyProofSha256": "94b948a14e4641598150b5a20f71f71d459502c9dc857c29cd5cb726b08177d9",
+    "normalExpiredTraceCount": 0,
+    "fiveProviderPayloadsMechanicallyExactApprovedImageOnly": true,
+    "actualAuxJGenerationAndOperatorSourcesBound": true,
+    "readOnlyMountedSourceFilesExact": 34,
+    "criteriaExact": 62,
+    "historicalReceiptsExact": 9,
+    "handoffExact": 1,
+    "providerStopProofSha256": "7dca8b1a375e36982fc9678c7ce776fa5c8f8b1f25654cf79e381adf7b8e5265",
+    "reviewerModelCalls": 0,
+    "reviewerLiveSignalsOrLifecycleChanges": 0
+  },
+  "verified": [
+    "Exact two core/worker candidates plus five provider candidates are the reviewed Node/MCP source/package closure. All5provider payloads reproduce from actual current containers with image-only changes; actualAUX companion generations/config/storage/network, native625, newproxy42, newpublishers718/B9 and documentE8 remain bound.",
+    "Full Config/HostConfig/mount cardinality/networkIPAM/MAC/aliases/source-label contracts are retained; existing-key OOM normalization permits onlyNone/False equivalence, true remains distinct and missing/unknown types fail. Prestart validates exact unstarted source/storage/requested endpoints and underlying network generation before any start.",
+    "Explicit public stopSIGTERM&t=-1 is dispatched once per exact generation after fresh state-aware claims/native/document/browser gates. Real5-original-image isolated readiness/restartpolicy proofs exit0 with stableRestartCount. Unknownacknowledgements are inspected without repeat; forced/oldfinish/OOM/restarted/policydrift outcomes are rejected.",
+    "Provider-progress guard handles a known created replacement before start without consulting a deleted oldCID. Unknown create ACK is adopted only by exactsourceauthority then fullprestartvalidation. Remove never deletesvolumes/forces; partialreceipt forbids reinstall replay.",
+    "Initial and replacement receipt files are file-fsynced then parentdirectory-fsynced before return; exactordering/duplicateintent/fsyncfailure tests pass. Originalfreeze retained.",
+    "Host changes only finalpublisher installed-snapshot pointer; sameinterpreter/fourroots/privatecriteria/history. Host remains stopped until SDKcandidate image/source/site/RECORD/nativeTLS/four-profile verification; existinggoalcontainer resumes with unchangedscope/mandate/source.",
+    "Actualowner-token readonly catalog checks cover core9/worker9/goal4; fiveoriginalcataloggroups14+4x2 preserved, noappend/copypublication and gatewayautoRefreshFalse fromactualprocessenvironment. Admitted/started/leased workblocks; historicalambiguous/needs_help rows are retained withoutrebind/replay.",
+    "Fresh completepreflight passes after normalnative retention sweep, includingexpiredtrace0; reviewer independently measuredexpired0readonly. No purge,predicate/schema/retention-policy change.",
+    "Earlier preliminary /kill autorestart objection was withdrawn after exactdaemon29.1.3 primarysource showed manually-stopped state for theseStopSignalNone targets. PublicStopAPI is a deliberate ownerdirected contractchoice, not a claimed proven restartfix."
+  ],
+  "limitations": [
+    "This approval is exacthashbound and the installer must rerun its unchanged freshpreflight immediately before activation. Any source/generation/config drift requires anewreview.",
+    "A retained partial or unknown receipt requires inspection and a separately reviewed continuation; no unconditionalautomaticrollback or redispatchclaim.",
+    "Post-install independentreadback ofactual7images/source/packages/profiles/AUXpreservation and readonlyownercatalog is still required.",
+    "No fullE4.16, householdacceptance, permissionexpansion or paidproviderrequest authorized by this review."
+  ]
+}

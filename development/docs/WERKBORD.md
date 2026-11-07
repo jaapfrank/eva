@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: De aanvullende Hindsight-toegangsreparatie en vier Python3.12.16-hulpdiensten zijn geïnstalleerd, echt gebruikt en onafhankelijk teruggelezen. Verlopen/onbeschikbare toegang wordt vóór verzending geweigerd; de toegangsdiensten ronden atomaire publicatie af en de proxy sluit netjes af. Alle 24 oorspronkelijke native tabellen zijn behouden en alle 21 tabellen met eigen proefgegevens zijn leeg. Kern, worker en evaluator draaien weer; vier werkprofielen en bevoegdheden zijn gelijk. Volgende uitkomst: Node26/filesystemMCP2.2 met zes bestaande bestandsacties en drie documentacties installeren op deze actuele AUX-generatie, na één nieuwe DocE8-overdrachtsproef en afzonderlijke installatiebeoordeling. Daarna overige werkelijk gebruikte afhankelijkheden per compatibele groep. De bestaande spraakoverdracht, volledige E4.16-autonomie en E4.11-residuopruiming blijven open.
+Volgende stap: De Node26/filesystemMCP2.2-installatie is vóór vervanging gestopt op een toestandsfout in de installatiecontrole: een bewust gestopte documentwerker werd als draaiend beoordeeld. Alleen evaluator en documentwerker zijn gecontroleerd gestopt; kern, worker en alle providers blijven op hun oorspronkelijke gezonde generatie. Hervat uitsluitend de bewezen resterende stappen na gerichte correctie en onafhankelijke beoordeling; voer de oorspronkelijke installatie niet opnieuw uit. Hindsight1.2, PydanticAI2.66 en de eerdere updates blijven geïnstalleerd. Volledige E4.16-autonomie en overige afhankelijkheden blijven open.
 
 ## Voortgang
 
