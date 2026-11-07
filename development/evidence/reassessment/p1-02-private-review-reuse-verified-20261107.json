@@ -1,0 +1,96 @@
+{
+  "contract": "EvaPrivateReviewReuseVerification/v1",
+  "priority": "P1-02",
+  "status": "installed_controlled_verification_passed_live_measurement_open",
+  "checkedAt": "2026-11-07T13:35:26.974343+00:00",
+  "scope": "One ordinary private opportunity following the immediately preceding clean measured silence.",
+  "behavior": {
+    "sameCurrentPrivateSources": "One recorded silence with zero decision-model dispatch, zero decision-model tokens and no model admission reservation.",
+    "freshContext": "Day sources, recalled facts, due person expectations, mandate, installed profile, observations and bounded work/history can defeat equality.",
+    "plannedAttentionAndUrgencyRetained": true,
+    "maximumConsecutiveReusedOutcomes": 1,
+    "maximumPredecessorAgeMinutes": 90,
+    "freshDayReadBeforeReuse": true,
+    "existingPrivateRecallStillRuns": true,
+    "skippedOutcomeIsNotModelDecisionTrainingEvidence": true
+  },
+  "observedBefore": {
+    "windowUtc": [
+      "2026-10-24T19:07:00+00:00",
+      "2026-10-25T01:28:04+00:00"
+    ],
+    "outcomes": 7,
+    "modelAttempts": 7,
+    "decisionInputTokens": 159054,
+    "decisionOutputTokens": 1198,
+    "minimumTokensPerOutcome": 22621,
+    "maximumTokensPerOutcome": 22961,
+    "decisionsWithoutActionOrPlannedAttention": 7,
+    "sameRetainedObservationWorkAndDaySourceDigests": true,
+    "fullHistoricalModelInputEqualityEstablished": false,
+    "includedProviderFailures": 0
+  },
+  "controlledAfter": {
+    "test": "development/tests/postgres/test_private_review_reuse.py",
+    "testSha256": "5273abd0767651dfed726e03d966f361a2b3e4e483713934d78e6f7a34c618bb",
+    "environment": "Isolated PostgreSQL 16.13, source from the installed core plus only the exact candidate files, local provider double.",
+    "testsPassed": 12,
+    "targetedScenarioTests": 6,
+    "existingLeaseAndProviderRegressionTests": 6,
+    "testExecutionSeconds": 9.19,
+    "duplicateOutcomes": 1,
+    "decisionModelAttemptsForDuplicate": 0,
+    "decisionModelInputTokensForDuplicate": 0,
+    "decisionModelOutputTokensForDuplicate": 0,
+    "decisionProviderFailuresForDuplicate": 0,
+    "newDaySourceDuringComparisonReachedModel": true,
+    "dueExpectationAndPlannedAttentionReachedModel": true,
+    "nextOrdinaryOccasionAfterReuseReachedModel": true,
+    "stopPreventedFurtherScheduling": true
+  },
+  "installation": {
+    "activationSha256": "908945c18395009c18b8d09dea8cd289498b614a70c4f79f290c08e61b2e4d7e",
+    "completedAt": "2026-11-07T13:35:00.806182+00:00",
+    "profileNames": [
+      "digital_work",
+      "household_research",
+      "public_research",
+      "shared_provider"
+    ],
+    "profileSha256": "bbf2dfaa0fcd4d96c8105678c2f07b7a8220413b65d33301857e4e46fd92a8af",
+    "sources": {
+      "application/free_will.py": "02066f7d417766fdeae92c3b3c40b9bb34dcaadcf33bd23d9113b23d6c72a2a3",
+      "adapters/postgres/sensory_events.py": "848a71f9bae8f2ebab53f1e3571e389dbcfd02464937d5ed9835dad34582cb3f"
+    },
+    "imageDigests": {
+      "eva2-managed-b-slot3-core": "sha256:c98e4994d72d2a9c0f105d9649d7d7a411e9b0daae244d5adb5a113d8c0f6cdc",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:bae5cc84131069a934dc84cf5ad1f98fce2c994dd5101112476882e2da136beb"
+    },
+    "phases": [
+      "pause_exact_evaluator_core_and_worker",
+      "existing_sdk_install_exact_two_images",
+      "resume_same_config_evaluator_once",
+      "actual_source_profiles_authorities_and_preservation"
+    ],
+    "oldPairMatched": true,
+    "planSha256": "49abce68d5d3fcd463e64af3885de0cda312e5112261c717dbe083fa3fdb8862",
+    "installerSha256": "b12848a10cce3bb6f2a599034a33f36d658de049a46c0ffcce9c3ba857aae6ba",
+    "offlineImageAndProfileProofSha256": "17fdf51db3ffed867b5f4c1a468d653c910a6a142a4c08b726f83e5480f312fa",
+    "independentReview": "approved_exact_pair_plan",
+    "healthyCoreAndWorker": true,
+    "installedProfileCheckCompatible": true,
+    "retainedEvaluatorConfiguration": true,
+    "changedImageSourceFilesPerRole": 2,
+    "productionVerificationWrites": 0
+  },
+  "liveMeasurement": {
+    "privateReviewPhase": "will_usage_uncertain",
+    "earlierHttpStatus": 429,
+    "latestCheckpointUtc": "2026-10-30T12:24:13+00:00",
+    "latestCheckpointSha256": "5cf2eb659304a42982f35de27c9560a8bc3d9c665ef0eec80395b926d6056edc",
+    "decisionUsage": null,
+    "newPrivateReviewForced": false,
+    "liveSavingMeasured": false,
+    "e16FullAcceptance": false
+  }
+}

@@ -1661,6 +1661,24 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "P1-02 · Eén ongewijzigde privébeoordeling overslaan",
+            "state": "installed",
+            "summary": "Eva vergelijkt actuele privébronnen vóór één gewone herbeoordeling.",
+            "result": "De geïnstalleerde privéroute slaat één herbeoordeling over na een schone, gemeten stilte en gelijke actuele broncontext. Gecontroleerd op nul aanroepen van het beslismodel voor die herhaling. Een nieuwe bron of vervallen aandacht bereikt de gewone afweging.",
+            "remaining": "Een eerdere onzekere HTTP 429 houdt de live privéreeks tegen. Werkelijke besparing in productie en de volledige E1.6-bronveranderingsketen zijn nog niet gemeten.",
+            "source": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json",
+            "review": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json",
+            "checkedAt": "2026-11-07T13:35:26.974343+00:00",
+            "installedAt": "2026-11-07T13:35:00.806182+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "controlledRuntimeVerificationPassed": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "P1-01 · Gewone taak herstelt na provideruitval",
             "state": "installed",
             "summary": "De bestaande privéroute hervat een veilig verifieerbare taak na uitval en herstart.",
@@ -3582,14 +3600,15 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "P1-01 · Gewone taak herstelt na provideruitval",
+          "title": "P1-02 · Eén ongewijzigde privébeoordeling overslaan",
           "state": "installed",
-          "summary": "De bestaande privéroute hervat een veilig verifieerbare taak na uitval en herstart.",
-          "result": "De gewone privétaak wachtte na HTTP 503 herkenbaar en werd na herstart één keer hervat. Eva gebruikte zes bewaarde leesresultaten zonder de leesacties te herhalen en meldde het resultaat één keer terug aan de oorspronkelijke eigenaarroute. STOP en een onzeker extern effect blokkeerden de hervatting.",
-          "remaining": "Dagelijks gebruik van een gezinsverantwoordelijkheid blijft de afzonderlijke E1.14-uitkomst.",
-          "source": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
-          "review": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
-          "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+          "summary": "Eva vergelijkt actuele privébronnen vóór één gewone herbeoordeling.",
+          "result": "De geïnstalleerde privéroute slaat één herbeoordeling over na een schone, gemeten stilte en gelijke actuele broncontext. Gecontroleerd op nul aanroepen van het beslismodel voor die herhaling. Een nieuwe bron of vervallen aandacht bereikt de gewone afweging.",
+          "remaining": "Een eerdere onzekere HTTP 429 houdt de live privéreeks tegen. Werkelijke besparing in productie en de volledige E1.6-bronveranderingsketen zijn nog niet gemeten.",
+          "source": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json",
+          "review": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json",
+          "checkedAt": "2026-11-07T13:35:26.974343+00:00",
+          "installedAt": "2026-11-07T13:35:00.806182+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": true,
           "controlledRuntimeVerificationPassed": true,
@@ -3618,12 +3637,12 @@
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T13:09:11.244255+00:00",
-        "reviewedAt": "2026-11-07T13:09:11.244255+00:00",
+        "checkedAt": "2026-11-07T13:35:26.974343+00:00",
+        "reviewedAt": "2026-11-07T13:35:26.974343+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-11-07T08:27:00.930248+00:00",
-      "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+      "checkedAt": "2026-11-07T13:35:26.974343+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3761,7 +3780,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T13:09:11.244255+00:00",
+      "lastUpdatedAt": "2026-11-07T13:35:26.974343+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3795,7 +3814,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T13:09:11.244255+00:00",
+      "updatedAt": "2026-11-07T13:35:26.974343+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -6518,7 +6537,8 @@
                   "development/reviews/e16-private-day-context-review-20261021.json",
                   "development/evidence/product/e16-model-access-continuity-20261022.json",
                   "development/reviews/e16-model-access-continuity-20261022.json",
-                  "development/evidence/product/e16-http-status-20261026.json"
+                  "development/evidence/product/e16-http-status-20261026.json",
+                  "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json"
                 ],
                 "installedAt": "2026-10-20T16:11:46.841997+00:00",
                 "lastInstalledAt": "2026-10-22T17:27:39Z",
@@ -6661,6 +6681,12 @@
                   "queueToDeliverySeconds": 54,
                   "workerTokens": 64079,
                   "fullE16Completed": false
+                },
+                "p102PrivateReviewReuse20261107": {
+                  "status": "installed_controlled_verification_passed_live_measurement_open",
+                  "checkedAt": "2026-11-07T13:35:26.974343+00:00",
+                  "evidence": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json",
+                  "fullSourceChangeAcceptance": false
                 }
               },
               {
@@ -10417,13 +10443,14 @@
           "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
           "P0-03 · Versterk onafhankelijke reviewerherkomst en scheid pure validators van de bestaande hash-/receipt-/rollback-dispatch in reviewed_component_application.py. Geen verzwakking van huidige releasebeveiliging.",
           "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
-          "P1-02/03/04/06 · Meet tokenverbruik per echte uitkomst en goedkope geen-veranderingpoort; meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
+          "P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.",
+          "P1-03/04/06 · Meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
           "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
           "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
           "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-07T13:09:11.244255+00:00",
+        "updatedAt": "2026-11-07T13:35:26.974343+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10702,7 +10729,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+        "checkedAt": "2026-11-07T13:35:26.974343+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -10985,6 +11012,14 @@
           "result": "De gewone privétaak wachtte na HTTP 503 herkenbaar en werd na herstart één keer hervat. Eva gebruikte zes bewaarde leesresultaten zonder de leesacties te herhalen en meldde het resultaat één keer terug aan de oorspronkelijke eigenaarroute. STOP en een onzeker extern effect blokkeerden de hervatting.",
           "evidence": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
           "checkedAt": "2026-11-07T13:09:11.244255+00:00"
+        },
+        "p102PrivateReviewReuse20261107": {
+          "priority": "P1-02",
+          "status": "installed_controlled_verification_passed_live_measurement_open",
+          "checkedAt": "2026-11-07T13:35:26.974343+00:00",
+          "result": "De geïnstalleerde privéroute slaat één herbeoordeling over na een schone, gemeten stilte en gelijke actuele broncontext. Gecontroleerd op nul aanroepen van het beslismodel voor die herhaling. Een nieuwe bron of vervallen aandacht bereikt de gewone afweging.",
+          "remaining": "Een eerdere onzekere HTTP 429 houdt de live privéreeks tegen. Werkelijke besparing in productie en de volledige E1.6-bronveranderingsketen zijn nog niet gemeten.",
+          "evidence": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json"
         }
       }
     },
@@ -13704,7 +13739,8 @@
                 "development/reviews/e16-private-day-context-review-20261021.json",
                 "development/evidence/product/e16-model-access-continuity-20261022.json",
                 "development/reviews/e16-model-access-continuity-20261022.json",
-                "development/evidence/product/e16-http-status-20261026.json"
+                "development/evidence/product/e16-http-status-20261026.json",
+                "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json"
               ],
               "installedAt": "2026-10-20T16:11:46.841997+00:00",
               "lastInstalledAt": "2026-10-22T17:27:39Z",
@@ -13847,6 +13883,12 @@
                 "queueToDeliverySeconds": 54,
                 "workerTokens": 64079,
                 "fullE16Completed": false
+              },
+              "p102PrivateReviewReuse20261107": {
+                "status": "installed_controlled_verification_passed_live_measurement_open",
+                "checkedAt": "2026-11-07T13:35:26.974343+00:00",
+                "evidence": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json",
+                "fullSourceChangeAcceptance": false
               }
             },
             {
@@ -17603,13 +17645,14 @@
         "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
         "P0-03 · Versterk onafhankelijke reviewerherkomst en scheid pure validators van de bestaande hash-/receipt-/rollback-dispatch in reviewed_component_application.py. Geen verzwakking van huidige releasebeveiliging.",
         "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
-        "P1-02/03/04/06 · Meet tokenverbruik per echte uitkomst en goedkope geen-veranderingpoort; meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
+        "P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.",
+        "P1-03/04/06 · Meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.",
         "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
         "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
         "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-07T13:09:11.244255+00:00",
+      "updatedAt": "2026-11-07T13:35:26.974343+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17888,7 +17931,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-07T13:09:11.244255+00:00",
+      "checkedAt": "2026-11-07T13:35:26.974343+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -18171,6 +18214,14 @@
         "result": "De gewone privétaak wachtte na HTTP 503 herkenbaar en werd na herstart één keer hervat. Eva gebruikte zes bewaarde leesresultaten zonder de leesacties te herhalen en meldde het resultaat één keer terug aan de oorspronkelijke eigenaarroute. STOP en een onzeker extern effect blokkeerden de hervatting.",
         "evidence": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
         "checkedAt": "2026-11-07T13:09:11.244255+00:00"
+      },
+      "p102PrivateReviewReuse20261107": {
+        "priority": "P1-02",
+        "status": "installed_controlled_verification_passed_live_measurement_open",
+        "checkedAt": "2026-11-07T13:35:26.974343+00:00",
+        "result": "De geïnstalleerde privéroute slaat één herbeoordeling over na een schone, gemeten stilte en gelijke actuele broncontext. Gecontroleerd op nul aanroepen van het beslismodel voor die herhaling. Een nieuwe bron of vervallen aandacht bereikt de gewone afweging.",
+        "remaining": "Een eerdere onzekere HTTP 429 houdt de live privéreeks tegen. Werkelijke besparing in productie en de volledige E1.6-bronveranderingsketen zijn nog niet gemeten.",
+        "evidence": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json"
       }
     },
     "goalRevision": {
@@ -18179,30 +18230,29 @@
       "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
-      "recordedAt": "2026-11-06T13:40:23.527110+00:00",
-      "checkedAt": "2026-11-06T13:40:23.527110+00:00",
+      "recordedAt": "2026-11-07T13:35:26.974343+00:00",
+      "checkedAt": "2026-11-07T13:35:26.974343+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "coreImage": "sha256:5e78cbebedf89a593fe240e14323ef8c05ee566f6800747bb712cc0f492052e5",
-      "workerImage": "sha256:56fa6a99bc63ce6c7c6f675ccdd1d29bb7886d72d9b66cd5ac2a8ddae699ab68",
+      "coreImage": "sha256:c98e4994d72d2a9c0f105d9649d7d7a411e9b0daae244d5adb5a113d8c0f6cdc",
+      "workerImage": "sha256:bae5cc84131069a934dc84cf5ad1f98fce2c994dd5101112476882e2da136beb",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "p003_host_review_provenance_installed_core_worker_unchanged",
-      "evidence": "development/reviews/p003-independent-20261106/installed-go.json",
-      "independentSourceReview": "development/reviews/p003-independent-20261106/review.json",
+      "readyStatus": "installed_controlled_verification_passed_live_measurement_open",
+      "evidence": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json",
+      "independentSourceReview": "development/evidence/reassessment/p1-02-private-review-reuse-verified-20261107.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Kern en werker behouden exacte P0-01/P0-02-images5e78cbeb/56fa6a99. Alleen8modules van de hostbeoordelingsdienst voor P0-03 bijgewerkt en onafhankelijk teruggelezen;10vaste beoordelingsankers,9historie-/62criteriabestanden behouden. Dit is geen volledige installatie van alle lokale code en geen voltooide autonome E4.16-uitkomst.",
+      "meaning": "De kern en werkuitvoerder voeren dezelfde gecontroleerde P1-02-bronwijziging uit. De geïnstalleerde profielen komen overeen.",
       "runtimeProfiles": {
         "digital_work": "matching",
+        "household_research": "matching",
         "public_research": "matching",
-        "shared_provider": "matching",
-        "household_research": "matching"
+        "shared_provider": "matching"
       },
-      "profileReadbackSha256": "d681922d24e49706cee354103bbb168b0e29764f6201987803b480d727afbe92",
-      "sourceCommitChecked": "1fc3854f093e28c16fc6ac5e8bc9221764ed03ee",
+      "profileReadbackSha256": "bbf2dfaa0fcd4d96c8105678c2f07b7a8220413b65d33301857e4e46fd92a8af",
       "hostOverlaySourceHashes": {
         "component_evaluation_service.py": "496d3f1e9d2a02835c01a18b8359d17ef09f16aac134a5f5280be48f0e874020",
         "owned_package_handoff.py": "23f6e0995c0435ffbfc52a498ac8ad6ee3aba7e27537b13db0c6ed6cdfe7a38a",
@@ -18219,6 +18269,11 @@
         "moduleCount": 8,
         "authorityCount": 10,
         "installedEvidence": "development/reviews/p003-independent-20261106/installed-go.json"
+      },
+      "sourceBaseCommitChecked": "0360809c7a3bbbd9d07319fbdc4cacf5a43d05f1",
+      "installedSourceSha256": {
+        "application/free_will.py": "02066f7d417766fdeae92c3b3c40b9bb34dcaadcf33bd23d9113b23d6c72a2a3",
+        "adapters/postgres/sensory_events.py": "848a71f9bae8f2ebab53f1e3571e389dbcfd02464937d5ed9835dad34582cb3f"
       }
     },
     "memoryGoal20260910": {

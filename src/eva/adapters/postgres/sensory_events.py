@@ -844,23 +844,68 @@ class PostgresSensoryEventStore:
                     "provider_dispatched": False, "source_event_id": claim.event.source_event_id})
         return True
 
+    def previous_private_silence(self, claim, *, now: datetime) -> dict | None:
+        """Use only the preceding, clean, measured decision in this owner lane."""
+        if (not self._context_reviews_only or self._household_binding is not None
+                or not claim.thread_id.startswith(self._decision_prefix)
+                or claim.revision != 2 or claim.retry_count != 0):
+            return None
+        scope = self._timeline._scope_value
+        c, e = operational_checkpoints.c, operational_events.c
+        with self._timeline._engine.connect() as connection:
+            self._timeline._scope(connection)
+            row = connection.execute(sa.select(c.phase, c.status, c.revision,
+                c.updated_at, e.event_type, e.payload, e.payload_sha256).join(
+                operational_events, sa.and_(e.tenant_id == c.tenant_id,
+                    e.installation_id == c.installation_id, e.thread_id == c.thread_id,
+                    e.sequence == c.revision),
+            ).where(c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                c.thread_id.startswith(self._decision_prefix), c.thread_id != claim.thread_id,
+            ).order_by(c.updated_at.desc(), c.thread_id).limit(1)).first()
+        if (row is None or row.phase != "will_decided" or row.status != "completed"
+                or row.revision != 4 or row.event_type != "WILL_DECIDED"
+                or row.updated_at >= claim.event.occurred_at
+                or now - row.updated_at > timedelta(minutes=90)):
+            return None
+        digest = bytes(row.payload_sha256).hex()
+        if canonical_sha256(row.payload) != digest:
+            return None
+        data = row.payload["data"]
+        usage = data.get("usage") or {}
+        provenance = data.get("memory_search_context") or {}
+        input_digest = provenance.get("private_review_input_sha256")
+        if (not isinstance(input_digest, str) or len(input_digest) != 64
+                or data.get("disposition") != "silence" or data.get("urgency") != 0
+                or any(key in data for key in ("initiative", "next_attention", "feedback_application"))
+                or usage.get("measurement") != "measured"
+                or usage.get("model_attempts") != 1 or usage.get("tool_calls") != 1
+                or not usage.get("input_tokens") or "reused_decision_sha256" in provenance):
+            return None
+        return {"input_sha256": input_digest, "decision_sha256": digest}
+
     def _maintenance_review_source_current(self, connection, source, *, now):
         if self._household_binding is not None or self._private_maintenance_context_reader is None:
             return False
         values = self._private_maintenance_context_reader(
             connection, self._timeline._scope_value, self._initiative_principal_id, now)
-        return bool(values) and all(values[0].get(k) == v for k, v in source.items())
+        return bool(values) and isinstance(source, dict) and all(values[0].get(k) == v for k, v in source.items())
 
-    def context_review_claim_is_current(self, claim, *, now: datetime) -> bool:
+    def context_review_claim_is_current(
+        self, claim, *, now: datetime, check_carried_maintenance: bool = False,
+    ) -> bool:
         if not self._context_reviews_only or not claim.thread_id.startswith(self._decision_prefix):
             return False
         state = self._timeline.load(claim.thread_id)
-        if claim.event.payload.get("review_cause") == "component_source_changed":
+        maintenance = claim.event.payload.get("maintenance_source")
+        if (claim.event.payload.get("review_cause") == "component_source_changed"
+                or (check_carried_maintenance and maintenance is not None)):
             with self._timeline._engine.connect() as connection:
                 self._timeline._scope(connection)
                 if not self._maintenance_review_source_current(
-                        connection, claim.event.payload["maintenance_source"], now=now):
+                        connection, maintenance, now=now):
                     return False
+        if check_carried_maintenance and self._event_from_thread(claim.thread_id) != claim.event:
+            return False
         source = claim.event.payload.get("feedback_source")
         if source is not None:
             with self._timeline._engine.connect() as connection:

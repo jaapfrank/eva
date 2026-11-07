@@ -456,6 +456,15 @@ class SensoryDecisionWorker:
             if blocker is not None:
                 self._store.wait_for_admission(claim, blocker, now=now)
                 return "waiting_for_admission"
+            previous_silence = None
+            can_compare_context = (
+                context_review and not household_review and attention is None
+                and self._private_day_context_reader is not None and _ordinary_private_review(event)
+            )
+            if can_compare_context:
+                read_silence = getattr(self._store, "previous_private_silence", None)
+                if callable(read_silence):
+                    previous_silence = read_silence(claim, now=now)
             if context_review:
                 # Preserve the existing admission claim before reserving budget.
                 # A crash after this marker stays ambiguous; a live preparation
@@ -464,18 +473,7 @@ class SensoryDecisionWorker:
                 if started is None:
                     return "idle"
                 claim = started
-                if self._context_review_admission is not None:
-                    admission = self._context_review_admission(claim, now=self._current_time(now))
-                else:
-                    admission = None if self._context_review_budget is None else self._context_review_budget.admit_background_reflection(
-                        tenant_id=self._tenant_id, installation_id=self._installation_id,
-                        principal_id=self._principal_id, now=self._current_time(now),
-                        reservation_id=claim.thread_id, spread_over_day=True)
-                if admission is None or not admission.admitted:
-                    self._store.complete(claim, FreeWillDecision("silence",
-                        "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",
-                        0, "eva:background-budget"),
-                        now=self._current_time(now))
+                if previous_silence is None and not self._admit_context_review(claim, now=now):
                     return "waiting_for_budget"
             current_state = event.payload.get("current_state")
             state_description = (
@@ -650,6 +648,48 @@ class SensoryDecisionWorker:
                     self._store.defer_before_dispatch(claim, reason="foreground_active",
                         now=self._current_time(now))
                     return "deferred"
+            review_input = None
+            if can_compare_context:
+                review_input = _private_review_input_sha256(
+                    event, self._identity, memory, history, capabilities, private_contact, day_context,
+                    search_available=private_context_search is not None,
+                )
+            if previous_silence is not None:
+                now = self._current_time(now)
+                if review_input == previous_silence["input_sha256"]:
+                    current_day = self._private_day_context_reader(now=now)
+                    _, mandate_sha = self._context_review_authorizer()
+                    now = self._current_time(now)
+                    if (self._dispatch_ready is not None and not self._dispatch_ready()):
+                        self._store.defer_before_dispatch(claim, reason="foreground_active", now=now)
+                        return "deferred"
+                    if (_private_day_sources(current_day) == _private_day_sources(day_context)
+                            and mandate_sha == event.payload["private_capability_context"]["source_mandate_sha256"]
+                            and self._store.context_review_claim_is_current(
+                                claim, now=now, check_carried_maintenance=True)):
+                        self._store.complete(claim, FreeWillDecision(
+                            "silence", "Dezelfde actuele bronnen vragen geen tweede beoordeling.",
+                            0, "eva:private-context-unchanged",
+                            usage=ConversationModelUsage.measured(
+                                model_attempts=0, tool_calls=0, input_tokens=0, output_tokens=0),
+                            memory_search_context={"is_execution_permission": False,
+                                "private_review_input_sha256": review_input,
+                                "reused_decision_sha256": previous_silence["decision_sha256"]},
+                        ), now=now)
+                        return "unchanged"
+                    # Continue with the freshly observed source if it changed
+                    # during the comparison. A doubtful comparison cannot seed reuse.
+                    day_context = current_day
+                    review_input = None
+                now = self._current_time(now)
+                if not self._store.context_review_claim_is_current(claim, now=now):
+                    raise RuntimeError("private review claim expired during source comparison")
+                if not self._admit_context_review(claim, now=now):
+                    return "waiting_for_budget"
+                if self._dispatch_ready is not None and not self._dispatch_ready():
+                    self._store.defer_before_dispatch(claim, reason="foreground_active",
+                        now=self._current_time(now))
+                    return "deferred"
             # Recall may outlast the access lease. No model call has happened in
             # this attempt, so use the existing durable pre-dispatch deferral.
             if not self._model_access_ready():
@@ -718,6 +758,12 @@ class SensoryDecisionWorker:
                     "sources_sha256": canonical_sha256([{key: value for key, value in item.items()
                         if key not in {"text", "truncated", "retention_state"}} for item in day_context["sources"]]),
                     "is_execution_permission": False}
+            if (review_input is not None and search_context is None
+                    and decision.disposition == "silence" and decision.urgency == 0
+                    and decision.initiative is None and decision.next_attention is None
+                    and decision.feedback_application is None):
+                recorded_context = recorded_context or {"is_execution_permission": False}
+                recorded_context["private_review_input_sha256"] = review_input
             decision = replace(decision, memory_search_context=recorded_context)
             if source_outcomes:
                 from eva.contracts.canonical_json import canonical_sha256
@@ -743,6 +789,22 @@ class SensoryDecisionWorker:
                 self._store.fail(claim, error, now=self._current_time(now))
             return "failed"
 
+
+    def _admit_context_review(self, claim, *, now):
+        at = self._current_time(now)
+        if self._context_review_admission is not None:
+            admission = self._context_review_admission(claim, now=at)
+        else:
+            admission = None if self._context_review_budget is None else self._context_review_budget.admit_background_reflection(
+                tenant_id=self._tenant_id, installation_id=self._installation_id,
+                principal_id=self._principal_id, now=at,
+                reservation_id=claim.thread_id, spread_over_day=True)
+        if admission is not None and admission.admitted:
+            return True
+        self._store.complete(claim, FreeWillDecision("silence",
+            "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",
+            0, "eva:background-budget"), now=self._current_time(now))
+        return False
 
     def _revalidate_once(self, *, now: datetime) -> str:
         claim = self._store.claim_next_revalidation(now=now)
@@ -799,6 +861,96 @@ def private_orientation_context(event: SensoryEvent, history: tuple[dict, ...]) 
             "visible_pending_projects": pending, "phase_counts_do_not_prove_goal_completion": True,
             "coverage": "supplied_bounded_history_not_all_goals_or_family_knowledge",
             "history_selects_no_current_goal": True, "is_execution_permission": False}
+
+
+def _ordinary_private_review(event: SensoryEvent) -> bool:
+    return (
+        event.source == "initiative-review" and event.event_type == "private_opportunity_review"
+        and type(event.payload.get("review_window")) is int
+        and event.source_event_id.rsplit(":", 1)[-1] == str(event.payload["review_window"])
+        and isinstance(event.payload.get("review_profile"), str)
+        and isinstance(event.payload.get("private_capability_context"), dict)
+        and set(event.payload) <= {
+            "review_window", "review_profile", "review_profile_base",
+            "private_capability_context", "life_context", "maintenance_source",
+        }
+    )
+
+
+def _private_day_sources(context):
+    return None if not isinstance(context, dict) else {k: v for k, v in context.items() if k != "as_of"}
+
+
+def _private_review_input_sha256(event, identity, memory, history, capabilities, private_contact,
+                                 day_context, *, search_available):
+    """Compare the bounded private sources, retaining only their digest."""
+    from dataclasses import asdict
+    from hashlib import sha256
+    import json
+    from eva.application.human_understanding import current_person_context
+
+    life = event.payload.get("life_context")
+    if (not isinstance(life, dict) or not isinstance(memory, PresenceMemory)
+            or not day_context or day_context.get("available") is not True
+            or day_context.get("truncated") is not False):
+        return None
+    work = life.get("ordinary_work")
+    if (not isinstance(work, dict) or work.get("available") is not True
+            or any(item.get("status") in {"active", "waiting_for_proof"}
+                   for item in life.get("own_work", ()))):
+        return None
+
+    # A new clock stamp or another silent orientation is not source evidence.
+    # Preserve the local date/offset and all retained observations and work.
+    sources = deepcopy(event.payload)
+    sources.pop("review_window", None)
+    sources["private_capability_context"].pop("observed_at", None)
+    current = sources["life_context"]
+    current.pop("observed_at_utc", None)
+    local_time = current.pop("local_time", None)
+    if not isinstance(local_time, str):
+        return None
+    try:
+        local = datetime.fromisoformat(local_time)
+    except ValueError:
+        return None
+    if local.utcoffset() is None:
+        return None
+    current["local_date"] = local.date().isoformat()
+    current["utc_offset_seconds"] = int(local.utcoffset().total_seconds())
+    current["ordinary_work"].pop("as_of", None)
+    current["own_orientation_history"] = [
+        item for item in current.get("own_orientation_history", ())
+        if item["disposition"] != "silence" or item["initiative_status"] is not None
+        or item["next_attention"] is not None
+    ]
+    identity_data = asdict(identity)
+    if identity.identity_pack is not None:
+        identity_data["identity_pack"] = identity.identity_pack.model_dump(mode="json")
+    person_context = current_person_context(memory)
+    person_context.pop("as_of", None)
+    inputs = {
+        "contract": "PrivateReviewInputs/v1",
+        "sources": sources,
+        "identity": identity_data,
+        "history": history,
+        "capabilities": capabilities,
+        "private_contact": private_contact,
+        "search_available": search_available,
+        "day_context": _private_day_sources(day_context),
+        "person_context": person_context,
+        "facts": [fact.model_dump(mode="json") for fact in memory.confirmed_facts],
+        "style_mirror": memory.style_mirror,
+        "memory_projection": memory.recall.projection_version,
+        "memory_scope": memory.recall.scope_sha256,
+        "memory_principal": memory.recall.principal_id,
+    }
+    try:
+        encoded = json.dumps(inputs, sort_keys=True, ensure_ascii=False, allow_nan=False,
+            separators=(",", ":")).encode()
+    except (TypeError, ValueError):
+        return None
+    return sha256(encoded).hexdigest()
 
 
 def _private_review_recall_context(event: SensoryEvent) -> str:

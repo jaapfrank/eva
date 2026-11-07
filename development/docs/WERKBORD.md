@@ -25,10 +25,11 @@ Volgende stap: De zaak van 26 oktober is onafhankelijk gereproduceerd en de bewa
 2. P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.
 3. P0-03 · Versterk onafhankelijke reviewerherkomst en scheid pure validators van de bestaande hash-/receipt-/rollback-dispatch in reviewed_component_application.py. Geen verzwakking van huidige releasebeveiliging.
 4. P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.
-5. P1-02/03/04/06 · Meet tokenverbruik per echte uitkomst en goedkope geen-veranderingpoort; meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.
-6. P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.
-7. P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.
-8. P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding.
+5. P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.
+6. P1-03/04/06 · Meet actuele importgrenzen opnieuw (oude 110 is geen huidige telling); voeg gerichte adversarial- en kind-/gezinsautorisatieproeven toe; beoordeel de grote gespreks-/aandacht-/actieklassen op aangetoonde dubbele verantwoordelijkheden.
+7. P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.
+8. P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.
+9. P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding.
 
 ## Open taken
 
