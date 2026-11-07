@@ -1,0 +1,50 @@
+{
+  "contract": "EvaOwnedPackageActivationReadback/v1",
+  "checkedAt": "2026-11-07T12:57:43.498138+00:00",
+  "taskId": "E4.15",
+  "package": {
+    "name": "eva-gmail",
+    "version": "0.3.0",
+    "archiveSha256": "eb10d1658377c372aab4914457f359d4702d16998d86a856673fa1c4115abd93",
+    "manifestFilesVerified": 13,
+    "author": "Eva"
+  },
+  "sandbox": {
+    "testsPassed": 41,
+    "testSeconds": 1.579,
+    "network": "none",
+    "liveSecrets": false,
+    "usedPinnedPackageRuntime": true
+  },
+  "independentReview": {
+    "decision": "no_go_for_live_activation",
+    "callbackProbe": {
+      "descriptorInternalPath": "/oauth/callback",
+      "hostForwardingUsesDescriptorPath": true,
+      "candidateExpectsExternalRedirectPath": true,
+      "observedStatus": 404,
+      "oauthExchanges": 0
+    },
+    "additionalFindings": [
+      "The OAuth token check accepts additional returned scopes beyond the requested read-only scope.",
+      "The advertised Gmail move tool does not match the read-only HTTP bridge."
+    ],
+    "nativeReviewAdmitted": false
+  },
+  "productionReadback": {
+    "originalLatestGeneration": 8,
+    "originalLatestState": "ambiguous",
+    "originalLatestError": "exact_http_400",
+    "originalLatestToolCalls": 1,
+    "installedReconciliationMinimumToolCalls": 2,
+    "independentPackageReceiptDirectories": 0,
+    "requiredEnvironmentValuesMissing": 3,
+    "requiredSecretBindingsMissing": 1,
+    "scopedNetworkGrantForThisApplicationVerified": false
+  },
+  "newModelRequests": 0,
+  "olderAttemptsReplayed": false,
+  "packageInstalled": false,
+  "gmailUseOrReuseVerified": false,
+  "fullCardCompleted": false
+}

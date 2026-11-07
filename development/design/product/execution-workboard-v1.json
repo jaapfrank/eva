@@ -3595,19 +3595,19 @@
         "next": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "detail": "E4.15 blijft open. De werkregistratie blijft na HTTP 400 op onbekend staan. De pakkethost bevestigt voor deze poging dat er geen pakketoverdracht, aansluitverzoek of installatie is. De bewaarde kandidaat passeert de toelatingscontrole in een geïsoleerde reconstructie met gesimuleerde taakmetadata. De werkelijke afwijzingsreden is onbewezen en de huidige poging voldoet niet aan de bestaande hervatcontrole. Diagnose voor afwijzingen en de controle op gedeeltelijke of onleesbare pakketopslag zijn onafhankelijk beoordeeld, geïnstalleerd en live teruggelezen. Alle 67 gerichte tests slagen. De oorspronkelijke taakuitkomst blijft onbekend. Een nieuwe echte Telegram-opdracht eindigde met een duidelijke blokkade: Eva kon haar bewaarde pakket vanuit die taak niet openen. Er is geen pakket ingediend; de Gmail-voorziening is nog niet beoordeeld, aangesloten of gebruikt."
+          "detail": "Eva’s bewaarde pakket 0.3.0 is bytegelijk teruggevonden. De 41 geïsoleerde tests slagen. De onafhankelijke proef geeft HTTP 404 op het exacte interne terugkeerpad vóór contact met Google. Onafhankelijke toelating, configuratie, installatie en later werkelijk gebruik zijn nog niet bevestigd. Laat Eva in een geldige brongebonden taak haar bewaarde pakket 0.3.0 hergebruiken en het interne terugkeerpad, de exacte leesrechten en de gereedschapslijst corrigeren. Laat de beheerde route de kandidaat onafhankelijk beoordelen en het ingestelde terugkeerpad controleren vóór eigenaarconfiguratie, installatie en later gebruik. De huidige laatste poging blijft onzeker en valt buiten de bestaande hervatregel."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-11-07T12:46:36.735427+00:00",
-        "reviewedAt": "2026-11-07T12:46:36.735427+00:00",
+        "checkedAt": "2026-11-07T12:57:43.498138+00:00",
+        "reviewedAt": "2026-11-07T12:57:43.498138+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-11-07T08:27:00.930248+00:00",
-      "checkedAt": "2026-11-07T12:46:36.735427+00:00",
+      "checkedAt": "2026-11-07T12:57:43.498138+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3745,7 +3745,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-07T12:46:36.735427+00:00",
+      "lastUpdatedAt": "2026-11-07T12:57:43.498138+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3779,7 +3779,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-11-07T12:46:36.735427+00:00",
+      "updatedAt": "2026-11-07T12:57:43.498138+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -9068,7 +9068,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "E4.15 blijft open. De werkregistratie blijft na HTTP 400 op onbekend staan. De pakkethost bevestigt voor deze poging dat er geen pakketoverdracht, aansluitverzoek of installatie is. De bewaarde kandidaat passeert de toelatingscontrole in een geïsoleerde reconstructie met gesimuleerde taakmetadata. De werkelijke afwijzingsreden is onbewezen en de huidige poging voldoet niet aan de bestaande hervatcontrole. Diagnose voor afwijzingen en de controle op gedeeltelijke of onleesbare pakketopslag zijn onafhankelijk beoordeeld, geïnstalleerd en live teruggelezen. Alle 67 gerichte tests slagen. De oorspronkelijke taakuitkomst blijft onbekend. Een nieuwe echte Telegram-opdracht eindigde met een duidelijke blokkade: Eva kon haar bewaarde pakket vanuit die taak niet openen. Er is geen pakket ingediend; de Gmail-voorziening is nog niet beoordeeld, aangesloten of gebruikt.",
+                "nextAction": "Laat Eva in een geldige brongebonden taak haar bewaarde pakket 0.3.0 hergebruiken en het interne terugkeerpad, de exacte leesrechten en de gereedschapslijst corrigeren. Laat de beheerde route de kandidaat onafhankelijk beoordelen en het ingestelde terugkeerpad controleren vóór eigenaarconfiguratie, installatie en later gebruik. De huidige laatste poging blijft onzeker en valt buiten de bestaande hervatregel.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -9091,10 +9091,10 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-03T17:57:30.939767+00:00",
-                "progress": "Pakketoverdracht geïnstalleerd en teruggelezen; 360 oorspronkelijke gerichte regressies en database-/containerproeven slagen. Eva bouwde zelf versie0.3.0 (13 bestanden), maar haar eerste vervolg eindigde op HTTP400 vóór pakketindiening. Normale archieftijdstempels en status vóór indiening gericht hersteld/geïnstalleerd (62 controles); hetzelfde werk hervat na gewijzigde oorzaak. Toepassing, onafhankelijke inhoudelijke beoordeling en later gebruik blijven onbewezen. Eerste poging:815.121 gedeeltelijk gemeten tokens,19 modelresponsen/19tools; kosten/cacheverdeling onbekend.",
+                "checkedAt": "2026-11-07T12:57:43.498138+00:00",
+                "progress": "Eva’s bewaarde pakket 0.3.0 is bytegelijk teruggevonden. De 41 geïsoleerde tests slagen. De onafhankelijke proef geeft HTTP 404 op het exacte interne terugkeerpad vóór contact met Google. Onafhankelijke toelating, configuratie, installatie en later werkelijk gebruik zijn nog niet bevestigd.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-                "latestEvidence": "development/evidence/product/owned-package-handoff-20261103.json",
+                "latestEvidence": "development/evidence/product/e415-gmail-activation-blockers-20261107.json",
                 "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
                 "foundationDelivery": {
                   "checkedAt": "2026-10-29T21:43:52.133135+00:00",
@@ -9155,6 +9155,12 @@
                   "focusedCompatibilityTestsPassed": 62,
                   "continuationOutcome": "ambiguous_http_400_before_review",
                   "ownerAcceptance": false
+                },
+                "ownerActivationBlockers20261107": {
+                  "status": "candidate_activation_rejected_in_isolation",
+                  "checkedAt": "2026-11-07T12:57:43.498138+00:00",
+                  "evidence": "development/evidence/product/e415-gmail-activation-blockers-20261107.json",
+                  "fullCardCompleted": false
                 }
               },
               {
@@ -16234,7 +16240,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "E4.15 blijft open. De werkregistratie blijft na HTTP 400 op onbekend staan. De pakkethost bevestigt voor deze poging dat er geen pakketoverdracht, aansluitverzoek of installatie is. De bewaarde kandidaat passeert de toelatingscontrole in een geïsoleerde reconstructie met gesimuleerde taakmetadata. De werkelijke afwijzingsreden is onbewezen en de huidige poging voldoet niet aan de bestaande hervatcontrole. Diagnose voor afwijzingen en de controle op gedeeltelijke of onleesbare pakketopslag zijn onafhankelijk beoordeeld, geïnstalleerd en live teruggelezen. Alle 67 gerichte tests slagen. De oorspronkelijke taakuitkomst blijft onbekend. Een nieuwe echte Telegram-opdracht eindigde met een duidelijke blokkade: Eva kon haar bewaarde pakket vanuit die taak niet openen. Er is geen pakket ingediend; de Gmail-voorziening is nog niet beoordeeld, aangesloten of gebruikt.",
+              "nextAction": "Laat Eva in een geldige brongebonden taak haar bewaarde pakket 0.3.0 hergebruiken en het interne terugkeerpad, de exacte leesrechten en de gereedschapslijst corrigeren. Laat de beheerde route de kandidaat onafhankelijk beoordelen en het ingestelde terugkeerpad controleren vóór eigenaarconfiguratie, installatie en later gebruik. De huidige laatste poging blijft onzeker en valt buiten de bestaande hervatregel.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -16257,10 +16263,10 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-03T17:57:30.939767+00:00",
-              "progress": "Pakketoverdracht geïnstalleerd en teruggelezen; 360 oorspronkelijke gerichte regressies en database-/containerproeven slagen. Eva bouwde zelf versie0.3.0 (13 bestanden), maar haar eerste vervolg eindigde op HTTP400 vóór pakketindiening. Normale archieftijdstempels en status vóór indiening gericht hersteld/geïnstalleerd (62 controles); hetzelfde werk hervat na gewijzigde oorzaak. Toepassing, onafhankelijke inhoudelijke beoordeling en later gebruik blijven onbewezen. Eerste poging:815.121 gedeeltelijk gemeten tokens,19 modelresponsen/19tools; kosten/cacheverdeling onbekend.",
+              "checkedAt": "2026-11-07T12:57:43.498138+00:00",
+              "progress": "Eva’s bewaarde pakket 0.3.0 is bytegelijk teruggevonden. De 41 geïsoleerde tests slagen. De onafhankelijke proef geeft HTTP 404 op het exacte interne terugkeerpad vóór contact met Google. Onafhankelijke toelating, configuratie, installatie en later werkelijk gebruik zijn nog niet bevestigd.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-              "latestEvidence": "development/evidence/product/owned-package-handoff-20261103.json",
+              "latestEvidence": "development/evidence/product/e415-gmail-activation-blockers-20261107.json",
               "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
               "foundationDelivery": {
                 "checkedAt": "2026-10-29T21:43:52.133135+00:00",
@@ -16321,6 +16327,12 @@
                 "focusedCompatibilityTestsPassed": 62,
                 "continuationOutcome": "ambiguous_http_400_before_review",
                 "ownerAcceptance": false
+              },
+              "ownerActivationBlockers20261107": {
+                "status": "candidate_activation_rejected_in_isolation",
+                "checkedAt": "2026-11-07T12:57:43.498138+00:00",
+                "evidence": "development/evidence/product/e415-gmail-activation-blockers-20261107.json",
+                "fullCardCompleted": false
               }
             },
             {
