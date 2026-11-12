@@ -7,6 +7,7 @@ from eva.operations.unified_sandbox import (
     AtomicOverlayInstaller,
     SandboxCandidateFile,
     UnifiedSandboxEvaluator,
+    resolve_eva_import_closure,
 )
 
 
@@ -77,3 +78,16 @@ def test_atomic_overlay_installer_rolls_back_automatically_on_failed_post_instal
     assert ok_receipt.installed is True
     assert ok_receipt.rolled_back is False
     assert target_file.read_text(encoding="utf-8") == "STATE = 'candidate'\n"
+
+
+def test_resolve_eva_import_closure_covers_e416_scheduled_work_failure_dependencies() -> None:
+    repo_eva_root = Path(__file__).resolve().parents[3] / "src" / "eva"
+    closure = resolve_eva_import_closure(
+        repo_eva_root,
+        ("adapters/postgres/scheduled_work_failure.py",),
+    )
+    assert "adapters/postgres/scheduled_work_failure.py" in closure
+    assert "adapters/postgres/operational_timeline.py" in closure
+    assert "contracts/timestamps.py" in closure
+    assert "contracts/canonical_json.py" in closure
+    assert "contracts/base.py" in closure

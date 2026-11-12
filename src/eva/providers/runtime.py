@@ -12,6 +12,7 @@ from eva.application.conversation import (
     ConversationExternalToolPort,
     ConversationToolDescriptor,
 )
+from eva.application.module_registry import ModuleRegistry, ProviderModuleAdapter
 from eva.application.sensory import SensoryEventSourcePort
 from eva.providers.contracts import (
     ExternalProviderBundle,
@@ -169,9 +170,30 @@ __all__ = [
     "LoadedProvider",
     "ProviderContribution",
     "RuntimeProviderFactory",
+    "build_external_module_registry",
     "build_external_provider_bundle",
     "load_external_provider_settings",
 ]
+
+
+def build_external_module_registry(
+    settings: ExternalProviderSettings | None,
+    engine: sa.Engine,
+) -> ModuleRegistry | None:
+    """Register all loaded external providers on the unified ModuleRegistry."""
+
+    if settings is None:
+        return None
+    registry = ModuleRegistry()
+    for loaded in settings.providers:
+        registry.register(
+            ProviderModuleAdapter(
+                loaded.provider_id,
+                lambda item=loaded: item.factory.build(item.settings, engine),
+                execution_sources=tuple(getattr(loaded.factory, "execution_sources", ())),
+            )
+        )
+    return registry
 
 
 def build_provider_owner_media(provider_settings, runtime_settings, **identity):

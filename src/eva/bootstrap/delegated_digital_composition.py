@@ -304,9 +304,9 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
 class DigitalEnabledDelegatedRunner:
     """Dispatch one extra task contract within the existing worker lifecycle."""
     def __init__(self, existing, digital):
+        from eva.bootstrap.unified_task_engine import UnifiedTaskEngine
         self.existing, self.digital = existing, digital
+        self._engine = UnifiedTaskEngine(existing_runner=existing, digital_runner=digital)
 
     async def run(self, spec, *, call_id, cancellation_event=None):
-        from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
-        runner = self.digital if isinstance(spec, DelegatedDigitalWorkSpec) else self.existing
-        return await runner.run(spec, call_id=call_id, cancellation_event=cancellation_event)
+        return await self._engine.run(spec, call_id=call_id, cancellation_event=cancellation_event)
