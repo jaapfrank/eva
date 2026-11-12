@@ -1,0 +1,64 @@
+[
+  {
+    "method": "initialize",
+    "seconds": 0.259,
+    "ok": true
+  },
+  {
+    "notification": "configWarning"
+  },
+  {
+    "notification": "remoteControl/status/changed"
+  },
+  {
+    "method": "account/login/start",
+    "seconds": 0.033,
+    "ok": true
+  },
+  {
+    "method": "thread/realtime/listVoices",
+    "seconds": 0.001,
+    "ok": true
+  },
+  {
+    "voices_result_keys": [
+      "voices"
+    ]
+  },
+  {
+    "notification": "account/login/completed"
+  },
+  {
+    "notification": "account/updated"
+  },
+  {
+    "method": "thread/start",
+    "seconds": 0.341,
+    "ok": true
+  },
+  {
+    "notification": "thread/started"
+  },
+  {
+    "notification": "mcpServer/startupStatus/updated"
+  },
+  {
+    "method": "thread/realtime/start",
+    "seconds": 0.001,
+    "ok": true
+  },
+  {
+    "notification": "mcpServer/startupStatus/updated"
+  },
+  {
+    "notification": "thread/realtime/started"
+  },
+  {
+    "notification": "thread/realtime/sdp"
+  },
+  {
+    "method": "thread/realtime/stop",
+    "seconds": 0.002,
+    "ok": true
+  }
+]

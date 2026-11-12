@@ -56,11 +56,106 @@ class NativeWorkDelivery:
         state = response.json()
         return state.get("entity_id") == satellite and state.get("state") == "idle"
 
+    def _explicit_tasks(self):
+        from eva.adapters.postgres.household_work_destination import destination_exists
+        store = self.server.store
+        with store._engine.begin() as c:
+            store._scope(c)
+            pending = pending_household_results(c, store, self.server.authority.clock()).subquery()
+            return c.execute(sa.select(pending.c.work_id).where(
+                destination_exists(store.scope, pending.c.work_id))
+                .order_by(pending.c.completed_at, pending.c.work_id).limit(128)).scalars().all()
+
+    def _streaming_busy(self, satellite):
+        from eva.adapters.postgres.operational_timeline import operational_checkpoints as checkpoints
+        events = operational_events
+        store = self.server.store
+        with store._engine.begin() as c:
+            store._scope(c)
+            return bool(c.scalar(sa.select(sa.exists(sa.select(1).select_from(
+                events.join(checkpoints, sa.and_(
+                    events.c.tenant_id == checkpoints.c.tenant_id,
+                    events.c.installation_id == checkpoints.c.installation_id,
+                    events.c.thread_id == checkpoints.c.thread_id))).where(
+                events.c.tenant_id == store.scope.tenant_id,
+                events.c.installation_id == store.scope.installation_id,
+                events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED",
+                events.c.sequence == 1,
+                events.c.payload["data"]["binding"]["satellite_id"].astext == satellite,
+                events.c.payload["data"]["native_conversation_key"].astext.is_(None),
+                checkpoints.c.phase == "open",
+                checkpoints.c.deadline > self.server.authority.clock())))))
+
+    def _explicit_once(self):
+        from eva.adapters.postgres.household_work_destination import read_destination, validate_destination
+        for work_id in self._explicit_tasks():
+            claim = None
+            post_started = False
+            try:
+                service = self.server.explicit_delivery_session(work_id)
+                turn = service.control_turn()
+                work = service._load(work_id, service.origin(turn))
+                with service.store._engine.begin() as c:
+                    service.store._scope(c)
+                    destination = validate_destination(c, service.store.scope,
+                        self.server.authority, work.spec,
+                        read_destination(c, service.store.scope, work_id))
+                satellite = destination["satellite_id"]
+                with httpx.Client(base_url=self.provider.endpoint_url.rstrip("/"),
+                        headers={"Authorization": "Bearer " + self.provider.credential},
+                        timeout=httpx.Timeout(30, connect=4), follow_redirects=False) as client:
+                    if self._streaming_busy(satellite) or not self._idle(client, satellite):
+                        continue
+                    claim = service.result_delivery(turn, "claim", work_id=work_id)
+                    if claim is None:
+                        continue
+                    # Selection may have changed between the idle probe and
+                    # claim. Once claimed it is immutable; re-read that exact
+                    # authorized destination before any media request.
+                    with service.store._engine.begin() as c:
+                        service.store._scope(c)
+                        destination = validate_destination(c, service.store.scope,
+                            self.server.authority, work.spec,
+                            read_destination(c, service.store.scope, work_id))
+                    satellite = destination["satellite_id"]
+                    if self._streaming_busy(satellite) or not self._idle(client, satellite):
+                        service.result_delivery(turn, "defer", work_id=work_id,
+                            result_sha256=claim["result_sha256"])
+                        continue
+                    if service.result_delivery(turn, "authorize", work_id=work_id,
+                            result_sha256=claim["result_sha256"]) is None:
+                        continue
+                    text = readable_work_result(claim["result"])
+                    if len(text) > 4000:
+                        text = text[:4000].rsplit(" ", 1)[0] + " Vraag me naar het volledige resultaat."
+                    message = text if work.state in FAILURE_STATES else "Over je opdracht " + work.title + ": " + text
+                    post_started = True
+                    response = client.post("/api/services/assist_satellite/announce", json={
+                        "entity_id": satellite, "message": message, "preannounce": False})
+                    response.raise_for_status()
+                service.result_delivery(turn, "ack", work_id=work_id,
+                    result_sha256=claim["result_sha256"], disposition="offered")
+                return True
+            except Exception:
+                _LOG.warning("Explicit household result delivery unavailable")
+                if claim is not None:
+                    try:
+                        service.result_delivery(turn, "ack" if post_started else "defer", work_id=work_id,
+                            result_sha256=claim["result_sha256"],
+                            **({"disposition": "ambiguous"} if post_started else {}))
+                    except Exception:
+                        pass
+                    return True
+        return False
+
     def run_once(self):
         self.server.authority.validate_current()
+        if self._explicit_once():
+            return
         idle_satellites = {}
         for binding in self._sessions():
             claim = None
+            post_started = False
             service = None
             turn = None
             try:
@@ -73,9 +168,11 @@ class NativeWorkDelivery:
                 # Only the configured HA endpoint and one exact admitted satellite.
                 with httpx.Client(base_url=self.provider.endpoint_url.rstrip("/"),
                         headers={"Authorization": "Bearer " + self.provider.credential},
-                        timeout=4, follow_redirects=False) as client:
+                        timeout=httpx.Timeout(30, connect=4), follow_redirects=False) as client:
                     satellite = binding["satellite_id"]
                     if speaker:
+                        if self._streaming_busy(satellite):
+                            continue
                         if satellite not in idle_satellites:
                             idle_satellites[satellite] = self._idle(client, satellite)
                         if not idle_satellites[satellite]:
@@ -93,13 +190,14 @@ class NativeWorkDelivery:
                         result_sha256=claim["result_sha256"])
                     if authorized is None:
                         return
-                    if speaker and not self._idle(client, binding["satellite_id"]):
+                    if speaker and (self._streaming_busy(satellite) or not self._idle(client, satellite)):
                         service.result_delivery(turn, "defer", work_id=claim["work_id"],
                             result_sha256=claim["result_sha256"])
                         return
                     service.current()
                     if self.server.sessions.native_delivery(binding) != destination:
                         raise ValueError("native result destination changed")
+                    post_started = True
                     if speaker:
                         response = client.post("/api/services/assist_satellite/announce",
                             json={"entity_id": binding["satellite_id"], "message": message,
@@ -120,8 +218,9 @@ class NativeWorkDelivery:
                 _LOG.warning("Native household result delivery unavailable")
                 if claim is not None:
                     try:
-                        service.result_delivery(turn, "ack", work_id=claim["work_id"],
-                            result_sha256=claim["result_sha256"], disposition="ambiguous")
+                        service.result_delivery(turn, "ack" if post_started else "defer", work_id=claim["work_id"],
+                            result_sha256=claim["result_sha256"],
+                            **({"disposition": "ambiguous"} if post_started else {}))
                     except Exception:
                         pass
                     return

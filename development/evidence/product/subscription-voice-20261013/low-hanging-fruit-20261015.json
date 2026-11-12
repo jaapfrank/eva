@@ -1,0 +1,482 @@
+{
+  "contract": "EvaVoiceLowHangingFruit/v1",
+  "recorded_at": "2026-10-15T09:32:39.268730+00:00",
+  "status": "installed_targeted_checks_and_synthetic_voice_passed_latency_target_unmet",
+  "changes": [
+    "Reuse one opted-in short sourced public lookup answer without final text-model rewrite; retain authorization, receipt replay and answer guard.",
+    "Offer existing authorized HA inventory/API tools directly, prefer relevant local data and keep their results on contact model.",
+    "Explain general REST response/service-body semantics; no hardcoded weather routing or new grants.",
+    "Public lookup follows question language."
+  ],
+  "tests": {
+    "broader_targeted_before_final_prompt": 89,
+    "model_admission_subset": 9,
+    "final_targeted": 42,
+    "independent_read_only_review": "no concrete blockers; source truth/completeness remains model judged"
+  },
+  "backend_probes": {
+    "baseline": {
+      "elapsed_ms": 33397,
+      "text_model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 5728,
+          "first_content_ms": null,
+          "input_tokens": 3111,
+          "output_tokens": 61,
+          "requested_action": true
+        },
+        {
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 6119,
+          "first_content_ms": 5076,
+          "input_tokens": 4062,
+          "output_tokens": 75,
+          "requested_action": false
+        }
+      ],
+      "final_provider": "chatgpt-codex:gpt-6-sol",
+      "direct_reply_hook": false,
+      "actions": [
+        {
+          "name": "search_public_info",
+          "status": "verified"
+        }
+      ],
+      "raw_private_log_sha256": "6120ee792a67d3864da6598bad55049b3540cfbdda15f690669346fc1d8ade04"
+    },
+    "candidate": {
+      "elapsed_ms": 22587,
+      "text_model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 9290,
+          "first_content_ms": null,
+          "input_tokens": 3155,
+          "output_tokens": 62,
+          "requested_action": true
+        }
+      ],
+      "final_provider": "eva:verified-public-lookup",
+      "direct_reply_hook": true,
+      "actions": [
+        {
+          "name": "search_public_info",
+          "status": "verified"
+        }
+      ],
+      "raw_private_log_sha256": "c09f0bf7bdbab02a0915f8d29064101791d19c0e53b309b484b50dc8bd1d0a1f"
+    },
+    "baseline-local": {
+      "elapsed_ms": 58308,
+      "text_model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 9277,
+          "first_content_ms": null,
+          "input_tokens": 6377,
+          "output_tokens": 79,
+          "requested_action": true
+        },
+        {
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 5358,
+          "first_content_ms": null,
+          "input_tokens": 6546,
+          "output_tokens": 79,
+          "requested_action": true
+        },
+        {
+          "phase_index": 2,
+          "receipt_count": 2,
+          "elapsed_ms": 6517,
+          "first_content_ms": null,
+          "input_tokens": 6114,
+          "output_tokens": 75,
+          "requested_action": true
+        },
+        {
+          "phase_index": 3,
+          "receipt_count": 3,
+          "elapsed_ms": 23037,
+          "first_content_ms": null,
+          "input_tokens": 8338,
+          "output_tokens": 237,
+          "requested_action": true
+        },
+        {
+          "phase_index": 4,
+          "receipt_count": 4,
+          "elapsed_ms": 6993,
+          "first_content_ms": 2525,
+          "input_tokens": 7261,
+          "output_tokens": 88,
+          "requested_action": false
+        }
+      ],
+      "final_provider": "chatgpt-codex:gpt-6-astra",
+      "direct_reply_hook": false,
+      "actions": [
+        {
+          "name": "read_home_assistant_inventory",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        }
+      ],
+      "raw_private_log_sha256": "8ab0851302afe4dda62d329b19757c615832689e9e278a95dc23f38e8410a087"
+    },
+    "candidate-local": {
+      "elapsed_ms": 28382,
+      "text_model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 6662,
+          "first_content_ms": null,
+          "input_tokens": 5444,
+          "output_tokens": 42,
+          "requested_action": true
+        },
+        {
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 5580,
+          "first_content_ms": null,
+          "input_tokens": 5841,
+          "output_tokens": 64,
+          "requested_action": true
+        },
+        {
+          "phase_index": 2,
+          "receipt_count": 2,
+          "elapsed_ms": 2812,
+          "first_content_ms": null,
+          "input_tokens": 6201,
+          "output_tokens": 67,
+          "requested_action": true
+        },
+        {
+          "phase_index": 3,
+          "receipt_count": 3,
+          "elapsed_ms": 6740,
+          "first_content_ms": 4313,
+          "input_tokens": 7075,
+          "output_tokens": 55,
+          "requested_action": false
+        }
+      ],
+      "final_provider": "chatgpt-codex:gpt-6-sol",
+      "direct_reply_hook": false,
+      "actions": [
+        {
+          "name": "read_home_assistant_inventory",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        }
+      ],
+      "raw_private_log_sha256": "77be852d5acdbcfeabd22f1b460ff88a3c89650869ead0aea8eb8529234ddfb6"
+    },
+    "candidate-local-v2": {
+      "elapsed_ms": 54180,
+      "text_model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 4968,
+          "first_content_ms": null,
+          "input_tokens": 5473,
+          "output_tokens": 42,
+          "requested_action": true
+        },
+        {
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 4030,
+          "first_content_ms": null,
+          "input_tokens": 5874,
+          "output_tokens": 50,
+          "requested_action": true
+        },
+        {
+          "phase_index": 2,
+          "receipt_count": 2,
+          "elapsed_ms": 3140,
+          "first_content_ms": null,
+          "input_tokens": 6490,
+          "output_tokens": 75,
+          "requested_action": true
+        },
+        {
+          "phase_index": 3,
+          "receipt_count": 3,
+          "elapsed_ms": 4537,
+          "first_content_ms": null,
+          "input_tokens": 6800,
+          "output_tokens": 44,
+          "requested_action": true
+        },
+        {
+          "phase_index": 4,
+          "receipt_count": 4,
+          "elapsed_ms": 3514,
+          "first_content_ms": null,
+          "input_tokens": 8874,
+          "output_tokens": 58,
+          "requested_action": true
+        },
+        {
+          "phase_index": 5,
+          "receipt_count": 5,
+          "elapsed_ms": 4894,
+          "first_content_ms": null,
+          "input_tokens": 8090,
+          "output_tokens": 70,
+          "requested_action": true
+        },
+        {
+          "phase_index": 6,
+          "receipt_count": 6,
+          "elapsed_ms": 9025,
+          "first_content_ms": null,
+          "input_tokens": 8414,
+          "output_tokens": 93,
+          "requested_action": true
+        },
+        {
+          "phase_index": 7,
+          "receipt_count": 7,
+          "elapsed_ms": 6397,
+          "first_content_ms": null,
+          "input_tokens": 8764,
+          "output_tokens": 85,
+          "requested_action": true
+        },
+        {
+          "phase_index": 8,
+          "receipt_count": 8,
+          "elapsed_ms": 4786,
+          "first_content_ms": 2029,
+          "input_tokens": 9697,
+          "output_tokens": 61,
+          "requested_action": false
+        }
+      ],
+      "final_provider": "chatgpt-codex:gpt-6-sol",
+      "direct_reply_hook": false,
+      "actions": [
+        {
+          "name": "read_home_assistant_inventory",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        }
+      ],
+      "raw_private_log_sha256": "78a0eaef7e92640aa5c2ecdea95cd49b60c081be2f2c184240635748e4ec2417"
+    },
+    "candidate-local-v3": {
+      "elapsed_ms": 34178,
+      "text_model_phases": [
+        {
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 5437,
+          "first_content_ms": null,
+          "input_tokens": 5527,
+          "output_tokens": 42,
+          "requested_action": true
+        },
+        {
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 4053,
+          "first_content_ms": null,
+          "input_tokens": 5932,
+          "output_tokens": 50,
+          "requested_action": true
+        },
+        {
+          "phase_index": 2,
+          "receipt_count": 2,
+          "elapsed_ms": 2987,
+          "first_content_ms": null,
+          "input_tokens": 6548,
+          "output_tokens": 44,
+          "requested_action": true
+        },
+        {
+          "phase_index": 3,
+          "receipt_count": 3,
+          "elapsed_ms": 4043,
+          "first_content_ms": null,
+          "input_tokens": 8626,
+          "output_tokens": 52,
+          "requested_action": true
+        },
+        {
+          "phase_index": 4,
+          "receipt_count": 4,
+          "elapsed_ms": 4093,
+          "first_content_ms": null,
+          "input_tokens": 9685,
+          "output_tokens": 67,
+          "requested_action": true
+        },
+        {
+          "phase_index": 5,
+          "receipt_count": 5,
+          "elapsed_ms": 4868,
+          "first_content_ms": 1886,
+          "input_tokens": 8924,
+          "output_tokens": 53,
+          "requested_action": false
+        }
+      ],
+      "final_provider": "chatgpt-codex:gpt-6-sol",
+      "direct_reply_hook": false,
+      "actions": [
+        {
+          "name": "read_home_assistant_inventory",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        },
+        {
+          "name": "home_assistant_request",
+          "status": "verified"
+        }
+      ],
+      "raw_private_log_sha256": "fe677d3ffeb6c0ab912185380bea0f1e2048232172001cc56d5a0b30aaf936cb"
+    }
+  },
+  "installed_voice": {
+    "synthetic": true,
+    "physical_listening": false,
+    "smoke": {
+      "result": "weather_return_smoke",
+      "ready_after_wake_seconds": 2.14,
+      "core_completed": 1,
+      "core_failed": 0,
+      "saved_result_parts": 0,
+      "pcm_after_result": 11520,
+      "pcm_samples": 218112,
+      "closed_early": false,
+      "elapsed_seconds": 32.18
+    },
+    "end_of_microphone_to_answer_signal_ms": 21912,
+    "core_request_to_final_ms": 18958,
+    "result_to_audio_ms": 1152,
+    "initial_ack_after_mic_ms": 2037,
+    "ice": {
+      "local_type": "host",
+      "remote_type": "host",
+      "protocol": "udp"
+    },
+    "event_loop": {
+      "samples": 1451,
+      "maximum_ms": 29.37,
+      "p95_ms": 3.42
+    },
+    "observed_error_events": 0
+  },
+  "installation": {
+    "core": {
+      "name": "eva2-managed-b-slot3-core",
+      "before": "sha256:10643158af087b332b297e08649dd633fde2fa544c78cbbb87172a44612bfb8f",
+      "image": "sha256:f16b0b7db8c0fa73779b2dae01dae931fe22c600ee10f48843ae36cf2e3d23c5",
+      "modules": {
+        "application/conversation.py": "5788752d0ebf28aad716ae9ab7fc0b9e8e5a41be80cb53f7a38fee94ff4c5f38",
+        "adapters/postgres/conversation_actions.py": "81d3db94ca0dff8d29deea3feb8513b2fba8e8fc04cd2d58134dc2e72ec6be25",
+        "bootstrap/public_lookup.py": "5486b484dbe5c8f6b657a4f03e10f1b2af7a6c49aab25dd46a4f1d973bc2ac72",
+        "adapters/model/public_lookup.py": "696cf992df7ca7e8eaf3be832eacea46dba0855521829d42e214261a64add573",
+        "adapters/model/tool_namespaces.py": "a650bbc07aaafce21f22c4ab3fe5dafb13325c8535668e5a663aba17bafe8b2c"
+      }
+    },
+    "worker": {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "before": "sha256:8fb47a90a4773929f6d29f00eeaee394ca906479e7b95cd0d6d240fdc956ec7e",
+      "image": "sha256:9756869e76e94e09b12a5aed416cf5125b6034840245dc48ec0ccafe2e53a345",
+      "modules": {
+        "application/conversation.py": "5788752d0ebf28aad716ae9ab7fc0b9e8e5a41be80cb53f7a38fee94ff4c5f38",
+        "adapters/postgres/conversation_actions.py": "81d3db94ca0dff8d29deea3feb8513b2fba8e8fc04cd2d58134dc2e72ec6be25",
+        "bootstrap/public_lookup.py": "5486b484dbe5c8f6b657a4f03e10f1b2af7a6c49aab25dd46a4f1d973bc2ac72",
+        "adapters/model/public_lookup.py": "696cf992df7ca7e8eaf3be832eacea46dba0855521829d42e214261a64add573",
+        "adapters/model/tool_namespaces.py": "a650bbc07aaafce21f22c4ab3fe5dafb13325c8535668e5a663aba17bafe8b2c"
+      }
+    }
+  },
+  "verification": {
+    "installed_image_and_module_hashes_match": true,
+    "core_and_worker_health": "healthy",
+    "core_profile_matches_current_mandate": true,
+    "worker_native_check": "passed",
+    "worker_http_app_probe": "Invalid check: worker environment lacks browser service config; with core config unrelated pre-existing initiative constructor mismatch. Native worker entrypoint --check passes; no worker HTTP app compatibility claimed."
+  },
+  "limits": [
+    "Backend comparison n=1 per variant; provider timing varies, no p95 or sole causal speedup claim.",
+    "Public source answers differed between probes; no independent forecast truth validation.",
+    "Local v2 took 54.180s and final v3 34.178s; extra discovery/API rounds remain.",
+    "Voice smoke confirms answer signal, not full acoustic playback quality or owner acceptance.",
+    "Prepared household context cache and nightly maintenance not implemented in this change.",
+    "Credits/development model token cost unknown; phase tokens reported where measured; public hosted-search usage not included in text phase counts."
+  ],
+  "next": "Reduce repeated local service discovery through existing source-backed capability context, then prepared shared/private memory with correction/deletion invalidation and nightly maintenance."
+}

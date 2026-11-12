@@ -1,0 +1,103 @@
+{
+  "contract": "EvaPydanticStackAudit/v1",
+  "checkedAt": "2026-11-06T14:22:23.660409+00:00",
+  "scope": "Installed core/worker inventory, current implementation review and isolated 2.66 compatibility; no live upgrade",
+  "installed": {
+    "core": {
+      "pydantic-ai-slim": "2.37.0",
+      "pydantic-graph": "2.37.0",
+      "pydantic": "2.12.5",
+      "openai": "3.6.0",
+      "httpx2": "2.12.0"
+    },
+    "workerMatchesCore": true
+  },
+  "latestStable": {
+    "version": "2.66.0",
+    "released": "2026-11-04",
+    "sources": [
+      "https://pypi.org/project/pydantic-ai-slim/2.66.0/",
+      "https://github.com/pydantic/pydantic-ai/releases/tag/v2.66.0"
+    ]
+  },
+  "isolatedCandidate": {
+    "pydantic-ai-slim": "2.66.0",
+    "pydantic-graph": "2.66.0",
+    "openai": "3.31.0",
+    "genai-prices": "0.1.13",
+    "pydantic": "2.12.5",
+    "dependencyCheck": "No broken requirements found."
+  },
+  "currentIndependentReview": "development/reviews/pydantic-ai-current-independent-20261106.json",
+  "checks": {
+    "currentIndependent": {
+      "passed": 184,
+      "failed": 2,
+      "failures": "Existing context/prompt contract assertions, not attributed to SDK misuse"
+    },
+    "candidateOriginalFixtures": {
+      "passed": 160,
+      "failed": 32
+    },
+    "candidateTemporarySinglePassStreamFixtures": {
+      "passed": 187,
+      "failed": 5,
+      "productCodeChanged": false,
+      "repositoryTestsChanged": false,
+      "note": "Temporary fixture copies only; two baseline assertions, one malformed typed header constructor test, two upgrade behavior regressions"
+    },
+    "realLoopbackHttp": {
+      "passed": true,
+      "networkRequests": 1,
+      "externalProviderCalls": 0,
+      "rawUsage": [
+        17,
+        7
+      ],
+      "note": "Real loopback socket uses current Eva transport and candidate dependencies; excludes blanket runtime stream incompatibility"
+    }
+  },
+  "findings": [
+    {
+      "kind": "correct_existing_integration",
+      "detail": "Public Agent lifecycle, DeferredToolRequests/ExternalToolset, cancellation, request bounds, usage property and retry ownership reviewed; no reproduced generic API misuse."
+    },
+    {
+      "kind": "upgrade_adapter_setting",
+      "file": "src/eva/adapters/model/openai_codex_provider.py",
+      "detail": "New upstream message ID default no longer follows existing reasoning_context profile pin. Explicit public openai_send_reasoning_ids=False is candidate adaptation; preserve stateless source/history contract."
+    },
+    {
+      "kind": "upgrade_behavior_guard",
+      "file": "src/eva/adapters/model/pydantic_conversation.py",
+      "detail": "New SDK normalizes phase metadata differently; existing same-part phase mutation rejection no longer triggers. Preserve rejection before SDK normalization in bounded raw SSE adapter, not by loosening tests."
+    },
+    {
+      "kind": "existing_modularity_leak",
+      "file": "src/eva/bootstrap/delegated_digital_runner.py",
+      "detail": "Worker imports private _InputBudgetError/_ProviderUnavailable/_ProviderUsageError from concrete model adapter. Use public provider-neutral failure contracts to isolate SDK adapter changes."
+    },
+    {
+      "kind": "existing_auth_recovery_gap",
+      "detail": "Live 401 came from stale rejected owner access credentials; existing access-only publisher does not renew owner credentials. One bounded existing owner refresh succeeded; following live transport probe returned HTTP200 with completed event. No new provider or Eva1 agent started."
+    },
+    {
+      "kind": "upstream_simplification_candidate",
+      "detail": "2.66 includes native OpenAICodexModel/provider. Its injected-client API may replace wire compatibility logic while retaining access-only authority, durable actions, raw usage and phase guards. Not yet a proven replacement."
+    }
+  ],
+  "productionUpgradeInstalled": false,
+  "e416Completed": false,
+  "nextAction": "First restore public adapter boundary and verify both pinned and candidate stack against unchanged behavior/security contracts; upgrade only after actual adapter regressions pass.",
+  "evidenceHashes": {
+    "candidate-tests-single-pass-fixtures.log": "0d6dfff0604a88df274092fb4cc67c5c8dd7c79180f968aaf82930dc2e5c71d5",
+    "loopback-final.log": "1bafa4874f8f7003761c6e73f42a0da601af80889d4a17fbb2d7d7a02e8cba5a",
+    "candidate-tests-full.log": "a0ff970a08fa4a6ae37659784efef8d073e211839a3add5ff11382f0d9c699eb",
+    "candidate-dependencies.log": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+  },
+  "sourceHashes": {
+    "src/eva/adapters/model/openai_codex_provider.py": "f1627e09212de3ac6efa1698ef26511f6ca120e6e87c31cecae33321e6ef23a0",
+    "src/eva/adapters/model/pydantic_conversation.py": "9f03546a1c6d8b5bb37a49e7b0a50997690baad6e59ba910776fb5e69a537b89",
+    "src/eva/bootstrap/delegated_digital_runner.py": "156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb"
+  }
+}

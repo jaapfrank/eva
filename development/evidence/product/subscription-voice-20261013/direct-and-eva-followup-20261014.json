@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-14",
+  "status": "direct_candidate_measured_eva_latency_unresolved",
+  "quality_accepted": false,
+  "tests": {
+    "research_regressions_passed": 54,
+    "initial_host_test_collection": "Missing local dependencies; rerun successfully using installed image with repository source."
+  },
+  "results": {
+    "direct-focused": {
+      "source_clip_end_ms": 3699,
+      "first_ack_after_clip_ms": 2546,
+      "answer_audio_after_clip_ms": 12114,
+      "observed_errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 1,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "backend_start_to_search_ms": 2595,
+      "search_duration_ms": 3263,
+      "backend_usage": {
+        "inputTokens": 22758,
+        "cachedInputTokens": 9216,
+        "outputTokens": 113,
+        "reasoningOutputTokens": 0,
+        "totalTokens": 22871
+      }
+    },
+    "eva-deep": {
+      "source_clip_end_ms": 4028,
+      "first_ack_after_clip_ms": 2145,
+      "answer_audio_after_clip_ms": 37891,
+      "observed_errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 1,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "work_state": "succeeded",
+      "research_seconds": 20,
+      "web_actions": 2,
+      "usage": {
+        "input_tokens": 13975,
+        "output_tokens": 260,
+        "total_tokens": 14235
+      }
+    },
+    "eva-focused": {
+      "source_clip_end_ms": 3883,
+      "first_ack_after_clip_ms": 2050,
+      "answer_audio_after_clip_ms": 56762,
+      "observed_errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 1,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "work_state": "succeeded",
+      "research_seconds": 40,
+      "web_actions": 2,
+      "usage": {
+        "input_tokens": 11334,
+        "output_tokens": 249,
+        "total_tokens": 11583
+      }
+    }
+  },
+  "changes": {
+    "retained": "Reusable content-free profiling now supports --eva, capturing installed core/task/result/speaker path. Direct synthetic backend instructions prioritize immediate lookup and short sourced answers; calendar date is dynamic.",
+    "reverted": "The two-line EVA research instruction candidate and matching policy/image overlay were reverted after no observed latency benefit. Earlier validated production fixes remain.",
+    "models_unchanged": {
+      "direct_backend": "gpt-6-sol / none",
+      "eva_contact": "gpt-6-sol / none",
+      "eva_research": "gpt-6-astra / medium",
+      "voice_requested": "gpt-live-1-codex"
+    }
+  },
+  "limitations": [
+    "One sample per configuration is not evidence of a causal speedup or regression.",
+    "Search completion and a saved research artifact do not independently establish forecast correctness.",
+    "Timing uses synthetic microphone source EOF and software audio sink, not acoustic playback.",
+    "No observed provider errors in these runs does not prove the earlier intermittent failure is resolved."
+  ],
+  "next_bottleneck": "EVA contact/tool selection before durable research plus the stronger research backend. Need a bounded lightweight lookup path for simple factual questions, preserving public-only inputs, authority, citations and usage accounting; this path has not been implemented."
+}

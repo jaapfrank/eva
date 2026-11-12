@@ -1,0 +1,580 @@
+{
+  "contract": "EvaGeneralPublicLookupOutcome/v1",
+  "implementation": "One topic-independent public lookup on existing subscription, isolated public input, retained Sol continuation, durable receipts, usage and current audience authority. The tool is offered as an eager flat function; other tools retain their existing namespaces.",
+  "voice_latency_seconds": {
+    "earlier_background_sample": 37.891,
+    "initial_sourced_short_route": 26.152,
+    "latest_flat_route": 21.928
+  },
+  "unrelated_public_statistics_backend_seconds": 24.796,
+  "not_met": "No demonstrated mean below 10 seconds or p95 below 15 seconds. Routing robustness is not established by single samples.",
+  "trials": {
+    "eva-public-lookup": {
+      "boundaries": [
+        {
+          "stage": "profile_microphone_clip_end",
+          "elapsed_ms": 3977
+        },
+        {
+          "stage": "profile_selected_action",
+          "elapsed_ms": 16694,
+          "name": "search_public_info",
+          "kind": "action_started",
+          "status": null
+        },
+        {
+          "stage": "profile_selected_action",
+          "elapsed_ms": 22848,
+          "name": "search_public_info",
+          "kind": "action_finished",
+          "status": "failed"
+        },
+        {
+          "stage": "profile_foreground_answer_signal",
+          "elapsed_ms": 27829
+        }
+      ],
+      "errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 1,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "model_requests_and_reply": [
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T08:48:54+00:00",
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 3205,
+            "output_tokens": 73,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T08:49:00+00:00",
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 5048,
+            "output_tokens": 101,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T08:49:03+00:00",
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 2654,
+            "output_tokens": 30,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "REPLY_COMMITTED",
+          "time": "2026-10-14T08:48:45+00:00",
+          "usage": null,
+          "timing": {
+            "completed_ms": 7954,
+            "first_content_ms": 6996
+          },
+          "provider": "chatgpt-codex:gpt-6-sol"
+        }
+      ]
+    },
+    "eva-public-lookup-citations": {
+      "boundaries": [
+        {
+          "stage": "profile_microphone_clip_end",
+          "elapsed_ms": 3863
+        },
+        {
+          "stage": "profile_selected_action",
+          "elapsed_ms": 14081,
+          "name": "search_public_info",
+          "kind": "action_started",
+          "status": null
+        },
+        {
+          "stage": "profile_selected_action",
+          "elapsed_ms": 25563,
+          "name": "search_public_info",
+          "kind": "action_finished",
+          "status": "verified"
+        },
+        {
+          "stage": "profile_foreground_answer_signal",
+          "elapsed_ms": 30015
+        }
+      ],
+      "errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 1,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "model_requests_and_reply": [
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T08:52:26+00:00",
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 3204,
+            "output_tokens": 68,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T08:52:37+00:00",
+          "usage": {
+            "tool_calls": 2,
+            "measurement": "measured",
+            "input_tokens": 9018,
+            "output_tokens": 180,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T08:52:40+00:00",
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 3784,
+            "output_tokens": 46,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "REPLY_COMMITTED",
+          "time": "2026-10-14T08:52:17+00:00",
+          "usage": null,
+          "timing": {
+            "completed_ms": 7615,
+            "first_content_ms": 6503
+          },
+          "provider": "chatgpt-codex:gpt-6-sol"
+        }
+      ]
+    },
+    "eva-public-lookup-eager": {
+      "boundaries": [
+        {
+          "stage": "profile_microphone_clip_end",
+          "elapsed_ms": 3842
+        },
+        {
+          "stage": "profile_foreground_answer_signal",
+          "elapsed_ms": 21207
+        }
+      ],
+      "errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 1,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "model_requests_and_reply": [
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T08:55:31+00:00",
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 3930,
+            "output_tokens": 57,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "REPLY_COMMITTED",
+          "time": "2026-10-14T08:55:18+00:00",
+          "usage": null,
+          "timing": {
+            "completed_ms": 9669,
+            "first_content_ms": 8144
+          },
+          "provider": "chatgpt-codex:gpt-6-sol"
+        }
+      ]
+    },
+    "eva-public-statistics-eager-2": {
+      "boundaries": [
+        {
+          "elapsed_ms": 95,
+          "kind": "request_acknowledged"
+        },
+        {
+          "elapsed_ms": 11655,
+          "kind": "action_started",
+          "name": "start_background_research",
+          "status": null
+        },
+        {
+          "elapsed_ms": 11899,
+          "kind": "action_finished",
+          "name": "start_background_research",
+          "status": "verified"
+        },
+        {
+          "elapsed_ms": 12160,
+          "kind": "final",
+          "provider": "chatgpt-codex:gpt-6-sol",
+          "answer_characters": 51
+        }
+      ],
+      "errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 0,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "model_requests_and_reply": [
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T08:58:09+00:00",
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 4312,
+            "output_tokens": 195,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "REPLY_COMMITTED",
+          "time": "2026-10-14T08:57:57+00:00",
+          "usage": null,
+          "timing": {
+            "completed_ms": 8477,
+            "first_content_ms": null
+          },
+          "provider": "chatgpt-codex:gpt-6-sol"
+        }
+      ]
+    },
+    "eva-public-statistics-routed": {
+      "boundaries": [
+        {
+          "elapsed_ms": 68,
+          "kind": "request_acknowledged"
+        },
+        {
+          "elapsed_ms": 18008,
+          "kind": "final",
+          "provider": "chatgpt-codex:gpt-6-sol",
+          "answer_characters": 139
+        }
+      ],
+      "errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 0,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "model_requests_and_reply": [
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T09:02:22+00:00",
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 4741,
+            "output_tokens": 103,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "REPLY_COMMITTED",
+          "time": "2026-10-14T09:02:04+00:00",
+          "usage": null,
+          "timing": {
+            "completed_ms": 14370,
+            "first_content_ms": 12473
+          },
+          "provider": "chatgpt-codex:gpt-6-sol"
+        }
+      ]
+    },
+    "eva-public-statistics-flat": {
+      "boundaries": [
+        {
+          "elapsed_ms": 91,
+          "kind": "request_acknowledged"
+        },
+        {
+          "elapsed_ms": 7353,
+          "kind": "action_started",
+          "name": "search_public_info",
+          "status": null
+        },
+        {
+          "elapsed_ms": 18927,
+          "kind": "action_finished",
+          "name": "search_public_info",
+          "status": "verified"
+        },
+        {
+          "elapsed_ms": 24796,
+          "kind": "final",
+          "provider": "chatgpt-codex:gpt-6-sol",
+          "answer_characters": 205
+        }
+      ],
+      "errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 0,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "model_requests_and_reply": [
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T09:05:02+00:00",
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 3267,
+            "output_tokens": 48,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T09:05:13+00:00",
+          "usage": {
+            "tool_calls": 2,
+            "measurement": "measured",
+            "input_tokens": 12801,
+            "output_tokens": 155,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "REPLY_COMMITTED",
+          "time": "2026-10-14T09:04:55+00:00",
+          "usage": null,
+          "timing": {
+            "completed_ms": 9290,
+            "first_content_ms": 8324
+          },
+          "provider": "chatgpt-codex:gpt-6-sol"
+        },
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T09:05:19+00:00",
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 4160,
+            "output_tokens": 65,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        }
+      ]
+    },
+    "eva-public-lookup-flat": {
+      "boundaries": [
+        {
+          "stage": "profile_microphone_clip_end",
+          "elapsed_ms": 3948
+        },
+        {
+          "stage": "profile_selected_action",
+          "elapsed_ms": 11895,
+          "name": "search_public_info",
+          "kind": "action_started",
+          "status": null
+        },
+        {
+          "stage": "profile_selected_action",
+          "elapsed_ms": 22238,
+          "name": "search_public_info",
+          "kind": "action_finished",
+          "status": "verified"
+        },
+        {
+          "stage": "profile_foreground_answer_signal",
+          "elapsed_ms": 25876
+        }
+      ],
+      "errors": {
+        "codex_error_notifications": 0,
+        "realtime_error_notifications": 0,
+        "voice_error_events": 0,
+        "failed_backend_turns": 0,
+        "completed_backend_turns": 1,
+        "local_task_failures": 0,
+        "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+      },
+      "model_requests_and_reply": [
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T09:08:08+00:00",
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 3855,
+            "output_tokens": 60,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T09:07:55+00:00",
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 2936,
+            "output_tokens": 46,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "CONVERSATION_MODEL_RECORDED",
+          "time": "2026-10-14T09:08:05+00:00",
+          "usage": {
+            "tool_calls": 2,
+            "measurement": "measured",
+            "input_tokens": 9025,
+            "output_tokens": 189,
+            "model_attempts": 1
+          },
+          "timing": null,
+          "provider": null
+        },
+        {
+          "event": "REPLY_COMMITTED",
+          "time": "2026-10-14T09:07:49+00:00",
+          "usage": null,
+          "timing": {
+            "completed_ms": 5109,
+            "first_content_ms": 3860
+          },
+          "provider": "chatgpt-codex:gpt-6-sol"
+        }
+      ]
+    }
+  },
+  "tests": {
+    "contact_and_public_lookup": 67,
+    "durable_postgres_lookup": 3,
+    "voice_regressions": 37,
+    "model_and_namespace_regressions_before_flat_change": 103,
+    "flat_namespace_and_shared_provider": 61,
+    "public_lookup_and_source_parser": 31
+  },
+  "installation": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:cb9ce9b537de5b282668bdb4dc967a873eb24329522cf8f3843e3a76ee3fb429",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:a6886895ea9b3c5622e2b55bcd6a8e308b91ddc6f73bf3a343b0513dd4ae070e",
+      "health": "healthy"
+    }
+  },
+  "source_sha256": {
+    "application/conversation.py": "bc6cab101753311ff3c63f770fcb5672a15d772a039fe7edefa93bea76164ff8",
+    "bootstrap/runtime.py": "e98d7e60870e2788ab2f4b487644ea3be6b9a5d867c09d39e99858c7c56240e1",
+    "bootstrap/public_lookup.py": "c2ac6934decd309184d9f4aebbd6d38be6f0eeffa0d5203ee0f0d7b638429ef6",
+    "adapters/model/public_lookup.py": "b5b5a089ac94a6e3e5142a2ed15786ffb0bc6d664ba2938dd48c21ff19594f5f",
+    "adapters/model/pydantic_conversation.py": "482b067f9429876b6f6e9c6b49763014973778ec515e2997e74deba4fe1c0b0d",
+    "adapters/model/tool_namespaces.py": "a51e29fd49b716bbf72e6b70fb545e09e15a7f68bd461098bf8c7dbf2796b957",
+    "adapters/model/openai_codex_provider.py": "d92aa95e5e423df2c041f2c75a8c05d12a651a004189f3a6b71c74aa4c597070"
+  },
+  "limits": [
+    "Synthetic input and software PCM; physical playback and audio completeness unverified.",
+    "Earlier rejected/misrouted trials retained, not counted as valid fast answers.",
+    "Citation presence is not independent factual verification.",
+    "Model-request entries exclude any additional background worker spend from the misrouted statistics trial.",
+    "Underlying returned realtime voice model not independently identified."
+  ],
+  "instant_review": {
+    "file": "instant-review-request.yaml",
+    "access_evidence": "instant-review-access.json",
+    "received": false
+  },
+  "installed_source_parity": {
+    "core": {
+      "unchanged_python_files": 344,
+      "changed": [
+        "application/conversation.py",
+        "bootstrap/runtime.py",
+        "adapters/model/pydantic_conversation.py",
+        "adapters/model/openai_codex_provider.py",
+        "adapters/model/tool_namespaces.py"
+      ],
+      "added": [
+        "adapters/model/public_lookup.py",
+        "bootstrap/public_lookup.py"
+      ]
+    },
+    "worker": {
+      "unchanged_python_files": 344,
+      "changed": [
+        "application/conversation.py",
+        "bootstrap/runtime.py",
+        "adapters/model/pydantic_conversation.py",
+        "adapters/model/openai_codex_provider.py",
+        "adapters/model/tool_namespaces.py"
+      ],
+      "added": [
+        "adapters/model/public_lookup.py",
+        "bootstrap/public_lookup.py"
+      ]
+    }
+  }
+}

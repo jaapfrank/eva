@@ -1,0 +1,61 @@
+EVA subscription voice investigation — 13 October 2026
+
+Result: a Codex-managed WebRTC voice session produced Dutch synthetic speech
+using the current EVA model-access lease, with no new login or API key. The
+prototype is not wired into EVA's deployed household or private voice services.
+
+Evidence:
+- rea-static.json binds the Windows app inspection to ASAR and selected asset
+  SHA256 values. REA encountered an unrelated unpacked serialport hash mismatch;
+  the inspected JavaScript assets separately matched their declared hashes.
+- websocket.json preserves the rejected WebSocket route: "realtime conversation
+  requires API key auth". The initial RPC ACK was not session readiness.
+- webrtc-start.json records actual thread/realtime/started and SDP notifications.
+- adapter-audio.json records the reusable prototype's successful WebRTC run:
+  444 decoded frames at 48 kHz stereo; 108 frames exceeded RMS 200. Four focused
+  readiness/cancellation tests passed. MediaStreamError occurred during cleanup.
+- synthetic-eva.wav is the generated Dutch test phrase. Leading/trailing quiet
+  audio was trimmed. No household microphone audio was collected.
+- direct-call.json records the desktop direct-call experiment: HTTP 201 did not
+  mean usable access. The data channel reported forbidden / Voice session access
+  denied. That route was not pursued after the denial was diagnosed.
+
+Model identity and support:
+The inspected desktop client names gpt-live-1-codex for its v3 client-owned call.
+The successful Codex-managed session returned no model identifier; its v3 protocol
+alone does not prove that model or exact ChatGPT voice parity. The generated
+Codex 0.162.1 LoginAccountParams schema calls token-injection auth internal-only.
+Current official app-server docs describe it as experimental for host apps that
+own the user's authentication lifecycle. Both facts must be retained.
+https://learn.chatgpt.com/docs/app-server#authentication-modes
+
+Difference from deployed EVA:
+EVA already has streaming media via LiveKit, VAD, interruption handling and
+sentence-level output. Its current voice path still chains HA final transcription,
+EVA processing and HA speech synthesis. The experiment establishes an alternative
+Codex-native audio session, not that replacing existing media alone preserves
+EVA's identity, memory, action permissions or reliable physical interruption.
+Source: src/eva/voice_service/server.py, media.py, agent.py and
+src/eva/adapters/model/openai_codex_provider.py.
+
+Required integration outcome:
+Home Assistant wake word -> existing device/household authorization -> voice
+session -> existing EVA backend for memory and actions -> streaming spoken output.
+Keep microphone capture active during playback, preserve hardware echo handling,
+and distinguish interrupting speech from cancelling accepted background work.
+Client-managed handoff is not proof that automatic Codex backend execution is
+turned off. Verify that before connecting any household actions. Do not create a
+second independent EVA brain. No such integration has been activated in this run.
+https://developers.openai.com/api/docs/guides/live-delegation
+
+Other channels:
+Telegram voice messages and a linked live voice interface are separate from native
+Telegram calls. The official phone.requestCall method is available only to users,
+not bot accounts. No Telegram messages were sent during this investigation.
+https://core.telegram.org/method/phone.requestCall
+The Meta WhatsApp calling documentation could not be fetched (HTTP 429); calling
+eligibility and account setup remain unverified. No WhatsApp call was attempted.
+
+Still unverified: real microphones, wake-word startup, Dutch input recognition,
+physical speaker echo, barge-in, latency, backend handoff, reported model identity,
+usage debit and subjective sound quality. These are not green acceptance claims.

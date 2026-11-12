@@ -1320,7 +1320,7 @@ def test_contact_catalog_omits_only_discoverable_descriptors(tmp_path):
     assert TOOL.name not in scripted.phase_catalogs[0]
     assert set(CONNECTOR_ACTION_NAMES).issubset(scripted.phase_catalogs[0])
     assert "search_personal_memory" in scripted.phase_catalogs[0]
-    assert "full schemas are available through discovery" in request.instructions
+    assert "Full MCP tool schemas are available through discovery" in request.instructions
 
 
 @pytest.mark.parametrize("missing", CONNECTOR_ACTION_NAMES)
@@ -1777,6 +1777,51 @@ def test_current_multi_source_observation_reaches_real_model_wire_as_provisional
     for source in sources:
         assert source["source_ref"] in shared_context and source["evidence_ref"] in shared_context
         assert source["text"] not in shared_context
+
+
+@pytest.mark.parametrize("stamp", ["2026-10-13T18:00:00Z", "2026-10-14T01:00:00Z"])
+def test_current_turn_time_reaches_model_despite_older_memory(tmp_path, stamp):
+    from dataclasses import replace
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Ik zoek het op."),))
+    model = _adapter(tmp_path, scripted)
+    turn = replace(_turn(), text="Wat wordt morgen de temperatuur?", occurred_at=stamp)
+    model.generate(turn, _identity(), _memory(), ())
+    assert f"Tijdstip van dit actuele bericht (UTC): {stamp}" in scripted.captures[0].instructions
+
+
+@pytest.mark.parametrize(("stamp", "today", "tomorrow", "offset"), [
+    ("2026-10-13T22:33:33Z", "2026-10-14", "2026-10-15", "+02:00"),
+    ("2026-10-25T23:30:00Z", "2026-10-26", "2026-10-27", "+01:00"),
+    ("2026-03-29T00:30:00Z", "2026-03-29", "2026-03-30", "+01:00"),
+    ("2026-03-29T01:30:00Z", "2026-03-29", "2026-03-30", "+02:00"),
+])
+def test_local_calendar_is_explicit_after_midnight_and_across_dst(tmp_path, monkeypatch, stamp, today, tomorrow, offset):
+    from dataclasses import replace
+    monkeypatch.setenv("EVA_CONVERSATION_TIMEZONE", "Europe/Amsterdam")
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Ik zoek het op."),))
+    model = _adapter(tmp_path, scripted)
+    model.generate(replace(_turn(), occurred_at=stamp), _identity(), _memory(), ())
+    instructions = scripted.captures[0].instructions
+    assert f"Vandaag: {today}; morgen: {tomorrow}" in instructions
+    assert "Europe/Amsterdam" in instructions and offset in instructions
+
+
+@pytest.mark.parametrize("event_type", ["response.failed", "response.incomplete", "response.cancelled", "error"])
+def test_research_terminal_failure_retains_safe_diagnostic_without_releasing_text(caplog, event_type):
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    event = {"type": event_type, "response": {
+        "error": {"code": "server_error", "message": "private-provider-body"},
+        "incomplete_details": {"reason": "max_output_tokens"},
+        "output": ["private-research-text"],
+    }, "error": {"code": "server_error", "message": "private-provider-body"}}
+    stream = [("data: " + json.dumps(event) + "\n").encode()]
+    with pytest.raises(ConversationModelError, match="research provider did not complete"):
+        list(PydanticConversationModel._capture_terminal_usage(stream, [], hosted_search_ids=set()))
+    assert "private-provider-body" not in caplog.text
+    assert "private-research-text" not in caplog.text
+    diagnostic = json.loads(caplog.records[-1].message.split(" ", 1)[1])["provider_failure"]
+    assert diagnostic["event_kind"] == event_type
+    assert diagnostic["error_code"] == "server_error"
 
 
 @pytest.mark.parametrize("parts, expected", [

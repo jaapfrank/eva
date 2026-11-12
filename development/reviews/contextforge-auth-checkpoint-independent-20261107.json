@@ -1,0 +1,52 @@
+{
+  "contract": "EvaContextForgeIndependentAuthGapReview/v1",
+  "reviewer": "/root/independent_review",
+  "decision": "NO_INSTALL_OR_UNIVERSAL_FALLBACK_GO",
+  "checkpointSha256": "e1af494b78d5181de24986604973314c48e408054e037d372ddd0068eca29c74",
+  "sources": {
+    "official-1.0.8/mcpgateway/auth.py": "bc9aab55b843b0e9cc7da8777259f5be5ac115ed7ee5ca53a313424cafeed6e7",
+    "official-1.1.0/mcpgateway/auth.py": "1736e0e58b706a4650a971189233594a903b29805456c6697747bb9c9b917d73",
+    "candidate-source/mcpgateway/auth.py": "1736e0e58b706a4650a971189233594a903b29805456c6697747bb9c9b917d73",
+    "actual-old-app-official-source-comparison.json": "aa926d999cec2bd1c1960707099b8933ab583db1e7a5ff8430342100be246ec8"
+  },
+  "finding": {
+    "inheritedBaselineIssue": true,
+    "oldCachedReturnLine": 1681,
+    "oldBatchedReturnLine": 1807,
+    "oldIdleCheckLine": 1835,
+    "newCachedReturnLine": 1811,
+    "newBatchedReturnLine": 1934,
+    "newIdleCheckLine": 1962,
+    "detail": "Cached/batched authentication paths can return an active user before fallback-only non-API token idle enforcement. Existing synthetic1.1 evidence demonstrates batched acceptance and nonbatched refusal; full HTTP pipeline remains to be proved."
+  },
+  "actualGatewaySettingsReadOnly": {
+    "containerId": "f1f1f1e10e4f2b12db7b3a80792df6251352754c55e496ef6f0b6104a8bef570",
+    "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "startedAt": "2026-11-06T13:23:31.308238355Z",
+    "actualGunicornPid": 7,
+    "authCacheEnabled": true,
+    "authCacheBatchQueries": true,
+    "tokenIdleTimeoutMinutes": 60,
+    "requireUserInDb": true,
+    "method": "Instantiate actual config under captured actual gunicorn process environment, exposing only selected non-secret settings. No DB/JWT/network mutation."
+  },
+  "providerSettings": {
+    "rolesAttempted": 5,
+    "configurationsRead": 0,
+    "limitation": "Provider processes do not use the selected gunicorn predicate; failed probes establish no settings conclusion."
+  },
+  "minimalNextStep": [
+    "Use existing public AUTH_CACHE_ENABLED=false and AUTH_CACHE_BATCH_QUERIES=false together as an isolated candidate mitigation; disabling batching alone leaves cache early return.",
+    "Prove full real HTTP auth pipeline with synthetic inactive session token, API-token exemption, ordinary expiry/signature/revocation, fresh activity and disabled user. Bind actual per-role settings before activation.",
+    "If retaining caches is necessary, factor the existing idle enforcement into one shared auth gate before every successful user return; preserve API exemption and activity/revocation semantics, without copying auth route logic into another platform."
+  ],
+  "fallbackLimits": [
+    "Old1.0.8 carries the same idle path, so it cannot be claimed as a stronger universal fallback.",
+    "New session_start/original-iat refresh and predecessor revocation, single-winner refresh and max-lifetime on refresh require explicit backward compatibility or refusal.",
+    "Personal-team and lost-membership permission behavior differs; schema compatibility alone cannot authorize downgrade."
+  ],
+  "reviewerIssuedJwt": 0,
+  "reviewerDatabaseWrites": 0,
+  "reviewerModelRequests": 0,
+  "reviewerRuntimeMutations": 0
+}

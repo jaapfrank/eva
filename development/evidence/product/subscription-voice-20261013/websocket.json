@@ -1,0 +1,62 @@
+[
+  {
+    "method": "initialize",
+    "seconds": 0.219,
+    "ok": true
+  },
+  {
+    "notification": "configWarning"
+  },
+  {
+    "notification": "remoteControl/status/changed"
+  },
+  {
+    "method": "account/login/start",
+    "seconds": 0.044,
+    "ok": true
+  },
+  {
+    "method": "thread/realtime/listVoices",
+    "seconds": 0.001,
+    "ok": true
+  },
+  {
+    "voices_result_keys": [
+      "voices"
+    ]
+  },
+  {
+    "method": "thread/start",
+    "seconds": 0.461,
+    "ok": true
+  },
+  {
+    "notification": "thread/started"
+  },
+  {
+    "notification": "mcpServer/startupStatus/updated"
+  },
+  {
+    "method": "thread/realtime/start",
+    "seconds": 0.001,
+    "ok": true
+  },
+  {
+    "notification": "thread/realtime/error",
+    "detail": "{\"threadId\": \"01a1354f-4936-7192-8342-8cedf1a73c85\", \"message\": \"realtime conversation requires API key auth\"}"
+  },
+  {
+    "notification": "account/login/completed"
+  },
+  {
+    "notification": "account/updated"
+  },
+  {
+    "notification": "mcpServer/startupStatus/updated"
+  },
+  {
+    "method": "thread/realtime/stop",
+    "seconds": 0.001,
+    "ok": true
+  }
+]

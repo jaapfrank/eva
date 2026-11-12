@@ -67,7 +67,7 @@ class HouseholdVoiceAuthority:
         self._identity_loader = identity_loader
         self._clock = clock
 
-    def validate_current(self) -> None:
+    def validate_current(self, *, allow_inactive: bool = False) -> bool:
         actual = _read_policy(self._path)
         identity = self._identity_loader()
         token = read_private_runtime_file_bytes(
@@ -77,12 +77,15 @@ class HouseholdVoiceAuthority:
             raise ValueError("Household voice clock must be timezone aware")
         stamp = now.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         if (canonical_sha256(actual.model_dump(mode="json")) != self._hash
-                or actual.state != "enabled"
-                or not actual.effective_at <= stamp < actual.expires_at
                 or identity.state != "current"
                 or canonical_sha256(identity.model_dump(mode="json")) != actual.identity_sha256
                 or hashlib.sha256(token.encode()).hexdigest() != actual.token_sha256):
             raise ValueError("Household voice authority is no longer current")
+        if actual.state != "enabled" or not actual.effective_at <= stamp < actual.expires_at:
+            if allow_inactive:
+                return False
+            raise ValueError("Household voice authority is no longer current")
+        return True
 
     def active_reference(self, *, principal_id: str, household_id: str,
                          now: datetime) -> HouseholdConsentReference | None:

@@ -27,6 +27,7 @@ _SOURCES = (
     "application/background_execution.py", "application/initiative_execution.py",
     "application/free_will.py", "adapters/postgres/initiative_adoption.py",
     "adapters/postgres/initiative_execution.py", "bootstrap/native_initiative_work.py",
+    "bootstrap/native_work_assets.py",
     "adapters/postgres/owner_initiatives.py", "application/personal_interests.py",
     "bootstrap/runtime_settings.py", "bootstrap/delegated_work_service.py",
     "contracts/dashboard_access_token.py", "contracts/tool_deadlines.py",

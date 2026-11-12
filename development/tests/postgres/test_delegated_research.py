@@ -198,7 +198,23 @@ def test_failed_research_preserves_measured_over_budget_usage(delegated_engine):
         raise ConversationModelError('provider exceeded output budget', model_usage=
             ConversationModelUsage.measured(tool_calls=2,input_tokens=9000,output_tokens=1300))
     research.research_current_options=over_budget
-    assert asyncio.run(worker.run_once())=='ambiguous'
+    assert asyncio.run(worker.run_once())=='failed'
     saved=store.load(spec.work_id,**owner)
+    assert saved.error_code == "budget_exceeded"
     assert saved.result is None and saved.usage.output_tokens==1300 and saved.usage.tool_calls==2
+    assert asyncio.run(worker.run_once())=='idle' and research.calls==1
+
+
+def test_completed_research_over_tool_limit_is_failed_without_replay(delegated_engine):
+    from dataclasses import replace
+    store,research,profile,spec,worker,owner=setup(delegated_engine,'research-tools-budget')
+    original=research.research_current_options
+    def over_tools(**kwargs):
+        return replace(original(**kwargs), usage=ConversationModelUsage.measured(
+            tool_calls=4,input_tokens=9000,output_tokens=500))
+    research.research_current_options=over_tools
+    assert asyncio.run(worker.run_once())=='failed'
+    saved=store.load(spec.work_id,**owner)
+    assert saved.error_code=='budget_exceeded' and saved.result is None
+    assert saved.usage.tool_calls==4
     assert asyncio.run(worker.run_once())=='idle' and research.calls==1

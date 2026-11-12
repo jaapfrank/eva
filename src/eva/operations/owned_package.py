@@ -71,7 +71,15 @@ def archive_files(raw):
             name = relative_path(member.name.rstrip("/") if member.isdir() else member.name)
             if member.isdir():
                 continue
-            if (not member.isfile() or member.linkname or member.pax_headers
+            # Python's ordinary tar writer adds fractional timestamps through
+            # PAX. They carry no executable bytes and are never restored. Path,
+            # link, sparse and size overrides remain forbidden.
+            if (set(member.pax_headers) - {'mtime', 'atime', 'ctime'}
+                    or any(not isinstance(value, str) or len(value) > 64
+                           or re.fullmatch(r'-?[0-9]+(?:\.[0-9]+)?', value) is None
+                           for value in member.pax_headers.values())):
+                raise ValueError('package archive metadata exceeds plain timestamps')
+            if (not member.isfile() or member.linkname
                     or member.mode & 0o7000 or name in files
                     or len(files) >= MAX_FILES or not 0 <= member.size <= MAX_EXPANDED):
                 raise ValueError("package requires unique plain regular files")

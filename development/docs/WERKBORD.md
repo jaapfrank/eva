@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Gebruik één nieuwe echte interne fout met een geldige oorspronkelijke eigenaarstaak en actuele bron. Volg die via Eva’s eigen kandidaat en onafhankelijke beoordeling naar veilige installatie, controle en later hergebruik.
+Volgende stap: Volg het automatisch aangenomen hersteldoel voor dezelfde fout door Eva’s eigen ontwikkeltaak, onafhankelijke beoordeling, veilige installatie en bewezen later gebruik.
 
 ## Voortgang
 

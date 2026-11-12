@@ -1,0 +1,121 @@
+{
+  "date": "2026-10-15",
+  "status": "startup_fix_installed_latency_and_followup_disconnect_unresolved",
+  "scope": "Actual owner voice tests; timing and source inspection, no retained speech in this evidence",
+  "first_start": {
+    "standby_seconds_approx": 1056,
+    "media_ready_ms": 2667,
+    "closing_ms": 3668,
+    "cause": "last_activity initialized during wakeword standby, not reset when active session starts",
+    "reproduced_before_fix": true,
+    "fix": "Reset at active start and provider session.started; keep 120-second idle and 1800-second active caps"
+  },
+  "first_question_ms": {
+    "core_total": 26203,
+    "memory_preparation": 1597,
+    "contact_tool_selection": 5076,
+    "public_lookup": 14772,
+    "contact_final_wording": 3227,
+    "remaining": 1531,
+    "core_final_to_assistant_turn_created": 507,
+    "actual_acoustic_first_audio": "unmeasured"
+  },
+  "followup_ms": {
+    "memory_preparation": 1974,
+    "contact_tool_selection": 2843,
+    "public_lookup": 17875,
+    "contact_final_wording": 4068,
+    "core_request_session_elapsed": 58966,
+    "media_stream_error_session_elapsed": 80764
+  },
+  "context_findings": [
+    "First lookup selected country-level weather; authorized household context did not supply the home city to the selected query.",
+    "Follow-up correctly recognized the city, weather topic and next-day date; the actual external query contained the requested city.",
+    "Voice session had household audience, not verified private owner audience. Private Telegram/history must not be silently shared.",
+    "Home Assistant configuration has a generic home label, Dutch country, local timezone and configured coordinates; explicit city is not available in location_name.",
+    "Runtime reads durable recent messages but voice path selects voice.recent instead. Voice playback qualification must be preserved when combining authorized durable context."
+  ],
+  "followup_disconnect": {
+    "observed": "play task MediaStreamError; authority closed before final core reply",
+    "root_cause": "not established by existing logs",
+    "idle_bug_explains_this_disconnect": false,
+    "final_reply_committed": false,
+    "new_diagnostics": [
+      "connection/ICE/signaling state enums",
+      "lifetime expiry category and idle duration",
+      "Codex terminal event kind",
+      "transport state at task failure and closure"
+    ],
+    "raw_provider_text_logged": false
+  },
+  "latency_findings": [
+    "Three serial model calls, all existing Sol contact route; no Astra work task in these two turns.",
+    "Public lookup writes a sourced answer, then contact model writes the final answer again.",
+    "Voice bridge ignores delta events and sends final Responses output only after complete authorized core reply.",
+    "No evidence that a shorter instruction, VAD change or switching networking libraries removes the measured core delay."
+  ],
+  "verification": {
+    "targeted_tests_passed": 46,
+    "initial_test_environment_failure": "Endpoint test initially imported legacy /app/speaker module; rerun with actual /opt/eva entrypoint precedence passed.",
+    "synthetic_stability": {
+      "duration_ms": 61954,
+      "ready_ms": 2214,
+      "pause_between_greetings_seconds": 40,
+      "second_greeting_answered": true,
+      "farewell_closed": true,
+      "backend_requests": 0,
+      "rtt_ms_range": [
+        44.32,
+        46.4
+      ],
+      "maximum_reported_packet_loss": 0,
+      "acoustic_quality_proven": false,
+      "owner_disconnect_reproduced": false
+    }
+  },
+  "runtime_usage_observed": {
+    "owner_test_backend_requests": 6,
+    "input_tokens": 50997,
+    "output_tokens": 995,
+    "total_tokens": 51992,
+    "tool_calls": 6,
+    "voice_provider_usage": "unmeasured",
+    "development_usage": "not fully measured",
+    "subscription_credits": "unknown"
+  },
+  "proposal_in_order": [
+    {
+      "change": "Connect bounded shared household facts and authorized conversation continuity to existing context composition",
+      "purpose": "Home location and prior topic available without per-question routing or private-person leakage",
+      "acceptance": "Same authorized context through voice/text; follow-ups resolve antecedents; private histories remain private; playback is never assumed."
+    },
+    {
+      "change": "Compare compact evidence-only public lookup results with current full prose lookup; retain source validation and one final Eva wording step",
+      "purpose": "Remove redundant answer writing using the existing generic public lookup, independent of topic",
+      "acceptance": "Paired latency and factual/source checks across unrelated public questions; adopt only demonstrated improvement; no numerical speed promise."
+    },
+    {
+      "change": "Evaluate validated sentence delivery through existing core/voice bridge after eliminating unnecessary model work",
+      "purpose": "Reduce time to useful speech while final answer is being completed",
+      "acceptance": "No unvalidated tokens or stale unauthorized delivery; interruption and following turns remain correct."
+    },
+    {
+      "change": "Use installed terminal/ICE diagnostics to establish cause of any repeated track ending",
+      "purpose": "Separate provider closure, ICE failure and local timeout; reconnect must not duplicate actions",
+      "acceptance": "Repeated multi-turn sessions after long standby; no lost replies, no duplicated actions; measure end-of-speech to first useful audio plus full answer separately."
+    }
+  ],
+  "deployment": {
+    "speaker_image": "sha256:6bc66950c626f9664d168b70e2fa2877ba507c67bb1cb4b0e309bf802a034a7b",
+    "browser_image": "sha256:db2f1611cb631a8f1db3a0bab27377af991b796855bdb01ffaea2f2c4a2e20c9",
+    "changed_modules": [
+      "voice_service/codex_media.py"
+    ],
+    "source_sha256": "8ed787932d70fb18c25b45933a970f44acdd448e974c649ed100db208416c761",
+    "installed_import_hashes_verified": true,
+    "speaker_listening": true,
+    "human_acceptance": false
+  },
+  "private_evidence_directory": "/tmp/eva-voice-20261015",
+  "private_install_receipt": "/var/lib/eva2/voice-session/idle-fix-20261015/installation.json"
+}

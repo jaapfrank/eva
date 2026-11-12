@@ -56,11 +56,11 @@ class PrivateWorkReturnStore:
         if (not voice and turn.conversation_id != 'dashboard:' + str(self.service.principal_binding_id)
                 and not is_whatsapp_conversation(turn.conversation_id)):
             raise ValueError("private return route unavailable")
-        if operation not in {'open', 'close', 'renew', 'poll', 'authorize', 'ack', 'history', 'replay'}:
+        if operation not in {'open', 'ensure_open', 'close', 'renew', 'poll', 'authorize', 'ack', 'history', 'replay'}:
             raise ValueError("unknown return operation")
         if voice and operation in {'history', 'replay'}:
             raise ValueError("speech results cannot be replayed")
-        if not voice and operation in {'open', 'close'}:
+        if not voice and operation in {'open', 'ensure_open', 'close'}:
             raise ValueError("dashboard has no speech session")
         route = {'owner': str(self.service.owner_principal_id),
                  'binding': str(self.service.principal_binding_id),
@@ -78,7 +78,7 @@ class PrivateWorkReturnStore:
             connection.execute(sa.text('SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))'),
                                {'key': session_thread})
             session = self._state(connection, session_thread) if voice else None
-            if operation == 'open':
+            if operation in {'open','ensure_open'} and (session is None or operation == 'open'):
                 if session is not None:
                     raise ValueError("return session cannot be reopened")
                 insert_initial_timeline_thread(connection, self.work.scope,
@@ -90,6 +90,8 @@ class PrivateWorkReturnStore:
                 return {'status': 'open'}
             if voice:
                 if session is None:
+                    if operation == 'close':
+                        return {'status': 'closed'}
                     raise ValueError("return session absent")
                 from datetime import datetime
                 opened = self._first(connection, session_thread)
@@ -112,7 +114,7 @@ class PrivateWorkReturnStore:
                         checkpoint_id=session_thread+':renew:'+str(session['revision']),
                         occurred_at=now, event_type='PRIVATE_RETURN_SESSION_RENEWED',
                         phase='open', status='active', deadline=now+timedelta(seconds=15), data={})
-            if operation == 'renew':
+            if operation in {'renew','ensure_open'}:
                 return {'status': 'open'}
             delivery_prefix = 'private-work-return:' + route_hash + ':'
             document = None

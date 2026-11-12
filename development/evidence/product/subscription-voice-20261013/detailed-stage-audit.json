@@ -1,0 +1,135 @@
+{
+  "status": "detailed_stage_audit_complete_latency_and_date_not_fixed",
+  "production_changed": false,
+  "physical_audio_verified": false,
+  "method": {
+    "foreground": "Temporary clone of current core image and read-only bindings, same database and authority, background work disabled. Existing production research worker executes one admitted synthetic question.",
+    "question": "Wat wordt morgen de temperatuur in Amsterdam?",
+    "core_image": "sha256:178504a05c7f99e5eb2dd1c2cecb1f39926021f9c4ed3272c8e94cadb8e0368c",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "work_id": "work:household:f95e6bb8-766c-514e-b665-c8a76ac715e8",
+    "limitations": [
+      "Fresh foreground process includes cold local imports; not a controlled optimization comparison.",
+      "Historical samples and current source review supplement this one instrumented foreground sample.",
+      "Physical wake detection, microphone acoustics, hardware playback, internal provider scheduling and exact remote search timing remain unmeasured."
+    ],
+    "failed_setup_attempts": [
+      "Missing connector network; no voice question dispatched.",
+      "Missing work volume; no voice question dispatched."
+    ]
+  },
+  "timeline_seconds_from_wake": {
+    "ready": 1.915,
+    "question_end": 3.877,
+    "core_request": 5.53,
+    "ack_first_sink_signal": 5.849,
+    "ack_turn_done": 7.932,
+    "research_action_start": 15.141,
+    "core_final": 15.711,
+    "saved_result_claimed": 27.838,
+    "authorized": 27.957,
+    "first_forecast_sink_signal": 28.793
+  },
+  "question_end_to_forecast_seconds": 24.916,
+  "foreground_detail_ms": {
+    "runtime_response": 10024,
+    "pending_receipt_read": 295,
+    "available_action_names": 78,
+    "memory": 2727,
+    "parallel_active_context": 429,
+    "memory_bank_initialization": 33,
+    "parallel_recall_calls": [
+      1327,
+      2209,
+      2208,
+      2679
+    ],
+    "model_generate_total": 6012,
+    "first_input_admission": 377,
+    "second_input_admission": 18,
+    "phase_start_to_network_send": 1605,
+    "network_headers": 595,
+    "network_first_body_to_end": 3413,
+    "action_execution": 285,
+    "reply_guard_after_action": 57
+  },
+  "local_preparation_offline": {
+    "network": "none",
+    "real_credentials": false,
+    "model_requests": 0,
+    "cold_tokenizer_ms": 312,
+    "cold_provider_lifecycle_ms": 1568,
+    "warm_tokenizer_ms": 0,
+    "warm_provider_lifecycle_ms": 7,
+    "finding": "Cold local setup is a verified avoidable first-request cost. Provider setup interval in live probe also includes small journal/framework work; offline measurement isolates a similar lifecycle cost, not identical operations."
+  },
+  "research": {
+    "started_utc": "2026-10-13T22:33:43Z",
+    "completed_utc": "2026-10-13T22:33:53Z",
+    "duration_seconds_approx": 10,
+    "web_actions": 2,
+    "input_tokens": 14105,
+    "output_tokens": 212,
+    "completed_model_responses": 1
+  },
+  "return": {
+    "poll_interval_seconds": 2,
+    "poll_http_ms": 142,
+    "first_authorization_ms": 118,
+    "result_to_audio_ms": 834,
+    "finding": "Polling adds up to approximately two seconds scheduling delay, in addition to request and authorization. Exact completion-to-poll time limited by whole-second worker timestamps."
+  },
+  "additional_defect": {
+    "type": "relative_date_timezone",
+    "utc_turn": "2026-10-13T22:33:33Z",
+    "local_turn": "2026-10-14T00:33:33+02:00",
+    "expected_tomorrow": "2026-10-15",
+    "returned_date": "2026-10-14",
+    "status": "confirmed_in_synthetic_test_not_fixed"
+  },
+  "priorities": [
+    {
+      "rank": 1,
+      "change": "Start public information work without waiting for a separate serial contact-model decision, within existing Eva authority.",
+      "reason": "Repeated serial model round trip costs multiple seconds.",
+      "constraint": "Requires a typed authorized tool handoff or integration of public lookup into the existing reasoning step; no keyword router, invented permissions or bypass of person memory."
+    },
+    {
+      "rank": 2,
+      "change": "Move local tokenizer/provider imports to service startup.",
+      "reason": "Offline cold-to-warm difference around 1.87 seconds.",
+      "constraint": "First request only; no speculative provider request or new credentials."
+    },
+    {
+      "rank": 3,
+      "change": "Reduce memory latency inside scoped retrieval, retain required person and household context.",
+      "reason": "Four parallel recall variants, slowest 2.679 seconds.",
+      "constraint": "Not four sequential delays; deleting variants or skipping memory needs retrieval-quality evidence."
+    },
+    {
+      "rank": 4,
+      "change": "Notify voice when durable work completes instead of periodic polling.",
+      "reason": "Avoid approximately 0-2 seconds idle wait.",
+      "constraint": "Preserve exact result hash, current authorization, deduplication and interruption."
+    },
+    {
+      "rank": 5,
+      "change": "Keep research answers concise, stop searching once the requested fact is grounded.",
+      "reason": "Installed concise prompt already reduced unnecessary document generation; current research still about 10 seconds.",
+      "constraint": "Do not stream unvalidated claims or lower configured research model quality."
+    },
+    {
+      "rank": 6,
+      "change": "Warm voice connection preparation before wake and capture persistent transport timings.",
+      "reason": "Normal readiness near 2 seconds overlaps input; historical 13-second outlier unresolved.",
+      "constraint": "Removing STUN previously failed; do not deploy that experiment."
+    }
+  ],
+  "interim_speech": "A brief acknowledgement overlaps foreground processing. It does not start research itself, and must not become a dependency for execution. Natural progress is supplementary; no new periodic filler installed.",
+  "evidence": [
+    "foreground-stage-events.json",
+    "foreground-voice-events.json",
+    "short-answer-repair.json",
+    "component-audit.json"
+  ]
+}

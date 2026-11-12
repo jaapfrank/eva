@@ -1,0 +1,386 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-15T08:24:47.897474+00:00",
+  "status": "research_and_execution_plan_ready_implementation_pending",
+  "objective": "Eva reageert snel, contextbewust en betrouwbaar via bestaande spraakverbinding; lokale kennis vooraf klaar en lokale bronnen benut.",
+  "scope": "Hele gesproken keten; huidige gebruiker vraagt onderbouwd uitvoeringsplan en online verkenning. Geen volledige projectafronding.",
+  "baseline": {
+    "core_question_ms": 26203,
+    "public_lookup_ms": [
+      14772,
+      17875
+    ],
+    "local_forecast_read_ms": 10,
+    "first_start_fix": "installed",
+    "followup_disconnect": "unresolved",
+    "livekit_agents_installed": "1.8.0",
+    "aiortc_installed": "1.15.0",
+    "hindsight_version": "package metadata unavailable; existing mental-model adapter verified",
+    "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU, 16303 MiB",
+    "cpu": "Intel Core Ultra 9 275HX"
+  },
+  "targets": {
+    "local_foreground_processing": "p95 < 1000 ms for total local critical path; also report cold and warm separately, actual local service waits included",
+    "simple_local_answer": "provisional target median <=3 s / p95 <=5 s from end of user speech to useful audio",
+    "external_public_answer": "provisional target median <=6 s / p95 <=10 s; external provider delays/failures remain explicit",
+    "reliability": "no lost follow-up or duplicate execution in evaluation; human acceptance still required",
+    "note": "Targets are engineering goals, not achieved measurements or new owner-approved acceptance criteria."
+  },
+  "phases": [
+    {
+      "id": "V1",
+      "title": "Werkelijke keten en nulmeting vastleggen",
+      "files": [
+        "voice_service/codex_media.py",
+        "voice_service/codex_session.py",
+        "voice_service/codex_backend.py",
+        "adapters/api/voice_turns.py",
+        "bootstrap/runtime.py",
+        "application/conversation.py"
+      ],
+      "actions": [
+        "Bind bronhashes, images, modelnamen en capabilities aan iedere meting.",
+        "Volg wakeword, sessie-ready, spraakeinde, delegatie, admission, contextselectie, model/toolstappen, gevalideerd resultaat, eerste inhoudelijke audio en laatste playbackbevestiging.",
+        "Meet lokale queue/DB/HTTP/serialisatie/eventloop/CPU/GPU afzonderlijk; neem mislukte en afgebroken vragen mee.",
+        "Reproduceer eerste-start na lange standby en tweede vraag; sluitredenen moeten aantoonbaar zijn, geen gok op ICE."
+      ],
+      "done_when": "Iedere waargenomen wachttijd heeft een gemeten component of expliciet onbekende grens; geen begroeting of filler als inhoudelijk antwoord tellen."
+    },
+    {
+      "id": "V2",
+      "title": "Compacte context vooraf beschikbaar",
+      "files": [
+        "adapters/projection/hindsight.py",
+        "application/memory.py",
+        "application/conversation.py",
+        "bootstrap/runtime.py",
+        "bootstrap/private_continuity.py",
+        "application/voice_context.py"
+      ],
+      "actions": [
+        "Hergebruik bestaande afgeleide mental-modelroute en PostgreSQL-bronautoriteit.",
+        "Scheid stabiele huishoud-/persoonskennis, recente gesprekstoestand en kortlevende bronwaarden.",
+        "Bereid toegelaten gedeelde context tijdens standby voor; persoonlijke context pas na geverifieerde binding.",
+        "Versieer snapshots op audience, bronrevisie, verwijdergeneratie en schema; controleer huidige toegang bij ieder gebruik.",
+        "Begin met compacte tokenbegroting, meet benodigde omvang; niet complete historie/inventaris in iedere prompt.",
+        "Combineer opgeslagen gesprekscontext en live transcript zonder te claimen dat gegenereerde tekst gehoord is."
+      ],
+      "done_when": "Bekende gedeelde feiten en vervolgverwijzingen direct beschikbaar; onbekend/gecorrigeerd/verwijderd blijft correct; geen nieuw model nodig om geldige snapshot te lezen."
+    },
+    {
+      "id": "V3",
+      "title": "Nachtelijk en tussentijds geheugenonderhoud",
+      "files": [
+        "application/memory_background.py",
+        "adapters/projection/hindsight.py",
+        "adapters/postgres/memory_outbox.py",
+        "bootstrap/runtime.py"
+      ],
+      "actions": [
+        "Gebruik bestaande cold-path worker en duurzame claims; één nachtelijke beurt per scope/lokale kalenderdag, met inhalen na offlineperiode.",
+        "Herbouw vanuit geldige bronnen, dedupliceer, los aantoonbare correcties op, markeer onopgeloste conflicten en verwijder verlopen afgeleiden.",
+        "Publiceer atomair pas na controle van bronverwijzingen, audience en omvang; behoud vorige geldige versie bij onderhoudsfout, maar serveer geen verlopen of gewiste inhoud.",
+        "Maak bij correctie/verwijdering snapshot direct ongeldig; nachtelijke run is aanvullende opschoning, geen uitstel van verwijdering.",
+        "Geen modelaanroep bij ongewijzigde bronnen; meet onderhoudskosten, duur en gemiste runs.",
+        "Voorkom dat lopend onderhoud foreground gesprek blokkeert; test timezone/DST/herstart/concurrente wijziging."
+      ],
+      "done_when": "Dubbele runs, herstart, bronverwijdering tijdens herbouw en overschrijding van omvang getest; nachtelijk onderhoud aantoonbaar uitgevoerd zonder hoorbare gesprekshapering."
+    },
+    {
+      "id": "V4",
+      "title": "Lokale informatie via bestaande autorisatie gebruiken",
+      "files": [
+        "providers/home_assistant.py",
+        "adapters/connectors/home_assistant_api.py",
+        "adapters/connectors/home_assistant_admin.py",
+        "bootstrap/household_work.py",
+        "application/conversation.py"
+      ],
+      "actions": [
+        "Controleer waarom bekende HA-reads niet direct in de huidige household-contactroute gekozen worden.",
+        "Maak compacte catalogus van werkelijk toegelaten lokale mogelijkheden beschikbaar naast gesprekscontext.",
+        "Laat bestaande modelbeslissing kiezen op relevantie, actualiteit en beschikbaarheid; geen extra routermodel en geen woordenlijst per voorbeeldvraag.",
+        "Geef relevante read-only bronnen directe, begrensde uitvoering; algemene HA POST-toegang niet als read-only beschouwen.",
+        "Cache brondata met gemeten/herleidbare geldigheid, locatie/tijdzone en bronidentiteit; vraag actueel op waar nodig.",
+        "Bij lokale fout/ontbreken passend extern vervolg of gerichte vraag; geen stil fout antwoord."
+      ],
+      "done_when": "Meerdere lokale vraagsoorten werken zonder zware opdrachtketen en zonder onnodige websearch; correcte onbekend/offline/andere-locatieafhandeling en bestaande persoonsgrenzen behouden."
+    },
+    {
+      "id": "V5",
+      "title": "Opeenvolgende modelverwerking verkorten",
+      "files": [
+        "application/conversation.py",
+        "bootstrap/public_lookup.py",
+        "adapters/model/public_lookup.py",
+        "adapters/model/pydantic_conversation.py",
+        "voice_service/codex_backend.py"
+      ],
+      "actions": [
+        "Vergelijk kort bronresultaat plus één formulering met huidige dubbel geschreven antwoorden.",
+        "Onderzoek directe geverifieerde feiten naar voice versus één contactrun met eigen native read/search; behoud Eva identiteit, broncontrole en beleid.",
+        "Reken interne toolrondes mee: één HTTP-request is niet automatisch één modelstap.",
+        "Stabiele instructies/catalogus vooraan, veranderlijke vraag/resultaten achteraan; cached-tokenmetingen gebruiken waar bestaande transport deze rapporteert.",
+        "Publieke API prewarm/nieuwe modellen alleen beoordelen op daadwerkelijke compatibiliteit; geen betaalde route of extra provider aannemen.",
+        "Streaming pas voor gevalideerde inhoud; voortgang mag tegelijk met werk spreken, geen extra sequentiële wachttijd of cosmetische fillerwinst."
+      ],
+      "done_when": "Gepaarde metingen tonen lagere tijd tot bruikbare audio en compleet antwoord bij gelijkwaardige feiten/bronkwaliteit; bekende antwoorden geen onnodige lookup, gewone reads geen zware onderzoekstaak."
+    },
+    {
+      "id": "V6",
+      "title": "Audio en lokale modellen afzonderlijk vergelijken",
+      "files": [
+        "voice_service/codex_media.py",
+        "voice_service/codex_speaker_audio.py",
+        "voice_service/codex_session.py",
+        "development/tools/voice/profiling"
+      ],
+      "actions": [
+        "Houd huidige stem als referentie; vergelijk spraaklaag met identieke vooraf beschikbare backendresultaten en daarna identieke Eva-backend.",
+        "Controleer kandidaat eerst op Nederlands, vrouwelijke stem, full-duplex, onderbreken, tool/resultaataansluiting, licentie en GPU-ruimte.",
+        "Onderzoek PersonaPlex/Moshi/MiniCPM-o; huidige officiële taalbeperkingen verhinderen een onbewezen overstap.",
+        "Meet warm/koud, lange sessie, VRAM en realtimefactor naast eerste audio; CPU-offload/quantisatie zijn geen gratis snelheidswinst.",
+        "Geen extra STT/LLM/TTS-keten als identiek aan end-to-end speech presenteren; native audio kan wel teksttokens en audiocodec hebben.",
+        "Herstel verbinding alleen met deduplicatie en geldige autoriteit; taaklevensduur en audioverbinding blijven afzonderlijk."
+      ],
+      "done_when": "Onderbouwde behouden/vervangen-beslissing op Nederlands en daadwerkelijke gebruikerskwaliteit; geen modeldownload/licentieacceptatie of installatie tijdens alleen dit onderzoek."
+    },
+    {
+      "id": "V7",
+      "title": "Gecombineerde regressie en installatie",
+      "files": [
+        "development/tests/voice_service",
+        "development/tests/application",
+        "development/tests/postgres",
+        "development/tools/voice/profiling",
+        "development/design/product/execution-workboard-v1.json"
+      ],
+      "actions": [
+        "Test sociale uitwisseling, bekende gedeelde kennis, lokale status, openbare informatie en persoonlijke activiteit; ook vervolgverwijzingen, correcties, afscheid en onderbreking.",
+        "Test koude start na standby, langer gesprek, bronuitval, cacheveroudering/verwijdering, reboot en gelijktijdige onderhoudsrun.",
+        "Eerst deterministische lokale tests, daarna kleine gepaarde livevergelijking; rapporteer n/mediaan/max en pas p95 bij voldoende samples, geen bewijs uit één snelle beurt.",
+        "Meet ook foutpercentage, verloren antwoorden, onnodige toolcalls en model/tokencosts; mislukkingen niet uit timingselectie verwijderen.",
+        "Installeer uitsluitend bewezen winst op actuele images, behoud andermans wijzigingen, bronhash/importcontrole en terugvalmogelijkheid."
+      ],
+      "done_when": "Geïnstalleerde route werkt herhaaldelijk met correcte context en volledige antwoorden; technische resultaten en menselijke akoestische acceptatie apart geregistreerd."
+    }
+  ],
+  "projects": [
+    {
+      "full_name": "livekit/agents",
+      "html_url": "https://github.com/livekit/agents",
+      "description": "A framework for building realtime voice AI agents 🤖🎙️📹 ",
+      "stargazers_count": 14749,
+      "forks_count": 3935,
+      "subscribers_count": 103,
+      "created_at": "2023-10-19T23:00:55Z",
+      "pushed_at": "2026-10-15T06:07:50Z",
+      "archived": false,
+      "open_issues_count": 721,
+      "license": "Apache-2.0",
+      "latest_release": {
+        "tag_name": "livekit-agents@1.8.8",
+        "published_at": "2026-10-15T06:10:17Z",
+        "html_url": "https://github.com/livekit/agents/releases/tag/livekit-agents%401.8.8"
+      },
+      "sample_commit_count": 30,
+      "sample_distinct_authors": 16,
+      "sample_oldest_commit_at": "2026-10-12T06:55:29Z",
+      "decision": "Bestuderen binnen bestaande audio-integratie",
+      "eva_relevance": "Beurtgebonden metingen, onderbrekingen en speculatieve generatie; huidige versie 1.8.0 tegenover upstream 1.8.8. Geen blinde upgrade of aanname dat AgentSession-opties de custom CodexMediaSession besturen."
+    },
+    {
+      "full_name": "pipecat-ai/pipecat",
+      "html_url": "https://github.com/pipecat-ai/pipecat",
+      "description": "Open Source framework for voice agents, multimodal apps, and realtime AI. Maintained by Daily and the community.",
+      "stargazers_count": 16493,
+      "forks_count": 2885,
+      "subscribers_count": 84,
+      "created_at": "2023-12-27T12:59:00Z",
+      "pushed_at": "2026-10-15T07:25:03Z",
+      "archived": false,
+      "open_issues_count": 395,
+      "license": "BSD-2-Clause",
+      "latest_release": {
+        "tag_name": "v1.12.0",
+        "published_at": "2026-09-26T01:58:06Z",
+        "html_url": "https://github.com/pipecat-ai/pipecat/releases/tag/v1.12.0"
+      },
+      "sample_commit_count": 30,
+      "sample_distinct_authors": 5,
+      "sample_oldest_commit_at": "2026-10-13T15:12:42Z",
+      "decision": "Ontwerpreferentie, geen frameworkmigratie",
+      "eva_relevance": "Recente release behandelt onderbreekbaarheid per frame en onderscheid tussen transportuitval en ophangen; MOQ-code is geen directe WebRTC-reparatie."
+    },
+    {
+      "full_name": "vectorize-io/hindsight",
+      "html_url": "https://github.com/vectorize-io/hindsight",
+      "description": "Hindsight: Agent Memory That Learns",
+      "stargazers_count": 49839,
+      "forks_count": 6074,
+      "subscribers_count": 109,
+      "created_at": "2025-10-30T11:49:48Z",
+      "pushed_at": "2026-10-15T08:14:57Z",
+      "archived": false,
+      "open_issues_count": 190,
+      "license": "MIT",
+      "latest_release": {
+        "tag_name": "v1.0.0",
+        "published_at": "2026-10-13T14:08:48Z",
+        "html_url": "https://github.com/vectorize-io/hindsight/releases/tag/v1.0.0"
+      },
+      "sample_commit_count": 30,
+      "sample_distinct_authors": 1,
+      "sample_oldest_commit_at": "2026-10-12T10:32:40Z",
+      "decision": "Eerste kandidaat via bestaande geheugenadapter",
+      "eva_relevance": "Mental models vooraf lezen, achtergrondvernieuwing en bronherkomst. Eva gebruikt dit al voor een stijlspiegel; brede huishoudcontext ontbreekt. Geïnstalleerde pakketversie niet via metadata vastgesteld; capabilities controleren voor wijziging."
+    },
+    {
+      "full_name": "getzep/graphiti",
+      "html_url": "https://github.com/getzep/graphiti",
+      "description": "Build Real-Time Knowledge Graphs for AI Agents",
+      "stargazers_count": 31771,
+      "forks_count": 3267,
+      "subscribers_count": 174,
+      "created_at": "2024-08-08T22:08:30Z",
+      "pushed_at": "2026-10-15T00:19:20Z",
+      "archived": false,
+      "open_issues_count": 475,
+      "license": "Apache-2.0",
+      "latest_release": {
+        "tag_name": "v0.31.0",
+        "published_at": "2026-10-14T23:58:36Z",
+        "html_url": "https://github.com/getzep/graphiti/releases/tag/v0.31.0"
+      },
+      "sample_commit_count": 30,
+      "sample_distinct_authors": 7,
+      "sample_oldest_commit_at": "2026-09-27T08:49:42Z",
+      "decision": "Ontwerpreferentie voor feitgeldigheid",
+      "eva_relevance": "Tijdgebonden feiten en bronverwijzingen vergelijken met bestaand geheugen; geen tweede graphdatabase toevoegen zonder bewezen noodzaak."
+    },
+    {
+      "full_name": "TEN-framework/ten-framework",
+      "html_url": "https://github.com/TEN-framework/ten-framework",
+      "description": " Open-source framework for conversational voice AI agents",
+      "stargazers_count": 11163,
+      "forks_count": 1367,
+      "subscribers_count": 69,
+      "created_at": "2024-06-19T14:26:15Z",
+      "pushed_at": "2026-10-14T12:46:33Z",
+      "archived": false,
+      "open_issues_count": 247,
+      "license": "NOASSERTION",
+      "latest_release": {
+        "tag_name": "0.11.73",
+        "published_at": "2026-09-22T08:53:40Z",
+        "html_url": "https://github.com/TEN-framework/ten-framework/releases/tag/0.11.73"
+      },
+      "sample_commit_count": 30,
+      "sample_distinct_authors": 12,
+      "sample_oldest_commit_at": "2026-08-31T02:28:59Z",
+      "decision": "Lager geprioriteerde referentie",
+      "eva_relevance": "Realtime architectuur vergelijken indien een concreet transportgat resteert; extra runtime/migratie en licentie-inhoud eerst beoordelen. GitHub geeft license NOASSERTION, geen conclusie dat er geen licentie is."
+    }
+  ],
+  "sources": [
+    {
+      "id": "openai_latency",
+      "url": "https://developers.openai.com/api/docs/guides/latency-optimization",
+      "application": "Minder opeenvolgende requests en minder gegenereerde tekst als hypothesen testen."
+    },
+    {
+      "id": "openai_cache",
+      "url": "https://developers.openai.com/api/docs/guides/prompt-caching",
+      "application": "Stabiele promptprefix; nieuwe prewarm-mogelijkheid in publieke API is niet bewezen beschikbaar via bestaande abonnementstransport."
+    },
+    {
+      "id": "openai_live",
+      "url": "https://developers.openai.com/api/docs/guides/live-delegation",
+      "application": "Compact geverifieerd resultaat teruggeven kan extra verwoording vermijden; exact Codex-protocol en Eva-antwoordcontrole blijven apart te verifiëren."
+    },
+    {
+      "id": "hindsight_models",
+      "url": "https://hindsight.vectorize.io/developer/mental-models",
+      "application": "Vooraf opgebouwde afgeleide kennis onderzoeken binnen bestaande adapter."
+    },
+    {
+      "id": "hindsight_pages",
+      "url": "https://hindsight.vectorize.io/developer/knowledge-pages",
+      "application": "Achtergrondvernieuwing en herleidbare afgeleide documenten; geen garantie dat Eva geïnstalleerde versie alle nieuwe mogelijkheden heeft."
+    },
+    {
+      "id": "livekit_audio",
+      "url": "https://docs.livekit.io/agents/multimodality/audio/",
+      "application": "Speculatieve generatie kan tijd verschuiven maar kost verspild werk; pas na kernverbetering en zonder speculatieve effecten."
+    },
+    {
+      "id": "livekit_metrics",
+      "url": "https://docs.livekit.io/testing/observability/data/",
+      "application": "Metingen aan dezelfde beurt koppelen; server-VAD en eigen transport kunnen andere observatiegrenzen hebben."
+    },
+    {
+      "id": "pipecat_release",
+      "url": "https://github.com/pipecat-ai/pipecat/releases/tag/v1.12.0",
+      "application": "Concrete nieuwe audiolevenscyclus- en herstelpatronen, niet alleen README-beloften."
+    },
+    {
+      "id": "ha_llm",
+      "url": "https://developers.home-assistant.io/docs/core/llm/",
+      "application": "Bestaande toegelaten mogelijkheden gericht aanbieden; bereikbaarheid is geen autorisatie voor ieder gesprek."
+    },
+    {
+      "id": "ha_weather",
+      "url": "https://www.home-assistant.io/integrations/weather/",
+      "application": "Forecastactie bestaat; lokale proef 10 ms voor zes dagen is bronopvraag, niet spraaklatency."
+    },
+    {
+      "id": "voice_architecture",
+      "url": "https://developers.openai.com/api/docs/guides/voice-agents",
+      "application": "Full-duplex stemlaag, geïntegreerde realtime sessie en STT/LLM/TTS zijn verschillende architecturen."
+    },
+    {
+      "id": "personaplex",
+      "url": "https://huggingface.co/nvidia/personaplex-7b-v1",
+      "application": "7B full-duplex model; officiële toepassing Engels. Geen Nederlandse kwaliteits- of snelheidsgarantie."
+    },
+    {
+      "id": "moshi",
+      "url": "https://github.com/kyutai-labs/moshi",
+      "application": "Audiostreams en teksttokens samen; gepubliceerde circa 200 ms op L4 is geen Eva- of laptopbenchmark."
+    },
+    {
+      "id": "minicpm",
+      "url": "https://github.com/OpenBMB/MiniCPM-V",
+      "application": "MiniCPM-o 4.5: 9B, full-duplex, spraak Engels/Chinees; multimodale benchmarkwinst bewijst geen Nederlandse spraakkwaliteit."
+    }
+  ],
+  "selection_rules": [
+    "Stars are interest, not speed/quality. Recent 30-commit author count is a sample including possible bots, not total contributor count.",
+    "Read actual release/implementation evidence; benchmark numbers are vendor-reported and not Eva measurements.",
+    "Prefer existing Hindsight/LiveKit/HA interfaces; adopt patterns before considering extra platforms.",
+    "No weather-specific core router, separate memory authority or additional paid service."
+  ],
+  "next_action": "Reduce repeated local service discovery through existing source-backed capability context, then prepared shared/private memory with correction/deletion invalidation and nightly maintenance.",
+  "changed_runtime_this_turn": false,
+  "implementation_progress": {
+    "evidence": "development/evidence/product/subscription-voice-20261013/low-hanging-fruit-20261015.json",
+    "status": "installed_targeted_checks_and_synthetic_voice_passed_latency_target_unmet",
+    "installed_changes": [
+      "Reuse one opted-in short sourced public lookup answer without final text-model rewrite; retain authorization, receipt replay and answer guard.",
+      "Offer existing authorized HA inventory/API tools directly, prefer relevant local data and keep their results on contact model.",
+      "Explain general REST response/service-body semantics; no hardcoded weather routing or new grants.",
+      "Public lookup follows question language."
+    ],
+    "context_cache_and_nightly_maintenance": "not_implemented; recent conversation journal integration is not a second memory cache",
+    "shared_recent_conversation": "installed bounded canonical household journal context across admitted microphones; private channels excluded",
+    "memory_gc_and_startup_warmup": {
+      "status": "installed_and_verified",
+      "evidence": "development/evidence/product/subscription-voice-20261013/hindsight-gc-20261015.json",
+      "fresh_baseline_median_seconds": 4.7483,
+      "final_recall_median_seconds": 1.0784,
+      "first_post_restart_recall_seconds": 1.8669,
+      "ordered_facts_unchanged": true,
+      "limit": "Memory component only; full conversation and physical audio latency targets remain unproven."
+    }
+  }
+}

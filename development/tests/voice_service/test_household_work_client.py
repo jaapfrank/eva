@@ -81,3 +81,33 @@ async def test_household_saved_audio_has_explicit_disposition_and_no_sdk_history
     assert backend.dispositions == ["offered", "interrupted" if interrupted else "completed"]
     assert ''.join(session.spoken) == TEXT
     assert not session.chat_history and session.options[-1]["add_to_chat_ctx"] is False
+
+
+@pytest.mark.asyncio
+async def test_server_verified_personal_returns_keep_device_endpoint_and_exact_claim(monkeypatch):
+    import json
+    from tests.voice_service.test_private_work_return import RESULT
+    session=str(uuid4()); calls=[]
+    async def handle(request):
+        body=json.loads(request.content);calls.append((request.url.path,body))
+        assert '/ha-voice/' in request.url.path and 'principal_id' not in body
+        op=request.url.path.rsplit('/',1)[-1]
+        if op=='open':return httpx.Response(200,json={'contract':'EvaHouseholdWorkReturn/v1','state':'open','session_id':session})
+        if op=='close':return httpx.Response(200,json={'contract':'EvaHouseholdWorkReturn/v1','state':'closed','session_id':session})
+        if op=='poll':data={'result':RESULT}
+        else:
+            assert body['operation_id']==RESULT['operation_id'] and body['work_id']==RESULT['work_id']
+            assert 'result_sha256' not in body
+            data={'status':'authorized' if op=='authorize' else 'acknowledged',
+                  **{k:RESULT[k] for k in ('operation_id','output_sha256','result_sha256')}}
+        return httpx.Response(200,json={'contract':'EvaPrivateWorkReturn/v1',**data})
+    factory=httpx.AsyncClient
+    monkeypatch.setattr(httpx,'AsyncClient',lambda **kwargs:factory(transport=httpx.MockTransport(handle),**kwargs))
+    client=HouseholdCoreClient('http://test','token',satellite_id='assist_satellite.room',device_id='a'*32)
+    client.household_work_returns=True
+    await client.work_return('open',session)
+    claimed=(await client.work_return('poll',session))['result']
+    await authorize_saved_return(client,session,claimed,lambda:None)
+    with pytest.raises(ValueError):await client.work_return('authorize',session,work_id='other',operation_id=claimed['operation_id'])
+    await client.work_return('close',session)
+    with pytest.raises(ValueError):await client.work_return('authorize',session,work_id=claimed['work_id'],operation_id=claimed['operation_id'])

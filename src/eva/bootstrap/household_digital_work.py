@@ -99,15 +99,23 @@ def household_source(turn):
 
 
 class HouseholdDigitalSourceLoader:
-    def __init__(self, engine, scope, authority):
+    def __init__(self, engine, scope, authority, *, for_task_control=False):
         self.timeline = PostgresOperationalTimeline(engine, scope)
         self.authority = authority
+        self.for_task_control = for_task_control
 
     def __call__(self, value):
         from eva.contracts.delegated_digital_work import HouseholdWorkSource
         source = HouseholdWorkSource.model_validate(value)
         authority, p = self.authority, self.authority.policy
-        authority.validate_actor(source.principal_id)
+        if self.for_task_control:
+            # A household control request may refer to work executed under another
+            # admitted device's original effect grant. It grants no new effects.
+            authority.validate_current()
+            if source.principal_id not in {"household-device:" + device for device in p.devices.values()}:
+                raise ConversationConflict("household control actor is not admitted")
+        else:
+            authority.validate_actor(source.principal_id)
         if ((source.tenant_id, source.installation_id, source.audience.household_id,
                 source.audience.consent_operation_id) !=
                 (p.tenant_id, p.installation_id, p.household_id, p.consent_operation_id)):
@@ -130,7 +138,7 @@ class HouseholdDigitalSourceLoader:
 
 
 def admit_household_digital(service, turn, request_key, task, *, previous=None, admission_time=None,
-                            household_continuation_execution_id=None):
+                            household_continuation_execution_id=None, destination_satellite_id=None):
     """Use the same admission, resume receipts and delivery scope as research."""
     profile = service.digital_profile
     if profile is None:
@@ -167,14 +175,16 @@ def admit_household_digital(service, turn, request_key, task, *, previous=None, 
     spec = profile.build_spec(**identity, origin=origin.to_payload(),
         owner_principal_id=str(service._owner["owner_principal_id"]),
         principal_binding_id=str(service._owner["principal_binding_id"]), task=task,
-        created_at=created, deadline=min(created+timedelta(seconds=profile.timeout_seconds),expiry))
+        created_at=created, deadline=min(created+timedelta(seconds=min(profile.timeout_seconds,300)),expiry))
     title = previous.title if previous else " ".join(task.split())[:120]
     try:
         saved = service.store.load(spec.work_id, **service._owner, household_origin=origin, **continuation)
         title = saved.title
     except DelegatedWorkNotFound:
         pass
-    admitted = service.store.admit(spec=spec, title=title,
+    from eva.adapters.postgres.household_work_destination import admit_with_destination
+    admitted = admit_with_destination(service, turn, request_key=request_key,
+        destination_satellite_id=destination_satellite_id, spec=spec, title=title,
         summary="Huisopdracht via de bestaande Home Assistant-API.", worker_role="Huisopdracht",
         retention_policy_id="retention:household-digital-work:v1",
         retention_until=min(created+timedelta(days=7),expiry), occurred_at=created,

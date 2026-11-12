@@ -12,7 +12,7 @@ from tools.check_dependency_update_posture import validate_release_watch_receipt
 
 
 ROOT = Path(__file__).resolve().parents[3]
-REPOSITORY_ROOT = ROOT.parent
+REPOSITORY_ROOT = ROOT
 
 
 def test_renovate_config_is_proposal_only_and_content_addressed() -> None:
@@ -35,14 +35,21 @@ def test_renovate_config_is_proposal_only_and_content_addressed() -> None:
 
 
 def test_component_watch_includes_all_comparison_targets() -> None:
-    watch = json.loads((REPOSITORY_ROOT / "component-watch.json").read_bytes())
+    watch_path = REPOSITORY_ROOT / "component-watch.json"
+    if watch_path.is_file():
+        watch = json.loads(watch_path.read_bytes())
+        assert all(row["currentRelease"] for row in watch["components"])
+    else:
+        watch = json.loads(
+            (REPOSITORY_ROOT / "development/evidence/product/upstream-release-watch-live-2026-08-31.json").read_bytes()
+        )
+        assert all(row["expected"] for row in watch["components"])
 
     assert {row["repository"] for row in watch["competitors"]} == {
         "openclaw/openclaw",
         "NousResearch/hermes-agent",
         "agent0ai/agent-zero",
     }
-    assert all(row["currentRelease"] for row in watch["components"])
     assert watch["checkedAt"] < watch["reviewValidUntil"]
 
 

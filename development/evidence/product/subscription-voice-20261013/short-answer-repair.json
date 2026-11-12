@@ -1,0 +1,28 @@
+{
+  "status": "installed_shorter_research_output_latency_still_excessive",
+  "physical_audio_verified": false,
+  "session": "855eb8e2-27db-4a8a-9580-2a23ec27e46a",
+  "work_id": "work:household:8bc67485-22d1-587b-8d01-7832381156d2",
+  "seconds_from_wake": {
+    "connection_ready": 2.02,
+    "question_clip_end": 3.92,
+    "voice_delegation": 5.292,
+    "core_request": 5.8,
+    "ack_audio_at_sink": 6.308,
+    "ack_turn_done": 9.698,
+    "research_action_start": 17.236,
+    "research_action_done": 17.521,
+    "core_final": 17.807,
+    "result_claimed": 28.659,
+    "result_authorized": 28.85,
+    "speech_offer": 29.098,
+    "forecast_audio_at_sink": 30.056
+  },
+  "core_model_ms": 7487,
+  "research_db_seconds_approx": 11,
+  "research_web_actions": 1,
+  "question_end_to_forecast_seconds": 26.136,
+  "evidence": "short-answer-events.json",
+  "interpretation": "One sample, not a controlled benchmark. The acknowledgement overlaps core preparation; actual research begins later, without a dependency on acknowledgement completion.",
+  "targeted_checks_passed": 45
+}

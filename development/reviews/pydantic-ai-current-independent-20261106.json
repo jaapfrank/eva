@@ -1,0 +1,67 @@
+{
+  "contract": "EvaIndependentPydanticAIImplementationReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T14:18:49.539842+00:00",
+  "scope": "Read-only focused current2.37 implementation/API/lifecycle/tool/cancellation/usage review. Latest-version isolated compatibility owned by parent.",
+  "versionsConfirmedInTrustedTestEnvironmentAndActualCore": {
+    "pydantic-ai-slim": "2.37.0",
+    "pydantic": "2.12.5",
+    "openai": "3.6.0",
+    "httpx2": "2.12.0"
+  },
+  "sourceHashes": {
+    "src/eva/adapters/model/pydantic_conversation.py": "9f03546a1c6d8b5bb37a49e7b0a50997690baad6e59ba910776fb5e69a537b89",
+    "src/eva/adapters/model/openai_codex_provider.py": "f1627e09212de3ac6efa1698ef26511f6ca120e6e87c31cecae33321e6ef23a0",
+    "src/eva/application/cancellation.py": "b97ab6117742a0a09367b77ac8293ad7297e271c1e5a79ab7ec101765f9963c4",
+    "src/eva/application/human_understanding.py": "5437a5f308eef3a23388016b4dcd83241838c17f8ab155e31756be99cc71e072"
+  },
+  "conclusion": "No concrete Pydantic SDK integration defect reproduced in this bounded review. Existing suite is not fully green:184pass,2current context-contract assertion failures.",
+  "SDKAPISourceChecks": [
+    "Installed official Agent.run signature supports all used keyword arguments and internally enters async self.iter.",
+    "Installed ExternalToolset.call_tool raises NotImplementedError: direct external effects remain deferred for Eva durable host dispatch.",
+    "Installed OpenAIResponsesModel.request_stream merges own settings via prepare_request, preserving delegate defaults through Eva wrapper."
+  ],
+  "verifiedBehavior": [
+    "Real local SDK+synthetic SSE tests pass hosted tool search/deferred namespaces and actual deferred continuation.",
+    "SDK retries0, Agent retries0, transport retries0; existing Eva bounded unavailable retry shares one absolute deadline and usage balance.",
+    "Cancellation tests pass propagation, stream close before following question, no retry after ownerSTOP/final preview.",
+    "Unique raw response.completed usage attestation and known/unknown accounting tests pass; unknown costs remain unknown.",
+    "No automatic function execution by PydanticAI; exact deferred action count and durable receipt continuation remain in Eva."
+  ],
+  "testRun": {
+    "cases": 186,
+    "passed": 184,
+    "failed": 2,
+    "elapsedSeconds": 9.6,
+    "log": "development/reviews/pydantic-ai-current-independent-tests-20261106.log",
+    "logSha256": "3890928d2827f4f98ada47947cb968be392958b67f209f126ccc9f26474973ad",
+    "externalProviderRequests": 0
+  },
+  "knownFailures": [
+    {
+      "test": "test_contact_catalog_omits_only_discoverable_descriptors",
+      "path": "development/tests/model/test_pydantic_conversation_model.py:1317",
+      "observation": "Expected literal English instruction phrase is absent while tested tool catalog membership assertions pass.",
+      "classification": "Current instruction text contract discrepancy; no demonstrated SDK API failure."
+    },
+    {
+      "test": "test_current_multi_source_observation_reaches_real_model_wire_as_provisional",
+      "path": "development/tests/model/test_pydantic_conversation_model.py:1760",
+      "observation": "Real SDK request lacks original raw source texts. Current person context projects bound source references, timestamps and SHA256; ordinary recall skips projected fact to avoid duplication.",
+      "sourceLocations": [
+        "src/eva/application/human_understanding.py:240",
+        "src/eva/application/human_understanding.py:269",
+        "src/eva/adapters/model/pydantic_conversation.py:4550"
+      ],
+      "classification": "Context/provenance projection contract discrepancy requiring separate decision; no evidence a Pydantic version bump restores raw texts."
+    }
+  ],
+  "failureBaselineCheck": "ASTs of _instructions and current_person_context match current HEAD; source behavior predates this read-only review. Assertions/criteria not modified.",
+  "limitations": [
+    "No live provider generation or household acceptance performed.",
+    "No recommendation to update dependencies solely from a version number; exact newer-version compatibility requires parent isolated test evidence.",
+    "Existing dirty voice changes were read only where adjacent; no voice code/task handoff taken."
+  ],
+  "productCodeOrDependencyEdits": false,
+  "installed": false
+}

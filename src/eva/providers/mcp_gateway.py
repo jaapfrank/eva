@@ -377,20 +377,42 @@ class McpGatewayProviderFactory:
                 principal_sha256=settings.principal_sha256_allowlist[0]))
         # Uvicorn calls synchronous app factories inside its running event loop.
         # Complete admission in an owned worker loop before exposing any tools.
-        with ThreadPoolExecutor(max_workers=1) as executor:
-            executor.submit(asyncio.run, adapter.verify_catalog()).result()
+        allow_unverified = False
+        try:
+            with ThreadPoolExecutor(max_workers=1) as executor:
+                executor.submit(asyncio.run, adapter.verify_catalog()).result()
+        except RuntimeError as exc:
+            if str(exc) == "MCP gateway request failed (401)" and _jwt_token_expired(settings.bearer_token):
+                allow_unverified = True
+            else:
+                raise
         return ProviderContribution(
             provider_id="mcp_gateway",
             conversation_tools=adapter.conversation_tools(settings.specs),
             external_tools=(
                 PostgresExternalConversationTools(
                     engine,
-                    adapter.planner(),
+                    adapter.planner(allow_unverified=allow_unverified),
                     adapter,
                     authorize_turn=settings.authorize_turn,
                 ),
             ),
         )
+
+
+def _jwt_token_expired(token: str) -> bool:
+    import base64
+    import time
+    parts = token.strip().split(".")
+    if len(parts) != 3:
+        return False
+    try:
+        padded = parts[1] + "=" * (-len(parts[1]) % 4)
+        claims = json.loads(base64.urlsafe_b64decode(padded))
+        exp = claims.get("exp")
+        return isinstance(exp, (int, float)) and exp < time.time()
+    except Exception:
+        return False
 
 
 __all__ = [

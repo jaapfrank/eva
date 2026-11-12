@@ -57,6 +57,7 @@ class HouseholdResearchAuthority:
         provider_validator,
         profile,
         clock=lambda: datetime.now(UTC).replace(microsecond=0),
+        allow_inactive: bool = False,
     ):
         self.voice = voice_authority
         self._policy_loader, self._budget_loader = policy_loader, budget_loader
@@ -67,10 +68,18 @@ class HouseholdResearchAuthority:
         if not isinstance(self.policy, HouseholdResearchPolicy):
             raise TypeError("household research requires an explicit typed policy")
         self.sha256 = canonical_sha256(self.policy.model_dump(mode="json"))
-        self.validate_current()
+        self.validate_current(allow_inactive=allow_inactive)
 
-    def validate_current(self):
-        self.voice.validate_current()
+    def validate_current(self, *, allow_inactive: bool = False) -> bool:
+        if allow_inactive:
+            try:
+                voice_active = self.voice.validate_current(allow_inactive=True)
+            except TypeError:
+                self.voice.validate_current()
+                voice_active = True
+        else:
+            self.voice.validate_current()
+            voice_active = True
         current = self._policy_loader()
         budget = self._budget_loader()
         self._provider_validator()
@@ -84,8 +93,6 @@ class HouseholdResearchAuthority:
             or not isinstance(budget, RuntimeResourceBudget)
             or not isinstance(current, HouseholdResearchPolicy)
             or canonical_sha256(current.model_dump(mode="json")) != self.sha256
-            or policy.state != "enabled"
-            or not policy.effective_at <= now < policy.expires_at
             or policy.household_policy_id != voice.policy_id
             or policy.household_policy_sha256
             != canonical_sha256(voice.model_dump(mode="json"))
@@ -119,6 +126,16 @@ class HouseholdResearchAuthority:
             raise ValueError(
                 "household research authority changed or exceeds its parent"
             )
+        active = (
+            bool(voice_active)
+            and policy.state == "enabled"
+            and policy.effective_at <= now < policy.expires_at
+        )
+        if not active and not allow_inactive:
+            raise ValueError(
+                "household research authority changed or exceeds its parent"
+            )
+        return active
 
     def validate_device(self, satellite_id, device_id):
         self.validate_current()

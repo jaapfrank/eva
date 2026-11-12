@@ -293,8 +293,8 @@ class HouseholdWorkSessions:
                 raise ValueError("retained household binding requires an original native session")
             return first["binding"]
 
-    def continuity_bindings(self, binding, *, work_id=None, parent_ids=None, limit=65):
-        """Select this device's retained native tasks, not unrelated session history."""
+    def continuity_bindings(self, binding, *, work_id=None, parent_ids=None, limit=65, read_only=False):
+        """Select retained household tasks, preserving each original delivery binding."""
         if type(limit) is not int or not 1 <= limit <= 65:
             raise ValueError("household continuity selection exceeds its task bound")
         current = self.read(binding["session_id"], binding["satellite_id"], binding["device_id"])
@@ -303,9 +303,6 @@ class HouseholdWorkSessions:
         from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
         with self.store._engine.begin() as connection:
             self.store._scope(connection)
-            first = first_session(connection, self.store.scope, binding["session_id"])
-            if first.get("native_conversation_key") is None:
-                return (binding,)
             now = self.authority.clock()
             # Keep the same retained selection, but evaluate its filters once
             # instead of rescanning task payloads for each candidate session.
@@ -324,6 +321,9 @@ class HouseholdWorkSessions:
             ).cte("retained_household_work").prefix_with("MATERIALIZED")
             data = events.c.payload["data"]
             stored_binding = data["binding"]
+            admitted_devices = [stored_binding.contains({"satellite_id": satellite,
+                "device_id": device, "actor_id": "household-device:" + device})
+                for satellite, device in self.authority.policy.devices.items()]
             selected = connection.execute(sa.select(stored_binding).select_from(events.join(
                 runs, sa.and_(events.c.tenant_id == runs.c.tenant_id,
                     events.c.installation_id == runs.c.installation_id,
@@ -333,10 +333,9 @@ class HouseholdWorkSessions:
                 events.c.installation_id == self.store.scope.installation_id,
                 events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED",
                 events.c.sequence == 1,
-                data["native_conversation_key"].astext.is_not(None),
+                sa.or_(*admitted_devices) if admitted_devices else sa.false(),
                 stored_binding.contains({key: binding[key] for key in (
-                    "tenant_id", "installation_id", "household_id", "actor_id",
-                    "satellite_id", "device_id", "consent_operation_id",
+                    "tenant_id", "installation_id", "household_id", "consent_operation_id",
                     "household_policy_sha256", "research_policy_sha256")}),
                 runs.c.owner_principal_id == self.authority.policy.owner_principal_id,
                 runs.c.principal_binding_id == self.authority.policy.principal_binding_id,
@@ -347,7 +346,13 @@ class HouseholdWorkSessions:
             ).group_by(stored_binding).order_by(sa.func.max(runs.c.updated_at).desc()).limit(limit)).scalars().all()
         result = []
         for item in selected:
-            verified = self.read_retained_native(item["session_id"], binding["satellite_id"], binding["device_id"])
+            # Validate the original and current devices independently. Reading or
+            # controlling a task never renews its old media lease or moves delivery.
+            self.authority.validate_device(item["satellite_id"], item["device_id"])
+            with self.store._engine.begin() as connection:
+                self.store._scope(connection)
+                verified = self._read_binding(connection, item["session_id"],
+                    item["satellite_id"], item["device_id"])["binding"]
             if verified != item:
                 raise ValueError("native household continuity binding changed")
             result.append(verified)

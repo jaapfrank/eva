@@ -98,6 +98,28 @@ class HouseholdWorkServer:
         return HouseholdWorkService(self, binding, token)
 
 
+    def explicit_delivery_session(self, work_id):
+        from eva.adapters.postgres.household_work_destination import read_destination
+        with self.store._engine.begin() as connection:
+            self.store._scope(connection)
+            data = read_destination(connection, self.store.scope, work_id)
+            if data is None:
+                raise ValueError("explicit household destination absent")
+            from eva.contracts.delegated_work import HouseholdWorkOrigin
+            # The destination record is only a locator; the store revalidates
+            # the sealed task and its authorized destination before any output.
+            from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
+            origin = connection.scalar(sa.select(runs.c.spec_payload).where(
+                runs.c.tenant_id == self.store.scope.tenant_id,
+                runs.c.installation_id == self.store.scope.installation_id,
+                runs.c.work_id == work_id))
+            if origin is None:
+                raise ValueError("explicit household task absent")
+            origin = HouseholdWorkOrigin.model_validate(origin["origin"])
+        binding = self.sessions.read_retained_household(origin.session_id, origin.satellite_id, origin.device_id)
+        return HouseholdWorkService(self, binding, self.authority.voice.token,
+            delivery_only=True, explicit_work_id=work_id)
+
     def delivery_session(self, *, token, satellite_id, device_id, session_id):
         """Bind stored native output without reopening the foreground session."""
         self.authenticate(token, satellite_id, device_id)
@@ -106,8 +128,9 @@ class HouseholdWorkServer:
 
 
 class HouseholdWorkService:
-    def __init__(self, server, binding, token, *, delivery_only=False):
+    def __init__(self, server, binding, token, *, delivery_only=False, explicit_work_id=None):
         self._delivery_only = delivery_only
+        self._explicit_work_id = explicit_work_id
         self.server, self.store, self.binding, self._token = (
             server,
             server.store,
@@ -131,8 +154,9 @@ class HouseholdWorkService:
         if self._delivery_only:
             if operation != "read":
                 raise ValueError("stored household output cannot control a foreground session")
-            actual = self.server.sessions.read_retained_native(
-                b["session_id"], b["satellite_id"], b["device_id"])
+            reader = (self.server.sessions.read_retained_household if self._explicit_work_id
+                else self.server.sessions.read_retained_native)
+            actual = reader(b["session_id"], b["satellite_id"], b["device_id"])
         else:
             actual = self.server.sessions.read(
                 b["session_id"], b["satellite_id"], b["device_id"], operation=operation)
@@ -215,17 +239,20 @@ class HouseholdWorkService:
         return ({} if work.spec.origin.destination() == origin.destination() else
                 {"household_request_origin": origin})
 
-    def _load(self, work_id, origin, *, include_native=True):
+    def _load(self, work_id, origin, *, include_native=True, read_only=False):
         self.current()
         if self._delivery_only:
+            if self._explicit_work_id is not None and work_id != self._explicit_work_id:
+                raise ValueError("explicit destination belongs to another task")
             return self.store.load(work_id, **self._owner, household_origin=origin,
-                household_delivery_binding=self.binding)
+                household_delivery_binding=self.binding,
+                household_explicit_delivery=self._explicit_work_id is not None)
         try:
             work = self.store.load(work_id, **self._owner, household_origin=origin)
         except DelegatedWorkNotFound:
             if not include_native:
                 raise
-            rows = self._native_work(origin, work_id=work_id, limit=1)
+            rows = self._native_work(origin, work_id=work_id, limit=1, read_only=read_only)
             if not rows:
                 raise
             work = rows[0]
@@ -233,13 +260,13 @@ class HouseholdWorkService:
             raise DelegatedWorkNotFound("household result expired")
         return work
 
-    def _native_work(self, current_origin, *, work_id=None, parent_ids=None, limit=21):
-        """Read retained native work through the current device's admitted turn."""
+    def _native_work(self, current_origin, *, work_id=None, parent_ids=None, limit=21, read_only=False):
+        """Read shared household work through the current admitted device turn."""
         from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
         self.current()
         bindings = {item["session_id"]: item for item in
                     self.server.sessions.continuity_bindings(self.binding,
-                        work_id=work_id, parent_ids=parent_ids, limit=limit)}
+                        work_id=work_id, parent_ids=parent_ids, limit=limit, read_only=read_only)}
         now = self.server.authority.clock()
         with self.store._engine.begin() as connection:
             self.store._scope(connection)
@@ -265,13 +292,28 @@ class HouseholdWorkService:
                 raise ValueError("native work origin differs from its original session")
             result.append(self.store.load(row.work_id, **self._owner, household_origin=origin,
                 **({} if origin.destination() == current_origin.destination() else
-                   {"household_request_origin": current_origin})))
+                   {("household_read_origin" if read_only else "household_request_origin"): current_origin})))
         self.current()
         return tuple(result)
 
     def view(self, work):
         self.current()
+        from eva.adapters.postgres.household_work_destination import read_destination, validate_destination, delivery_status
+        with self.store._engine.begin() as c:
+            self.store._scope(c)
+            selected = read_destination(c, self.store.scope, work.spec.work_id)
+            status = delivery_status(c, self.store.scope, work.spec.work_id)
+            destination = None
+            if selected is not None:
+                try:
+                    validate_destination(c, self.store.scope, self.server.authority, work.spec, selected)
+                    destination = {key: selected[key] for key in ("satellite_id", "transport")}
+                    destination["available"] = True
+                    destination["delivery_status"] = status
+                except ValueError:
+                    destination = {"transport": "home_assistant_announce", "available": False, "delivery_status": status}
         return dict(
+            delivery_destination=destination,
             work_id=work.spec.work_id,
             title=work.title,
             created_at=work.spec.created_at,
@@ -282,7 +324,7 @@ class HouseholdWorkService:
             parent_work_id=work.spec.parent_task_id if work.spec.parent_task_id.startswith("work:") else None,
             state=work.state,
             error_code=work.error_code,
-            failure_description=work_failure_description(work.error_code),
+            failure_description=work_failure_description(work.error_code, getattr(work, "failure_report", None)),
             stop_requested=work.stop_requested_at is not None,
             result=None if work.result is None else work.result.output,
             result_sha256=None if work.result is None else work.result.output_sha256,
@@ -290,23 +332,24 @@ class HouseholdWorkService:
         )
 
     def active_work_metadata(self, turn):
-        """Project work from authorized current-device native sessions."""
+        """Project retained shared task status within the current household authority."""
         if self._delivery_only:
             raise ValueError("stored household output cannot supply foreground tools")
         self.validate_authority(turn)
         from eva.application.work_context import work_context_metadata
         now = self.server.authority.clock()
-        rows = self._native_work(self.origin(turn), limit=21)
+        rows = self._native_work(self.origin(turn), limit=21, read_only=True)
         return work_context_metadata(rows, now)
 
     def execute(
-        self, operation, turn, *, request_key, research=None, work_id=None, task=None, prior_work_id=None, revision=None
+        self, operation, turn, *, request_key, research=None, work_id=None, task=None, prior_work_id=None, revision=None, destination=None, destination_satellite_id=None
     ):
         if self._delivery_only:
             raise ValueError("stored household output cannot execute user work")
         self.validate_authority(turn)
         if (task is not None and operation != "digital") or operation not in {
             "digital",
+            "household_destination",
             "revise_digital",
             "research",
             "list",
@@ -324,6 +367,28 @@ class HouseholdWorkService:
             self.store._engine, self.server.conversation_scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
         origin = self.origin(turn)
+        if destination_satellite_id is not None and (operation not in {"research", "digital"}
+                or not isinstance(destination_satellite_id, str)
+                or destination_satellite_id not in self.server.authority.policy.devices):
+            raise ValueError("household start destination is not admitted")
+        if operation == "household_destination":
+            if (not isinstance(destination, dict) or set(destination) != {"work_id", "satellite_id"}
+                    or any(value is not None for value in (research, work_id, task, prior_work_id, revision, destination_satellite_id))):
+                raise ValueError("household destination arguments differ")
+            work = self._load(destination["work_id"], origin, read_only=True)
+            if work.stop_requested_at is not None:
+                raise ValueError("stopped work cannot be routed")
+            from eva.adapters.postgres.household_work_destination import save_destination
+            with self.store._engine.begin() as connection:
+                self.store._scope(connection)
+                self.validate_authority(turn)
+                data = save_destination(connection, self.store.scope, self.server.authority,
+                    work.spec, origin, destination["satellite_id"], request_key)
+            return {"status": "destination_saved", "work": self.view(work),
+                "destination": {key: data[key] for key in ("satellite_id", "transport")},
+                "voice": "configured_home_assistant_announcement_voice", "delivered": False}
+        if destination is not None:
+            raise ValueError("destination requires its own operation")
         if operation == "revise_digital":
             if (any(value is not None for value in (task, research, work_id, prior_work_id))
                     or not isinstance(revision, dict) or set(revision) != {"work_id", "instruction"}
@@ -339,7 +404,7 @@ class HouseholdWorkService:
             if research is not None or work_id is not None or prior_work_id is not None:
                 raise ValueError("household digital admission cannot select another destination")
             from eva.bootstrap.household_digital_work import admit_household_digital
-            return admit_household_digital(self, turn, request_key, task)
+            return admit_household_digital(self, turn, request_key, task, destination_satellite_id=destination_satellite_id)
         if operation == "stop_related":
             if research is not None or prior_work_id is not None or not isinstance(work_id, str) or not work_id:
                 raise ValueError("related stop requires one work ID")
@@ -373,10 +438,10 @@ class HouseholdWorkService:
         if operation == "list":
             if research is not None or work_id is not None or prior_work_id is not None:
                 raise ValueError("household listing cannot select another destination")
-            rows = self._native_work(self.origin(turn), limit=21)
+            rows = self._native_work(self.origin(turn), limit=21, read_only=True)
             # Listing supplies selection context, not all completed research text.
             return {"jobs": [{key: view[key] for key in
-                    ("work_id", "title", "question", "state", "generation", "stop_requested", "created_at", "updated_at", "completed_at")}
+                    ("work_id", "title", "question", "state", "generation", "stop_requested", "delivery_destination", "created_at", "updated_at", "completed_at")}
                     for view in (self.view(work) for work in rows[:20])], "truncated": len(rows) > 20}
         if prior_work_id is not None:
             if operation != "research" or not isinstance(prior_work_id, str) or not 1 <= len(prior_work_id) <= 240:
@@ -399,7 +464,7 @@ class HouseholdWorkService:
         else:
             if research is not None or not isinstance(work_id, str):
                 raise ValueError("household work identity required")
-            previous = self._load(work_id, origin)
+            previous = self._load(work_id, origin, read_only=operation in {"get", "result"})
             if operation in {"get", "result"}:
                 return {"work": self.view(previous)}
             if operation == "stop":
@@ -462,8 +527,9 @@ class HouseholdWorkService:
         else:
             # Replaying an older admission must keep its immutable stored title.
             title = saved.title
-        admitted = self.store.admit(
-            spec=spec,
+        from eva.adapters.postgres.household_work_destination import admit_with_destination
+        admitted = admit_with_destination(self, turn, request_key=request_key,
+            destination_satellite_id=destination_satellite_id, spec=spec,
             title=title,
             summary="Publiek onderzoek voor de oorspronkelijke huishoudsessie.",
             worker_role="Onderzoek",
@@ -484,11 +550,13 @@ class HouseholdWorkService:
         self.validate_authority(turn)
         from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
 
+        from eva.adapters.postgres.household_work_destination import destination_exists
         with self.store._engine.begin() as c:
             self.store._scope(c)
             candidate = c.scalar(pending_household_results(c, self.store,
                 self.server.authority.clock()).with_only_columns(runs.c.work_id).where(
-                runs.c.spec_payload["origin"]["session_id"].astext == self.binding["session_id"]
+                runs.c.spec_payload["origin"]["session_id"].astext == self.binding["session_id"],
+                ~destination_exists(self.store.scope, runs.c.work_id),
             ).order_by(runs.c.completed_at, runs.c.work_id).limit(1))
 
         return (
@@ -517,11 +585,16 @@ class HouseholdWorkService:
         thread = "household-work-delivery:" + canonical_sha256(binding)
         with self.store._engine.begin() as c:
             self.store._scope(c)
-            c.execute(
-                sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key,0))"),
-                {"key": thread},
-            )
+            from eva.adapters.postgres.household_work_destination import output_lock, read_destination, validate_destination
+            output_lock(c, work_id)
             self.validate_authority(turn)
+            selected = read_destination(c, self.store.scope, work_id)
+            if self._explicit_work_id is not None:
+                validate_destination(c, self.store.scope, self.server.authority, work.spec, selected)
+            elif selected is not None:
+                if operation == "claim":
+                    return None
+                raise ValueError("household output has an explicit destination")
             row = (
                 c.execute(
                     sa.select(operational_checkpoints)
@@ -619,6 +692,7 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
     def action_names(self):
         return (() if self._service.digital_profile is None else ("start_digital_work", "revise_digital_work")) + (
             "start_background_research",
+            "set_household_work_destination",
             "list_delegated_work",
             "get_related_work",
             "stop_related_work",
@@ -641,15 +715,47 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
             "resume_delegated_work",
         }
         from dataclasses import replace
-        return tuple(
+        tools = tuple(
             replace(tool, description="Bekijk de toegankelijke taken binnen de huidige persoons- "
-                    "of nog geldige openbare spraaksessies op hetzelfde huisapparaat, met titel, work_id en status.")
-            if tool.name == "list_delegated_work" else tool
+                    "of nog geldige openbare spraaksessies binnen hetzelfde huishouden, met titel, work_id en status.")
+            if tool.name == "list_delegated_work" else
+            replace(tool, description=tool.description +
+                    " In een openbaar huisgesprek heeft deze taak uitsluitend de bestaande "
+                    "Home Assistant-koppeling, geen webzoekfunctie. Gebruik start_background_research "
+                    "voor openbare actuele informatie buiten die gekoppelde huisgegevens, "
+                    "zoals een weersverwachting voor een opgegeven stad. Een thuisweerbron "
+                    "bewijst geen verwachting voor een andere locatie.")
+            if tool.name == "start_digital_work" else tool
             for tool in PostgresDelegatedWorkActions.conversation_tools(
                 include_research=True, include_digital=True
             )
             if tool.name in allowed
         )
+        from eva.application.conversation import ConversationToolDescriptor
+        routed = []
+        for tool in tools:
+            if tool.name in {"start_background_research", "start_digital_work"}:
+                schema = dict(tool.input_schema)
+                schema["properties"] = dict(schema["properties"], destination_satellite_id={
+                    "type": ["string", "null"], "description": "Alleen bij expliciet gevraagde andere afleverplek: toegelaten assist_satellite entity uit de HA-inventaris; anders null. Aflevering gebruikt HA announce en diens ingestelde stem, niet gegarandeerd de Codexstem."})
+                schema["required"] = [*schema["required"], "destination_satellite_id"]
+                tool = replace(tool, input_schema=schema)
+            routed.append(tool)
+        routed.append(ConversationToolDescriptor("set_household_work_destination",
+            "Bewaar op expliciet verzoek de afleverplek van één nog niet aangeboden openbare huishoudtaak. Gebruik een work_id en een toegelaten assist_satellite uit HA-inventaris; raad geen kamer-ID. Dit gebruikt HA announce met diens ingestelde stem, niet gegarandeerd de Codexstem. Geen privéresultaten. Na een eerdere afleverclaim is wijzigen niet toegestaan.",
+            {"type": "object", "additionalProperties": False, "required": ["destination"], "properties": {
+                "destination": {"type": "object", "additionalProperties": False,
+                    "required": ["work_id", "satellite_id"], "properties": {
+                        "work_id": {"type": "string", "minLength": 1, "maxLength": 240},
+                        "satellite_id": {"type": "string", "minLength": 1, "maxLength": 200}}}}},
+            "Destination_saved bevestigt alleen de opgeslagen HA-aankondigingsplek, niet aflevering of horen."))
+        return tuple(routed)
+
+    def operation_spec(self, name):
+        return ("household_destination", "destination") if name == "set_household_work_destination" else super().operation_spec(name)
+
+    def optional_arguments(self, operation):
+        return {"destination_satellite_id"} if operation in {"research", "digital"} else set()
 
     def _validate_saved(self, turn, receipt):
         if receipt is not None:
@@ -661,7 +767,20 @@ class HouseholdWorkActions(PostgresDelegatedWorkActions):
             saved_work.extend(result.get("jobs", ()))
             for work in saved_work:
                 if work is not None:
-                    self._service._load(work["work_id"], self._service.origin(turn))
+                    loaded = self._service._load(work["work_id"], self._service.origin(turn),
+                        read_only=receipt.call.name in {"list_delegated_work", "get_delegated_work"})
+                    if receipt.call.name == "set_household_work_destination" or receipt.call.arguments.get("destination_satellite_id"):
+                        from eva.adapters.postgres.household_work_destination import read_destination, validate_destination
+                        store = self._service.store
+                        with store._engine.begin() as c:
+                            store._scope(c)
+                            selected = validate_destination(c, store.scope, self._service.server.authority,
+                                loaded.spec, read_destination(c, store.scope, loaded.spec.work_id))
+                            requested = (receipt.call.arguments["destination"]["satellite_id"]
+                                if receipt.call.name == "set_household_work_destination"
+                                else receipt.call.arguments["destination_satellite_id"])
+                            if selected["satellite_id"] != requested:
+                                raise ValueError("household destination receipt has been superseded")
         return receipt
 
     def pending(self, turn, *, step_index=0):

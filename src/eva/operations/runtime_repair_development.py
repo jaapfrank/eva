@@ -35,12 +35,130 @@ from eva.adapters.postgres.operational_timeline import operational_events, opera
 from eva.application.repair_assessment import repair_assessment_task
 from eva.contracts.canonical_json import canonical_sha256
 
+def failed_input_evidence(authority,service,store,binding,parent,failed,request):
+    """Hash all retained local actions; no model-written probe becomes authority."""
+    from eva.adapters.postgres.background_work_progress import _events, _timeline, load_work_progress
+    current=_work_metadata(authority,service,store,binding,failed['task_id'],require_running=False)
+    work=store.load(failed['task_id'],**service._owner);spec=work.spec
+    fingerprint=hashlib.sha256(b'_BlockedWorkPlan:task plan contains a recorded blocker').hexdigest()
+    if (current!=failed or current['role']!='original_behavior_oracle'
+            or current['target_id']!=request['target_id'] or current['work_succeeded']
+            or not current['usage_measured'] or current['candidate_sha256'] is not None
+            or current['comparison_sha256'] is not None or spec.generation!=1
+            or work.state!='failed' or work.error_code!='incomplete_work'
+            or work.error_fingerprint!=fingerprint or work.lease_owner is not None
+            or work.stop_requested_at is not None or work.completed_at is None
+            or not set(spec.grant.capability_ids)<={'manage_own_runtime_repair','read_own_component_source',
+                'write_programming_file','start_programming_process','use_programming_tool',
+                'list_programming_tools','save_work_progress'}):
+        raise ValueError('exact retained local independent input refusal required')
+    checkpoint=authority.timeline.load(spec.origin.thread_id)
+    events=authority.timeline.events(spec.origin.thread_id)
+    adopted=events[0].payload['data']
+    if (checkpoint.phase!='initiative_blocked' or checkpoint.status!='needs_help'
+            or events[0].event_type!='PERSONAL_INTENT_ADOPTED'
+            or adopted.get('repair_supplement_parent_task_id')!=parent['task_id']
+            or adopted.get('repair_supplement_sha256')!=request['prior_supplement_sha256']
+            or adopted.get('repair_supplement_blocked_sha256')!=request['blocked_sha256']
+            or adopted.get('repair_supplement_blocked_original_sha256')!=request['blocked_original_sha256']
+            or adopted.get('repair_import_closure_failed_task_id') is not None):
+        raise ValueError('failed evidence is not the original single supplementary assessment')
+    progress=load_work_progress(store._engine,spec)
+    if (not progress or progress['work_id']!=spec.work_id
+            or not any(step['state']=='blocked' for step in progress['steps'])
+            or any(step['state'] not in {'done','skipped','blocked'} for step in progress['steps'])):
+        raise ValueError('retained independent refusal progress differs')
+    actions={};timeline=_timeline(store._engine,spec)
+    def retain(index,name,items):
+        if (type(index) is not int or not 0<=index<spec.grant.maximum_tool_calls or index in actions
+                or any(canonical_sha256(event.payload)!=event.payload_sha256 for event in items)):
+            raise ValueError('independent local action evidence is incomplete')
+        actions[index]={'step':index,'name':name,'events':[event.payload_sha256 for event in items]}
+    for event in _events(store._engine,spec):
+        data=event.payload['data']
+        if data['work_id']!=spec.work_id:raise ValueError('refusal progress belongs to another attempt')
+        retain(data['step_index'],'save_work_progress',[event])
+    identity={'execution_id':spec.execution_id,'source':spec.source.model_dump(mode='json'),
+              'source_ingress_sha256':spec.source_ingress_sha256}
+    workspace=canonical_sha256(identity)
+    if not 1<=spec.grant.maximum_tool_calls<=64:raise ValueError('bounded independent action grant required')
+    for index in range(spec.grant.maximum_tool_calls):
+        programmed=timeline.events('programming-action:'+canonical_sha256({'workspace':workspace,'step':index}))
+        if programmed:
+            data=programmed[0].payload['data']
+            if (len(programmed)!=1 or programmed[0].event_type!='PROGRAMMING_ACTION_RECORDED'
+                    or data['name'] not in {'write_programming_file','start_programming_process',
+                        'use_programming_tool','list_programming_tools'}
+                    or data.get('output',{}).get('status')!='verified'):
+                raise ValueError('local programming receipt is not complete')
+            retain(index,data['name'],programmed)
+        component=timeline.events('component-draft:'+canonical_sha256({'execution':spec.execution_id,
+            'source':spec.source.model_dump(mode='json'),'step':index}))
+        if component:
+            first,last=component[0].payload['data'],component[-1].payload['data']
+            result=last.get('output',{}).get('operation_result',{})
+            if (len(component)!=2 or component[0].event_type!='RUNTIME_REPAIR_REQUEST_ADMITTED'
+                    or component[-1].event_type!='COMPONENT_ACTION_RECORDED'
+                    or first.get('spec_sha256')!=spec.sha256 or first.get('execution_id')!=spec.execution_id
+                    or first.get('source_ingress_sha256')!=spec.source_ingress_sha256
+                    or first.get('name')!='manage_own_runtime_repair' or first.get('arguments')!={'action':'describe'}
+                    or last.get('name')!=first['name'] or last.get('arguments')!=first['arguments']
+                    or last.get('call_id')!=first.get('call_id') or last.get('output',{}).get('status')!='verified'
+                    or result.get('target_id')!=request['target_id'] or result.get('role')!='original_behavior_oracle'
+                    or result.get('criteria_sha256') is not None or result.get('installed') is not False):
+                raise ValueError('only acknowledged candidate-blind describe is permitted')
+            retain(index,first['name'],component)
+    usage=work.usage.to_payload()
+    if sorted(actions)!=list(range(usage['tool_calls'])):
+        raise ValueError('all measured local actions must have complete receipts')
+    return {'contract':'EvaFailedOraclePrerequisite/v1','work':current,
+        'origin_thread':spec.origin.thread_id,'source':spec.source.model_dump(mode='json'),
+        'checkpoint':{'phase':checkpoint.phase,'status':checkpoint.status,'revision':checkpoint.revision},
+        'error_code':work.error_code,'error_fingerprint':fingerprint,'usage':usage,
+        'completed_at':work.completed_at.isoformat(),'progress_sha256':canonical_sha256(progress),
+        'actions':[actions[i] for i in sorted(actions)],'prior_supplement_sha256':request['prior_supplement_sha256']}
+
+def fence_failed_input(connection,authority,store,evidence):
+    """Additional host prerequisite STOP fence; this is not native ancestry."""
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    from eva.adapters.postgres.current_catalog import delegated_work_runs
+    owner=authority.owner;c=operational_checkpoints.c
+    row=connection.execute(sa.select(operational_checkpoints).where(
+        c.tenant_id==owner._scope.tenant_id,c.installation_id==owner._scope.installation_id,
+        c.thread_id==evidence['origin_thread']).with_for_update(read=True)).one()
+    if {k:getattr(row,k) for k in ('phase','status','revision')}!=evidence['checkpoint']:
+        raise ValueError('failed prerequisite was stopped or changed')
+    source=evidence['source'];journal=PostgresConversationJournal(owner._engine,owner._scope)
+    identity=journal._stop_identity(source['principal_id'],source['conversation_id'],source['message_id'])
+    journal._stop_fence(connection,identity)
+    if journal._marker_exists(connection,journal._stop_thread_id(identity),'CONVERSATION_STOP_REQUESTED',identity):
+        raise ValueError('failed prerequisite has a durable stop')
+    store._scope(connection);w=delegated_work_runs.c
+    row=connection.execute(sa.select(delegated_work_runs).where(
+        w.tenant_id==store.scope.tenant_id,w.installation_id==store.scope.installation_id,
+        w.work_id==evidence['work']['task_id']).with_for_update(read=True)).one()
+    if (row.state!='failed' or row.stop_requested_at is not None or row.lease_owner is not None
+            or bytes(row.spec_sha256).hex()!=evidence['work']['spec_sha256']
+            or row.error_code!=evidence['error_code'] or bytes(row.error_fingerprint).hex()!=evidence['error_fingerprint']
+            or row.usage_payload!=evidence['usage'] or row.completed_at.isoformat()!=evidence['completed_at']):
+        raise ValueError('retained failed prerequisite work changed')
+    authority.timeline._scope(connection)
+
 def handle(request, *, authority=None, service=None, store=None, source_root=None):
     fields={'action','incident_id','scope_sha256','failure','parent','target_id','sources',
             'repair_scope','blocked_sha256','blocked_original_sha256','supplement_sha256'}
-    if not isinstance(request,dict) or set(request)!=fields or request['action'] not in {'admit','inspect'}:
+    closure=isinstance(request,dict) and request.get('stage')=='baseline_import_closure'
+    if closure:fields|={'stage','failed_prerequisite','prior_supplement_sha256',
+        'failed_blocked_sha256','failure_evidence_sha256'}
+    actions={'admit','inspect'}|({'inspect_failed_prerequisite'} if closure else set())
+    if not isinstance(request,dict) or set(request)!=fields or request['action'] not in actions:
         raise ValueError('exact original-behavior supplementary request required')
-    for key in ('scope_sha256','target_id','blocked_sha256','blocked_original_sha256','supplement_sha256'):
+    hashes=['scope_sha256','target_id','blocked_sha256','blocked_original_sha256','supplement_sha256']
+    if closure:hashes+=['prior_supplement_sha256','failed_blocked_sha256']
+    if closure and request['action']!='inspect_failed_prerequisite':hashes+=['failure_evidence_sha256']
+    if closure and request['action']=='inspect_failed_prerequisite' and request['failure_evidence_sha256'] is not None:
+        raise ValueError('read-only failed evidence request must not assert a result')
+    for key in hashes:
         if not isinstance(request[key],str) or not re.fullmatch(r'[0-9a-f]{64}',request[key]):
             raise ValueError('supplement identity differs')
     with _context(authority,service,store) as (authority,service,store,settings):
@@ -82,11 +200,25 @@ def handle(request, *, authority=None, service=None, store=None, source_root=Non
                     or source.stat().st_size>MAX_REPAIR_SOURCE_BYTES
                     or hashlib.sha256(source.read_bytes()).hexdigest()!=digest):
                 raise ValueError('installed supplementary assessment source changed')
+        evidence=None
+        if closure:
+            evidence=failed_input_evidence(authority,service,store,binding,parent,
+                request['failed_prerequisite'],request)
+            if request['action']=='inspect_failed_prerequisite':
+                return {'status':'verified_failed_prerequisite','evidence':evidence}
+            if (canonical_sha256(evidence)!=request['failure_evidence_sha256']
+                    or request['supplement_sha256']==request['prior_supplement_sha256']):
+                raise ValueError('new closed prerequisite and exact prior refusal required')
         identity={'contract':'EvaOriginalBehaviorSupplement/v1','incident_id':binding['incident_id'],
             'target_id':request['target_id'],'role':'original_behavior_oracle',
             'parent_task_id':parent['task_id'],'parent_spec_sha256':parent['spec_sha256'],
             'blocked_sha256':request['blocked_sha256'],'blocked_original_sha256':request['blocked_original_sha256'],
             'supplement_sha256':request['supplement_sha256']}
+        if closure:identity.update(contract='EvaOriginalBehaviorImportClosure/v1',
+            failed_task_id=request['failed_prerequisite']['task_id'],
+            failed_blocked_sha256=request['failed_blocked_sha256'],
+            failure_evidence_sha256=request['failure_evidence_sha256'],
+            prior_supplement_sha256=request['prior_supplement_sha256'])
         key=canonical_sha256(identity);intent='personal-interest:'+key
         task=repair_assessment_task('original_behavior_oracle',target_id=request['target_id'],
             sources=request['sources'],observation=binding['observation'])
@@ -96,6 +228,16 @@ def handle(request, *, authority=None, service=None, store=None, source_root=Non
             'uitkomst of beoordelingscriterium. Je krijgt nog steeds geen kandidaat. '
             'Maak eigen oorspronkelijke gedragsgevallen; meld blocked.json als bewijs ontbreekt. '
             'Wijzig niets aan de lopende installatie. Invoerbinding: '+request['supplement_sha256'])
+        if closure:
+            task+=('\nDit is een afzonderlijke oorspronkelijke beoordeling met een nieuw, volledig '
+                'bronpakket waarvan alle oorspronkelijke imports vooraf in de bestaande geïsoleerde '
+                'programmeeromgeving zijn gecontroleerd. De twee eerdere weigeringen blijven bewijs; '
+                'dit hervat of herhaalt hun werk niet. Lees de nieuwe import-closuremanifest via describe. '
+                'Gebruik de bronkopieën alleen om het oorspronkelijke gedrag te begrijpen. Schrijf '
+                'gedragsdrivers met normale eva-imports; geen absolute snapshotpaden, gekopieerde '
+                'loader, dependency-stubs of veronderstelde uitkomsten. De bestaande onafhankelijke '
+                'vergelijking draait uitsluitend in de echte vastgelegde runtime-images. '
+                'Schrijf geen kandidaat; meld een concrete weigering als bewijs nog ontbreekt.')
         owner=authority.owner;now=service.now()
         followup={'intent_id':adopted['intent_id'],'content_sha256':completed['content_sha256']}
         with owner._engine.begin() as connection:
@@ -109,9 +251,12 @@ def handle(request, *, authority=None, service=None, store=None, source_root=Non
             def revalidate():
                 if current_repair_binding(authority,binding['incident_id'],now=now,_connection=connection)!=binding:
                     raise ValueError('supplement source or mandate changed')
+                if closure:fence_failed_input(connection,authority,store,evidence)
             revalidate()
             connection.execute(sa.text('SELECT pg_advisory_xact_lock(hashtextextended(:key,0))'),
-                {'key':'eva-oracle-supplement:'+canonical_sha256({'incident':binding['incident_id'],'parent':parent['task_id']})})
+                {'key':('eva-oracle-import-closure:' if closure else 'eva-oracle-supplement:')+
+                    canonical_sha256({'incident':binding['incident_id'],'parent':
+                        request['failed_prerequisite']['task_id'] if closure else parent['task_id']})})
             payload={**{k:adopted[k] for k in ('principal_id','source_principal_id','repair_source')},
                 'conversation_id':'initiative-task:'+key,'source_message_id':'initiative-execute:'+key,
                 'intent_id':intent,'origin':'eva_initiative','execution_mode':'autonomous_task',
@@ -126,10 +271,23 @@ def handle(request, *, authority=None, service=None, store=None, source_root=Non
                 'repair_supplement_blocked_original_sha256':request['blocked_original_sha256'],
                 'repair_supplement_sha256':request['supplement_sha256'],
                 'followup_source':bound,'authority':'current_host_self_repair_mandate_required'}
+            slot='repair_supplement_parent_task_id';slot_value=parent['task_id']
+            if closure:
+                for name in ('repair_supplement_parent_task_id','repair_supplement_blocked_sha256',
+                        'repair_supplement_blocked_original_sha256','repair_supplement_sha256'):
+                    payload.pop(name)
+                slot='repair_import_closure_failed_task_id';slot_value=request['failed_prerequisite']['task_id']
+                payload.update({slot:slot_value,'repair_assessment_stage':'baseline_import_closure',
+                    'repair_import_closure_sha256':request['supplement_sha256'],
+                    'repair_import_closure_failed_blocked_sha256':request['failed_blocked_sha256'],
+                    'repair_import_closure_failure_evidence_sha256':request['failure_evidence_sha256'],
+                    'repair_import_closure_prior_input_sha256':request['prior_supplement_sha256'],
+                    'failed_evidence_stop_policy':'additional_host_prerequisite_fence_not_native_ancestry',
+                    'title':'Oorspronkelijk gedrag met volledig importpakket beoordelen ('+key[:12]+')'})
             existing=connection.execute(sa.select(e.payload,e.payload_sha256).where(
                 e.tenant_id==owner._scope.tenant_id,e.installation_id==owner._scope.installation_id,
                 e.event_type=='PERSONAL_INTENT_ADOPTED',
-                e.payload['data']['repair_supplement_parent_task_id'].astext==parent['task_id'])).all()
+                e.payload['data'][slot].astext==slot_value)).all()
             if existing:
                 if (len(existing)!=1 or canonical_sha256(existing[0].payload)!=bytes(existing[0].payload_sha256).hex()
                         or existing[0].payload['data']!=payload):
@@ -209,6 +367,7 @@ class RuntimeRepairDevelopment:
         self.maintenance=None
         self._last_target=None
         self._diagnostic_screened=set()
+        self._closure_screened=set()
         from eva.operations.component_release_import import load_object
         for path in self.root.glob('*/handoff.json'):
             job=load_object(_path(path));identity=_sha(path.parent.name)
@@ -264,15 +423,24 @@ class RuntimeRepairDevelopment:
                     _require_single_role_assessment(job,role,meta,identity)
                 supplemental={}
                 if role=='original_behavior_oracle' and job is not None and 'oracle_supplement' in job:
-                    supplement=job['oracle_supplement']
+                    supplement=job.get('oracle_import_closure',job['oracle_supplement'])
                     current=self._supplement_current(job,target)
                     if meta!=current:
                         raise ValueError('supplementary source belongs to another independent task')
                     _require_single_role_assessment(job,role,meta,identity)
-                    from eva.operations.runtime_repair_diagnostics import seed_scheduled_failure_diagnostics
-                    supplemental=seed_scheduled_failure_diagnostics(self.artifacts,meta,target,
-                        supplement['diagnostics'],blocked_sha256=job['blocked_diagnostic']['sha256'],
-                        parent_task_sha256=canonical_sha256({'task_id':supplement['parent']['task_id']}))
+                    if 'oracle_import_closure' in job:
+                        from eva.operations.runtime_repair_baseline import seed_scheduled_failure_import_closure
+                        evidence=job['oracle_import_closure_evidence']
+                        supplemental=seed_scheduled_failure_import_closure(self.artifacts,meta,target,
+                            supplement['diagnostics'],
+                            previous_diagnostics_sha256=job['oracle_supplement']['diagnostics']['sha256'],
+                            failed_work_sha256=canonical_sha256(_artifact(evidence['work'])[1]),
+                            blocked_sha256=evidence['blocked']['sha256'])
+                    else:
+                        from eva.operations.runtime_repair_diagnostics import seed_scheduled_failure_diagnostics
+                        supplemental=seed_scheduled_failure_diagnostics(self.artifacts,meta,target,
+                            supplement['diagnostics'],blocked_sha256=job['blocked_diagnostic']['sha256'],
+                            parent_task_sha256=canonical_sha256({'task_id':supplement['parent']['task_id']}))
                     if self._supplement_current(job,target)!=current:
                         raise ValueError('supplementary attempt changed during source handoff')
                 self.artifacts.seed_sources(meta,target,source=self.targets.source)
@@ -390,8 +558,11 @@ class RuntimeRepairDevelopment:
         validate_blocked_diagnostic(target,blocked)
         directory=self.root/job['target_id']
         if 'oracle_supplement' in job:
-            job['supplement_blocked_diagnostic']=_put(directory/'supplement-blocked.json',blocked)
-            job.update(state='blocked',reason='supplementary_independent_input_still_insufficient')
+            closed='oracle_import_closure' in job
+            name='import-closure-blocked' if closed else 'supplement-blocked'
+            job[name.replace('-','_')+'_diagnostic']=_put(directory/(name+'.json'),blocked)
+            job.update(state='blocked',reason='closed_import_prerequisite_still_insufficient' if closed
+                else 'supplementary_independent_input_still_insufficient')
             return 'blocked'
         # Preserve the exact prior record, including the old three host errors.
         diagnostic=_put(directory/'independent-input-blocked.json',blocked)
@@ -453,6 +624,114 @@ class RuntimeRepairDevelopment:
         job['state']='supplement_admission_pending'
         return job['state']
 
+    def _failed_prerequisite_request(self,job,metadata,blocked_raw_sha256):
+        original=_artifact(job['oracle_supplement']['request'])[1]
+        return {**original,'stage':'baseline_import_closure','failed_prerequisite':metadata,
+            'prior_supplement_sha256':job['oracle_supplement']['diagnostics']['sha256'],
+            'failed_blocked_sha256':blocked_raw_sha256,'failure_evidence_sha256':None}
+
+    def _read_failed_prerequisite(self,job,metadata,blocked_raw_sha256):
+        result=self._run_assessment_rpc(self._failed_prerequisite_request(job,metadata,blocked_raw_sha256),
+            'inspect_failed_prerequisite')
+        if result.get('status')!='verified_failed_prerequisite' or not isinstance(result.get('evidence'),dict):
+            raise ValueError('exact refused prerequisite evidence unavailable')
+        return result['evidence']
+
+    def _recover_import_refusal(self,job):
+        self._closure_screened.add(job['target_id'])
+        try:
+            target=self._diagnostic_target(job)
+            failed=self._metadata(job,job['oracle_supplement']['task_id'])
+            if (failed['task_id']!=job['oracle_supplement']['task_id']
+                    or failed.get('execution_id')!=failed['task_id'] or failed['state']!='failed'):
+                return 'blocked'
+            try:self.artifacts.read(failed,'oracle.json',maximum=524288)
+            except FileNotFoundError:pass
+            else:return 'blocked'
+            blocked,raw=self.artifacts.read_snapshot(failed,'blocked.json',maximum=160000)
+            from eva.operations.runtime_repair_baseline import validate_import_blocked_diagnostic
+            validate_import_blocked_diagnostic(target,blocked,
+                previous_diagnostics_sha256=job['oracle_supplement']['diagnostics']['sha256'])
+            raw_sha=hashlib.sha256(raw).hexdigest()
+            evidence=self._read_failed_prerequisite(job,failed,raw_sha)
+            directory=self.root/job['target_id']/'import-closure'
+            directory.mkdir(mode=0o700,exist_ok=True)
+            # Everything remains immutable evidence. No failed work is resumed,
+            # relabeled successful or used as a native follow-up ancestor.
+            refusal=_put(directory/'failed-input-blocked.json',blocked)
+            snapshot=_put(directory/'failed-input-blocked-snapshot.json',{
+                'contract':'EvaOriginalBlockedArtifact/v1','task_id':failed['task_id'],
+                'raw_sha256':raw_sha,'raw_base64':base64.b64encode(raw).decode('ascii'),
+                'canonical_sha256':canonical_sha256(blocked)})
+            work=_put(directory/'failed-work-evidence.json',evidence)
+            previous=_put(directory/'before-import-closure.json',deepcopy(job))
+            job.update(oracle_import_closure_evidence={'blocked':refusal,'snapshot':snapshot,'work':work,
+                'previous_handoff':previous},state='original_behavior_imports_blocked',
+                reason='independent_original_import_closure_missing')
+            return job['state']
+        except (OSError,ValueError,KeyError):
+            return 'blocked'
+
+    def _current_failed_prerequisite(self,job):
+        retained=job['oracle_import_closure_evidence']
+        evidence=_artifact(retained['work'])[1]
+        raw_sha=_artifact(retained['snapshot'])[1]['raw_sha256']
+        failed=self._metadata(job,job['oracle_supplement']['task_id'])
+        if failed!=evidence['work']:
+            raise ValueError('failed independent prerequisite changed')
+        try:self.artifacts.read(failed,'oracle.json',maximum=524288)
+        except FileNotFoundError:pass
+        else:raise ValueError('refused prerequisite now has unconsumed oracle material')
+        blocked,raw=self.artifacts.read_snapshot(failed,'blocked.json',maximum=160000)
+        if (hashlib.sha256(raw).hexdigest()!=raw_sha or blocked!=_artifact(retained['blocked'])[1]
+                or self._read_failed_prerequisite(job,failed,raw_sha)!=evidence):
+            raise ValueError('failed input evidence was changed, stopped or superseded')
+        return evidence,raw_sha
+
+    def _prepare_import_closure(self,job):
+        target=self._diagnostic_target(job)
+        evidence,raw_sha=self._current_failed_prerequisite(job)
+        from eva.operations.runtime_repair_baseline import prepare_scheduled_failure_import_closure
+        directory=self.root/job['target_id']/'import-closure'
+        diagnostics=prepare_scheduled_failure_import_closure(self.publisher,self.runtime,target,directory,
+            programming_image=self.artifacts.programming.config.image,
+            previous_diagnostics=job['oracle_supplement']['diagnostics'],
+            failed_work_sha256=canonical_sha256(evidence),
+            blocked_receipt=job['oracle_import_closure_evidence']['blocked'])
+        _artifact(diagnostics)
+        self._diagnostic_target(job);self._current_failed_prerequisite(job)
+        request={**self._failed_prerequisite_request(job,evidence['work'],raw_sha),
+            'supplement_sha256':diagnostics['sha256'],'failure_evidence_sha256':canonical_sha256(evidence)}
+        job['oracle_import_closure']={'parent':job['oracle_supplement']['parent'],
+            'diagnostics':diagnostics,'request':_put(directory/'request.json',request),
+            'authority':'original_completed_oracle_and_repair_mandate',
+            'failed_evidence_stop_policy':'additional_host_prerequisite_fence_not_native_ancestry'}
+        job['state']='import_closure_admission_pending'
+        return job['state']
+
+    def _closure_rpc(self,job,action):
+        request=_artifact(job['oracle_import_closure']['request'])[1]
+        evidence,raw_sha=self._current_failed_prerequisite(job)
+        expected={**self._failed_prerequisite_request(job,evidence['work'],raw_sha),
+            'supplement_sha256':job['oracle_import_closure']['diagnostics']['sha256'],
+            'failure_evidence_sha256':canonical_sha256(evidence)}
+        if request!=expected:raise ValueError('closed prerequisite request changed')
+        _artifact(job['oracle_import_closure']['diagnostics'])
+        return self._run_assessment_rpc(request,action)
+
+    @staticmethod
+    def _closure_intent(job):
+        r=_artifact(job['oracle_import_closure']['request'])[1];parent=r['parent']
+        identity={'contract':'EvaOriginalBehaviorImportClosure/v1','incident_id':r['incident_id'],
+            'target_id':r['target_id'],'role':'original_behavior_oracle',
+            'parent_task_id':parent['task_id'],'parent_spec_sha256':parent['spec_sha256'],
+            'blocked_sha256':r['blocked_sha256'],'blocked_original_sha256':r['blocked_original_sha256'],
+            'supplement_sha256':r['supplement_sha256'],'failed_task_id':r['failed_prerequisite']['task_id'],
+            'failed_blocked_sha256':r['failed_blocked_sha256'],
+            'failure_evidence_sha256':r['failure_evidence_sha256'],
+            'prior_supplement_sha256':r['prior_supplement_sha256']}
+        return 'personal-interest:'+canonical_sha256(identity)
+
     def _supplement_rpc(self,job,action):
         request=_artifact(job['oracle_supplement']['request'])[1]
         if (request['parent']!=job['oracle_supplement']['parent']
@@ -462,6 +741,9 @@ class RuntimeRepairDevelopment:
                 or request['blocked_original_sha256']!=_artifact(job['blocked_diagnostic_snapshot'])[1]['raw_sha256']
                 or request['supplement_sha256']!=job['oracle_supplement']['diagnostics']['sha256']):
             raise ValueError('frozen supplementary request changed')
+        return self._run_assessment_rpc(request,action)
+
+    def _run_assessment_rpc(self,request,action):
         raw=json.dumps({**request,'action':action},ensure_ascii=True)
         if len(raw.encode())>65536:raise ValueError('supplementary request exceeds bound')
         result=self.runtime.run(['docker','exec',self.runtime.config['core_container'],
@@ -487,11 +769,12 @@ class RuntimeRepairDevelopment:
         if (target['target_id']!=job['target_id'] or target['failure']!=job['failure']
                 or self.targets.resolve(job['incident_id'])!={k:v for k,v in target.items() if k!='criteria'}):
             raise ValueError('supplementary target is no longer current')
-        observed=self._supplement_rpc(job,'inspect')
+        closure='oracle_import_closure' in job
+        observed=self._closure_rpc(job,'inspect') if closure else self._supplement_rpc(job,'inspect')
         if (observed.get('status')!='already_adopted'
-                or observed.get('intent_id')!=self._supplement_intent(job)):
+                or observed.get('intent_id')!=(self._closure_intent(job) if closure else self._supplement_intent(job))):
             raise ValueError('exact independent supplementary child is unavailable')
-        execution=job['oracle_supplement']['task_id']
+        execution=job['oracle_import_closure' if closure else 'oracle_supplement']['task_id']
         current=self._metadata(job,execution)
         _require_single_role_assessment(job,'original_behavior_oracle',current,job['target_id'])
         if (current.get('execution_id')!=execution or current.get('role')!='original_behavior_oracle'
@@ -501,18 +784,20 @@ class RuntimeRepairDevelopment:
 
     def _admit_or_inspect_supplement(self,job):
         self._diagnostic_target(job)
-        action='admit' if job['state']=='supplement_admission_pending' else 'inspect'
+        closure='oracle_import_closure' in job
+        prefix='import_closure' if closure else 'supplement'
+        action='admit' if job['state']==prefix+'_admission_pending' else 'inspect'
         if action=='admit':
             # An uncertain acknowledgement can only inspect this same identity.
             # Never re-dispatch a stage or clear an old host-error counter.
-            job['state']='supplement_admission_unconfirmed'
+            job['state']=prefix+'_admission_unconfirmed'
             self._save(job)
-        result=self._supplement_rpc(job,action)
+        result=self._closure_rpc(job,action) if closure else self._supplement_rpc(job,action)
         if result.get('status') in {'adopted','already_adopted'}:
-            if result.get('intent_id')!=self._supplement_intent(job):
+            if result.get('intent_id')!=(self._closure_intent(job) if closure else self._supplement_intent(job)):
                 raise ValueError('supplementary response identifies another child')
             task='work:eva-initiative:'+result['intent_id'].removeprefix('personal-interest:')
-            job['oracle_supplement']['task_id']=task
+            job['oracle_import_closure' if closure else 'oracle_supplement']['task_id']=task
             job['original_behavior_oracle_task_id']=task
             job['state']='original_behavior_oracle'
         elif action=='admit' and result.get('status')=='not_admitted':
@@ -532,7 +817,10 @@ class RuntimeRepairDevelopment:
             pending=[j for j in self.jobs.values() if j['state'] not in _TERMINAL or (
                 j['state']=='blocked' and j.get('reason')=='host_source_or_stage_could_not_be_verified'
                 and 'original_behavior_oracle_task_id' in j and self._unsealed(j)
-                and 'oracle_supplement' not in j and j['target_id'] not in self._diagnostic_screened)]
+                and 'oracle_supplement' not in j and j['target_id'] not in self._diagnostic_screened) or (
+                j['state']=='blocked' and j.get('reason')=='independent_stage_not_completed_with_measured_usage'
+                and 'oracle_supplement' in j and 'oracle_import_closure_evidence' not in j and self._unsealed(j)
+                and j['target_id'] not in self._closure_screened)]
             if not pending:return 'idle'
             # A waiting/permanently broken older repair cannot starve another.
             after=next((i+1 for i,j in enumerate(pending) if j['target_id']==self._last_target),0)
@@ -550,7 +838,7 @@ class RuntimeRepairDevelopment:
                 job[error_key]=count
                 job['supplement_host_error_type_sha256' if error_key=='supplement_host_errors'
                     else 'host_error_type_sha256']=hashlib.sha256(kind.encode()).hexdigest()
-                if job['state']=='supplement_admission_unconfirmed':
+                if job['state'] in {'supplement_admission_unconfirmed','import_closure_admission_unconfirmed'}:
                     job['reason']='inspect_exact_supplementary_admission'
                 elif job['state']=='application_request_pending':
                     # The exact durable queue request can be replayed safely;
@@ -579,9 +867,12 @@ class RuntimeRepairDevelopment:
         if job.get('contract')=='EvaDependencyMaintenanceHandoff/v1':
             return job['state'] if self.maintenance is None else self.maintenance.advance(job)
         state=job['state'];directory=self.root/job['target_id']
-        if state=='blocked':return self._recover_reported_blocker(job)
+        if state=='blocked':
+            return self._recover_import_refusal(job) if 'oracle_supplement' in job else self._recover_reported_blocker(job)
         if state=='original_behavior_input_blocked':return self._prepare_oracle_supplement(job)
-        if state in {'supplement_admission_pending','supplement_admission_unconfirmed'}:
+        if state=='original_behavior_imports_blocked':return self._prepare_import_closure(job)
+        if state in {'supplement_admission_pending','supplement_admission_unconfirmed',
+                'import_closure_admission_pending','import_closure_admission_unconfirmed'}:
             return self._admit_or_inspect_supplement(job)
         if state=='waiting_for_builder':
             target=self.targets.resolve(job['incident_id'])

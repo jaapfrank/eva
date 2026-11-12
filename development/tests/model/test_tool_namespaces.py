@@ -10,6 +10,26 @@ def tool(name):
             "parameters": {"type": "object", "properties": {}, "additionalProperties": False}, "strict": True}
 
 
+def test_public_lookup_is_eager_only_when_already_authorized():
+    groups, mapping = deferred_namespaces([tool("search_public_info"), tool("get_delegated_work")])
+    assert groups[0] == {**tool("search_public_info"), "defer_loading": False}
+    assert groups[1]["tools"][0]["defer_loading"] is True
+    assert "search_public_info" not in mapping
+    groups, mapping = deferred_namespaces([tool("get_delegated_work")])
+    assert "search_public_info" not in mapping
+
+
+def test_direct_lookup_replay_has_no_discovery_namespace():
+    call = {"type": "function_call", "name": "search_public_info", "namespace": "search_public_info",
+        "call_id": "retained", "arguments": "{}"}
+    body = {"model": "gpt-6-sol", "store": False, "stream": True, "instructions": "Answer",
+        "input": [call], "tools": [tool("search_public_info")]}
+    request = httpx2.Request("POST", "https://example.invalid/responses", json=body)
+    projected = json.loads(_codex_compatible_request(request, namespace_functions=True).content)
+    assert "namespace" not in projected["input"][0]
+    assert projected["tools"] == [{**tool("search_public_info"), "defer_loading": False}]
+
+
 def test_grouping_retains_exact_definitions_and_authorized_subset():
     original = [tool("get_delegated_work"), tool("stop_delegated_work"), tool("new_extension"), {"type": "tool_search"}]
     snapshot = json.dumps(original)
@@ -45,3 +65,11 @@ def test_old_individual_namespace_receipt_projects_to_current_group_without_new_
     assert projected["input"][1] == {**call, "namespace": "eva_work_control"}
     assert projected["input"][2] == output
     assert len(projected["tools"]) == 2  # Search plus one group.
+
+
+def test_household_destination_is_direct_only_when_authorized():
+    definition = tool("set_household_work_destination")
+    groups, mapping = deferred_namespaces([definition])
+    assert groups == [{**definition, "defer_loading": False}] and mapping == {}
+    groups, mapping = deferred_namespaces([tool("get_delegated_work")])
+    assert "set_household_work_destination" not in json.dumps(groups)

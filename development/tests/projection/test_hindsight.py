@@ -1370,6 +1370,18 @@ def test_model_planned_synonyms_become_independent_recall_queries() -> None:
     )
 
 
+@pytest.mark.parametrize("text", ["Apeldoorn", "APELDOORN"])
+def test_single_word_recall_does_not_repeat_its_identical_anchor(hindsight_server, text):
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    assert engine._recall_query_variants(text) == (text,)
+    result = engine.recall_for_presence(replace(_query(), query_text=text))
+    requests = [body for method, path, body in state.requests
+                if method == "POST" and path.endswith("/memories/recall")]
+    assert [body["query"] for body in requests] == [text]
+    assert result.confirmed_facts
+
+
 @pytest.mark.parametrize("text", [
     "Wat heb je vandaag gedaan?", "En wat heb je gisteren gedaan?",
     "Wat hadden jullie eigenlijk kunnen doen?",
@@ -2307,26 +2319,6 @@ def test_reflection_receipt_preserves_settled_operation_on_readback_loss(monkeyp
     assert "private" not in json.dumps(asdict(receipt))
 
 
-def test_missing_imported_legacy_source_does_not_invent_native_erasure(hindsight_server):
-    base_url, state = hindsight_server
-    state.group_recall_response = {"results": [{
-        "id": "imported-legacy", "text": "Synthetic historical preference", "type": "world",
-        "mentioned_at": NOW, "scores": {"final": 1.0}, "metadata": {
-            "principal_id": PRINCIPAL, "source_ref": "eva1-memory:source:rows:0-49",
-            "evidence_ref": "eva1:import:synthetic", "privacy_class": "internal",
-            "trust": "legacy_unverified"},
-    }]}
-    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
-        private_source_resolver=lambda _query, _refs: ())
-    first = engine.recall_for_presence_fast(_query())
-    second = engine.recall_for_presence_fast(_query())
-    assert len(first.confirmed_facts) == len(second.confirmed_facts) == 1
-    assert second.confirmed_facts[0].value["semantic_trust"] == "legacy_unverified"
-    assert second.recall.selected[0].trust == "legacy_unverified"
-    assert "original_source" not in second.confirmed_facts[0].value
-    assert second.recall.excluded_reasons == {}
-
-
 @pytest.mark.parametrize("missing_metadata", [None, {}])
 def test_shared_recall_skips_unproven_legacy_fact_without_losing_valid_fallback(
     hindsight_server, missing_metadata,
@@ -2347,3 +2339,23 @@ def test_shared_recall_skips_unproven_legacy_fact_without_losing_valid_fallback(
     assert result.confirmed_facts == ()
     assert result.recall.excluded_reasons == {
         "hindsight:legacy-without-authority": "missing_shared_source_authority"}
+
+
+def test_missing_imported_legacy_source_does_not_invent_native_erasure(hindsight_server):
+    base_url, state = hindsight_server
+    state.group_recall_response = {"results": [{
+        "id": "imported-legacy", "text": "Synthetic historical preference", "type": "world",
+        "mentioned_at": NOW, "scores": {"final": 1.0}, "metadata": {
+            "principal_id": PRINCIPAL, "source_ref": "eva1-memory:source:rows:0-49",
+            "evidence_ref": "eva1:import:synthetic", "privacy_class": "internal",
+            "trust": "legacy_unverified"},
+    }]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+        private_source_resolver=lambda _query, _refs: ())
+    first = engine.recall_for_presence_fast(_query())
+    second = engine.recall_for_presence_fast(_query())
+    assert len(first.confirmed_facts) == len(second.confirmed_facts) == 1
+    assert second.confirmed_facts[0].value["semantic_trust"] == "legacy_unverified"
+    assert second.recall.selected[0].trust == "legacy_unverified"
+    assert "original_source" not in second.confirmed_facts[0].value
+    assert second.recall.excluded_reasons == {}

@@ -1,0 +1,61 @@
+{
+  "contract": "EvaIndependentPydanticAIUpgradeRegressionReview/v1",
+  "reviewer": "/root/independent_review",
+  "recordedAt": "2026-11-06T14:23:16.094077+00:00",
+  "scope": "Two2.66upgrade regressions and concrete adapter/private-contract boundary; no product edits or installation",
+  "candidatePackages": {
+    "pydantic-ai-slim": "2.66.0",
+    "openai": "3.31.0"
+  },
+  "actualInstalledVersionStill": "2.37.0",
+  "productSourcesUnchangedFromPreviousReview": true,
+  "primaryCandidateSourceHashes": {
+    "pydantic_ai/models/openai.py": "745894b1d9c4d5ef8c7c614f524329f27f87557bced96127cc7d9a5a11bbfb99",
+    "pydantic_ai/profiles/openai.py": "8b2ceb54b530fe9e63533e50e76d7fd982043bbd5e36f9c21c703d6938ad7259"
+  },
+  "findings": [
+    {
+      "priority": "P1",
+      "title": "New SDK item-ID default conflicts with existing stateless history projection",
+      "evaLocation": "src/eva/adapters/model/openai_codex_provider.py:647",
+      "upstreamLocation": "pydantic_ai/models/openai.py:5381",
+      "cause": "2.66send_item_ids defaults from supports_encrypted_reasoning_content; disabling supports_reasoning_context no longer suppresses assistant itemIDs. SDK emits structured assistant output-message replay rejected by exact current adapter.",
+      "minimalAdaptation": "Set public model setting openai_send_reasoning_ids=False explicitly on delegate. It is supported by both2.37and2.66 and preserves the intended idless/stateless history contract; no broader unvalidated item parser required.",
+      "isolatedProof": "Process-local constructor settings injection only; both unchanged deferred history cases passed in1.59s including msg_read_status.",
+      "log": "development/reviews/pydantic-ai-candidate-stateless-setting-independent-20261106.log"
+    },
+    {
+      "priority": "P1",
+      "title": "SDK stream normalization hides phase changes from existing guard",
+      "evaLocation": "src/eva/adapters/model/pydantic_conversation.py:2090",
+      "upstreamLocation": "pydantic_ai/models/openai.py:6961",
+      "cause": "2.66emits phase metadata only once per content part using _phase_started_content. Same wire itemID later changing final_answer to commentary becomes invisible to capture_events and commentary may be exposed as final text.",
+      "minimalAdaptation": "Reject contradictory raw output-item phase identity in bounded SSE compatibility adapter before SDK normalization. Keep existing framework event checks and unchanged negative criterion. Validate absent/changed phases, separateIDs, tool/text mixing and terminal/cleanup paths.",
+      "isolatedProof": "Process-local rawattestor immutable itemphase map only; unchanged negative testcase passed in1.70s, asserting preview onlyHoi and one request.",
+      "log": "development/reviews/pydantic-ai-candidate-rawphase-probe-independent-20261106.log"
+    }
+  ],
+  "modularity": {
+    "concretePrivateBoundary": [
+      "src/eva/bootstrap/delegated_digital_runner.py:587",
+      "src/eva/bootstrap/delegated_digital_runner.py:853"
+    ],
+    "currentCoupling": "Runner imports _InputBudgetError,_ProviderUnavailable,_ProviderUsageError from large concrete PydanticConversationModel module to classify neutral work outcomes. Public model/contracts.py already houses the corresponding shared error contract boundary.",
+    "boundedRecommendation": "Place three descriptive provider-neutral public exception classes in existing model/contracts.py and use that single definition from adapter and runner. Preserve model_usage, exact status classifications and never match exception messages. No new registry/platform or whole-adapter rewrite.",
+    "deploymentCaution": "Runner source and shared provider are release/profile-bound; any such refactor needs scoped tests and exact core/worker/digital profiles to match before deployment."
+  },
+  "knownNonUpgradeFailures": [
+    "Two existing context-projection assertions already failed on2.37.",
+    "Malformed non-string fakeHTTPheaders trigger upstream new ModelHTTPError constructor before Eva code; adjust synthetic error fixture rather than broaden product parsing.",
+    "Reiterable fakeSSEbodies must be single-pass to model actual network streams under newer SDKdrain; parent adapted temporary fixture copies only."
+  ],
+  "conclusion": "Do not upgrade unchanged production adapter yet. Two bounded adapter changes have independently reproduced feasible remedies, requiring full scoped regression and pinned deployment evidence before installation.",
+  "limitations": [
+    "Probes mutate only in-process objects and are not implemented source changes.",
+    "No live model/provider request, voice-code change, installation, criteria change or generic upgrade approval."
+  ],
+  "probeLogHashes": {
+    "development/reviews/pydantic-ai-candidate-stateless-setting-independent-20261106.log": "df69c00a9c7833fd12e540abf9509296c1650b9c8ab7a282f6f5cab6594208fd",
+    "development/reviews/pydantic-ai-candidate-rawphase-probe-independent-20261106.log": "a1adafdb0441c1372e78eb5e8e7193a0c50696fa214807beea369ce00546680d"
+  }
+}

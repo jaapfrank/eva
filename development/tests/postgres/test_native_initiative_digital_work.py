@@ -21,6 +21,7 @@ from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
 from eva.bootstrap.delegated_digital_runner import DelegatedDigitalRunner
 from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
 from eva.bootstrap.native_initiative_work import admit_native_initiative
+from eva.bootstrap.native_work_assets import TaskBoundNativeWorkAssets
 from eva.contracts.delegated_digital_work import DelegatedDigitalWorkResult, PrivateWorkSource
 from eva.contracts.delegated_work import DelegatedWorkUsage, load_delegated_work_spec
 from eva.contracts.canonical_json import canonical_sha256
@@ -40,8 +41,14 @@ def native_digital(costless_native):
     policy["digital_work"] = {"worker_profile_release_sha256": profile.release.worker_profile_release_sha256,
         "capability_ids": list(profile.capability_ids)}
     path.write_text(json.dumps(policy))
+    # Exercise production source delivery and the real manifest parser; no
+    # dummy resolver or hand-written empty declaration bypasses the queue guard.
+    input_root = path.parent / "native-inputs"
+    input_root.mkdir(mode=0o700)
+    native_required_assets = TaskBoundNativeWorkAssets(input_root, producer=True)
     store = PostgresDelegatedWorkStore(control._engine, control._authority,
-        initiative_authority_loader=lambda: auth)
+        initiative_authority_loader=lambda: auth,
+        native_required_assets=native_required_assets)
     service = DelegatedWorkOwnerService(store, owner_principal_id=control._owner,
         principal_binding_id=control._binding, digital_profile=profile,
         conversation_scope=control._scope, clock=lambda: NOW)
@@ -606,3 +613,67 @@ def test_legacy_native_completion_without_deferred_application_keeps_already_com
     assert f.auth.timeline.events(f.claim.thread_id) == original
     turn = f.auth.work_memory_source(f.store.load(work.spec.work_id, **f.service._owner), now=NOW)
     PostgresConversationJournal(f.control._engine, f.control._scope).ensure_running(turn)
+
+
+def test_task_bound_manifest_reaches_separate_worker_with_exact_identity(native_digital):
+    f = native_digital
+    _, work = admitted(f)
+    assert work.state == "admitted"
+    producer = f.store._native_required_assets
+    reader = TaskBoundNativeWorkAssets(producer.root)
+    assets = reader(work.spec)
+    assert len(assets) == 1
+    source_file, digest = assets[0]
+    payload = json.loads(source_file.read_text())
+    assert canonical_sha256(payload["source_ingress"]) == work.spec.source_ingress_sha256
+    assert payload["task"] == work.spec.task
+    assert hashlib.sha256(source_file.read_bytes()).hexdigest() == digest
+    manifest = json.loads((source_file.parent / "manifest.json").read_text())
+    assert manifest["contract"] == "EvaNativeWorkInputs/v1"
+    worker_store = PostgresDelegatedWorkStore(f.control._engine, f.control._authority,
+        initiative_authority_loader=lambda: f.auth, native_required_assets=reader)
+    claim = worker_store.claim_next(worker_id="manifest-consumer", release=f.profile.release, now=NOW)
+    assert claim is not None
+    call = worker_store.start_call(claim, now=NOW)
+    assert call is not None and call.spec == work.spec
+    assert call.spec.execution_id == work.spec.execution_id
+    assert call.spec.grant.capability_ids == work.spec.grant.capability_ids
+    saved = worker_store.record_success(call, result(call), now=NOW)
+    assert saved.state == "succeeded"
+    assert f.control.artifact(f.claim.intent_id, now=NOW)["content"] == saved.result.output
+
+
+@pytest.mark.parametrize("damage", ["source", "manifest"])
+def test_task_bound_input_damage_blocks_before_worker_call(native_digital, damage):
+    f = native_digital
+    _, work = admitted(f)
+    source_file, _ = f.store._native_required_assets(work.spec)[0]
+    if damage == "source":
+        source_file.write_bytes(b"changed after admission")
+    else:
+        (source_file.parent / "manifest.json").unlink()
+    claim = f.store.claim_next(worker_id="manifest-consumer", release=f.profile.release, now=NOW)
+    assert claim is not None
+    assert f.store.start_call(claim, now=NOW) is None
+    blocked = f.store.load(work.spec.work_id, **f.service._owner)
+    assert blocked.state == "needs_help" and blocked.call_started_at is None
+    assert f.auth.timeline.load(f.claim.thread_id).phase == "initiative_blocked"
+
+
+def test_task_bound_delivery_is_immutable_under_duplicate_producers(native_digital):
+    from concurrent.futures import ThreadPoolExecutor
+    f = native_digital
+    _, work = admitted(f)
+    _, turn = f.auth.bind_work(work.spec)
+    producer = f.store._native_required_assets
+    source_file, _ = producer(work.spec)[0]
+    before = source_file.read_bytes(), source_file.stat().st_ino
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        receipts = list(pool.map(lambda _: producer.prepare(work.spec, turn), range(2)))
+    assert receipts[0] == receipts[1] == producer(work.spec)
+    assert (source_file.read_bytes(), source_file.stat().st_ino) == before
+    with pytest.raises(ValueError, match="verified original source"):
+        producer.prepare(work.spec, replace(turn, text="A different task"))
+    with pytest.raises(RuntimeError, match="cannot produce"):
+        TaskBoundNativeWorkAssets(producer.root).prepare(work.spec, turn)
+    assert (source_file.read_bytes(), source_file.stat().st_ino) == before

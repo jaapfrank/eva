@@ -7,6 +7,7 @@ import hmac
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import ipaddress
 import json
+import logging
 import signal
 from pathlib import Path
 import threading
@@ -15,6 +16,8 @@ from eva.operations.component_evaluation import (
     CandidateRequest, ComponentEvaluator, EvaluationConfig, validate_saved_artifact_target,
     validated_skill_package_context,
 )
+
+_LOG = logging.getLogger(__name__)
 
 _MAX_BODY = 96 * 1024
 # Local trusted configuration includes retained round metadata; HTTP request bounds remain separate.
@@ -222,6 +225,7 @@ class EvaluationHandler(BaseHTTPRequestHandler):
         if not self._authenticated():
             self._reply(401, {"error": "unauthorized"})
             return
+        route = "request_envelope"
         try:
             lengths = self.headers.get_all("Content-Length", [])
             types = self.headers.get_all("Content-Type", [])
@@ -245,29 +249,60 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                 key(package_scope)
                 if self.server.owned_packages is None:
                     raise ValueError('package route is not configured')
-            if value["action"] == "request":
+            if value['action'] == 'reconcile_no_dispatch':
+                if package_scope is None or self.server.owned_packages is None or value['review_id'] != '0' * 64:
+                    raise ValueError('task-bound host reconciliation required')
+                route = "package_no_dispatch"
+                result = self.server.owned_packages.no_dispatch_proof(
+                    task_id=value['task_id'], scope_sha256=package_scope)
+            elif value["action"] == "request":
                 packages = self.server.owned_packages
                 if packages is not None and (packages.contains(value['review_id'])
                         or value['review_id'] not in self.server.reviewed_applications.releases):
                     if package_scope is None:
                         raise ValueError('package source scope is required')
+                    route = "package_submission"
                     result = packages.request(value['review_id'], value['request_id'], value['task_id'], scope_sha256=package_scope)
                 else:
+                    route = "reviewed_application"
                     result = self.server.reviewed_applications.request(
                         value["review_id"], value["request_id"], value["task_id"])
             elif value["action"] == "status":
+                route = "application_status"
                 if self.server.owned_packages is not None and self.server.owned_packages.contains(value['review_id']):
                     if package_scope is None:
                         raise ValueError('package source scope is required')
                     result = self.server.owned_packages.status(value['review_id'], task_id=value['task_id'], scope_sha256=package_scope)
                 elif (package_scope is not None and self.server.final_assessments is not None
                         and value['review_id'] not in self.server.reviewed_applications.releases):
-                    result = self.server.final_assessments.status(value['review_id'], scope_sha256=package_scope)
+                    try:
+                        result = self.server.final_assessments.status(value['review_id'], scope_sha256=package_scope)
+                    except ValueError as error:
+                        if (str(error) != 'final assessment is unavailable'
+                                or self.server.owned_packages is None):
+                            raise
+                        result = self.server.owned_packages.status(value['review_id'],
+                            task_id=value['task_id'], scope_sha256=package_scope)
+                elif package_scope is not None and self.server.owned_packages is not None:
+                    result = self.server.owned_packages.status(value['review_id'],
+                        task_id=value['task_id'], scope_sha256=package_scope)
                 else:
                     result = self.server.reviewed_applications.review_status(value["review_id"])
             else:
                 raise ValueError()
-        except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
+        except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError) as error:
+            # Trace locations are code metadata. Exception text and request
+            # fields may contain private task data or host paths.
+            frames = []
+            trace = error.__traceback__
+            while trace is not None:
+                frame = trace.tb_frame
+                module = frame.f_globals.get("__name__", "")
+                if module.startswith("eva.operations."):
+                    frames.append(f"{module}.{frame.f_code.co_name}:{trace.tb_lineno}")
+                trace = trace.tb_next
+            _LOG.warning("Reviewed component rejected route=%s error=%s code=%s",
+                         route, type(error).__name__, " > ".join(frames[-6:]))
             self._reply(400, {"error": "invalid_component_application"})
             return
         except Exception:

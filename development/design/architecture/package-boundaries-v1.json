@@ -197,10 +197,14 @@
       "path": "src/eva/voice_service",
       "allowedLocalImports": [
         "eva.voice_service",
-        "eva.adapters.connectors.home_assistant_voice"
+        "eva.adapters.connectors.home_assistant_voice",
+        "eva.application.conversation_receipt",
+        "eva.application.work_result_presentation"
       ],
       "allowedExternalImports": [
         "aiohttp",
+        "aiortc",
+        "av",
         "fastapi",
         "httpx",
         "livekit"

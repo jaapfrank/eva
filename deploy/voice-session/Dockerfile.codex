@@ -1,0 +1,13 @@
+# Optional Codex voice layer over the existing, immutable EVA media image.
+ARG EVA_VOICE_MEDIA_BASE
+FROM ${EVA_VOICE_MEDIA_BASE}
+USER 0:0
+COPY deploy/voice-session/requirements-codex.lock /tmp/requirements-codex.lock
+COPY wheels/ /tmp/voice-wheels/
+RUN ["/usr/local/bin/python", "-m", "pip", "install", "--no-index", "--find-links=/tmp/voice-wheels", "--target=/opt/eva-voice-deps", "--requirement=/tmp/requirements-codex.lock"]
+COPY src/eva/voice_service/ /opt/eva/src/eva/voice_service/
+COPY src/eva/voice_service/ /app/eva/voice_service/
+COPY deploy/native-speaker/codex_service.py /opt/eva/codex_speaker_service.py
+COPY deploy/native-speaker/speaker_endpoint.py /opt/eva/speaker_endpoint.py
+ENV PYTHONPATH=/opt/eva-voice-deps:/app:/app/speaker:/opt/eva/src
+USER 65532:65532

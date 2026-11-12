@@ -1,0 +1,210 @@
+{
+  "date": "2026-10-15",
+  "scope": "Speaker-prefix investigation and explicit household destinations",
+  "state": "implementation_in_progress",
+  "prefix_probe": {
+    "kind": "Real Codex voice generation, installed media code, simulated speaker acknowledgements; no microphone captured",
+    "voice_requests": 3,
+    "eva_core_model_requests": 0,
+    "turns": [
+      {
+        "probe_turn": 0,
+        "seconds": 3.604,
+        "confirmed": true,
+        "suppressed_frames": 0
+      },
+      {
+        "probe_turn": 1,
+        "seconds": 5.127,
+        "confirmed": true,
+        "suppressed_frames": 28
+      },
+      {
+        "probe_turn": 2,
+        "seconds": 5.072,
+        "confirmed": true,
+        "suppressed_frames": 26
+      }
+    ],
+    "non_silent_frames_suppressed_before_response": [
+      0,
+      0,
+      0
+    ],
+    "first_signal_after_gate_ms": [
+      98,
+      282,
+      121
+    ],
+    "conclusion": "This sample does not reproduce prefix truncation at the local output gate. No acoustic-quality proof.",
+    "physical_speaker_test": false
+  },
+  "additional_instrumentation": {
+    "content_free": true,
+    "measurements": [
+      "Speaker segment leading silence",
+      "Time blocked submitting PCM to sink",
+      "Maximum inter-frame arrival gap",
+      "Submitted audio duration"
+    ],
+    "tests": {
+      "media_and_speaker": 35
+    }
+  },
+  "wakeword": {
+    "changed": false,
+    "user_confirmed_working": true
+  },
+  "destination": {
+    "state": "implementation_in_progress",
+    "tts_engine": "tts.home_assistant_cloud",
+    "voice_equivalent_to_codex": false,
+    "constraint": "Private Telegram/WhatsApp remain separate; immutable work origin and one output claim retained."
+  },
+  "credits": "unknown",
+  "status": "installed_room_delivery_and_shared_context_verified_latency_and_physical_audio_open",
+  "destination_tests": {
+    "unique_postgres": 53,
+    "destination_suite": 13,
+    "destination_seconds": 22.81,
+    "contact_and_catalogue_tests": 54,
+    "review": "Two concrete findings fixed: pre-send probe failure defers; superseded start destination cannot replay stale receipt."
+  },
+  "installation_receipts_private": "/var/lib/eva2/voice-session/room-audio-20261015",
+  "live_room_probe": {
+    "work_id": "work:household-digital:c934fedf-3e3d-5845-8a5a-d95b8212f546",
+    "state": "succeeded",
+    "source_room": "woonkamer",
+    "target_room": "overkapping",
+    "kind": "Real authorized read-only HA task, atomic explicit destination, original session closed",
+    "model_usage": "pending",
+    "human_hearing_verified": false,
+    "delivery_status": "offered",
+    "completed_model_responses": 2,
+    "tool_calls": 1,
+    "input_tokens": 13431,
+    "output_tokens": 95,
+    "cost_usd": null,
+    "task_execution_seconds": 14,
+    "completed_to_claim_seconds": 2,
+    "claim_to_ha_ack_seconds": 29,
+    "latency_boundary": "HA acknowledge waits for announcement; first audible audio not measured"
+  },
+  "shared_conversation_context": {
+    "installed": true,
+    "source": "existing canonical journal, no second memory",
+    "bounds": {
+      "source_age_hours": 24,
+      "exchanges": 6,
+      "added_characters": 6000
+    },
+    "postgres_tests": 8,
+    "test_seconds": 10.92,
+    "speaker_read_ms": [
+      [
+        563.96,
+        334.11,
+        296.41,
+        281.7,
+        300.51
+      ],
+      [
+        662.93,
+        425.24,
+        405.44,
+        397.06,
+        408.45
+      ]
+    ],
+    "earlier_microphone_issue_present_on_both": true,
+    "read_probe_model_calls": 0,
+    "private_voice_shadow_filtered": true,
+    "telegram_whatsapp_excluded": true,
+    "known_limits": [
+      "Current-session played context remains authoritative; stored earlier replies are not proof of hearing.",
+      "Reads are bounded snapshots, not a nightly maintained context cache.",
+      "Voice-only social utterances never forwarded to the core are not reconstructed."
+    ],
+    "model_probes": [
+      {
+        "seconds": 9.422,
+        "model_ms": 5094,
+        "first_model_content_ms": 3617,
+        "model_attempts": 1,
+        "tool_calls": 0,
+        "input_tokens": 6309,
+        "output_tokens": 48,
+        "correctly_recalled_prior_issue": true,
+        "physical_audio": false
+      },
+      {
+        "seconds": 11.335,
+        "profiled": true,
+        "model_ms": 6020,
+        "first_model_content_ms": 4795,
+        "model_attempts": 1,
+        "tool_calls": 0,
+        "input_tokens": 6309,
+        "output_tokens": 51,
+        "correctly_recalled_prior_issue": true,
+        "physical_audio": false
+      }
+    ]
+  },
+  "diagnostic_cleanup": {
+    "own_diagnostic_texts_erased": 13,
+    "user_messages_erased": 0,
+    "method": "existing journal erasure, exact known diagnostic phrases"
+  },
+  "remaining": [
+    "Intermittent missing speech prefix not acoustically verified; output timing instrumentation installed.",
+    "Overall spoken latency targets remain unproven.",
+    "HA other-room announcements use configured HA voice, not guaranteed same Codex voice.",
+    "Prepared memory cache and nightly maintenance remain separate unimplemented plan items."
+  ],
+  "new_context_source_sha256": "94f2769b0f71bd11beb6a44dd0c643a76172422ad2d0dab14b0cce2a3fca77c2",
+  "component_profile": {
+    "initial_memory_ms": 2551,
+    "provider_dependency_import_profile_ms": 3040,
+    "warning": "Profiled timings include instrumentation overhead; nested cumulative times are not additive."
+  },
+  "dependency_warmup": {
+    "built": true,
+    "installed": true,
+    "first_import_without_network_ms": 772,
+    "second_import_ms": 0.013,
+    "generation_model_calls": 0,
+    "effect": "Shift SDK loading to active voice runtime startup before readiness; no claim of warm-turn speedup."
+  },
+  "memory_component_probe": {
+    "same_process_recall_seconds": [
+      2.5304,
+      2.6136,
+      2.5141
+    ],
+    "http_critical_seconds": [
+      2.5138,
+      2.5973,
+      2.5005
+    ],
+    "answer_model_calls": 0,
+    "parallel_recall_requests_per_sample": 4,
+    "selected_facts_per_sample": 2,
+    "interpretation": "No material warmup gain. Delay is in existing Hindsight HTTP recall; caller overhead 14–17ms. Existing bank assumed for isolated measurement; not total conversation timing.",
+    "server_trace_seconds": {
+      "embedding": 0.0842,
+      "retrieval": 0.1983,
+      "reranking_including_wait": 2.3146,
+      "token_filter": 0.0013,
+      "source_fetch": 0.0235,
+      "server_total": 2.6482
+    }
+  },
+  "memory_deduplication": {
+    "installed": true,
+    "tests": 103,
+    "seconds": 44.54,
+    "effect": "Remove only duplicate casefold-identical anchor when full query is already that anchor; preserve all unique variants.",
+    "four_unique_variant_speedup_claimed": false
+  }
+}

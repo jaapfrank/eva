@@ -1,0 +1,749 @@
+{
+  "synthetic_audio_only": true,
+  "content_free_events": [
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_signalingstatechange",
+      "elapsed_ms": 7
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_icegatheringstatechange",
+      "elapsed_ms": 7
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_icegatheringstatechange",
+      "elapsed_ms": 7405
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "ice_ready",
+      "elapsed_ms": 7405
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "account_start",
+      "elapsed_ms": 16
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_microphone_clip_start",
+      "elapsed_ms": 17
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "wake_greeting_started",
+      "elapsed_ms": 22
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 30,
+      "method": "initialize"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_sink_signal",
+      "elapsed_ms": 30,
+      "turn": "greeting"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 129,
+      "method": "initialize",
+      "duration_ms": 99
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 129,
+      "method": "account/login/start"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "wake_greeting_finished",
+      "elapsed_ms": 155
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 187,
+      "method": "account/login/start",
+      "duration_ms": 58
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 187,
+      "method": "thread/start"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 723,
+      "method": "thread/start",
+      "duration_ms": 535
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "account_ready",
+      "elapsed_ms": 723
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 724,
+      "method": "thread/realtime/start"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 726,
+      "method": "thread/realtime/start",
+      "duration_ms": 1
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "voice_answer_ready",
+      "elapsed_ms": 1690
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_signalingstatechange",
+      "elapsed_ms": 1694
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_iceconnectionstatechange",
+      "elapsed_ms": 1694
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_connectionstatechange",
+      "elapsed_ms": 1694
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_iceconnectionstatechange",
+      "elapsed_ms": 1907
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_connectionstatechange",
+      "elapsed_ms": 1997
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_datachannel_open",
+      "elapsed_ms": 2128
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_provider_session",
+      "elapsed_ms": 2129,
+      "model": null,
+      "top_model": null
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 2130,
+      "kind": "session.started",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "media_ready",
+      "elapsed_ms": 2130
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_selected_ice_pair",
+      "elapsed_ms": 2130,
+      "local_type": "host",
+      "remote_type": "host",
+      "protocol": "udp"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_microphone_signal_sent",
+      "elapsed_ms": 2158
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 2261,
+      "duration_ms": 130,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_rtp_received",
+      "elapsed_ms": 2530
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_decoded_frame",
+      "elapsed_ms": 2609
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 3542,
+      "kind": "turn.created",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_microphone_clip_end",
+      "elapsed_ms": 3890
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 4348,
+      "duration_ms": 83,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 5365,
+      "kind": "delegation.created",
+      "role": null
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "codex_event",
+      "elapsed_ms": 5375,
+      "method": "turn/started"
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "core_request",
+      "elapsed_ms": 5827
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_core_stream",
+      "elapsed_ms": 5892,
+      "kind": "request_acknowledged"
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "core_request_acknowledged",
+      "elapsed_ms": 5894
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 6279,
+      "kind": "turn.done",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 6284,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "first_output_audio",
+      "elapsed_ms": 6287
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_sink_signal",
+      "elapsed_ms": 6287,
+      "turn": "turn_EYnZs4XJK7Vuamq31BWXf"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 6726,
+      "duration_ms": 375,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 8543,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 8824,
+      "duration_ms": 94,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 11463,
+      "duration_ms": 635,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 13555,
+      "duration_ms": 88,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 15820,
+      "duration_ms": 262,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_core_stream",
+      "elapsed_ms": 16824,
+      "kind": "final"
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "core_final",
+      "elapsed_ms": 16826
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "codex_event",
+      "elapsed_ms": 16861,
+      "method": "turn/completed"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 16930,
+      "kind": "delegation.context.appended",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 17933,
+      "duration_ms": 109,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 19095,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_sink_signal",
+      "elapsed_ms": 19215,
+      "turn": "turn_EYna5NDe1QyO9WjbA4Gfi"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 20036,
+      "duration_ms": 98,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 22133,
+      "duration_ms": 94,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 24252,
+      "duration_ms": 116,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 26381,
+      "duration_ms": 125,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 28464,
+      "duration_ms": 80,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 28525,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 30803,
+      "duration_ms": 332,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 32911,
+      "duration_ms": 101,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 35003,
+      "duration_ms": 88,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 37120,
+      "duration_ms": 112,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 39197,
+      "duration_ms": 74,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 41348,
+      "duration_ms": 147,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 43429,
+      "duration_ms": 78,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 45691,
+      "duration_ms": 259,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 47778,
+      "duration_ms": 85,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 50164,
+      "duration_ms": 384,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 52243,
+      "duration_ms": 75,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 54607,
+      "duration_ms": 361,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 56685,
+      "duration_ms": 76,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 58990,
+      "duration_ms": 302,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 61123,
+      "duration_ms": 131,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 63302,
+      "duration_ms": 176,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 65385,
+      "duration_ms": 81,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 67690,
+      "duration_ms": 302,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 69764,
+      "duration_ms": 71,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 71906,
+      "duration_ms": 139,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 73980,
+      "duration_ms": 72,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 76172,
+      "duration_ms": 189,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 78268,
+      "duration_ms": 94,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 80371,
+      "duration_ms": 100,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 82457,
+      "duration_ms": 82,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 84540,
+      "duration_ms": 81,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 86619,
+      "duration_ms": 76,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 88831,
+      "duration_ms": 205,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 90923,
+      "duration_ms": 90,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 93023,
+      "duration_ms": 97,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 95323,
+      "duration_ms": 298,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 97463,
+      "duration_ms": 135,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 99563,
+      "duration_ms": 97,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 101672,
+      "duration_ms": 105,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 103768,
+      "duration_ms": 93,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 105839,
+      "duration_ms": 68,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 107977,
+      "duration_ms": 135,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 110410,
+      "duration_ms": 423,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 112505,
+      "duration_ms": 92,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 114895,
+      "duration_ms": 388,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 116981,
+      "duration_ms": 83,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 119282,
+      "duration_ms": 298,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 121369,
+      "duration_ms": 84,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 123653,
+      "duration_ms": 282,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_return_poll",
+      "elapsed_ms": 125733,
+      "duration_ms": 78,
+      "result_available": false
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_event_loop_lag",
+      "elapsed_ms": 126835,
+      "samples": 5715,
+      "maximum_ms": 34.34,
+      "p95_ms": 3.49
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "closing",
+      "elapsed_ms": 126835
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 126835,
+      "method": "thread/realtime/stop"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 126837,
+      "method": "thread/realtime/stop",
+      "duration_ms": 1
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_signalingstatechange",
+      "elapsed_ms": 126890
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_iceconnectionstatechange",
+      "elapsed_ms": 126892
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_connectionstatechange",
+      "elapsed_ms": 126892
+    }
+  ]
+}

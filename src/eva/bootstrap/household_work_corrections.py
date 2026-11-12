@@ -84,7 +84,7 @@ class _HouseholdScheduleAudience:
         if turn.audience.kind != "household":
             raise ValueError("household scheduling requires its original audience")
         restored = HouseholdDigitalSourceLoader(self.store._engine,
-            self.server.conversation_scope, self.server.authority)(household_source(turn))
+            self.server.conversation_scope, self.server.authority, for_task_control=True)(household_source(turn))
         if restored != turn:
             raise ValueError("household scheduling source differs from admitted ingress")
 
@@ -110,15 +110,19 @@ class _HouseholdScheduleAudience:
         origin = HouseholdWorkOrigin.model_validate(context["origin"])
         request_origin = HouseholdWorkOrigin.model_validate(context["request_origin"])
         if any(getattr(origin, name) != getattr(request_origin, name) for name in (
-                "actor_id", "device_id", "satellite_id", "tenant_id", "installation_id",
-                "household_id", "consent_operation_id", "household_policy_sha256",
+                "tenant_id", "installation_id", "household_id", "consent_operation_id", "household_policy_sha256",
                 "research_policy_sha256")):
-            raise ValueError("household correction crossed its original device or audience")
+            raise ValueError("household correction crossed its original household authority")
+        for admitted in (origin, request_origin):
+            self.server.authority.validate_device(admitted.satellite_id, admitted.device_id)
+            if admitted.actor_id != "household-device:" + admitted.device_id:
+                raise ValueError("household correction actor differs from admitted device")
         with self.store._engine.begin() as connection:
             self.store._scope(connection)
+            verify_origin(connection, self.store.scope, origin, require_open=False, now=self.now())
             verify_origin(connection, self.store.scope, request_origin, require_open=False, now=self.now())
         turn = HouseholdDigitalSourceLoader(self.store._engine,
-            self.server.conversation_scope, self.server.authority)({
+            self.server.conversation_scope, self.server.authority, for_task_control=True)({
                 "tenant_id": request_origin.tenant_id, "installation_id": request_origin.installation_id,
                 "principal_id": request_origin.actor_id, "conversation_id": request_origin.conversation_id,
                 "message_id": request_origin.message_id,

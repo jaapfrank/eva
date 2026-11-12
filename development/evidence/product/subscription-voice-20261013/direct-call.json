@@ -1,0 +1,12 @@
+{
+  "http_status": 201,
+  "error_type": "TimeoutError",
+  "audio": {
+    "frames": 0,
+    "nonzero_frames": 0
+  },
+  "events": [
+    "error"
+  ],
+  "connection_state": "connected"
+}

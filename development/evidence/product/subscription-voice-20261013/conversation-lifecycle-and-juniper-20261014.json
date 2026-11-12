@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-14",
+  "status": "installed_conversation_checks_pass_latency_target_unmet",
+  "voice": "juniper",
+  "verification": {
+    "installed_voice_tests_passed": 49,
+    "contact_tests_passed": 52,
+    "live_dialogue": {
+      "core_completed": 3,
+      "core_failed": 0,
+      "verified_lookups": 2,
+      "microphone_interruption_and_recovery": true,
+      "active_offer_revocation_and_recovery": true,
+      "native_playback_ack": true,
+      "software_device_ack_only": true
+    }
+  },
+  "timing_ms": {
+    "standby_prepared_startup": 1756,
+    "first_fresh_lookup_end_of_question_to_answer_audio": 23537,
+    "followup_fresh_lookup_end_of_question_to_answer_audio": 19508,
+    "repeat_answer_with_retained_evidence": 6255
+  },
+  "improvements": [
+    "Response-scoped completion, serialized offers and native playback confirmation",
+    "Preserve provider busy state after interruption until terminal event",
+    "Final answer phase on backend handoff",
+    "Bind local provider before process startup",
+    "Generic follow-up lookup instruction; no topic-specific routing",
+    "Explicit Juniper voice and matching local wake greetings"
+  ],
+  "limitations": [
+    "No physical acoustic or human listening validation",
+    "Fresh lookup latency remains above the intended target",
+    "Prior follow-up lookup lacked native citations and was rejected; final passing run does not establish reliability",
+    "Three sequential model stages remain: action choice, public search, final phrasing",
+    "Shimmer was rejected by this realtime route; superseded by successful Juniper",
+    "ICE preparation occurs in standby before the reported startup interval"
+  ],
+  "artifacts": {
+    "/tmp/eva-voice-improve/dialogue-juniper-installed.jsonl": {
+      "sha256": "7451bb77ab639799d8aefb3b018543e2c30e077143e2ce7b87a0e511f997b2cc"
+    },
+    "/tmp/eva-voice-improve/dialogue-final-installed.jsonl": {
+      "sha256": "fc06619281ab3bc4117f026fa31581614326c8f2056c260ffc6cd2b9b14cf5fe"
+    },
+    "/tmp/eva-voice-improve/dialogue-shimmer-installed.jsonl": {
+      "sha256": "6a6684a66bc3cfeca662b55c0719d87be3c3d902bd3d4c3fc2ffbae12b5563bb"
+    },
+    "/tmp/eva-voice-improve/thread-start-profile.jsonl": {
+      "sha256": "a86b753cf6e0ccf3ba70ee1e3d6987a0c6695c1226363d0d56bc052a26fa669a"
+    },
+    "/tmp/eva-voice-improve/record-juniper-greetings.jsonl": {
+      "sha256": "d435977ae41275aed9c5aa314415f9afc671409556d27b83fba5cc696fe1fbd7"
+    }
+  },
+  "installed": {
+    "eva2-household-speaker-1": {
+      "image": "sha256:bee882fe87350e537ea0ef40357c59e86aa0450aad356f071b0f1e5e461c692c",
+      "running": true,
+      "sha256": {
+        "codex_session.py": "e4542c5c7a8f4212610025f9a745807cac5cfd447a317f9ce3b4d79467704cea",
+        "greetings/0.wav": "244543876a63436091169ee939ea7b5db4556bb53f7ced594671b5e4a18b6975",
+        "greetings/1.wav": "8c37748507735681fc1a1e070d2251a454d5ff15fb6ffcfb65d62aded00e542e",
+        "greetings/2.wav": "a29c05752526804bfc2be7afd5c591726692abcd4fe52e4006b9cb4fa9e2114f",
+        "greetings/manifest.json": "fbb15b08bcdb5d1c0c0acea874e84a1e37a10510d5813aac5da0bfbe844d2e26"
+      }
+    },
+    "eva2-owner-voice-media-1": {
+      "image": "sha256:342cc9ee90fca4902996539106725fffa47c78d69bda5de5668f1678ab287e88",
+      "running": true,
+      "sha256": {
+        "codex_session.py": "e4542c5c7a8f4212610025f9a745807cac5cfd447a317f9ce3b4d79467704cea",
+        "greetings/0.wav": "244543876a63436091169ee939ea7b5db4556bb53f7ced594671b5e4a18b6975",
+        "greetings/1.wav": "8c37748507735681fc1a1e070d2251a454d5ff15fb6ffcfb65d62aded00e542e",
+        "greetings/2.wav": "a29c05752526804bfc2be7afd5c591726692abcd4fe52e4006b9cb4fa9e2114f",
+        "greetings/manifest.json": "fbb15b08bcdb5d1c0c0acea874e84a1e37a10510d5813aac5da0bfbe844d2e26"
+      }
+    }
+  }
+}

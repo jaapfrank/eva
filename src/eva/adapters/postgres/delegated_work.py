@@ -7,6 +7,9 @@ from contextlib import contextmanager, nullcontext
 import re
 import hashlib
 from dataclasses import dataclass
+from pathlib import Path
+import os
+import stat
 from datetime import UTC, datetime, timedelta
 from typing import Literal
 from uuid import UUID, uuid4, uuid5
@@ -17,6 +20,7 @@ from sqlalchemy.engine import Engine
 from eva.adapters.postgres.current_catalog import delegated_work_runs, metadata
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope, PostgresOperationalTimeline, insert_initial_timeline_thread, operational_events, operational_checkpoints,
+    transition_timeline_thread, _event_from_row,
 )
 from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
@@ -120,6 +124,36 @@ class StoredDelegatedWork:
     failure_report: str | None = None
     repair_notice: str | None = None
 
+    @property
+    def effect_state(self) -> dict | None:
+        """Task-level projection of persisted queue state, not per-tool effects.
+
+        No new queue enum or mutable copy of the signed work specification.
+        A result reference proves queue verification, not every external effect.
+        """
+        if not isinstance(self.spec, DelegatedInitiativeDigitalWorkSpec):
+            return None
+        key = canonical_sha256({
+            "source": self.spec.source.model_dump(mode="json"),
+            "source_ingress_sha256": self.spec.source_ingress_sha256,
+            "intent_id": self.spec.origin.intent_id,
+            "execution_id": self.spec.execution_id,
+        })
+        verification_ref = None
+        if self.state == "verified" and self.result is not None:
+            status = "confirmed"
+            verification_ref = "delegated-result:" + canonical_sha256(self.result.to_payload())
+        elif self.call_started_at is not None:
+            # A timeout, stopped call or received-but-unverified result never
+            # certifies absence of effects and cannot grant a blind retry.
+            status = "unknown"
+        elif self.state in {"needs_help", "failed", "stopped"}:
+            status = "blocked"
+        else:
+            status = "pending"
+        return {"effect_key": key, "effect_status": status,
+                "verification_ref": verification_ref}
+
 
 @dataclass(frozen=True, slots=True)
 class DelegatedWorkAdmission:
@@ -157,16 +191,67 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         household_clock=None,
         failure_report_clock=None,
         initiative_authority_loader=None,
+        native_required_assets=None,
     ) -> None:
         if engine.url.get_backend_name() != "postgresql":
             raise ValueError("delegated work requires PostgreSQL")
         self._engine = engine
+        # Host composition supplies explicit input paths and expected hashes.
+        # No path is inferred from model text.
+        if native_required_assets is not None and not callable(native_required_assets):
+            raise TypeError("native asset resolver must be callable")
+        self._native_required_assets = native_required_assets
         self._initiative_authority_loader = initiative_authority_loader
         self._failure_report_clock = failure_report_clock or (lambda: datetime.now(UTC))
         self._scope_value = scope
         self._role = role
         self._household_authorizer = household_authorizer
         self._household_clock = household_clock or (lambda: datetime.now(UTC).replace(microsecond=0))
+
+    def _native_asset_error(self, spec):
+        """Fail closed if a native task's trusted input manifest is unavailable.
+
+        Each entry is (absolute Path, expected SHA-256). An explicit empty tuple
+        means no required input files. Missing resolver
+        does NOT mean an empty manifest. Output files must not be listed here.
+        This checks the queue host's view; worker/tool-boundary integration and
+        immutable input pinning remain necessary before production use.
+        """
+        if not isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
+            return None
+        if self._native_required_assets is None:
+            return "required_assets_unavailable"
+        try:
+            paths = self._native_required_assets(spec)
+            if not isinstance(paths, tuple) or len(paths) > 32:
+                return "required_assets_invalid"
+            for asset in paths:
+                if not isinstance(asset, tuple) or len(asset) != 2:
+                    return "required_assets_invalid"
+                path, expected_sha256 = asset
+                if (not isinstance(path, Path) or not path.is_absolute()
+                        or not isinstance(expected_sha256, str)
+                        or re.fullmatch(r"[0-9a-f]{64}", expected_sha256) is None):
+                    return "required_assets_invalid"
+                if path.resolve(strict=True) != path:
+                    return "required_assets_missing"
+                flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
+                descriptor = os.open(path, flags)
+                with os.fdopen(descriptor, "rb") as stream:
+                    before = os.fstat(stream.fileno())
+                    if not stat.S_ISREG(before.st_mode):
+                        return "required_assets_invalid"
+                    digest = hashlib.file_digest(stream, "sha256").hexdigest()
+                    after = os.fstat(stream.fileno())
+                if ((before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns, before.st_ctime_ns)
+                        != (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_ctime_ns)
+                        or path.stat().st_ino != after.st_ino or digest != expected_sha256):
+                    return "required_assets_changed"
+        except OSError:
+            return "required_assets_missing"
+        except (ValueError, RuntimeError):
+            return "required_assets_invalid"
+        return None
 
     def _native_guard(self, spec):
         if not isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
@@ -190,6 +275,53 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         # never a scope supplied by the task/model, before reading its result.
         PostgresOperationalTimeline(self._engine, self.scope)._scope(connection)
         self._scope(connection)
+
+    def _settle_native_admission_block(self, connection, work, *, admission_revision, now):
+        """Settle an unstarted preflight block in the admission transaction.
+
+        The normal outcome reader opens another connection. It cannot see a
+        newly appended admission before commit. Read this exact admission chain
+        through the caller's connection instead; do not split the transaction.
+        """
+        spec = work.spec
+        if (not connection.in_transaction() or connection.in_nested_transaction()
+                or not isinstance(spec, DelegatedInitiativeDigitalWorkSpec)
+                or work.state != "needs_help" or work.call_started_at is not None
+                or self._initiative_authority_loader is None):
+            raise DelegatedWorkConflict("native admission block is not an unstarted handoff")
+        authority = self._initiative_authority_loader()
+        if authority.owner._authority != self.scope:
+            raise DelegatedWorkConflict("native admission block authority scope differs")
+        authority.timeline._scope(connection)
+        try:
+            c, e, scope = operational_checkpoints.c, operational_events.c, authority.owner._scope
+            parent = connection.execute(authority.owner._query().where(
+                c.thread_id == spec.origin.thread_id).with_for_update(
+                    of=operational_checkpoints)).one_or_none()
+            if parent is not None and parent.phase == "personal_stopped":
+                return
+            rows = connection.execute(sa.select(operational_events).where(
+                e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+                e.thread_id == spec.origin.thread_id).order_by(e.sequence)).all()
+            admission = authority._work_admission(tuple(_event_from_row(row) for row in rows), spec)
+            if (parent is None or parent.phase != "initiative_work_waiting"
+                    or parent.status != "waiting_for_proof"
+                    or parent.revision != admission_revision or admission is None
+                    or admission.sequence != admission_revision):
+                raise DelegatedWorkConflict("native admission block receipt differs")
+            transition_timeline_thread(connection, scope, thread_id=spec.origin.thread_id,
+                expected_revision=admission_revision,
+                checkpoint_id=(spec.origin.thread_id + ":digital-outcome" if spec.generation == 1
+                               else spec.origin.thread_id + ":digital-outcome:" + spec.work_id),
+                phase="initiative_blocked", status="needs_help",
+                event_type="PERSONAL_INITIATIVE_BLOCKED", occurred_at=now,
+                data={"intent_id": spec.origin.intent_id, "origin": "eva_initiative",
+                      "work_id": spec.work_id, "spec_sha256": spec.sha256,
+                      "work_state": work.state, "reason": work.error_code,
+                      "delegated_usage": None, **work.effect_state})
+        finally:
+            PostgresOperationalTimeline(self._engine, self.scope)._scope(connection)
+            self._scope(connection)
 
     def _authorize_household(self, spec, connection, *, require_open=False, read_only=False):
         if not isinstance(spec, _HOUSEHOLD_WORK_TYPES):
@@ -357,8 +489,13 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         household_request_origin=None,
         _connection=None,
         _native_guard=None,
+        _native_preparation_evidence=None,
         _owner_recovery_guard=None,
     ) -> DelegatedWorkAdmission:
+        if _native_preparation_evidence is not None and (
+                type(spec) is not DelegatedInitiativeDigitalWorkSpec
+                or resumes_work_id is None or _native_guard is None):
+            raise DelegatedWorkConflict("preparation evidence requires a guarded native resume")
         if _owner_recovery_guard is not None:
             from eva.adapters.postgres.scheduled_work import _OwnerRecoveryGuard
             from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
@@ -441,6 +578,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 principal_binding_id=principal_binding_id,
             )
             previous = None
+            certified_native_resume = False
+            known_failed_native_resume = False
             if resumes_work_id is not None:
                 previous = self._load_terminal_locked(
                     connection, work_id=resumes_work_id,
@@ -465,6 +604,24 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                             or _native_guard is None
                             or _native_guard.resume_work.spec.sha256 != previous.spec.sha256):
                         raise DelegatedWorkNotResumable(previous)
+                    # check_locked() already validated the current parent failure
+                    # receipt under its lock. Bind that guarded snapshot to this
+                    # locked queue row; failed is a known terminal disposition,
+                    # not proof that earlier task-tool effects never happened.
+                    known_failed_native_resume = (
+                        previous.state == "failed"
+                        and previous.completed_at is not None
+                        and previous.result is None and previous.usage is not None
+                        and previous.lease_expires_at is None
+                        and _native_guard.resume_work == previous
+                    )
+                    if _native_preparation_evidence is not None:
+                        # Revalidate the explicit host certificate against the
+                        # locked original row; zero tool counts alone prove nothing.
+                        evidence = certified_preparation_evidence(previous)
+                        if evidence is None or evidence != _native_preparation_evidence:
+                            raise DelegatedWorkConflict("native preparation evidence changed or is uncertified")
+                        certified_native_resume = True
                 elif isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
                     raise DelegatedWorkConflict("native resume cannot borrow ordinary owner work")
                 expected_id = "work:eva-resume:" + str(uuid5(
@@ -543,6 +700,15 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     )
                 return DelegatedWorkAdmission("already_present", loaded)
 
+            if (previous is not None and previous.effect_state is not None
+                    and (previous.effect_state["effect_status"] == "confirmed"
+                         or (previous.effect_state["effect_status"] == "unknown"
+                             and not (certified_native_resume or known_failed_native_resume)))):
+                # Certified no-dispatch recovery and explicitly guarded known
+                # failures may continue the same execution/tool journal. Active,
+                # uncertain and confirmed attempts cannot start another generation;
+                # duplicates above still return the one existing successor.
+                raise DelegatedWorkNotResumable(previous)
             if previous is not None and not (
                 previous.state in {"failed", "ambiguous", "needs_help", "stopped"}
                 or (previous.state in {"admitted", "call_started"}
@@ -600,6 +766,14 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 .one()
             )
             loaded = self._validated(connection, row)
+            asset_error = self._native_asset_error(spec)
+            if asset_error is not None:
+                # Keep the existing closed queue enum. The parent handoff writes
+                # effect_status=blocked into its existing JSONB admission receipt.
+                # Parent settlement follows admission in the same transaction.
+                self._mark_needs_help(connection, loaded, now=occurred_at,
+                                      error_code=asset_error, settle_parent=False)
+                loaded = self._load_locked(connection, spec.work_id)
             record_admission_destination(connection, self.scope, spec=spec,
                 destination=delivery_destination, occurred_at=occurred_at, existing=False)
         return DelegatedWorkAdmission("inserted", loaded)
@@ -886,6 +1060,12 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 or row.lease_expires_at < now
             ):
                 raise DelegatedWorkConflict("delegated work claim is stale")
+            # Recheck after leasing, immediately before opening the call fence.
+            # Files may have disappeared since admission; never start the call.
+            asset_error = self._native_asset_error(loaded.spec)
+            if asset_error is not None:
+                self._mark_needs_help(connection, loaded, now=now, error_code=asset_error)
+                return None
             result = connection.execute(
                 sa.update(delegated_work_runs)
                 .where(

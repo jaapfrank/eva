@@ -1,0 +1,516 @@
+[
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 7,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_icegatheringstatechange",
+    "elapsed_ms": 8,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_icegatheringstatechange",
+    "elapsed_ms": 7411,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "ice_ready",
+    "elapsed_ms": 7412
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "account_start",
+    "elapsed_ms": 7
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "wake_greeting_started",
+    "elapsed_ms": 13
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 23,
+    "method": "initialize"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_first_sink_signal",
+    "elapsed_ms": 24,
+    "turn": "greeting"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 134,
+    "method": "initialize",
+    "duration_ms": 112
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 135,
+    "method": "account/login/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "wake_greeting_finished",
+    "elapsed_ms": 209
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 214,
+    "method": "account/login/start",
+    "duration_ms": 79
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 214,
+    "method": "thread/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 818,
+    "method": "thread/start",
+    "duration_ms": 604
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "account_ready",
+    "elapsed_ms": 818
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 820,
+    "method": "thread/realtime/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 821,
+    "method": "thread/realtime/start",
+    "duration_ms": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "voice_answer_ready",
+    "elapsed_ms": 1662
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 1668,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 1668,
+    "ice": "checking",
+    "connection": "new",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 1668,
+    "ice": "checking",
+    "connection": "connecting",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 1868,
+    "ice": "completed",
+    "connection": "connecting",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 1949,
+    "ice": "completed",
+    "connection": "connected",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_datachannel_open",
+    "elapsed_ms": 2066
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_provider_session",
+    "elapsed_ms": 2066,
+    "model": null,
+    "top_model": null
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "provider_event",
+    "elapsed_ms": 2068,
+    "kind": "session.started",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "media_ready",
+    "elapsed_ms": 2068
+  },
+  {
+    "result": "connection_only",
+    "ready_seconds": 2.07
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "closing",
+    "elapsed_ms": 2569,
+    "audio_received": 0,
+    "audio_suppressed": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 2569,
+    "method": "thread/realtime/stop"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 2570,
+    "method": "thread/realtime/stop",
+    "duration_ms": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 2608,
+    "ice": "completed",
+    "connection": "connected",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 2611,
+    "ice": "closed",
+    "connection": "connected",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "487a13ca-6800-4255-a3db-dcf2ee79f500",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 2611,
+    "ice": "closed",
+    "connection": "closed",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 3,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_icegatheringstatechange",
+    "elapsed_ms": 3,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_icegatheringstatechange",
+    "elapsed_ms": 7438,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "ice_ready",
+    "elapsed_ms": 7438
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "account_start",
+    "elapsed_ms": 18
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "wake_greeting_started",
+    "elapsed_ms": 21
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 27,
+    "method": "initialize"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_first_sink_signal",
+    "elapsed_ms": 27,
+    "turn": "greeting"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 194,
+    "method": "initialize",
+    "duration_ms": 168
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 195,
+    "method": "account/login/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "wake_greeting_finished",
+    "elapsed_ms": 304
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 306,
+    "method": "account/login/start",
+    "duration_ms": 111
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 306,
+    "method": "thread/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 655,
+    "method": "thread/start",
+    "duration_ms": 349
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "account_ready",
+    "elapsed_ms": 655
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 657,
+    "method": "thread/realtime/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 658,
+    "method": "thread/realtime/start",
+    "duration_ms": 2
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "voice_answer_ready",
+    "elapsed_ms": 1555
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 1559,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 1559,
+    "ice": "checking",
+    "connection": "new",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 1559,
+    "ice": "checking",
+    "connection": "connecting",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 1771,
+    "ice": "completed",
+    "connection": "connecting",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 1850,
+    "ice": "completed",
+    "connection": "connected",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_datachannel_open",
+    "elapsed_ms": 1968
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_provider_session",
+    "elapsed_ms": 1985,
+    "model": null,
+    "top_model": null
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "provider_event",
+    "elapsed_ms": 1986,
+    "kind": "session.started",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "media_ready",
+    "elapsed_ms": 1986
+  },
+  {
+    "result": "connection_only",
+    "ready_seconds": 1.988
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "closing",
+    "elapsed_ms": 2486,
+    "audio_received": 0,
+    "audio_suppressed": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 2487,
+    "method": "thread/realtime/stop"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 2488,
+    "method": "thread/realtime/stop",
+    "duration_ms": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 2500,
+    "ice": "completed",
+    "connection": "connected",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 2502,
+    "ice": "closed",
+    "connection": "connected",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "d96df49c-ecf0-4a31-88d5-ae1ba7a4570b",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 2502,
+    "ice": "closed",
+    "connection": "closed",
+    "signaling": "closed"
+  }
+]

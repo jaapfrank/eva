@@ -47,6 +47,9 @@ def test_core_and_worker_factories_have_identical_release_and_budget(monkeypatch
     assert core_model.research_configuration_sha256()==worker_model.research_configuration_sha256()
     assert worker_model._resource_budget==budget
     payload = worker_model.research_request_payload(question="Find official speech documentation", options=())
+    assert "max_tool_calls" not in payload  # Rejected by the subscription endpoint.
+    assert "maximaal 3 webacties" in payload["instructions"]
+    assert worker_profile.maximum_tool_calls == 3
     assert payload["model"] == "gpt-6-astra"
     assert payload["reasoning"]["effort"] == "medium"
     assert worker_profile.maximum_cost_usd_micros == 715_360
@@ -96,3 +99,33 @@ def test_check_validates_research_config_without_provider_or_worker_run(monkeypa
     monkeypatch.setattr(service.sa,'create_engine',lambda *a,**kw:Engine())
     assert service.check_openai_delegated_work(settings) is None
     assert len(checked)==1
+
+
+def test_research_tool_limit_is_bound_to_configuration(monkeypatch):
+    budget = fixtures(monkeypatch)
+    model, profile = build_public_research_composition(model_access_lease_file=Path("/run/eva/model-lease/auth.json"), resource_budget=budget)
+    original = model.research_configuration_sha256()
+    model._research_maximum_tool_calls = 2
+    assert model.research_configuration_sha256() != original
+    assert "maximaal 2 webacties" in model.research_request_payload(question="HTTP", options=("HTTP",))["instructions"]
+
+
+def test_topic_answer_depth_is_bound_without_changing_comparison_or_limits(monkeypatch):
+    from eva.adapters.model import pydantic_conversation as provider
+    budget = fixtures(monkeypatch)
+    model, profile = build_public_research_composition(
+        model_access_lease_file=Path("/run/eva/model-lease/auth.json"), resource_budget=budget)
+    arguments = {"question": "Wat wordt morgen de temperatuur in Amsterdam?", "options": ("Amsterdam",)}
+    topic = model.research_request_payload(**arguments, research_mode="topic")
+    comparison = model.research_request_payload(**arguments, research_mode="comparison")
+    assert "one to three sentences" in topic["instructions"]
+    assert "at least one primary source" in topic["instructions"]
+    assert "uncertainty" in topic["instructions"]
+    assert "explicitly requests detailed research" in topic["instructions"]
+    assert comparison["instructions"].startswith(provider._CURRENT_RESEARCH_INSTRUCTIONS)
+    for field in ("model", "reasoning", "tools", "input", "stream", "store"):
+        assert topic[field] == comparison[field]
+    assert "maximaal 3 webacties" in topic["instructions"]
+    before = model.research_configuration_sha256()
+    monkeypatch.setattr(provider, "_TOPIC_RESEARCH_INSTRUCTIONS", "changed policy")
+    assert model.research_configuration_sha256() != before

@@ -51,7 +51,9 @@ if __name__ == "__main__":
         if args.check_only:
             print('{"state":"validated","uid":65532,"network_calls":0}')
         else:
-            os.execv(sys.executable, [sys.executable, "/app/speaker/speaker_livekit_service.py",
+            service = ("/opt/eva/codex_speaker_service.py" if os.environ.get("EVA_VOICE_ENGINE") == "codex"
+                       else "/app/speaker/speaker_livekit_service.py")
+            os.execv(sys.executable, [sys.executable, service,
                      "--config", str(config), "--policy", "/run/household-voice/current.json",
                      "--household-token", "/run/household-voice/token",
                      "--identity", "/run/identity/current.json"])

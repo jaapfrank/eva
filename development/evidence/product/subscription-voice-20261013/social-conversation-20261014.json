@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-14",
+  "status": "installed_verified_with_synthetic_conversation",
+  "changes": [
+    "Courtesy questions answered directly by voice without a lookup filler",
+    "Questions about own activity delegated to Eva with guidance to consult authorized memory/work and describe known activity naturally",
+    "Standalone farewell handled from the ordered WebRTC user-turn transcript, followed by farewell audio playout then media close",
+    "New user speech cancels a pending farewell close; mentions, quotations and task cancellation are not session termination",
+    "Missing farewell audio/playback ACK cannot keep the microphone open indefinitely; timeout remains explicit, never counted as confirmed playback."
+  ],
+  "tests": {
+    "voice_passed": 59,
+    "voice_context_passed": 8
+  },
+  "live_checks": {
+    "candidate_social_greeting_no_backend": true,
+    "candidate_activity_used_list_delegated_work": true,
+    "candidate_farewell_closed": true,
+    "ordered_farewell_detected_to_close_ms": 1708,
+    "installed_social_greeting_no_backend": true,
+    "installed_activity_used_list_delegated_work": true,
+    "installed_farewell_playout_confirmed": true,
+    "installed_farewell_detected_to_close_ms": 1680,
+    "installed_full_dialogue_passed": true
+  },
+  "superseded_failures": [
+    "Initial cross-channel transcript callback occasionally failed to close or waited for fallback timeout; replaced by ordered media event handling",
+    "Voice-context regression fixture called the outer runtime without its cold-path coordinator; updated to target the admitted-turn behavior under test",
+    "After ordered transcript handling, a full dialogue closed only after the original 15-second playback wait when no farewell audio was confirmed; post-response confirmation wait is now bounded to three seconds and recorded as unconfirmed on timeout."
+  ],
+  "limits": [
+    "Synthesized microphone and simulated speaker acknowledgements, not physical human listening",
+    "A limited authorized activity view is not a complete daily biography; no additional memory access granted",
+    "Standalone farewell controls only; no claim to recognize every possible indirect closing phrase"
+  ],
+  "traces": {
+    "/tmp/eva-voice-improve/social-candidate.jsonl": {
+      "sha256": "f5a1bfe722c345bc0998fb82217eec236a7623c73a8b1cd06718602e878d4261"
+    },
+    "/tmp/eva-voice-improve/social-installed.jsonl": {
+      "sha256": "1b847b7b342fc83b6baec0c6b382c8abdc767b88e9a5d374ce71ad26c40943fb"
+    },
+    "/tmp/eva-voice-improve/farewell-ordered-candidate.jsonl": {
+      "sha256": "13667820cd17de7c82edbc0cbe3e2be38f491ef8028e45df31fd83d4e9a27577"
+    },
+    "/tmp/eva-voice-improve/social-ordered-installed.jsonl": {
+      "sha256": "962387e3308553ce97b9883faf2edbdb7bb3779cbf012dd2744e9085e07928a1"
+    },
+    "/tmp/eva-voice-improve/social-final-installed.jsonl": {
+      "sha256": "0a17a0adb8d6a424b6f07c3445275a0bc11c9605b7bdfeac4b225f8dea46e9de"
+    }
+  },
+  "installed": {
+    "eva2-household-speaker-1": {
+      "image": "sha256:b55f46e55d7fba902ac6b556d735a2e3e9052ee6e050bbc83c6774cf8d9d2f32",
+      "running": true,
+      "sha256": {
+        "codex_media.py": "3e8f972e365463209054a3d76f926e6afb1851b7347096ece08e916c4d52c5e7",
+        "codex_backend.py": "1084b3af68951e6c591a61fac21bfd7f40c057bc04998c07767579acf97b65a9"
+      }
+    },
+    "eva2-owner-voice-media-1": {
+      "image": "sha256:1d789ccc611edb9f8b5dba7cbfd5ab1ddda4592f559f8ce3c7ba9dc8ae38317e",
+      "running": true,
+      "sha256": {
+        "codex_media.py": "3e8f972e365463209054a3d76f926e6afb1851b7347096ece08e916c4d52c5e7",
+        "codex_backend.py": "1084b3af68951e6c591a61fac21bfd7f40c057bc04998c07767579acf97b65a9"
+      }
+    },
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:1d4983523255a31f1432b3005fa592d7f9e54e5c271df29f089eec279b361edd",
+      "running": true,
+      "sha256": {
+        "voice_context.py": "af4c2562fb9f2be104b8e6145d55d98ba629907ea69109c28e6c9382986f8ea4"
+      }
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:cdd855fbeee6e97b050f6d58ba46d1f7a54351f67f0525ce0a12d39557572a37",
+      "running": true,
+      "sha256": {
+        "voice_context.py": "af4c2562fb9f2be104b8e6145d55d98ba629907ea69109c28e6c9382986f8ea4"
+      }
+    }
+  }
+}

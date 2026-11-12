@@ -16,9 +16,11 @@ from eva.operations.component_evaluation_service import EvaluationServer
 
 
 @contextmanager
-def host(queue):
+def host(queue, *, packages=None, assessments=None):
     server = EvaluationServer(("127.0.0.1", 0), evaluator=None, token="test-token",
                               allowed_paths=(), reviewed_applications=queue)
+    server.owned_packages = packages
+    server.final_assessments = assessments
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     try:
@@ -73,7 +75,10 @@ def application(monkeypatch):
         def __init__(self, *args): self.rows = {}
         def events(self, key): return self.rows.get(key, [])
         def create_thread(self, **kwargs):
-            self.rows[kwargs["thread_id"]] = [NS(payload={"data": kwargs["data"]})]
+            self.rows[kwargs["thread_id"]] = [NS(
+                event_type=kwargs.get("event_type", "COMPONENT_ACTION_RECORDED"),
+                payload={"data": kwargs["data"]},
+            )]
     monkeypatch.setattr(actions, "configured_component_evaluator", lambda: client)
     monkeypatch.setattr(actions, "PostgresOperationalTimeline", Timeline)
     spec = NS(execution_id="execution:1", work_id="work:1", source=NS(model_dump=lambda **kwargs: vars(turn)))
@@ -155,3 +160,45 @@ def test_status_keeps_same_verified_person_boundary(application):
     with pytest.raises(ConversationConflict, match="not approved"):
         provider.execute(turn, call, step_index=1)
     assert len(received) == len(dispatches) == 1
+
+
+def test_not_yet_submitted_package_status_is_readable_without_creating_work(tmp_path):
+    from tests.operations.test_owned_package_handoff import inputs
+    from eva.operations.owned_package_handoff import OwnedPackageHandoff
+    _, metadata, _, candidate, policy = inputs(tmp_path)
+    calls = []
+    def rpc(action, **kwargs):
+        calls.append(action)
+        assert action == 'metadata'
+        return metadata
+    packages = OwnedPackageHandoff({'receipt_root': str(tmp_path / 'handoffs'), 'runtime_policy': policy},
+        runtime=NS(package_call=rpc), programming=None, applications=None, start=False)
+    def unavailable(*args, **kwargs): raise ValueError('final assessment is unavailable')
+    token = tmp_path / 'token'; token.write_text('test-token')
+    try:
+        with host(NS(releases={}), packages=packages, assessments=NS(status=unavailable)) as url:
+            client = ComponentEvaluationClient(url, str(token), (), 'a' * 64,
+                owned_package_scopes=(metadata['scope_sha256'],))
+            result = client.application('status', review_id=candidate['archive_sha256'], request_id='5'*64,
+                task_id=metadata['task_id'], scope_sha256=metadata['scope_sha256'])
+            assert result['state'] == 'not_submitted' and result['installed'] is False
+            assert not packages.jobs and calls == ['metadata']
+    finally: packages.close()
+
+
+def test_not_submitted_is_an_observation_not_a_failed_external_effect(application):
+    provider, turn, client, received, dispatches = application
+    client.application = lambda *args, **kwargs: {'state': 'not_submitted', 'installed': False}
+    result = provider.execute(turn, ConversationActionCall('read-status', actions.APPLICATION_STATUS,
+        {'review_id': 'accepted'}), step_index=2)
+    assert result.output['operation_result'] == {'state': 'not_submitted', 'installed': False}
+    assert result.output['scope'] == 'reviewed_application_status'
+
+
+def test_invalid_package_input_can_be_corrected_without_uncertain_execution(application):
+    from eva.application.conversation import ConversationActionInputRejected
+    provider, turn, client, received, dispatches = application
+    client.application=lambda *a,**k:{'state':'candidate_invalid','application_requested':False,'installed':False}
+    with pytest.raises(ConversationActionInputRejected):
+        provider.execute(turn,ConversationActionCall('invalid-candidate',actions.APPLY,{'review_id':'accepted'}),step_index=2)
+    assert provider.pending(turn,step_index=2) is None

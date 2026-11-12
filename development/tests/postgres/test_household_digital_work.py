@@ -194,7 +194,8 @@ def test_household_correction_survives_new_session_close_and_resumes_once(databa
             if completed_action is None:
                 name, target = "original-write", 20
             elif not corrected:
-                current = native(x, "correction")
+                current = native(x, "correction", **({"satellite": "assist_satellite.office",
+                    "device": "b" * 32} if close_original else {}))
                 correction_turn = current.service.turn(str(uuid4()), instruction)
                 revision = ConversationActionCall("revise", "revise_digital_work",
                     {"revision": {"work_id": first_id, "instruction": instruction}})
@@ -504,7 +505,7 @@ def test_later_household_stop_cancels_waiting_correction(database, operation):
     assert len(original.service.execute("list", original.turn, request_key="list")["jobs"]) == 1
 
 
-def test_household_correction_keeps_device_boundary_and_current_policy(database):
+def test_household_correction_shares_admitted_devices_but_requires_current_policy(database):
     from eva.adapters.postgres.work_corrections import work_corrections
     from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
     from tests.postgres.test_native_task_continuity import native
@@ -516,11 +517,22 @@ def test_household_correction_keeps_device_boundary_and_current_policy(database)
     first = original.service._load(first_id, original.service.origin(original.turn))
     other = native(x, "other", satellite="assist_satellite.office", device="b" * 32)
     revision = {"work_id": first_id, "instruction": "Controleer de doeltemperatuur."}
-    with pytest.raises(DelegatedWorkNotFound):
-        other.service.execute("revise_digital", other.turn, request_key="wrong-device", revision=revision)
-    assert work_corrections(database, first.spec) == []
-    assert original.service._load(first_id, first.spec.origin).stop_requested_at is None
-    result = original.service.execute("revise_digital", original.turn, request_key="revision", revision=revision)
+    # Shared task control does not grant this device new Home Assistant effects.
+    with pytest.raises(ValueError, match="lacks HA access"):
+        other.service.execute("digital", other.turn, request_key="new-effect", task="Verander de lampen")
+    from eva.bootstrap.household_digital_work import household_source
+    with pytest.raises(ValueError, match="lacks HA access"):
+        HouseholdDigitalSourceLoader(database, x.server.conversation_scope,
+            x.server.authority)(household_source(other.turn))
+    control_loader = HouseholdDigitalSourceLoader(database, x.server.conversation_scope,
+        x.server.authority, for_task_control=True)
+    assert control_loader(household_source(other.turn)) == other.turn
+    from eva.application.conversation import ConversationConflict
+    with pytest.raises((ValueError, ConversationConflict)):
+        control_loader(household_source(other.turn) | {"conversation_id": "forged-conversation"})
+    result = other.service.execute("revise_digital", other.turn, request_key="revision", revision=revision)
+    assert len(work_corrections(database, first.spec)) == 1
+    assert original.service._load(first_id, first.spec.origin).spec.origin == first.spec.origin
     assert result["status"] == "correction_saved", result
     x.policies[0] = x.policies[0].model_copy(update={"state": "revoked"})
     with pytest.raises(ValueError):

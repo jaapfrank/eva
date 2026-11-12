@@ -1,6 +1,6 @@
 {
   "contract": "EvaOwnedPackageHandoffDelivery/v1",
-  "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+  "checkedAt": "2026-11-03T17:57:30.939767+00:00",
   "scope": "General task-bound package handoff; application code remains authored by Eva.",
   "built": true,
   "installed": true,
@@ -58,7 +58,11 @@
     "inventedOwnerMessage": false,
     "applicationAuthoredByCodex": false,
     "applicationInstalledByCodex": false,
-    "googleConfigurationChangedByCodex": false
+    "googleConfigurationChangedByCodex": false,
+    "evaAuthoredVersion": "0.3.0",
+    "evaAuthoredManifestFiles": 13,
+    "firstAttemptEnded": "ambiguous_http_400_before_package_admission",
+    "newContinuationAfterChangedCauseScheduled": true
   },
   "limits": [
     "No application success or external service authorization is inferred from a catalog or container.",
@@ -68,10 +72,34 @@
   ],
   "usage": {
     "developmentModelUsage": "unknown",
-    "runtimeAttemptUsage": "not_yet_complete",
+    "runtimeAttemptUsage": "first_attempt_partial_measurements_retained; later_attempt_not_complete",
     "newAccounts": 0,
     "newCodexChats": 0,
-    "additionalAutomations": 0
+    "additionalAutomations": 0,
+    "runtimeFirstAttempt": {
+      "measurement": "partial",
+      "completed_model_responses": 19,
+      "tool_calls": 19,
+      "input_tokens": 810982,
+      "output_tokens": 4139,
+      "total_tokens": 815121,
+      "cost_usd_micros": null,
+      "cache_or_billable_breakdown": "unknown"
+    }
   },
-  "privateOperatorEvidence": "/var/lib/eva2/owned-package-handoff-20261103"
+  "privateOperatorEvidence": "/var/lib/eva2/owned-package-handoff-20261103",
+  "compatibilityRepair": {
+    "built": true,
+    "installed": true,
+    "focusedPassed": 62,
+    "focusedFailed": 0,
+    "durationSeconds": 3.7,
+    "causes": [
+      "Harmless standard tar/PAX timestamps were rejected.",
+      "A not-yet-submitted package status returned HTTP 400."
+    ],
+    "realEvaArchiveReadbackValidated": true,
+    "liveUnsubmittedStatusReadbackVerified": true,
+    "applicationChangedByCodex": false
+  }
 }

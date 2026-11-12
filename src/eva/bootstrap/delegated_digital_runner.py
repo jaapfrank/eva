@@ -287,7 +287,7 @@ class _TaskModel:
             "wanneer de bijbehorende toolresultaten dat bevestigen.", *self.repair_context), **kwargs)
 
 
-def _recorded_action_slots(engine, spec, source):
+def _recorded_action_slots(engine, spec, source, *, connection=None):
     """Read existing execution journals once; retain sparse and colliding old slots."""
     import sqlalchemy as sa
     from eva.adapters.postgres.operational_timeline import (
@@ -321,8 +321,11 @@ def _recorded_action_slots(engine, spec, source):
     timeline = PostgresOperationalTimeline(engine, scope)
     e, c = operational_events.c, operational_checkpoints.c
     data = e.payload["data"]
-    with engine.connect() as connection:
-        connection.exec_driver_sql("SET TRANSACTION READ ONLY")
+    from contextlib import nullcontext
+    owns_connection = connection is None
+    with (engine.connect() if owns_connection else nullcontext(connection)) as connection:
+        if owns_connection:
+            connection.exec_driver_sql("SET TRANSACTION READ ONLY")
         timeline._scope(connection)
         rows = connection.execute(sa.select(
             e.thread_id, e.sequence, e.event_type, e.payload, e.payload_sha256, e.occurred_at,

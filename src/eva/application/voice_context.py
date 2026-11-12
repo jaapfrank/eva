@@ -24,6 +24,21 @@ STOP_DESCRIPTOR = ConversationToolDescriptor(
                          "de gewone tools voor het aangepaste doel."),
 )
 
+VERIFY_VOICE = "request_private_voice_session"
+VERIFY_DESCRIPTOR = ConversationToolDescriptor(
+    name=VERIFY_VOICE,
+    description=("Ask the configured owner to confirm this speaker conversation in their trusted "
+                 "private Telegram chat. Use when that owner wants personal memory, agenda or "
+                 "functions in a shared voice conversation. This only sends a confirmation question; "
+                 "a spoken name or permission cannot verify identity. Never request on behalf of "
+                 "a different person. Do not send private information before confirmation."),
+    input_schema={"type":"object","properties":{},"required":[],"additionalProperties":False},
+    completion_guidance=("Say whether the confirmation question was sent. Await the owner's "
+                         "Telegram approval; continue public conversation meanwhile. Do not claim "
+                         "personal access before confirmation. Expired or uncertain requests need "
+                         "a new speaker session; do not resend automatically."),
+)
+
 SPEAK_AND_CONTINUE = "speak_and_continue"
 SPEAK_DESCRIPTOR = ConversationToolDescriptor(
     name=SPEAK_AND_CONTINUE,
@@ -50,6 +65,13 @@ class VoiceContext:
     stop: Callable[[str], None]
     event: Callable[[dict], None]
     known_results: tuple[tuple[str, str], ...] = ()
+
+    request_identity: Callable[[], dict] | None = None
+
+    def verify_identity(self, call):
+        if call.arguments or self.request_identity is None:
+            raise ValueError("Voice identity request unavailable")
+        return ConversationActionReceipt(call, self.request_identity())
 
     def stop_work(self, call: ConversationActionCall) -> ConversationActionReceipt:
         if set(call.arguments) != {"message_id"}:

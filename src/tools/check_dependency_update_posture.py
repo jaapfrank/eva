@@ -10,9 +10,10 @@ from pathlib import Path
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
-REPOSITORY_ROOT = EVA2_ROOT.parent
+REPOSITORY_ROOT = EVA2_ROOT
 CONFIG = REPOSITORY_ROOT / "renovate.json"
 WATCH = REPOSITORY_ROOT / "component-watch.json"
+BINDING = EVA2_ROOT / "deploy/release/4d-dependency-source-binding.json"
 RELEASE_WATCH_EVIDENCE = EVA2_ROOT / "development/evidence/product"
 RELEASE_WATCH_GLOB = "upstream-release-watch-live-*.json"
 
@@ -113,35 +114,43 @@ def main() -> None:
         for manager in managers
     ):
         raise SystemExit("upstream component and competitor releases must be watched")
-    watch_raw = WATCH.read_bytes()
-    watch = json.loads(watch_raw)
-    try:
-        checked_at = datetime.fromisoformat(watch["checkedAt"]).astimezone(UTC)
-        valid_until = datetime.fromisoformat(watch["reviewValidUntil"]).astimezone(UTC)
-    except (KeyError, TypeError, ValueError) as error:
-        raise SystemExit("upstream release review window is invalid") from error
-    now = datetime.now(UTC)
-    if checked_at > now or valid_until <= now:
-        raise SystemExit("upstream release review is absent, future-dated or expired")
-    if valid_until - checked_at > timedelta(days=30):
-        raise SystemExit("upstream release review window may not exceed 30 days")
-    competitors = watch.get("competitors")
-    watched_competitors = (
-        {row.get("repository") for row in competitors if isinstance(row, dict)}
-        if isinstance(competitors, list)
-        else set()
-    )
-    if watched_competitors != {
-        "openclaw/openclaw",
-        "NousResearch/hermes-agent",
-        "agent0ai/agent-zero",
-    }:
-        raise SystemExit("the exact three Eva competitors must be release-watched")
-    validate_release_watch_receipt(
-        watch_raw,
-        watch,
-        sorted(RELEASE_WATCH_EVIDENCE.glob(RELEASE_WATCH_GLOB)),
-    )
+    if WATCH.is_file():
+        watch_raw = WATCH.read_bytes()
+        watch = json.loads(watch_raw)
+        try:
+            checked_at = datetime.fromisoformat(watch["checkedAt"]).astimezone(UTC)
+            valid_until = datetime.fromisoformat(watch["reviewValidUntil"]).astimezone(UTC)
+        except (KeyError, TypeError, ValueError) as error:
+            raise SystemExit("upstream release review window is invalid") from error
+        now = datetime.now(UTC)
+        if checked_at > now or valid_until <= now:
+            raise SystemExit("upstream release review is absent, future-dated or expired")
+        if valid_until - checked_at > timedelta(days=30):
+            raise SystemExit("upstream release review window may not exceed 30 days")
+        competitors = watch.get("competitors")
+        watched_competitors = (
+            {row.get("repository") for row in competitors if isinstance(row, dict)}
+            if isinstance(competitors, list)
+            else set()
+        )
+        if watched_competitors != {
+            "openclaw/openclaw",
+            "NousResearch/hermes-agent",
+            "agent0ai/agent-zero",
+        }:
+            raise SystemExit("the exact three Eva competitors must be release-watched")
+        validate_release_watch_receipt(
+            watch_raw,
+            watch,
+            sorted(RELEASE_WATCH_EVIDENCE.glob(RELEASE_WATCH_GLOB)),
+        )
+    else:
+        binding = json.loads(BINDING.read_bytes())
+        if (
+            binding.get("contract") != "Eva2RuntimeDependencySourceBinding/v1"
+            or binding.get("status") != "sealed_offline_inputs_not_release"
+        ):
+            raise SystemExit("runtime dependency binding must remain proposal-only")
     print(
         "dependency update posture: proposal-only, approval-required, "
         "digest-pinned, freshness-bounded, receipt-bound"

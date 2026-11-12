@@ -1,0 +1,102 @@
+request:
+  purpose: "Independent, concise diagnosis of EVA voice latency and tool routing"
+  response_language: Dutch
+  maximum_words: 250
+  task: >-
+    Recommend the single best next change or measurement. Give three ranked causes,
+    distinguish observations from hypotheses, and state what would falsify your
+    leading hypothesis. Do not write code, run tools, or propose topic-specific
+    weather/traffic adapters. Do not promise unsupported latency numbers.
+
+user_constraints:
+  - Preserve EVA personality, authorized memory and existing execution controls.
+  - Use the existing ChatGPT/Codex subscription connection.
+  - No keyword router, predefined question categories or extra classification model.
+  - Ordinary questions may be answered directly by the contact model.
+  - Short public lookups should not create an Astra background research task.
+  - Extensive work still belongs to the existing durable worker.
+  - Never turn missing sources, errors or uncertain usage into success.
+
+architecture:
+  voice:
+    requested_model: gpt-live-1-codex
+    actual_provider_voice_model: "not independently echoed/verified"
+    transport: "Codex 0.162.1 realtime WebRTC"
+  bridge: "Local aiohttp Responses endpoint forwards voice delegation to EVA core"
+  contact: {model: gpt-6-sol, reasoning_effort: none}
+  short_lookup:
+    action: search_public_info
+    input: "Standalone public question plus public suitability review"
+    execution: "Separate bounded Sol/none request with native web_search, low context"
+    output: "Short sourced artifact, followed by Sol wording in the original conversation"
+    limits: "20-second lookup deadline; two instructed web actions, checked after execution"
+    accounting: "Existing conversation model journal and durable indexed tool receipts"
+  extensive_research: "Existing Astra/medium background worker with saved-result return"
+  private_context: "Remains in EVA conversation; not copied to the public lookup request"
+
+measurements:
+  interpretation: "Single synthetic samples, not distributions or controlled causal estimates"
+  earlier_direct_voice:
+    end_of_recorded_question_to_answer_pcm_seconds: 12.114
+    eva_connected: false
+  earlier_eva_background:
+    end_of_recorded_question_to_answer_pcm_seconds: 37.891
+  short_lookup_first_attempt:
+    outcome: "Failed: provider search returned no accepted source citations"
+    lookup_step_seconds: 6.154
+    lookup_usage: {input_tokens: 5048, output_tokens: 101, web_actions: 1}
+    retained: true
+  short_lookup_with_explicit_source_instruction:
+    outcome: "Lookup artifact verified with citations; factual forecast not independently checked"
+    end_of_recorded_question_to_answer_pcm_seconds: 26.152
+    question_end_to_lookup_start_seconds: 10.218
+    lookup_step_seconds: 11.482
+    lookup_end_to_answer_pcm_seconds: 4.452
+    lookup_usage: {input_tokens: 9018, output_tokens: 180, web_actions: 2}
+  eager_function_inside_namespace:
+    weather: "No lookup selected; model stated that current lookup was unavailable"
+    unrelated_statistics_question: "Selected background research instead of short lookup"
+    after_instruction_clarification: "Still no lookup selected for the statistics question"
+    cause: "Unknown; these samples do not prove a transport incompatibility"
+  eager_flat_function_latest:
+    question_type: "Public CBS population statistic, requested briefly"
+    route: search_public_info
+    lookup_result: verified
+    backend_request_to_lookup_start_seconds: 7.353
+    lookup_step_seconds: 11.574
+    lookup_end_to_final_text_seconds: 5.869
+    backend_total_seconds: 24.796
+    final_model: gpt-6-sol
+    microphone_and_voice_included: false
+
+  latest_flat_function_voice:
+    route: search_public_info
+    lookup_result: verified
+    end_of_recorded_question_to_answer_pcm_seconds: 21.928
+    question_end_to_lookup_start_seconds: 7.947
+    lookup_step_seconds: 10.343
+    lookup_end_to_answer_pcm_seconds: 3.638
+    note: "Single synthetic voice sample; includes EVA and the original voice transport"
+
+known_limits:
+  - "Software PCM timing does not prove physical speaker playback or complete audible delivery."
+  - "Question-file EOF differs from the last transmitted non-silent microphone sample."
+  - "Native search itself may perform multiple internal operations."
+  - "Source citations establish provenance, not independently verified factual correctness."
+  - "No observed realtime error is not proof that intermittent provider failures are resolved."
+  - "The short route still has three serial model phases: choose tool, public lookup, final wording."
+  - "The bridge currently waits for the final EVA reply before sending it to voice."
+  - "Lookup transport buffers the bounded SSE stream before parsing; no stage-level lookup timing yet."
+  - "Memory retrieval and active-context loading already run concurrently."
+  - "Direct UDP and low event-loop lag were observed in earlier voice probes."
+
+relevant_code:
+  - src/eva/application/conversation.py
+  - src/eva/bootstrap/public_lookup.py
+  - src/eva/bootstrap/runtime.py
+  - src/eva/adapters/model/public_lookup.py
+  - src/eva/adapters/model/pydantic_conversation.py
+  - src/eva/adapters/model/tool_namespaces.py
+  - src/eva/adapters/model/openai_codex_provider.py
+  - src/eva/adapters/model/research_transport.py
+  - src/eva/voice_service/codex_backend.py

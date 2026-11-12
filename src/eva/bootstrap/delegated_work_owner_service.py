@@ -117,15 +117,24 @@ class DelegatedWorkOwnerService:
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
         prior_research = None
         if prior_work_id is not None:
-            if operation != "research" or not isinstance(prior_work_id, str) or not 1 <= len(prior_work_id) <= 240:
-                raise ValueError("prior work is only valid for research follow-up")
+            if operation not in {"research", "digital"} or not isinstance(prior_work_id, str) or not 1 <= len(prior_work_id) <= 240:
+                raise ValueError("invalid prior work")
             self.validate_authority(turn)
-            prior_research = self.store.load(prior_work_id, **self._owner)
-            if (not isinstance(prior_research.spec, DelegatedResearchSpec)
-                    or (prior_research.state in {"admitted", "call_started"}
-                        and prior_research.stop_requested_at is None)
-                    or prior_research.retention_until <= self.now()):
-                raise ValueError("research follow-up requires a finished attempt or a recorded stop")
+            predecessor = self.store.load(prior_work_id, **self._owner)
+            if operation == "research":
+                prior_research = predecessor
+                if (not isinstance(predecessor.spec, DelegatedResearchSpec)
+                        or (predecessor.state in {"admitted", "call_started"}
+                            and predecessor.stop_requested_at is None)
+                        or predecessor.retention_until <= self.now()):
+                    raise ValueError("research follow-up requires a finished attempt or a recorded stop")
+            elif (type(predecessor.spec) is not DelegatedDigitalWorkSpec
+                    or predecessor.state not in {"failed", "ambiguous", "succeeded"}
+                    or predecessor.stop_requested_at is not None
+                    or predecessor.retention_until <= self.now()
+                    or any(getattr(predecessor.spec.source, key) != getattr(turn, key)
+                           for key in ("tenant_id", "installation_id", "principal_id", "conversation_id"))):
+                raise ValueError("package follow-up requires retained work in the same private conversation")
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         if operation == "revise_digital":
             if (any(value is not None for value in (task, work_id, research, intent_id, feedback, schedule, schedule_id, search))
@@ -408,6 +417,21 @@ class DelegatedWorkOwnerService:
                 self.validate_authority(turn)
                 if self.store.load(work_id, **self._owner) != previous:
                     raise DelegatedWorkConflict("work changed during model refusal reconciliation")
+            from eva.adapters.postgres.work_corrections import is_local_host_rejection, reconcile_local_host_rejection
+            if existing is None and is_local_host_rejection(previous):
+                from eva.adapters.connectors.component_evaluation import configured_component_evaluator
+                from eva.adapters.connectors.programming_workspace import configured_programming_workspace
+                from eva.adapters.postgres.work_source_retention import retained_source_guard
+                with retained_source_guard(self, previous.spec) as original:
+                    pass
+                evaluator, programming = configured_component_evaluator(), configured_programming_workspace()
+                if callable(getattr(evaluator, 'owned_package_no_dispatch', None)) and programming is not None:
+                    reconciliation = reconcile_local_host_rejection(self.store._engine, previous, original,
+                        now=self.now(), close_session=programming.close,
+                        read_host_proof=evaluator.owned_package_no_dispatch, queue_scope=self.store.scope)
+                    self.validate_authority(turn)
+                    if self.store.load(work_id, **self._owner) != previous:
+                        raise DelegatedWorkConflict('work changed during host rejection reconciliation')
             if reconciliation is None:
                 return {**response, "status": "not_resumable", "created": False,
                         "prior_outcome_unknown": True, "previous": self._view(previous, turn=turn),

@@ -1,0 +1,318 @@
+{
+  "recorded_at": "2026-10-13T18:54:37.057074+00:00",
+  "status": "research_and_date_repairs_installed_dutch_forecast_returned_latency_open",
+  "owner_request": "Fix the separate search failure instead of stopping after the greeting change.",
+  "changes": [
+    "Pass the admitted three-action total explicitly in the research instructions; retain measured post-response budget enforcement.",
+    "Classify measured research overruns as budget_exceeded/failed, retain usage and never replay or publish rejected content.",
+    "Align the worker with the already-installed household deadline clamp. The unmatched module had prevented household digital work from being claimed.",
+    "Clarify the household digital action has HA-only tools and direct external public information to start_background_research.",
+    "Include the admitted current turn timestamp in model instructions to ground relative dates independently of old memory."
+  ],
+  "provider_constraint": {
+    "official_reference": "https://developers.openai.com/api/docs/guides/deep-research",
+    "direct_subscription_probe": {
+      "status": 400,
+      "detail": "Unsupported parameter: max_tool_calls"
+    },
+    "installed_request_omits_unsupported_parameter": true,
+    "prompt_is_not_hard_provider_enforcement": true,
+    "granted_maximum_tool_calls_before_and_after": 3
+  },
+  "tests": {
+    "research_and_lifecycle_passed": 21,
+    "date_and_existing_contact_stream_checks_passed": 13,
+    "research_regressions_fail_on_old_source": 3,
+    "date_regressions_fail_without_timestamp": 2,
+    "household_catalog_valid": true,
+    "core_worker_execution_source_files_compared": 59
+  },
+  "direct_research_probe": {
+    "ok": true,
+    "seconds": 18.72,
+    "usage": {
+      "input_tokens": 10265,
+      "measurement": "measured",
+      "model_attempts": 1,
+      "output_tokens": 387,
+      "tool_calls": 2
+    },
+    "content": "## Amsterdam: woensdag 14 oktober 2026\n\n**De lokale verwachting geeft circa 10°C in de ochtend en 17°C in de middag, met veel bewolking en later enkele opklaringen.** ’s Avonds daalt de temperatuur naar ongeveer 12°C. \n\n### Bronfeiten\n- **Temperatuur en bewolking:** bovenstaande waarden komen uit de opgevraagde uurverwachting voor Amsterdam. \n- **Regen en wind:** het KNMI verwacht voor woensdag landelijk droog weer en een zwakke tot matige zuidwestenwind. De landelijke verwachting is bijgewerkt op **13 oktober 2026 om 20.21 uur**. ([knmi.nl](https://www.knmi.nl/nederland-nu/weer/verwachtingen))\n\n### Beperking en conclusie\nDe bronnen verschillen over de hoeveelheid zon: het KNMI noemt landelijk flinke zonnige perioden, terwijl de lokale uurverwachting voor Amsterdam meer bewolking aangeeft. **Hoe zonnig het precies wordt, is daarmee onzeker.** De lokale gegevens bevatten geen neerslagpercentage of windsnelheid; daarvoor is alleen de landelijke KNMI-indicatie beschikbaar. ([knmi.nl](https://www.knmi.nl/nederland-nu/weer/verwachtingen))\n\n**Mijn advies:** draag laagjes en neem een jas mee voor de koelere ochtend en avond.\n\n## Bronnen\n\n- [KNMI - Weer - Verwachtingen](https://www.knmi.nl/nederland-nu/weer/verwachtingen)",
+    "sources": [
+      "https://www.knmi.nl/nederland-nu/weer/verwachtingen"
+    ]
+  },
+  "dutch_spoken_probe": {
+    "result": "weather_return_smoke",
+    "ready_after_wake_seconds": 12.96,
+    "core_completed": 1,
+    "core_failed": 0,
+    "saved_result_parts": 1,
+    "result_preview": "## Amsterdam — woensdag 14 oktober 2026\n\n**De verwachte minimumtemperatuur is circa 10 °C en de maximumtemperatuur circa 17 °C**, afgeleid uit de actuele uurverwachting voor Amsterdam. \n\n- **Bronfeit:** de lokale uurverwachting vermeldt ongeveer **10 °C om 08.00 uur** en **17 °C in de namiddag**. Dit zijn de laagste en hoogste weergegeven uurtemperaturen. \n- **Primaire controlebron:** het KNMI noemt in zijn landelijke verwachting van **13 oktober 2026, 20.21 uur** een nachtminimum rond **8 °C** en een middagmaximum rond **17 °C**. Deze cijfers gelden landelijk, niet specifiek voor Amsterdam. ([knmi.nl](https://www.knmi.nl/nederland-nu/weer/verwachtingen))\n\n**Conclusie en beperking:** voor Amsterdam is **ongeveer 10–17 °C** de best beschikbare lokale indicatie uit de geraadpleegde uurverwachting; het betreft afgeleide uur-extremen, geen afzonderlijk gepubliceerde dagelijkse minimum- en maximumwaarden.\n\n## Bronnen\n\n- [KNMI - Weer - Verwachtingen](https://www.knmi.nl/nederland-nu/weer/verwachtingen)",
+    "pcm_after_result": 221760,
+    "transcripts": [
+      {
+        "role": "user",
+        "text": " Wat wordt morgen de temperatuur in Amsterdam",
+        "occurred_at": "2026-10-13T18:51:56Z",
+        "interrupted": false
+      },
+      {
+        "role": "assistant",
+        "text": " Moment, ik kijk even.",
+        "occurred_at": "2026-10-13T18:51:58Z",
+        "interrupted": true
+      },
+      {
+        "role": "assistant",
+        "text": " Morgen in Amsterdam ligt de temperatuur naar verwachting tussen ongeveer 10 en 17 graden. In de ochtend rond de 10, en in de namiddag rond de 17.",
+        "occurred_at": "2026-10-13T18:52:37Z",
+        "interrupted": true
+      }
+    ],
+    "pcm_samples": 294224,
+    "closed_early": false,
+    "elapsed_seconds": 58.36
+  },
+  "saved_work": {
+    "work_id": "work:household:b719c91d-c25f-52da-8a60-ff721ba63853",
+    "state": "succeeded",
+    "task": "Wat is de verwachte minimum- en maximumtemperatuur in Amsterdam op woensdag 14 oktober 2026? Raadpleeg actuele openbare weersbronnen.",
+    "created_at": "2026-10-13T18:51:56+00:00",
+    "call_started_at": "2026-10-13T18:52:08+00:00",
+    "completed_at": "2026-10-13T18:52:25+00:00",
+    "usage": {
+      "contract": "DelegatedWorkUsage/v1",
+      "tool_calls": 2,
+      "measurement": "measured",
+      "input_tokens": 10279,
+      "total_tokens": 10632,
+      "output_tokens": 353,
+      "schema_version": 1,
+      "cost_usd_micros": 120440,
+      "completed_model_responses": 1
+    },
+    "maximum_tool_calls": 3
+  },
+  "timing_seconds": {
+    "local_greeting_started": 0.022,
+    "media_ready": 12.96,
+    "core_request": 16.529,
+    "core_final": 29.196,
+    "forecast_speech_turn_started": 47.293,
+    "forecast_speech_turn_done": 57.86,
+    "test_completed": 58.36
+  },
+  "synthetic_input": {
+    "text": "Wat wordt morgen de temperatuur in Amsterdam?",
+    "generator": "Existing Home Assistant Dutch TTS; decoded to mono PCM16 16 kHz",
+    "sha256": "93db5649038c7b8d00de03615b273caa8b445ae2fcbeb8b3bb7dc2cc866e6364",
+    "recognized_transcript": " Wat wordt morgen de temperatuur in Amsterdam"
+  },
+  "intermediate_findings": [
+    "The first newly generated input was invalid: appendSpeech answered the requested question instead of reading it verbatim. Both trials using that clip are excluded as weather tests.",
+    "A valid Dutch question initially selected HA-only digital work. After source parity was repaired that task reported its source could not establish Amsterdam weather; its failure is preserved.",
+    "After routing correction, a real research result and speech returned, but the core had changed tomorrow into October 5. That task remains succeeded at its own submitted research question, not counted as fulfilling the spoken question.",
+    "The final trial searched October 14 and returned a concrete forecast through the actual subscription voice and EVA core/worker path."
+  ],
+  "installation": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "image": "sha256:f8121a5e346488ff4a2f791f80a650650565957f24a8cf374482f0513b429249",
+      "health": "healthy",
+      "sha256": {
+        "adapters/model/pydantic_conversation.py": "ab03226185bf5c2e20feb61c2d1344db0760aea5886b2c43eee49d1969dc7f26",
+        "bootstrap/delegated_research.py": "dc322d11141873e602cf552c9fa16d3d15623fd7c3ae93dbf53c98c23744cdae",
+        "bootstrap/household_work.py": "765fff4d1039d8ae409787957d5fa449235030289b22c756603ac19160b2aa26",
+        "bootstrap/household_digital_work.py": "7702e798ec6b15853df97e9385fa251f38985ca648cccc4ec8d8ac3470cf5386"
+      }
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:6da4bafca8564ed7bc1a336f5388f2611d64612286f5b09df059dd5c91189aa4",
+      "health": "healthy",
+      "sha256": {
+        "adapters/model/pydantic_conversation.py": "ab03226185bf5c2e20feb61c2d1344db0760aea5886b2c43eee49d1969dc7f26",
+        "bootstrap/delegated_research.py": "dc322d11141873e602cf552c9fa16d3d15623fd7c3ae93dbf53c98c23744cdae",
+        "bootstrap/household_work.py": "765fff4d1039d8ae409787957d5fa449235030289b22c756603ac19160b2aa26",
+        "bootstrap/household_digital_work.py": "7702e798ec6b15853df97e9385fa251f38985ca648cccc4ec8d8ac3470cf5386"
+      }
+    }
+  ],
+  "private_deployment_receipt": "/var/lib/eva2/voice-session/codex-20261013/research-budget-install.json",
+  "policy_change": "Only provider configuration hash changed in a new overlay artifact. Original policy, account, permissions, tool limits and historical task records retained.",
+  "deployment_note": "Initial startup rejected the changed provider configuration. Resolved the effective nested bind mount and added a matching policy overlay before final verification; both services are healthy.",
+  "module_provenance": "The three new source modules match the repository. Worker household_digital_work was copied from the exact already-patched running core, preserving its older module structure and the single deadline correction.",
+  "historical_failed_research_replayed": false,
+  "physical_speaker_verified": false,
+  "raw_user_audio_recorded": false,
+  "remaining": [
+    "Forecast speech began about 47 seconds after simulated wake; latency remains too high for fluent voice.",
+    "Physical microphone, echo, interruption and speaker quality require acoustic verification.",
+    "Prompted search limits remain subject to provider behavior; measured overshoots fail explicitly."
+  ],
+  "reproducer": "development/tools/voice/weather_return_smoke.py",
+  "diagnostics": [
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "ice_ready",
+      "elapsed_ms": 7507
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "account_start",
+      "elapsed_ms": 18
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "wake_greeting_started",
+      "elapsed_ms": 22
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "wake_greeting_finished",
+      "elapsed_ms": 228
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "account_ready",
+      "elapsed_ms": 654
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "voice_answer_ready",
+      "elapsed_ms": 1526
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 12957,
+      "kind": "session.started",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "media_ready",
+      "elapsed_ms": 12957
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 14320,
+      "kind": "turn.created",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 16045,
+      "kind": "delegation.created",
+      "role": null
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "codex_event",
+      "elapsed_ms": 16055,
+      "method": "turn/started"
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "core_request",
+      "elapsed_ms": 16529,
+      "recent_count": 0
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "core_request_acknowledged",
+      "elapsed_ms": 16593
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 16962,
+      "kind": "turn.done",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 16964,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "first_output_audio",
+      "elapsed_ms": 16968
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 19046,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "core_final",
+      "elapsed_ms": 29196
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "codex_event",
+      "elapsed_ms": 29211,
+      "method": "turn/completed"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 29281,
+      "kind": "delegation.context.appended",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 47293,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "provider_event",
+      "elapsed_ms": 57860,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+      "stage": "closing",
+      "elapsed_ms": 58362,
+      "audio_received": 2197,
+      "audio_suppressed": 128
+    }
+  ]
+}

@@ -199,6 +199,12 @@ class McpOwnerAuthority:
             if not addresses or not addresses.issubset(managed[canonical_endpoint]):
                 raise ConversationConflict("managed connector endpoint address differs")
             return
+        # Host-installed packages have an exact authenticated endpoint and an
+        # independent accepted review. Treat only that owner-bound endpoint as
+        # managed; do not broaden CIDRs or trust model-supplied network claims.
+        from eva.adapters.connectors.component_evaluation import owned_package_transport_auth
+        if owned_package_transport_auth(turn, canonical_endpoint) is not None:
+            return
         local = tuple(ipaddress.ip_network(item) for item in self._mandate["local_networks"])
         if not addresses or any(not (
             (address.is_global and parsed.scheme == "https" and (parsed.port or 443) == 443

@@ -586,6 +586,31 @@ def test_current_work_can_plan_requested_followup_without_polling(replayed, plan
     assert ("opgeslagen" in reply.text) is planning_available
 
 
+def test_household_destination_receipt_stays_on_contact_model():
+    name = "set_household_work_destination"
+    class DestinationActions(Actions):
+        def available_action_names(self, source):
+            return (name,) if source.audience.kind == "household" else ()
+    household = replace(turn(principal="household-device"),
+        conversation_id="household:home:conversation:speaker",
+        message_id="household:home:conversation:speaker:destination",
+        audience=MemoryAudience.household(principal_id="household-device", household_id="home",
+            consent_ref=HouseholdConsentReference("household-device", "home", "household-consent:one")))
+    def choose(source, context):
+        if context["completed_action"] is None:
+            assert name in context["available_actions"]
+            return ConversationActionCall("destination", name,
+                {"destination": {"work_id": "work:example", "satellite_id": "assist_satellite.garden"}})
+        return "De afleverplek is opgeslagen."
+    contact = Model(choose)
+    work = Model(lambda *_: pytest.fail("destination acknowledgement switched to work model"))
+    actions = DestinationActions()
+    reply = LivingConversation(_Memory(), work, IDENTITY, actions, contact_model=contact).respond(household)
+    assert reply.text == "De afleverplek is opgeslagen."
+    assert len(contact.calls) == 2 and not work.calls
+    assert actions.available_action_names(turn()) == ()
+
+
 @pytest.mark.parametrize("remote_first,reader_id,status,source,expected_work,external_verified", [
     (False, "eva-stored-result:" + "a"*64 + ":" + "b"*64, "verified", "stored_connector_result", 0, False),
     (False, "eva-stored-result:" + "a"*64 + ":" + "b"*64, "selection_invalid", "stored_connector_result", 0, False),

@@ -1,0 +1,68 @@
+{
+  "scope": "Installed content-free diagnostics; two synthetic probes. No latency improvement inferred from sampling variability.",
+  "diagnostics": [],
+  "tests": {
+    "targeted": 32,
+    "telemetry_privacy_and_chunking": 1
+  },
+  "voice": {
+    "file": "/tmp/eva-voice-improve/eva-public-lookup-timing.jsonl",
+    "question_eof_ms": 3960,
+    "first_answer_pcm_ms": 30934,
+    "latency_ms": 26974,
+    "lookup_verified": true,
+    "physical_playback_verified": false
+  },
+  "other_topic_backend": {
+    "file": "/tmp/eva-voice-improve/eva-public-statistics-timing.jsonl",
+    "latency_ms": 19390,
+    "lookup_verified": true,
+    "includes_audio": false
+  },
+  "limitations": [
+    "No controlled evidence of a speedup; the previous 21.928s voice sample was faster.",
+    "Two different questions and a restarted process do not isolate cold startup costs.",
+    "Citations are present; semantic claims are not independently checked.",
+    "Native transport timings expose provider events, not internal provider computation.",
+    "Three model requests remain serial; no memory or authority checks removed."
+  ],
+  "source_sha256": {
+    "application/conversation.py": "8ce6fae73ec807e76efbd31eba3e15a088ee71c3d108bfe5e5528ee266e64df2",
+    "adapters/model/research_transport.py": "2e179d3361b4d38cf0c146c2f36c1e6738debeb9d44dd4f052c1da1805793fbe",
+    "adapters/model/research_timing.py": "8463fc4b4b871914deaad3eed22ed09d4244aac1012937df0384ba1f41054d14"
+  },
+  "installed": {
+    "core": {
+      "image": "sha256:cbb55540b7a6b68163e86425fe6659f0405a0c9411ed4304e17c8a69de828732",
+      "health": "healthy"
+    },
+    "worker": {
+      "image": "sha256:814be286331bb19fcc5dedd0150404a68a248f1a988fb19c98053f74a005dc49",
+      "health": "healthy"
+    }
+  },
+  "installed_source_parity": {
+    "core": {
+      "changed": [
+        "application/conversation.py",
+        "adapters/model/research_transport.py"
+      ],
+      "added": [
+        "adapters/model/research_timing.py"
+      ],
+      "removed": [],
+      "unchanged": 349
+    },
+    "worker": {
+      "changed": [
+        "application/conversation.py",
+        "adapters/model/research_transport.py"
+      ],
+      "added": [
+        "adapters/model/research_timing.py"
+      ],
+      "removed": [],
+      "unchanged": 349
+    }
+  }
+}

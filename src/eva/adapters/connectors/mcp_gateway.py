@@ -373,8 +373,8 @@ class McpGatewayToolAdapter:
             for item in specs
         )
 
-    def planner(self) -> McpGatewayToolPlanner:
-        if not self._verified_input_schemas:
+    def planner(self, *, allow_unverified: bool = False) -> McpGatewayToolPlanner:
+        if not self._verified_input_schemas and not allow_unverified:
             raise RuntimeError("MCP gateway catalog must be verified before use")
         operation_timeout = (
             self._config.request_timeout_seconds

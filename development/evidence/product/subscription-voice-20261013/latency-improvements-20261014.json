@@ -1,0 +1,99 @@
+{
+  "status": "installed_partial_improvements_latency_not_accepted",
+  "date": "2026-10-14",
+  "quality_accepted": false,
+  "installed_changes": [
+    "Move tokenizer and model imports to service startup without upstream requests; offline cold preparation improvement approximately 1.2 seconds.",
+    "Resolve relative dates from explicit Europe/Amsterdam local calendar dates, retaining UTC turn timestamp.",
+    "Poll saved work every 250 ms plus request time for up to 60 seconds after verified admission; retain two-second idle cadence.",
+    "Record allowlisted provider failure metadata without raw provider error text, transcripts, tokens or exception traces."
+  ],
+  "retained_targeted_tests": {
+    "voice": 33,
+    "date_and_provider_failure": 10
+  },
+  "candidate_not_retained": {
+    "change": "Load three authorized work handoff schemas eagerly",
+    "unit_tests_passed": 60,
+    "live_outcome": "No research tool was invoked; model declined weather lookup; probe timed out awaiting saved result.",
+    "causal_regression_proven": false,
+    "action": "Reverted only candidate source/test and installed image overlay; earlier fixes retained."
+  },
+  "installed": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:abfc4969c92dafd124f63912259a4bad43ddba13e865076572be0aa31e239ef2",
+      "running": true,
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:b5dddce90703f4062941835d71668ac200f9cb52bb5f8925cede087354a21b0c",
+      "running": true,
+      "health": "healthy"
+    },
+    "eva2-household-speaker-1": {
+      "image": "sha256:db33f7e07c47e7faafe4f0b3918f7a50972ea09dc267c00a9a6131af55963bc1",
+      "running": true,
+      "health": null
+    }
+  },
+  "successful_eva_weather_probe": {
+    "question": "Wat wordt morgen de temperatuur in Amsterdam?",
+    "source_clip_end_ms": 4025,
+    "first_ack_sink_ms": 6364,
+    "first_forecast_sink_ms": 52797,
+    "response_after_source_clip_end_ms": 48772,
+    "contact_model_ms": 10686,
+    "research_worker_elapsed_seconds_approx": 30,
+    "work_state": "succeeded",
+    "research_usage": {
+      "measurement": "measured",
+      "input_tokens": 8985,
+      "output_tokens": 242,
+      "model_responses": 1,
+      "web_actions": 1
+    },
+    "ice": "host-to-host UDP; no relay selected",
+    "event_loop_lag_ms": {
+      "p95": 5.98,
+      "max": 73.58
+    }
+  },
+  "failed_provider_probe": {
+    "state": "ambiguous",
+    "error_code": "internal_error",
+    "research_usage": "unmeasured",
+    "finding": "Provider stream terminal failure prevented a verified source artifact; original terminal subtype was not retained. No replay or reset."
+  },
+  "direct_codex_probe": {
+    "eva_core_connected": false,
+    "eva_work_admitted": false,
+    "voice_model_requested": "gpt-live-1-codex",
+    "voice_model_echoed": false,
+    "text_model_requested_and_returned": "gpt-6-sol",
+    "reasoning_effort_requested": "none",
+    "web_search_requested": "live",
+    "source_clip_end_ms": 3708,
+    "first_ack_sink_ms": 6161,
+    "first_forecast_sink_ms": 17456,
+    "ack_after_source_clip_end_ms": 2453,
+    "forecast_after_source_clip_end_ms": 13748,
+    "backend_turn_started_ms": 5398,
+    "backend_turn_completed_ms": 16450,
+    "backend_turn_duration_ms": 11052,
+    "ice": "host-to-host UDP; no relay selected",
+    "event_loop_lag_ms": {
+      "p95": 1.53,
+      "max": 3.09
+    },
+    "forecast_correctness_verified": false,
+    "web_search_execution_verified": false,
+    "limitations": "Native search was enabled, but the probe did not retain native tool events or source citations. A forecast was spoken; no verified-weather success claim. Backend usage was not collected and is unknown."
+  },
+  "interpretation": [
+    "EVA memory/contact/durable research was not involved in the direct sample. Remaining latency includes native Codex backend work, not solely voice generation.",
+    "Single samples from different requests and times cannot establish a stable speedup or isolate every configuration difference.",
+    "Microphone EOF and first nonquiet software sink PCM are instrumented timestamps, not physical loudspeaker measurements.",
+    "No production switch to direct Codex tools, alternate model, VAD, noise reduction or transport settings.",
+    "Production retains Sol contact and Astra/medium research; simple questions do not yet have a separate lightweight lookup path."
+  ]
+}

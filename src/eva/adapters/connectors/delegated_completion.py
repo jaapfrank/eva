@@ -7,7 +7,7 @@ import json
 from eva.adapters.connectors.home_assistant_completion import (
     _automation_config_target, _full_automation_readback, _automation_batch_readbacks,
 )
-from eva.adapters.postgres.component_improvement_actions import DRAFT, EVALUATE, PREPARE, COMPARE
+from eva.adapters.postgres.component_improvement_actions import DRAFT, EVALUATE, PREPARE, COMPARE, REPAIR
 from eva.adapters.postgres.programming_actions import (
     programming_tool_name, LIST as PROGRAMMING_LIST, CALL as PROGRAMMING_CALL,
     WRITE as PROGRAMMING_WRITE, START as PROGRAMMING_START,
@@ -127,6 +127,15 @@ def completed_tool_evidence(receipts):
             completed = False
             continue
         output = receipt.output
+        if receipt.call.name == REPAIR:
+            result = output.get('operation_result', {})
+            if output.get('status') != 'verified':
+                return False
+            if receipt.call.arguments == {'action':'submit'}:
+                if result.get('accepted') is not True or result.get('installed') is not False:
+                    return False
+                completed = True  # Handoff completes this phase, not the repair incident.
+            continue
         if receipt.call.name in {"save_work_progress", "get_delegated_work", PROGRAMMING_LIST}:
             # Planning and reading a predecessor are context, not new completed work.
             continue

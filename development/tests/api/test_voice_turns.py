@@ -158,3 +158,11 @@ def test_private_return_http_binds_owner_session_and_rechecks_after_read():
     runtime.private_work_return = revoke
     denied = client.post(path, headers=headers, json={'session_id': session})
     assert denied.status_code == 403 and 'PRIVATE' not in denied.text
+
+def test_unconfirmed_audio_is_not_reported_as_interruption_or_completion():
+    client, config, runtime = setup()
+    data=payload();data['active_work']=[]
+    data['recent'][0].update(interrupted=False,playback_status='unconfirmed')
+    response=client.post(PATH,headers={'Authorization':'Bearer '+TOKEN},json=data)
+    assert response.status_code==200
+    assert runtime.context.recent[0].playback_status=='unconfirmed'

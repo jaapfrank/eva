@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Gebruik één nieuwe echte interne fout met een geldige oorspronkelijke eigenaarstaak en actuele bron. Volg die via Eva’s eigen kandidaat en onafhankelijke beoordeling naar veilige installatie, controle en later hergebruik.",
+    "nextAction": "Volg het automatisch aangenomen hersteldoel voor dezelfde fout door Eva’s eigen ontwikkeltaak, onafhankelijke beoordeling, veilige installatie en bewezen later gebruik.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
-    "executionStep": "Observe a fresh real autonomous repair and later reuse",
+    "executionStep": "Provide complete proven original import closure for the same independent assessment",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-07T16:22:10.472360+00:00",
+    "checkedAt": "2026-11-07T19:14:31.024017+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -869,7 +869,7 @@
       "knownBaselineFailuresRetained": true,
       "historicalProducerUnchanged": true
     },
-    "latestEvidence": "development/evidence/reassessment/e416-live-source-binding-20261107.json"
+    "latestEvidence": "development/evidence/reassessment/e416-source-binding-repair-20261107.json"
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -3674,13 +3674,13 @@
         },
         "now": {
           "taskId": "E4.16",
-          "title": "E4.16 · Een nieuwe echte autonome reparatie aantonen",
-          "summary": "Live planning gelezen. Een herstelzaak met geldige bronbinding ontbreekt.",
-          "detail": "De live proef via het eigenaarsdashboard las de geplande taken en gaf antwoord. Er ontstond geen nieuwe herstelzaak. De terugkerende waarschuwing van de oude herstelpoging blijft buiten de herstelroute door de afwijkende bronhash.",
+          "title": "E4.16 · Dezelfde achtergrondfout autonoom herstellen",
+          "summary": "Oorspronkelijke afhankelijkheidsketen completeren na vastgelegde beoordelingsblokkade.",
+          "detail": "Eva heeft de onafhankelijke vervolgbeoordeling zelf gestart. Die stopte terecht: de oorspronkelijke code kon niet laden doordat onderliggende bronmodules ontbraken. De volledige oorspronkelijke afhankelijkheidsketen wordt nu gecontroleerd. Beide weigeringen en Eva’s kandidaat blijven behouden; er is geen geldig oordeel, installatie van de reparatie of hergebruik bewezen.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Open · actuele zaak met geldige bronbinding ontbreekt",
-          "checkedAt": "2026-11-07T16:22:10.472360+00:00",
-          "nextAction": "Gebruik één nieuwe echte interne fout met een geldige oorspronkelijke eigenaarstaak en actuele bron. Volg die via Eva’s eigen kandidaat en onafhankelijke beoordeling naar veilige installatie, controle en later hergebruik."
+          "state": "Bezig · onafhankelijke reproductie deblokkeren",
+          "checkedAt": "2026-11-07T19:14:31.024017+00:00",
+          "nextAction": "Volg het automatisch aangenomen hersteldoel voor dezelfde fout door Eva’s eigen ontwikkeltaak, onafhankelijke beoordeling, veilige installatie en bewezen later gebruik."
         },
         "next": {
           "taskId": "E4.15",
@@ -9282,8 +9282,8 @@
                   "E4.13"
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
-                "gap": "De live proef via het eigenaarsdashboard las de geplande taken en gaf antwoord. Er ontstond geen nieuwe herstelzaak. De terugkerende waarschuwing van de oude herstelpoging blijft buiten de herstelroute door de afwijkende bronhash.",
-                "nextAction": "Gebruik één nieuwe echte interne fout met een geldige oorspronkelijke eigenaarstaak en actuele bron. Volg die via Eva’s eigen kandidaat en onafhankelijke beoordeling naar veilige installatie, controle en later hergebruik.",
+                "gap": "Eva heeft de onafhankelijke vervolgbeoordeling zelf gestart. Die stopte terecht: de oorspronkelijke code kon niet laden doordat onderliggende bronmodules ontbraken. De volledige oorspronkelijke afhankelijkheidsketen wordt nu gecontroleerd. Beide weigeringen en Eva’s kandidaat blijven behouden; er is geen geldig oordeel, installatie van de reparatie of hergebruik bewezen.",
+                "nextAction": "Volg het automatisch aangenomen hersteldoel voor dezelfde fout door Eva’s eigen ontwikkeltaak, onafhankelijke beoordeling, veilige installatie en bewezen later gebruik.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -9321,9 +9321,9 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-07T16:22:10.472360+00:00",
-                "progress": "De rolgebonden herstelroute en providerfoutafhandeling draaien. De ontbrekende reproductie van de zaak van 26 oktober is afzonderlijk uitgevoerd op beide oorspronkelijke images. Eva’s bewaarde kandidaat ving de fout af. Een nieuwe autonome installatie en later hergebruik zijn nog niet bewezen.",
-                "latestEvidence": "development/evidence/reassessment/e416-live-source-binding-20261107.json",
+                "checkedAt": "2026-11-07T19:14:31.024017+00:00",
+                "progress": "Eva heeft zelf een kandidaat gemaakt. De onafhankelijke beoordelaar heeft terecht geen proef verzonnen: gebonden afhankelijkheden, oorspronkelijke aanroep en privacyveilige foutinvoer ontbraken. Die invoeroverdracht wordt nu binnen dezelfde herstelzaak aangevuld; oorspronkelijke kandidaat, weigering, taak-STOP en live versies blijven behouden. Vergelijking, installatie en hergebruik zijn nog niet bewezen.",
+                "latestEvidence": "development/evidence/reassessment/e416-source-binding-repair-20261107.json",
                 "scopedTelegramRepairAuthorization": {
                   "at": "2026-10-27T07:47:07.435768+00:00",
                   "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -9816,6 +9816,16 @@
                   "fullCardCompleted": false,
                   "historicalOriginalReproduced": true,
                   "historicalCandidateComparisonPassed": true
+                },
+                "sourceBindingContinuation20261107": {
+                  "evidence": "development/evidence/reassessment/e416-source-binding-repair-20261107.json",
+                  "sourceMatches": true,
+                  "oldWorkReplayed": false,
+                  "status": "host_fault_binding_installed_autonomous_incident_admitted",
+                  "fullE416Complete": false,
+                  "installed": true,
+                  "originalWorkStopPreserved": true,
+                  "unpromptedIntakeProven": true
                 }
               },
               {
@@ -16514,8 +16524,8 @@
                 "E4.13"
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
-              "gap": "De live proef via het eigenaarsdashboard las de geplande taken en gaf antwoord. Er ontstond geen nieuwe herstelzaak. De terugkerende waarschuwing van de oude herstelpoging blijft buiten de herstelroute door de afwijkende bronhash.",
-              "nextAction": "Gebruik één nieuwe echte interne fout met een geldige oorspronkelijke eigenaarstaak en actuele bron. Volg die via Eva’s eigen kandidaat en onafhankelijke beoordeling naar veilige installatie, controle en later hergebruik.",
+              "gap": "Eva heeft de onafhankelijke vervolgbeoordeling zelf gestart. Die stopte terecht: de oorspronkelijke code kon niet laden doordat onderliggende bronmodules ontbraken. De volledige oorspronkelijke afhankelijkheidsketen wordt nu gecontroleerd. Beide weigeringen en Eva’s kandidaat blijven behouden; er is geen geldig oordeel, installatie van de reparatie of hergebruik bewezen.",
+              "nextAction": "Volg het automatisch aangenomen hersteldoel voor dezelfde fout door Eva’s eigen ontwikkeltaak, onafhankelijke beoordeling, veilige installatie en bewezen later gebruik.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -16553,9 +16563,9 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-07T16:22:10.472360+00:00",
-              "progress": "De rolgebonden herstelroute en providerfoutafhandeling draaien. De ontbrekende reproductie van de zaak van 26 oktober is afzonderlijk uitgevoerd op beide oorspronkelijke images. Eva’s bewaarde kandidaat ving de fout af. Een nieuwe autonome installatie en later hergebruik zijn nog niet bewezen.",
-              "latestEvidence": "development/evidence/reassessment/e416-live-source-binding-20261107.json",
+              "checkedAt": "2026-11-07T19:14:31.024017+00:00",
+              "progress": "Eva heeft zelf een kandidaat gemaakt. De onafhankelijke beoordelaar heeft terecht geen proef verzonnen: gebonden afhankelijkheden, oorspronkelijke aanroep en privacyveilige foutinvoer ontbraken. Die invoeroverdracht wordt nu binnen dezelfde herstelzaak aangevuld; oorspronkelijke kandidaat, weigering, taak-STOP en live versies blijven behouden. Vergelijking, installatie en hergebruik zijn nog niet bewezen.",
+              "latestEvidence": "development/evidence/reassessment/e416-source-binding-repair-20261107.json",
               "scopedTelegramRepairAuthorization": {
                 "at": "2026-10-27T07:47:07.435768+00:00",
                 "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -17048,6 +17058,16 @@
                 "fullCardCompleted": false,
                 "historicalOriginalReproduced": true,
                 "historicalCandidateComparisonPassed": true
+              },
+              "sourceBindingContinuation20261107": {
+                "evidence": "development/evidence/reassessment/e416-source-binding-repair-20261107.json",
+                "sourceMatches": true,
+                "oldWorkReplayed": false,
+                "status": "host_fault_binding_installed_autonomous_incident_admitted",
+                "fullE416Complete": false,
+                "installed": true,
+                "originalWorkStopPreserved": true,
+                "unpromptedIntakeProven": true
               }
             },
             {

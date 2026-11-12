@@ -40,7 +40,6 @@ class ResearchSourceCoverageError(ConversationModelError):
                          model_usage=model_usage)
 
 
-
 class ResearchCitationError(ConversationModelError):
     """A completed research response has an unusable cited source URL."""
 

@@ -1,0 +1,49 @@
+{
+  "contract": "Eva2E419IndependentNormalRestoreExecutionRegistration/v1",
+  "task": "E4.19",
+  "status": "NORMAL_AND_DATA_RESTORE_EXECUTABLE_BASELINE_PREFLIGHT_PASSED_IMAGE_AND_RECOVERY_EXECUTION_PENDING_EXACT_ACCEPTED_RELEASE",
+  "criteriaRef": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/criteria.private.json",
+    "sha256": "068d4f3887e0dff659e852bc0b83c1b505df3b5a1ec2f1eba1ef460be0ee16c5"
+  },
+  "executionRef": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/normal-restore-execution.private.json",
+    "sha256": "6811afab1e6318f5e107a34db6d61d17346401b86353144471068143239983cd"
+  },
+  "baselineOnlyEvidencePassed": 4,
+  "actualRoles": [
+    "core",
+    "delegated-work-worker"
+  ],
+  "knownSyntheticArchiveRows": 2,
+  "actualAcceptedCandidateCompared": false,
+  "newImageCleanLoadAndRecoveryProof": "pending exact accepted release",
+  "fullOriginalTaskCompleted": false,
+  "criteriaChanged": false,
+  "reusedExistingSixCriteria": true,
+  "runtimeModelRequests": 0,
+  "productionWrites": 0,
+  "findingsForCoordinator": [
+    {
+      "id": "E419-RESTORE-LAYERS-001",
+      "priority": 1,
+      "status": "executor_reports_fixed_pending_bundled_source_review",
+      "file": "src/tools/installation_runtime_image_restore.py",
+      "observed": "Original256layerlimit rejected actual271layercore; actualOCI image identity must also correctly bind manifest/config graph."
+    },
+    {
+      "id": "E419-FIXTURE-TYPE-002",
+      "priority": 2,
+      "status": "executor_reports_fixed_pending_bundled_source_review",
+      "file": "src/eva/operations/runtime_dependency_update.py",
+      "observed": "Actual frozen fixture serverVersionNum is SHOWvalue string180006; arithmetic without explicit validation fails."
+    },
+    {
+      "id": "E419-COMPARISON-TIME-003",
+      "priority": 2,
+      "status": "executor_reports_fixed_pending_bundled_source_review",
+      "file": "src/eva/operations/runtime_dependency_update.py",
+      "observed": "Frozen evaluator returns elapsed_ms; elapsed_seconds lookup silently lost measured walltime."
+    }
+  ]
+}

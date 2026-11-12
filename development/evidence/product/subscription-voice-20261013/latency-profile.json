@@ -1,0 +1,55 @@
+{
+  "recorded_at": "2026-10-13T20:08:04.677393+00:00",
+  "status": "historical_latency_profile_not_acoustic_measurement",
+  "source": "research-repair.json",
+  "session_id": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+  "measurement_correction": {
+    "start": "simulated wake / media start, including connection setup and the question",
+    "end": "receipt of provider assistant turn.created event for forecast",
+    "elapsed_seconds": 47.293,
+    "first_forecast_pcm_timestamp_recorded": false,
+    "physical_speaker_verified": false,
+    "audio_received_after_saved_result_samples": 221760,
+    "warning": "Provider turn start is not an acoustic onset measurement; sample count does not prove intelligibility or complete physical playback."
+  },
+  "phases_seconds": {
+    "wake_to_session_started": 12.957,
+    "session_started_to_core_request": 3.572,
+    "core_request_to_final": 12.667,
+    "core_final_to_forecast_turn_event": 18.097
+  },
+  "connection_detail_seconds": {
+    "account_ready": 0.654,
+    "remote_answer_ready": 1.526,
+    "remote_answer_to_session_started": 11.431,
+    "network_vs_provider_startup_split": "not instrumented"
+  },
+  "core_detail": {
+    "initial_memory_seconds": 2.383,
+    "memory_source": "running core conversation_initial_memory_timing log, message SHA256 4c9ced7b4784077b42a71cc9e4930ca057a532ae553e92f667d37a16c1af98be",
+    "model_admitted_utc": "2026-10-13T18:52:01Z",
+    "model_recorded_utc": "2026-10-13T18:52:07Z",
+    "model_interval_seconds_approx": 6,
+    "model_attempts": 1,
+    "input_tokens": 3760,
+    "output_tokens": 150,
+    "tool_calls": 1,
+    "remaining_core_time": "Not separately measured; do not attribute all remaining time to memory or model."
+  },
+  "research_detail": {
+    "call_started_utc": "2026-10-13T18:52:08Z",
+    "completed_utc": "2026-10-13T18:52:25Z",
+    "duration_seconds_approx": 17,
+    "result_claimed_utc": "2026-10-13T18:52:25Z",
+    "long_delivery_queue_supported": false,
+    "created_at_warning": "Request timestamp is not insertion time or evidence of a 12 second worker queue."
+  },
+  "findings": [
+    "Connection readiness and sequential EVA contact plus research dominate this trial.",
+    "The result was claimed in the same whole second as research completed; no evidence of a long result delivery queue.",
+    "The 47 second measure includes connection setup and question input, so it is not directly comparable with a warm ChatGPT session measured from the end of speaking."
+  ],
+  "runtime_changed": false,
+  "latency_fixed": false,
+  "next": "Instrument connection/ICE/data-channel readiness and first forecast PCM at the speaker boundary before attributing the startup gap or claiming an acoustic latency improvement."
+}

@@ -199,3 +199,16 @@ def test_legacy_title_replay_preserves_metadata_and_rejects_changed_task(delegat
     service.execute("stop", turn, work_id=original["work"]["work_id"], request_key="stop")
     resumed = service.execute("resume", turn, work_id=original["work"]["work_id"], request_key="resume")
     assert resumed["work"]["title"] == "Onderzoek vanuit Eva-chat"
+
+
+def test_ensure_open_is_idempotent_but_never_reopens_a_closed_session(delegated_engine):
+    service,turn,at=setup(delegated_engine,'return-ensure-open')
+    assert service.private_return(turn,'ensure_open') == {'status':'open'}
+    service.private_return(turn,'close')
+    with pytest.raises(ValueError):service.private_return(turn,'ensure_open')
+    new=replace(turn,conversation_id='voice:'+str(uuid4()))
+    assert service.private_return(new,'close') == {'status':'closed'}
+    assert service.private_return(new,'ensure_open') == {'status':'open'}
+    assert service.private_return(new,'ensure_open') == {'status':'open'}
+    at[0]+=timedelta(seconds=16)
+    with pytest.raises(ValueError):service.private_return(new,'ensure_open')

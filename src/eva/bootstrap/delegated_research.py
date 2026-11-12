@@ -137,7 +137,8 @@ def build_public_research_composition(*, model_access_lease_file: Path, resource
     validate_delegated_model_access_lease(model_access_lease_file)
     research = PydanticConversationModel(auth_file=model_access_lease_file,
         model=MODEL_NAME, endpoint=MODEL_ENDPOINT, reasoning_effort="medium",
-        timeout_seconds=60, research_timeout_seconds=60, resource_budget=resource_budget)
+        timeout_seconds=60, research_timeout_seconds=60, research_maximum_tool_calls=3,
+        resource_budget=resource_budget)
     profile = DelegatedResearchProfile(MODEL_PROFILE_ID, research.research_configuration_sha256(),
         maximum_input_tokens=resource_budget.max_input_tokens,
         maximum_output_tokens=resource_budget.max_output_tokens, maximum_tool_calls=3,
@@ -270,7 +271,14 @@ class DelegatedResearchRunner:
                         if recovered.measurement != "unmeasured":
                             usage = recovered
                             break
-            return ToolFreeChildOutcome("cancelled" if cancellation_event is not None and cancellation_event.is_set() else "internal_error", None, usage, False,
+            exceeded = usage.measurement == "measured" and any(actual > maximum for actual, maximum in (
+                (usage.input_tokens, spec.grant.maximum_input_tokens),
+                (usage.output_tokens, spec.grant.maximum_output_tokens),
+                (usage.tool_calls, spec.grant.maximum_tool_calls),
+                (usage.cost_usd_micros, spec.grant.maximum_cost_usd_micros)))
+            status = ("cancelled" if cancellation_event is not None and cancellation_event.is_set()
+                      else "budget_exceeded" if exceeded else "internal_error")
+            return ToolFreeChildOutcome(status, None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest())
         finally:
             watcher.cancel()

@@ -180,7 +180,7 @@ def test_end_to_end_retry_sources_and_single_delivery(delegated_engine):
     assert x.research.calls == 1
 
 
-def test_private_entrypoints_and_other_sessions_cannot_read(delegated_engine):
+def test_private_entrypoints_cannot_read_and_household_sessions_share_control(delegated_engine):
     x = setup(delegated_engine, "hh-isolation")
     work_id = start(x)
     store = x.server.store
@@ -193,8 +193,8 @@ def test_private_entrypoints_and_other_sessions_cannot_read(delegated_engine):
         **x.args, session_id=x.server.open_session(**x.args)["session_id"]
     )
     turn = other.turn(str(uuid4()), "Status")
-    with pytest.raises(DelegatedWorkNotFound):
-        other.execute("get", turn, request_key="get", work_id=work_id)
+    assert other.execute("get", turn, request_key="get", work_id=work_id)["work"]["work_id"] == work_id
+    assert other.execute("stop", turn, request_key="stop", work_id=work_id)["work"]["state"] == "stopped"
     args = x.args | dict(satellite_id="assist_satellite.office", device_id="b" * 32)
     with pytest.raises(ValueError):
         x.server.session(**args, session_id=x.service.binding["session_id"])
@@ -683,17 +683,17 @@ def test_household_list_selects_and_stops_only_the_named_task(delegated_engine):
     assert x.research.calls == 0
 
 
-def test_household_list_does_not_reveal_another_session_and_replay_expires(delegated_engine):
+def test_household_list_reads_same_device_session_and_replay_expires(delegated_engine):
     from eva.bootstrap.household_work import HouseholdWorkActions
     from eva.application.conversation import ConversationActionCall
     x = setup(delegated_engine, "household-list-isolation")
-    start(x)
+    prior_work_id = start(x)
     other_binding = x.server.open_session(**x.args)
     other = x.server.session(**x.args, session_id=other_binding["session_id"])
     turn = other.turn(str(uuid4()), "What tasks are running?")
     actions = HouseholdWorkActions(delegated_engine, other)
     call = ConversationActionCall("list", "list_delegated_work", {})
-    assert actions.execute(turn, call).output["operation_result"]["jobs"] == []
+    assert {row["work_id"] for row in actions.execute(turn, call).output["operation_result"]["jobs"]} == {prior_work_id}
     x.server.sessions.read(other_binding["session_id"], SAT, DEVICE, operation="close")
     with pytest.raises((ValueError, RuntimeError)):
         actions.execute(turn, call)

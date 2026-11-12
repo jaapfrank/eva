@@ -1,0 +1,36 @@
+{
+  "contract": "EvaComponentReviewAuthorityCandidate/v1",
+  "recordedAt": "2026-11-06T10:27:04.072404+00:00",
+  "priority": "P0-03",
+  "status": "built_targeted_tests_passed_independent_review_pending",
+  "sourceHashes": {
+    "src/eva/operations/component_review_authority.py": "0da2c98f8cd443a903e3e758d2d6f24f8d6547a37b3bb24ca3bf215f1a83fc61",
+    "src/eva/operations/component_release_import.py": "2d5aeff36995debecea092229a01138164e7496119d19d89563f431535f14599",
+    "src/eva/operations/reviewed_component_application.py": "291fe0cd8355575079b288735311195554560bafa65c5ffca1bb63f908e3c0f0",
+    "src/eva/operations/saved_artifact_application.py": "af65f5c64221b248f4d3efe3d26e817677b26cd4d806bb16e793e3ab76cc060e",
+    "development/tests/operations/test_component_review_authority.py": "89c3c24d89c784aafff4ae8b912df6a6118c68346c0af8ae2de7b05d9d3b9029",
+    "development/tests/operations/test_import_component_release.py": "007ad89d8b89c4817c77d4a580cc4589f342a312601d211fcb1d2c5c4cf04398",
+    "development/tests/operations/test_reviewed_component_application.py": "ecce77e58e99b7120a91475b77b8952e3a81d30ee18c08b729a840b508094724"
+  },
+  "validation": {
+    "command": "PYTHONPATH=src:development PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python -m pytest -q -p no:cacheprovider development/tests/operations/test_component_review_authority.py development/tests/operations/test_import_component_release.py development/tests/operations/test_reviewed_component_application.py",
+    "passed": 101,
+    "failed": 0,
+    "seconds": 1.16,
+    "productionDatabaseUsed": false,
+    "externalModelCalls": 0,
+    "externalEffects": false
+  },
+  "outcome": "New component and saved-artifact approvals require a v2 review tied to exact full package, an accepting public decision, and separately configured host registration/scorer/component/source-target/baseline authority. A reviewer label alone does not grant authority.",
+  "preserved": [
+    "Existing updater locks, hashes, fsync, receipts and rollback protocols",
+    "Runtime-repair/dependency-update/owned-package discriminator authority remains unchanged",
+    "Legacy v1 approvals are read-only historical validation; new registration, new request, interrupted dispatch resume and dispatch reject v1",
+    "Retained completed legacy status validates unchanged evidence bytes; historical receipts are not upgraded to modern acceptance",
+    "No runtime installation, workboard change, commit or index change by this candidate"
+  ],
+  "review": "pending independent exact candidate review",
+  "installed": false,
+  "fullProjectCompleted": false,
+  "statusCorrection": "A legacy v1 review without a retained application receipt is rejected/legacy_review_read_only, never ready. Completed retained receipts preserve their historical state."
+}

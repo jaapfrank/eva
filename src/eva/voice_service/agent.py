@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 import json
 import re
+import time
 from typing import AsyncIterator, Callable
 from uuid import UUID, uuid4, uuid5
 
@@ -83,6 +84,7 @@ class HouseholdCoreClient(CoreClient):
         self.household_work_returns = False
         self._work_session = None
         self._work_claims = {}
+        self._private_work_claims = {}
 
     @property
     def work_returns(self):
@@ -111,7 +113,13 @@ class HouseholdCoreClient(CoreClient):
                 raise ValueError("household work session differs")
             body = {**self._device, "session_id": session_id}
         claim = None
-        if operation in {"authorize", "ack"}:
+        if operation in {"authorize", "ack"} and identity.get('operation_id') in self._private_work_claims:
+            operation_id=identity['operation_id']
+            if self._private_work_claims[operation_id]!=identity.get('work_id'):
+                raise ValueError('Private result identity differs')
+            body.update(work_id=identity['work_id'],operation_id=operation_id)
+            if operation=='ack':body['disposition']='offered'
+        elif operation in {"authorize", "ack"}:
             claim = self._work_claims.get(identity.get("operation_id"))
             if claim is None or identity.get("work_id") != claim["work_id"]:
                 raise ValueError("household result was not claimed here")
@@ -125,6 +133,13 @@ class HouseholdCoreClient(CoreClient):
                 headers={"Authorization": "Bearer " + self.token}, json=body)
             response.raise_for_status()
             data = response.json()
+        if data.get('contract')=='EvaPrivateWorkReturn/v1' and operation in {'poll','authorize','ack'}:
+            result=data.get('result')
+            if operation=='poll' and result is not None:
+                if not isinstance(result,dict) or not isinstance(result.get('work_id'),str) or not re.fullmatch(r'[0-9a-f]{64}',result.get('operation_id','')):
+                    raise ValueError('Private result identity invalid')
+                self._private_work_claims[result['operation_id']]=result['work_id']
+            return data
         if data.get("contract") != "EvaHouseholdWorkReturn/v1":
             raise ValueError("household return contract differs")
         if operation == "open":
@@ -138,6 +153,7 @@ class HouseholdCoreClient(CoreClient):
                 raise ValueError("household session response differs")
             if operation == "close":
                 self._work_claims.clear()
+                self._private_work_claims.clear()
             return data
         if operation == "poll":
             result = data.get("result")
@@ -196,6 +212,9 @@ class BridgeState:
         self.background_returns: set[str] = set()
         self.invalid_background_returns: set[str] = set()
         self.saved_result_context: dict[str, dict] = {}
+        # Briefly check more often after confirmed durable admission. Quiet
+        # sessions retain the ordinary cadence; no speculative work is started.
+        self.return_poll_fast_until = 0.0
 
     def history(self, chat_ctx: llm.ChatContext, exclude: str) -> list[dict]:
         return [{"role": item.role, "text": item.text_content,
@@ -411,7 +430,7 @@ class EvaAgent(Agent):
                     # conversation. A failed session renewal still fails closed.
                     check()
                     await self.state.backend.work_return("renew", self.state.session_id)
-            await asyncio.sleep(2)
+            await asyncio.sleep(.25 if time.monotonic() < self.state.return_poll_fast_until else 2)
 
     async def on_user_turn_completed(self, turn_ctx, new_message):
         # Unheard older replies wait until this newer question has an answer.

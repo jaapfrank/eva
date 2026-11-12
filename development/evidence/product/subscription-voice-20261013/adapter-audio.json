@@ -1,0 +1,26 @@
+{
+  "contract": "EvaSubscriptionVoiceProbe/v1",
+  "synthetic_only": true,
+  "exact_desktop_model_verified": false,
+  "connected": true,
+  "audio": {
+    "decoded_frames": 444,
+    "frames_rms_over_200": 108,
+    "consumer_end_type": "MediaStreamError"
+  },
+  "metadata": {
+    "reported_model": null,
+    "sample_rate": 48000,
+    "channels": 2
+  },
+  "event_types": [
+    "output_transcript.added",
+    "session.context.appended",
+    "session.started",
+    "turn.created",
+    "turn.delta",
+    "turn.done"
+  ],
+  "audio_verified": true,
+  "eva_backend_connected": false
+}

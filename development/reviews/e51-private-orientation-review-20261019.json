@@ -113,5 +113,33 @@
       },
       "limit": "Two reviewed core sources match the installed source map; all other 70 measured core sources and the worker image are preserved. This is a bounded measured-source claim, not an inventory of every byte or a speech behavior check. No actual autonomous execution, result or later continuation is established. E5.1 remains open."
     }
+  ],
+  "actualObservationAddenda": [
+    {
+      "reviewedAt": "2026-10-18T22:48:21.121396+00:00",
+      "previousReviewSha256": "e72ce330b2126ec40015f5189d49e77a7e02fac0a4a8d987d24ebe9e0102f0cc",
+      "evidenceSha256": "f10fec5b93443a340aff87d09abc30d645a5e43f5541f22b72f58f870331eaae",
+      "observedAt": "2026-10-18T22:45:34+00:00",
+      "decidedAt": "2026-10-18T22:45:46+00:00",
+      "profile": "private-orientation-contract-v2",
+      "cause": "installed_profile_change",
+      "reviewWindow": 497878,
+      "decisionPayloadSha256": "d8d2ae81e4690bcf30f5da6f76bbe33b48720c0f6e2f10ad295dd50604f7da4c",
+      "disposition": "silence",
+      "expressionPrepared": false,
+      "initiativeAdmitted": false,
+      "nextAttentionChosen": false,
+      "memorySearchUsed": false,
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 11270,
+        "output_tokens": 152,
+        "model_attempts": 1
+      },
+      "interpretation": "The distinct changed-profile occasion actually executed, with its previous hourly source preserved. It did not produce the requested useful self-chosen work, result or later followthrough. Source/install GO remains bounded; the requested daily outcome is not established. This result alone does not prove why the model chose silence.",
+      "wholeTaskComplete": false,
+      "familyAccepted": false
+    }
   ]
 }

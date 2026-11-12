@@ -1,0 +1,133 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.17 exact E4.15 face-backend asset inventory proposal",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T19:48:37.263117+00:00",
+  "verdict": "GO",
+  "status": "exact15_asset_inventory_and_conditions_only",
+  "scope": "GO only for the exact13 selected disk-file plus2 code-pinned ONNX asset inventory, existing roles and privacy boundary. The broader localPayloadCapture/72-distribution/8GB venv plan is excluded by the coordinator instruction. No concrete capture target/script or execution approval is supplied by this inventory review.",
+  "boundedOutcome": {
+    "existing": "Two model hashes were previously measured and preserved; current CPU source pins them. Proposal lists13 bounded disk files plus2 model asset paths and current stat observations.",
+    "gap": "These selected assets have not been captured, and earlier hashes/current stat do not verify current opened ONNX bytes.",
+    "route": "Existing face bridge/CPU source and existing document_artifact/document_marker recovery roles only; no new backend/platform.",
+    "doneWhen": "Exact15 inventory roles/pins/privacy accepted with smallest future-capture conditions and missing execution binding explicit.",
+    "userUse": "Root may prepare one separately bound private15-file capture action; no model/interpreter execution or wider dependency capture follows."
+  },
+  "bindings": {
+    "proposalPath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/face-backend-asset-capture-proposal.private.json",
+    "proposalSha256": "50834d99f282f5ede89bae46e935ca704ecdce113e19cb9d73228a1f933eb8a5",
+    "basedOn": {
+      "path": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture-plan.private.json",
+      "sha256": "00cdd0be79befea07d77c7124a4300968587f6f81e7896bdf34a3899a58a866e"
+    },
+    "fixedAssetOperationsSha256": "ce5f49c921b3019ee38ae72afb05238de6e927f6dfa0999adcb8fff74baec881",
+    "operationsDigestEncoding": "UTF-8 json.dumps(fixedAssetOperations,sort_keys=True,separators=(comma,colon)), proposal list order.",
+    "existingWriterSha256": "cd0652005eeda46298ffa5505f2be22f40455ab9bd43574ea247aeeb320c758a",
+    "cpuSourcePath": "src/eva/operations/local_face_cpu.py",
+    "cpuSourceSha256MeasuredByStaticRead": "2b23b5dd7f2d6b1b25af52c306c3609dee77ccecea02013cfb81725e3d36f9ba"
+  },
+  "inventory": {
+    "diskFiles": 13,
+    "diskFileBytes": 43641,
+    "modelAssets": 2,
+    "modelAssetBytes": 191307687,
+    "selectedPayloads": 15,
+    "selectedPayloadBytes": 191351328,
+    "roles": {
+      "document_marker": 3,
+      "document_artifact": 12
+    },
+    "assetKinds": {
+      "unit_fragment_no_drop_ins": 1,
+      "exact_disk_source": 5,
+      "package_namespace_source": 5,
+      "venv_configuration": 2
+    },
+    "fixedAssetOperationsMatchInventoryExactly": true,
+    "safeUniqueAbsoluteSourcesAndRelativePackagePaths": true,
+    "existingInactiveModes": {
+      "document_marker": "0400",
+      "document_artifact": "0600"
+    },
+    "models": [
+      {
+        "filename": "det_10g.onnx",
+        "expectedSha256": "5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91",
+        "bytes": 16923827,
+        "destination": "documents/face-backend/models/buffalo_l/det_10g.onnx",
+        "role": "document_artifact",
+        "inactiveMode": "0600"
+      },
+      {
+        "filename": "w600k_r50.onnx",
+        "expectedSha256": "4c06341c33c2ca1f86781dab0e829f88ad5b64be9fba56e56bc9ebdefc619e43",
+        "bytes": 174383860,
+        "destination": "documents/face-backend/models/buffalo_l/w600k_r50.onnx",
+        "role": "document_artifact",
+        "inactiveMode": "0600"
+      }
+    ]
+  },
+  "modelEvidence": {
+    "earlierByteEvidence": "Exact retained capture-plan.private.json SHA00cdd0be79befea07d77c7124a4300968587f6f81e7896bdf34a3899a58a866e contains the earlier observed disk-byte hashes/sizes for both model paths. This review reads that metadata evidence only, not ONNX payloads.",
+    "currentCodePins": "Static AST/literal reading of the exact current local_face_cpu.py MODEL_HASHES matches both expected model hashes. No import or interpreter/inference execution of that source.",
+    "currentStat": "Proposal currentStatSizeMatchesPrior=true/currentPayloadHashMeasured=false is metadata observation at preparation time. Matching size/path/mode and earlier byte hash do not prove current model content.",
+    "futureRequirement": "The actual opened model bytes must be hashed during any future bounded capture and compared against these fixed source pins; do not reuse the earlier hash as a measurement of the new copy or silently update the expected hash."
+  },
+  "unitMetadata": {
+    "observationAt": "2026-10-23T19:34:40.024044+00:00",
+    "unitFragmentInventory": true,
+    "reportedDropInCount": 0,
+    "reportedDropInPathsEmpty": true,
+    "meaning": "Unit fragment/no-drop-ins is a separate supplied inventory fact. Effective ExecStart/MainPID/WorkingDirectory and disk-fragment hash are distinct observations, not loaded Python bytes/process memory or service-reload proof. Reviewer made no new systemd query and did not read unit Environment values."
+  },
+  "smallestCaptureConditions": [
+    "Root later names one new absent absolute operator-private stage and binds exactly fixedAssetOperations[0..14], proposal SHA50834d99f282f5ede89bae46e935ca704ecdce113e19cb9d73228a1f933eb8a5, operation digestce5f49c921b3019ee38ae72afb05238de6e927f6dfa0999adcb8fff74baec881 and an exact single-purpose capture script/review. No capture until those bounded execution inputs are supplied; do not reuse the earlier executor target.",
+    "Only15 explicit regular non-symlink sources may be opened. Check pinned source paths, size/mode/UID/GID and stable descriptor identity before/after reads; reject symlink/path escape, special/unlisted files and drift. Read/hash/copy the actual bytes with bounded or streaming reads and compare every expectedSha256, including both ONNX pins. Do not import, infer, download, repair, regenerate or refresh hashes on mismatch.",
+    "Use only the exact15 packagePath destinations as local relative paths, with operator/root-owned0700 directories,0400 for the3 markers and0600 for the12 artifacts. Preserve original source modes/ownership as metadata; no executable permissions or unit/service installation. Treat unit/config bytes as private opaque data for capture; never inspect or print secret values.",
+    "Persist a bounded metadata receipt and verify exact15 target inventory,191351328 total bytes, destination hashes/roles/modes/ownership. Keep partial/failure evidence private and never auto-retry into an existing target. No package, compression, transport, extraction or restore action is part of this selected-byte step.",
+    "Exclude all72 distribution payloads,29,626 RECORD-owned runtime files,8,146,513,623 reported venv bytes, model-cache recursion, interpreter/stdlib/OS trees and any isolated CPUdependencycandidate directory. No dependency selection/removal/import, CPU/GPU equivalence or model usability claim.",
+    "Exclude every legacy DB/WAL/SHM, profile label, embedding, pixel, private conversation and token/credential target. The known database/token paths remain references only; separate minimal consistent profile data transfer and credential reprovisioning remain unresolved.",
+    "Before any later integration/transfer, bind a real existing recovery-package base/hash/identity trust, unchanged core/memory/gateway/source_components/key references, aggregate1GiB/100000-file limits and existing encrypted transport with separate safe key handling. Never fabricate dummy/synthetic current state, expand limits or invent chunks/another package format. This review grants no package/export/restore permission."
+  ],
+  "privacyAndLegacy": "Eva1 stays stopped. Existing Bottie model/venv paths identify the explicitly known technical photo/face dependency only; no old-agent import alias, second agent, full Bottie-data traversal or whole legacy DB copy. No enrolled-person state is preserved by source/model assets alone.",
+  "preservedGaps": [
+    "Exact future private stage,15-operation execution mapping/script and its hash binding are not yet supplied; captureExecutionReady=false.",
+    "72-distribution dependency superset and reported8GB stat inventory are not payload capture, successful imports, complete runtime/source/ABI/OS closure or proof that every dependency is needed. Existing source requesting CPUExecutionProvider does not prove a working CPU backend. The builder isolated candidate task remains separate and uninspected.",
+    "191351328 selected raw bytes are below1GiB alone; fit with actual core/memory/gateway/other required package components remains unmeasured. Full uncompressed CPU payload exceeds unchanged transport bound; compressed fit is unknown. No current installation package claim.",
+    "Consistent face-only DB/profile state, biometric enrollment/embeddings, separate keys/tokens, STOP/current authorization, remote reconnect and activation/restore proof remain unresolved.",
+    "No loaded-process, runnable host, recognition/inference result, physical greeting, lastWorking/fullRecovery/cleanPcRestore, full E4.15/E4.17 or whole-project acceptance claim."
+  ],
+  "findings": [],
+  "capturePerformed": false,
+  "captureExecutionReady": false,
+  "onnxPayloadRehashed": false,
+  "runtimeOrRestoreClaim": false,
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "usage": {
+    "development": {
+      "elapsedSeconds": 97.711,
+      "startedAt": "2026-10-23T19:46:59.552176+00:00",
+      "modelTokens": null,
+      "modelCost": null,
+      "credits": null,
+      "unknownMeasurementsRemainUnknown": true
+    },
+    "evaRuntime": {
+      "modelCalls": 0,
+      "inferenceCalls": 0,
+      "cameraCalls": 0,
+      "databaseReads": 0,
+      "profileEmbeddingPixelReads": 0,
+      "onnxPayloadReadsOrHashes": 0,
+      "configurationSecretValueReads": 0,
+      "interpreterOrCpuCandidateImports": 0,
+      "serviceActions": 0,
+      "captures": 0,
+      "gitActions": 0
+    }
+  }
+}

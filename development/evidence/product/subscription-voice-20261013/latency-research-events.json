@@ -1,0 +1,168 @@
+[
+  {
+    "event": "research_profile",
+    "stage": "request_sent",
+    "elapsed_ms": 0
+  },
+  {
+    "event": "research_profile",
+    "stage": "headers_received",
+    "elapsed_ms": 640,
+    "status": 200
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 641,
+    "kind": "response.created"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 641,
+    "kind": "response.in_progress"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 2177,
+    "kind": "response.output_item.added",
+    "item_type": "web_search_call",
+    "item_id": "ws_0f525860f4dfc32d016ace93d369fc87d29ceff60c23045df8",
+    "action_type": null
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 2177,
+    "kind": "response.web_search_call.in_progress"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 2792,
+    "kind": "response.web_search_call.searching"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 4447,
+    "kind": "response.web_search_call.completed"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 4451,
+    "kind": "response.output_item.done",
+    "item_type": "web_search_call",
+    "item_id": "ws_0f525860f4dfc32d016ace93d369fc87d29ceff60c23045df8",
+    "action_type": "search"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 4459,
+    "kind": "response.output_item.added",
+    "item_type": "web_search_call",
+    "item_id": "ws_0f525860f4dfc32d016ace93d5b22487d29fc220ed73d5dc2b",
+    "action_type": null
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 4472,
+    "kind": "response.web_search_call.in_progress"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 5246,
+    "kind": "response.web_search_call.searching"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 7416,
+    "kind": "response.web_search_call.completed"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 7515,
+    "kind": "response.output_item.done",
+    "item_type": "web_search_call",
+    "item_id": "ws_0f525860f4dfc32d016ace93d5b22487d29fc220ed73d5dc2b",
+    "action_type": "open_page"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 7530,
+    "kind": "response.output_item.added",
+    "item_type": "message",
+    "item_id": "msg_0f525860f4dfc32d016ace93d89f6087d28f39a1bc58927787"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 7549,
+    "kind": "response.content_part.added"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 7560,
+    "kind": "response.output_text.delta"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 13655,
+    "kind": "response.output_text.annotation.added"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 15457,
+    "kind": "response.output_text.annotation.added"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 16263,
+    "kind": "response.output_text.done"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 16272,
+    "kind": "response.content_part.done"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 16278,
+    "kind": "response.output_item.done",
+    "item_type": "message",
+    "item_id": "msg_0f525860f4dfc32d016ace93d89f6087d28f39a1bc58927787"
+  },
+  {
+    "event": "research_profile",
+    "stage": "sse",
+    "elapsed_ms": 16278,
+    "kind": "response.completed",
+    "model": "gpt-6-astra",
+    "usage": {
+      "input_tokens": 10223,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 4864
+      },
+      "output_tokens": 432,
+      "output_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "total_tokens": 10655
+    }
+  }
+]

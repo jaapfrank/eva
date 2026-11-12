@@ -1,0 +1,369 @@
+{
+  "synthetic_audio_only": true,
+  "content_free_events": [
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_signalingstatechange",
+      "elapsed_ms": 5
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_icegatheringstatechange",
+      "elapsed_ms": 5
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_icegatheringstatechange",
+      "elapsed_ms": 7435
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "ice_ready",
+      "elapsed_ms": 7436
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "account_start",
+      "elapsed_ms": 17
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_microphone_clip_start",
+      "elapsed_ms": 18
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "wake_greeting_started",
+      "elapsed_ms": 23
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 32,
+      "method": "initialize"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_sink_signal",
+      "elapsed_ms": 32,
+      "turn": "greeting"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 123,
+      "method": "initialize",
+      "duration_ms": 91
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 123,
+      "method": "account/login/start"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 197,
+      "method": "account/login/start",
+      "duration_ms": 73
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 197,
+      "method": "thread/start"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "wake_greeting_finished",
+      "elapsed_ms": 206
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 874,
+      "method": "thread/start",
+      "duration_ms": 677
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "account_ready",
+      "elapsed_ms": 874
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 875,
+      "method": "thread/realtime/start"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 877,
+      "method": "thread/realtime/start",
+      "duration_ms": 1
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "voice_answer_ready",
+      "elapsed_ms": 2476
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_signalingstatechange",
+      "elapsed_ms": 2479
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_iceconnectionstatechange",
+      "elapsed_ms": 2480
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_connectionstatechange",
+      "elapsed_ms": 2480
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_iceconnectionstatechange",
+      "elapsed_ms": 2693
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_connectionstatechange",
+      "elapsed_ms": 2774
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_datachannel_open",
+      "elapsed_ms": 2891
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_provider_session",
+      "elapsed_ms": 3525,
+      "model": null,
+      "top_model": null
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 3526,
+      "kind": "session.started",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "media_ready",
+      "elapsed_ms": 3526
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_microphone_signal_sent",
+      "elapsed_ms": 3568
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_rtp_received",
+      "elapsed_ms": 3893
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_microphone_clip_end",
+      "elapsed_ms": 3900
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_decoded_frame",
+      "elapsed_ms": 3973
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 4743,
+      "kind": "turn.created",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 6842,
+      "kind": "delegation.created",
+      "role": null
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "codex_event",
+      "elapsed_ms": 6854,
+      "method": "turn/started"
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "core_request",
+      "elapsed_ms": 7249
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_core_stream",
+      "elapsed_ms": 7307,
+      "kind": "request_acknowledged"
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "core_request_acknowledged",
+      "elapsed_ms": 7308
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 7595,
+      "kind": "turn.done",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 7597,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "first_output_audio",
+      "elapsed_ms": 7610
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_sink_signal",
+      "elapsed_ms": 7610,
+      "turn": "turn_EYnGSzUDgDa1JeIKmZktj"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 10098,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_core_stream",
+      "elapsed_ms": 23970,
+      "kind": "action_started"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_core_stream",
+      "elapsed_ms": 24189,
+      "kind": "action_finished"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_core_stream",
+      "elapsed_ms": 24446,
+      "kind": "final"
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "core_final",
+      "elapsed_ms": 24447
+    },
+    {
+      "event": "eva_voice_backend",
+      "stage": "codex_event",
+      "elapsed_ms": 24458,
+      "method": "turn/completed"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 24519,
+      "kind": "delegation.context.appended",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_saved_result_claimed",
+      "elapsed_ms": 41683,
+      "duration_ms": 419
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_saved_result_authorized",
+      "elapsed_ms": 41851,
+      "duration_ms": 166
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_saved_result_part",
+      "elapsed_ms": 41853
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 42112,
+      "method": "thread/realtime/appendSpeech"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 42115,
+      "method": "thread/realtime/appendSpeech",
+      "duration_ms": 4
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 42604,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_first_sink_signal",
+      "elapsed_ms": 42777,
+      "turn": "turn_EYnH1r3mCeQZVUAQtSpDB"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "provider_event",
+      "elapsed_ms": 54071,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "closing",
+      "elapsed_ms": 54574
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_start",
+      "elapsed_ms": 54574,
+      "method": "thread/realtime/stop"
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_rpc_end",
+      "elapsed_ms": 54576,
+      "method": "thread/realtime/stop",
+      "duration_ms": 1
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_signalingstatechange",
+      "elapsed_ms": 54625
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_iceconnectionstatechange",
+      "elapsed_ms": 54630
+    },
+    {
+      "event": "eva_voice_media",
+      "stage": "profile_connectionstatechange",
+      "elapsed_ms": 54630
+    }
+  ]
+}

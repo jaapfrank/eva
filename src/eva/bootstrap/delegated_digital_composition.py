@@ -42,6 +42,7 @@ _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_runner.py", "bootstrap/native_initiative_work.py",
     "adapters/model/programming_history.py",
     "adapters/postgres/work_source_retention.py",
+    "bootstrap/native_work_assets.py",
     "adapters/connectors/delegated_completion.py",
     "contracts/tool_deadlines.py",
     "contracts/component_target.py",
@@ -276,6 +277,8 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
             tenant_id=settings.background_tenant_id, installation_id=settings.background_installation_id,
             owner=owner, binding=binding, authority_scope=store.scope))
     store._initiative_authority_loader = initiative_authority
+    from eva.bootstrap.native_work_assets import configured_native_work_assets
+    store._native_required_assets = configured_native_work_assets()
     source_loader = _SourceTurnLoader(engine, SimpleNamespace(
         scope=service.conversation_scope, authorize_turn=service.validate_authority))
     if household_authority is not None:

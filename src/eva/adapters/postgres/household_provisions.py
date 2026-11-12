@@ -186,7 +186,7 @@ class PostgresHouseholdProvisions:
             empty = self.verify_empty_current(conn, state['evidence'])
             if empty is not None:
                 _digest(empty)
-                value = 'clear'
+                value = 'clear' 
         if value not in {'clear', 'unknown', 'in_flight', 'stopped'}:
             raise ValueError("provision effect status is invalid")
         return value

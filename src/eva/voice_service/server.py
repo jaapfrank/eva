@@ -207,10 +207,14 @@ def create_app():
             state = BridgeState(backend, notify)
             # Browser capture already requests AEC. LiveKit's initial 3s warmup
             # would otherwise discard a real correction during the first answer.
-            session = AgentSession(stt=HomeAssistantSTT(stt_source, check, vad=vad), tts=streaming_speech_output(tts_source, check),
-                                   vad=vad, turn_detection="vad", allow_interruptions=True,
-                                   min_interruption_duration=.15, false_interruption_timeout=1.5,
-                                   aec_warmup_duration=0)
+            if config.get("voice_engine") == "codex":
+                from eva.voice_service.codex_media import CodexMediaSession
+                session = CodexMediaSession(config, state, check)
+            else:
+                session = AgentSession(stt=HomeAssistantSTT(stt_source, check, vad=vad), tts=streaming_speech_output(tts_source, check),
+                                       vad=vad, turn_detection="vad", allow_interruptions=True,
+                                       min_interruption_duration=.15, false_interruption_timeout=1.5,
+                                       aec_warmup_duration=0)
             @session.on("user_input_transcribed")
             def user_input_transcribed(event):
                 if event.is_final:
@@ -240,7 +244,7 @@ def create_app():
             sessions[room_name] = lease
             agent = EvaAgent(state)
             try:
-                async with asyncio.timeout(20):
+                async with asyncio.timeout(45 if config.get("voice_engine") == "codex" else 20):
                     options = rtc.RoomOptions()
                     if ice_servers:
                         options.rtc_config = rtc.RtcConfiguration(ice_transport_type=rtc.IceTransportType.TRANSPORT_RELAY,

@@ -1,7 +1,7 @@
 """Device-authenticated transport for explicitly composed household work.
 
-This adapter never chooses a speaker identity, opens private work, starts model
-calls, or turns periodic delivery polling into user conversation messages.
+Only a server-verified Telegram confirmation can select personal work returns.
+Periodic delivery polling never becomes a user conversation or model call.
 """
 from typing import Literal
 from uuid import UUID
@@ -14,11 +14,12 @@ from eva.adapters.api.household_voice_session import HouseholdDevice
 class HouseholdWorkRequest(HouseholdDevice):
     session_id: UUID | None = None
     work_id: str | None = Field(default=None, min_length=1, max_length=240)
+    operation_id: str | None = Field(default=None,pattern=r"^[0-9a-f]{64}$")
     result_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
     disposition: Literal["offered", "completed", "interrupted", "ambiguous"] | None = None
 
 
-def install_household_work(app: FastAPI, *, admit, server=None):
+def install_household_work(app: FastAPI, *, admit, server=None, verification=None):
     @app.post("/internal/v1/ha-voice/session/work/{operation}")
     def work(request: Request, operation: str, payload: HouseholdWorkRequest):
         admit(request, payload)
@@ -29,13 +30,26 @@ def install_household_work(app: FastAPI, *, admit, server=None):
                 or request.query_params
                 or ((payload.session_id is None) != (operation == "open"))
                 or (basic and any(value is not None for value in
-                    (payload.work_id, payload.result_sha256, payload.disposition)))
-                or (not basic and (payload.work_id is None or payload.result_sha256 is None))
+                    (payload.work_id, payload.result_sha256, payload.disposition, payload.operation_id)))
+                or (not basic and (payload.work_id is None or (payload.result_sha256 is None and payload.operation_id is None)))
                 or ((payload.disposition is not None) != (operation == "ack"))):
             raise HTTPException(422, "Invalid household work operation")
         credentials = dict(token=request.headers["Authorization"].removeprefix("Bearer "),
             satellite_id=payload.satellite_id, device_id=payload.device_id)
         try:
+            if operation != 'open' and verification is not None:
+                binding=server.session(**credentials,session_id=str(payload.session_id)).binding
+                if verification.principal(binding) is not None:
+                    if operation in {'renew','close'}:
+                        verification.work_return(binding,operation)
+                    else:
+                        if operation != 'poll' and (payload.operation_id is None or payload.result_sha256 is not None):
+                            raise ValueError('Private result identity required')
+                        identity={} if operation=='poll' else {'work_id':payload.work_id,'operation_id':payload.operation_id}
+                        result=verification.work_return(binding,operation,**identity)
+                        return {'contract':'EvaPrivateWorkReturn/v1',**result}
+                elif payload.operation_id is not None:
+                    raise ValueError('Personal result not authorized')
             if operation == "open":
                 binding = server.open_session(**credentials)
                 server.authenticate(**credentials)

@@ -41,11 +41,10 @@ def _presentation():
     return by_function, direct
 
 
-
 def function_defer_loading(name):
-    """Keep immediate voice reactions available without a discovery round."""
+    """Expose common authorized household/public tools without a discovery round."""
     _, direct = _presentation()
-    return name not in (direct | {"speak_and_continue"})
+    return name not in (direct | {"speak_and_continue", "search_public_info", "set_household_work_destination"})
 
 
 def deferred_namespaces(tools):
@@ -72,5 +71,5 @@ def deferred_namespaces(tools):
             groups[namespace] = {"type": "namespace", "name": namespace,
                                  "description": description, "tools": []}
             result.append(groups[namespace])
-        groups[namespace]["tools"].append({**tool, "defer_loading": True})
+        groups[namespace]["tools"].append({**tool, "defer_loading": function_defer_loading(name)})
     return result, mapping

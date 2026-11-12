@@ -34,7 +34,8 @@ def install_household_voice_session(app: FastAPI, *, runtime, authority, work_se
             raise HTTPException(403, "Household voice authority unavailable") from None
 
     from eva.adapters.api.household_work import install_household_work
-    install_household_work(app, admit=admit, server=work_server)
+    verification=getattr(runtime,"_voice_identity",None)
+    install_household_work(app, admit=admit, server=work_server, verification=verification)
 
     @app.post("/internal/v1/ha-voice/session/ready")
     def ready(request: Request, payload: HouseholdDevice):
@@ -58,12 +59,32 @@ def install_household_voice_session(app: FastAPI, *, runtime, authority, work_se
                 turn = service.turn(str(payload.message_id), payload.text)
         except (ValueError, RuntimeError, OSError):
             raise HTTPException(403, "Household voice scope unavailable") from None
+        personal = None
+        if service is not None and verification is not None:
+            try:
+                personal=verification.private_turn(service.binding,payload.message_id,payload.text,source_turn=turn)
+            except (ValueError,RuntimeError,OSError):
+                raise HTTPException(403,"Personal voice authority unavailable") from None
+        if personal is not None:
+            try:
+                verification.work_return(service.binding,"renew")
+                payload=verification.personal_context(service.binding,payload)
+                turn=personal
+            except (ValueError, RuntimeError, OSError):
+                raise HTTPException(403, "Personal voice context unavailable") from None
         def message_id(value):
+            if personal is not None:return 'voice:'+str(payload.session_id)+':'+str(value)
+
             return turn.conversation_id + ":request:" + (str(value) if service is not None else value.hex)
         def check():
             authority.validate_current()
             if service is not None:
-                service.validate_authority(turn)
+                if personal is None:service.validate_authority(turn)
+                elif verification.principal(service.binding)!=turn.principal_id:
+                    raise ValueError("Personal voice authority changed")
             runtime.admit_turn_audience(turn)
         return stream_voice_turn(runtime=runtime, payload=payload, turn=turn,
-                                 message_id=message_id, check=check, user_label="Spreker")
+                                 message_id=message_id, check=check, user_label="Spreker",
+                                 admit=runtime.admit_voice_turn if personal is not None else None,
+                                 request_identity=(lambda:verification.request(service.binding))
+                                     if service is not None and verification is not None and personal is None else None)

@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-15",
+  "status": "installed_and_targeted_checks_passed_with_open_items",
+  "owner_requirement": "Toegelaten huisapparaten delen openbare huishoudtaken; Telegram en WhatsApp blijven persoonlijk. Expliciet een andere huisruimte als antwoordbestemming kunnen kiezen.",
+  "findings": [
+    {
+      "issue": "Conversation abruptly closed",
+      "evidence": "capture_native task_failed QueueFull; immediate session close",
+      "fix": "Bound microphone backlog by dropping oldest live frames instead of crashing; preserve larger setup buffer",
+      "limit": "Sustained stalls can still lose input audio; underlying scheduling stall not proven fixed"
+    },
+    {
+      "issue": "Previous task absent in later conversation",
+      "evidence": "Streaming sessions lacked native continuity; prior task failed with recorded plan blocker",
+      "fix": "Read/control shared household work from subsequent admitted device sessions, retain original sealed origin and private boundaries"
+    },
+    {
+      "issue": "No useful result for voice diagnostic task",
+      "evidence": "Existing worker plan recorded missing voice diagnostic capability",
+      "limit": "This task was not successfully executed; receiving an error-notice acknowledgement is not proof the human heard it"
+    },
+    {
+      "issue": "Missing initial spoken words",
+      "status": "unresolved",
+      "measurement": "Per-answer output gate timing and suppressed non-silent frame counters; no transcript or audio logged"
+    }
+  ],
+  "delivery_routing": {
+    "status": "not_implemented",
+    "existing_destinations": [
+      "woonkamer",
+      "overkapping"
+    ],
+    "design": "Keep immutable task origin. Store an independently authorized public household output destination, coordinate durable claim to avoid double delivery, and validate selected device at playback. Personal channel tasks excluded.",
+    "physical_validation": "not_performed"
+  },
+  "tests": {
+    "media_and_backend": {
+      "passed": 43
+    },
+    "household": {
+      "continuity": 23,
+      "digital_work": 17,
+      "public_work": {
+        "passed": 21,
+        "failed": 1,
+        "baseline_failure": "Existing available_action_names/catalogue mismatch also reproduced on installed baseline; unchanged."
+      },
+      "actual_task_read_check": {
+        "woonkamer": true,
+        "overkapping": true,
+        "state": "failed",
+        "context_and_list": true,
+        "model_calls": 0
+      },
+      "unique_passed_including_public": 59
+    },
+    "installed_read_check": {
+      "destinations": 2,
+      "passed": true,
+      "model_calls": 0
+    }
+  },
+  "usage": {
+    "new_diagnostic_model_calls": 0,
+    "credits": "unknown"
+  },
+  "physical_audio_heard_by_developer": false,
+  "installation": {
+    "speaker": {
+      "image": "sha256:64763c1129636876e5e06a2a8cf3f959797c1f391bb9c294a74d712737c34f21",
+      "running": true,
+      "health": null,
+      "modules_match": {
+        "voice_service/codex_media.py": true
+      }
+    },
+    "browser": {
+      "image": "sha256:e8a61f7b51a19a42d90062baf3b9e41f00644724d12e6416fe5ff1dffb9e4e6f",
+      "running": true,
+      "health": null,
+      "modules_match": {
+        "voice_service/codex_media.py": true
+      }
+    },
+    "core": {
+      "image": "sha256:e9b9cfbac6defda840cdb4818d705f4b1173113ffda0fd1a975804c5456b4dec",
+      "running": true,
+      "health": "healthy",
+      "modules_match": {
+        "bootstrap/household_work.py": true,
+        "adapters/postgres/household_work_sessions.py": true,
+        "adapters/postgres/delegated_work.py": true,
+        "bootstrap/household_work_corrections.py": true,
+        "bootstrap/household_digital_work.py": true
+      }
+    },
+    "worker": {
+      "image": "sha256:43e55ff616ae2ddf946fd536f7bbe1c34c4db9c0d5573667d91152efe0cf6fc4",
+      "running": true,
+      "health": "healthy",
+      "modules_match": {
+        "bootstrap/household_work.py": true,
+        "adapters/postgres/household_work_sessions.py": true,
+        "adapters/postgres/delegated_work.py": true,
+        "bootstrap/household_work_corrections.py": true,
+        "bootstrap/household_digital_work.py": true
+      }
+    }
+  },
+  "worker_configuration_check": "passed"
+}

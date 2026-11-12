@@ -3,7 +3,7 @@
   "taskId": "E5.1",
   "recordedAt": "2026-10-18T22:41:26.557736+00:00",
   "state": "installed",
-  "status": "installed_ordinary_work_and_followthrough_pending",
+  "status": "installed_v2_no_useful_execution_self_continuity_gap_identified",
   "wholeTaskComplete": false,
   "familyAccepted": false,
   "baseline": {
@@ -62,7 +62,29 @@
     }
   },
   "independentReview": "development/reviews/e51-private-orientation-review-20261019.json",
-  "ordinaryObservation": null,
+  "ordinaryObservation": {
+    "observedAt": "2026-10-18T22:46:03.779217+00:00",
+    "reviewAt": "2026-10-18 22:45:46+00:00",
+    "sourceSha256": "fd84629d5533f8ec58711012ba9d53a0a823c5af2ebedf8e961121662905d33a",
+    "decisionSha256": "d8d2ae81e4690bcf30f5da6f76bbe33b48720c0f6e2f10ad295dd50604f7da4c",
+    "sourceCause": "installed_profile_change",
+    "operatorSelectedTask": false,
+    "operatorQueuedReview": false,
+    "state": "silence",
+    "initiative": null,
+    "nextAttention": null,
+    "memorySearchUsed": false,
+    "usage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 11270,
+      "output_tokens": 152,
+      "model_attempts": 1
+    },
+    "usefulExecutionProven": false,
+    "followthroughProven": false,
+    "meaning": "Phase descriptions and distinct source work, but did not suffice for useful self-chosen work."
+  },
   "scopeOfNextObservation": "One ordinary installed-profile-change occasion through the existing cycle, with explicit installation provenance. No operator-selected task or topic. If work is selected, follow the existing native result and subsequent ordinary source-bound review.",
   "actualCompletionRequired": [
     "Self-chosen useful concrete work, not merely a message or plan.",
@@ -71,7 +93,13 @@
   ],
   "accounting": {
     "developmentCredits": null,
-    "runtimeNewCandidateUsage": null,
+    "runtimeNewCandidateUsage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 11270,
+      "output_tokens": 152,
+      "model_attempts": 1
+    },
     "runtimeCredits": null
   },
   "privateEvidence": {

@@ -189,7 +189,10 @@ def current_maintenance_origin(authority,origin,*,service=None,store=None,_conne
         raise ValueError('typed maintenance origin required')
     owner=authority.owner;now=service.now() if service is not None else datetime.now(UTC)
     if store is None:
-        store=PostgresDelegatedWorkStore(owner._engine,owner._authority,initiative_authority_loader=lambda:authority)
+        from eva.bootstrap.native_work_assets import configured_native_work_assets
+        store=PostgresDelegatedWorkStore(owner._engine,owner._authority,
+            initiative_authority_loader=lambda:authority,
+            native_required_assets=configured_native_work_assets(producer=True))
     policy=authority._read();maintenance=policy.get('component_maintenance',{})
     mandate=canonical_sha256({k:v for k,v in policy.items() if k!='enabled'})
     scope=canonical_sha256({'tenant_id':owner._tenant_id,'installation_id':owner._installation_id,'principal_id':str(owner._owner)})

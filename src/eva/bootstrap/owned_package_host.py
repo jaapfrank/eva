@@ -123,7 +123,7 @@ def current_package_origin(authority, origin, *, service=None, store=None, _conn
     return (current if leaf else record), turn
 
 
-def _metadata(authority, service, store, task_id):
+def _metadata(authority, service, store, task_id, *, include_link=True):
     from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
     owner = authority.owner
     record = store.load(task_id, owner_principal_id=owner._owner, principal_binding_id=owner._binding)
@@ -149,6 +149,21 @@ def _metadata(authority, service, store, task_id):
             if "owned_package_origin" in data:
                 extra = {"review_origin": data["owned_package_origin"],
                          "review_package_sha256": data["owned_package_sha256"]}
+    from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+    if (include_link and type(spec) is DelegatedDigitalWorkSpec and spec.generation == 1
+            and spec.parent_task_id.startswith("work:") and current.state == "call_started"):
+        predecessor = store.load(spec.parent_task_id, owner_principal_id=owner._owner,
+                                 principal_binding_id=owner._binding)
+        if (type(predecessor.spec) is not DelegatedDigitalWorkSpec
+                or any(getattr(predecessor.spec.source, name) != getattr(spec.source, name)
+                       for name in ("tenant_id", "installation_id", "principal_id", "conversation_id"))):
+            raise ValueError("linked package source differs")
+        linked = _metadata(authority, service, store, spec.parent_task_id, include_link=False)
+        if (linked["latest_work_id"] != linked["task_id"] or linked["active_lease"]
+                or linked["state"] not in {"failed", "ambiguous", "succeeded"}
+                or not linked["can_publish_package"]):
+            raise ValueError("linked package source must be closed")
+        extra["linked_package_origin"] = {name: linked[name] for name in origin}
     return {**origin, **extra, "task_text": spec.task,
             "session_key": canonical_sha256({**identity, "work_id": task_id}),
             'latest_work_id': current.spec.work_id,

@@ -1,0 +1,282 @@
+{
+  "recorded_at": "2026-10-13T17:20:11.396960+00:00",
+  "status": "repair_installed_pending_physical_retest",
+  "owner_feedback": {
+    "approx_response_delay_seconds": 12,
+    "partial_response": true,
+    "first_session_closed_without_response": true
+  },
+  "historical_findings": {
+    "raw_audio_recording_available": false,
+    "first_session_utc": [
+      "2026-10-13T16:56:40Z",
+      "2026-10-13T16:56:51Z"
+    ],
+    "second_session_utc": [
+      "2026-10-13T16:56:59Z",
+      "2026-10-13T16:57:35Z"
+    ],
+    "core_http_422_utc": [
+      "2026-10-13T16:57:13Z",
+      "2026-10-13T16:57:28Z"
+    ],
+    "timestamp_format_error_reproduced": true,
+    "exact_historical_audio_cutoff_cause": "UNKNOWN: no audio or per-task shutdown diagnostics retained"
+  },
+  "changes": [
+    "Canonical UTC timestamps required by existing conversation core",
+    "Local playback interruption overtaking a blocked frame no longer terminates the conversation",
+    "Core HTTP and runtime failures return a safe spoken failure without retrying the action",
+    "ICE gathering before wakeword; model session and microphone capture still start only on wake",
+    "Content-free per-session startup, core timing, output and task-failure diagnostics"
+  ],
+  "tests": {
+    "voice_tests_passed": 35,
+    "architecture_voice_tests_passed": 10,
+    "regressions_failed_on_previous_image": 2
+  },
+  "wire_smoke": {
+    "result": "two_turn_wire_smoke",
+    "ready_after_wake_seconds": 2.07,
+    "core_requests": 2,
+    "core_completed": 2,
+    "core_failed": 0,
+    "first_pcm_samples": 114240,
+    "total_pcm_samples": 224640,
+    "closed_early": false,
+    "generations": 4
+  },
+  "core_processing_ms": [
+    8431,
+    9892
+  ],
+  "diagnostics": [
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "ice_ready",
+      "elapsed_ms": 7426
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "account_start",
+      "elapsed_ms": 15
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "account_ready",
+      "elapsed_ms": 799
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "voice_answer_ready",
+      "elapsed_ms": 1673
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 2070,
+      "kind": "session.started",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "media_ready",
+      "elapsed_ms": 2070
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 3521,
+      "kind": "turn.created",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "core_request",
+      "elapsed_ms": 5330,
+      "recent_count": 0
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "core_request_acknowledged",
+      "elapsed_ms": 5416
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 5812,
+      "kind": "turn.done",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 5814,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "first_output_audio",
+      "elapsed_ms": 5820
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 8247,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "core_final",
+      "elapsed_ms": 13761
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 15193,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 18829,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 23291,
+      "kind": "turn.created",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "core_request",
+      "elapsed_ms": 24678,
+      "recent_count": 3
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "core_request_acknowledged",
+      "elapsed_ms": 24743
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 25582,
+      "kind": "turn.done",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 25583,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 28040,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "core_final",
+      "elapsed_ms": 34570
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 35432,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "provider_event",
+      "elapsed_ms": 39444,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "result": "two_turn_wire_smoke",
+      "ready_after_wake_seconds": 2.07,
+      "core_requests": 2,
+      "core_completed": 2,
+      "core_failed": 0,
+      "first_pcm_samples": 114240,
+      "total_pcm_samples": 224640,
+      "closed_early": false,
+      "generations": 4
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "f50d71d4-0747-4d10-b0b8-0ba03a0e4004",
+      "stage": "closing",
+      "elapsed_ms": 42572,
+      "audio_received": 1929,
+      "audio_suppressed": 218
+    }
+  ],
+  "limitations": [
+    "Wire playback receipts in this test are simulated, not physical speaker acceptance",
+    "Core processing still takes about 8-10 seconds in the successful test",
+    "Other trial saw provider connection startup take 8.35 seconds despite prewarmed ICE",
+    "Another real-core trial failed in household digital-work validation; that core module is unchanged",
+    "Historical cause of first physical session shutdown remains unproven"
+  ],
+  "source_sha256": {
+    "src/eva/voice_service/codex_backend.py": "293dd4c3af212681140ab1edef7cb8f5f066add09933be77730ef742ff00b899",
+    "src/eva/voice_service/codex_speaker_audio.py": "11962f12da0491ad7643c919027a71b2b4765811c738433527213db576904b84",
+    "src/eva/voice_service/codex_session.py": "cc926784b90b0b510293c74e0598639f2bae88f59a9a86405ea4cd98ca53c92c",
+    "src/eva/voice_service/codex_media.py": "0a9f37f6d9b228d6f9d873f6385f913f72e89df3b5aa420d45808a68cbcb1600",
+    "deploy/native-speaker/codex_service.py": "15cf88bf56c758b70e27fcf64fe2a9c0f3527adc7bda2f1d5a18235c666f0703"
+  },
+  "installed": [
+    {
+      "container": "eva2-owner-voice-media-1",
+      "image": "sha256:8c56d237aaf25577b38e6f394f1309d4307a88591dd89a3a5ed0e417d8059236",
+      "running": true,
+      "source_verified": true
+    },
+    {
+      "container": "eva2-household-speaker-1",
+      "image": "sha256:a647c9ccb208b3416fb2aa253e89dd939389142c73e838a8281952e03e8063a6",
+      "running": true,
+      "source_verified": true
+    }
+  ],
+  "owner_ready": true,
+  "household_listening": true
+}

@@ -407,12 +407,18 @@ class ComponentImprovementActions:
             value = self.evaluator.application(operation, review_id=call.arguments["review_id"],
                 request_id=request_id, task_id=self.spec.work_id,
                 scope_sha256=scope)
+            if (call.name == APPLY and value.get('state') == 'candidate_invalid'
+                    and value.get('application_requested') is False and value.get('installed') is False):
+                raise ConversationActionInputRejected(('review_id',), prompt=
+                    "Pakket niet overgedragen; niets geïnstalleerd. Controleer package/candidate.json, "
+                    "archive_sha256 en alle bestanden/hashes volgens het hostcontract. Herstel de "
+                    "invoer en dien de juiste kandidaat in.")
             admitted = {"queued", "waiting", "completed", "waiting_for_builder", "awaiting_independent_review",
                 "waiting_for_configuration", "application_requested"} if call.name == APPLY else {
                 "ready", "queued", "waiting", "completed", "interrupted_before_dispatch",
                 "cancelled", "dispatching", "unconfirmed", "rejected", "assessing",
                 "awaiting_independent_answer_assessment", "application_requested", "publishing", "answer_assessing",
-                "waiting_for_builder", "awaiting_independent_review", "waiting_for_configuration", "blocked", "package_contract"}
+                "waiting_for_builder", "awaiting_independent_review", "waiting_for_configuration", "blocked", "package_contract", "not_submitted"}
             if value.get("state") not in admitted:
                 raise ConversationConflict("reviewed component application was not accepted")
             scope = "reviewed_application_requested" if call.name == APPLY else "reviewed_application_status"

@@ -166,7 +166,10 @@ class PostgresDelegatedWorkActions:
                     } if operation == "revise_digital" else {"type":"string"}),
                         **({"prior_work_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 240,
                             "description": "Gebruik null bij een nieuwe onderzoeksopdracht zonder voorganger. Bij een gevraagde aanvulling of correctie: work_id van eerder onderzoek. Lees een beschikbaar resultaat eerst. Bij nog lopend onderzoek moet eerst stop_delegated_work een stopverzoek hebben vastgelegd. Formuleer in research de volledige zelfstandige gecorrigeerde openbare vraag. Geen automatische herhaling; eerdere resultaten blijven behouden."}}
-                           if operation == "research" else {}),
+                           if operation == "research" else {"prior_work_id": {"type": ["string", "null"],
+                               "minLength": 1, "maxLength": 240, "description":
+                               "Exact work_id van één eerder privépakket, alleen wanneer de eigenaar vraagt dat pakket in deze nieuwe opdracht te gebruiken."}}
+                           if operation == "digital" else {}),
                         **({"feedback": {"type": "string", "minLength": 1, "maxLength": 800}}
                            if operation == "initiative_feedback" else {}),
                         **({"acceptance_message": {
@@ -435,10 +438,16 @@ class PostgresDelegatedWorkActions:
             return message
         return reconcile
 
+    def operation_spec(self, name):
+        return _OPERATIONS.get(name)
+
+    def optional_arguments(self, operation):
+        return set()
+
     def execute(
         self, turn: ConversationTurn, call: ConversationActionCall, *, step_index: int = 0
     ) -> ConversationActionReceipt:
-        operation_and_key = _OPERATIONS.get(call.name)
+        operation_and_key = self.operation_spec(call.name)
         if operation_and_key is None or call.name not in self.action_names:
             raise ConversationConflict("unknown delegated action")
         operation, key = operation_and_key
@@ -448,8 +457,8 @@ class PostgresDelegatedWorkActions:
             feedback = call.arguments.get("feedback")
             if not isinstance(feedback, str) or not 1 <= len(feedback.strip()) <= 800:
                 raise ConversationConflict("initiative feedback must contain 1..800 characters")
-        optional = {"acceptance_message"} if operation in {"start", "research", "digital"} else set()
-        if operation == "research":
+        optional = ({"acceptance_message"} if operation in {"start", "research", "digital"} else set()) | self.optional_arguments(operation)
+        if operation in {"research", "digital"}:
             optional.add("prior_work_id")
         # The shared model schema may include the optional household destination
         # on private text turns. Explicit null means no destination; it grants no
@@ -460,14 +469,14 @@ class PostgresDelegatedWorkActions:
         if call.arguments.get("prior_work_id") is not None and (
                 not isinstance(call.arguments["prior_work_id"], str)
                 or not 1 <= len(call.arguments["prior_work_id"]) <= 240):
-            raise ConversationConflict("research predecessor is invalid")
+            raise ConversationConflict("work predecessor is invalid")
         acceptance = call.arguments.get("acceptance_message")
         if (not required <= set(call.arguments) <= required | optional
                 or ("acceptance_message" in call.arguments
                     and not (operation == "digital" and acceptance is None) and (
                     not isinstance(acceptance, str) or not acceptance.strip()
                     or len(acceptance) > 240))) or (
-            key is not None and operation not in {"research", "schedule_digital", "schedule_resume", "search", "revise_digital"} and (
+            key is not None and operation not in {"research", "schedule_digital", "schedule_resume", "search", "revise_digital", "household_destination"} and (
                 not isinstance(call.arguments[key], str)
                 or not call.arguments[key].strip()
                 or len(call.arguments[key].encode("utf-8")) > (8192 if key == "task" else 240)
@@ -544,6 +553,7 @@ class PostgresDelegatedWorkActions:
             **({} if key is None else {key: service_argument}),
             **({"feedback": call.arguments["feedback"]} if operation == "initiative_feedback" else {}),
             **({"prior_work_id": call.arguments["prior_work_id"]} if call.arguments.get("prior_work_id") is not None else {}),
+            **{name: call.arguments[name] for name in self.optional_arguments(operation) if name in call.arguments},
         )
         if operation == "list":
             result = _model_work_overview(result)

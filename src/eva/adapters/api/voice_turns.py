@@ -26,6 +26,7 @@ class HeardMessage(BaseModel):
     text: str = Field(min_length=1, max_length=16000)
     occurred_at: str
     interrupted: bool = False
+    playback_status: Literal["completed", "interrupted", "unconfirmed"] | None = None
 
 class ActiveWork(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -112,14 +113,14 @@ def install_voice_turns(app: FastAPI, *, access: DashboardAccess,
 
 
 def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
-                      message_id, check, user_label: str = "Jaap", admit=None):
+                      message_id, check, user_label: str = "Jaap", admit=None, request_identity=None):
     """Shared task/context stream; callers must supply a server-admitted turn."""
     try:
         recent = tuple(RecentConversationMessage(
             role=user_label if item.role == "user" else "Eva",
             text=item.text, occurred_at=item.occurred_at,
             playback_status=(None if item.role == "user" else
-                             "interrupted" if item.interrupted else "completed"),
+                             item.playback_status or ("interrupted" if item.interrupted else "completed")),
         ) for item in payload.recent)
         if len({item.message_id for item in payload.active_work}) != len(payload.active_work):
             raise ValueError("duplicate work")
@@ -144,7 +145,7 @@ def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
         check()
         runtime.request_turn_stop(replace(turn, message_id=target),
                                   request_message_id=turn.message_id + ":" + target[-36:])
-    context = VoiceContext(recent=recent,
+    context = VoiceContext(recent=recent, request_identity=request_identity,
         active_work=tuple((message_id(item.message_id), item.text) for item in payload.active_work),
         stop=stop, event=event,
         known_results=tuple((message_id(item.message_id), item.text) for item in payload.work_results))

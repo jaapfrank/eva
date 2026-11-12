@@ -5996,10 +5996,11 @@ def _check_dependency_binding(
         "dependency binding contract/status is not exact",
     )
     target_runtime = binding.get("targetRuntime", {})
-    tier1 = target_runtime.get("tier1", [])
+    tier1 = target_runtime.get("tier1", []) if isinstance(target_runtime, dict) else []
     _need(
         errors,
-        target_runtime.get("python") == "CPython 3.12.14"
+        isinstance(target_runtime, dict)
+        and target_runtime.get("python") == "CPython 3.12.14"
         and tier1
         == [
             {

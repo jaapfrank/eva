@@ -1,0 +1,754 @@
+{
+  "contract": "EvaRepeatedComponentProfile/v1",
+  "recorded_at": "2026-10-15T10:03:28.494520+00:00",
+  "status": "measured_no_production_behavior_changed",
+  "method": [
+    "Same running application object and same authorized synthetic household session per run.",
+    "Two synthetic question types, weather state and light inventory; no intended device changes.",
+    "Model selection repeated three times with exactly the same generate arguments; only first selected action executed. Repetitions are development measurements, not normal voice latency.",
+    "Memory queries repeated six times per run, holding validity timestamp fixed and alternating two questions.",
+    "HA state read repeated three times; inventory read six times across two domains.",
+    "Separate memory-only diagnostic alternates normal four-query recall and single-query recall; unchanged source and audience checks; not installed."
+  ],
+  "runs": {
+    "baseline-components": {
+      "measurements": [
+        {
+          "component": "runtime_construction",
+          "attempt": 1,
+          "elapsed_ms": 679.15
+        },
+        {
+          "component": "household_memory",
+          "attempt": 1,
+          "elapsed_ms": 2839.59,
+          "question_group": 0
+        },
+        {
+          "component": "household_memory",
+          "attempt": 2,
+          "elapsed_ms": 3977.32,
+          "question_group": 0
+        },
+        {
+          "component": "household_memory",
+          "attempt": 3,
+          "elapsed_ms": 2330.54,
+          "question_group": 0
+        },
+        {
+          "component": "household_memory",
+          "attempt": 4,
+          "elapsed_ms": 2380.46,
+          "question_group": 1
+        },
+        {
+          "component": "household_memory",
+          "attempt": 5,
+          "elapsed_ms": 2409.15,
+          "question_group": 1
+        },
+        {
+          "component": "household_memory",
+          "attempt": 6,
+          "elapsed_ms": 2264.25,
+          "question_group": 0
+        },
+        {
+          "component": "contact_model",
+          "attempt": 1,
+          "elapsed_ms": 6678.56,
+          "group": 1,
+          "identical_input_repetition": true,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 4566,
+            "output_tokens": 42
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 6224
+          },
+          "selected_action": "read_home_assistant_inventory"
+        },
+        {
+          "component": "contact_model",
+          "attempt": 2,
+          "elapsed_ms": 2182.85,
+          "group": 1,
+          "identical_input_repetition": true,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 4566,
+            "output_tokens": 42
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 2139
+          },
+          "selected_action": "read_home_assistant_inventory"
+        },
+        {
+          "component": "contact_model",
+          "attempt": 3,
+          "elapsed_ms": 2356.87,
+          "group": 1,
+          "identical_input_repetition": true,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 4566,
+            "output_tokens": 42
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 2313
+          },
+          "selected_action": "read_home_assistant_inventory"
+        },
+        {
+          "component": "contact_model",
+          "attempt": 1,
+          "elapsed_ms": 4337.09,
+          "group": 1,
+          "identical_input_repetition": false,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 8404,
+            "output_tokens": 83
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 4103
+          },
+          "selected_action": "read_home_assistant_inventory"
+        },
+        {
+          "component": "contact_model",
+          "attempt": 1,
+          "elapsed_ms": 3426.07,
+          "group": 1,
+          "identical_input_repetition": false,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 5878,
+            "output_tokens": 50
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 3077
+          },
+          "selected_action": "home_assistant_request"
+        },
+        {
+          "component": "ha_request",
+          "attempt": 1,
+          "elapsed_ms": 8.64
+        },
+        {
+          "component": "ha_request",
+          "attempt": 2,
+          "elapsed_ms": 9.69
+        },
+        {
+          "component": "ha_request",
+          "attempt": 3,
+          "elapsed_ms": 10.13
+        },
+        {
+          "component": "contact_model",
+          "attempt": 1,
+          "elapsed_ms": 3588.77,
+          "group": 1,
+          "identical_input_repetition": false,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 6482,
+            "output_tokens": 31
+          },
+          "timing": {
+            "first_content_ms": 1926,
+            "completed_ms": 3102
+          },
+          "selected_action": null
+        },
+        {
+          "component": "contact_model",
+          "attempt": 1,
+          "elapsed_ms": 2396.43,
+          "group": 2,
+          "identical_input_repetition": true,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 4396,
+            "output_tokens": 42
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 2341
+          },
+          "selected_action": "read_home_assistant_inventory"
+        },
+        {
+          "component": "contact_model",
+          "attempt": 2,
+          "elapsed_ms": 2098.52,
+          "group": 2,
+          "identical_input_repetition": true,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 4396,
+            "output_tokens": 42
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 2044
+          },
+          "selected_action": "read_home_assistant_inventory"
+        },
+        {
+          "component": "contact_model",
+          "attempt": 3,
+          "elapsed_ms": 2108.2,
+          "group": 2,
+          "identical_input_repetition": true,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 4396,
+            "output_tokens": 42
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 2049
+          },
+          "selected_action": "read_home_assistant_inventory"
+        },
+        {
+          "component": "contact_model",
+          "attempt": 1,
+          "elapsed_ms": 5256.68,
+          "group": 2,
+          "identical_input_repetition": false,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 8266,
+            "output_tokens": 121
+          },
+          "timing": {
+            "first_content_ms": null,
+            "completed_ms": 5018
+          },
+          "selected_action": "read_home_assistant_inventory"
+        },
+        {
+          "component": "contact_model",
+          "attempt": 1,
+          "elapsed_ms": 3852.6,
+          "group": 2,
+          "identical_input_repetition": false,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "input_tokens": 4027,
+            "output_tokens": 43
+          },
+          "timing": {
+            "first_content_ms": 2105,
+            "completed_ms": 3588
+          },
+          "selected_action": null
+        }
+      ],
+      "cases": [
+        {
+          "probe_case": 0,
+          "completed": true,
+          "actions": [
+            {
+              "name": "read_home_assistant_inventory",
+              "status": "verified"
+            },
+            {
+              "name": "read_home_assistant_inventory",
+              "status": "verified"
+            },
+            {
+              "name": "home_assistant_request",
+              "status": "verified"
+            }
+          ]
+        },
+        {
+          "probe_case": 1,
+          "completed": true,
+          "actions": [
+            {
+              "name": "read_home_assistant_inventory",
+              "status": "verified"
+            },
+            {
+              "name": "read_home_assistant_inventory",
+              "status": "failed"
+            }
+          ]
+        }
+      ]
+    },
+    "baseline-components-local": {
+      "measurements": [
+        {
+          "component": "runtime_construction",
+          "attempt": 1,
+          "elapsed_ms": 1370.43
+        },
+        {
+          "component": "memory_http",
+          "attempt": 1,
+          "elapsed_ms": 61.14,
+          "route": "source_or_bank"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 2,
+          "elapsed_ms": 25.37,
+          "route": "source_or_bank"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 3,
+          "elapsed_ms": 1734.52,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 4,
+          "elapsed_ms": 3848.92,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 5,
+          "elapsed_ms": 3873.18,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 6,
+          "elapsed_ms": 3888.27,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 1,
+          "elapsed_ms": 4007.89,
+          "question_group": 0
+        },
+        {
+          "component": "memory_http",
+          "attempt": 7,
+          "elapsed_ms": 5074.23,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 8,
+          "elapsed_ms": 5807.11,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 9,
+          "elapsed_ms": 5817.06,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 10,
+          "elapsed_ms": 6545.69,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 2,
+          "elapsed_ms": 6598.71,
+          "question_group": 0
+        },
+        {
+          "component": "memory_http",
+          "attempt": 11,
+          "elapsed_ms": 2005.24,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 12,
+          "elapsed_ms": 2015.04,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 13,
+          "elapsed_ms": 3369.96,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 14,
+          "elapsed_ms": 3383.01,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 3,
+          "elapsed_ms": 3400.54,
+          "question_group": 0
+        },
+        {
+          "component": "memory_http",
+          "attempt": 15,
+          "elapsed_ms": 1206.94,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 16,
+          "elapsed_ms": 3264.77,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 17,
+          "elapsed_ms": 3280.71,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 18,
+          "elapsed_ms": 3280.33,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 4,
+          "elapsed_ms": 3294.95,
+          "question_group": 1
+        },
+        {
+          "component": "memory_http",
+          "attempt": 19,
+          "elapsed_ms": 1249.4,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 20,
+          "elapsed_ms": 2594.1,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 21,
+          "elapsed_ms": 2608.23,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 22,
+          "elapsed_ms": 3314.28,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 5,
+          "elapsed_ms": 3327.47,
+          "question_group": 1
+        },
+        {
+          "component": "memory_http",
+          "attempt": 23,
+          "elapsed_ms": 1266.01,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 24,
+          "elapsed_ms": 1959.43,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 25,
+          "elapsed_ms": 3125.22,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 26,
+          "elapsed_ms": 3134.9,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 6,
+          "elapsed_ms": 3152.61,
+          "question_group": 0
+        },
+        {
+          "component": "ha_inventory_read",
+          "attempt": 1,
+          "elapsed_ms": 188.64,
+          "domain": "weather",
+          "item_count": 1
+        },
+        {
+          "component": "ha_inventory_read",
+          "attempt": 2,
+          "elapsed_ms": 174.33,
+          "domain": "weather",
+          "item_count": 1
+        },
+        {
+          "component": "ha_inventory_read",
+          "attempt": 3,
+          "elapsed_ms": 174.46,
+          "domain": "weather",
+          "item_count": 1
+        },
+        {
+          "component": "ha_inventory_read",
+          "attempt": 4,
+          "elapsed_ms": 188.95,
+          "domain": "light",
+          "item_count": 50
+        },
+        {
+          "component": "ha_inventory_read",
+          "attempt": 5,
+          "elapsed_ms": 167.96,
+          "domain": "light",
+          "item_count": 50
+        },
+        {
+          "component": "ha_inventory_read",
+          "attempt": 6,
+          "elapsed_ms": 186.47,
+          "domain": "weather",
+          "item_count": 1
+        }
+      ],
+      "cases": []
+    },
+    "baseline-components-variants": {
+      "measurements": [
+        {
+          "component": "runtime_construction",
+          "attempt": 1,
+          "elapsed_ms": 934.26
+        },
+        {
+          "component": "memory_http",
+          "attempt": 1,
+          "elapsed_ms": 20.52,
+          "route": "source_or_bank"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 2,
+          "elapsed_ms": 14.34,
+          "route": "source_or_bank"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 3,
+          "elapsed_ms": 2423.17,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 4,
+          "elapsed_ms": 2441.31,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 5,
+          "elapsed_ms": 2443.76,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 6,
+          "elapsed_ms": 3024.59,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 1,
+          "elapsed_ms": 3079.64,
+          "question_group": 0,
+          "single_query": false
+        },
+        {
+          "component": "memory_http",
+          "attempt": 7,
+          "elapsed_ms": 1042.13,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 2,
+          "elapsed_ms": 1055.22,
+          "question_group": 0,
+          "single_query": true
+        },
+        {
+          "component": "memory_http",
+          "attempt": 8,
+          "elapsed_ms": 970.72,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 9,
+          "elapsed_ms": 1752.71,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 10,
+          "elapsed_ms": 2373.96,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 11,
+          "elapsed_ms": 2959.84,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 3,
+          "elapsed_ms": 2975.58,
+          "question_group": 0,
+          "single_query": false
+        },
+        {
+          "component": "memory_http",
+          "attempt": 12,
+          "elapsed_ms": 1017.16,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 4,
+          "elapsed_ms": 1030.86,
+          "question_group": 0,
+          "single_query": true
+        },
+        {
+          "component": "memory_http",
+          "attempt": 13,
+          "elapsed_ms": 1098.42,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 14,
+          "elapsed_ms": 1830.36,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 15,
+          "elapsed_ms": 3176.09,
+          "route": "recall"
+        },
+        {
+          "component": "memory_http",
+          "attempt": 16,
+          "elapsed_ms": 3183.18,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 5,
+          "elapsed_ms": 3194.7,
+          "question_group": 1,
+          "single_query": false
+        },
+        {
+          "component": "memory_http",
+          "attempt": 17,
+          "elapsed_ms": 969.87,
+          "route": "recall"
+        },
+        {
+          "component": "household_memory",
+          "attempt": 6,
+          "elapsed_ms": 981.18,
+          "question_group": 1,
+          "single_query": true
+        }
+      ],
+      "cases": []
+    }
+  },
+  "development_model_usage": {
+    "requests": 11,
+    "input_tokens": 59943,
+    "output_tokens": 580,
+    "credits": null,
+    "excludes": "Assistant development tokens and concurrent production runtime activity"
+  },
+  "findings": [
+    "Identical initial model input: 6678.56, 2182.85, 2356.87 ms. A new question type in the same process: 2396.43, 2098.52, 2108.20 ms. Consistent with warming, not proof of provider prompt cache.",
+    "Household recall has no existing private-person fast-cache path. Repetition still invokes Hindsight four times in parallel.",
+    "Paired normal/single recall ms: 3079.64/1055.22, 2975.58/1030.86, 3194.70/981.18. Retrieval quality not compared; no production change justified by latency alone.",
+    "HA GET read: 8.64,9.69,10.13 ms; fresh inventory 167.96–188.95 ms. Neither explains multi-second reasoning turns.",
+    "Most measured memory duration is within local Hindsight HTTP recall; host-side preparation/source processing is the small remainder on this path.",
+    "For identical warm model inputs, 43–59 ms lies outside the model phase; phase itself still takes about 2 seconds. Phase includes SDK/network/provider and cannot be equated with pure provider compute.",
+    "Light inventory route completed with a failed follow-up tool read; final HTTP completion is not evidence of successful task fulfilment."
+  ],
+  "runtime_observations": {
+    "hindsight_cuda_available": true,
+    "torch_cuda": "12.8",
+    "torch_cpu_threads": 4,
+    "embeddings_force_cpu": true,
+    "reranker_force_cpu": false,
+    "actual_reranker_device_not_verified": true
+  },
+  "limits": [
+    "First request in a fresh probe process is not a guaranteed cold remote provider, GPU or shared Hindsight server. No production services restarted.",
+    "Small ordered samples, background activity uncontrolled; no p95, robust cache attribution or full causal CPU accounting.",
+    "No cached_input_tokens metric observed; do not claim a prompt-cache hit.",
+    "Memory diagnostic does not prove single-query recall preserves important facts.",
+    "Extra repeated model calls occur inside the profiling request; whole-request timing in that run is deliberately inflated and must not be used as latency baseline.",
+    "No fresh audio test; prior installed voice measurement remains separate."
+  ],
+  "next_actions": [
+    "Prepare source-backed household context on existing memory authority, with correction/deletion invalidation.",
+    "Measure recall quality before replacing unconditional query expansion with bounded fallback.",
+    "Reduce repeated model/API discovery through existing authorized capability context; inspect failed inventory cursor separately.",
+    "Keep component repetitions in future comparisons; use full voice chain only for integration acceptance."
+  ]
+}

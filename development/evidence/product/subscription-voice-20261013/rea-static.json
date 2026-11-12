@@ -1,0 +1,115 @@
+{
+  "scope": "Static inspection only; no live voice session tested. Native symbols and strings do not establish complete runtime control flow.",
+  "rea_extraction_evidence_id": "ev_44be7670c4b8b466d7f0c7d12d78689b72abdc1eaf4242b8e9def6e5138e70ff",
+  "app_asar_sha256": "c5fdef328cfa2ad9095786f9c3a7aaa447e68834d31299d6ef2592da02029038",
+  "integrity_note": "REA extraction used record-and-continue after unpacked serialport bindings.node integrity mismatch. Selected JavaScript files individually checked against ASAR metadata below.",
+  "javascript": [
+    {
+      "file": "/tmp/rea-extracted-5ef45351-3628-4ac7-ae80-278692982851/webview/assets/app-initial-b8e1c8014bb4.js",
+      "sha256": "799331dde54905c4df5e360f23a9621141759e2c0acb230aeab909f9904b646f",
+      "declared_asar_hash": "799331dde54905c4df5e360f23a9621141759e2c0acb230aeab909f9904b646f",
+      "matches_declared_hash": true,
+      "matches": [
+        {
+          "term": "thread/realtime/start",
+          "character_offset": 5301076,
+          "line": 1739,
+          "excerpt": "eStartInstructions:f,voice:p}){if(c.type===`existingCall`){await i.sendRequest(`thread/realtime/start`,{codexResponseHandoffChannelPrefixes:d?.codexResponseHandoffChannelPrefixes,codexResponseHandoffMode:d?.codexResponseHandoffMode,codexResponseItemPrefix:t,codexResponsesAsItems:n,flushTranscriptTailOnSessionEnd:!0,includeStartupContext:!1,outputModality:o,re"
+        },
+        {
+          "term": "thread/realtime/stop",
+          "character_offset": 5302041,
+          "line": 1739,
+          "excerpt": ")).voices}async function sra({manager:e,conversationId:t}){await e.sendRequest(`thread/realtime/stop`,{threadId:t})}async function cra({manager:e,conversationId:t,role:n,text:r}){await e.sendRequest(`thread/realtime/appendText`,{threadId:t,role:n,text:r})}async function lra({manager:e,conversationId:t,text:n}){await e.sendRequest(`thread/realtime/appendSpeec"
+        },
+        {
+          "term": "channelCount:1,noiseSuppression:!0",
+          "character_offset": 7612107,
+          "line": 3924,
+          "excerpt": "o;function CYo(){return(CYo=e((()=>{Ns(),vm(),s_(),h8r(),_Yo(),yYo(),saa(),xYo={channelCount:1,noiseSuppression:!0},SYo=class e{context;inputStream;webRtcStream;sourceNode;workletNode;preference;nativeMicrophoneMuteEnabled;assertCanCapture;analytics;onInputStreamChanged=null;pendingInputRefresh=Promise.resolve();appliedPreference;isStopped=!1;isMuted=!1;muteRequestId=0;re"
+        },
+        {
+          "term": "p=new RTCPeerConnection",
+          "character_offset": 7620541,
+          "line": 3924,
+          "excerpt": "FAILED;try{let t=f.getWebRtcStream();r?.mark(`peerConnectionCreationStartTime`),p=new RTCPeerConnection,d?.observeTransportConnectionState(p.connectionState);let n=document.createElement(`audio`);n.autoplay=!0,n.hidden=!0,n.muted=u,h=th.CODEX_REALTIME_VOICE_STARTUP_MEDIA_FAILURE_REASON_DATA_CHANNEL_INITIALIZATION_FAILED,r?.mark(`dataChannelCreationStartTime`);l"
+        },
+        {
+          "term": "async acceptAnswerSdp",
+          "character_offset": 7622235,
+          "line": 3924,
+          "excerpt": "urn this.microphone.getInputStream()}getOutputStream(){return this.outputStream}async acceptAnswerSdp(e){this.connectionSetupAnalytics?.mark(`setRemoteDescriptionStartTime`),await this.peerConnection.setRemoteDescription({type:`answer`,sdp:e}),this.isStopped||(this.connectionSetupAnalytics?.mark(`setRemoteDescriptionEndTime`),this.connectionSetupAnalytics?.ma"
+        },
+        {
+          "term": "setInputAudioMuted(e)",
+          "character_offset": 7622664,
+          "line": 3924,
+          "excerpt": "e,!e&&this.audioElement.srcObject!=null&&this.audioElement.play().catch(()=>{})}setInputAudioMuted(e){this.microphone.setMuted(e)}releaseInputAudio(){this.isStopped||this.hasReleasedInput||(this.hasReleasedInput=!0,this.microphone.release())}refreshMicrophoneInput(e){return this.microphone.refreshInput(e)}stop(e){let t=!this.isStopped&&(e?.playEndSound??this."
+        },
+        {
+          "term": "this.dataChannel.close()",
+          "character_offset": 7623005,
+          "line": 3924,
+          "excerpt": ".playEndSound??this.hasConnected);this.captureTransportExit(),this.isStopped=!0,this.dataChannel.close(),this.peerConnection.close(),this.outputStream=null,this.audioElement.pause(),this.audioElement.srcObject=null,this.microphone.stop(),t&&nYo()}handleConnectionFailure(){this.isStopped||this.hasConnectionFailed||(this.hasConnectionFailed=!0,this.onConnectionFai"
+        }
+      ]
+    },
+    {
+      "file": "/tmp/rea-extracted-5ef45351-3628-4ac7-ae80-278692982851/webview/assets/voice-session-parameters-e132baafb255.js",
+      "sha256": "be322547bcbebcc1b297151a2b388944adcab59d691711b85df17c6d2acf2285",
+      "declared_asar_hash": "be322547bcbebcc1b297151a2b388944adcab59d691711b85df17c6d2acf2285",
+      "matches_declared_hash": true,
+      "matches": [
+        {
+          "term": "u.createDataChannel",
+          "character_offset": 29567,
+          "line": 1,
+          "excerpt": "equired for fresh setup`);return r()}),d=l.dataChannel.time(()=>n?.dataChannel??u.createDataChannel(``,{negotiated:!0,id:0})),f=l.eventHandlers.time(()=>t?.({dataChannel:d,getEventTimestamp:()=>performance.now(),getPeerConnectionState:()=>{let e=r?.()??u;return{connectionState:e.connectionState,iceConnectionState:e.iceConnectionState}},pc:u})),{audioTransce"
+        },
+        {
+          "term": "new RTCPeerConnection",
+          "character_offset": 34684,
+          "line": 1,
+          "excerpt": "q=void 0,ii=!1,J={createPeerConnection:e=>($r(),q&&Hr(q)&&(q=void 0),q===void 0?new RTCPeerConnection({bundlePolicy:`max-bundle`}):new RTCPeerConnection({bundlePolicy:`max-bundle`,certificates:[q]})),getFreshPeerConnection:e=>{try{return K&&ei(K)?K:(K?.close(),J.createPeerConnection(e))}finally{ii&&ni().catch(e=>{a.debug(`[voice] Peer connection prewarm unava"
+        }
+      ]
+    }
+  ],
+  "cli": "/home/administrator/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/bin/codex",
+  "cli_version": "0.162.1",
+  "cli_hash_checks": {
+    "bin/codex": {
+      "sha256": "628e35487d888a28f0427fc37501da529dd3d81fcbad7a2c3421c1e8670d92e1",
+      "matches_manifest": true
+    },
+    "codex-resources/voice/bin/codex-voice-host": {
+      "sha256": "f0e6d22a2f5f3f838ac3b214ba1a119b5ef94e98dc50e3feac4e7d6e8e835f2c",
+      "matches_manifest": true
+    }
+  },
+  "cli_strings": [
+    {
+      "text": "/voice stop",
+      "byte_offset": 238384973
+    },
+    {
+      "text": "thread/realtime/start failed in TUI",
+      "byte_offset": 239724582
+    },
+    {
+      "text": "tui/src/chatwidget/realtime.rs",
+      "byte_offset": 238407343
+    },
+    {
+      "text": "Voice connection timed out. Retrying once after cleanup.",
+      "byte_offset": 245444641
+    },
+    {
+      "text": "Start voice mode before muting the microphone.",
+      "byte_offset": 245444523
+    }
+  ],
+  "voice_helper": "/home/administrator/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-resources/voice/bin/codex-voice-host",
+  "native_symbol_file": "/tmp/codex-voice-evidence-20261013/native-symbols.txt",
+  "native_decompiler_limitation": "REA native search providers unavailable; nm and byte-string inspection used, not native decompilation."
+}

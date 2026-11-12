@@ -1,0 +1,88 @@
+{
+  "synthetic_only": true,
+  "eva_core_connected": false,
+  "production_changed": false,
+  "clock": "Local monotonic milliseconds from voice start; prewarm events occur before that reset and are not comparable.",
+  "milestones_ms": {
+    "microphone_clip_end": 3695,
+    "media_ready": 2173,
+    "delegation_received": 5599,
+    "backend_turn_start": 5607,
+    "first_backend_text_delta": 18196,
+    "backend_turn_end": 18975,
+    "first_audio_per_turn": [
+      6698,
+      19909
+    ]
+  },
+  "audio_after_clip_end_ms": [
+    3003,
+    16214
+  ],
+  "observed_searches": [
+    {
+      "item_index": 2,
+      "action_type": "search",
+      "start_ms": 14257,
+      "end_ms": 16284,
+      "observed_duration_ms": 2027
+    }
+  ],
+  "last_token_usage": {
+    "inputTokens": 22333,
+    "cachedInputTokens": 18176,
+    "outputTokens": 115,
+    "reasoningOutputTokens": 0,
+    "totalTokens": 22448
+  },
+  "last_nonquiet_microphone_frame_ms": 4694,
+  "network": {
+    "rtt_samples": 23,
+    "rtt_median_ms": 38.61,
+    "rtt_max_ms": 39.41,
+    "maximum_reported_packets_lost": 0,
+    "rtp_jitter_units": "RTP timestamp ticks, not milliseconds; audio clock is 48000 Hz."
+  },
+  "max_observed_microphone_queue_frames": 95,
+  "event_loop_lag": [
+    {
+      "samples": 1306,
+      "maximum_ms": 3.16,
+      "p95_ms": 1.67
+    }
+  ],
+  "limitations": [
+    "Notification arrival times bound observed stages; they do not expose server queue time, pure inference time, DNS or search provider internal timing.",
+    "First software PCM is not measured acoustic playback.",
+    "Search completion proves a tool event, not forecast correctness. No query, URL, transcript or credentials are recorded.",
+    "A single sample is not a performance distribution.",
+    "Microphone source EOF was 3695 ms, while the last nonquiet outgoing frame was 4694 ms: startup buffering contributes to the input-to-backend interval. Do not label the whole interval VAD delay. Maximum queue 95 frames occurred during startup, not sustained backlog."
+  ],
+  "phase_durations_ms": {
+    "source_clip_end_to_backend_start": 1912,
+    "backend_start_to_search_started": 8650,
+    "search_lifecycle": 2027,
+    "search_completed_to_first_text_delta": 1912,
+    "first_text_delta_to_backend_completed": 779,
+    "backend_completed_to_answer_audio": 934
+  },
+  "tests": {
+    "privacy_and_projection": 3,
+    "result": "passed"
+  },
+  "source_documentation": "https://learn.chatgpt.com/docs/app-server#events",
+  "user_comparison": {
+    "reported_phone_seconds": 22,
+    "measurement_boundaries_confirmed": false
+  },
+  "observed_error_signals": {
+    "codex_error_notifications": 0,
+    "realtime_error_notifications": 0,
+    "voice_error_events": 0,
+    "failed_backend_turns": 0,
+    "completed_backend_turns": 1,
+    "local_task_failures": 0,
+    "interpretation": "Counts are observed signals, not an assertion that every internal provider failure is exposed."
+  },
+  "error_capture_limit": "This historical run predates explicit thread/realtime/error capture. Zero counts describe only recorded signals; future traces include that notification."
+}

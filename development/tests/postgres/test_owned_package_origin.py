@@ -90,3 +90,56 @@ def test_original_private_alias_stop_erasure_and_exact_scope_are_preserved(deleg
             store.request_stop(latest.spec.work_id, now=clock[0], **owner)
             with pytest.raises(ValueError, match='stopped'):
                 handle_package_request(request, authority=authority, service=service, store=store)
+
+
+def test_private_package_followup_is_bound_to_a_closed_predecessor(delegated_engine, tmp_path):
+    from dataclasses import replace
+    from eva.contracts.delegated_work import DelegatedWorkUsage
+
+    _, installation = _case(delegated_engine, tmp_path)
+    source = complete_dream_exchange(delegated_engine, _dream(installation, 'package-link'))
+    store, profile, old, owner = _retained_work(delegated_engine, source, 'package-link', admit=False)
+    profile = replace(profile, capability_ids=('apply_reviewed_component_improvement',))
+    previous = profile.build_spec(
+        source=old.source.model_dump(mode='json'), source_ingress_sha256=old.source_ingress_sha256,
+        work_id=old.work_id, episode_id=old.episode_id, generation=1, parent_task_id=old.parent_task_id,
+        owner_principal_id=old.owner_principal_id, principal_binding_id=old.principal_binding_id,
+        task=old.task, created_at=NOW, deadline=NOW + timedelta(minutes=20),
+    )
+    store.admit(spec=previous, title='Package fixture', summary='Closed source fixture',
+                worker_role='Digital', retention_policy_id='retention:test',
+                retention_until=NOW + timedelta(days=7), occurred_at=NOW)
+    service = DelegatedWorkOwnerService(
+        store, **owner, digital_profile=profile, clock=lambda: NOW,
+        conversation_scope=source.outbox._scope_value,
+        private_bridge_principal_loader=lambda: source.turn.principal_id,
+    )
+    followup = replace(source.turn, message_id='package-link:new',
+                       text='Use the package from my previous task.')
+    source.journal.admit(followup)
+
+    def admit(turn, key):
+        return service.execute('digital', turn, task='Submit retained package for review.',
+                               request_key=key, prior_work_id=previous.work_id)
+
+    with pytest.raises(ValueError, match='same private conversation'):
+        admit(followup, 'package-link-active')
+    call = store.start_call(store.claim_next(worker_id='fixture', release=profile.release, now=NOW), now=NOW)
+    store.record_failure(call, usage=DelegatedWorkUsage.unmeasured(), error_code='internal_error',
+                         error_fingerprint='a' * 64, ambiguous=True, now=NOW)
+    other_chat = replace(followup, conversation_id='package-link:other-chat')
+    with pytest.raises(ValueError, match='same private conversation'):
+        admit(other_chat, 'package-link-other-chat')
+    result = admit(followup, 'package-link-valid')
+    current_id = result['work']['work_id']
+    store.start_call(store.claim_next(worker_id='fixture', release=profile.release, now=NOW), now=NOW)
+    authority = SimpleNamespace(owner=SimpleNamespace(
+        _engine=delegated_engine, _scope=source.outbox._scope_value, _authority=store.scope,
+        _owner=owner['owner_principal_id'], _binding=owner['principal_binding_id']))
+    metadata = _metadata(authority, service, store, current_id)
+    linked = metadata['linked_package_origin']
+    assert linked['task_id'] == previous.work_id
+    assert linked['spec_sha256'] == previous.sha256
+    assert linked['workspace_key'] != metadata['workspace_key']
+    assert linked['owner_binding_sha256'] == metadata['owner_binding_sha256']
+    assert store.load(previous.work_id, **owner).state == 'ambiguous'

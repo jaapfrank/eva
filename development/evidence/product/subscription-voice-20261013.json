@@ -1,0 +1,67 @@
+{
+  "contract": "EvaSubscriptionVoiceEvidence/v1",
+  "date": "2026-10-13",
+  "status": "experimental_transport_verified_product_incomplete",
+  "codex_version": "0.162.1",
+  "existing_eva_access_used": true,
+  "new_api_key_or_login": false,
+  "installed_runtime_changed": false,
+  "websocket": "rejected: realtime conversation requires API key auth",
+  "webrtc": "Codex managed session connected and generated synthetic audio",
+  "direct_desktop_call": "HTTP 201 followed by forbidden: Voice session access denied",
+  "model_identity": "not returned by working session; desktop parity unverified",
+  "authentication_support": {
+    "installed_schema": "Marks chatgptAuthTokens internal-only",
+    "official_documentation": "Describes chatgptAuthTokens as experimental and intended for host apps owning auth lifecycle",
+    "source": "https://learn.chatgpt.com/docs/app-server#authentication-modes",
+    "assessment": "Documentation/schema disagreement; successful experimental access proven, production stability not proven"
+  },
+  "audio_receipt": {
+    "contract": "EvaSubscriptionVoiceProbe/v1",
+    "synthetic_only": true,
+    "exact_desktop_model_verified": false,
+    "connected": true,
+    "audio": {
+      "decoded_frames": 444,
+      "frames_rms_over_200": 108,
+      "consumer_end_type": "MediaStreamError"
+    },
+    "metadata": {
+      "reported_model": null,
+      "sample_rate": 48000,
+      "channels": 2
+    },
+    "event_types": [
+      "output_transcript.added",
+      "session.context.appended",
+      "session.started",
+      "turn.created",
+      "turn.delta",
+      "turn.done"
+    ],
+    "audio_verified": true,
+    "eva_backend_connected": false
+  },
+  "tests": "4 focused lifecycle/readiness tests passed",
+  "not_implemented": [
+    "EVA core delegation",
+    "Home Assistant wake-word routing to new voice session",
+    "Telegram voice adapter",
+    "WhatsApp calls"
+  ],
+  "not_verified": [
+    "Physical microphone input",
+    "Dutch recognition",
+    "Physical speaker echo cancellation",
+    "Barge-in reliability",
+    "End-to-end latency",
+    "Subscription usage debit",
+    "Exact model identity"
+  ],
+  "sample": {
+    "file": "synthetic-eva.wav",
+    "sha256": "11a58e13bf7c712c9c1950c8b808a28a20934a7f58561834bf501617a01ff057",
+    "source": "Synthetic requested phrase; no household audio",
+    "trim": "Leading/trailing low-energy audio removed, no speech alteration"
+  }
+}

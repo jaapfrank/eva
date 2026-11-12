@@ -11,6 +11,7 @@ from eva.adapters.postgres.initiative_execution import PostgresInitiativeAuthori
 from eva.adapters.postgres.operational_timeline import transition_timeline_thread
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.contracts.canonical_json import canonical_sha256
+from eva.bootstrap.native_work_assets import prepare_native_work_assets
 
 
 from eva.application.initiative_execution import NativeInitiativeDelegation, unstarted_profile_refresh, certified_preparation_evidence
@@ -33,7 +34,7 @@ def admit_native_initiative(authority, claim, service):
         raise InitiativeMandateDenied("native digital work is not composed")
     guard, turn = authority.bind(claim)
     profile = service.digital_profile
-    grant = authority.digital_grant(profile)
+    grant = guard.restrict_work_grant(authority.digital_grant(profile))
     now = service.now()
     origin = {"kind": "eva_initiative", "intent_id": claim.intent_id,
         "thread_id": claim.thread_id, "claim_revision": claim.revision,
@@ -58,25 +59,32 @@ def admit_native_initiative(authority, claim, service):
         raise InitiativeMandateDenied("native handoff differs from its host owner scope")
     with authority.owner._engine.begin() as conn:
         guard.check_locked(conn)
-        service.store.admit(spec=spec, title="Eigen initiatief van Eva",
+        prepare_native_work_assets(service, spec, turn)
+        admission = service.store.admit(spec=spec, title="Eigen initiatief van Eva",
             summary="Native initiatief; resultaat wacht op digitale uitvoering.",
             worker_role="digital-worker", retention_policy_id="initiative-private-work:v1",
             retention_until=now + timedelta(days=7), occurred_at=now, _connection=conn,
             _native_guard=guard)
         authority.timeline._scope(conn)
-        transition_timeline_thread(conn, authority.owner._scope, thread_id=claim.thread_id,
+        admission_checkpoint = transition_timeline_thread(conn, authority.owner._scope, thread_id=claim.thread_id,
             expected_revision=claim.revision, checkpoint_id=claim.thread_id + ":digital-admitted",
             phase="initiative_work_waiting", status="waiting_for_proof",
             event_type="PERSONAL_INITIATIVE_WORK_ADMITTED", occurred_at=now,
             data={"intent_id": claim.intent_id, "origin": "eva_initiative",
                   "work_id": spec.work_id, "spec_sha256": spec.sha256,
-                  "mandate_sha256": guard.mandate_sha})
+                  "mandate_sha256": guard.mandate_sha,
+                  # Immutable admission snapshot; current status is projected
+                  # from the existing persisted queue row, never this old copy.
+                  **admission.work.effect_state})
+        if admission.work.state == "needs_help":
+            service.store._settle_native_admission_block(conn, admission.work,
+                admission_revision=admission_checkpoint.revision, now=now)
     return NativeInitiativeDelegation(spec.work_id)
 
 
 def resume_native_initiative(service, previous, *, created, recovery_ingress_sha256=None,
         recovery_conversation_id=None, recovery_message_id=None, _profile_refresh=False,
-        _certified_prepare_recovery=False):
+        _certified_prepare_recovery=False, _repair_rate_limit_recovery=False):
     """Retain the native namespace for explicit recovery or proven unstarted refresh."""
     import sqlalchemy as sa
     from eva.adapters.postgres.current_catalog import delegated_work_runs
@@ -102,6 +110,8 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
     _, mandate_sha = authority.policy()
     previous_mandate_sha = authority._work_mandate(old)
     preparation = certified_preparation_evidence(previous) if _certified_prepare_recovery else None
+    if _repair_rate_limit_recovery and (_profile_refresh or _certified_prepare_recovery):
+        raise InitiativeMandateDenied("automatic repair recovery reasons cannot be mixed")
     if _certified_prepare_recovery and (_profile_refresh or preparation is None):
         raise InitiativeMandateDenied("certified recovery requires its exact historical preparation failure")
     if _profile_refresh or _certified_prepare_recovery:
@@ -114,6 +124,9 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
                     "worker_profile_release_sha256", "model_profile_release_sha256",
                     "engine_release_sha256", "output_schema_sha256"))):
             raise InitiativeMandateDenied("automatic refresh requires unstarted obsolete work under the same mandate")
+    elif _repair_rate_limit_recovery:
+        if mandate_sha != previous_mandate_sha:
+            raise InitiativeMandateDenied("automatic repair recovery mandate changed")
     elif not all(isinstance(v, str) and v for v in (
             recovery_ingress_sha256, recovery_conversation_id, recovery_message_id)):
         raise InitiativeMandateDenied("explicit native recovery requires its owner ingress")
@@ -172,15 +185,24 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
         if _certified_prepare_recovery and certified_preparation_evidence(current) != preparation:
             raise InitiativeMandateDenied("certified preparation evidence changed before admission")
         authority.timeline._scope(conn)
-        guard, _ = authority.bind_resume_work(current, spec, now=now, _connection=conn)
+        guard, source_turn = authority.bind_resume_work(current, spec, now=now, _connection=conn)
         if guard.mandate_sha != mandate_sha:
             raise InitiativeMandateDenied("native recovery mandate changed during admission")
+        rate_limit_evidence = None
+        if _repair_rate_limit_recovery:
+            rate_limit_evidence = _repair_rate_limit_evidence(
+                authority, current, source_turn, connection=conn, now=now)
+            # The receipt reader uses the original execution scope. Restore the
+            # admission scope before continuing within this same transaction.
+            authority.timeline._scope(conn)
+        prepare_native_work_assets(service, spec, source_turn)
         admission = service.store.admit(spec=spec, title=current.title, summary=current.summary,
             worker_role=current.worker_role, retention_policy_id=current.retention_policy_id,
             retention_until=current.retention_until, occurred_at=created,
-            resumes_work_id=old.work_id, _connection=conn, _native_guard=guard)
+            resumes_work_id=old.work_id, _connection=conn, _native_guard=guard,
+            _native_preparation_evidence=preparation)
         authority.timeline._scope(conn)
-        transition_timeline_thread(conn, authority.owner._scope, thread_id=old.origin.thread_id,
+        admission_checkpoint = transition_timeline_thread(conn, authority.owner._scope, thread_id=old.origin.thread_id,
             expected_revision=row.revision,
             checkpoint_id=old.origin.thread_id + ":digital-resumed:" + str(spec.generation),
             phase="initiative_work_waiting", status="waiting_for_proof",
@@ -189,22 +211,30 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
                 "work_id": spec.work_id, "spec_sha256": spec.sha256,
                 "mandate_sha256": mandate_sha, "previous_mandate_sha256": previous_mandate_sha,
                 "generation": spec.generation,
+                **admission.work.effect_state,
                 "previous_work_id": old.work_id, "previous_spec_sha256": old.sha256,
                 "source_ingress_sha256": old.source_ingress_sha256,
-                "recovery_kind": ("host_certified_prepare_recovery" if _certified_prepare_recovery else
+                "recovery_kind": ("host_repair_rate_limit_recovery" if _repair_rate_limit_recovery else
+                    "host_certified_prepare_recovery" if _certified_prepare_recovery else
                     "host_unstarted_profile_refresh" if _profile_refresh else "explicit_private_owner_native_resume"),
+                **({"rate_limit_evidence": rate_limit_evidence,
+                    "rate_limit_evidence_sha256": canonical_sha256(rate_limit_evidence)}
+                    if rate_limit_evidence is not None else {}),
                 **({"preparation_evidence": preparation,
                     "preparation_evidence_sha256": canonical_sha256(preparation)} if _certified_prepare_recovery else {}),
                 **({"unstarted_evidence_sha256": canonical_sha256({
                     "work_id": old.work_id, "spec_sha256": old.sha256,
                     "claim_count": 0, "call_id": None, "call_started_at": None,
                     "error_code": "unstarted_profile_superseded"})} if _profile_refresh else {}),
-                "recovery_ingress_sha256": (canonical_sha256({
+                "recovery_ingress_sha256": (canonical_sha256(rate_limit_evidence) if rate_limit_evidence is not None else canonical_sha256({
                     "work_id": old.work_id, "spec_sha256": old.sha256,
                     "current_program_sha256": spec.worker_program_sha256})
                     if (_profile_refresh or _certified_prepare_recovery) else recovery_ingress_sha256),
                 "recovery_conversation_id": recovery_conversation_id,
                 "recovery_message_id": recovery_message_id})
+        if admission.work.state == "needs_help":
+            service.store._settle_native_admission_block(conn, admission.work,
+                admission_revision=admission_checkpoint.revision, now=created)
         return admission
 
 
@@ -227,6 +257,105 @@ def refresh_one_unstarted_native(service):
         service.store.withdraw_unstarted_refresh(previous, now=service.now())
         return "refresh_not_authorized"
     return "profile_refreshed" if admission.disposition == "inserted" else "already_present"
+
+
+def _repair_rate_limit_evidence(authority, previous, source, *, connection, now):
+    """Prove a rejected first attempt and no actions under the admission locks."""
+    from eva.adapters.postgres.initiative_execution import RATE_LIMIT_FINGERPRINT
+    from eva.adapters.postgres.self_repair import current_repair_binding
+    from eva.bootstrap.delegated_digital_runner import _recorded_action_slots
+    from eva.contracts.timestamps import format_required_utc_timestamp
+    if (previous.spec.generation != 1 or previous.state != "failed"
+            or previous.error_code != "provider_transient"
+            or previous.error_fingerprint != RATE_LIMIT_FINGERPRINT
+            or previous.usage is None or previous.usage.tool_calls != 0
+            or previous.result is not None or previous.stop_requested_at is not None
+            or previous.lease_owner is not None or previous.lease_expires_at is not None
+            or previous.call_id is None or previous.call_started_at is None
+            or previous.completed_at is None
+            or now < previous.completed_at + timedelta(minutes=5)
+            or now >= previous.retention_until):
+        raise InitiativeMandateDenied("repair rate-limit recovery is not eligible")
+    events = authority.timeline.events(previous.spec.origin.thread_id)
+    adopted = next((e for e in events if e.event_type == "PERSONAL_INTENT_ADOPTED"), None)
+    incident = None if adopted is None else adopted.payload["data"].get("repair_incident_id")
+    if incident is None:
+        raise InitiativeMandateDenied("automatic rate-limit recovery requires native self-repair")
+    binding = current_repair_binding(authority, incident, now=now, _connection=connection)
+    if _recorded_action_slots(authority.owner._engine, previous.spec, source, connection=connection):
+        raise InitiativeMandateDenied("repair rate-limit recovery has prior action receipts")
+    return {
+        "contract": "EvaNativeRepairRateLimitRecovery/v1",
+        "work_id": previous.spec.work_id, "spec_sha256": previous.spec.sha256,
+        "incident_id": incident, "incident_event_sha256": binding["incident_event_sha256"],
+        "scope_sha256": binding["scope_sha256"],
+        "usage_sha256": canonical_sha256(previous.usage.to_payload()),
+        "error_fingerprint": previous.error_fingerprint, "tool_calls": 0, "action_slots": 0,
+        "completed_at": format_required_utc_timestamp(previous.completed_at),
+        "not_before": format_required_utc_timestamp(previous.completed_at + timedelta(minutes=5)),
+        "resumed_at": format_required_utc_timestamp(now),
+    }
+
+
+def resume_one_rate_limited_repair(service):
+    """One bounded continuation via the existing service lane, never a retry loop."""
+    if service is None or service.digital_profile is None or service.store._initiative_authority_loader is None:
+        return "idle"
+    import sqlalchemy as sa
+    from eva.adapters.postgres.current_catalog import delegated_work_runs
+    from eva.adapters.postgres.delegated_work import DelegatedWorkConflict
+    from eva.adapters.postgres.initiative_execution import RATE_LIMIT_FINGERPRINT
+    from eva.application.conversation import ConversationConflict
+    from eva.adapters.postgres.operational_timeline import operational_events
+    authority = service.store._initiative_authority_loader()
+    table = delegated_work_runs
+    later = table.alias("repair_successor")
+    now = service.now()
+    with service.store._engine.connect() as connection:
+        connection.exec_driver_sql("SET TRANSACTION READ ONLY")
+        authority.timeline._scope(connection)
+        events = operational_events.c
+        repair_threads = connection.execute(sa.select(events.thread_id).where(
+            events.tenant_id == authority.owner._scope.tenant_id,
+            events.installation_id == authority.owner._scope.installation_id,
+            events.event_type == "PERSONAL_INTENT_ADOPTED",
+            events.payload["data"]["repair_incident_id"].astext.is_not(None),
+        )).scalars().all()
+    if not repair_threads:
+        return "idle"
+    # Candidate discovery spans two immutable scopes. Only the final admission
+    # shares the locked transaction; discovery must not rebind an RLS scope.
+    with service.store._engine.connect() as connection:
+        connection.exec_driver_sql("SET TRANSACTION READ ONLY")
+        service.store._scope(connection)
+        ids = connection.execute(sa.select(table.c.work_id).where(
+            table.c.spec_payload["origin"]["thread_id"].astext.in_(repair_threads),
+            table.c.tenant_id == service.store.scope.tenant_id,
+            table.c.installation_id == service.store.scope.installation_id,
+            table.c.owner_principal_id == service.owner_principal_id,
+            table.c.principal_binding_id == service.principal_binding_id,
+            table.c.generation == 1, table.c.state == "failed",
+            table.c.error_code == "provider_transient",
+            table.c.error_fingerprint == bytes.fromhex(RATE_LIMIT_FINGERPRINT),
+            table.c.completed_at <= now - timedelta(minutes=5),
+            table.c.retention_until > now, table.c.stop_requested_at.is_(None),
+            table.c.spec_payload["contract"].astext == "DelegatedInitiativeDigitalWork/v1",
+            table.c.usage_payload["tool_calls"].astext == "0",
+            ~sa.exists(sa.select(later.c.work_id).where(
+                later.c.tenant_id == table.c.tenant_id,
+                later.c.installation_id == table.c.installation_id,
+                later.c.parent_task_id == table.c.work_id)),
+        ).order_by(table.c.completed_at).limit(20)).scalars().all()
+    for work_id in ids:
+        try:
+            previous = service.store.load(work_id, **service._owner)
+            admission = resume_native_initiative(service, previous, created=now,
+                _repair_rate_limit_recovery=True)
+        except (InitiativeMandateDenied, DelegatedWorkConflict, ConversationConflict, ValueError):
+            # Retain the original failure. No new work, false proof or allowance.
+            continue
+        return "repair_resumed" if admission.disposition == "inserted" else "already_present"
+    return "idle"
 
 
 def subscription_initiative_available(authority, model):

@@ -1,0 +1,11 @@
+{
+  "requested": "Latest ChatGPT Instant",
+  "model_id": "chat-latest",
+  "model_reference": "https://developers.openai.com/api/docs/models/chat-latest",
+  "transport": "Existing ChatGPT-account Codex connection",
+  "provider_status": 400,
+  "provider_message": "The 'chat-latest' model is not supported when using Codex with a ChatGPT account.",
+  "review_received": false,
+  "alternative_model_used": false,
+  "request_file": "instant-review-request.yaml"
+}

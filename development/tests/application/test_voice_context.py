@@ -44,7 +44,7 @@ def test_runtime_shortcut_does_not_bypass_voice_suppression(text):
     runtime = SimpleNamespace(admit_turn_audience=lambda turn: None, _journal=lambda turn: Journal(),
                               _conversation=SimpleNamespace(respond=respond))
     with voice_context(context):
-        PostgresHindsightMemoryRuntime.respond(runtime, turn)
+        PostgresHindsightMemoryRuntime._respond_admitted(runtime, turn)
     assert stopped == ["voice:old"]
     assert events[0]["type"] == "task_stop_requested"
 
@@ -138,6 +138,45 @@ def test_first_part_is_bounded_and_never_claims_playback_receipt():
     result = ctx.speak_and_continue(ConversationActionCall("first", SPEAK_AND_CONTINUE, {"text": "Een regenboog ontstaat door gebroken zonlicht."}))
     assert result.output["heard"] is False
     assert result.output["status"] == "offered_to_voice"
+
+
+def test_verification_tool_only_exists_with_server_bound_callback(tmp_path):
+    from eva.application.voice_context import VERIFY_VOICE
+    from tests.model.test_pydantic_conversation_model import _adapter, _turn, _identity, _memory
+    from tests.support.scripted_pydantic_conversation import ScriptedPydanticConversation, ScriptedPhase, ScriptedCall
+    scripted=ScriptedPydanticConversation((ScriptedPhase.deferred(ScriptedCall('verify',VERIFY_VOICE,{})),))
+    model=_adapter(tmp_path,scripted)
+    context=VoiceContext((),(),lambda _:None,lambda _:None,
+        request_identity=lambda:{'status':'awaiting_confirmation','new_message_sent':True})
+    with voice_context(context):
+        result=model.generate(_turn(),_identity(),_memory(),(),available_actions=(VERIFY_VOICE,))
+        assert result.action_call.name==VERIFY_VOICE
+        assert context.verify_identity(result.action_call).output['status']=='awaiting_confirmation'
+        with pytest.raises(ValueError):context.verify_identity(ConversationActionCall('bad',VERIFY_VOICE,{'principal':'other'}))
+    with voice_context(VoiceContext((),(),lambda _:None,lambda _:None)):
+        with pytest.raises(ValueError,match='unknown conversation actions'):
+            model.generate(_turn(),_identity(),_memory(),(),available_actions=(VERIFY_VOICE,))
+
+
+def test_telegram_verification_acknowledgement_stays_on_contact_model():
+    from eva.application.voice_context import VERIFY_VOICE
+    from eva.application.conversation import LivingConversation
+    from tests.application.test_contact_model import IDENTITY, Model, Actions, turn
+    from tests.application.test_conversation import _Memory
+    calls=[]
+    def choose(t,context):
+        if context['completed_action'] is None:
+            assert VERIFY_VOICE in context['available_actions']
+            return ConversationActionCall('verify',VERIFY_VOICE,{})
+        assert VERIFY_VOICE not in context['available_actions']
+        return 'Ik heb je de vraag in Telegram gestuurd.'
+    contact=Model(choose)
+    work=Model(lambda *_:pytest.fail('verification must not switch to the work model'))
+    ctx=VoiceContext((),(),lambda _:None,lambda _:None,
+        request_identity=lambda:calls.append('sent') or {'status':'awaiting_confirmation'})
+    with voice_context(ctx):
+        reply=LivingConversation(_Memory(),work,IDENTITY,Actions(),contact_model=contact).respond(turn())
+    assert reply.text and calls==['sent'] and len(contact.calls)==2 and not work.calls
 
 
 def test_validated_commentary_precedes_action_without_extra_model_or_receipt():

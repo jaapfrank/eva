@@ -1,0 +1,157 @@
+{
+  "date": "2026-10-14",
+  "kind": "read_only_architecture_review_and_proposal",
+  "production_changed": false,
+  "scope": [
+    "Installed household speaker composition and actual speaker wire audio/session modules",
+    "Codex session lifecycle, WebRTC capture/playback and interruption",
+    "Authenticated local Responses bridge, context handoff and deduplication",
+    "LivingConversation memory/context preparation, tool authorization and model routing",
+    "Pydantic tool registration, deferred namespace presentation, public research transport",
+    "Durable household work admission, research worker, result authorization and voice delivery",
+    "Private browser voice composition and Telegram ingress boundaries",
+    "Existing synthetic timing evidence and installed/source parity"
+  ],
+  "installed_images": {
+    "core": "abfc4969c92dafd124f63912259a4bad43ddba13e865076572be0aa31e239ef2",
+    "worker": "b5dddce90703f4062941835d71668ac200f9cb52bb5f8925cede087354a21b0c",
+    "speaker": "db33f7e07c47e7faafe4f0b3918f7a50972ea09dc267c00a9a6131af55963bc1",
+    "browser_media": "3cd866488f900c71d8a47d7227eea174be1522fbb0d21821383ddb97c967b6b3"
+  },
+  "parity": {
+    "core_and_worker_each_matching_modules_in_selected_scan": 47,
+    "speaker_and_browser_each_matching_modules_in_selected_scan": 20,
+    "differences": [
+      "tool_namespaces.py whitespace only",
+      "household_voice.py import placement",
+      "installer_wizard_cli.py outside active voice path; no replacement proposed"
+    ]
+  },
+  "confirmed_findings": [
+    {
+      "source": "src/eva/application/conversation.py:1094",
+      "finding": "Existing synchronous research action is removed when background research and contact model are available."
+    },
+    {
+      "source": "src/eva/application/conversation.py:1107",
+      "finding": "A new lookup receipt outside contact_receipts selects the work model for follow-up; tool registration alone does not keep the reply on Sol."
+    },
+    {
+      "source": "src/eva/application/conversation.py:1018",
+      "finding": "Initial memory recall and active context are already overlapped. Retain audience-scoped memory rather than bypassing it."
+    },
+    {
+      "source": "src/eva/voice_service/codex_backend.py:116",
+      "finding": "The local Responses bridge waits for a final core reply before emitting its response SSE. Delta events are currently not forwarded as spoken text."
+    },
+    {
+      "source": "src/eva/adapters/model/research_transport.py:16",
+      "finding": "Provider HTTP is asynchronous internally but the entire bounded SSE body is read into BytesIO before downstream parsing. Instrument network arrival inside this reader."
+    },
+    {
+      "source": "src/eva/voice_service/codex_media.py:100",
+      "finding": "OfferedSpeech defaults interrupted=True and never establishes completed playback from speaker acknowledgements."
+    },
+    {
+      "source": "src/eva/voice_service/codex_media.py:230",
+      "finding": "All assistant turn.done events set a shared completion event used by say(); pending speech is not correlated to a unique provider turn."
+    },
+    {
+      "source": "src/eva/voice_service/codex_media.py:351",
+      "finding": "say() awaits provider completion, not the native sink playback barrier. Full physical playback remains unproven by these handles."
+    },
+    {
+      "source": "src/eva/application/telegram_ingress.py:345",
+      "finding": "Non-text Telegram messages are rejected; voice note support is separate remaining integration work."
+    }
+  ],
+  "causality_limits": [
+    "Playback observations are static code findings, not a reproduction proving the cause of the owner-reported lost audio.",
+    "The 8.65-second interval was in direct Codex mode without EVA deferred tools; it cannot be attributed to EVA tool discovery.",
+    "Direct and EVA timings are individual synthetic samples, not controlled distributions.",
+    "Body buffering does not itself explain all remote research latency; validation before speech is still required."
+  ],
+  "proposal": [
+    {
+      "priority": 1,
+      "change": "Separate routine lookup from durable research in the existing conversation action system.",
+      "implementation": [
+        "Register a bounded structured public lookup descriptor and matching external action handler through runtime composition.",
+        "Keep list/get work status on existing local actions. Start with an explicit weather adapter using resolved public location, date and units; do not masquerade as a generic news search.",
+        "Extend explicit contact-model continuation policy for verified bounded lookup receipts so Sol handles both action selection and answer.",
+        "Reserve existing Astra durable worker for extensive research and ongoing work.",
+        "Retain identity, audience-scoped memory, tool result receipts, input/output limits, authority checks and usage recording."
+      ]
+    },
+    {
+      "priority": 2,
+      "change": "Offer a small authorized core tool set directly at EVA provider boundary.",
+      "implementation": [
+        "Do not inject Codex dynamicTools as a substitute for EVA registration.",
+        "Change admission envelope, provider projection and replay validation together; keep larger catalogs deferred.",
+        "Retest actual tool invocation because the earlier eager-handoff candidate made no tool call; schema validity alone is insufficient."
+      ]
+    },
+    {
+      "priority": 3,
+      "change": "Repair per-answer speech delivery and interruption state.",
+      "implementation": [
+        "Bind generated speech, queued PCM and native generation acknowledgements to a single delivery identity.",
+        "Distinguish provider finished, output drained, interrupted and unknown.",
+        "Use existing STOP/STOPPED barriers; stale turn completion must not release a newer pending answer.",
+        "Preserve accepted background work across barge-in while respecting explicit task cancellation."
+      ]
+    },
+    {
+      "priority": 4,
+      "change": "Measure actual streamed boundaries and then optimize safe reply delivery.",
+      "implementation": [
+        "Instrument headers, first SSE event, search lifecycle, first text, validated final result, first and last PCM, native playback acknowledgements.",
+        "Retain bounded metadata-only logging and avoid production asyncio debug payloads.",
+        "Do not stream unvalidated claims; allow early speech only at an explicitly validated boundary.",
+        "Treat result polling as a secondary optimization after the serial model/task overhead is removed."
+      ]
+    },
+    {
+      "priority": 5,
+      "change": "Reuse the resulting core for additional channels.",
+      "implementation": [
+        "Add Telegram voice-note ingress/egress with bounded audio and existing principal bindings.",
+        "Treat WhatsApp voice notes and live calls as separate channel capabilities requiring their own transport integration, not a switch on Telegram or WebRTC."
+      ]
+    }
+  ],
+  "weather_source_candidate": {
+    "provider": "Open-Meteo",
+    "documentation": "https://open-meteo.com/en/docs",
+    "geocoding": "https://open-meteo.com/en/docs/geocoding-api",
+    "terms": "https://open-meteo.com/en/terms",
+    "limits": "Validate location ambiguity, timezone, date range, bytes and structured fields; preserve source and observation time. Provider performance has not been measured in this audit."
+  },
+  "validation": {
+    "existing_targeted_tests_passed": 37,
+    "hardware_test_run": false,
+    "new_upstream_model_probes": 0,
+    "proposed_cases": [
+      "cold start and existing session",
+      "ordinary greeting without lookup",
+      "weather tomorrow and day after in different places",
+      "ambiguous place name",
+      "local task status",
+      "deep research remains delegated",
+      "provider timeout, rate limit and malformed/oversize response",
+      "revoked session and duplicate handoff",
+      "barge-in before answer and mid-answer",
+      "late old turn.done cannot complete new speech",
+      "second question while saved work completes",
+      "actual device full answer and STOP acknowledgement"
+    ]
+  },
+  "proposed_acceptance_targets_not_guarantees": {
+    "simple_lookup_first_answer_seconds_median": 10,
+    "simple_lookup_first_answer_seconds_p95": 15,
+    "warm_session_ack_seconds": 2,
+    "barge_in_to_device_stop_ms": 300,
+    "method": "Measure source EOF and outgoing microphone EOF separately; use actual audible/device playback where available; include failures, cold/warm state and source freshness. Small fixed acceptance set, not repeated success-only sampling."
+  }
+}

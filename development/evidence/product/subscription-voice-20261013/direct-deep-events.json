@@ -1,0 +1,1795 @@
+[
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 4,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_icegatheringstatechange",
+    "elapsed_ms": 4,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_icegatheringstatechange",
+    "elapsed_ms": 7407,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "ice_ready",
+    "elapsed_ms": 7408
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "account_start",
+    "elapsed_ms": 9
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_clip_start",
+    "elapsed_ms": 10
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 12,
+    "method": "initialize"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 110,
+    "method": "initialize",
+    "duration_ms": 97
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 110,
+    "method": "account/login/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 178,
+    "method": "account/login/start",
+    "duration_ms": 68
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 178,
+    "method": "thread/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 535,
+    "method": "thread/start",
+    "duration_ms": 358
+  },
+  {
+    "direct_backend_requested": "gpt-6-sol",
+    "eva_core_connected": false,
+    "model_returned": "gpt-6-sol",
+    "model_provider_returned": "openai"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "account_ready",
+    "elapsed_ms": 535
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 536,
+    "method": "thread/realtime/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 537,
+    "method": "thread/realtime/start",
+    "duration_ms": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "voice_answer_ready",
+    "elapsed_ms": 1626
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 1633,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 1633,
+    "ice": "checking",
+    "connection": "new",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 1633,
+    "ice": "checking",
+    "connection": "connecting",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 1867,
+    "ice": "completed",
+    "connection": "connecting",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 1992,
+    "ice": "completed",
+    "connection": "connected",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_datachannel_open",
+    "elapsed_ms": 2170
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_provider_session",
+    "elapsed_ms": 2173,
+    "model": null,
+    "top_model": null
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 2173,
+    "kind": "session.started",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "media_ready",
+    "elapsed_ms": 2173
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_selected_ice_pair",
+    "elapsed_ms": 2173,
+    "local_type": "host",
+    "remote_type": "host",
+    "protocol": "udp"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 2174,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 9,
+    "bytesSent": 27
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 2174,
+    "stats_type": "transport",
+    "packetsSent": 16,
+    "packetsReceived": 7,
+    "bytesSent": 1496,
+    "bytesReceived": 1232
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 2174,
+    "frames": 95
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_first_microphone_signal_sent",
+    "elapsed_ms": 2194,
+    "queued_frames": 95
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_first_rtp_received",
+    "elapsed_ms": 3158
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 3175,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 59,
+    "bytesSent": 12844
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 3175,
+    "stats_type": "transport",
+    "packetsSent": 67,
+    "packetsReceived": 10,
+    "bytesSent": 15809,
+    "bytesReceived": 1380
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 3175,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 31,
+    "packetsLost": 0,
+    "jitter": 139,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 3176,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 1,
+    "packetsLost": 0,
+    "jitter": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 3176,
+    "frames": 93
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_first_decoded_frame",
+    "elapsed_ms": 3239
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 3676,
+    "kind": "turn.created",
+    "role": "user"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_clip_end",
+    "elapsed_ms": 3695
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 4176,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 110,
+    "bytesSent": 25479
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 4177,
+    "stats_type": "transport",
+    "packetsSent": 124,
+    "packetsReceived": 61,
+    "bytesSent": 30280,
+    "bytesReceived": 3663
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 4177,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 80,
+    "packetsLost": 0,
+    "jitter": 89,
+    "roundTripTime": 0.03739142417907715,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 4177,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 46,
+    "packetsLost": 0,
+    "jitter": 375
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 4177,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 22,
+    "bytesSent": 66
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 4177,
+    "frames": 91
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 5177,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 160,
+    "bytesSent": 32061
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 5178,
+    "stats_type": "transport",
+    "packetsSent": 180,
+    "packetsReceived": 117,
+    "bytesSent": 38670,
+    "bytesReceived": 6109
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 5178,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 131,
+    "packetsLost": 0,
+    "jitter": 103,
+    "roundTripTime": 0.03744367361068726,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 5178,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 96,
+    "packetsLost": 0,
+    "jitter": 114
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 5178,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 67,
+    "bytesSent": 201
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 5178,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_direct_voice_event",
+    "elapsed_ms": 5599,
+    "kind": "delegation.created"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 5599,
+    "kind": "delegation.created",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 5607,
+    "method": "turn/started",
+    "status": "inProgress"
+  },
+  {
+    "event": "eva_voice_backend",
+    "stage": "codex_event",
+    "elapsed_ms": 5607,
+    "method": "turn/started"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 5975,
+    "method": "item/started",
+    "item_index": 1,
+    "item_type": "userMessage"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 5975,
+    "method": "item/completed",
+    "item_index": 1,
+    "item_type": "userMessage"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 6179,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 210,
+    "bytesSent": 32211
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 6179,
+    "stats_type": "transport",
+    "packetsSent": 237,
+    "packetsReceived": 168,
+    "bytesSent": 40693,
+    "bytesReceived": 8706
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 6179,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 181,
+    "packetsLost": 0,
+    "jitter": 119,
+    "roundTripTime": 0.03803893983364105,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 6179,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 140,
+    "packetsLost": 0,
+    "jitter": 115
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 6179,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 117,
+    "bytesSent": 351
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 6179,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_direct_voice_event",
+    "elapsed_ms": 6682,
+    "kind": "turn.done"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 6682,
+    "kind": "turn.done",
+    "role": "user"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 6683,
+    "kind": "turn.created",
+    "role": "assistant"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "first_output_audio",
+    "elapsed_ms": 6697
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_first_sink_signal",
+    "elapsed_ms": 6698
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 7180,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 260,
+    "bytesSent": 32361
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 7180,
+    "stats_type": "transport",
+    "packetsSent": 298,
+    "packetsReceived": 222,
+    "bytesSent": 42976,
+    "bytesReceived": 17484
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 7180,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 231,
+    "packetsLost": 0,
+    "jitter": 143,
+    "roundTripTime": 0.03897417685389519,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 7180,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 183,
+    "packetsLost": 0,
+    "jitter": 288
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 7180,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 159,
+    "bytesSent": 2217
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 7180,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 8180,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 310,
+    "bytesSent": 32511
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 8180,
+    "stats_type": "transport",
+    "packetsSent": 352,
+    "packetsReceived": 273,
+    "bytesSent": 44804,
+    "bytesReceived": 26541
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 8180,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 281,
+    "packetsLost": 0,
+    "jitter": 65,
+    "roundTripTime": 0.038880637644231324,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 8180,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 230,
+    "packetsLost": 0,
+    "jitter": 180
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 8180,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 204,
+    "bytesSent": 9462
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 8180,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_direct_voice_event",
+    "elapsed_ms": 9177,
+    "kind": "turn.done"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 9177,
+    "kind": "turn.done",
+    "role": "assistant"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 9180,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 360,
+    "bytesSent": 32661
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 9180,
+    "stats_type": "transport",
+    "packetsSent": 404,
+    "packetsReceived": 325,
+    "bytesSent": 46515,
+    "bytesReceived": 28381
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 9180,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 330,
+    "packetsLost": 0,
+    "jitter": 110,
+    "roundTripTime": 0.03875639006964863,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 9180,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 279,
+    "packetsLost": 0,
+    "jitter": 79
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 9180,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 251,
+    "bytesSent": 13395
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 9180,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 10182,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 410,
+    "bytesSent": 32811
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 10182,
+    "stats_type": "transport",
+    "packetsSent": 457,
+    "packetsReceived": 377,
+    "bytesSent": 48265,
+    "bytesReceived": 30031
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 10182,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 380,
+    "packetsLost": 0,
+    "jitter": 122,
+    "roundTripTime": 0.03861165514242277,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 10182,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 329,
+    "packetsLost": 0,
+    "jitter": 91
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 10182,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 300,
+    "bytesSent": 13542
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 10182,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 11182,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 460,
+    "bytesSent": 32961
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 11182,
+    "stats_type": "transport",
+    "packetsSent": 509,
+    "packetsReceived": 429,
+    "bytesSent": 49963,
+    "bytesReceived": 31681
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 11182,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 431,
+    "packetsLost": 0,
+    "jitter": 87,
+    "roundTripTime": 0.03859885136339944,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 11182,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 379,
+    "packetsLost": 0,
+    "jitter": 126
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 11182,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 350,
+    "bytesSent": 13692
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 11182,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 12184,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 510,
+    "bytesSent": 33111
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 12184,
+    "stats_type": "transport",
+    "packetsSent": 560,
+    "packetsReceived": 481,
+    "bytesSent": 51609,
+    "bytesReceived": 33331
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 12184,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 480,
+    "packetsLost": 0,
+    "jitter": 83,
+    "roundTripTime": 0.03836230496610998,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 12184,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 429,
+    "packetsLost": 0,
+    "jitter": 113
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 12184,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 400,
+    "bytesSent": 13842
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 12184,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 13184,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 560,
+    "bytesSent": 33261
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 13184,
+    "stats_type": "transport",
+    "packetsSent": 612,
+    "packetsReceived": 524,
+    "bytesSent": 53307,
+    "bytesReceived": 34702
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 13184,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 530,
+    "packetsLost": 0,
+    "jitter": 91,
+    "roundTripTime": 0.038199935863802124,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 13184,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 470,
+    "packetsLost": 0,
+    "jitter": 87
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 13184,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 449,
+    "bytesSent": 13989
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 13184,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 14185,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 610,
+    "bytesSent": 33411
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 14185,
+    "stats_type": "transport",
+    "packetsSent": 665,
+    "packetsReceived": 566,
+    "bytesSent": 55101,
+    "bytesReceived": 36042
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 14185,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 581,
+    "packetsLost": 0,
+    "jitter": 97,
+    "roundTripTime": 0.03810043864829431,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 14185,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 510,
+    "packetsLost": 0,
+    "jitter": 252
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 14185,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 484,
+    "bytesSent": 14094
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 14185,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 14257,
+    "method": "item/started",
+    "item_index": 2,
+    "item_type": "webSearch"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 15187,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 660,
+    "bytesSent": 33561
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 15187,
+    "stats_type": "transport",
+    "packetsSent": 716,
+    "packetsReceived": 618,
+    "bytesSent": 56703,
+    "bytesReceived": 37692
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 15187,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 631,
+    "packetsLost": 0,
+    "jitter": 98,
+    "roundTripTime": 0.03864622089639928,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 15187,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 560,
+    "packetsLost": 0,
+    "jitter": 243
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 15187,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 530,
+    "bytesSent": 14232
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 15187,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 16188,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 710,
+    "bytesSent": 33711
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 16188,
+    "stats_type": "transport",
+    "packetsSent": 769,
+    "packetsReceived": 670,
+    "bytesSent": 58497,
+    "bytesReceived": 39342
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 16188,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 680,
+    "packetsLost": 0,
+    "jitter": 194,
+    "roundTripTime": 0.038524698986304624,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 16188,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 610,
+    "packetsLost": 0,
+    "jitter": 175
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 16188,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 580,
+    "bytesSent": 14382
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 16188,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 16284,
+    "method": "item/completed",
+    "item_index": 2,
+    "item_type": "webSearch",
+    "action_type": "search"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 16287,
+    "method": "thread/tokenUsage/updated",
+    "last": {
+      "inputTokens": 9312,
+      "cachedInputTokens": 9088,
+      "outputTokens": 48,
+      "reasoningOutputTokens": 0,
+      "totalTokens": 9360
+    },
+    "total": {
+      "inputTokens": 9312,
+      "cachedInputTokens": 9088,
+      "outputTokens": 48,
+      "reasoningOutputTokens": 0,
+      "totalTokens": 9360
+    }
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 17189,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 760,
+    "bytesSent": 33861
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 17189,
+    "stats_type": "transport",
+    "packetsSent": 822,
+    "packetsReceived": 723,
+    "bytesSent": 60260,
+    "bytesReceived": 41201
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 17189,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 730,
+    "packetsLost": 0,
+    "jitter": 110,
+    "roundTripTime": 0.038399447011588914,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 17189,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 660,
+    "packetsLost": 0,
+    "jitter": 107
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 17189,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 630,
+    "bytesSent": 14532
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 17189,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 18189,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 810,
+    "bytesSent": 34011
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 18190,
+    "stats_type": "transport",
+    "packetsSent": 876,
+    "packetsReceived": 775,
+    "bytesSent": 62106,
+    "bytesReceived": 42851
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 18190,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 781,
+    "packetsLost": 0,
+    "jitter": 192,
+    "roundTripTime": 0.038676610247783925,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 18190,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 710,
+    "packetsLost": 0,
+    "jitter": 172
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 18190,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 680,
+    "bytesSent": 14682
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 18190,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 18191,
+    "method": "item/started",
+    "item_index": 3,
+    "item_type": "agentMessage",
+    "phase": "final_answer"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 18196,
+    "method": "item/agentMessage/delta",
+    "item_index": 3
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_direct_voice_event",
+    "elapsed_ms": 18457,
+    "kind": "delegation.context.appended"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 18457,
+    "kind": "delegation.context.appended",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_direct_voice_event",
+    "elapsed_ms": 18660,
+    "kind": "delegation.context.appended"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 18660,
+    "kind": "delegation.context.appended",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_direct_voice_event",
+    "elapsed_ms": 18855,
+    "kind": "delegation.context.appended"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 18855,
+    "kind": "delegation.context.appended",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 18944,
+    "method": "item/completed",
+    "item_index": 3,
+    "item_type": "agentMessage",
+    "phase": "final_answer",
+    "citation_marker_count": 0,
+    "url_count": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 18975,
+    "method": "thread/tokenUsage/updated",
+    "last": {
+      "inputTokens": 13021,
+      "cachedInputTokens": 9088,
+      "outputTokens": 67,
+      "reasoningOutputTokens": 0,
+      "totalTokens": 13088
+    },
+    "total": {
+      "inputTokens": 22333,
+      "cachedInputTokens": 18176,
+      "outputTokens": 115,
+      "reasoningOutputTokens": 0,
+      "totalTokens": 22448
+    }
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_codex_notification",
+    "elapsed_ms": 18975,
+    "method": "turn/completed",
+    "status": "completed"
+  },
+  {
+    "event": "eva_voice_backend",
+    "stage": "codex_event",
+    "elapsed_ms": 18975,
+    "method": "turn/completed"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_direct_voice_event",
+    "elapsed_ms": 19014,
+    "kind": "delegation.context.appended"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 19015,
+    "kind": "delegation.context.appended",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 19191,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 860,
+    "bytesSent": 34161
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 19191,
+    "stats_type": "transport",
+    "packetsSent": 932,
+    "packetsReceived": 831,
+    "bytesSent": 64064,
+    "bytesReceived": 45241
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 19191,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 831,
+    "packetsLost": 0,
+    "jitter": 129,
+    "roundTripTime": 0.038747046448806034,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 19191,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 760,
+    "packetsLost": 0,
+    "jitter": 348
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 19191,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 730,
+    "bytesSent": 14832
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 19191,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 19735,
+    "kind": "turn.created",
+    "role": "assistant"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_first_sink_signal",
+    "elapsed_ms": 19909
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 20192,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 910,
+    "bytesSent": 34311
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 20192,
+    "stats_type": "transport",
+    "packetsSent": 990,
+    "packetsReceived": 881,
+    "bytesSent": 66152,
+    "bytesReceived": 51201
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 20192,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 880,
+    "packetsLost": 0,
+    "jitter": 127,
+    "roundTripTime": 0.038665189295327904,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 20192,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 802,
+    "packetsLost": 0,
+    "jitter": 183
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 20192,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 772,
+    "bytesSent": 14958
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 20192,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 21192,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 960,
+    "bytesSent": 34461
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 21193,
+    "stats_type": "transport",
+    "packetsSent": 1042,
+    "packetsReceived": 933,
+    "bytesSent": 67850,
+    "bytesReceived": 60751
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 21193,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 931,
+    "packetsLost": 0,
+    "jitter": 129,
+    "roundTripTime": 0.03847222910018643,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 21193,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 852,
+    "packetsLost": 0,
+    "jitter": 143
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 21193,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 822,
+    "bytesSent": 21588
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 21193,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 22193,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 1010,
+    "bytesSent": 34611
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 22193,
+    "stats_type": "transport",
+    "packetsSent": 1102,
+    "packetsReceived": 993,
+    "bytesSent": 70068,
+    "bytesReceived": 71877
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 22193,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 980,
+    "packetsLost": 0,
+    "jitter": 149,
+    "roundTripTime": 0.038330135522664566,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 22193,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 902,
+    "packetsLost": 0,
+    "jitter": 128
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 22193,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 872,
+    "bytesSent": 29634
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 22193,
+    "frames": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 23194,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 1060,
+    "bytesSent": 34761
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 23194,
+    "stats_type": "transport",
+    "packetsSent": 1160,
+    "packetsReceived": 1050,
+    "bytesSent": 72156,
+    "bytesReceived": 81905
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 23194,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 1031,
+    "packetsLost": 0,
+    "jitter": 60,
+    "roundTripTime": 0.038772298009816644,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 23194,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 951,
+    "packetsLost": 0,
+    "jitter": 147
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 23194,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 922,
+    "bytesSent": 37688
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 23194,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 24195,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 1110,
+    "bytesSent": 34911
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 24195,
+    "stats_type": "transport",
+    "packetsSent": 1220,
+    "packetsReceived": 1111,
+    "bytesSent": 74374,
+    "bytesReceived": 93366
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 24195,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 1081,
+    "packetsLost": 0,
+    "jitter": 64,
+    "roundTripTime": 0.0392015299646857,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 24195,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 1002,
+    "packetsLost": 0,
+    "jitter": 61
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 24195,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 972,
+    "bytesSent": 45316
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 24195,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 25195,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 1161,
+    "bytesSent": 35064
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 25195,
+    "stats_type": "transport",
+    "packetsSent": 1273,
+    "packetsReceived": 1154,
+    "bytesSent": 76103,
+    "bytesReceived": 100410
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 25195,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 1130,
+    "packetsLost": 0,
+    "jitter": 117,
+    "roundTripTime": 0.039408806287396174,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 25195,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 1043,
+    "packetsLost": 0,
+    "jitter": 283
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 25195,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 1022,
+    "bytesSent": 53390
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 25195,
+    "frames": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_direct_voice_event",
+    "elapsed_ms": 26185,
+    "kind": "turn.done"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "provider_event",
+    "elapsed_ms": 26185,
+    "kind": "turn.done",
+    "role": "assistant"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 26196,
+    "stats_type": "outbound-rtp",
+    "packetsSent": 1211,
+    "bytesSent": 35214
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 26196,
+    "stats_type": "transport",
+    "packetsSent": 1325,
+    "packetsReceived": 1204,
+    "bytesSent": 77814,
+    "bytesReceived": 105499
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 26196,
+    "stats_type": "remote-inbound-rtp",
+    "packetsReceived": 1180,
+    "packetsLost": 0,
+    "jitter": 56,
+    "roundTripTime": 0.03906271142232019,
+    "fractionLost": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 26196,
+    "stats_type": "inbound-rtp",
+    "packetsReceived": 1090,
+    "packetsLost": 0,
+    "jitter": 106
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rtc_stats",
+    "elapsed_ms": 26196,
+    "stats_type": "remote-outbound-rtp",
+    "packetsSent": 1060,
+    "bytesSent": 57223
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_microphone_queue",
+    "elapsed_ms": 26196,
+    "frames": 0
+  },
+  {
+    "direct_result": true,
+    "assistant_turn_count": 2,
+    "eva_core_connected": false,
+    "closed_early": false
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_last_microphone_signal",
+    "elapsed_ms": 27186,
+    "signal_elapsed_ms": 4694
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_event_loop_lag",
+    "elapsed_ms": 27186,
+    "samples": 1306,
+    "maximum_ms": 3.16,
+    "p95_ms": 1.67
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "closing",
+    "elapsed_ms": 27186,
+    "audio_received": 1136,
+    "audio_suppressed": 135
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 27186,
+    "method": "thread/realtime/stop"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 27187,
+    "method": "thread/realtime/stop",
+    "duration_ms": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 27250,
+    "ice": "completed",
+    "connection": "connected",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 27257,
+    "ice": "closed",
+    "connection": "connected",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 27257,
+    "ice": "closed",
+    "connection": "closed",
+    "signaling": "closed"
+  }
+]

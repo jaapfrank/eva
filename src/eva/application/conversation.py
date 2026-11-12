@@ -1107,7 +1107,7 @@ class LivingConversation:
             else:
                 available_names = continuation_names(completed)
         from eva.application.voice_context import (
-            current_voice_context, STOP_VOICE_WORK, SPEAK_AND_CONTINUE,
+            current_voice_context, STOP_VOICE_WORK, SPEAK_AND_CONTINUE, VERIFY_VOICE,
         )
         voice = current_voice_context()
 
@@ -1173,7 +1173,8 @@ class LivingConversation:
         check_cancellation()
         if contact_model is not None:
             self_context = (*self_context,
-                "Answer only simple questions directly, warmly and briefly. Delegate research, "
+                "Answer simple questions warmly and briefly, using an offered short public "
+                "lookup when sources are needed. Delegate extensive research, "
                 "substantial analysis, creation and Eva improvements. start_delegated_work is "
                 "for tool-free thinking/writing, not current sources or external actions. "
                 "Confirm only durable admission, using a short acceptance_message, never completion. "
@@ -1200,16 +1201,35 @@ class LivingConversation:
                 "For ordinary work without follow-up planning, keep the immediate acceptance.")
         if "start_background_research" in available_names:
             self_context = (*self_context,
-                "Use start_background_research for explicit public-source research, with only "
+                "Use start_background_research for extensive public-source research, with only "
                 "the public question, never private context or recalled memories. Confirm durable "
                 "admission, remain available, and use existing task controls for status/stop/resume.")
         provider_instructions = getattr(self._actions, "conversation_instructions", None)
         if callable(provider_instructions):
             self_context = (*self_context, *provider_instructions(turn, available_names))
+        if "search_public_info" in available_names:
+            self_context = (*self_context,
+                "For a short factual question needing current information or sources, use "
+                "search_public_info and answer briefly from its result. Choose by the work needed, "
+                "not the topic. Answer ordinary questions directly when no lookup is needed. "
+                "A lookup on an earlier user turn does not exhaust this turn's lookup. "
+                "If a follow-up changes constraints not covered by the retained evidence, "
+                "invoke the offered lookup now. Never end with a promise to look something up: "
+                "make the call, answer from sufficient evidence, ask for missing details, or "
+                "state a concrete inability. "
+                "The tools offered on this turn define current capability; an older failure or "
+                "recalled limitation does not establish that lookup is unavailable now. "
+                "Only send a standalone public question, never private context or memories. "
+                "Keep relevant public locations and resolve dates from the current date; write "
+                "dates with the month name. Ask for clarification when essential details are missing. "
+                "Use background work for extensive investigation. A failed lookup is not a reason "
+                "to repeat it automatically or silently start a background task.")
         if voice is not None:
             self_context = (*self_context, *voice.instructions())
             if not any(item.call.name == SPEAK_AND_CONTINUE for item in receipts):
                 available_names = (*available_names, SPEAK_AND_CONTINUE)
+            if voice.request_identity is not None:
+                available_names = (*available_names, VERIFY_VOICE)
             if voice.active_work:
                 available_names = (*available_names, STOP_VOICE_WORK)
         if initiative is not None:
@@ -1258,13 +1278,29 @@ class LivingConversation:
                         model_usage=total_usage(),
                         model_timing=ConversationModelTiming.aggregate(tuple(timings)),
                     )
+            # A tool may already own a complete, sourced answer. Let the voice
+            # layer phrase it, without another text-model round trip. This also
+            # handles durable receipt replay, and never skips final authority.
+            direct_reader = getattr(self._actions, "direct_voice_reply", None)
+            guard_factory = getattr(self._actions, "reply_guard", None)
+            if voice is not None and callable(direct_reader) and callable(guard_factory):
+                checkpoint()
+                direct = direct_reader(turn, tuple(receipts))
+                if isinstance(direct, str) and direct.strip() and len(direct.split()) <= self._identity.maximum_reply_words:
+                    reply_guard = guard_factory(turn, tuple(receipts))
+                    if reply_guard is not None:
+                        generated = ConversationModelResult(text=direct, provider="eva:verified-public-lookup")
+                        _INITIAL_MEMORY_TIMING_LOG.info("conversation_direct_voice_reply receipt_count=%d", len(receipts))
+                        break
             if contact_model is not None:
                 # Offer admitted background work instead of new synchronous
                 # execution. Reapply after lookups; retained receipts are replayed
                 # above, and routes without the corresponding worker stay intact.
                 deferred_actions = set()
-                if completed is None and "start_background_research" in available_names:
+                if (completed is None or completed.call.name == "search_public_info") and "start_background_research" in available_names:
                     deferred_actions.add("research_current_options")
+                if any(item.call.name == "search_public_info" for item in receipts):
+                    deferred_actions.add("search_public_info")
                 if "start_digital_work" in available_names:
                     deferred_actions.add("run_reusable_procedure")
                 available_names = tuple(name for name in available_names if name not in deferred_actions)
@@ -1284,11 +1320,13 @@ class LivingConversation:
             # model. Speaking an approved first part alone does not escalate;
             # substantive tool execution still uses the existing work model.
             contact_receipts = {
-                MEMORY_SEARCH_ACTION, STOP_VOICE_WORK, SPEAK_AND_CONTINUE,
+                MEMORY_SEARCH_ACTION, STOP_VOICE_WORK, VERIFY_VOICE, SPEAK_AND_CONTINUE,
                 "read_recent_activity",
+                "search_public_info",
                 "list_reusable_procedures", "resolve_reusable_procedure",
                 "start_delegated_work", "start_background_research", "start_digital_work", "list_delegated_work", "get_delegated_work", "get_related_work", "search_delegated_work", "revise_digital_work",
                 "stop_delegated_work", "stop_related_work", "resume_delegated_work",
+                "set_household_work_destination",
                 "list_own_initiatives", "get_own_initiative_result",
                 "stop_own_initiative", "give_initiative_feedback",
                 "schedule_digital_work", "schedule_work_resume", "list_scheduled_work", "cancel_scheduled_work", "cancel_work_chain",
@@ -1327,7 +1365,7 @@ class LivingConversation:
                 _record_model_memory_context(turn, model_journal, request_id, style_digest)
             guard_factory = getattr(self._actions, "reply_guard", None)
             reply_guard = (guard_factory(turn, tuple(
-                item for item in receipts if item.call.name not in {STOP_VOICE_WORK, SPEAK_AND_CONTINUE}
+                item for item in receipts if item.call.name not in {STOP_VOICE_WORK, SPEAK_AND_CONTINUE, VERIFY_VOICE}
             )) if callable(guard_factory) else None)
             # A durable action may change while its acknowledgement is being
             # generated. Do not publish provisional claims before its guard.
@@ -1336,6 +1374,7 @@ class LivingConversation:
                 stream_conversation_text(lambda _delta: None)
                 if reply_guard is not None or repairing_input else nullcontext()
             ):
+                model_started_at = monotonic()
                 generated = model.generate(
                     turn,
                     self._identity,
@@ -1346,6 +1385,15 @@ class LivingConversation:
                     self_context=self_context,
                     **history,
                 )
+            _INITIAL_MEMORY_TIMING_LOG.info("conversation_model_phase_timing %s", json.dumps({
+                "message_id_sha256": hashlib.sha256(turn.message_id.encode()).hexdigest(),
+                "phase_index": len(timings), "receipt_count": len(receipts),
+                "elapsed_ms": round((monotonic() - model_started_at) * 1000),
+                "first_content_ms": generated.timing.first_content_ms,
+                "input_tokens": generated.usage.input_tokens,
+                "output_tokens": generated.usage.output_tokens,
+                "requested_action": generated.action_call is not None,
+            }, separators=(",", ":")))
             if model_journal is not None and request_id is not None:
                 model_journal.complete_model_request(turn, request_id, generated.usage)
             usages.append(generated.usage)
@@ -1396,6 +1444,11 @@ class LivingConversation:
                 memory_receipt = completed
                 memory_receipt_index = len(receipts)
                 continue
+            if voice is not None and call.name == VERIFY_VOICE and call.name in available_names:
+                completed = voice.verify_identity(call)
+                receipts.append(completed)
+                available_names = tuple(name for name in available_names if name != VERIFY_VOICE)
+                continue
             if voice is not None and call.name == SPEAK_AND_CONTINUE and call.name in available_names:
                 completed = voice.speak_and_continue(call)
                 voice_bridge_offered = True
@@ -1413,11 +1466,11 @@ class LivingConversation:
             if voice is not None:
                 voice.event({"type": "action_started", "name": call.name})
             try:
-                if any(item.call.name not in {STOP_VOICE_WORK, SPEAK_AND_CONTINUE} for item in receipts):
+                if any(item.call.name not in {STOP_VOICE_WORK, SPEAK_AND_CONTINUE, VERIFY_VOICE} for item in receipts):
                     execute_step = getattr(self._actions, "execute_step", None)
                     if not callable(execute_step):
                         raise ConversationConflict("conversation continuation is unavailable")
-                    completed = execute_step(turn, call, step_index=sum(item.call.name not in {STOP_VOICE_WORK, SPEAK_AND_CONTINUE} for item in receipts))
+                    completed = execute_step(turn, call, step_index=sum(item.call.name not in {STOP_VOICE_WORK, SPEAK_AND_CONTINUE, VERIFY_VOICE} for item in receipts))
                     if completed.call != call:
                         raise ConversationConflict("conversation step returned another call")
                 else:

@@ -381,5 +381,20 @@
       "liveSysModulesNotClaimed": true
     }
   },
-  "nextReviewScope": "Follow same actual native E419 chain and exact newly delivered results only; no oldmatrix, forced3.3.6proof or installation rerun."
+  "nextReviewScope": "Follow same actual native E419 chain and exact newly delivered results only; no oldmatrix, forced3.3.6proof or installation rerun.",
+  "newFunctionalDefects": [
+    {
+      "id": "E419-OBSERVE-UTC-013",
+      "status": "SOURCE_FIX_GO_PENDING_PROFILE_INSTALL_AND_REAL_PUBLICATION",
+      "beforeSourceSha256": "9234fbaf34b5c5905b7d1c1d71d341b9b447c96ef7785fc4b44aef6614934140",
+      "afterSourceSha256": "539273f48fc0b5b877d8d817140e6b9618bced63c21ac248e3ec496774f41010",
+      "review": {
+        "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/observation-utc-source-review.private.json",
+        "sha256": "8e2a857cfebd78ccfdced8d76fef5993bcc782edc04ac4a7b9d4f3c1d5715261"
+      },
+      "rootCause": "Actual host observe request omits now. Default datetime.now(UTC) had fractional seconds and original UTCsecond validator rejected before first INSERT; installed foundation health was not functional source-publication proof.",
+      "sourceOnly": true
+    }
+  ],
+  "nativeMaintenanceFunctionReady": false
 }

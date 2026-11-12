@@ -1,0 +1,317 @@
+{
+  "recorded_at": "2026-10-13T18:12:54.024725+00:00",
+  "status": "wake_greeting_and_lifetime_fix_installed_weather_failure_unresolved",
+  "physical_quality_accepted": false,
+  "owner_request": "Greet after Hey Eva while the connection starts; diagnose dropped first session and missing weather reply.",
+  "changes": [
+    "Three local greetings generated through the same gpt-live-1-codex voice, played before account negotiation finishes.",
+    "Native microphone captured during greeting and startup; initial speech is buffered.",
+    "Active endpoint lifetime starts at wake instead of spending the active budget on standby.",
+    "Voice instructions explicitly require actual delegation for current information; provider delegation and turn diagnostics added. This is not proof of deterministic routing.",
+    "Household digital admission deadline clamped to the existing 300-second contract; broader execution grant unchanged."
+  ],
+  "greetings": {
+    "model": "gpt-live-1-codex",
+    "codex_version": "0.162.1",
+    "generated_on": "2026-10-13",
+    "purpose": "Local wakeword greeting during connection startup",
+    "clips": [
+      {
+        "file": "0.wav",
+        "text": "Hé, hallo! Wat kan ik voor je doen?",
+        "seconds": 1.8,
+        "sha256": "bb560064c36ccb4ee41fa9d95dc5f3e6abfb9b68c8bb8ca1cf3b09d721754e1f"
+      },
+      {
+        "file": "1.wav",
+        "text": "Hé, ik ben er. Vertel maar.",
+        "seconds": 1.9,
+        "sha256": "7ce4eb6932c469f0f3b6dd8258642727b1de098d7adce0abd5a804588dbfeaf1"
+      },
+      {
+        "file": "2.wav",
+        "text": "Hallo! Waar kan ik je mee helpen?",
+        "seconds": 1.86,
+        "sha256": "2d0dc7f100e89641989d3995e13c134e9b1f4ad8768016eefe4c579a0c5e0ca2"
+      }
+    ]
+  },
+  "historical_first_disconnect": {
+    "listener_started_utc": "2026-10-13T17:19:34Z",
+    "wake_utc": "2026-10-13T17:49:31Z",
+    "media_ready_utc": "2026-10-13T17:49:33Z",
+    "closed_utc": "2026-10-13T17:49:34Z",
+    "cause": "Installed endpoint counted its 1800-second timeout from socket admission including standby.",
+    "regression": "A wake near standby expiry now gets a full bounded active lifetime."
+  },
+  "historical_weather_session": {
+    "period_utc": [
+      "2026-10-13T17:49:37Z",
+      "2026-10-13T17:50:55Z"
+    ],
+    "core_request_count": 0,
+    "audio_recording_available": false
+  },
+  "checks": {
+    "voice_tests_passed": 37,
+    "architecture_voice_tests_passed": 10,
+    "core_deadline_and_contract_tests_passed": 49,
+    "deadline_regression_fails_on_previous_core_image": true,
+    "native_listener_ready": true,
+    "owner_session_ready": true
+  },
+  "wire_smoke": {
+    "result": "weather_return_smoke",
+    "ready_after_wake_seconds": 7.31,
+    "core_completed": 1,
+    "core_failed": 0,
+    "saved_result_parts": 1,
+    "result_preview": "Over je opdracht Weer morgen in Amsterdam: Ik kan niet bevestigen hoe je opdracht is afgelopen. Een begonnen handeling kan al uitgevoerd zijn. Ik herhaal die niet automatisch. Vraag me naar de taakstatus voordat we verdergaan.",
+    "pcm_samples": 332624,
+    "closed_early": false,
+    "elapsed_seconds": 67.41
+  },
+  "wire_limitations": "Synthetic microphone and simulated device playback acknowledgements; not a physical acoustic test. Greeting start was 21 ms after session start. The 207 ms finished receipt is simulated, not the clip duration. Forecast task failed; no successful weather result.",
+  "open_research_failure": {
+    "work_id": "work:household:52880f5b-de0d-5fe7-9885-4b203c0c3da3",
+    "state": "ambiguous",
+    "error_code": "internal_error",
+    "error_fingerprint": "651a65ab4526c0319d7bcbd1774dc7dc9acbd59bc627ff6cd69b6d5b2f123cc0",
+    "matched_exception": "ValueError:research usage exceeds its grant",
+    "actual_tool_calls": 4,
+    "granted_tool_calls": 3,
+    "input_tokens": 18834,
+    "output_tokens": 639,
+    "task_replayed": false,
+    "blocked_result_released": false,
+    "grant_changed": false,
+    "next": "Research provider requests do not propagate the tool-call cap. Resolve forward request enforcement and accurate budget-failure classification in shared core/worker composition; preserve this failed task."
+  },
+  "installed_voice": [
+    {
+      "name": "eva2-owner-voice-media-1",
+      "image": "sha256:31e4f06a5ffe3965e8cfeb804ea13a8540dcc3b017358c7436e883b635e5fb6f",
+      "running": true,
+      "installed_source_sha256": {
+        "src/eva/voice_service/codex_media.py": "04192bd28871de90b529eaa8e916135121942fd0d34520f30bfec9e34d132771",
+        "src/eva/voice_service/codex_backend.py": "4af3a559851601d9fe3c69974c002b46a8395b8c8a2e0829051b75414eee28cc",
+        "src/eva/voice_service/greetings/1.wav": "7ce4eb6932c469f0f3b6dd8258642727b1de098d7adce0abd5a804588dbfeaf1",
+        "src/eva/voice_service/greetings/manifest.json": "7569f2613b7d701ab2f5ab7d9f6bc7d8ec9faa0b1604fdf2d5dc46935b9e973a",
+        "src/eva/voice_service/greetings/2.wav": "2d0dc7f100e89641989d3995e13c134e9b1f4ad8768016eefe4c579a0c5e0ca2",
+        "src/eva/voice_service/greetings/0.wav": "bb560064c36ccb4ee41fa9d95dc5f3e6abfb9b68c8bb8ca1cf3b09d721754e1f"
+      }
+    },
+    {
+      "name": "eva2-household-speaker-1",
+      "image": "sha256:a5155a539b383d295b83b2684a6c0cf32cb739c30bb548535889fe3bbd410da0",
+      "running": true,
+      "installed_source_sha256": {
+        "src/eva/voice_service/codex_media.py": "04192bd28871de90b529eaa8e916135121942fd0d34520f30bfec9e34d132771",
+        "src/eva/voice_service/codex_backend.py": "4af3a559851601d9fe3c69974c002b46a8395b8c8a2e0829051b75414eee28cc",
+        "deploy/native-speaker/speaker_endpoint.py": "1b149d71110c584be551c10b91f76908fc78827ae8727e65cc6395c569ef86ee",
+        "deploy/native-speaker/codex_service.py": "3178c8623f1ee4b70c5c6339708f03696995667b204104f81b105aa7f130b756",
+        "src/eva/voice_service/greetings/1.wav": "7ce4eb6932c469f0f3b6dd8258642727b1de098d7adce0abd5a804588dbfeaf1",
+        "src/eva/voice_service/greetings/manifest.json": "7569f2613b7d701ab2f5ab7d9f6bc7d8ec9faa0b1604fdf2d5dc46935b9e973a",
+        "src/eva/voice_service/greetings/2.wav": "2d0dc7f100e89641989d3995e13c134e9b1f4ad8768016eefe4c579a0c5e0ca2",
+        "src/eva/voice_service/greetings/0.wav": "bb560064c36ccb4ee41fa9d95dc5f3e6abfb9b68c8bb8ca1cf3b09d721754e1f"
+      }
+    }
+  ],
+  "core_install": {
+    "before_image": "sha256:a0dc4b8aea7c953409bfcb0fd337d9d43f35eef183ff9722d0a5989b7771f685",
+    "image": "sha256:5db72d0f16ad6688a1e980aed22ba8d23581dac45ff5dd60e928b26fc82d197f",
+    "rollback": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-managed-b-slot3",
+      "--project-directory",
+      "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/cleanup-outcome-installation",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/cleanup-outcome-installation/candidate.compose.private.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "core"
+    ],
+    "start": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-managed-b-slot3",
+      "--project-directory",
+      "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/cleanup-outcome-installation",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261013/cleanup-outcome-installation/candidate.compose.private.json",
+      "-f",
+      "/var/lib/eva2/voice-session/codex-20261013/household-deadline.compose.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "core"
+    ]
+  },
+  "core_patch_provenance": "Installed core patched from its own exact module, changing only deadline min(profile.timeout_seconds, 300); concurrent host-source refactors were not copied into the image. Worker unchanged.",
+  "rollback_directory": "/var/lib/eva2/voice-session/codex-20261013/before-wake-greeting",
+  "diagnostics": [
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "ice_ready",
+      "elapsed_ms": 7485
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "account_start",
+      "elapsed_ms": 17
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "wake_greeting_started",
+      "elapsed_ms": 21
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "wake_greeting_finished",
+      "elapsed_ms": 207
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "account_ready",
+      "elapsed_ms": 876
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "voice_answer_ready",
+      "elapsed_ms": 1824
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "provider_event",
+      "elapsed_ms": 7306,
+      "kind": "session.started",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "media_ready",
+      "elapsed_ms": 7306
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "provider_event",
+      "elapsed_ms": 9211,
+      "kind": "turn.created",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "provider_event",
+      "elapsed_ms": 11247,
+      "kind": "delegation.created",
+      "role": null
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "codex_event",
+      "elapsed_ms": 11251,
+      "method": "turn/started"
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "core_request",
+      "elapsed_ms": 11685,
+      "recent_count": 0
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "core_request_acknowledged",
+      "elapsed_ms": 11778
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "provider_event",
+      "elapsed_ms": 12173,
+      "kind": "turn.done",
+      "role": "user"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "provider_event",
+      "elapsed_ms": 12180,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "first_output_audio",
+      "elapsed_ms": 12188
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "provider_event",
+      "elapsed_ms": 14655,
+      "kind": "turn.done",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "core_final",
+      "elapsed_ms": 23870
+    },
+    {
+      "event": "eva_voice_backend",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "codex_event",
+      "elapsed_ms": 23881,
+      "method": "turn/completed"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "provider_event",
+      "elapsed_ms": 23941,
+      "kind": "delegation.context.appended",
+      "role": null
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "provider_event",
+      "elapsed_ms": 56362,
+      "kind": "turn.created",
+      "role": "assistant"
+    },
+    {
+      "event": "eva_voice_media",
+      "session": "8935e018-25c9-4ad7-956e-3ac3086666ef",
+      "stage": "closing",
+      "elapsed_ms": 67537,
+      "audio_received": 2851,
+      "audio_suppressed": 139
+    }
+  ],
+  "remaining": [
+    "Physical greeting, echo, interruption and full-answer playback acceptance.",
+    "Actual weather forecast return and excessive research latency.",
+    "Dutch current-information delegation needs real-use verification.",
+    "Telegram and WhatsApp voice remain unimplemented."
+  ]
+}

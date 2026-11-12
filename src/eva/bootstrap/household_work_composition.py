@@ -41,17 +41,20 @@ def load_household_work_authority(path, *, scope, profile, model_lease_file, voi
     voice_policy = _read_policy(config.voice_policy_file)
     token = read_private_runtime_file_bytes(config.voice_token_file,
         setting_name="EVA_HOUSEHOLD_VOICE_TOKEN_FILE").decode().strip()
+    if scope is None or (config.task_tenant_id, config.task_installation_id) != (scope.tenant_id, scope.installation_id):
+        raise ValueError("household work composition scope differs")
     if voice_authority is None:
         voice_authority = HouseholdVoiceAuthority(path=config.voice_policy_file,
             token_path=config.voice_token_file, policy=voice_policy, token=token,
             identity_loader=identity, clock=lambda: datetime.now(UTC))
+        if not voice_authority.validate_current(allow_inactive=True):
+            return None
     elif (voice_authority.policy != voice_policy or voice_authority.token != token
             or Path(voice_authority._path) != Path(config.voice_policy_file)
             or Path(voice_authority._token_path) != Path(config.voice_token_file)):
         raise ValueError("household work differs from the current voice authority")
-    voice_authority.validate_current()
-    if scope is None or (config.task_tenant_id, config.task_installation_id) != (scope.tenant_id, scope.installation_id):
-        raise ValueError("household work composition scope differs")
+    else:
+        voice_authority.validate_current()
     def budget():
         return RuntimeResourceBudget.from_bytes(read_private_runtime_file_bytes(
             config.budget_file, setting_name="EVA_RUNTIME_RESOURCE_BUDGET_FILE"),
@@ -61,7 +64,10 @@ def load_household_work_authority(path, *, scope, profile, model_lease_file, voi
         policy_loader=lambda: read_household_research_policy(config.research_policy_file),
         budget_loader=budget,
         provider_validator=lambda: validate_delegated_model_access_lease(Path(model_lease_file)),
-        profile=HouseholdResearchProfile(**asdict(profile)))
+        profile=HouseholdResearchProfile(**asdict(profile)),
+        allow_inactive=True)
+    if not authority.validate_current(allow_inactive=True):
+        return None
 
     if digital_profile is not None:
         from eva.bootstrap.household_digital_work import with_household_digital

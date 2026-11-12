@@ -5,7 +5,7 @@ from uuid import uuid4
 
 import pytest
 
-from eva.adapters.postgres.delegated_work import DelegatedWorkNotFound
+from eva.adapters.postgres.delegated_work import DelegatedWorkNotFound, DelegatedWorkConflict
 from eva.application.conversation import ConversationActionCall
 from eva.bootstrap.household_work import HouseholdWorkActions
 from tests.postgres.test_household_public_work import setup, start, PUBLIC, SAT, DEVICE
@@ -58,7 +58,7 @@ def test_native_controls_preserve_origin_and_leave_other_task_running(database, 
     assert actions.pending(action_turn) == receipt
 
 
-def test_native_scope_keeps_retained_tasks_and_excludes_other_devices_and_nonnative_sessions(database):
+def test_household_scope_shares_retained_tasks_and_preserves_delivery(database):
     x = setup(database, "native-scope")
     nonnative = start(x)
     old = native(x, "old")
@@ -71,19 +71,23 @@ def test_native_scope_keeps_retained_tasks_and_excludes_other_devices_and_nonnat
     other_id = start(other)
     current = native(x, "current")
     own = start(current)
-    assert ids(current.service, current.turn) == {expired, closed_id, own}
+    assert ids(current.service, current.turn) == {nonnative, expired, closed_id, own, other_id}
     x.clock[0] += timedelta(minutes=2)
-    assert ids(current.service, current.turn) == {expired, closed_id, own}
-    for identifier in (nonnative, other_id):
-        with pytest.raises(DelegatedWorkNotFound):
-            current.service.execute("get", current.turn, request_key="get", work_id=identifier)
-    # Ordinary audio sessions retain exact-session control even on this device.
+    assert ids(current.service, current.turn) == {nonnative, expired, closed_id, own, other_id}
+    assert current.service.execute("get", current.turn, request_key="get", work_id=other_id)["work"]["work_id"] == other_id
+    # Household streaming sessions share task control, but not automatic delivery.
     binding = x.server.open_session(**x.args)
     exact = x.server.session(**x.args, session_id=binding["session_id"])
     turn = exact.turn(str(uuid4()), "List work")
-    assert ids(exact, turn) == set()
+    assert ids(exact, turn) == {nonnative, expired, closed_id, own, other_id}
+    assert exact.execute("get", turn, request_key="get", work_id=nonnative)["work"]["work_id"] == nonnative
+    assert exact.execute("get", turn, request_key="get-native", work_id=own)["work"]["work_id"] == own
+    assert exact.execute("stop", turn, request_key="stop", work_id=own)["work"]["state"] == "stopped"
+    resumed = exact.execute("resume", turn, request_key="resume", work_id=own)["work"]["work_id"]
+    assert exact._load(resumed, exact.origin(turn)).spec.origin.session_id == current.service.binding["session_id"]
     with pytest.raises(DelegatedWorkNotFound):
-        exact.execute("get", turn, request_key="get", work_id=own)
+        exact.result_delivery(turn, "claim", work_id=own)
+    assert exact.poll(turn) is None
     x.policies[0] = x.policies[0].model_copy(update={"state": "revoked"})
     with pytest.raises(ValueError):
         ids(current.service, current.turn)
@@ -136,8 +140,7 @@ def test_retained_native_work_controls_and_original_output_once(database, monkey
     with pytest.raises(DelegatedWorkNotFound):
         x.server.store.load(second_id, **current.service._owner)
     other = native(x, "other-device", satellite="assist_satellite.office", device="b" * 32)
-    with pytest.raises(DelegatedWorkNotFound):
-        other.service.execute("get", other.turn, request_key="get", work_id=second_id)
+    assert other.service.execute("get", other.turn, request_key="get", work_id=second_id)["work"]["work_id"] == second_id
     with pytest.raises(ValueError):
         x.server.delivery_session(token="test-token", satellite_id="assist_satellite.office",
             device_id="b" * 32, session_id=first.spec.origin.session_id)
@@ -194,6 +197,12 @@ def test_retained_native_work_controls_and_original_output_once(database, monkey
         SimpleNamespace(endpoint_url="http://ha.invalid", credential="fixture"))
     assert list(delivery._sessions()) == [original.service.binding]
     delivery.run_once()
+    if lifetime == "closed":
+        # setup also opened a separate live streaming session on this speaker.
+        # A retained native result must wait until that foreground session ends.
+        assert sent == []
+        x.service.current("close")
+        delivery.run_once()
     delivery.run_once()
     assert len(sent) == 1 and sent[0]["entity_id"] == SAT and text in sent[0]["message"]
     assert list(delivery._sessions()) == [] and output.poll(control) is None
@@ -315,3 +324,148 @@ def test_native_automation_stop_survives_late_reply_and_new_store(database, stop
     database.dispose()
     assert not store().begin(**args, now=now, delivery_mode="automation")
     assert not store().claim_reply(**args, now=now + timedelta(seconds=60), reply_sha256="c" * 64)
+
+
+@pytest.mark.parametrize("lifetime", ["closed", "expired"])
+def test_streaming_retained_control_keeps_delivery_and_lease_boundaries(database, lifetime):
+    from eva.application.conversation import ConversationActionCall
+    from eva.adapters.postgres.household_work_sessions import first_session
+    x = setup(database, "stream-read-" + lifetime)
+    work_id = start(x)
+    original = x.service.binding
+    if lifetime == "closed":
+        x.service.current("close")
+    else:
+        x.clock[0] += timedelta(seconds=16)
+    binding = x.server.open_session(**x.args)
+    current = x.server.session(**x.args, session_id=binding["session_id"])
+    turn = current.turn(str(uuid4()), "Wat is de status van mijn vorige opdracht?")
+    actions = HouseholdWorkActions(database, current)
+    call = ConversationActionCall("read-old", "get_delegated_work", {"work_id": work_id})
+    receipt = actions.execute(turn, call)
+    assert receipt.output["operation_result"]["work"]["work_id"] == work_id
+    assert actions.pending(turn) == receipt
+    assert ids(current, turn) == {work_id}
+    assert {item["work_id"] for item in current.active_work_metadata(turn)["jobs"]} == {work_id}
+    retained = current._load(work_id, current.origin(turn), read_only=True)
+    assert retained.spec.origin.session_id == original["session_id"]
+    with database.begin() as connection:
+        x.server.store._scope(connection)
+        assert first_session(connection, x.server.store.scope, binding["session_id"]).get("native_conversation_key") is None
+    with pytest.raises(DelegatedWorkNotFound):
+        current.result_delivery(turn, "claim", work_id=work_id)
+    assert current.execute("stop", turn, request_key="stop", work_id=work_id)["work"]["state"] == "stopped"
+    resumed = current.execute("resume", turn, request_key="resume", work_id=work_id)["work"]["work_id"]
+    assert current._load(resumed, current.origin(turn)).spec.origin == retained.spec.origin
+    assert current.poll(turn) is None
+    # A new household audience cannot import a forged person or changed authority.
+    for field, value in (("actor_id", "person:other"), ("research_policy_sha256", "f" * 64),
+                         ("consent_operation_id", "another-consent")):
+        forged = current.origin(turn).model_copy(update={field: value})
+        with pytest.raises((DelegatedWorkNotFound, ValueError)):
+            current.store.load(work_id, **current._owner, household_origin=retained.spec.origin,
+                               household_read_origin=forged)
+    x.clock[0] += timedelta(seconds=16)
+    with pytest.raises(ValueError):
+        current.execute("get", turn, request_key="expired-current", work_id=work_id)
+
+
+def test_streaming_read_rejects_expired_retention(database):
+    x = setup(database, "stream-read-expired-retention")
+    work_id = start(x)
+    work = x.service._load(work_id, x.service.origin(x.turn))
+    x.clock[0] = work.retention_until + timedelta(seconds=1)
+    binding = x.server.open_session(**x.args)
+    current = x.server.session(**x.args, session_id=binding["session_id"])
+    turn = current.turn(str(uuid4()), "Wat was de vorige opdracht?")
+    assert ids(current, turn) == set()
+    with pytest.raises(DelegatedWorkNotFound):
+        current.execute("get", turn, request_key="expired", work_id=work_id)
+
+
+def test_streaming_read_cannot_import_private_same_sponsor_tasks(database):
+    from tests.postgres.test_household_public_work import test_private_task_id_cannot_be_read_or_resumed
+    test_private_task_id_cannot_be_read_or_resumed(database)
+
+
+def test_streaming_read_keeps_private_entrypoint_and_control_isolation(database):
+    from tests.postgres.test_household_public_work import test_private_entrypoints_cannot_read_and_household_sessions_share_control
+    test_private_entrypoints_cannot_read_and_household_sessions_share_control(database)
+
+
+@pytest.mark.parametrize("kind", ["research", "digital"])
+def test_streaming_household_devices_share_control_without_moving_origin(database, kind, monkeypatch):
+    if kind == "digital":
+        from tests.postgres.test_household_digital_work import digital_setup
+        x = digital_setup(database, "shared-household-" + kind)
+        work_id = x.service.execute("digital", x.turn, request_key="start", task="Controleer de lampen")["work"]["work_id"]
+    else:
+        x = setup(database, "shared-household-" + kind)
+        work_id = start(x)
+    origin = x.service._load(work_id, x.service.origin(x.turn)).spec.origin
+    x.service.current("close")
+    args = x.args | {"satellite_id": "assist_satellite.office", "device_id": "b" * 32}
+    binding = x.server.open_session(**args)
+    current = x.server.session(**args, session_id=binding["session_id"])
+    turn = current.turn(str(uuid4()), "Ga hier verder met de huishoudopdracht")
+    assert ids(current, turn) == {work_id}
+    assert current.execute("get", turn, request_key="get", work_id=work_id)["work"]["work_id"] == work_id
+    with pytest.raises(DelegatedWorkNotFound):
+        current.result_delivery(turn, "claim", work_id=work_id)
+    assert current.execute("stop", turn, request_key="stop", work_id=work_id)["work"]["state"] == "stopped"
+    resumed = current.execute("resume", turn, request_key="resume", work_id=work_id)["work"]["work_id"]
+    assert current._load(resumed, current.origin(turn)).spec.origin == origin
+    assert current.poll(turn) is None
+    with pytest.raises(ValueError):
+        x.server.open_session(**(args | {"satellite_id": "assist_satellite.unknown", "device_id": "c" * 32}))
+    for field, value in (("household_id", "another-household"), ("tenant_id", "another-tenant"),
+                         ("installation_id", "another-installation")):
+        forged = current.origin(turn).model_copy(update={field: value})
+        with pytest.raises((ValueError, DelegatedWorkNotFound)):
+            current.store.load(work_id, **current._owner, household_origin=origin,
+                               household_request_origin=forged)
+    # The original device must still be admitted too; the new device alone is insufficient.
+    validate = x.server.authority.validate_device
+    def reject_original(satellite, device):
+        if satellite == origin.satellite_id:
+            raise ValueError("original device no longer admitted")
+        return validate(satellite, device)
+    monkeypatch.setattr(x.server.authority, "validate_device", reject_original)
+    with pytest.raises((ValueError, DelegatedWorkConflict)):
+        current.execute("get", turn, request_key="removed-origin", work_id=work_id)
+
+
+def test_household_get_preserves_authorized_unfinished_report(database):
+    from tests.postgres.test_household_digital_work import digital_setup
+    from tests.postgres.test_delegated_work_store import _usage
+    x = digital_setup(database, "shared-household-failure-report")
+    work_id = x.service.execute("digital", x.turn, request_key="start", task="Controleer de lampen")["work"]["work_id"]
+    store = x.server.store
+    store._failure_report_clock = lambda: x.clock[0]
+    claim = store.claim_next(worker_id="worker:report", release=x.profile.release, now=x.clock[0])
+    call = store.start_call(claim, now=x.clock[0])
+    report = "De leescontrole is afgerond; de tweede stap wacht op een beschikbare bron."
+    store.record_failure(call, usage=_usage(), error_code="incomplete_work",
+        error_fingerprint="d" * 64, ambiguous=False, now=x.clock[0], failure_report=report)
+    args = x.args | {"satellite_id": "assist_satellite.office", "device_id": "b" * 32}
+    current = x.server.session(**args, session_id=x.server.open_session(**args)["session_id"])
+    turn = current.turn(str(uuid4()), "Waarom kreeg ik geen eindantwoord?")
+    view = current.execute("get", turn, request_key="get-failure", work_id=work_id)["work"]
+    assert view["result"] is None and view["state"] == "failed"
+    assert report in view["failure_description"]
+    assert "niet als afgerond resultaat bevestigd" in view["failure_description"]
+
+
+def test_household_listing_excludes_removed_device_without_hiding_valid_tasks(database, monkeypatch):
+    x = setup(database, "shared-household-device-selection")
+    own = start(x)
+    other = native(x, "office", satellite="assist_satellite.office", device="b" * 32)
+    removed = start(other)
+    assert ids(x.service, x.turn) == {own, removed}
+    # Exercise the current admitted-device subset while keeping the persisted
+    # authority generation stable; revoking the whole policy is tested separately.
+    monkeypatch.setattr(x.server.authority, "policy", x.server.authority.policy.model_copy(
+        update={"devices": {SAT: DEVICE}}))
+    assert ids(x.service, x.turn) == {own}
+    with pytest.raises(DelegatedWorkNotFound):
+        x.service.execute("get", x.turn, request_key="removed", work_id=removed)

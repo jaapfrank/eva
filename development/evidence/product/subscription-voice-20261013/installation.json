@@ -1,0 +1,107 @@
+{
+  "recorded_at": "2026-10-13T14:00:08.756378+00:00",
+  "status": "installed_pending_physical_acceptance",
+  "voice_model": "gpt-live-1-codex",
+  "codex_version": "0.162.1",
+  "voice_protocol": "v3 WebRTC with Codex-managed sideband",
+  "authentication": "Existing rotating EVA model access lease; no API key or new login",
+  "backend": "Per-session loopback Responses provider delegates to existing EVA CoreClient/HouseholdCoreClient",
+  "source_sha256": {
+    "src/eva/voice_service/codex_backend.py": "91995461941d0b6ee5bc84d2278ff124b83301301857902b79f5241fdb96bf82",
+    "src/eva/voice_service/codex_speaker_audio.py": "29ab06f7e39d816a6c02afc2fa7b45651222222abb9cf0c52cc9cc1b89aaba07",
+    "src/eva/voice_service/codex_session.py": "cc926784b90b0b510293c74e0598639f2bae88f59a9a86405ea4cd98ca53c92c",
+    "src/eva/voice_service/codex_media.py": "54862566a4de36947c1c34066342c299027e96cf55262895d98086ad25dadc82",
+    "deploy/native-speaker/codex_service.py": "c4677cba41fa1782ef86181904c59efab911b1d44541a7022fbe8c4141d2d887",
+    "deploy/native-speaker/launch.py": "c8a4757d570cdeff93131c1c16bce13a0308639e5b1731e98af80bee92ad00b2",
+    "deploy/voice-session/Dockerfile.codex": "239e592e79b078ab8257ab2bc0cfee94fb5488dbd032d7e0482c009f8aa5ddc6",
+    "deploy/voice-session/requirements-codex.lock": "d7a3863259b993cfcb21f51c7668856a84652632763c44f1efafb5879a7078df"
+  },
+  "tests": {
+    "voice": 30,
+    "architecture_voice": 10
+  },
+  "containers": [
+    {
+      "name": "eva2-owner-voice-media-1",
+      "image": "sha256:0e52bbb98f27833eace55441bcc95e7d8a78c25511adffc36279da80f34ec0f3",
+      "running": true,
+      "source_hashes_verified": true
+    },
+    {
+      "name": "eva2-household-speaker-1",
+      "image": "sha256:9040c793f001221de45881d40e53c5527ef478de67a33ea39c712de093c65576",
+      "running": true,
+      "source_hashes_verified": true,
+      "household_codex_listening": true
+    }
+  ],
+  "limitations": [
+    "Experimental version-pinned app-server voice protocol; not a ChatGPT voice API guarantee",
+    "Physical microphone, room echo, wakeword and barge-in acceptance pending",
+    "Telegram voice and WhatsApp calls are not implemented by this change",
+    "Conservative playback acknowledgments do not claim audio was physically heard"
+  ],
+  "operational_configuration": "/var/lib/eva2/voice-session/codex-20261013",
+  "rollback": "Previous images retained; original Compose commands preserved in private deployment.json",
+  "owner_policy": {
+    "same_identity_and_scope": true,
+    "renewed_until": "2026-11-12T13:31:11Z"
+  },
+  "browser_smoke": [
+    {
+      "connected": true,
+      "audio": {
+        "received_frames": 1415,
+        "audible_frames": 125
+      },
+      "work_events": [
+        "user_voice_state",
+        "work_started",
+        "request_acknowledged",
+        "user_voice_state",
+        "stt_final",
+        "voice_state",
+        "voice_state",
+        "action_started",
+        "action_finished",
+        "work_finished",
+        "voice_state",
+        "voice_state"
+      ],
+      "transcript_count": 3,
+      "transcript_roles": [
+        "owner",
+        "eva",
+        "eva"
+      ]
+    },
+    {
+      "close_status": 200
+    }
+  ],
+  "resolved_failures": [
+    "Empty LiveKit caption track SID corrected to published track SID",
+    "Removing STUN caused connection startup timeout; default ICE discovery restored",
+    "Native opening audio exceeded initial five-second buffer; bounded buffer extended to 45 seconds and regression tested",
+    "Native capture now drains before account negotiation to preserve the provisioned wire two-second unread-audio limit"
+  ],
+  "native_smoke": [
+    {
+      "transport": "native-adapter",
+      "audio_frames": 199,
+      "audible_frames": 163,
+      "work_events": [
+        "work_started",
+        "request_acknowledged",
+        "work_finished"
+      ],
+      "closed_early": false
+    },
+    {
+      "closed": true,
+      "stop_calls": 3
+    }
+  ],
+  "owner_ready": true,
+  "verification_scope": "Real browser and native audio/core round trips verified during installation; final startup-capture ordering verified by regression test. Final installed source hashes verified for both services. Physical device acceptance remains open."
+}

@@ -11,6 +11,7 @@ import httpx2
 
 from eva.adapters.model.contracts import ConversationModelError, ConversationModelDeadlineExceeded
 from eva.application.cancellation import run_cancellable
+from eva.adapters.model.research_timing import ResearchTiming
 
 
 def open_research_response(
@@ -22,6 +23,9 @@ def open_research_response(
     request interrupts headers or body reads through the existing shared signal.
     Local closure does not attest that a remote provider has stopped computing.
     """
+    timing = ResearchTiming()
+    outcome = "failed"
+
     async def read() -> bytes:
         remaining = deadline - monotonic()
         if remaining <= 0:
@@ -36,11 +40,13 @@ def open_research_response(
                     request.get_method(), request.full_url,
                     headers=dict(request.header_items()), content=request.data,
                 ) as response:
+                    timing.headers_ms = timing.elapsed()
                     failed = not 200 <= response.status_code < 300
                     limit = 1024 if failed else maximum_bytes
                     chunks: list[bytes] = []
                     total = 0
                     async for chunk in response.aiter_bytes():
+                        timing.feed(chunk)
                         total += len(chunk)
                         if failed:
                             chunks.append(chunk[:max(0, limit - (total - len(chunk)))])
@@ -57,8 +63,12 @@ def open_research_response(
                     return body
 
     try:
-        return BytesIO(asyncio.run(run_cancellable(read)))
+        result = BytesIO(asyncio.run(run_cancellable(read)))
+        outcome = "succeeded"
+        return result
     except (TimeoutError, httpx2.TimeoutException) as error:
         raise ConversationModelDeadlineExceeded("research provider deadline expired") from error
     except httpx2.TransportError as error:
         raise urllib.error.URLError("research provider transport unavailable") from error
+    finally:
+        timing.finish(outcome)

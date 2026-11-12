@@ -71,6 +71,47 @@ def _public_input_is_host_selected(schema):
     return False
 
 
+
+NATIVE_REPAIR_RATE_LIMIT_RECOVERY = "host_repair_rate_limit_recovery"
+RATE_LIMIT_FINGERPRINT = "f92175b7d9453e3fd18889629f3147bab3b3b09eb83be99b307d94e8ba167979"
+
+
+def valid_repair_rate_limit_recovery(data):
+    """Validate the host's single, no-action recovery proof in the admission chain."""
+    proof = data.get("rate_limit_evidence")
+    if not isinstance(proof, dict) or set(proof) != {
+        "contract", "work_id", "spec_sha256", "incident_id", "incident_event_sha256",
+        "scope_sha256", "usage_sha256", "error_fingerprint", "tool_calls",
+        "action_slots", "completed_at", "not_before", "resumed_at",
+    }:
+        return False
+    if (proof["contract"] != "EvaNativeRepairRateLimitRecovery/v1"
+            or data.get("generation") != 2
+            or data.get("previous_mandate_sha256") != data.get("mandate_sha256")
+            or proof["work_id"] != data.get("previous_work_id")
+            or proof["spec_sha256"] != data.get("previous_spec_sha256")
+            or proof["error_fingerprint"] != RATE_LIMIT_FINGERPRINT
+            or type(proof["tool_calls"]) is not int or proof["tool_calls"] != 0
+            or type(proof["action_slots"]) is not int or proof["action_slots"] != 0
+            or not isinstance(proof["incident_id"], str)
+            or re.fullmatch(r"self-repair:[0-9a-f]{64}", proof["incident_id"]) is None
+            or any(not isinstance(proof[k], str) or re.fullmatch(r"[0-9a-f]{64}", proof[k]) is None
+                   for k in ("spec_sha256", "incident_event_sha256", "scope_sha256", "usage_sha256"))
+            or data.get("rate_limit_evidence_sha256") != canonical_sha256(proof)
+            or data.get("recovery_ingress_sha256") != canonical_sha256(proof)
+            or data.get("recovery_conversation_id") is not None
+            or data.get("recovery_message_id") is not None):
+        return False
+    from datetime import timedelta
+    from eva.contracts.timestamps import parse_utc_timestamp
+    try:
+        completed = parse_utc_timestamp(proof["completed_at"])
+        eligible = parse_utc_timestamp(proof["not_before"])
+        resumed = parse_utc_timestamp(proof["resumed_at"])
+        return eligible == completed + timedelta(minutes=5) and resumed >= eligible
+    except (TypeError, ValueError):
+        return False
+
 class InitiativeMandateDenied(ConversationConflict):
     """No execution permission; keep a concrete blocker instead of guessing."""
 
@@ -393,7 +434,10 @@ class PostgresInitiativeAuthority:
                         or data["generation"] != prior[1] + 1
                         or data.get("source_ingress_sha256") != spec.source_ingress_sha256
                         or data.get("recovery_kind") not in {"explicit_private_owner_native_resume",
-                            "host_unstarted_profile_refresh", "host_certified_prepare_recovery"}
+                            "host_unstarted_profile_refresh", "host_certified_prepare_recovery",
+                             NATIVE_REPAIR_RATE_LIMIT_RECOVERY}
+                        or (data.get("recovery_kind") == NATIVE_REPAIR_RATE_LIMIT_RECOVERY
+                            and not valid_repair_rate_limit_recovery(data))
                         or (data.get("recovery_kind") == "host_unstarted_profile_refresh"
                             and (data.get("previous_mandate_sha256") != digest
                                 or data.get("unstarted_evidence_sha256") != canonical_sha256({
@@ -842,7 +886,9 @@ class NativeInitiativeGuard:
         event = self.authority._work_admission(
             self.authority.timeline.events(self.claim.thread_id), spec)
         data = {} if event is None else event.payload.get("data", {})
-        if (data.get("recovery_kind") != "explicit_private_owner_native_resume"
+        if (data.get("recovery_kind") not in {"explicit_private_owner_native_resume", NATIVE_REPAIR_RATE_LIMIT_RECOVERY}
+                or (data.get("recovery_kind") == NATIVE_REPAIR_RATE_LIMIT_RECOVERY
+                    and not valid_repair_rate_limit_recovery(data))
                 or data.get("previous_work_id") != spec.parent_task_id):
             return None
         self.check(turn)

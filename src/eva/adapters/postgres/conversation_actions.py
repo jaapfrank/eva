@@ -368,6 +368,12 @@ class PostgresConversationActions:
                     return receipt
         return None
 
+    def direct_voice_reply(self, turn, receipts):
+        if len(receipts) != 1:
+            return None
+        provider = self._external_tool_by_action.get(receipts[0].call.name)
+        reader = getattr(provider, "direct_voice_reply", None)
+        return reader(turn, receipts) if callable(reader) else None
 
     def reply_guard(self, turn, receipts):
         """Delegate final consistency checks only to tools used by this turn."""

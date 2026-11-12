@@ -267,3 +267,24 @@ async def test_waiting_result_revocation_never_starts_speech():
         await asyncio.wait_for(returned, 2)
     assert not session.handles and "ack" not in backend.operations
     assert not state.saved_result_context
+
+
+@pytest.mark.asyncio
+async def test_faster_return_polling_expires_and_cancellation_stops_it(monkeypatch):
+    from eva.voice_service import agent as module
+    backend = Backend()
+    state = BridgeState(backend)
+    state.return_poll_fast_until = 11
+    clock = [10]
+    waits = []
+    monkeypatch.setattr(module.time, "monotonic", lambda: clock[0])
+    async def sleep(delay):
+        waits.append(delay)
+        clock[0] = 12
+        if len(waits) == 2:
+            raise asyncio.CancelledError
+    monkeypatch.setattr(asyncio, "sleep", sleep)
+    with pytest.raises(asyncio.CancelledError):
+        await EvaAgent(state).poll_saved_work(Session(), lambda: None)
+    assert waits == [.25, 2]
+    assert backend.operations == ["poll", "poll"]

@@ -1,0 +1,76 @@
+{
+  "contract": "EvaIndependentE416ChainGapReview/v1",
+  "recordedAt": "2026-11-06T14:05:34.804769+00:00",
+  "reviewer": "/root/independent_review",
+  "scope": "Read-only first incomplete product-chain link; no code, criteria, markers or installation changes",
+  "canonicalCriteria": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+  "canonicalBoardSha256": "86e95505f92eb62802c18ec30fd002ee99a5061686d5bef0e2d437088c03010a",
+  "observedHostHandoffSha256": "4bab9a807ebc2b0789b6ad72996fbf25e023e5e15101fad3e2806497b303065c",
+  "target_id": "3d167759c80446eeb8d917bea6baaebd23ef2cee780a186266de87469284b193",
+  "candidate_sha256": "4e1aec8ffe095cd08403e46b133b5fb03eceb98c782ab651ed6b5ac1c6838ed1",
+  "handoffState": "blocked",
+  "handoffReason": "independent_stage_not_completed_with_measured_usage",
+  "liveReadOnlyDatabase": {
+    "builder": {
+      "state": "succeeded",
+      "completedAt": "2026-10-26T15:40:13Z",
+      "specHashValid": true,
+      "resultPresent": true,
+      "usageMeasurement": "partial",
+      "modelResponses": 16,
+      "toolCalls": 15
+    },
+    "originalBehaviorOracle": {
+      "state": "failed",
+      "errorCode": "incomplete_work",
+      "completedAt": "2026-10-26T15:53:32Z",
+      "specHashValid": true,
+      "resultPresent": false,
+      "usageMeasurement": "partial",
+      "modelResponses": 13,
+      "toolCalls": 12
+    },
+    "bothLeaseOwnerAndExpiresNull": true,
+    "incident": {
+      "phase": "repair_investigating",
+      "status": "waiting_for_proof",
+      "revision": 3
+    }
+  },
+  "firstUnfinishedLink": {
+    "phase": "independent_original_behavior_oracle",
+    "source": "src/eva/operations/runtime_repair_development.py",
+    "lines": [
+      182,
+      187,
+      254,
+      268
+    ],
+    "evidence": "Existing builder candidate retained, but oracle failed; no oracle/comparison/review/release files exist in this handoff."
+  },
+  "oldTargetNotCurrent": {
+    "changedPath": "bootstrap/delegated_work_owner_service.py",
+    "retainedSha256": "ba4b83387c95b7452133bd40510c262ddb241b1d571508f50749e8bd59004b63",
+    "actualCoreSha256": "e25cbd625e05f062f857e31312c240ce57855df7febcd59c6f208115fcf603bf",
+    "otherTwoTargetSourcesStillMatch": true
+  },
+  "concreteContinuationGapToReproduce": {
+    "controller": "src/eva/operations/runtime_repair_development.py:183",
+    "hostMetadata": "src/eva/bootstrap/runtime_repair_host.py:49",
+    "observation": "Controller asks only stored initial role task id; host metadata loads that exact run, without resolving the same-execution native continuation leaf.",
+    "provenRuntimeManifestation": false,
+    "nextExecutableStep": "Add a focused reproduction for an unchanged-authority failed stage with one legitimate succeeded same-execution child, plus source/owner/STOP/branch mismatches. Reuse existing execution-chain contract if reproduces; do not reset the historical blocked handoff or replay uncertain HTTP400 effects."
+  },
+  "laterLinks": {
+    "independentCandidateReview": "not reached in retained repair",
+    "managedRepairApplication": "not reached in retained repair",
+    "installedOriginalBehaviorVerification": "not reached in retained repair",
+    "secondIndependentFaultAutonomousReuse": "unproven"
+  },
+  "conclusion": "E4.16 remains in_progress. P003 installed provenance does not complete this missing repair product chain.",
+  "unknowns": [
+    "No current provider-auth diagnosis performed by this reviewer.",
+    "No real new repair candidate, accepted comparison or later reuse demonstrated."
+  ],
+  "codeOrStateModified": false
+}

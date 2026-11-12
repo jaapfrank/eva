@@ -833,6 +833,8 @@ class PostgresHindsightMemoryRuntime:
                       else tuple((*recent_messages, *durable_recent)[-12:]))
             from eva.bootstrap.private_continuity import with_private_continuity
             recent = with_private_continuity(self, turn, recent)
+            from eva.bootstrap.household_continuity import with_household_continuity
+            recent = with_household_continuity(self, turn, recent)
             latest_usage = ConversationModelUsage.unmeasured()
 
             def checkpoint(current, usage):
@@ -882,6 +884,16 @@ class PostgresHindsightMemoryRuntime:
     ) -> GroundedReply | None:
         """Handle owner work commands on Eva1's existing private bridge."""
 
+        verification = getattr(self, '_voice_identity', None)
+        if verification is not None:
+            import re
+            if re.fullmatch(r'(?:/stem|stem)\s+(ja|nee)\s+([A-F0-9]{10})',turn.text.strip(),re.I):
+                journal=self._journal(turn)
+                journal.admit(turn)
+                committed=journal.committed_reply(turn)
+                if committed is not None:return committed
+                reply=verification.confirm_message(turn,telegram_user_id,chat_id)
+                return journal.commit_reply(turn,reply)
         try:
             bindings = (self._telegram_principal_bindings_loader()
                         if self._telegram_principal_bindings_loader is not None
@@ -1363,12 +1375,14 @@ def create_runtime_app() -> FastAPI:
         dashboard_authority_scope = TimelineScope(
             UUID(settings.dashboard_tenant_id), UUID(settings.dashboard_installation_id),
         )
+        from eva.bootstrap.native_work_assets import configured_native_work_assets
         delegated_work_store = PostgresDelegatedWorkStore(
             engine,
             TimelineScope(
                 UUID(settings.dashboard_tenant_id),
                 UUID(settings.dashboard_installation_id),
             ),
+            native_required_assets=configured_native_work_assets(producer=True),
         )
         if settings.delegated_work_enabled:
             if telegram_principal_bindings is not None and not telegram_principal_bindings.contains_binding(
@@ -1443,21 +1457,23 @@ def create_runtime_app() -> FastAPI:
             raise ValueError("digital work requires the configured private owner service")
         delegated_work_service.digital_profile = build_digital_profile(settings, provider_bundle)
     if settings.household_work_config_file is not None:
-        if (household_voice is None or not settings.household_voice_session_enabled
+        if (not settings.household_voice_session_enabled
                 or delegated_research_profile is None):
             raise ValueError("household work requires existing voice sessions and public research")
-        from eva.bootstrap.household_work_composition import load_household_work_authority
-        from eva.bootstrap.household_work import HouseholdWorkServer
-        from eva.adapters.postgres.scoped_delegated_work_actions import ScopedDelegatedWorkActions
-        if delegated_work_actions is None:
-            raise ValueError("household work requires the existing owner task store")
-        scope = delegated_work_store.scope
-        work_authority = load_household_work_authority(settings.household_work_config_file,
-            scope=scope, profile=delegated_research_profile,
-            model_lease_file=Path(settings.conversation_auth_file), voice_authority=household_voice,
-            digital_profile=getattr(delegated_work_service, "digital_profile", None))
-        household_work_server = HouseholdWorkServer(engine, scope, work_authority)
-        delegated_work_actions = ScopedDelegatedWorkActions(delegated_work_actions, household_work_server)
+        if household_voice is not None:
+            from eva.bootstrap.household_work_composition import load_household_work_authority
+            from eva.bootstrap.household_work import HouseholdWorkServer
+            from eva.adapters.postgres.scoped_delegated_work_actions import ScopedDelegatedWorkActions
+            if delegated_work_actions is None:
+                raise ValueError("household work requires the existing owner task store")
+            scope = delegated_work_store.scope
+            work_authority = load_household_work_authority(settings.household_work_config_file,
+                scope=scope, profile=delegated_research_profile,
+                model_lease_file=Path(settings.conversation_auth_file), voice_authority=household_voice,
+                digital_profile=getattr(delegated_work_service, "digital_profile", None))
+            if work_authority is not None:
+                household_work_server = HouseholdWorkServer(engine, scope, work_authority)
+                delegated_work_actions = ScopedDelegatedWorkActions(delegated_work_actions, household_work_server)
     human_understanding_actions = None
     if dashboard_owner_principal_id is not None:
         from eva.providers.human_understanding_actions import HumanUnderstandingActions
@@ -1466,11 +1482,19 @@ def create_runtime_app() -> FastAPI:
             submit=lambda document: runtime._cold_path.submit(document))
     learning_tools = (() if human_understanding_actions is None
                       else human_understanding_actions.conversation_tools())
+    from eva.bootstrap.public_lookup import PUBLIC_LOOKUP, build_public_lookup, public_lookup_guidance
+    public_lookup = build_public_lookup(settings, engine, delegated_work_actions)
+    public_lookup_tools = () if public_lookup is None else (PUBLIC_LOOKUP,)
     from eva.bootstrap.recent_activity import RecentActivityActions, RECENT_ACTIVITY
     from eva.bootstrap.private_activity import PrivateActivityHistory
     activity_actions = RecentActivityActions(lambda: runtime._household_conversation_context,
         private_reader=PrivateActivityHistory(lambda: runtime))
     activity_tools = (RECENT_ACTIVITY,)
+    delegated_tools = (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
+        include_research=delegated_research_profile is not None,
+        include_digital=settings.delegated_digital_enabled))
+    if public_lookup is not None:
+        delegated_tools = public_lookup_guidance(delegated_tools)
     model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,
@@ -1478,10 +1502,8 @@ def create_runtime_app() -> FastAPI:
         resource_budget=settings.runtime_resource_budget,
         conversation_tools=(
             (() if provider_bundle is None else provider_bundle.conversation_tools)
-            + learning_tools + activity_tools
-            + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
-                include_research=delegated_research_profile is not None,
-                include_digital=settings.delegated_digital_enabled))
+            + learning_tools + public_lookup_tools + activity_tools
+            + delegated_tools
         ),
     )
     stripe_publication = (
@@ -1576,8 +1598,9 @@ def create_runtime_app() -> FastAPI:
         external_tools=(
             (() if provider_bundle is None else provider_bundle.external_tools)
             + (() if human_understanding_actions is None else (human_understanding_actions,))
-            + (activity_actions,)
             + (() if delegated_work_actions is None else (delegated_work_actions,))
+            + (() if public_lookup is None else (public_lookup,))
+            + (activity_actions,)
         ),
     )
     from eva.bootstrap.contact_catalog import discoverable_contact_actions
@@ -1591,10 +1614,8 @@ def create_runtime_app() -> FastAPI:
             resource_budget=settings.runtime_resource_budget,
             conversation_tools=(
                 (() if provider_bundle is None else provider_bundle.conversation_tools)
-                + learning_tools + activity_tools
-                + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
-                    include_research=delegated_research_profile is not None,
-                    include_digital=settings.delegated_digital_enabled))
+                + learning_tools + public_lookup_tools + activity_tools
+                + delegated_tools
             ),
         ))
     from eva.bootstrap.private_continuity import search_private_history
@@ -1915,14 +1936,15 @@ def create_runtime_app() -> FastAPI:
     if delegated_work_service is not None:
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         scheduled_work = ScheduledOwnerWork(delegated_work_service)
-        from eva.bootstrap.native_initiative_work import refresh_one_unstarted_native
+        from eva.bootstrap.native_initiative_work import refresh_one_unstarted_native, resume_one_rate_limited_repair
 
         def refresh_one_native_admission():
             # Deterministic queue maintenance must run even while pending work
             # intentionally closes the optional model/idle capacity gate.
             if not settings.background_work_enabled:
                 return "idle"
-            return refresh_one_unstarted_native(delegated_work_service)
+            refreshed = refresh_one_unstarted_native(delegated_work_service)
+            return resume_one_rate_limited_repair(delegated_work_service) if refreshed == "idle" else refreshed
 
         service_tasks = (refresh_one_native_admission, scheduled_work.run_once, *service_tasks)
     if household_work_server is not None and getattr(household_work_server.authority, "digital_profile", None) is not None:
@@ -2045,6 +2067,13 @@ def create_runtime_app() -> FastAPI:
         from eva.adapters.model.pydantic_conversation import _input_tokenizer
         _input_tokenizer()
         from eva.adapters.api.household_voice_session import install_household_voice_session
+        if household_work_server is not None and proactive_delivery is not None:
+            from eva.bootstrap.voice_identity import VoiceIdentity
+            recipient = PostgresPrivateTelegramRecipient(engine, runtime._dashboard_authority_scope,
+                owner=runtime._dashboard_owner_principal_id, binding=runtime._dashboard_principal_binding_id,
+                bindings=runtime._telegram_principal_bindings_loader)
+            runtime._voice_identity = VoiceIdentity(household_work_server, runtime, proactive_delivery,
+                lambda: recipient.current_chat_id(now=datetime.now(UTC)))
         install_household_voice_session(app, runtime=runtime, authority=household_voice,
                                         work_server=household_work_server)
     return app

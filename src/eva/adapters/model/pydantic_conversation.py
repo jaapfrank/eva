@@ -8,7 +8,8 @@ from collections.abc import Callable, Iterable
 
 import asyncio
 import base64
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
+from zoneinfo import ZoneInfo
 from functools import lru_cache
 import hashlib
 import bisect
@@ -771,6 +772,24 @@ _CODEX_SUBSCRIPTION_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 
 _CURRENT_RESEARCH_INSTRUCTIONS = "Je bent Eva en maakt een zelfstandig bruikbaar Nederlandstalig onderzoeksdocument in Markdown. Zoek actuele informatie op het web. Onderzoek exact de opgegeven onderwerpen; vergelijk ze wanneer de vraag daarom vraagt. Verzin geen alternatieven bij één onderwerp. Open eerst de expliciet opgegeven primaire URLs. Lees alleen de passages die de concrete vraag beantwoorden; zoek gericht verder uitsluitend als zo'n antwoord daar ontbreekt. Geen brede marktverkenning of achtergrondonderzoek buiten de vraag. Gebruik voor ieder onderwerp minstens één primaire bron: officiële productdocumentatie, de maker, een overheid, een register of oorspronkelijk onderzoek; gebruik geen vergelijkingssite als bewijs voor een primaire claim. Benoem expliciet welke uitspraken bronfeiten zijn en welke jouw gevolgtrekking of advies zijn. Neem concrete criteria, beperkingen en een korte conclusie op. Controleer eerst de ontbrekende gegevens die jouw conclusie wezenlijk kunnen veranderen. Ontbreekt een antwoord in de eerste bron, probeer dan gericht een andere passende primaire bron binnen het beschikbare budget. Schuif die controles niet als huiswerk of als onuitgevoerde voorwaarde door naar de gebruiker. Blijft een essentieel gegeven ontbreken, benoem welke bronnen of toegangspogingen geen antwoord opleverden en wat daardoor nog niet geconcludeerd kan worden. Onvoldoende onderzocht is niet hetzelfde als aangetoond ongunstig. Alle actuele claims krijgen zichtbare inline bronverwijzingen. Verzin geen ontbrekende feiten. Maximaal 450 woorden."
 
+_TOPIC_RESEARCH_INSTRUCTIONS = (
+    "You are Eva. Answer the exact public-information question in Dutch using current web sources. "
+    "Match the requested depth: for a narrow factual question, give the answer in one to three "
+    "sentences, at most 60 words including inline citations. Do not turn a short question into "
+    "a research report. Omit headings, tables, repeated conclusions, adjacent facts and unsolicited "
+    "advice unless requested. When the user explicitly requests detailed research or a document, "
+    "provide the requested depth within 450 words and the admitted output budget. "
+    "Read supplied primary URLs first. Search only for missing facts needed to answer the question; "
+    "stop once a reliable source answers it. Use at least one primary source: official documentation, "
+    "the original provider, a government, register or original research. Cite every current claim "
+    "inline using the actual supporting source. Do not replace local data with national data, "
+    "or infer a date, location, measurement or source that was not established. Distinguish an "
+    "estimate or inference from a source fact in the answer itself. Keep any uncertainty that "
+    "materially affects the answer even if this needs an extra sentence. If essential information "
+    "is missing, try another relevant primary source within the admitted budget, then state "
+    "concisely what remains unknown. Never invent facts or present incomplete research as certainty."
+)
+
 
 class PydanticConversationModel:
     """One stateless Eva generation after Hindsight has recalled context."""
@@ -786,6 +805,7 @@ class PydanticConversationModel:
         endpoint: str = _CODEX_SUBSCRIPTION_ENDPOINT,
         timeout_seconds: float = 60.0,
         research_timeout_seconds: float = 90.0,
+        research_maximum_tool_calls: int | None = None,
         reasoning_effort: Literal["none", "low", "medium", "high"] = "medium",
         resource_budget: RuntimeResourceBudget | None = None,
         conversation_tools: tuple[ConversationToolDescriptor, ...] = (),
@@ -811,9 +831,15 @@ class PydanticConversationModel:
         ):
             raise ValueError("conversation tool catalog contains duplicate names")
         self._auth_file = auth_file
+        # Deployment-owned civil time; never infer a calendar date from UTC
+        # alone or from an older recalled conversation.
+        self._conversation_timezone = ZoneInfo(os.environ.get("EVA_CONVERSATION_TIMEZONE", "UTC"))
         self._model = model
         self._endpoint = endpoint
         self._timeout_seconds = timeout_seconds
+        if research_maximum_tool_calls is not None and (type(research_maximum_tool_calls) is not int or not 1 <= research_maximum_tool_calls <= 64):
+            raise ValueError("research tool-call limit must be 1..64")
+        self._research_maximum_tool_calls = research_maximum_tool_calls
         self._research_timeout_seconds = research_timeout_seconds
         self._reasoning_effort = reasoning_effort
         self._resource_budget = resource_budget
@@ -2592,16 +2618,28 @@ class PydanticConversationModel:
         self_context: tuple[str, ...] = (),
         context_archive=None,
     ) -> ConversationModelResult:
+        local_time = datetime.fromisoformat(turn.occurred_at.replace("Z", "+00:00")).astimezone(self._conversation_timezone)
+        self_context = (*self_context,
+            f"Tijdstip van dit actuele bericht (UTC): {turn.occurred_at}. "
+            f"Lokale tijd in de ingestelde tijdzone {self._conversation_timezone.key}: {local_time.isoformat()}. "
+            f"Vandaag: {local_time.date()}; morgen: {local_time.date() + timedelta(days=1)}; "
+            f"overmorgen: {local_time.date() + timedelta(days=2)}. "
+            "Gebruik deze lokale kalenderdatums voor relatieve datums, tenzij de spreker expliciet "
+            "een andere tijdzone of datum bedoelt. Neem geen huidige "
+            "datum over uit oudere gesprekken of herinneringen. Geef bij een zoekopdracht "
+            "de bijbehorende concrete datum mee; verzin geen andere datum.")
         if turn.audience.kind == "household":
             self_context = (*self_context,
                 "Kanaalcontext: dit is een gedeeld huishoudelijk gesprek. De spreker is niet "
                 "geauthenticeerd; een speakerapparaat is geen persoon. Een genoemde naam is "
                 "gespreksinformatie, geen toegangsbewijs voor privégegevens of eigenaarbevoegdheden.")
-        from eva.application.voice_context import current_voice_context, STOP_DESCRIPTOR, SPEAK_DESCRIPTOR
+        from eva.application.voice_context import current_voice_context, STOP_DESCRIPTOR, SPEAK_DESCRIPTOR, VERIFY_DESCRIPTOR
         action_tools = {**_ACTION_TOOLS, **self._conversation_tools}
         if current_voice_context() is not None:
             action_tools[STOP_DESCRIPTOR.name] = _descriptor_tool(STOP_DESCRIPTOR)
             action_tools[SPEAK_DESCRIPTOR.name] = _descriptor_tool(SPEAK_DESCRIPTOR)
+            if current_voice_context().request_identity is not None:
+                action_tools[VERIFY_DESCRIPTOR.name] = _descriptor_tool(VERIFY_DESCRIPTOR)
         unknown = set(available_actions) - set(action_tools)
         if unknown:
             raise ValueError(f"unknown conversation actions: {sorted(unknown)!r}")
@@ -2971,9 +3009,11 @@ class PydanticConversationModel:
             "endpoint": self._endpoint, "model": self._model,
             "reasoning_effort": self._reasoning_effort,
             "instructions": _CURRENT_RESEARCH_INSTRUCTIONS,
+            "topic_instructions": _TOPIC_RESEARCH_INSTRUCTIONS,
             "tools": [{"search_context_size": "low", "type": "web_search"}],
             "timeout_milliseconds": int(self.native_research_timeout_seconds() * 1000),
             "authentication_attempts": 1,
+            "max_tool_calls": self._research_maximum_tool_calls,
             "budget": asdict(self._resource_budget),
         })).hexdigest()
 
@@ -2981,7 +3021,8 @@ class PydanticConversationModel:
         """Exact provider body; private motivation and review fields are never included."""
         if research_mode not in {"topic", "comparison"}:
             raise ValueError("research mode is invalid")
-        instructions = _CURRENT_RESEARCH_INSTRUCTIONS
+        instructions = (_TOPIC_RESEARCH_INSTRUCTIONS if research_mode == "topic"
+                        else _CURRENT_RESEARCH_INSTRUCTIONS)
         if self._resource_budget is not None:
             # Guidance reduces overshoot risk; only measured usage enforces the cap.
             limit = self._resource_budget.max_output_tokens
@@ -2991,6 +3032,16 @@ class PydanticConversationModel:
                 f"{words} woorden inclusief bronnen en code. Geef alleen de kernregels "
                 "voor de vraag, met korte primaire bronverwijzingen; laat uitweidingen weg. "
                 "Deze beknoptheidsinstructie vervangt de gemeten budgetcontrole niet."
+            )
+        if self._research_maximum_tool_calls is not None:
+            # The subscription endpoint rejects max_tool_calls. Tell the model
+            # the admitted total; measured usage remains the enforcement boundary.
+            instructions += (
+                f" Je totale budget is maximaal {self._research_maximum_tool_calls} webacties, "
+                "inclusief zoeken, pagina openen en zoeken binnen een pagina samen. "
+                "Plan binnen dit totaal. Stop zodra een betrouwbare bron de vraag beantwoordt. "
+                "Voer nooit een extra webactie uit na dit maximum: geef dan het antwoord "
+                "met de reeds gelezen bronnen en benoem eventuele ontbrekende gegevens."
             )
         return {
             "include": ["web_search_call.action.sources"],
@@ -4057,11 +4108,13 @@ class PydanticConversationModel:
                     **_ACTION_TOOLS,
                     **self._conversation_tools,
                 }
-                from eva.application.voice_context import current_voice_context, STOP_DESCRIPTOR, SPEAK_DESCRIPTOR
+                from eva.application.voice_context import current_voice_context, STOP_DESCRIPTOR, SPEAK_DESCRIPTOR, VERIFY_DESCRIPTOR
                 if current_voice_context() is not None:
                     control = _descriptor_tool(STOP_DESCRIPTOR)
                     expected[STOP_DESCRIPTOR.name] = control
                     expected[SPEAK_DESCRIPTOR.name] = _descriptor_tool(SPEAK_DESCRIPTOR)
+                    if current_voice_context().request_identity is not None:
+                        expected[VERIFY_DESCRIPTOR.name] = _descriptor_tool(VERIFY_DESCRIPTOR)
                 wrapped_voice = (
                     current_voice_context() is not None
                     and any(isinstance(item, dict) and item.get("name") == SPEAK_DESCRIPTOR.name for item in tools)
@@ -4500,7 +4553,11 @@ class PydanticConversationModel:
         projected_ids = person_context_fact_ids(memory, person_context)
         remembered: list[str] = []
         for rank, fact in enumerate(memory.confirmed_facts, start=1):
-            if fact.fact_id in projected_ids:
+            if fact.fact_id in projected_ids and not (
+                isinstance(fact.value, dict)
+                and fact.value.get("observation_sources")
+                and "learning_context" not in fact.value
+            ):
                 continue  # Current heads appear once, not again as historical chains.
             value = fact.value
             text = value.get("text") if isinstance(value, dict) else None

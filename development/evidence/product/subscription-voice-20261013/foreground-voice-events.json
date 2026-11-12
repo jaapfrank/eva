@@ -1,0 +1,478 @@
+[
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 5,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_icegatheringstatechange",
+    "elapsed_ms": 6,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_icegatheringstatechange",
+    "elapsed_ms": 7466,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "have-local-offer"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "ice_ready",
+    "elapsed_ms": 7466
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "account_start",
+    "elapsed_ms": 7
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_microphone_clip_start",
+    "elapsed_ms": 8
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "wake_greeting_started",
+    "elapsed_ms": 12
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 18,
+    "method": "initialize"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_first_sink_signal",
+    "elapsed_ms": 18,
+    "turn": "greeting"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 116,
+    "method": "initialize",
+    "duration_ms": 98
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 117,
+    "method": "account/login/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "wake_greeting_finished",
+    "elapsed_ms": 174
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 177,
+    "method": "account/login/start",
+    "duration_ms": 61
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 177,
+    "method": "thread/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 584,
+    "method": "thread/start",
+    "duration_ms": 407
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "account_ready",
+    "elapsed_ms": 584
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 586,
+    "method": "thread/realtime/start"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 586,
+    "method": "thread/realtime/start",
+    "duration_ms": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "voice_answer_ready",
+    "elapsed_ms": 1494
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 1498,
+    "ice": "new",
+    "connection": "new",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 1499,
+    "ice": "checking",
+    "connection": "new",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 1499,
+    "ice": "checking",
+    "connection": "connecting",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 1711,
+    "ice": "completed",
+    "connection": "connecting",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 1794,
+    "ice": "completed",
+    "connection": "connected",
+    "signaling": "stable"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_datachannel_open",
+    "elapsed_ms": 1914
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_provider_session",
+    "elapsed_ms": 1914,
+    "model": null,
+    "top_model": null
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 1915,
+    "kind": "session.started",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "media_ready",
+    "elapsed_ms": 1915
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_first_microphone_signal_sent",
+    "elapsed_ms": 1936,
+    "queued_frames": 78
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_first_rtp_received",
+    "elapsed_ms": 2374
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_first_decoded_frame",
+    "elapsed_ms": 2456
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 3308,
+    "kind": "turn.created",
+    "role": "user"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_microphone_clip_end",
+    "elapsed_ms": 3877
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 5072,
+    "kind": "delegation.created",
+    "role": null
+  },
+  {
+    "event": "eva_voice_backend",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "codex_event",
+    "elapsed_ms": 5082,
+    "method": "turn/started"
+  },
+  {
+    "event": "eva_voice_backend",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "core_request",
+    "elapsed_ms": 5530,
+    "recent_count": 0
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_core_stream",
+    "elapsed_ms": 5605,
+    "kind": "request_acknowledged"
+  },
+  {
+    "event": "eva_voice_backend",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "core_request_acknowledged",
+    "elapsed_ms": 5606
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 5836,
+    "kind": "turn.done",
+    "role": "user"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 5838,
+    "kind": "turn.created",
+    "role": "assistant"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "first_output_audio",
+    "elapsed_ms": 5849
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_first_sink_signal",
+    "elapsed_ms": 5849,
+    "turn": "turn_EYfLoHAoTKppsFYh5Efoa"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 7932,
+    "kind": "turn.done",
+    "role": "assistant"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_core_stream",
+    "elapsed_ms": 15141,
+    "kind": "action_started"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_core_stream",
+    "elapsed_ms": 15440,
+    "kind": "action_finished"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_core_stream",
+    "elapsed_ms": 15710,
+    "kind": "final",
+    "model_timing": null,
+    "reply_keys": [
+      "contract",
+      "conversation_id",
+      "evidence_memory_ids",
+      "generated_at",
+      "message_id",
+      "provider",
+      "text",
+      "text_sha256"
+    ]
+  },
+  {
+    "event": "eva_voice_backend",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "core_final",
+    "elapsed_ms": 15711
+  },
+  {
+    "event": "eva_voice_backend",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "codex_event",
+    "elapsed_ms": 15722,
+    "method": "turn/completed"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 15776,
+    "kind": "delegation.context.appended",
+    "role": null
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_saved_result_claimed",
+    "elapsed_ms": 27838,
+    "duration_ms": 142,
+    "work_id": "work:household:f95e6bb8-766c-514e-b665-c8a76ac715e8"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_saved_result_authorized",
+    "elapsed_ms": 27957,
+    "duration_ms": 118
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_saved_result_part",
+    "elapsed_ms": 27959
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 28147,
+    "method": "thread/realtime/appendSpeech"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 28148,
+    "method": "thread/realtime/appendSpeech",
+    "duration_ms": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 28687,
+    "kind": "turn.created",
+    "role": "assistant"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_first_sink_signal",
+    "elapsed_ms": 28793,
+    "turn": "turn_EYfMCWiyB8KKnePVrDoVt"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "provider_event",
+    "elapsed_ms": 34526,
+    "kind": "turn.done",
+    "role": "assistant"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "closing",
+    "elapsed_ms": 35238,
+    "audio_received": 1622,
+    "audio_suppressed": 124
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_start",
+    "elapsed_ms": 35238,
+    "method": "thread/realtime/stop"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_rpc_end",
+    "elapsed_ms": 35239,
+    "method": "thread/realtime/stop",
+    "duration_ms": 1
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_signalingstatechange",
+    "elapsed_ms": 35311,
+    "ice": "completed",
+    "connection": "connected",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_iceconnectionstatechange",
+    "elapsed_ms": 35313,
+    "ice": "closed",
+    "connection": "connected",
+    "signaling": "closed"
+  },
+  {
+    "event": "eva_voice_media",
+    "session": "f39ecebd-417c-4aad-8c04-0b54a2daca3c",
+    "stage": "profile_connectionstatechange",
+    "elapsed_ms": 35313,
+    "ice": "closed",
+    "connection": "closed",
+    "signaling": "closed"
+  }
+]

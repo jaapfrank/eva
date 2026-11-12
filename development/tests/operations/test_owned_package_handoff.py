@@ -226,3 +226,121 @@ def test_distinct_review_scope_preserves_canonical_owner_and_failed_checks_canno
         assert job['state'] == 'rejected' and not published
     finally:
         controller.close()
+
+
+def test_normal_python_tar_timestamps_preserve_exact_bytes_and_forbid_pax_overrides():
+    raw = io.BytesIO()
+    with tarfile.open(fileobj=raw, mode='w:gz', format=tarfile.PAX_FORMAT) as stream:
+        item = tarfile.TarInfo('main.py'); item.size = 4; item.mtime = 1793727337.123
+        stream.addfile(item, io.BytesIO(b'pass'))
+    assert archive_files(raw.getvalue()) == {'main.py': b'pass'}
+    for override in ('path', 'linkpath', 'GNU.sparse.map', 'size'):
+        raw = io.BytesIO()
+        with tarfile.open(fileobj=raw, mode='w:gz', format=tarfile.PAX_FORMAT) as stream:
+            item = tarfile.TarInfo('main.py'); item.size = 4; item.pax_headers = {override: '0'}
+            stream.addfile(item, io.BytesIO(b'pass'))
+        with pytest.raises(ValueError): archive_files(raw.getvalue())
+
+
+def test_no_dispatch_proof_is_read_only_and_cannot_pardon_an_existing_handoff(tmp_path, monkeypatch):
+    _, metadata, package, candidate, policy = inputs(tmp_path)
+    metadata.update(state='ambiguous', active_lease=False, latest_work_id=metadata['task_id'])
+    controller = OwnedPackageHandoff({'receipt_root':str(tmp_path/'receipts'),'runtime_policy':policy},
+        runtime=SimpleNamespace(package_call=lambda action,**kw:dict(metadata)),
+        programming=SimpleNamespace(config=SimpleNamespace(workspace_root=tmp_path/'workspaces')),
+        applications=SimpleNamespace(releases={}),start=False)
+    try:
+        proof=controller.no_dispatch_proof(task_id=metadata['task_id'],scope_sha256=metadata['scope_sha256'])
+        assert proof['origin']==package['origin'] and proof['application_requested'] is False
+        assert not controller.jobs and list((tmp_path/'receipts').glob('*.json'))==[]
+        metadata['active_lease']=True
+        with pytest.raises(ValueError):controller.no_dispatch_proof(task_id=metadata['task_id'],scope_sha256=metadata['scope_sha256'])
+        metadata['active_lease']=False
+        # Admission can stop after creating the archive directory, before
+        # persisting the handoff receipt or registering the in-memory job.
+        partial = controller.root / candidate['archive_sha256']
+        partial.mkdir()
+        with pytest.raises(ValueError, match='existing application handoff'):
+            controller.no_dispatch_proof(task_id=metadata['task_id'],scope_sha256=metadata['scope_sha256'])
+        assert partial.is_dir()
+        partial.rmdir()
+        original_lstat = Path.lstat
+
+        def inaccessible(path, *args, **kwargs):
+            if path == partial:
+                raise PermissionError('inaccessible partial admission')
+            return original_lstat(path, *args, **kwargs)
+
+        with monkeypatch.context() as patch:
+            patch.setattr(Path, 'lstat', inaccessible)
+            with pytest.raises(PermissionError, match='inaccessible partial admission'):
+                controller.no_dispatch_proof(task_id=metadata['task_id'],scope_sha256=metadata['scope_sha256'])
+        controller.applications.releases[candidate['archive_sha256']]={}
+        with pytest.raises(ValueError):controller.no_dispatch_proof(task_id=metadata['task_id'],scope_sha256=metadata['scope_sha256'])
+    finally:controller.close()
+
+
+def test_invalid_candidate_is_a_correctable_no_dispatch_result(tmp_path):
+    workspace, metadata, _, candidate, policy = inputs(tmp_path)
+    (workspace/'candidate.tar.gz').write_bytes(b'changed bytes')
+    controller=OwnedPackageHandoff({'receipt_root':str(tmp_path/'receipts'),'runtime_policy':policy},
+        runtime=SimpleNamespace(package_call=lambda action,**kw:dict(metadata)),
+        programming=SimpleNamespace(config=SimpleNamespace(workspace_root=tmp_path/'workspaces'),processes_idle=lambda *a,**k:{'idle':True}),
+        applications=SimpleNamespace(),start=False)
+    try:
+        result=controller.request(candidate['archive_sha256'],'5'*64,metadata['task_id'])
+        assert result['state']=='candidate_invalid' and result['application_requested'] is False
+        assert not controller.jobs and not list((tmp_path/'receipts').glob('*.json'))
+    finally:controller.close()
+
+
+def test_explicit_linked_candidate_keeps_source_and_uses_new_task_authority(tmp_path):
+    _, source, original, candidate, policy = inputs(tmp_path)
+    linked_origin = original['origin']
+    current = {**source, 'workspace_key': '1' * 64, 'task_id': 'work:followup',
+               'execution_id': 'execution:followup', 'spec_sha256': '2' * 64,
+               'source_ingress_sha256': '3' * 64}
+    controller = OwnedPackageHandoff(
+        {'receipt_root': str(tmp_path / 'receipts'), 'runtime_policy': policy},
+        runtime=SimpleNamespace(package_call=lambda *args, **kwargs: dict(current)),
+        programming=SimpleNamespace(
+            config=SimpleNamespace(workspace_root=tmp_path / 'workspaces'),
+            processes_idle=lambda *args, **kwargs: {'idle': True}),
+        applications=SimpleNamespace(releases={}), start=False,
+    )
+    archive_id = candidate['archive_sha256']
+    try:
+        def status():
+            return controller.status('0' * 64, task_id=current['task_id'],
+                                     scope_sha256=current['scope_sha256'])
+
+        def submit(identifier):
+            return controller.request(identifier, '5' * 64, current['task_id'],
+                                      scope_sha256=current['scope_sha256'])
+
+        assert 'linked_candidate' not in status()
+        assert submit(archive_id)['state'] == 'candidate_invalid'
+        current['linked_package_origin'] = linked_origin
+        assert status()['linked_candidate'] == {
+            'name': 'fixture-package', 'version': '0.1.0',
+            'archive_sha256': archive_id, 'work_id': source['task_id'],
+        }
+        assert submit('6' * 64)['state'] == 'candidate_invalid'
+        partial = controller.root / archive_id
+        partial.mkdir()
+        with pytest.raises(ValueError, match='existing application handoff'):
+            status()
+        assert submit(archive_id)['state'] == 'candidate_invalid'
+        partial.rmdir()
+        accepted = submit(archive_id)
+        assert accepted['state'] == 'waiting_for_builder' and not accepted['installed']
+        assert submit(archive_id) == accepted
+        task = json.loads((partial / 'task.json').read_bytes())
+        assert task['origin']['task_id'] == current['task_id']
+        assert task['candidate_source'] == {
+            'origin': linked_origin, 'package_sha256': original['package_sha256'],
+        }
+        assert sha((partial / 'archive.tar.gz').read_bytes()) == archive_id
+        assert not (tmp_path / 'workspaces' / current['workspace_key']).exists()
+    finally:
+        controller.close()

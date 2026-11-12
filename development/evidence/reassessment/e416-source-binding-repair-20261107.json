@@ -2,7 +2,7 @@
   "contract": "EvaScheduledFailureRepairContinuation/v1",
   "card": "E4.16",
   "startedAt": "2026-11-07T16:30:15.155792+00:00",
-  "checkedAt": "2026-11-07T18:56:39.002054+00:00",
+  "checkedAt": "2026-11-07T19:14:31.024017+00:00",
   "status": "independent_oracle_declined_missing_original_inputs_host_handoff_being_completed",
   "sameObservedFault": {
     "stage": "document_authority",
@@ -102,7 +102,7 @@
       "costUsdMicros": null
     },
     "developerUsage": "unknown",
-    "hostState": "original_behavior_input_blocked",
+    "hostState": "blocked",
     "newOwnerMessageRequired": false,
     "developerCandidateOrCriteriaAuthored": false,
     "autonomousInstallationProven": false,
@@ -141,8 +141,8 @@
       "postgresSupplementTestsPassed": 5,
       "coreAndWorkerGenerationsUnchanged": true,
       "originalCandidateAndBlockerUnchanged": true,
-      "successorAdmitted": false,
-      "currentState": "original_behavior_input_blocked",
+      "successorAdmitted": true,
+      "currentState": "blocked",
       "installedIndependentReview": "development/reviews/e416-oracle-original-path-installed-independent-20261107.json",
       "installedIndependentReviewSha256": "5e41e19bcd1a05af26bb3327621f46c24c4809ce2945ed19b35517522d2ae17f",
       "finalChangedRouteTestsPassed": 37,
@@ -152,7 +152,28 @@
       "sourceCompatibilityCorrections": [
         "Exact existing paired v1 target retained; v2 unchanged",
         "Both fixed original source path spellings accepted without using the model path for file access"
-      ]
+      ],
+      "successorAdmittedAt": "2026-11-07T18:56:52+00:00",
+      "successorTaskId": "work:eva-initiative:051041e16ade0d9eeec1385548e3eec5e5985ec827ef5327164d91f4269fea9f",
+      "manualAdmissionInvoked": false,
+      "successorStartedAt": "2026-11-07T19:03:29+00:00",
+      "successorStatus": "failed",
+      "actualIndependentDescribeCompletedAt": "2026-11-07T19:05:22+00:00",
+      "runtimeUsage": {
+        "measurement": "partial",
+        "completedModelResponses": 14,
+        "toolCalls": 13,
+        "inputTokens": 327768,
+        "outputTokens": 2820,
+        "totalTokens": 330588,
+        "costUsdMicros": null
+      },
+      "successorCompletedAt": "2026-11-07T19:09:26+00:00",
+      "successorErrorCode": "incomplete_work",
+      "successorFailureKind": "_BlockedWorkPlan:task plan contains a recorded blocker",
+      "successorBlockedArtifactSha256": "201652e83af14c8ac680f182e047a09727ce2a034c7a4945b5ea5b4aa4952a16",
+      "oracleCreated": false,
+      "remainingBlocker": "Original baseline import closure incomplete: operational_timeline requires contracts.timestamps; canonical_json requires contracts.base. Complete proven baseline import closure required before any further assessment."
     }
   }
 }

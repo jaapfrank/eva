@@ -1,0 +1,142 @@
+{
+  "contract": "EvaVoiceTelegramIdentityEvidence/v1",
+  "checked_at": "2026-10-14T11:18:22.537888+00:00",
+  "status": "installed_automated_verification_passed_human_confirmation_not_yet_observed",
+  "changes": [
+    "The configured owner can confirm a single live speaker session in the existing private Telegram chat.",
+    "Shared speaker turns remain household scoped until confirmation. Subsequent turns reuse the canonical private owner runtime and private work-return route.",
+    "Unknown playback is unconfirmed rather than an invented interruption.",
+    "Speech instructions reduced from 213 to 65 whitespace-delimited words.",
+    "Verification acknowledgements stay on the contact model.",
+    "A retried pre-confirmation household request keeps its original audience; durable receive time cannot acquire personal authority retroactively. Same-second input conservatively remains shared."
+  ],
+  "identity_rules": {
+    "spoken_name_is_not_authority": true,
+    "same_private_telegram_sender_chat_and_current_owner_binding_required": true,
+    "challenge_minutes": 3,
+    "maximum_personal_session_minutes": 30,
+    "parent_session_must_remain_live": true,
+    "one_delivery_attempt_per_session": true,
+    "denial_expiry_or_close_do_not_grant_access": true,
+    "prior_shared_context_and_work_not_reassigned": true,
+    "raw_challenge_code_not_in_challenge_journal": true,
+    "supports_configured_owner_only": true
+  },
+  "verification": {
+    "media_tests_passed": 65,
+    "contact_and_api_tests_passed": 25,
+    "postgres_identity_tests_passed": 10,
+    "private_return_tests_passed": 16,
+    "private_return_tests_failed": 1,
+    "existing_failure": "Dashboard concurrent unacknowledged result retry test expects one result; two are returned. Same failure reproduced with the original installed private_work_return module. Voice cases pass.",
+    "installed_speaker_open_poll_renew_close": "passed",
+    "candidate_core_trusted_telegram_resolver": "available",
+    "core_worker_full_release_equal": true,
+    "initiative_mandate_profile_unchanged": true,
+    "manual_model_requests": 0,
+    "manual_telegram_messages": 0,
+    "final_identity_and_household_api_tests_passed": 14
+  },
+  "preserved_failures": [
+    "Initial empty-tool schema missed required: []. Corrected before installation.",
+    "Initial fixed-clock database fixture exposed unbounded conflict recursion. Removed recursion, added deadline-conflict test, aligned test clocks.",
+    "Initial shared fixture teardown expected a task; verification tests now own their disposable fixture.",
+    "Initial full return integration fixture mixed real and historical timestamps; aligned fixture timestamps.",
+    "Runtime probe initially treated a positional runtime as a keyword and attempted HTTP app composition in the worker; corrected probe and used official worker check."
+  ],
+  "last_actual_conversation_timing": {
+    "measure": "server events, not acoustic audio timing",
+    "turns": [
+      {
+        "core_ms": 10714,
+        "core_to_assistant_turn_ms": 1023
+      },
+      {
+        "core_ms": 10712,
+        "core_to_assistant_turn_ms": 745
+      },
+      {
+        "core_ms": 9001,
+        "core_to_assistant_turn_ms": 19319
+      },
+      {
+        "core_ms": 7494,
+        "core_to_assistant_turn_ms": 839
+      },
+      {
+        "core_ms": 6569,
+        "core_to_assistant_turn_ms": 762
+      },
+      {
+        "core_ms": 7790,
+        "core_to_assistant_turn_ms": 882
+      }
+    ]
+  },
+  "limitations": [
+    "Real owner Telegram confirmation and subsequent physical speaker conversation have not yet been observed.",
+    "Server event timing is not acoustic first-audio timing; no claim of listening to recorded audio.",
+    "The observed 19.319 second post-core assistant-turn delay has not been explained or proven fixed.",
+    "No measured latency improvement is claimed solely from shortening the prompt."
+  ],
+  "installed": {
+    "core": {
+      "image": "sha256:2acbad8d0982a3fad5740d252885cf0d6793014f882f0f856db476afb166da39",
+      "source_hashes_match": true,
+      "state": "running",
+      "health": "healthy"
+    },
+    "worker": {
+      "image": "sha256:1890de71b8696c73dc6617f73122bfc0bf136e309c9f4bff2a53bfef8db1a7ae",
+      "source_hashes_match": true,
+      "state": "running",
+      "health": "healthy"
+    },
+    "speaker": {
+      "image": "sha256:05d12cb38de5ab7dc96b8f793aaac1a96f0d362b4ceb3cd2e5eedf19bfcd9d82",
+      "source_hashes_match": true,
+      "state": "running",
+      "health": null
+    },
+    "browser": {
+      "image": "sha256:bc53784975d7155bbb84417363c2135d62ad314f6198bba49da5c00604c28aea",
+      "source_hashes_match": true,
+      "state": "running",
+      "health": null
+    }
+  },
+  "source_hashes": {
+    "core": {
+      "application/conversation.py": "b34ce2615f5a88ec4b3f3b8221b08004a4b04c4a93bae8d117e3a0d56d09b5fe",
+      "application/voice_context.py": "30b97a7e7118c1721538d11565e2bc20f4529fec87466788e9c13c9597e3d0a8",
+      "adapters/api/voice_turns.py": "2ec29c4b438ec149cd07d83339c881d7af569b23eeac655bb308bbf93602bc7f",
+      "adapters/api/household_work.py": "b0eac8497e046b6691e99c4d437872be4682becea88c367d4edfdd917eb1374e",
+      "adapters/api/household_voice_session.py": "44f238442f46c26e2863bdfc3457eb8af09dc7f67fae2b8311bf8dba51c057ca",
+      "adapters/model/pydantic_conversation.py": "41bb54d46d8bbdbd92c76020d7d08df219139c86047fbcd8997746ea572f466e",
+      "adapters/postgres/private_work_return.py": "f97948e4caf09aa0cca3e0ae617efded58966d568c8c1cf2957b6ae8c1137428",
+      "bootstrap/runtime.py": "620e8dd1931ec207748987a614e034d5541d9637429a0652d4a88532d1c1f641",
+      "bootstrap/voice_identity.py": "55b56c549421998b1cc50e9b59e98ec897d7e8d5686aebf1f30bd8c8bd497761"
+    },
+    "worker": {
+      "application/conversation.py": "b34ce2615f5a88ec4b3f3b8221b08004a4b04c4a93bae8d117e3a0d56d09b5fe",
+      "application/voice_context.py": "30b97a7e7118c1721538d11565e2bc20f4529fec87466788e9c13c9597e3d0a8",
+      "adapters/api/voice_turns.py": "2ec29c4b438ec149cd07d83339c881d7af569b23eeac655bb308bbf93602bc7f",
+      "adapters/api/household_work.py": "b0eac8497e046b6691e99c4d437872be4682becea88c367d4edfdd917eb1374e",
+      "adapters/api/household_voice_session.py": "44f238442f46c26e2863bdfc3457eb8af09dc7f67fae2b8311bf8dba51c057ca",
+      "adapters/model/pydantic_conversation.py": "41bb54d46d8bbdbd92c76020d7d08df219139c86047fbcd8997746ea572f466e",
+      "adapters/postgres/private_work_return.py": "f97948e4caf09aa0cca3e0ae617efded58966d568c8c1cf2957b6ae8c1137428",
+      "bootstrap/runtime.py": "620e8dd1931ec207748987a614e034d5541d9637429a0652d4a88532d1c1f641",
+      "bootstrap/voice_identity.py": "55b56c549421998b1cc50e9b59e98ec897d7e8d5686aebf1f30bd8c8bd497761"
+    },
+    "speaker": {
+      "voice_service/agent.py": "fac8b2733efc60bd801fc89a506e9d0ed3df7431d4846a7c4bd348a5f2638fb0",
+      "voice_service/codex_backend.py": "17bfa1e8467a6347c4dc76183d3f41d4110e02c0af945016eb01ad1f58ad7b5b",
+      "voice_service/codex_session.py": "dbcc8931a565870135d8d87f4357ae6a7a4612c6d33fdbd37829a80a42de859f"
+    },
+    "browser": {
+      "voice_service/agent.py": "fac8b2733efc60bd801fc89a506e9d0ed3df7431d4846a7c4bd348a5f2638fb0",
+      "voice_service/codex_backend.py": "17bfa1e8467a6347c4dc76183d3f41d4110e02c0af945016eb01ad1f58ad7b5b",
+      "voice_service/codex_session.py": "dbcc8931a565870135d8d87f4357ae6a7a4612c6d33fdbd37829a80a42de859f"
+    }
+  }
+}

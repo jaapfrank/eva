@@ -1,0 +1,235 @@
+{
+  "recorded_at": "2026-10-13T20:32:51.888321+00:00",
+  "status": "component_audit_completed_latency_not_fixed",
+  "production_changed": false,
+  "physical_audio_verified": false,
+  "models": {
+    "eva_voice_requested": "gpt-live-1-codex",
+    "voice_runtime_returns_model_identity": false,
+    "eva_contact_installed": {
+      "model": "gpt-6-sol",
+      "reasoning": "none"
+    },
+    "eva_research_installed": {
+      "model": "gpt-6-astra",
+      "reasoning": "medium"
+    },
+    "codex_bridge_thread_model_label": "gpt-6.1-sol; local EVA provider, not an extra upstream model request",
+    "installed_codex_default": {
+      "package": "OpenAI.Codex_26.1007.2314.0_x64__2p2nqsd0c76g0",
+      "asset": "webview/assets/app-initial-b8e1c8014bb4.js",
+      "sha256": "799331dde54905c4df5e360f23a9621141759e2c0acb230aeab909f9904b646f",
+      "new_voice_default": "gpt-live-1-codex",
+      "older_route_default": "gpt-realtime-1.5",
+      "caveat": "Defaults can be overridden; no model-weight or account-active-route equivalence proven."
+    },
+    "installed_classic": {
+      "package": "OpenAI.ChatGPT-Desktop",
+      "version": "1.2026.190.0",
+      "bundled_voice_model_identified": false
+    },
+    "official_sources": [
+      {
+        "url": "https://learn.chatgpt.com/docs/features/voice",
+        "finding": "Current desktop ChatGPT Voice is powered by GPT-Live; task-selected backend carries out requests."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/models/gpt-live-1",
+        "finding": "Full-duplex listening/speaking, with reasoning/tools delegated to a backend."
+      },
+      {
+        "url": "https://developers.openai.com/api/docs/guides/voice-agents",
+        "finding": "GPT-Live supports an existing backend; this differs from a single Realtime reasoning/voice model."
+      }
+    ],
+    "conclusion": "Same configured default identifier as the new installed Codex voice route and same documented GPT-Live family. Exact parity with the separate installed Classic app or backend weights remains unverified."
+  },
+  "historical_trial": {
+    "session": "4c8b8503-cc94-4811-8d0c-b70e0bc4d2ec",
+    "reply_turn_event_seconds": 47.293,
+    "phases_seconds": {
+      "connection": 12.957,
+      "question_and_handoff": 3.572,
+      "eva_foreground": 12.667,
+      "remaining_research_and_return": 18.097
+    },
+    "foreground_detail_seconds": {
+      "memory": 2.383,
+      "provider_request_recorded_timing": 8.309,
+      "remainder_not_separately_instrumented": 1.975
+    },
+    "timing_correction": "REPLY_COMMITTED.data.model_timing.completed_ms is 8309. The earlier roughly 6-second model journal admission/completion interval is not the whole request latency.",
+    "research_seconds_whole_timestamp_resolution": 17,
+    "web_actions": 2,
+    "unresolved_connection_gap_seconds": 11.431,
+    "connection_gap_boundary": "Remote SDP answer received to provider session.started; historical ICE/DTLS/data-channel times absent, so exact cause cannot be reconstructed."
+  },
+  "new_full_trial": {
+    "session": "76ea8995-08f6-48b1-aff6-a8f5d32c4a54",
+    "work_id": "work:household:ddbf3841-f1d1-5707-a448-433a6a8ce63c",
+    "work_state": "succeeded",
+    "connection_seconds": 2.463,
+    "core_request_seconds": 6.155,
+    "core_final_seconds": 14.8,
+    "foreground_duration_seconds": 8.645,
+    "foreground_detail_seconds": {
+      "memory": 2.751,
+      "provider_request_recorded_timing": 4.186,
+      "remainder_not_separately_instrumented": 1.708
+    },
+    "research": {
+      "call_started_utc": "2026-10-13T20:25:33Z",
+      "completed_utc": "2026-10-13T20:25:56Z",
+      "seconds_approx": 23,
+      "web_actions": 3,
+      "input_tokens": 10415,
+      "output_tokens": 439
+    },
+    "saved_result_claimed_seconds": 39.228,
+    "saved_result_authorized_seconds": 39.429,
+    "saved_result_published_seconds": 39.431,
+    "append_speech_seconds": 39.738,
+    "forecast_turn_created_seconds": 40.512,
+    "first_forecast_signal_at_sink_seconds": 40.811,
+    "output_measurement": "First >80 PCM amplitude frame handed into SpeakerAudioOutput for the forecast turn, not a physical acoustic measurement.",
+    "signal_after_speech_offer_seconds": 1.073,
+    "signal_after_result_publication_seconds": 1.38,
+    "ready_and_first_question": {
+      "source_clip_started_seconds": 0.006,
+      "source_clip_ended_seconds": 4.06,
+      "first_mic_signal_sent_seconds": 2.498,
+      "queued_frames_at_first_signal": 97,
+      "frame_ms": 20,
+      "delegation_created_seconds": 5.689,
+      "local_handoff_seconds": 0.466
+    },
+    "audio_transport": {
+      "first_rtp_seconds": 2.95,
+      "first_decoded_frame_seconds": 3.03,
+      "sampled_rtt_seconds": 0.04065,
+      "sampled_lost_packets": 0
+    },
+    "caveat": "Unchanged production logic with observation hooks. Different timing is variability, not demonstrated optimization."
+  },
+  "connection_audit": {
+    "successful_readiness_seconds": [
+      2.463,
+      2.07,
+      1.988
+    ],
+    "full_trial_detail_seconds": {
+      "initialize": 0.111,
+      "account_login": 0.067,
+      "thread_start": 0.481,
+      "account_ready_elapsed": 0.681,
+      "sdp_answer_elapsed": 2.03,
+      "ice_complete_elapsed": 2.246,
+      "transport_connected_elapsed": 2.335,
+      "datachannel_open_elapsed": 2.458
+    },
+    "standby_candidate_preparation": {
+      "seconds": 7.437,
+      "local_addresses": 58,
+      "host_candidates_in_sdp": 116,
+      "server_reflexive_candidates_in_sdp": 38,
+      "stun_server": "stun.l.google.com:19302",
+      "finding": "Two ICE transports enumerate host interfaces. Successful STUN candidates arrive around 2.49-2.56 s; remaining requests wait until the approximately 5-second gather timeout. Preparation is normally before wake, outside the old 12.957-second interval."
+    },
+    "browser_settings_experiment": {
+      "settings": {
+        "iceServers": [],
+        "bundlePolicy": "max-bundle"
+      },
+      "preparation_seconds": 1.279,
+      "outcome": "failed; remained ICE checking and timed out waiting for session.started after 15 s",
+      "installed": false,
+      "caveat": "Two settings changed together; this does not isolate which setting or combination caused failure."
+    },
+    "desktop_comparison": "Installed browser code constructs RTCPeerConnection without explicit STUN; shared voice code uses max-bundle and prewarming. Python aiortc defaults include Google STUN. Browser and Python defaults are not equivalent."
+  },
+  "isolated_research_profile": {
+    "model_confirmed_in_provider_response": "gpt-6-astra",
+    "reasoning_effort": "medium",
+    "request_to_headers_seconds": 0.64,
+    "first_search_item_seconds": 2.177,
+    "first_search_complete_seconds": 4.447,
+    "second_web_action": "open_page",
+    "second_web_action_complete_seconds": 7.416,
+    "first_text_delta_seconds": 7.56,
+    "text_done_seconds": 16.263,
+    "response_completed_seconds": 16.278,
+    "total_method_seconds": 16.67,
+    "generation_after_first_text_seconds": 8.718,
+    "output_tokens": 432,
+    "reasoning_tokens": 77,
+    "input_tokens": 10223,
+    "cached_input_tokens": 4864,
+    "transport_behavior": "open_research_response buffers all SSE bytes before parsing/validating and releasing the durable result. First text is not forwarded to voice.",
+    "prompt_behavior": "Existing generic research instructions ask for a standalone Dutch Markdown research document, primary sources, facts/inference distinctions, limitations and conclusion. They also ask to stop once a reliable answer is found. This is heavier than a concise spoken factual answer.",
+    "limit": "Cannot separate provider model computation, remote scheduling and individual web-service time beyond observed SSE event boundaries."
+  },
+  "component_review": [
+    {
+      "component": "Home Assistant wake and device admission",
+      "finding": "The production wrapper opens the household return session and begins device capture before media.start. The synthetic fixture preopens that session. These physical wake/admission intervals were not included or acoustically measured."
+    },
+    {
+      "component": "Local greeting",
+      "finding": "Cached PCM, starts without a model call; actual speaker duration not inferred from simulated FINISHED acknowledgement."
+    },
+    {
+      "component": "Microphone",
+      "finding": "16 kHz input is resampled to 48 kHz / 20 ms frames. Speech during startup is retained then sent at real-time pace; only quiet backlog is skipped. No separate STT model call."
+    },
+    {
+      "component": "Voice interpretation",
+      "finding": "GPT-Live sends delegation while the question is finishing, with a short acknowledgement. No fixed 12-second sleep in the media path."
+    },
+    {
+      "component": "EVA handoff",
+      "finding": "Local Responses provider to existing household core. About 0.466 s in the new probe; not a hidden extra remote Sol request. Bridge waits for final core reply and ignores provisional deltas."
+    },
+    {
+      "component": "Memory",
+      "finding": "Initial scoped Hindsight retrieval blocks before the contact model. Active work context is read in parallel. The private-person 30-second fast cache does not apply to household audience; measured 2.383/2.751 s. No foreground reflection loop found."
+    },
+    {
+      "component": "Contact model",
+      "finding": "Installed gpt-6-sol / none decides and admits research. One recorded model attempt, not repeated model retries. 8.309 s historical / 4.186 s new recorded model latency."
+    },
+    {
+      "component": "Research admission and worker",
+      "finding": "Durable background admission; worker poll default 0.25 s. created_at is turn time, not insertion time. No evidence of the previously alleged 12-second worker queue."
+    },
+    {
+      "component": "Research",
+      "finding": "Astra medium, 2-3 web actions, followed by document generation and full-result validation. 17/23 s full trials; isolated detailed trial 16.67 s."
+    },
+    {
+      "component": "Result delivery",
+      "finding": "Polling every 2 seconds plus HTTP and scoped authorization. New poll took 0.521 s and first authorization 0.199 s. Foreground completion is prioritized, but foreground had finished long before this result."
+    },
+    {
+      "component": "Speech generation and output",
+      "finding": "Same live voice session receives appendSpeech; it reformulates the saved text. New signal reached speaker sink 1.073 s after offer, including 0.299 s after provider turn event. 48 kHz decoded audio resampled to 24 kHz; native wire uses 20 ms chunks and a four-chunk acknowledgement window. No fresh TTS model or voice session on result return."
+    },
+    {
+      "component": "Physical acoustics",
+      "finding": "Echo cancellation, actual hardware buffering, audible completeness and interruption quality cannot be validated by simulated speaker receipts."
+    }
+  ],
+  "priorities": [
+    "Keep content-free ICE/transport/data-channel timestamps for a recurrence of the 11.431-second startup gap; do not label the outlier fixed.",
+    "Reduce unnecessary network interface candidate work while retaining working NAT traversal; browser-settings experiment failed and must not be deployed.",
+    "Give short public factual requests a concise, source-grounded output through the existing EVA authority and work model, instead of always producing a research document.",
+    "Review whether short research can return on its original delegation without an extra background handoff/poll, while preserving durable task ownership and cancellation.",
+    "Optimize scoped memory and repeated authorization/storage overhead using measurements; do not bypass memory or publish unvalidated partial research."
+  ],
+  "validation": {
+    "one_full_voice_probe": "passed",
+    "two_unchanged_connection_probes": "passed",
+    "isolated_research_profile": "passed",
+    "browser_settings_candidate": "failed, not installed",
+    "production_restart": false
+  }
+}

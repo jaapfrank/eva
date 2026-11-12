@@ -54,17 +54,6 @@ _TERMINAL_EVENTS = {
 class PostgresExternalConversationTools:
     """Persist admission, execution and proof without knowing the provider."""
 
-    def conversation_instructions(self, turn, available_names):
-        names = tuple(name for name in available_names if name in self.action_names)
-        guidance = getattr(self._planner, "conversation_instructions", None)
-        if not names or not callable(guidance) or not self.available_for(turn):
-            return ()
-        values = guidance(turn, names)
-        if (not isinstance(values, tuple) or any(not isinstance(v, str)
-                or not v.strip() or len(v.encode("utf-8")) > 4096 for v in values)):
-            raise ConversationConflict("external tool instructions are malformed")
-        return values
-
     supports_indexed_steps = True
 
     def __init__(
@@ -178,6 +167,16 @@ class PostgresExternalConversationTools:
         with self._execution_lock(self._thread_id(turn, call.name)):
             return self._execute(turn, call, step_index=0, preparation=preparation)
 
+    def conversation_instructions(self, turn, available_names):
+        names = tuple(name for name in available_names if name in self.action_names)
+        guidance = getattr(self._planner, "conversation_instructions", None)
+        if not names or not callable(guidance) or not self.available_for(turn):
+            return ()
+        values = guidance(turn, names)
+        if (not isinstance(values, tuple) or any(not isinstance(v, str)
+                or not v.strip() or len(v.encode("utf-8")) > 4096 for v in values)):
+            raise ConversationConflict("external tool instructions are malformed")
+        return values
 
     def available_for(self, turn: ConversationTurn) -> bool:
         """Filter model offerings; execution still rechecks authorization."""

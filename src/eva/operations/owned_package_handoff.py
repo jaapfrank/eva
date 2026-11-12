@@ -12,6 +12,7 @@ import hmac
 import secrets
 from pathlib import Path
 import threading
+import tarfile
 import time
 from collections import OrderedDict
 
@@ -302,6 +303,20 @@ class OwnedPackageHandoff:
                 self.effect_reply_bytes += len(raw)
         return result
 
+    def _linked_candidate(self, metadata):
+        origin = metadata.get("linked_package_origin")
+        if not origin or metadata.get("can_publish_package") is not True or metadata.get("review_origin"):
+            return None
+        root = self.programming.config.workspace_root
+        try:
+            candidate = json_object(read_workspace_file(
+                root, origin["workspace_key"], "package/candidate.json", maximum=65536))
+            package, raw, _ = snapshot_candidate(root, origin, candidate["archive_sha256"])
+        except (FileNotFoundError, ValueError, tarfile.TarError):
+            return None
+        self._require_no_handoff(package)
+        return package, raw
+
     def request(self, review_id, request_id, task_id, *, scope_sha256=None):
         key(review_id); key(request_id)
         metadata = self._call("metadata", task_id=task_id, **({'scope_sha256': scope_sha256} if scope_sha256 else {}))
@@ -324,7 +339,27 @@ class OwnedPackageHandoff:
                 raise ValueError("package submission requires its active originating task")
             if self.programming.processes_idle(metadata["session_key"], workspace_key=metadata["workspace_key"]).get("idle") is not True:
                 raise ValueError("package builder still has running processes")
-            package, raw, _ = snapshot_candidate(self.programming.config.workspace_root, metadata, review_id)
+            source_package = None
+            try:
+                try:
+                    package, raw, _ = snapshot_candidate(self.programming.config.workspace_root, metadata, review_id)
+                except FileNotFoundError:
+                    linked = self._linked_candidate(metadata)
+                    if linked is None or linked[0]["archive_sha256"] != review_id:
+                        raise
+                    source_package, raw = linked
+                    package = {**source_package, "origin": {
+                        name: metadata[name] for name in source_package["origin"]}}
+                    del package["package_sha256"]
+                    package["package_sha256"] = canonical_sha256(package)
+            except (ValueError, FileNotFoundError, tarfile.TarError):
+                # Validation precedes every durable handoff and every external
+                # effect. Give the builder correctable input feedback, not an
+                # ambiguous transport failure. Authority errors above stay fatal.
+                return {'contract':'EvaOwnedPackageHandoff/v1','review_id':review_id,
+                    'task_id':task_id,'state':'candidate_invalid','installed':False,
+                    'reason':'candidate_files_do_not_match_the_host_contract',
+                    'application_requested':False,'semantic_success_verified':False}
             current = self._call("metadata", task_id=task_id, scope_sha256=metadata['scope_sha256'])
             if current != metadata:
                 raise ValueError("package task changed during snapshot")
@@ -332,7 +367,11 @@ class OwnedPackageHandoff:
             directory.mkdir(mode=0o700)
             self._put_raw(directory / "archive.tar.gz", raw)
             _save(directory / "package.json", package, initial=True)
-            _save(directory / "task.json", {"task": metadata["task_text"], "origin": package["origin"]}, initial=True)
+            task_input = {"task": metadata["task_text"], "origin": package["origin"]}
+            if source_package is not None:
+                task_input["candidate_source"] = {
+                    "origin": source_package["origin"], "package_sha256": source_package["package_sha256"]}
+            _save(directory / "task.json", task_input, initial=True)
             job = {"contract": "EvaOwnedPackageHandoff/v1", "review_id": review_id,
                 "package_sha256": package["package_sha256"], "request_id": request_id,
                 "task_id": task_id, "origin": package["origin"], "state": "waiting_for_builder"}
@@ -352,12 +391,49 @@ class OwnedPackageHandoff:
         finally:
             os.close(descriptor)
 
+    def no_dispatch_proof(self, *, task_id, scope_sha256):
+        """Host-only observation; no review, installation or application call."""
+        metadata = self._call('metadata', task_id=task_id, scope_sha256=scope_sha256)
+        if (metadata.get('scope_sha256') != scope_sha256 or metadata.get('review_origin') is not None
+                or metadata.get('can_publish_package') is not True or metadata.get('active_lease') is not False
+                or metadata.get('state') != 'ambiguous' or metadata.get('latest_work_id') != task_id):
+            raise ValueError('closed original package builder required')
+        candidate = json_object(read_workspace_file(self.programming.config.workspace_root,
+            metadata['workspace_key'], 'package/candidate.json', maximum=65536))
+        package, _, _ = snapshot_candidate(self.programming.config.workspace_root, metadata, candidate['archive_sha256'])
+        with self.condition:
+            self._require_no_handoff(package)
+            return {'contract': 'EvaOwnedPackageNoDispatch/v1', 'origin': package['origin'],
+                'archive_sha256': package['archive_sha256'], 'package_sha256': package['package_sha256'],
+                'handoff_exists': False, 'application_requested': False, 'installed': False}
+
+    def _require_no_handoff(self, package):
+        archive_id = package['archive_sha256']
+        if (self.contains(archive_id) or self.contains(package['package_sha256'])
+                or archive_id in self.applications.releases):
+            raise ValueError('an existing application handoff cannot be pardoned')
+        # A partial admission can exist on disk before the job is registered.
+        for path in (self.root / archive_id, self.root / (archive_id + '.json')):
+            try:
+                path.lstat()
+            except FileNotFoundError:
+                continue
+            raise ValueError('an existing application handoff cannot be pardoned')
+
     def status(self, review_id, *, task_id, scope_sha256=None):
         metadata = self._call("metadata", task_id=task_id, **({'scope_sha256': scope_sha256} if scope_sha256 else {}))
         if scope_sha256 is not None and metadata['scope_sha256'] != scope_sha256:
             raise ValueError('package status source scope differs')
         if review_id == '0' * 64:
-            return {"state": "package_contract", "installed": False,
+            with self.condition:
+                linked = self._linked_candidate(metadata)
+            linked_details = {}
+            if linked is not None:
+                package, _ = linked
+                linked_details = {"linked_candidate": {
+                    "name": package["descriptor"]["name"], "version": package["descriptor"]["version"],
+                    "archive_sha256": package["archive_sha256"], "work_id": package["origin"]["task_id"]}}
+            return {**linked_details, "state": "package_contract", "installed": False,
                 "contract": "EvaOwnedPackageCandidate/v1", "submission_file": "/workspace/package/candidate.json",
                 "fields": {"contract": "EvaOwnedPackageCandidate/v1", "archive": "relative path of your gzip tar archive in /workspace",
                     "archive_sha256": "exact SHA-256 of that archive", "descriptor": {
@@ -372,9 +448,15 @@ class OwnedPackageHandoff:
                                       "bearer_env": "host-generated secret name also declared in permissions.secret_names"},
                             "activation": "OPTIONAL object: start_path (POST {} -> authorization_url), callback_path (GET -> authorized boolean), redirect_env (declared configuration name). Accept the exact host-provided redirect URL, including its path. OAuth state must be single-use and at least 32 characters."}},
                 "limits": {"compressed_bytes": 8388608, "expanded_bytes": 33554432, "files": 256},
-                "handoff": "apply_reviewed_component_improvement(review_id=archive_sha256), then finish this programming stage. The host independently reviews and applies; no self-approved success.",
+                "handoff": "For a linked_candidate, use its exact archive_sha256 without copying files. Otherwise prepare the local candidate. Call apply_reviewed_component_improvement(review_id=archive_sha256), then finish this programming stage. The host independently reviews and applies; no self-approved success.",
                 "runtime": "Host-pinned Python image; no package Dockerfile or pip install. Read-only /package, optional private /data. Exact host configuration and required independent rights review precede network or secret access.",
                 "configuration": "Configuration schema describes only non-secret string environment values. Actual secrets come from separate private host bindings. Missing access remains an explicit prerequisite, never a fabricated link or successful connection."}
+        if not self.contains(review_id):
+            key(review_id)
+            return {'contract': 'EvaOwnedPackageHandoff/v1', 'review_id': review_id,
+                'task_id': task_id, 'state': 'not_submitted', 'installed': False,
+                'semantic_success_verified': False,
+                'next_action': 'No package handoff exists for this identifier. If your candidate is ready, submit its exact archive_sha256 with apply_reviewed_component_improvement.'}
         job = self._job(review_id)
         if metadata.get("review_package_sha256") == job["package_sha256"]:
             if metadata.get("review_origin") != job["origin"]:

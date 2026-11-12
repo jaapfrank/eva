@@ -82,6 +82,13 @@ class ComponentEvaluationClient:
             raise ValueError("independent handoff binding differs")
         return result
 
+    def owned_package_no_dispatch(self, *, task_id, scope_sha256):
+        if scope_sha256 not in self.owned_package_scopes:
+            raise ValueError('package reconciliation is outside this owner scope')
+        return self._post('/reviewed-component', {'action': 'reconcile_no_dispatch',
+            'review_id': '0' * 64, 'request_id': '0' * 64, 'task_id': task_id,
+            'scope_sha256': scope_sha256}, limit=16384)
+
     def application(self, action, *, review_id, request_id, task_id, scope_sha256=None):
         if (self.owned_package_scopes
                 and scope_sha256 in self.owned_package_scopes

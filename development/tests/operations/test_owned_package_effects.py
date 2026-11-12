@@ -121,3 +121,29 @@ def test_changed_host_fact_notifies_once_and_lost_admission_uses_same_identity(t
         assert calls[0]['origin'] == job['origin']
         assert 'task_text' not in calls[0]
     finally: controller.close()
+
+
+def test_only_exact_owner_verified_installed_endpoint_enters_managed_network_scope(monkeypatch):
+    from eva.providers.mcp_owner_authority import McpOwnerAuthority
+    from eva.application.conversation import ConversationConflict
+    authority=object.__new__(McpOwnerAuthority)
+    authority._managed_endpoints={}
+    authority._read_managed_endpoints=lambda:{}
+    authority._mandate={'local_networks':[],'public_https':False}
+    calls=[]
+    authority.authorize_turn=lambda turn:calls.append('owner')
+    authority.authorize_current=lambda **kwargs:calls.append('current')
+    endpoint='http://172.28.0.1:44719/owned-package/'+'a'*64+'/mcp'
+    verified=[]
+    def host_proof(turn,url):
+        verified.append(url)
+        return {'auth_type':'bearer','auth_token':'fixture-only-private-token'} if url==endpoint else None
+    monkeypatch.setattr('eva.adapters.connectors.component_evaluation.owned_package_transport_auth',host_proof)
+    authority.authorize_endpoint(object(),endpoint)
+    assert calls==['owner','current'] and verified==[endpoint]
+    with pytest.raises(ConversationConflict):authority.authorize_endpoint(object(),'http://172.28.0.1:44719/other')
+    def denied(turn,url):raise ValueError('host rejected current owner or uninstalled package')
+    monkeypatch.setattr('eva.adapters.connectors.component_evaluation.owned_package_transport_auth',denied)
+    with pytest.raises(ValueError):authority.authorize_endpoint(object(),endpoint)
+    authority.authorize_turn=lambda turn:(_ for _ in ()).throw(ConversationConflict('owner revoked'))
+    with pytest.raises(ConversationConflict):authority.authorize_endpoint(object(),endpoint)
