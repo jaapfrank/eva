@@ -19,7 +19,7 @@ EVA2_ROOT = Path(__file__).resolve().parents[3]
 ARTIFACT_PATH = (
     EVA2_ROOT / "development/design/vertical/noor-4d-connector-provider-fixtures-v1.json"
 )
-ARTIFACT_SHA256 = "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6"
+ARTIFACT_SHA256 = "c49b5e527963cb593445e9f486b4cbf7f77dc92f0996b5a86a254ffc01404143"
 
 
 def _canonical_bytes(value: object) -> bytes:
@@ -94,7 +94,7 @@ def _worker_command(
     command = [
         sys.executable,
         "-I",
-        str(EVA2_ROOT / f"connectors/{worker_key}/worker.py"),
+        str(EVA2_ROOT / f"src/connectors/{worker_key}/worker.py"),
         "--artifact",
         str(ARTIFACT_PATH),
         "--artifact-sha256",

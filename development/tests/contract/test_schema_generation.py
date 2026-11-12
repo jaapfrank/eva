@@ -89,6 +89,7 @@ def test_registry_matches_the_sealed_catalogue_plus_acceptance_bundle() -> None:
         "PlatformLock/v1",
         "PlatformLock/v2",
         "PlatformLock/v3",
+        "PlatformLock/v4",
         "PolicyPack/v1",
         "PresenceContext/v1",
         "PresenceReply/v1",

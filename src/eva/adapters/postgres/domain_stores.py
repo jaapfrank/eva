@@ -337,18 +337,14 @@ class SensoryDomainStore:
             for event_id, event_type in rows:
                 by_type[event_type] = by_type.get(event_type, 0) + 1
                 event_ids.append(event_id)
-            compacted = 0
-            if not dry_run and event_ids:
-                result = connection.execute(
-                    sa.delete(operational_events).where(
-                        e.tenant_id == self.scope.tenant_id,
-                        e.installation_id == self.scope.installation_id,
-                        e.event_id.in_(event_ids),
-                        e.event_type.in_(tuple(COMPACTABLE_NOISE_EVENT_TYPES)),
-                        e.sequence > 1,
-                    )
-                )
-                compacted = int(result.rowcount or 0)
+            compacted = len(event_ids) if not dry_run else 0
+
+        if not dry_run:
+            with self.engine.connect().execution_options(
+                isolation_level="AUTOCOMMIT"
+            ) as connection:
+                connection.execute(sa.text("ANALYZE eva_core.operational_events"))
+                connection.execute(sa.text("ANALYZE eva_core.operational_checkpoints"))
 
         return EventCompactionReport(
             tenant_id=self.scope.tenant_id,
