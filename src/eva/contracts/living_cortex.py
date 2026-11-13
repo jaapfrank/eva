@@ -212,23 +212,131 @@ class ResponsibilityActionRequest(BaseModel):
     note_nl: str = "Bewust bevestigd door gezinslid."
 
 
+class WorldModelTrajectory(BaseModel):
+    """JEPA-inspired counterfactual rollout trajectory for one candidate action."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    action_id: str
+    label_nl: str
+    counterfactual_utility: float
+    selected: bool = False
+
+
+class WorldModelState(BaseModel):
+    """Latent 6D causal World Model state z_t and 2-step predicted state z_{t+2}."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    selected_action_id: str = "observe_silently"
+    trajectories: tuple[WorldModelTrajectory, ...] = ()
+    predicted_next_state: dict[str, float] = Field(default_factory=dict)
+
+
+class SynapticMemorySnapshot(BaseModel):
+    """Titans / Liquid O(1) 8x8 test-time associative fast-weights memory summary."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    matrix_dim: Literal[8] = 8
+    updates_count: int = Field(default=0, ge=0)
+    last_surprise_score: float = Field(default=0.0, ge=0.0, le=1.0)
+    frobenius_norm: float = Field(default=0.3536, ge=0.0)
+    predicted_concept_readout: tuple[float, ...] = (0.0,) * 8
+    status_nl: str = "Actief O(1) synaptisch werkgeheugen (8x8 fast-weights)"
+
+
+class ConceptSpaceSnapshot(BaseModel):
+    """Language-agnostic 8D semantic Concept Space + Neuro-Symbolic Guard readout."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    last_utterance_preview: str = ""
+    dominant_concept: str = "social_greeting"
+    dimensions: dict[str, float] = Field(default_factory=dict)
+    is_non_task_social: bool = True
+    requires_memory_lookup: bool = False
+    requires_verified_receipt: bool = False
+
+
+class JarvisStagedAction(BaseModel):
+    """Proactively prepared Jarvis-style action awaiting 1-click or chat confirmation."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    action_id: str
+    title_nl: str
+    prepared_summary_nl: str
+    why_now_nl: str
+    confidence: float = Field(default=0.88, ge=0.0, le=1.0)
+    status: Literal["staged", "confirmed", "dismissed"] = "staged"
+    updated_at: str = ""
+
+
+class SleepConsolidationSummary(BaseModel):
+    """Nightly episodic-to-semantic sleep/dream consolidation telemetry."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    cycles_completed: int = Field(default=1, ge=0)
+    last_consolidated_at: str = ""
+    pruned_noise_synapses: int = Field(default=0, ge=0)
+    reinforced_routines_count: int = Field(default=2, ge=0)
+    dream_insight_nl: str = (
+        "Episodische patronen geordend; ruis uit synaptische gewichten gefilterd en weekritme aangescherpt."
+    )
+
+
+class CloudProviderConfigureRequest(BaseModel):
+    """Pydantic v2 validated request to configure, check, or select a real Cloud/Optional-Local LLM in Cortex."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    action: Literal["configure_and_activate", "select", "check", "disable", "use_default_codex"] = (
+        "configure_and_activate"
+    )
+    kind: Literal["gemini", "anthropic", "openai_compatible"] = "gemini"
+    label: str = "Google Gemini Cloud"
+    model: str = "gemini-2.5-pro"
+    endpoint: str = ""
+    api_key: str = ""
+    connection_id: str = ""
+
+
+class JarvisActionDecisionRequest(BaseModel):
+    """Pydantic v2 validated request to confirm or dismiss a Jarvis staged action."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    action_id: str = "jarvis-stage-mon-tue-menu"
+    decision: Literal["confirm", "dismiss"] = "confirm"
+
+
 __all__ = [
     "ActiveInferencePolicyEvaluation",
     "AnticipatoryForesightItem",
     "AttentionSourceWatch",
     "BaseModel",
+    "CloudProviderConfigureRequest",
+    "ConceptSpaceSnapshot",
     "ConditionalRoutineHypothesis",
     "ConfigDict",
     "CortexStimulusRequest",
     "CuriosityProject",
     "Field",
     "HouseholdResponsibilityArtifact",
+    "JarvisActionDecisionRequest",
+    "JarvisStagedAction",
     "ResponsibilityActionRequest",
     "RoutineObservationRequest",
+    "SleepConsolidationSummary",
     "SourceWatchEventRequest",
     "SubscriptionProviderId",
     "SubscriptionProviderInfo",
     "SubscriptionSelectionRequest",
+    "SynapticMemorySnapshot",
+    "WorldModelState",
+    "WorldModelTrajectory",
     "field_validator",
     "model_validator",
     "rust_to_json",

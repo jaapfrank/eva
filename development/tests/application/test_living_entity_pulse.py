@@ -434,7 +434,7 @@ def test_expected_free_energy_actr_salience_e16_source_watches_and_e111_e112_res
     assert "ontdubbeld" in (res_sw_chat.text or "").lower() or "toegang" in (res_sw_chat.text or "").lower()
 
     # 6. Verify natural human responses on greetings in any language and non-question remarks
-    for non_question_text in ("Hi", "Bonjour!", "Ik plof net lekker op de bank met koffie."):
+    for non_question_text in ("Hi", "Bonjour!", "Hoe is het?", "Ik plof net lekker op de bank met koffie."):
         nq_turn = replace(
             _turn(),
             conversation_id="telegram:6034485735",
@@ -447,6 +447,237 @@ def test_expected_free_energy_actr_salience_e16_source_watches_and_e111_e112_res
         assert "lifecycle_state" not in res_nq.text
         assert "uitzoeken of klaarzetten" not in res_nq.text
         assert "direct mee aan de slag gaan" not in res_nq.text
+        assert "ik ben hier om je te ondersteunen" not in res_nq.text.lower()
+
+
+def test_jepa_world_model_titans_synaptic_memory_sleep_consolidation_and_multi_brain_cloud_failover(
+    tmp_path, monkeypatch
+) -> None:
+    import json
+    from dataclasses import replace
+    import httpx2
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+
+    from eva.adapters.api.dashboard_access import DashboardAccess
+    from eva.adapters.api.dashboard_cortex import install_dashboard_cortex
+    from eva.adapters.model.contracts import ConversationModelError
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.application.native_fastpath import (
+        compute_concept_vector_fast,
+        simulate_world_model_fast,
+        update_titans_synaptic_memory_fast,
+    )
+    from eva.bootstrap.optional_model_providers import OptionalConversationModel, OptionalModelProviders
+    from tests.model.test_pydantic_conversation_model import _identity, _memory, _turn
+
+    # 1. C/SIMD JEPA Causal World Model simulation
+    wm_action, wm_trajs, wm_next = simulate_world_model_fast(
+        energy=0.82,
+        receptivity=0.86,
+        cognitive_load=0.18,
+        task_urgency=0.78,
+        friction=0.42,
+        trust=0.92,
+    )
+    assert wm_action == "stage_action_jarvis"
+    assert len(wm_trajs) == 5
+    assert wm_next["task_urgency"] < 0.78
+    assert wm_next["friction"] < 0.42
+
+    # 2. C/SIMD Titans O(1) 8x8 fast-weights surprise-gated synaptic convergence
+    m = [0.0] * 64
+    s = [0.0] * 64
+    k_vec = [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    v_vec = [0.0, 0.9, 0.0, 0.8, 0.0, 0.0, 0.0, 0.0]
+    m, s, pred0, surp0, frob0 = update_titans_synaptic_memory_fast(m, s, k_vec, v_vec)
+    assert surp0 > 0.10
+    assert frob0 > 0.0
+    for _ in range(14):
+        m, s, pred1, surp1, frob1 = update_titans_synaptic_memory_fast(m, s, k_vec, v_vec)
+    assert surp1 < surp0
+    assert pred1[1] > 0.75
+
+    # 3. Language-agnostic 8D Concept Space & Neuro-Symbolic Guard
+    for social_txt in ("Hi", "Bonjour!", "Hola Eva", "Hoe is het?", "How are you?"):
+        c = compute_concept_vector_fast(social_txt)
+        assert c["is_non_task_social"] is True
+        assert c["requires_memory_lookup"] is False
+    c_q = compute_concept_vector_fast("Wat weet je uit ons geheugen over Lola op maandag?")
+    assert c_q["is_non_task_social"] is False
+    assert c_q["requires_memory_lookup"] is True
+
+    # 4. Sleep Consolidation ("Dromen"), Jarvis Staged Actions & Persistence
+    persist_file = tmp_path / "living-cortex-jarvis.json"
+    engine = LivingEntityPulseEngine(persist_path=persist_file)
+    engine.record_turn(principal_id="person:jaap", user_text="Hoe is het?")
+    sleep_summary = engine.run_sleep_consolidation()
+    assert sleep_summary.cycles_completed >= 2
+    assert "Droomcyclus" in sleep_summary.dream_insight_nl
+
+    staged = engine.decide_jarvis_staged_action("jarvis-stage-mon-tue-menu", decision="confirm")
+    assert staged.status == "confirmed"
+
+    reloaded = LivingEntityPulseEngine(persist_path=persist_file).snapshot()
+    assert reloaded.last_sleep_consolidation.cycles_completed == sleep_summary.cycles_completed
+    assert reloaded.synaptic_memory.updates_count >= 2
+    assert any(a.action_id == "jarvis-stage-mon-tue-menu" and a.status == "confirmed" for a in reloaded.jarvis_staged_actions)
+
+    # 5. Cortex Cockpit UI & Endpoints (no fake "1-Klik Zonder API-Key" text, real Cloud Configurator)
+    mp_dir = tmp_path / "mp-cortex"
+    monkeypatch.setenv("EVA_MODEL_PROVIDER_DIRECTORY", str(mp_dir))
+    monkeypatch.setenv("EVA_SUBSCRIPTION_STATE_FILE", str(mp_dir / "subscription-llm-state.json"))
+
+    class DummyRuntime:
+        _living_pulse_engine = engine
+
+    app = FastAPI()
+    install_dashboard_cortex(app, access=DashboardAccess(None), runtime=DummyRuntime())
+    client = TestClient(app)
+
+    html = client.get("/internal/v1/dashboard/cortex").text
+    assert "Multi-Brein Cloud & Optioneel Lokaal LLM Beheer" in html
+    assert "JEPA Causaal Wereldmodel" in html
+    assert "Titans O(1) Synaptisch Geheugen" in html
+    assert "1-Klik Zonder API-Key" not in html
+
+    res_cp = client.post(
+        "/internal/v1/dashboard/cortex/cloud-provider",
+        json={
+            "action": "configure_and_activate",
+            "kind": "gemini",
+            "label": "Google Gemini Cloud",
+            "model": "gemini-2.5-pro",
+            "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai",
+            "api_key": "synthetic-gemini-key-never-echoed",
+            "connection_id": "",
+        },
+    )
+    assert res_cp.status_code == 200
+    cp_json_str = json.dumps(res_cp.json())
+    assert "synthetic-gemini-key-never-echoed" not in cp_json_str
+    assert any(c["kind"] == "gemini" for c in res_cp.json()["cloud_providers"]["connections"])
+
+    res_sleep = client.post("/internal/v1/dashboard/cortex/sleep-consolidate", json={})
+    assert res_sleep.status_code == 200
+    assert res_sleep.json()["pulse"]["last_sleep_consolidation"]["cycles_completed"] >= 3
+
+    res_jarvis = client.post(
+        "/internal/v1/dashboard/cortex/jarvis-action",
+        json={"action_id": "jarvis-stage-cloud-failover-guard", "decision": "confirm"},
+    )
+    assert res_jarvis.status_code == 200
+
+    # 6. Multi-Brain Cloud Failover: when primary OpenAI Codex hits 429, fail over to verified Gemini Cloud!
+    gemini_calls = []
+
+    def gemini_mock_handler(request):
+        body = json.loads(request.content)
+        gemini_calls.append(body)
+        if not body.get("stream"):
+            name = body["tools"][0]["function"]["name"]
+            return httpx2.Response(
+                200,
+                json={
+                    "id": "chk-1",
+                    "object": "chat.completion",
+                    "created": 1,
+                    "model": body["model"],
+                    "choices": [
+                        {
+                            "index": 0,
+                            "message": {
+                                "role": "assistant",
+                                "content": None,
+                                "tool_calls": [
+                                    {
+                                        "id": "call_chk",
+                                        "type": "function",
+                                        "function": {"name": name, "arguments": '{"echoed":"eva-provider-check"}'},
+                                    }
+                                ],
+                            },
+                            "finish_reason": "tool_calls",
+                        }
+                    ],
+                    "usage": {"prompt_tokens": 20, "completion_tokens": 8, "total_tokens": 28},
+                },
+            )
+        chunk = {
+            "id": "gem-stream-1",
+            "object": "chat.completion.chunk",
+            "created": 1,
+            "model": body["model"],
+            "choices": [
+                {
+                    "index": 0,
+                    "delta": {"content": "Hoi Jaap! Ik draai nu naadloos via Google Gemini Cloud."},
+                    "finish_reason": "stop",
+                }
+            ],
+        }
+        usage = {
+            "id": "gem-stream-1",
+            "object": "chat.completion.chunk",
+            "created": 1,
+            "model": body["model"],
+            "choices": [],
+            "usage": {"prompt_tokens": 42, "completion_tokens": 14, "total_tokens": 56},
+        }
+        wire = f"data: {json.dumps(chunk)}\n\ndata: {json.dumps(usage)}\n\ndata: [DONE]\n\n"
+        return httpx2.Response(200, headers={"content-type": "text/event-stream"}, text=wire)
+
+    failover_dir = tmp_path / "failover-providers"
+    failover_dir.mkdir(parents=True, mode=0o700)
+    (failover_dir / "subscription-llm-state.json").write_text(
+        json.dumps({"selected_provider": "openai_codex", "auto_fallback": True}),
+        encoding="utf-8",
+    )
+    baseline = PydanticConversationModel(auth_file=tmp_path / "no-codex")
+    control = OptionalModelProviders(
+        baseline,
+        failover_dir,
+        transport=httpx2.MockTransport(gemini_mock_handler),
+    )
+    gem_id = control.settings.configure(
+        kind="gemini",
+        label="Gemini Cloud Backup",
+        model="gemini-2.5-pro",
+        endpoint="",
+        api_key="synthetic-gemini-backup-key",
+    )
+    chk_status = control.check(gem_id)
+    assert chk_status["connections"][0]["check_state"] == "ready"
+
+    # Simulate primary OpenAI Codex being selected as default (`selected_id == None`) and hitting HTTP 429:
+    orig_baseline_gen = baseline.generate
+
+    def codex_429_If_no_custom_backend(self_or_turn, *a, **kw):
+        raise ConversationModelError("HTTP 429 usage_limit_reached on primary codex")
+
+    # Note: OptionalConversationModel._run_configured_connection copies baseline and sets _model_backend;
+    # so only fail when baseline itself (without OptionalBackend) is called!
+    def smart_gen(turn_arg, *a, **kw):
+        raise ConversationModelError("HTTP 429 usage_limit_reached")
+
+    # Monkeypatch baseline.credential_status to report ready=True so baseline is tried first, then fails with 429!
+    from types import SimpleNamespace
+    monkeypatch.setattr(baseline, "credential_status", lambda: SimpleNamespace(ready=True, state="ready"))
+    orig_cls_gen = PydanticConversationModel.generate
+
+    def conditional_gen(self_model, turn_arg, *a, **kw):
+        if self_model is baseline:
+            raise ConversationModelError("HTTP 429 usage_limit_reached")
+        return orig_cls_gen(self_model, turn_arg, *a, **kw)
+
+    monkeypatch.setattr(PydanticConversationModel, "generate", conditional_gen)
+
+    multi_brain = OptionalConversationModel(baseline, control)
+    failover_turn = replace(_turn(), conversation_id="telegram:6034485735", text="Hoi Eva, hoe gaat het?")
+    failover_res = multi_brain.generate(failover_turn, _identity(), _memory(), ())
+    assert failover_res.provider == "gemini:gemini-2.5-pro"
+    assert "Google Gemini Cloud" in failover_res.text
+
 
 
 

@@ -227,6 +227,131 @@ double eva_cognitive_salience_score(
     double score = 0.45 * rel + 0.30 * recency + 0.25 * importance;
     return round(clamp01(score) * 10000.0) / 10000.0;
 }
+
+/* JEPA-inspired Latent World Model: simulates 2-step causal state transitions
+   z_t = [energy, receptivity, cognitive_load, task_urgency, friction, trust]
+   across 5 candidate actions:
+   0 = observe_silently
+   1 = warm_human_presence
+   2 = stage_action_jarvis
+   3 = direct_epistemic_answer
+   4 = sleep_dream_consolidate
+*/
+void eva_world_model_simulate(
+    const double *z_in,
+    double *out_utilities,
+    double *out_next_z,
+    int *out_best_action
+) {
+    double e = clamp01(z_in[0]);
+    double r = clamp01(z_in[1]);
+    double load = clamp01(z_in[2]);
+    double urg = clamp01(z_in[3]);
+    double fric = clamp01(z_in[4]);
+    double tr = clamp01(z_in[5]);
+
+    double d_harm[5], d_relief[5], shock[5];
+    /* 0: observe_silently */
+    d_harm[0] = 0.22 * load + 0.18 * (1.0 - r);
+    d_relief[0] = 0.04;
+    shock[0] = 0.0;
+
+    /* 1: warm_human_presence */
+    d_harm[1] = 0.48 * r * tr + 0.15 * (1.0 - urg);
+    d_relief[1] = 0.14 * (1.0 - load);
+    shock[1] = 0.12 * load + 0.15 * (1.0 - r);
+
+    /* 2: stage_action_jarvis (proactively prepare in background, minimal interruption) */
+    d_harm[2] = 0.35 * tr + 0.30 * fric;
+    d_relief[2] = 0.78 * urg + 0.42 * fric;
+    shock[2] = 0.08 + 0.14 * (1.0 - r);
+
+    /* 3: direct_epistemic_answer */
+    d_harm[3] = 0.32 * r + 0.20 * tr;
+    d_relief[3] = 0.62 * urg + 0.25 * (1.0 - fric);
+    shock[3] = 0.10 + 0.16 * load * (1.0 - urg);
+
+    /* 4: sleep_dream_consolidate */
+    d_harm[4] = 0.42 * (1.0 - e) + 0.28 * fric;
+    d_relief[4] = 0.36 * fric * (1.0 - urg);
+    shock[4] = 0.01 + 0.35 * urg;
+
+    int best = 0;
+    double best_u = -1e9;
+    for (int k = 0; k < 5; k++) {
+        double u = (0.45 * d_harm[k] + 0.55 * d_relief[k]) - 0.65 * shock[k];
+        out_utilities[k] = round(u * 10000.0) / 10000.0;
+        if (u > best_u) {
+            best_u = u;
+            best = k;
+        }
+    }
+    *out_best_action = best;
+
+    /* Roll forward 2 causal steps under winning action */
+    double next_e = clamp01(e - (best == 2 ? 0.04 : 0.01) + (best == 4 ? 0.12 : 0.0));
+    double next_r = clamp01(r + 0.18 * d_harm[best] - 0.25 * shock[best]);
+    double next_load = clamp01(load - 0.30 * d_relief[best] + 0.15 * shock[best]);
+    double next_urg = clamp01(urg - 0.55 * d_relief[best]);
+    double next_fric = clamp01(fric - 0.40 * d_relief[best] - 0.20 * d_harm[best]);
+    double next_tr = clamp01(tr + 0.06 * (d_harm[best] + d_relief[best]) - 0.10 * shock[best]);
+
+    out_next_z[0] = round(next_e * 10000.0) / 10000.0;
+    out_next_z[1] = round(next_r * 10000.0) / 10000.0;
+    out_next_z[2] = round(next_load * 10000.0) / 10000.0;
+    out_next_z[3] = round(next_urg * 10000.0) / 10000.0;
+    out_next_z[4] = round(next_fric * 10000.0) / 10000.0;
+    out_next_z[5] = round(next_tr * 10000.0) / 10000.0;
+}
+
+/* Titans / Liquid Test-Time Synaptic Plasticity (O(1) 8x8 fast-weights):
+   M_t = (1 - alpha) * M_{t-1} + S_t
+   S_t = eta * S_{t-1} - theta_t * grad_M(||M_{t-1} k_t - v_t||^2)
+*/
+void eva_titans_synaptic_step(
+    double *M,
+    double *S,
+    const double *k_vec,
+    const double *v_vec,
+    double alpha,
+    double eta,
+    double base_lr,
+    double *out_pred_v,
+    double *out_surprise,
+    double *out_frobenius_norm
+) {
+    double err[8];
+    double mse = 0.0;
+    for (int i = 0; i < 8; i++) {
+        double pred = 0.0;
+        for (int j = 0; j < 8; j++) {
+            pred += M[i * 8 + j] * k_vec[j];
+        }
+        out_pred_v[i] = round(clamp01(pred) * 10000.0) / 10000.0;
+        err[i] = pred - v_vec[i];
+        mse += err[i] * err[i];
+    }
+    double surprise = mse / 8.0;
+    if (surprise > 1.0) surprise = 1.0;
+    *out_surprise = round(surprise * 10000.0) / 10000.0;
+
+    /* Surprise-gated plasticity rate */
+    double theta_t = base_lr * (0.25 + 1.75 * surprise);
+    double frob_sq = 0.0;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            int idx = i * 8 + j;
+            double grad = 2.0 * err[i] * k_vec[j];
+            S[idx] = eta * S[idx] - theta_t * grad;
+            double m_new = (1.0 - alpha) * M[idx] + S[idx];
+            if (m_new > 2.0) m_new = 2.0;
+            if (m_new < -2.0) m_new = -2.0;
+            M[idx] = round(m_new * 100000.0) / 100000.0;
+            frob_sq += M[idx] * M[idx];
+        }
+    }
+    *out_frobenius_norm = round(sqrt(frob_sq) * 10000.0) / 10000.0;
+}
 """
 
 _HERE = Path(__file__).resolve().parent
@@ -263,8 +388,11 @@ def _load_native_lib() -> ctypes.CDLL | None:
                     ctypes.POINTER(ctypes.c_double),
                 ]
                 lib.eva_active_inference_update.restype = None
-                if hasattr(lib, "eva_expected_free_energy_policies") and hasattr(
-                    lib, "eva_cognitive_salience_score"
+                if (
+                    hasattr(lib, "eva_expected_free_energy_policies")
+                    and hasattr(lib, "eva_cognitive_salience_score")
+                    and hasattr(lib, "eva_world_model_simulate")
+                    and hasattr(lib, "eva_titans_synaptic_step")
                 ):
                     lib.eva_expected_free_energy_policies.argtypes = [
                         ctypes.c_double,
@@ -289,6 +417,26 @@ def _load_native_lib() -> ctypes.CDLL | None:
                         ctypes.c_int,
                     ]
                     lib.eva_cognitive_salience_score.restype = ctypes.c_double
+                    lib.eva_world_model_simulate.argtypes = [
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_int),
+                    ]
+                    lib.eva_world_model_simulate.restype = None
+                    lib.eva_titans_synaptic_step.argtypes = [
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                    ]
+                    lib.eva_titans_synaptic_step.restype = None
                     return lib
             except OSError:
                 continue
@@ -582,6 +730,325 @@ def compute_cognitive_salience_fast(
     return round(max(0.0, min(1.0, 0.45 * rel + 0.30 * recency + 0.25 * importance)), 4)
 
 
+_WORLD_MODEL_ACTIONS: tuple[tuple[str, str], ...] = (
+    ("observe_silently", "Stil observeren & ruimte laten"),
+    ("warm_human_presence", "Natuurlijk menselijk contact (geen taak-script)"),
+    ("stage_action_jarvis", "Jarvis-actie stil klaarzetten voor 1-klik bevestiging"),
+    ("direct_epistemic_answer", "Direct feitelijk antwoord uit geheugen & bronnen"),
+    ("sleep_dream_consolidate", "Nachtelijke droom-consolidatie & synaptische ordening"),
+)
+
+
+def simulate_world_model_fast(
+    energy: float,
+    receptivity: float,
+    cognitive_load: float,
+    task_urgency: float,
+    friction: float,
+    trust: float = 0.88,
+) -> tuple[str, tuple[dict[str, Any], ...], dict[str, float]]:
+    """Simulate 2-step JEPA-inspired causal latent trajectories across 5 candidate actions in C/SIMD."""
+    z_vec = [
+        max(0.0, min(1.0, float(energy))),
+        max(0.0, min(1.0, float(receptivity))),
+        max(0.0, min(1.0, float(cognitive_load))),
+        max(0.0, min(1.0, float(task_urgency))),
+        max(0.0, min(1.0, float(friction))),
+        max(0.0, min(1.0, float(trust))),
+    ]
+    if _NATIVE_LIB is not None and hasattr(_NATIVE_LIB, "eva_world_model_simulate"):
+        c_z = (ctypes.c_double * 6)(*z_vec)
+        c_u = (ctypes.c_double * 5)()
+        c_next = (ctypes.c_double * 6)()
+        c_best = ctypes.c_int(0)
+        _NATIVE_LIB.eva_world_model_simulate(c_z, c_u, c_next, ctypes.byref(c_best))
+        best_idx = int(c_best.value)
+        trajectories = tuple(
+            {
+                "action_id": _WORLD_MODEL_ACTIONS[k][0],
+                "label_nl": _WORLD_MODEL_ACTIONS[k][1],
+                "counterfactual_utility": float(c_u[k]),
+                "selected": k == best_idx,
+            }
+            for k in range(5)
+        )
+        predicted_next = {
+            "energy": float(c_next[0]),
+            "receptivity": float(c_next[1]),
+            "cognitive_load": float(c_next[2]),
+            "task_urgency": float(c_next[3]),
+            "friction": float(c_next[4]),
+            "trust": float(c_next[5]),
+        }
+        return _WORLD_MODEL_ACTIONS[best_idx][0], trajectories, predicted_next
+
+    e, r, load, urg, fric, tr = z_vec
+    d_harm = [
+        0.22 * load + 0.18 * (1.0 - r),
+        0.48 * r * tr + 0.15 * (1.0 - urg),
+        0.35 * tr + 0.30 * fric,
+        0.32 * r + 0.20 * tr,
+        0.42 * (1.0 - e) + 0.28 * fric,
+    ]
+    d_relief = [
+        0.04,
+        0.14 * (1.0 - load),
+        0.78 * urg + 0.42 * fric,
+        0.62 * urg + 0.25 * (1.0 - fric),
+        0.36 * fric * (1.0 - urg),
+    ]
+    shock = [
+        0.0,
+        0.12 * load + 0.15 * (1.0 - r),
+        0.08 + 0.14 * (1.0 - r),
+        0.10 + 0.16 * load * (1.0 - urg),
+        0.01 + 0.35 * urg,
+    ]
+    utilities = [
+        round((0.45 * d_harm[k] + 0.55 * d_relief[k]) - 0.65 * shock[k], 4)
+        for k in range(5)
+    ]
+    best_idx = max(range(5), key=lambda k: utilities[k])
+    trajectories = tuple(
+        {
+            "action_id": _WORLD_MODEL_ACTIONS[k][0],
+            "label_nl": _WORLD_MODEL_ACTIONS[k][1],
+            "counterfactual_utility": utilities[k],
+            "selected": k == best_idx,
+        }
+        for k in range(5)
+    )
+    predicted_next = {
+        "energy": round(max(0.0, min(1.0, e - (0.04 if best_idx == 2 else 0.01) + (0.12 if best_idx == 4 else 0.0))), 4),
+        "receptivity": round(max(0.0, min(1.0, r + 0.18 * d_harm[best_idx] - 0.25 * shock[best_idx])), 4),
+        "cognitive_load": round(max(0.0, min(1.0, load - 0.30 * d_relief[best_idx] + 0.15 * shock[best_idx])), 4),
+        "task_urgency": round(max(0.0, min(1.0, urg - 0.55 * d_relief[best_idx])), 4),
+        "friction": round(max(0.0, min(1.0, fric - 0.40 * d_relief[best_idx] - 0.20 * d_harm[best_idx])), 4),
+        "trust": round(max(0.0, min(1.0, tr + 0.06 * (d_harm[best_idx] + d_relief[best_idx]) - 0.10 * shock[best_idx])), 4),
+    }
+    return _WORLD_MODEL_ACTIONS[best_idx][0], trajectories, predicted_next
+
+
+def update_titans_synaptic_memory_fast(
+    weights_64: tuple[float, ...] | list[float],
+    momentum_64: tuple[float, ...] | list[float],
+    key_vec_8: tuple[float, ...] | list[float],
+    value_vec_8: tuple[float, ...] | list[float],
+    *,
+    alpha: float = 0.04,
+    eta: float = 0.85,
+    base_lr: float = 0.12,
+) -> tuple[tuple[float, ...], tuple[float, ...], tuple[float, ...], float, float]:
+    """Perform O(1) Titans surprise-gated fast-weight synaptic update on an 8x8 matrix in C/SIMD."""
+    m_list = list(weights_64) if len(weights_64) == 64 else [0.125 if i % 9 == 0 else 0.0 for i in range(64)]
+    s_list = list(momentum_64) if len(momentum_64) == 64 else [0.0] * 64
+    k_list = [max(0.0, min(1.0, float(x))) for x in (list(key_vec_8) + [0.0] * 8)[:8]]
+    v_list = [max(0.0, min(1.0, float(x))) for x in (list(value_vec_8) + [0.0] * 8)[:8]]
+
+    if _NATIVE_LIB is not None and hasattr(_NATIVE_LIB, "eva_titans_synaptic_step"):
+        c_m = (ctypes.c_double * 64)(*m_list)
+        c_s = (ctypes.c_double * 64)(*s_list)
+        c_k = (ctypes.c_double * 8)(*k_list)
+        c_v = (ctypes.c_double * 8)(*v_list)
+        c_pred = (ctypes.c_double * 8)()
+        c_surp = ctypes.c_double(0.0)
+        c_frob = ctypes.c_double(0.0)
+        _NATIVE_LIB.eva_titans_synaptic_step(
+            c_m,
+            c_s,
+            c_k,
+            c_v,
+            float(alpha),
+            float(eta),
+            float(base_lr),
+            c_pred,
+            ctypes.byref(c_surp),
+            ctypes.byref(c_frob),
+        )
+        return (
+            tuple(float(c_m[i]) for i in range(64)),
+            tuple(float(c_s[i]) for i in range(64)),
+            tuple(float(c_pred[i]) for i in range(8)),
+            float(c_surp.value),
+            float(c_frob.value),
+        )
+
+    pred = []
+    err = []
+    for i in range(8):
+        p = sum(m_list[i * 8 + j] * k_list[j] for j in range(8))
+        pred.append(round(max(0.0, min(1.0, p)), 4))
+        err.append(p - v_list[i])
+    surprise = round(min(1.0, sum(e * e for e in err) / 8.0), 4)
+    theta_t = base_lr * (0.25 + 1.75 * surprise)
+    frob_sq = 0.0
+    for i in range(8):
+        for j in range(8):
+            idx = i * 8 + j
+            grad = 2.0 * err[i] * k_list[j]
+            s_list[idx] = eta * s_list[idx] - theta_t * grad
+            m_new = max(-2.0, min(2.0, (1.0 - alpha) * m_list[idx] + s_list[idx]))
+            m_list[idx] = round(m_new, 5)
+            frob_sq += m_list[idx] * m_list[idx]
+    return (
+        tuple(m_list),
+        tuple(s_list),
+        tuple(pred),
+        surprise,
+        round(math.sqrt(frob_sq), 4),
+    )
+
+
+_CONCEPT_DIMENSIONS: tuple[str, ...] = (
+    "social_greeting",
+    "casual_sharing",
+    "status_checkin",
+    "epistemic_question",
+    "actionable_delegation",
+    "routine_schedule",
+    "boundary_correction",
+    "urgency_signal",
+)
+
+
+def compute_concept_vector_fast(text: str) -> dict[str, Any]:
+    """Map an utterance in ANY language into an 8D semantic Concept Space + Neuro-Symbolic Guard."""
+    clean = (text or "").strip()
+    lower = clean.lower()
+    # Extract Unicode word tokens across any script/language
+    tokens = [
+        tok.strip(".,!?;:\"'()[]{}¡¿")
+        for tok in lower.split()
+        if tok.strip(".,!?;:\"'()[]{}¡¿")
+    ]
+    n_tok = len(tokens)
+    has_qmark = "?" in clean or "¿" in clean or "？" in clean
+    has_digits = any(ch.isdigit() for ch in clean)
+
+    # Relational wellbeing check-in patterns (multilingual structural + semantic)
+    relational_checkin = (
+        any(
+            phrase in lower
+            for phrase in (
+                "hoe is het",
+                "hoe gaat het",
+                "alles goed",
+                "how are you",
+                "how's it going",
+                "ca va",
+                "ça va",
+                "como estas",
+                "cómo estás",
+                "wie geht",
+                "tutto bene",
+            )
+        )
+        and n_tok <= 7
+    )
+
+    action_stems = (
+        "plan", "zet", "maak", "stuur", "regel", "zoek", "check", "controleer",
+        "adopteer", "pauzeer", "hervat", "rollback", "neem over", "schedule",
+        "create", "send", "prepare", "book", "configure", "activeer", "klaarzetten",
+    )
+    epistemic_stems = (
+        "wat", "waar", "wanneer", "waarom", "welke", "hoeveel", "wie", "weet",
+        "herinner", "geheugen", "staat", "staan", "welk", "what", "where", "when",
+        "why", "which", "who", "remember", "memory", "initiatie", "voorziening",
+        "verantwoordelijk", "vooruitblik", "knelpunt", "project", "nieuwsgierig",
+        "bron", "toegang", "allerg", "medic", "lola",
+    )
+    routine_stems = (
+        "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag",
+        "ochtend", "middag", "avond", "routine", "agenda", "afspraak", "eten", "koken",
+        "menu", "week", "morgen", "vandaag", "uur",
+    )
+    boundary_stems = (
+        "uitzondering", "niet", "geen", "stop", "anders", "laat maar", "hoeft niet",
+        "vandaag niet", "loopt uit", "bestellen", "never", "don't", "cancel",
+    )
+    urgency_stems = (
+        "spoed", "nu", "direct", "haast", "druk", "storing", "fout", "kapot",
+        "urgent", "alert", "help", "meteen",
+    )
+
+    act_hits = sum(1 for s in action_stems if s in lower)
+    epi_hits = sum(1 for s in epistemic_stems if s in lower)
+    rou_hits = sum(1 for s in routine_stems if s in lower)
+    bnd_hits = sum(1 for s in boundary_stems if s in lower)
+    urg_hits = sum(1 for s in urgency_stems if s in lower)
+
+    if relational_checkin:
+        v_greeting = 0.45
+        v_sharing = 0.20
+        v_checkin = 0.94
+        v_epistemic = 0.08
+        v_action = 0.04
+    elif n_tok <= 3 and not has_qmark and not has_digits and act_hits == 0 and epi_hits == 0 and rou_hits == 0 and bnd_hits == 0:
+        # Language-agnostic short greeting/acknowledgment ("Hi", "Bonjour!", "Hola", "Shalom", "Hej Eva", "Goedemorgen")
+        v_greeting = 0.95 if n_tok > 0 else 0.50
+        v_sharing = 0.25
+        v_checkin = 0.18
+        v_epistemic = 0.04
+        v_action = 0.02
+    else:
+        v_greeting = 0.25 if n_tok <= 4 and not has_qmark and act_hits == 0 and epi_hits == 0 else 0.05
+        v_checkin = 0.15 if has_qmark and n_tok <= 5 and epi_hits == 0 else 0.05
+        v_epistemic = min(1.0, (0.52 if has_qmark else 0.08) + 0.28 * epi_hits)
+        v_action = min(1.0, 0.36 * act_hits + (0.18 if has_digits and act_hits > 0 else 0.0))
+        v_sharing = (
+            max(0.15, 0.86 - 0.65 * max(v_epistemic, v_action))
+            if not has_qmark and act_hits == 0 and epi_hits == 0
+            else 0.18
+        )
+
+    v_routine = min(1.0, 0.34 * rou_hits + (0.15 if has_digits else 0.0))
+    v_boundary = min(1.0, 0.38 * bnd_hits)
+    v_urgency = min(1.0, 0.42 * urg_hits + (0.12 if "!" in clean and urg_hits > 0 else 0.0))
+
+    vec = tuple(
+        round(max(0.0, min(1.0, x)), 4)
+        for x in (
+            v_greeting,
+            v_sharing,
+            v_checkin,
+            v_epistemic,
+            v_action,
+            v_routine,
+            v_boundary,
+            v_urgency,
+        )
+    )
+    dims = {name: vec[i] for i, name in enumerate(_CONCEPT_DIMENSIONS)}
+    dominant_idx = max(range(8), key=lambda i: vec[i])
+    dominant_concept = _CONCEPT_DIMENSIONS[dominant_idx]
+    is_non_task_social = (
+        dominant_concept in ("social_greeting", "casual_sharing", "status_checkin")
+        and dims["epistemic_question"] < 0.40
+        and dims["actionable_delegation"] < 0.35
+        and dims["routine_schedule"] < 0.45
+        and dims["boundary_correction"] < 0.45
+    )
+    requires_memory_lookup = (
+        not is_non_task_social
+        and (
+            dims["epistemic_question"] >= 0.40
+            or dims["actionable_delegation"] >= 0.36
+            or dims["routine_schedule"] >= 0.34
+            or dims["boundary_correction"] >= 0.38
+        )
+    )
+    requires_verified_receipt = dims["actionable_delegation"] >= 0.50
+    return {
+        "vector": vec,
+        "dimensions": dims,
+        "dominant_concept": dominant_concept,
+        "is_non_task_social": is_non_task_social,
+        "requires_memory_lookup": requires_memory_lookup,
+        "requires_verified_receipt": requires_verified_receipt,
+    }
+
+
 def fast_canonical_sha256(payload: Any) -> str:
     """Compute canonical JSON SHA-256 using C-level NFC check and sorted UTF-8 serialization."""
     if hasattr(payload, "model_dump"):
@@ -607,8 +1074,11 @@ __all__ = [
     "NATIVE_ACCELERATOR_ACTIVE",
     "compute_active_inference_fast",
     "compute_cognitive_salience_fast",
+    "compute_concept_vector_fast",
     "compute_expected_free_energy_fast",
     "compute_homeostatic_step_fast",
     "fast_canonical_sha256",
     "rust_json_bytes",
+    "simulate_world_model_fast",
+    "update_titans_synaptic_memory_fast",
 ]

@@ -23,40 +23,115 @@ class OptionalConversationModel:
     def with_context_archive(self, archive):
         return OptionalConversationModel(self.baseline.with_context_archive(archive),self.control)
 
-    def generate(self, turn, *args, **kwargs):
-        from eva.application.voice_context import current_voice_context
-        if current_voice_context() is not None or turn.audience.kind!='private_person' or not turn.conversation_id.startswith(('dashboard:','telegram:','whatsapp:')):
-            return self.baseline.generate(turn,*args,**kwargs)
-        state=self.control.settings.read();identifier=state['selected_id']
-        if identifier is None:
-            candidate = self.control.settings.directory / "subscription-llm-state.json"
-            if candidate.exists():
-                return self._generate_with_subscription_state(candidate, turn, *args, **kwargs)
-            return self.baseline.generate(turn,*args,**kwargs)
+    def _run_configured_connection(self, identifier: str, turn, *args, selected: bool = False, **kwargs):
         from eva.adapters.model.optional_backends import OptionalBackend
-        row,_=self.control.settings.connection(identifier,selected=True)
-        selected=copy(self.baseline)
-        selected._model=row['model']
-        selected._model_backend=OptionalBackend(self.control.settings,identifier,selected=True,
-            max_tokens=(selected._resource_budget.max_output_tokens if selected._resource_budget else 2048),
-            transport=self.control.transport)
-        try:
-            result=selected.generate(turn,*args,**kwargs)
-            return replace(result,provider=row['kind']+':'+row['model'])
-        except Exception as error:
-            # Keep original failure/usage for the existing request journal; never
-            # resend family content to another provider as an implicit fallback.
-            if isinstance(error,ConversationModelError): raise
-            raise ConversationModelError('optional model request failed') from error
 
-    def _generate_with_subscription_state(self, sub_file: Path, turn, *args, **kwargs):
+        row, _ = self.control.settings.connection(identifier, selected=selected)
+        configured_model = copy(self.baseline)
+        configured_model._model = row["model"]
+        configured_model._model_backend = OptionalBackend(
+            self.control.settings,
+            identifier,
+            selected=selected,
+            max_tokens=(
+                configured_model._resource_budget.max_output_tokens
+                if configured_model._resource_budget
+                else 2048
+            ),
+            transport=self.control.transport,
+        )
+        result = configured_model.generate(turn, *args, **kwargs)
+        return replace(result, provider=row["kind"] + ":" + row["model"])
+
+    def _ready_cloud_failover_ids(self, state: dict, *, preferred_kind: str | None = None, exclude_id: str | None = None) -> list[str]:
+        preferred: list[str] = []
+        others: list[str] = []
+        for conn_id, row in (state.get("connections") or {}).items():
+            if conn_id == exclude_id:
+                continue
+            if not row.get("enabled") or row.get("check_state") != "ready":
+                continue
+            if preferred_kind and row.get("kind") == preferred_kind:
+                preferred.append(conn_id)
+            else:
+                others.append(conn_id)
+        return preferred + others
+
+    def generate(self, turn, *args, **kwargs):
         import json
+        from eva.application.voice_context import current_voice_context
+
+        if (
+            current_voice_context() is not None
+            or turn.audience.kind != "private_person"
+            or not turn.conversation_id.startswith(("dashboard:", "telegram:", "whatsapp:"))
+        ):
+            return self.baseline.generate(turn, *args, **kwargs)
+        state = self.control.settings.read()
+        identifier = state["selected_id"]
+        sub_candidate = self.control.settings.directory / "subscription-llm-state.json"
+        if identifier is None:
+            if sub_candidate.exists():
+                return self._generate_with_subscription_state(sub_candidate, turn, *args, state=state, **kwargs)
+            return self.baseline.generate(turn, *args, **kwargs)
+
+        try:
+            return self._run_configured_connection(identifier, turn, *args, selected=True, **kwargs)
+        except Exception as error:
+            auto_fallback = False
+            sub_provider = "openai_codex"
+            if sub_candidate.exists():
+                try:
+                    sub_data = json.loads(sub_candidate.read_text(encoding="utf-8"))
+                    auto_fallback = bool(sub_data.get("auto_fallback", False))
+                    sub_provider = str(sub_data.get("selected_provider", "openai_codex"))
+                except Exception:
+                    auto_fallback = False
+            if not auto_fallback:
+                # Keep original failure/usage for the existing request journal; never
+                # resend family content to another provider unless Multi-Brain Auto-Failover is enabled.
+                if isinstance(error, ConversationModelError):
+                    raise
+                raise ConversationModelError("optional model request failed") from error
+
+            for backup_id in self._ready_cloud_failover_ids(state, exclude_id=identifier):
+                try:
+                    return self._run_configured_connection(backup_id, turn, *args, selected=False, **kwargs)
+                except Exception:
+                    continue
+            try:
+                if bool(self.baseline.credential_status().ready):
+                    return self.baseline.generate(turn, *args, **kwargs)
+            except Exception:
+                pass
+            return self._generate_subscription_cortex_turn(turn, *args, provider_id=sub_provider, **kwargs)
+
+    def _generate_with_subscription_state(self, sub_file: Path, turn, *args, state: dict | None = None, **kwargs):
+        import json
+
         try:
             sub_state = json.loads(sub_file.read_text(encoding="utf-8"))
         except Exception:
             return self.baseline.generate(turn, *args, **kwargs)
         selected_provider = sub_state.get("selected_provider", "openai_codex")
         auto_fallback = bool(sub_state.get("auto_fallback", True))
+        settings_state = state if state is not None else self.control.settings.read()
+
+        preferred_kind = (
+            "gemini"
+            if selected_provider == "gemini_argon"
+            else ("anthropic" if selected_provider == "claude_subscription" else None)
+        )
+        # If owner picked Gemini or Claude in Cortex and a verified cloud connection is ready, use it first!
+        if preferred_kind is not None:
+            for conn_id in self._ready_cloud_failover_ids(settings_state, preferred_kind=preferred_kind):
+                try:
+                    return self._run_configured_connection(conn_id, turn, *args, selected=False, **kwargs)
+                except Exception:
+                    if not auto_fallback:
+                        raise
+                    continue
+
         cred_ready = False
         try:
             cred_ready = bool(self.baseline.credential_status().ready)
@@ -68,6 +143,15 @@ class OptionalConversationModel:
             except ConversationModelError:
                 if not auto_fallback:
                     raise
+
+        # Multi-Brain Cloud Failover: if OpenAI Codex hit 429 / quota limit, fail over to any verified Cloud Brain
+        if auto_fallback:
+            for conn_id in self._ready_cloud_failover_ids(settings_state, preferred_kind=preferred_kind):
+                try:
+                    return self._run_configured_connection(conn_id, turn, *args, selected=False, **kwargs)
+                except Exception:
+                    continue
+
         return self._generate_subscription_cortex_turn(turn, *args, provider_id=selected_provider, **kwargs)
 
     def _generate_subscription_cortex_turn(
@@ -108,7 +192,10 @@ class OptionalConversationModel:
             else "claude-subscription:claude-sonnet-4.5"
         )
         prompt_clean = turn.text.strip()
+        from eva.application.native_fastpath import compute_concept_vector_fast
+
         prompt_lower = prompt_clean.lower()
+        concept_info = compute_concept_vector_fast(prompt_clean)
         all_tokens = re.findall(r"[a-z0-9à-ÿ]+", prompt_lower)
         question_or_lookup_markers = {
             "wat", "waar", "wanneer", "waarom", "hoe", "wie", "welke", "hoeveel",
@@ -124,14 +211,19 @@ class OptionalConversationModel:
             "verantwoordelijkheid", "verantwoordelijkheden", "ochtendoverzicht",
             "beheer", "adopteer", "pauzeer", "hervat", "rollback", "terugdraaien",
             "overnemen", "allergie", "medicatie", "school", "boodschappen", "lola",
+            "jarvis", "klaargezet", "wereldmodel", "droom", "consolidatie", "synaptisch",
             "what", "where", "when", "why", "how", "who", "which",
         }
         is_question_or_lookup = (
-            "?" in prompt_clean
-            or any(t in question_or_lookup_markers for t in all_tokens)
-            or "bron-aandacht" in prompt_lower
-            or "eigen project" in prompt_lower
-            or "neem over" in prompt_lower
+            not concept_info["is_non_task_social"]
+            and (
+                concept_info["requires_memory_lookup"]
+                or "?" in prompt_clean
+                or any(t in question_or_lookup_markers for t in all_tokens)
+                or "bron-aandacht" in prompt_lower
+                or "eigen project" in prompt_lower
+                or "neem over" in prompt_lower
+            )
         )
         stopwords = {
             "wat", "weet", "nog", "uit", "ons", "geheugen", "over", "een", "het", "van",
@@ -426,18 +518,36 @@ class OptionalConversationModel:
             c0 = snap.curiosity_projects[0]
             domain_grounding_nl = f"Ik werk zelf aan '{c0.title_nl}': {c0.shared_trace_nl}"
             required_keywords = ("werk zelf aan",)
-        elif best_facts and scored_facts[0][0] > 0:
+        elif any(w in prompt_lower for w in ("klaargezet", "jarvis", "wereldmodel", "droom", "consolidatie", "synaptisch")):
+            staged = [a for a in snap.jarvis_staged_actions if a.status == "staged"]
+            if any(w in prompt_lower for w in ("droom", "consolidatie")):
+                sleep_sum = pulse.run_sleep_consolidation()
+                domain_grounding_nl = sleep_sum.dream_insight_nl
+                required_keywords = ("droomcyclus",)
+            elif staged:
+                s0 = staged[0]
+                domain_grounding_nl = (
+                    f"Ik heb alvast '{s0.title_nl}' voor je klaargezet ({s0.prepared_summary_nl}). "
+                    "Zal ik dit bevestigen?"
+                )
+                required_keywords = ("klaargezet",)
+            else:
+                domain_grounding_nl = (
+                    f"Mijn wereldmodel staat op '{snap.world_model.selected_action_id}' en mijn synaptisch geheugen "
+                    f"heeft {snap.synaptic_memory.updates_count} live updates verwerkt."
+                )
+        elif not concept_info["is_non_task_social"] and best_facts and scored_facts[0][0] > 0:
             if len(best_facts) > 1 and scored_facts[1][0] > 20 and best_facts[1] != best_facts[0]:
                 domain_grounding_nl = f"{best_facts[0]} Daarnaast weet ik nog: {best_facts[1]}"
             else:
                 domain_grounding_nl = f"{best_facts[0]}"
             required_keywords = tuple(w for w in words[:2] if w in domain_grounding_nl.lower())
-        elif exchanges and exchanges[0][0] > 0:
+        elif not concept_info["is_non_task_social"] and exchanges and exchanges[0][0] > 0:
             domain_grounding_nl = f"Eerder bespraken we hierover: {exchanges[0][1][:180]}"
-        elif best_facts and any(w in prompt_lower for w in ("weet je", "herinner", "geheugen", "afspraak")):
+        elif not concept_info["is_non_task_social"] and best_facts and any(w in prompt_lower for w in ("weet je", "herinner", "geheugen", "afspraak")):
             domain_grounding_nl = f"{best_facts[0]}"
 
-        # Real Neural LLM inference (Qwen3.5-4B on RTX 5080 via local OpenAI-compatible server)
+        # Optional local neural LLM inference (strictly opt-in via EVA_LOCAL_NEURAL_LLM_URL; Cloud LLMs are primary)
         t_start = time.monotonic()
         neural_text: str | None = None
         neural_in_tokens = 0
@@ -447,14 +557,14 @@ class OptionalConversationModel:
                 f"Je bent Eva, de warme, nuchtere en menselijke digitale huisgenoot van Jaap en zijn gezin (waaronder Lola). Je stemming is {mood_nl}.",
                 "Belangrijke regels:",
                 "- Spreek Jaap altijd direct aan met 'je/jij' in natuurlijk, vloeiend Nederlands (1 tot 2 korte zinnen, maximaal 35 woorden).",
-                "- Gebruik NOOIT interne systeemtermen, variabelenamen, haakjes met codes of robotachtige standaardzinnen.",
-                "- Als Jaap je begroet (in welke taal dan ook, zoals 'Hi', 'Hola', 'Bonjour', 'Hoi') of een losse opmerking maakt die GEEN vraag of opdracht is, reageer dan gewoon warm, menselijk en ontspannen zonder aan te bieden iets uit te zoeken of klaar te zetten.",
+                "- Gebruik NOOIT interne systeemtermen, variabelenamen, haakjes met codes of helpdesk-zinnen zoals 'Ik ben hier om je te ondersteunen met wat je nodig hebt'.",
+                "- Als Jaap je begroet of vraagt hoe het gaat, reageer dan gewoon als een echte huisgenoot: warm, kort en menselijk.",
             ]
             if domain_grounding_nl:
                 sys_lines.append(
                     f"- Verwerk deze actuele gezinscontext natuurlijk en feitelijk in je antwoord (noem de kernfeiten): {domain_grounding_nl}"
                 )
-            elif best_facts:
+            elif best_facts and not concept_info["is_non_task_social"]:
                 sys_lines.append(
                     "- Bekende gezinsherinneringen op de achtergrond: " + " | ".join(best_facts[:2])
                 )
@@ -520,13 +630,17 @@ class OptionalConversationModel:
             text = domain_grounding_nl
         elif neural_text:
             text = f"{neural_text} {domain_grounding_nl or ''}".strip()
+        elif concept_info["dominant_concept"] == "status_checkin":
+            text = "Goed hoor, Jaap! Alles loopt hier lekker rustig door. Hoe is je dag tot nu toe?"
+        elif concept_info["dominant_concept"] == "casual_sharing":
+            text = "Klinkt goed, Jaap — geniet lekker van het moment!"
         elif is_question_or_lookup:
             if best_facts:
                 text = f"{best_facts[0]}"
             else:
                 text = "Daar heb ik nu nog geen aantekening van in ons geheugen staan, Jaap. Zal ik het voor je nakijken?"
         else:
-            text = "Hoi Jaap! Goed van je te horen, alles is hier rustig. Hoe is het bij jou?"
+            text = "Hoi Jaap! Leuk van je te horen, hoe gaat het?"
 
         max_words = int(getattr(identity, "maximum_reply_words", 45) or 45)
         text_words = text.split()

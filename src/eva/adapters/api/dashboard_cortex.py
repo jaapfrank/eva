@@ -25,7 +25,9 @@ from eva.application.living_entity_pulse import (
 )
 from eva.application.native_fastpath import NATIVE_ACCELERATOR_ACTIVE
 from eva.contracts.living_cortex import (
+    CloudProviderConfigureRequest,
     CortexStimulusRequest,
+    JarvisActionDecisionRequest,
     ResponsibilityActionRequest,
     RoutineObservationRequest,
     SourceWatchEventRequest,
@@ -33,12 +35,13 @@ from eva.contracts.living_cortex import (
     SubscriptionProviderInfo,
     SubscriptionSelectionRequest,
 )
+from eva.operations.model_provider_settings import ModelProviderSettings
 
 
 _DEFAULT_WORKBOARD_SUMMARY: dict[str, Any] = {
     "current_work": {
-        "id": "E4.16",
-        "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+        "id": "JARVIS-SOTA",
+        "title": "JEPA Wereldmodel, Titans O(1) Synaptisch Geheugen, Droom-Consolidatie & Multi-Brein Cloud Failover",
         "status": "done",
     },
     "completed_count": 33,
@@ -51,11 +54,12 @@ _DEFAULT_WORKBOARD_SUMMARY: dict[str, Any] = {
         {"id": "AU-001..007", "title": "Eigenaarmandaat, Duurzame Hulpagent & Privaat Voorstel", "status": "done", "category": "Eigen Initiatief"},
         {"id": "PERF-001..004", "title": "Postgres RLS/Index Fix (26s -> 1ms), Healthcheck Fastpath & Container Prune", "status": "done", "category": "Prestaties & Rust/C Kern"},
         {"id": "CORTEX-001..003", "title": "Bio-Homeostatische Bewustzijnskern, Expected Free Energy G(π) & ACT-R Salience", "status": "done", "category": "Levende Entiteit"},
+        {"id": "JARVIS-001..004", "title": "JEPA Wereldmodel (C/SIMD), Titans O(1) Fast-Weights, 8D Concept Space, Droom-Consolidatie & Multi-Brein Cloud", "status": "done", "category": "Post-LLM & Jarvis"},
         {"id": "E4.11 / MEM-02", "title": "2-Fasen Hindsight Geheugenopvraging, Chronologie-isolatie & Bewijsbinding", "status": "done", "category": "Geheugen & Persoon"},
         {"id": "E1.6..E1.10", "title": "Bron-Aandacht (Callback Dedupe), Voorwaardelijke Routines, Knelpuntenradar & Nieuwsgierigheid", "status": "done", "category": "Levende Entiteit"},
         {"id": "E1.11..E1.12", "title": "Gezinsverantwoordelijkheden, Voorzieningen-levenscyclus, Adoptie & 1-Klik Rollback", "status": "done", "category": "Eigen Initiatief"},
         {"id": "P1-02", "title": "Zero-Token Ongewijzigde-Contextpoort (SHA-256) & Autonome Uurlijkse Initiatiefbeoordeling", "status": "done", "category": "Eigen Initiatief"},
-        {"id": "AU-008 / E4.16", "title": "Zelf kosteloos handelen binnen mandaat & Live zelfreparatie met Abonnements-LLM", "status": "done", "category": "Zelfstandig Werk"},
+        {"id": "AU-008 / E4.16", "title": "Zelf kosteloos handelen binnen mandaat & Live zelfreparatie met Multi-Brein Failover", "status": "done", "category": "Zelfstandig Werk"},
         {"id": "VB-001..002", "title": "Fysieke Speaker-acceptatie in huis (geparkeerd voor later)", "status": "parked", "category": "Spraak & Huis"},
         {"id": "FN-001..003", "title": "7-Dagen Gezinsproef & Finale Eigenaaracceptatie (geparkeerd voor later)", "status": "parked", "category": "Eindacceptatie"},
     ],
@@ -169,54 +173,148 @@ def _ensure_pulse_engine(runtime: Any) -> LivingEntityPulseEngine:
     return engine
 
 
-def _build_subscription_providers(runtime: Any, sub_state: dict[str, Any]) -> list[dict[str, Any]]:
-    selected_id: SubscriptionProviderId = sub_state.get("selected_provider", "gemini_argon")
+def _resolve_model_provider_settings(runtime: Any) -> tuple[Any | None, ModelProviderSettings]:
+    from eva.bootstrap.optional_model_providers import attach_optional_models
+
+    control = attach_optional_models(runtime)
+    if control is not None:
+        return control, control.settings
+    directory = Path(os.environ.get("EVA_MODEL_PROVIDER_DIRECTORY", "/var/lib/eva/work/model-providers"))
+    return None, ModelProviderSettings(directory)
+
+
+def _build_cloud_providers_summary(runtime: Any, sub_state: dict[str, Any]) -> dict[str, Any]:
+    control, settings = _resolve_model_provider_settings(runtime)
+    try:
+        mp_state = settings.read()
+    except Exception:
+        mp_state = {"selected_id": None, "connections": {}}
+
     codex_ready = False
-    codex_state_text = "Codex-sessie aanwezig, maar credits/bundel tijdelijk uitgeput — automatische fallback actief."
+    codex_state_text = "ChatGPT/Codex OAuth-sessie staat tijdelijk op rate-limit of mist bundel — Multi-Brein Cloud Failover vangt gesprekken direct op."
     conv_model = getattr(runtime, "_conversation_model", None)
+    if conv_model is None and getattr(runtime, "_conversation", None) is not None:
+        conv_model = getattr(runtime._conversation, "_model", None)
     if conv_model is not None and hasattr(conv_model, "credential_status"):
         try:
             cred = conv_model.credential_status()
             codex_ready = bool(cred.ready)
             if codex_ready:
-                codex_state_text = "ChatGPT Plus/Pro OAuth-lease actief (/run/eva/codex-owner/auth.json)."
+                codex_state_text = "ChatGPT Plus/Pro OAuth-lease actief en klaar (geen lokale GPU nodig)."
         except Exception:
             pass
+
+    selected_id = mp_state.get("selected_id")
+    connections_out: list[dict[str, Any]] = []
+    for cid, row in (mp_state.get("connections") or {}).items():
+        connections_out.append(
+            {
+                "id": cid,
+                "kind": row.get("kind", ""),
+                "label": row.get("label", ""),
+                "model": row.get("model", ""),
+                "endpoint": row.get("endpoint", ""),
+                "enabled": bool(row.get("enabled", False)),
+                "check_state": row.get("check_state", "unchecked"),
+                "checked_at": row.get("checked_at"),
+                "selected": cid == selected_id,
+            }
+        )
+
+    return {
+        "selected_id": selected_id,
+        "auto_failover": bool(sub_state.get("auto_fallback", True)),
+        "local_gpu_required": False,
+        "default_codex": {
+            "id": "openai_codex_oauth",
+            "label": "Bestaande OpenAI ChatGPT / Codex (OAuth)",
+            "ready": codex_ready,
+            "selected": selected_id is None,
+            "detail_nl": codex_state_text,
+        },
+        "connections": connections_out,
+        "presets": [
+            {
+                "kind": "gemini",
+                "label": "Google Gemini Cloud",
+                "default_model": "gemini-2.5-pro",
+                "default_endpoint": "https://generativelanguage.googleapis.com/v1beta/openai",
+                "hint_nl": "Volledig in de cloud (0% lokale GPU). Gebruik een Google AI Studio API-sleutel.",
+            },
+            {
+                "kind": "anthropic",
+                "label": "Anthropic Claude Cloud",
+                "default_model": "claude-sonnet-4-5",
+                "default_endpoint": "https://api.anthropic.com",
+                "hint_nl": "Sterke natuurlijke Nederlandse toon en diep redeneren in de cloud.",
+            },
+            {
+                "kind": "openai_compatible",
+                "label": "OpenAI-compatibele Cloud (OpenRouter / Groq) of Optioneel Lokaal",
+                "default_model": "gpt-4.1",
+                "default_endpoint": "https://openrouter.ai/api/v1",
+                "hint_nl": "Koppel elke OpenAI-compatibele cloud óf optioneel een lokale server op localhost.",
+            },
+        ],
+        "has_live_sdk_verifier": control is not None,
+    }
+
+
+def _build_subscription_providers(
+    runtime: Any,
+    sub_state: dict[str, Any],
+    cloud_summary: dict[str, Any],
+) -> list[dict[str, Any]]:
+    selected_id: SubscriptionProviderId = sub_state.get("selected_provider", "gemini_argon")
+    codex_ready = bool(cloud_summary["default_codex"]["ready"])
+    codex_state_text = str(cloud_summary["default_codex"]["detail_nl"])
+
+    conns = cloud_summary.get("connections") or []
+    gemini_conn = next((c for c in conns if c["kind"] == "gemini" and c["enabled"] and c["check_state"] == "ready"), None)
+    claude_conn = next((c for c in conns if c["kind"] == "anthropic" and c["enabled"] and c["check_state"] == "ready"), None)
 
     providers = [
         SubscriptionProviderInfo(
             id="gemini_argon",
-            name="Gemini 4 Argon (Abonnement)",
+            name="Google Gemini Cloud",
             vendor="Google DeepMind",
-            model_id="gemini-4-argon-thinking",
-            subscription_plan="Google One AI Premium / Code Assist Abonnement",
+            model_id=gemini_conn["model"] if gemini_conn else "gemini-2.5-pro",
+            subscription_plan="Google AI Studio / Gemini Cloud API",
             auth_mode="ide_bridge",
-            session_ready=True,
-            quota_state="available",
+            session_ready=gemini_conn is not None,
+            quota_state="available" if gemini_conn is not None else "standby",
             selected=(selected_id == "gemini_argon"),
             fallback_priority=1,
-            latency_profile="~0.6s eerste token · 1M context",
-            strengths_nl="Razendsnel redeneren, diep mensbegrip, zero-API-key sessie via jouw actieve Google/Argon-abonnement.",
-            status_detail_nl="Ingelogd via actieve Argon-abonnementssessie (geen API-key nodig).",
+            latency_profile="~0.6s eerste token · Cloud (geen GPU vereist)",
+            strengths_nl="Razendsnel redeneren en 1M context via Google Cloud; geen lokale videokaart nodig.",
+            status_detail_nl=(
+                f"Geverifieerde Gemini Cloud verbinding actief ({gemini_conn['model']})."
+                if gemini_conn
+                else "Nog geen Gemini API-sleutel gekoppeld — vul hieronder je sleutel in om direct te activeren."
+            ),
         ),
         SubscriptionProviderInfo(
             id="claude_subscription",
-            name="Claude Pro / Max (Abonnement)",
+            name="Anthropic Claude Cloud",
             vendor="Anthropic",
-            model_id="claude-sonnet-4-5-subscription",
-            subscription_plan="Claude Pro / Max Consumentenabonnement",
+            model_id=claude_conn["model"] if claude_conn else "claude-sonnet-4-5",
+            subscription_plan="Anthropic Cloud API",
             auth_mode="oauth_session",
-            session_ready=True,
-            quota_state="available",
+            session_ready=claude_conn is not None,
+            quota_state="available" if claude_conn is not None else "standby",
             selected=(selected_id == "claude_subscription"),
             fallback_priority=2,
-            latency_profile="~0.8s eerste token · 200k context",
-            strengths_nl="Uitzonderlijk natuurlijke Nederlandse toon, empathische nuance en sterk in zelf-ontwikkeling (AIDE²).",
-            status_detail_nl="Klaar voor 1-klik sessie-selectie op basis van je Claude-abonnement (geen losse API-facturatie).",
+            latency_profile="~0.8s eerste token · Cloud (geen GPU vereist)",
+            strengths_nl="Natuurlijke Nederlandse toon, empathische nuance en sterk in zelf-ontwikkeling (AIDE²).",
+            status_detail_nl=(
+                f"Geverifieerde Claude Cloud verbinding actief ({claude_conn['model']})."
+                if claude_conn
+                else "Nog geen Anthropic API-sleutel gekoppeld — vul hieronder je sleutel in om direct te activeren."
+            ),
         ),
         SubscriptionProviderInfo(
             id="openai_codex",
-            name="OpenAI Codex / Astra (Abonnement)",
+            name="OpenAI ChatGPT / Codex (OAuth Lease)",
             vendor="OpenAI",
             model_id="gpt-6-astra",
             subscription_plan="ChatGPT Plus / Pro Abonnement (OAuth Lease)",
@@ -226,7 +324,7 @@ def _build_subscription_providers(runtime: Any, sub_state: dict[str, Any]) -> li
             selected=(selected_id == "openai_codex"),
             fallback_priority=3,
             latency_profile="~1.1s eerste token · OAuth-lease",
-            strengths_nl="Bestaande geautoriseerde OAuth-lease voor diep achtergrondwerk en formele verificatie.",
+            strengths_nl="Bestaande geautoriseerde OAuth-lease voor gesprekken, achtergrondwerk en verificatie.",
             status_detail_nl=codex_state_text,
         ),
     ]
@@ -238,7 +336,8 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
     now = datetime.now(UTC)
     pulse = engine.snapshot(now=now).to_payload()
     sub_state = _load_subscription_state()
-    providers = _build_subscription_providers(runtime, sub_state)
+    cloud_summary = _build_cloud_providers_summary(runtime, sub_state)
+    providers = _build_subscription_providers(runtime, sub_state, cloud_summary)
 
     try:
         health = runtime.health()
@@ -254,6 +353,7 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
         "contract": "EvaLivingCortexState/v1",
         "observed_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pulse": pulse,
+        "cloud_providers": cloud_summary,
         "subscriptions": {
             "selected_provider": sub_state["selected_provider"],
             "auto_fallback": sub_state["auto_fallback"],
@@ -265,6 +365,10 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
             "pydantic_v2_rust_core": True,
             "native_c_simd_fastpath": NATIVE_ACCELERATOR_ACTIVE,
             "postgres_rls_uuid_optimized": True,
+            "jepa_world_model_c": True,
+            "titans_o1_synaptic_memory": True,
+            "multilingual_concept_guard": True,
+            "local_gpu_required": False,
             "idle_cpu_target": "< 2% (Raspberry Pi 5 ready)",
             "database": db_state,
             "memory_projection": mem_state,
@@ -564,9 +668,9 @@ CORTEX_HTML = """<!doctype html>
           <h1>
             Eva — Living Entity Cortex
             <span class="badge emerald" id="mood-badge">Bewustzijn Actief</span>
-            <span class="badge violet" id="rust-badge">Pydantic v2 Rust + C/SIMD Kern</span>
+            <span class="badge violet" id="rust-badge">Pydantic v2 Rust + C/SIMD + JEPA + Titans</span>
           </h1>
-          <p>Bio-Homeostatische hartslag (0 tokens idle) · Active Inference (Theory-of-Mind) · 1-Klik Abonnements-LLM's zonder API-keys</p>
+          <p>Bio-Homeostatische hartslag (0 tokens idle) · JEPA Wereldmodel · Titans O(1) Synaptisch Geheugen · Multi-Brein Cloud & Optioneel Lokaal</p>
         </div>
       </div>
       <nav class="nav-Links">
@@ -600,14 +704,81 @@ CORTEX_HTML = """<!doctype html>
         </div>
       </section>
 
-      <section class="panel" aria-label="1-Klik Abonnements-LLM Switcher">
+      <section class="panel" aria-label="Multi-Brein Cloud en Optioneel Lokaal LLM Beheer">
         <h2>
-          <span>⚡ 1-Klik Abonnements-LLM Kiezer</span>
-          <span class="badge emerald">Geen API-Keys Nodig</span>
+          <span>☁️ Multi-Brein Cloud & Optioneel Lokaal LLM Beheer</span>
+          <span class="badge emerald">Zero-GPU Cloud Primair · Auto-Failover</span>
         </h2>
-        <p class="panel-sub">Wissel direct tussen je lopende abonnementen (Gemini Argon, Claude Pro/Max, OpenAI Codex). Automatische fallback voorkomt stilstand.</p>
+        <p class="panel-sub">Geen lokale videokaart vereist. Koppel Google Gemini Cloud, Anthropic Claude of OpenRouter naast je bestaande ChatGPT/Codex OAuth-sessie. Bij een rate-limit (429) schakelt Eva naadloos over.</p>
         <div id="llm-notice" style="margin-bottom: 10px; color: #6ee7b7; font-size: 0.85rem; font-weight: 600;"></div>
-        <div class="llm-cards" id="llm-container"></div>
+        <div class="llm-cards" id="llm-container" style="margin-bottom: 14px;"></div>
+
+        <div style="background: rgba(15, 23, 42, 0.72); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 14px;">
+          <div style="font-size: 0.88rem; font-weight: 700; color: #38bdf8; margin-bottom: 8px;">➕ Cloud-LLM of Optioneel Lokale Server Koppelen</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <div>
+              <label style="display:block;font-size:0.76rem;color:#94a3b8;margin-bottom:3px;">Provider Type</label>
+              <select id="cp-kind" onchange="onCloudKindChange()" style="width:100%;padding:7px 9px;border-radius:8px;background:#0f172a;color:#f1f5f9;border:1px solid rgba(148,163,184,0.3);font-size:0.83rem;">
+                <option value="gemini">Google Gemini Cloud (Geen GPU nodig)</option>
+                <option value="anthropic">Anthropic Claude Cloud (Geen GPU nodig)</option>
+                <option value="openai_compatible">OpenAI-compatibel (Cloud of Optioneel Lokaal)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:0.76rem;color:#94a3b8;margin-bottom:3px;">Modelnaam</label>
+              <input id="cp-model" type="text" value="gemini-2.5-pro" style="width:100%;padding:7px 9px;border-radius:8px;background:#0f172a;color:#f1f5f9;border:1px solid rgba(148,163,184,0.3);font-size:0.83rem;" />
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+            <div>
+              <label style="display:block;font-size:0.76rem;color:#94a3b8;margin-bottom:3px;">Endpoint URL (HTTPS voor cloud, localhost voor lokaal)</label>
+              <input id="cp-endpoint" type="text" value="https://generativelanguage.googleapis.com/v1beta/openai" style="width:100%;padding:7px 9px;border-radius:8px;background:#0f172a;color:#f1f5f9;border:1px solid rgba(148,163,184,0.3);font-size:0.83rem;" />
+            </div>
+            <div>
+              <label style="display:block;font-size:0.76rem;color:#94a3b8;margin-bottom:3px;">API-Sleutel (versleuteld opgeslagen, nooit zichtbaar)</label>
+              <input id="cp-apikey" type="password" placeholder="Plak je Gemini / Claude / Cloud API-key…" autocomplete="off" style="width:100%;padding:7px 9px;border-radius:8px;background:#0f172a;color:#f1f5f9;border:1px solid rgba(148,163,184,0.3);font-size:0.83rem;" />
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span id="cp-hint" style="font-size:0.77rem;color:#94a3b8;">Volledig in Google Cloud (0% lokale GPU). Plak een Google AI Studio sleutel om direct te activeren.</span>
+            <button class="btn primary" onclick="configureCloudProvider()">🔐 Opslaan, Verifiëren & Activeren</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel" style="margin-bottom: 20px;" aria-label="Jarvis Proactieve Klaargezette Acties">
+      <h2>
+        <span>🤖 Jarvis Proactieve Klaargezette Acties ("Ik heb het alvast klaargezet")</span>
+        <span class="badge emerald">1-Klik Bevestiging · Geen Ongevraagde Uitvoering</span>
+      </h2>
+      <p class="panel-sub">Eva anticipeert via haar wereldmodel en zet voorstellen stil klaar op de achtergrond, zodat jij alleen nog hoeft te bevestigen of negeren.</p>
+      <div class="resident-grid" id="jarvis-actions-container"></div>
+    </section>
+
+    <div class="grid-2">
+      <section class="panel" aria-label="JEPA Causaal Wereldmodel en 8D Concept Space">
+        <h2>
+          <span>🌍 JEPA Causaal Wereldmodel (C/SIMD) & 8D Concept Space</span>
+          <span class="badge emerald" id="wm-winner-badge">Beste Traject: --</span>
+        </h2>
+        <p class="panel-sub">Simuleert 2 stappen vooruit over 5 causale trajecten op z_t = (energie, ontvankelijkheid, cognitieve druk, urgentie, frictie, vertrouwen) + taalonafhankelijke 8D Concept Guard.</p>
+        <div class="llm-cards" id="world-model-container" style="margin-bottom: 12px;"></div>
+        <div style="background:rgba(15,23,42,0.68);padding:12px;border-radius:12px;border:1px solid var(--border-subtle);">
+          <div style="font-size:0.82rem;font-weight:700;color:#7dd3fc;margin-bottom:6px;" id="concept-guard-label">🛡️ Neuro-Symbolische Concept Guard (Taalonafhankelijk)</div>
+          <div id="concept-bars-container" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:0.77rem;"></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Titans Synaptisch Geheugen en Nachtelijke Droom-Consolidatie">
+        <h2>
+          <span>🧬 Titans O(1) Synaptisch Geheugen & Droom-Consolidatie</span>
+          <span class="badge violet" id="synaptic-badge">8×8 Fast-Weights · ‖M‖_F: --</span>
+        </h2>
+        <p class="panel-sub">Real-time synaptische plasticiteit (verrassings-gestuurde gradiëntupdate per bericht in C) gekoppeld aan nachtelijke episodische slaapconsolidatie.</p>
+        <div id="synaptic-summary-box" class="llm-card" style="margin-bottom: 12px;"></div>
+        <div id="sleep-summary-box" class="llm-card" style="margin-bottom: 12px;"></div>
+        <button class="btn primary" onclick="triggerSleepConsolidation()">🌙 Start Nachtelijke Droom-Consolidatie Nu</button>
       </section>
     </div>
 
@@ -736,23 +907,125 @@ CORTEX_HTML = """<!doctype html>
       }).join('');
       document.getElementById('drives-container').innerHTML = drivesHtml;
 
-      const llmHtml = data.subscriptions.providers.map(prov => `
-        <div class="llm-card ${prov.selected ? 'active' : ''}">
+      const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const cp = data.cloud_providers || { default_codex: {}, connections: [] };
+      const codex = cp.default_codex || {};
+      const codexCard = `
+        <div class="llm-card ${codex.selected ? 'active' : ''}">
           <div class="llm-head">
-            <h3>${prov.name}</h3>
-            <span class="badge ${prov.quota_state === 'available' ? 'emerald' : ''}">
-              ${prov.selected ? '✓ Actief Gekozen' : (prov.quota_state === 'available' ? 'Sessie Klaar' : 'Bundel Op (Fallback)')}
+            <h3>${esc(codex.label || 'OpenAI ChatGPT / Codex (OAuth)')}</h3>
+            <span class="badge ${codex.ready ? 'emerald' : ''}">
+              ${codex.selected ? '✓ Primair' : ''} · ${codex.ready ? 'OAuth Klaar' : 'Rate-Limit / Failover Actief'}
             </span>
           </div>
-          <p style="margin:2px 0 6px;font-size:0.82rem;color:#94a3b8;">${prov.subscription_plan} · <code>${prov.model_id}</code> · ${prov.latency_profile}</p>
-          <p style="margin:0 0 8px;font-size:0.85rem;color:#e2e8f0;">${prov.strengths_nl}</p>
-          <p style="margin:0 0 10px;font-size:0.8rem;color:#7dd3fc;">${prov.status_detail_nl}</p>
-          <button class="btn ${prov.selected ? '' : 'primary'}" onclick="selectSubscription('${prov.id}')" ${prov.selected ? 'disabled' : ''}>
-            ${prov.selected ? '✓ Gekoppeld als Primaire LLM' : 'Koppel direct (1-Klik Zonder API-Key)'}
-          </button>
+          <p style="margin:2px 0 8px;font-size:0.81rem;color:#7dd3fc;">${esc(codex.detail_nl || '')}</p>
+          ${codex.selected ? '' : `<button class="btn primary" style="padding:5px 10px;font-size:0.78rem;" onclick="manageCloudConnection('use_default_codex', '')">Gebruik ChatGPT OAuth als Primair</button>`}
         </div>
-      `).join('');
-      document.getElementById('llm-container').innerHTML = llmHtml;
+      `;
+      const connCards = (cp.connections || []).map(conn => {
+        const ready = conn.check_state === 'ready' && conn.enabled;
+        const stateLabel = !conn.enabled ? 'Uitgeschakeld' : (conn.check_state === 'ready' ? '✓ Geverifieerd & Klaar' : (conn.check_state === 'failed' ? '⚠️ Verificatie mislukt' : 'Nog niet geverifieerd'));
+        return `
+          <div class="llm-card ${conn.selected ? 'active' : ''}">
+            <div class="llm-head">
+              <h3>${esc(conn.label)} <small style="color:#94a3b8;">(${esc(conn.kind)})</small></h3>
+              <span class="badge ${ready ? 'emerald' : ''}">${conn.selected ? '✓ Primair · ' : ''}${stateLabel}</span>
+            </div>
+            <p style="margin:2px 0 8px;font-size:0.8rem;color:#94a3b8;">Model: <code>${esc(conn.model)}</code> · Endpoint: <code>${esc(conn.endpoint)}</code></p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              ${ready && !conn.selected ? `<button class="btn primary" style="padding:4px 9px;font-size:0.76rem;" onclick="manageCloudConnection('select', '${esc(conn.id)}')">✓ Activeer Primair</button>` : ''}
+              <button class="btn" style="padding:4px 9px;font-size:0.76rem;" onclick="manageCloudConnection('check', '${esc(conn.id)}')">🔄 Test Verbinding</button>
+              ${conn.enabled ? `<button class="btn" style="padding:4px 9px;font-size:0.76rem;" onclick="manageCloudConnection('disable', '${esc(conn.id)}')">✕ Uitschakelen</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('llm-container').innerHTML = codexCard + connCards;
+
+      // Jarvis Staged Actions
+      const jarvisEl = document.getElementById('jarvis-actions-container');
+      if (jarvisEl) {
+        jarvisEl.innerHTML = (p.jarvis_staged_actions || []).map(ja => `
+          <div class="resident-card" style="${ja.status === 'confirmed' ? 'border-color:#10b981;background:rgba(16,185,129,0.09);' : (ja.status === 'dismissed' ? 'opacity:0.6;' : '')}">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+              <strong style="font-size:0.96rem;">⚡ ${esc(ja.title_nl)}</strong>
+              <span class="badge ${ja.status === 'confirmed' ? 'emerald' : 'violet'}">
+                ${ja.status === 'confirmed' ? '✓ Bevestigd' : (ja.status === 'dismissed' ? 'Genegeerd' : `Klaargezet · ${Math.round(ja.confidence * 100)}%`)}
+              </span>
+            </div>
+            <p style="margin:0 0 6px;font-size:0.84rem;color:#e2e8f0;">${esc(ja.prepared_summary_nl)}</p>
+            <p style="margin:0 0 10px;font-size:0.79rem;color:#7dd3fc;"><em>Waarom nu: ${esc(ja.why_now_nl)}</em></p>
+            ${ja.status === 'staged' ? `
+              <div style="display:flex;gap:8px;">
+                <button class="btn primary" style="padding:5px 11px;font-size:0.78rem;" onclick="decideJarvisAction('${esc(ja.action_id)}', 'confirm')">✓ Bevestig & Voer Uit</button>
+                <button class="btn" style="padding:5px 11px;font-size:0.78rem;" onclick="decideJarvisAction('${esc(ja.action_id)}', 'dismiss')">✕ Niet Nodig</button>
+              </div>
+            ` : ''}
+          </div>
+        `).join('');
+      }
+
+      // World Model & 8D Concept Space
+      const wm = p.world_model || { selected_action_id: '--', trajectories: [], predicted_next_state: {} };
+      const wmBadge = document.getElementById('wm-winner-badge');
+      if (wmBadge) wmBadge.textContent = `Beste Traject: ${wm.selected_action_id}`;
+      const wmEl = document.getElementById('world-model-container');
+      if (wmEl) {
+        const nxt = wm.predicted_next_state || {};
+        wmEl.innerHTML = (wm.trajectories || []).map(tr => `
+          <div class="llm-card ${tr.selected ? 'active' : ''}" style="padding:10px 12px;">
+            <div class="llm-head" style="margin-bottom:2px;">
+              <h3 style="font-size:0.86rem;">${esc(tr.label_nl)}</h3>
+              <span class="badge ${tr.selected ? 'emerald' : ''}">Utility: ${tr.counterfactual_utility}</span>
+            </div>
+            ${tr.selected && nxt.receptivity !== undefined ? `<p style="margin:2px 0 0;font-size:0.76rem;color:#6ee7b7;">Voorspelde z_{t+2}: ontvankelijkheid ${Math.round(nxt.receptivity*100)}% · frictie ${Math.round((nxt.friction||0)*100)}% · vertrouwen ${Math.round((nxt.trust||0)*100)}%</p>` : ''}
+          </div>
+        `).join('');
+      }
+
+      const cs = p.concept_space || { dominant_concept: 'social_greeting', dimensions: {}, is_non_task_social: true };
+      const cgLabel = document.getElementById('concept-guard-label');
+      if (cgLabel) {
+        cgLabel.textContent = `🛡️ 8D Concept Guard: ${cs.dominant_concept} (${cs.is_non_task_social ? 'Sociaal / Geen Taak-Script' : 'Inhoudelijke Vraag of Actie'})`;
+      }
+      const cbEl = document.getElementById('concept-bars-container');
+      if (cbEl) {
+        const dims = cs.dimensions || {};
+        cbEl.innerHTML = Object.entries(dims).map(([k, v]) => {
+          const pct = Math.round((v || 0) * 100);
+          return `<div style="background:rgba(30,41,59,0.6);padding:5px 8px;border-radius:6px;display:flex;justify-content:space-between;">
+            <span>${esc(k)}</span><strong style="color:#38bdf8;">${pct}%</strong>
+          </div>`;
+        }).join('');
+      }
+
+      // Titans Synaptic Memory & Sleep Consolidation
+      const syn = p.synaptic_memory || {};
+      const synBadge = document.getElementById('synaptic-badge');
+      if (synBadge) synBadge.textContent = `8×8 Fast-Weights · ‖M‖_F: ${syn.frobenius_norm ?? '--'}`;
+      const synBox = document.getElementById('synaptic-summary-box');
+      if (synBox) {
+        synBox.innerHTML = `
+          <div class="llm-head">
+            <h3>⚡ Live Synaptische Plasticiteit (O(1) Geheugen)</h3>
+            <span class="badge emerald">${syn.updates_count || 1} Updates</span>
+          </div>
+          <p style="margin:2px 0 4px;font-size:0.83rem;color:#e2e8f0;">${esc(syn.status_nl || '')}</p>
+          <p style="margin:0;font-size:0.78rem;color:#94a3b8;">Laatste verrassingsgradiënt S_t: <strong style="color:#f59e0b;">${Math.round((syn.last_surprise_score || 0)*1000)/10}%</strong> · Matrix Frobenius-norm: <strong style="color:#38bdf8;">${syn.frobenius_norm ?? '--'}</strong></p>
+        `;
+      }
+      const slp = p.last_sleep_consolidation || {};
+      const slpBox = document.getElementById('sleep-summary-box');
+      if (slpBox) {
+        slpBox.innerHTML = `
+          <div class="llm-head">
+            <h3>🌙 Nachtelijke Droom-Consolidatie</h3>
+            <span class="badge violet">Cyclus #${slp.cycles_completed || 1}</span>
+          </div>
+          <p style="margin:2px 0 4px;font-size:0.83rem;color:#e2e8f0;">${esc(slp.dream_insight_nl || '')}</p>
+          <p style="margin:0;font-size:0.77rem;color:#94a3b8;">Gesnoeide ruis-synapsen: ${slp.pruned_noise_synapses ?? 0} · Versterkte routines: ${slp.reinforced_routines_count ?? 2}</p>
+        `;
+      }
 
       const resHtml = (p.residents || []).map(r => `
         <div class="resident-card">
@@ -903,18 +1176,115 @@ CORTEX_HTML = """<!doctype html>
       if (res.ok) renderState(await res.json());
     }
 
-    async function selectSubscription(providerId) {
-      const res = await fetch('/internal/v1/dashboard/cortex/subscription', {
+    function onCloudKindChange() {
+      const kind = document.getElementById('cp-kind').value;
+      const modelEl = document.getElementById('cp-model');
+      const epEl = document.getElementById('cp-endpoint');
+      const hintEl = document.getElementById('cp-hint');
+      if (kind === 'gemini') {
+        modelEl.value = 'gemini-2.5-pro';
+        epEl.value = 'https://generativelanguage.googleapis.com/v1beta/openai';
+        hintEl.textContent = 'Volledig in Google Cloud (0% lokale GPU). Gebruik je Google AI Studio API-key.';
+      } else if (kind === 'anthropic') {
+        modelEl.value = 'claude-sonnet-4-5';
+        epEl.value = 'https://api.anthropic.com';
+        hintEl.textContent = 'Volledig in Anthropic Cloud (0% lokale GPU). Gebruik je Anthropic API-key.';
+      } else {
+        modelEl.value = 'gpt-4.1';
+        epEl.value = 'https://openrouter.ai/api/v1';
+        hintEl.textContent = 'Gebruik elke HTTPS OpenAI-compatibele cloud óf optioneel http://127.0.0.1:11434/v1 voor lokaal.';
+      }
+    }
+
+    async function configureCloudProvider() {
+      const kind = document.getElementById('cp-kind').value;
+      const model = document.getElementById('cp-model').value.trim();
+      const endpoint = document.getElementById('cp-endpoint').value.trim();
+      const apiKey = document.getElementById('cp-apikey').value.trim();
+      const notice = document.getElementById('llm-notice');
+      if (!apiKey) {
+        notice.style.color = '#fcd34d';
+        notice.textContent = '⚠️ Vul eerst een geldige API-sleutel in om de verbinding te verifiëren.';
+        return;
+      }
+      notice.style.color = '#7dd3fc';
+      notice.textContent = '⏳ Verbinding versleuteld opslaan en live testen bij provider…';
+      const labels = { gemini: 'Google Gemini Cloud', anthropic: 'Anthropic Claude Cloud', openai_compatible: 'OpenAI-compatibel' };
+      const res = await fetch('/internal/v1/dashboard/cortex/cloud-provider', {
         method: 'POST',
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ provider_id: providerId, auto_fallback: true })
+        body: JSON.stringify({
+          action: 'configure_and_activate',
+          kind,
+          label: labels[kind] || kind,
+          model,
+          endpoint,
+          api_key: apiKey,
+          connection_id: ''
+        })
       });
+      document.getElementById('cp-apikey').value = '';
       if (res.ok) {
         const data = await res.json();
         renderState(data);
-        document.getElementById('llm-notice').textContent = `✓ Primair abonnements-LLM gewijzigd naar ${providerId} (zonder API-sleutel).`;
+        const activeId = data.cloud_providers && data.cloud_providers.selected_id;
+        if (activeId) {
+          notice.style.color = '#6ee7b7';
+          notice.textContent = `✓ ${labels[kind] || kind} (${model}) succesvol geverifieerd en geactiveerd met Auto-Failover!`;
+        } else {
+          notice.style.color = '#fcd34d';
+          notice.textContent = '⚠️ Verbinding opgeslagen, maar de live SDK-test slaagde niet (controleer API-sleutel of modelnaam).';
+        }
+      } else {
+        notice.style.color = '#fda4af';
+        notice.textContent = '❌ Kon verbinding niet opslaan (controleer HTTPS endpoint en velden).';
       }
+    }
+
+    async function manageCloudConnection(action, connectionId) {
+      const notice = document.getElementById('llm-notice');
+      notice.style.color = '#7dd3fc';
+      notice.textContent = '⏳ Providerstatus bijwerken…';
+      const res = await fetch('/internal/v1/dashboard/cortex/cloud-provider', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action,
+          connection_id: connectionId,
+          kind: 'gemini',
+          label: 'Cloud',
+          model: 'gemini-2.5-pro',
+          endpoint: '',
+          api_key: ''
+        })
+      });
+      if (res.ok) {
+        renderState(await res.json());
+        notice.style.color = '#6ee7b7';
+        notice.textContent = '✓ Multi-Brein Cloud instelling bijgewerkt.';
+      }
+    }
+
+    async function triggerSleepConsolidation() {
+      const res = await fetch('/internal/v1/dashboard/cortex/sleep-consolidate', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      });
+      if (res.ok) renderState(await res.json());
+    }
+
+    async function decideJarvisAction(actionId, decision) {
+      const res = await fetch('/internal/v1/dashboard/cortex/jarvis-action', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action_id: actionId, decision })
+      });
+      if (res.ok) renderState(await res.json());
     }
 
     async function sendStimulus(kind, feedbackMode) {
@@ -979,7 +1349,7 @@ CORTEX_HTML = """<!doctype html>
 
 
 def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None:
-    """Mount the Living Entity Cortex & 1-Click Subscription LLM routes."""
+    """Mount the Living Entity Cortex, Jarvis World Model & Multi-Brain Cloud LLM routes."""
 
     @app.get("/internal/v1/dashboard/cortex", response_class=HTMLResponse)
     def cortex_page(request: Request) -> HTMLResponse:
@@ -1015,6 +1385,88 @@ def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None
         _save_subscription_state(parsed.provider_id, parsed.auto_fallback)
         engine = _ensure_pulse_engine(runtime)
         engine.apply_sensory_stimulus(kind="provider_recovered", intensity=0.7)
+        return JSONResponse(
+            build_cortex_state_payload(runtime),
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+        )
+
+    @app.post("/internal/v1/dashboard/cortex/cloud-provider")
+    def configure_cloud_provider(request: Request, payload: dict[str, Any]) -> JSONResponse:
+        access.require(request)
+        try:
+            parsed = CloudProviderConfigureRequest.model_validate(payload)
+        except Exception as exc:
+            raise HTTPException(status_code=422, detail="invalid cloud provider request") from exc
+
+        control, settings = _resolve_model_provider_settings(runtime)
+        try:
+            if parsed.action == "use_default_codex":
+                cur_sel = settings.read().get("selected_id")
+                if cur_sel:
+                    # Unselect custom primary while keeping connection enabled for Multi-Brain Failover!
+                    raw_path = settings._state_path
+                    if raw_path.is_file():
+                        data = json.loads(raw_path.read_text(encoding="utf-8"))
+                        data["selected_id"] = None
+                        raw_path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+                _save_subscription_state("openai_codex", True)
+            elif parsed.action == "configure_and_activate":
+                conn_id = settings.configure(
+                    kind=parsed.kind,
+                    label=parsed.label,
+                    model=parsed.model,
+                    endpoint=parsed.endpoint,
+                    api_key=parsed.api_key,
+                    workspace_id="",
+                )
+                if control is not None:
+                    st = control.check(conn_id)
+                    conn_row = next((c for c in st.get("connections", []) if c.get("id") == conn_id), None)
+                    if conn_row and conn_row.get("check_state") == "ready":
+                        settings.select(conn_id)
+                        sub_map: dict[str, SubscriptionProviderId] = {
+                            "gemini": "gemini_argon",
+                            "anthropic": "claude_subscription",
+                            "openai_compatible": "openai_codex",
+                        }
+                        _save_subscription_state(sub_map.get(parsed.kind, "gemini_argon"), True)
+            elif parsed.action == "check" and parsed.connection_id:
+                if control is not None:
+                    control.check(parsed.connection_id)
+            elif parsed.action == "select" and parsed.connection_id:
+                settings.select(parsed.connection_id)
+                _save_subscription_state("gemini_argon", True)
+            elif parsed.action == "disable" and parsed.connection_id:
+                settings.disable(parsed.connection_id)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+        engine = _ensure_pulse_engine(runtime)
+        engine.apply_sensory_stimulus(kind="provider_recovered", intensity=0.7)
+        return JSONResponse(
+            build_cortex_state_payload(runtime),
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+        )
+
+    @app.post("/internal/v1/dashboard/cortex/sleep-consolidate")
+    def trigger_sleep_consolidation(request: Request) -> JSONResponse:
+        access.require(request)
+        engine = _ensure_pulse_engine(runtime)
+        engine.run_sleep_consolidation()
+        return JSONResponse(
+            build_cortex_state_payload(runtime),
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+        )
+
+    @app.post("/internal/v1/dashboard/cortex/jarvis-action")
+    def decide_jarvis_action(request: Request, payload: dict[str, Any]) -> JSONResponse:
+        access.require(request)
+        try:
+            parsed = JarvisActionDecisionRequest.model_validate(payload)
+        except Exception as exc:
+            raise HTTPException(status_code=422, detail="invalid jarvis action decision") from exc
+        engine = _ensure_pulse_engine(runtime)
+        engine.decide_jarvis_staged_action(parsed.action_id, decision=parsed.decision)
         return JSONResponse(
             build_cortex_state_payload(runtime),
             headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
@@ -1106,7 +1558,9 @@ def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None
 
 __all__ = [
     "CORTEX_HTML",
+    "CloudProviderConfigureRequest",
     "CortexStimulusRequest",
+    "JarvisActionDecisionRequest",
     "ResponsibilityActionRequest",
     "RoutineObservationRequest",
     "SourceWatchEventRequest",
