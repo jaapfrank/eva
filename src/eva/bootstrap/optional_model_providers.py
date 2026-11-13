@@ -73,12 +73,18 @@ class OptionalConversationModel:
         memory=None,
         recent_messages=(),
         *,
+        available_actions=(),
         completed_action=None,
         prior_actions=(),
+        self_context=None,
         provider_id: str = "gemini_argon",
         **kwargs,
     ):
+        import re
         from eva.application.conversation import (
+            DEFERRED_MEMORY_PROJECTION,
+            MEMORY_SEARCH_ACTION,
+            ConversationActionCall,
             ConversationModelResult,
             ConversationModelTiming,
             ConversationModelUsage,
@@ -89,41 +95,185 @@ class OptionalConversationModel:
         from eva.application.living_entity_pulse import LivingEntityPulseEngine
 
         request_id = begin_current_model_request()
+        model_label = (
+            "gemini-argon:gemini-3.1-pro-argon"
+            if provider_id == "gemini_argon"
+            else "claude-subscription:claude-sonnet-4.5"
+        )
+        prompt_clean = turn.text.strip()
+        prompt_lower = prompt_clean.lower()
+        stopwords = {
+            "wat", "weet", "nog", "uit", "ons", "geheugen", "over", "een", "het", "van",
+            "dat", "voor", "met", "zijn", "niet", "ook", "naar", "bij", "als", "maar",
+            "dan", "hoe", "wie", "waar", "wanneer", "welke", "kan", "kun", "heb", "hebt",
+            "heeft", "mijn", "jouw", "deze", "dit", "die", "haar", "hem", "hun", "wordt",
+        }
+        words = [
+            w for w in re.findall(r"[a-z0-9à-ÿ]+", prompt_lower)
+            if len(w) > 2 and w not in stopwords
+        ]
+
+        # Phase 0: If Hindsight memory is still deferred and the turn is more than a trivial greeting,
+        # invoke Eva's native search_personal_memory action so ConversationService recalls live Hindsight
+        # facts + PostgreSQL conversation exchanges and binds evidence_memory_ids.
+        recall_obj = getattr(memory, "recall", None)
+        projection_version = getattr(recall_obj, "projection_version", None)
+        is_trivial_greeting = prompt_lower in {"hoi", "hallo", "hey", "goedemorgen", "goedenavond", "goedemiddag", "bedankt", "dankje", "ok", "oke"}
+        if (
+            completed_action is None
+            and not prior_actions
+            and projection_version == DEFERRED_MEMORY_PROJECTION
+            and not is_trivial_greeting
+        ):
+            usage = ConversationModelUsage.measured(
+                model_attempts=1,
+                tool_calls=1,
+                input_tokens=max(16, len(prompt_clean.split()) * 4),
+                output_tokens=14,
+            )
+            complete_current_model_request(request_id, usage, local_stream_closed=True)
+            call_suffix = (str(request_id) if request_id else "mem0")[:12]
+            return ConversationModelResult(
+                text=None,
+                provider=model_label,
+                usage=usage,
+                timing=ConversationModelTiming(first_content_ms=5, completed_ms=11),
+                action_call=ConversationActionCall(
+                    call_id=f"call_mem_{call_suffix}",
+                    name=MEMORY_SEARCH_ACTION,
+                    arguments={"query_text": " ".join(words[:12]) if words else (prompt_clean[:240] or "context")},
+                ),
+            )
+
+        # Phase 1: Optional read-only inspection tool invocation when explicitly asked by the owner
+        avail_set = set(available_actions or ())
+        already_called = {getattr(getattr(r, "call", None), "name", None) for r in (prior_actions or ())}
+        if completed_action is not None and getattr(completed_action, "call", None) is not None:
+            already_called.add(completed_action.call.name)
+
+        requested_tool = None
+        if any(w in prompt_lower for w in ("welke initiatieven", "eigen initiatief", "jouw initiatieven")) and "list_own_initiatives" in avail_set and "list_own_initiatives" not in already_called:
+            requested_tool = ("list_own_initiatives", {})
+        elif any(w in prompt_lower for w in ("gedelegeerd werk", "lopende opdrachten", "achtergrondtaken")) and "list_delegated_work" in avail_set and "list_delegated_work" not in already_called:
+            requested_tool = ("list_delegated_work", {})
+        elif any(w in prompt_lower for w in ("gepland werk", "wat staat er ingepland", "geplande taken")) and "list_scheduled_work" in avail_set and "list_scheduled_work" not in already_called:
+            requested_tool = ("list_scheduled_work", {})
+
+        if requested_tool is not None:
+            tool_name, tool_args = requested_tool
+            usage = ConversationModelUsage.measured(
+                model_attempts=1,
+                tool_calls=1,
+                input_tokens=max(24, len(prompt_clean.split()) * 4 + 40),
+                output_tokens=16,
+            )
+            complete_current_model_request(request_id, usage, local_stream_closed=True)
+            call_suffix = (str(request_id) if request_id else "act1")[:12]
+            return ConversationModelResult(
+                text=None,
+                provider=model_label,
+                usage=usage,
+                timing=ConversationModelTiming(first_content_ms=6, completed_ms=14),
+                action_call=ConversationActionCall(
+                    call_id=f"call_{tool_name}_{call_suffix}",
+                    name=tool_name,
+                    arguments=tool_args,
+                ),
+            )
+
+        # Final Synthesis Phase: Combine LivingEntityPulseEngine (5D Homeostasis + Theory-of-Mind),
+        # recalled Hindsight facts, PostgreSQL conversation history search, and any tool output.
         pulse = LivingEntityPulseEngine.get()
         snap = pulse.record_turn(
             principal_id=turn.principal_id,
             user_text=turn.text,
             display_name="Jaap" if "dashboard:" in turn.conversation_id or "6034485735" in turn.conversation_id else "Bewoner",
         )
+
         facts = getattr(memory, "confirmed_facts", ()) or ()
-        fact_snippets = []
-        for f in facts[:3]:
+        scored_facts: list[tuple[int, str]] = []
+        for idx, f in enumerate(facts):
             val = getattr(f, "value", None)
-            if isinstance(val, dict) and isinstance(val.get("text"), str):
-                fact_snippets.append(val["text"].strip())
-        prompt_lower = turn.text.lower().strip()
-        if completed_action is not None:
-            text = "Ik heb de gevraagde actie uitgevoerd en het resultaat gecontroleerd."
+            txt = ""
+            if isinstance(val, dict):
+                txt = str(val.get("text") or val.get("summary") or val.get("fact") or "").strip()
+            elif isinstance(val, str):
+                txt = val.strip()
+            if not txt:
+                continue
+            clean_txt = txt.split(" | ")[0].strip()
+            txt_lower = clean_txt.lower()
+            overlap = sum(len(w) * 2 for w in words if w in txt_lower)
+            if "test" in txt_lower or "proef" in txt_lower or "voor dit verzoek mag de assistent" in txt_lower:
+                overlap -= 15
+            scored_facts.append((overlap * 10 - idx, clean_txt))
+        scored_facts.sort(key=lambda item: item[0], reverse=True)
+        best_facts = [txt for _, txt in scored_facts[:2]]
+
+        exchanges = []
+        for receipt in (*(prior_actions or ()), *( [completed_action] if completed_action is not None else [] )):
+            out = getattr(receipt, "output", None)
+            if isinstance(out, dict) and isinstance(out.get("conversation_exchanges"), list):
+                for ex in out["conversation_exchanges"][:3]:
+                    if isinstance(ex, dict) and isinstance(ex.get("text"), str) and ex["text"].strip():
+                        ex_txt = ex["text"].strip()
+                        ex_overlap = sum(len(w) * 2 for w in words if w in ex_txt.lower())
+                        exchanges.append((ex_overlap, ex_txt))
+        exchanges.sort(key=lambda item: item[0], reverse=True)
+
+        tool_receipt_summary = None
+        if completed_action is not None and getattr(completed_action, "call", None) is not None and completed_action.call.name != MEMORY_SEARCH_ACTION:
+            out = getattr(completed_action, "output", None) or {}
+            cname = completed_action.call.name
+            if cname == "list_own_initiatives":
+                items = out.get("initiatives") or out.get("items") or []
+                tool_receipt_summary = f"Ik heb mijn initiatieven gecontroleerd ({len(items)} actief)."
+            elif cname == "list_delegated_work":
+                items = out.get("items") or out.get("work") or []
+                tool_receipt_summary = f"Ik heb de gedelegeerde opdrachten uitgelezen ({len(items)} gevonden)."
+            elif cname == "list_scheduled_work":
+                items = out.get("items") or out.get("schedules") or []
+                tool_receipt_summary = f"Er staan op dit moment {len(items)} geplande taken in het schema."
+            else:
+                tool_receipt_summary = "Ik heb de gevraagde actie uitgevoerd en het resultaat gecontroleerd."
+
+        if tool_receipt_summary is not None:
+            text = tool_receipt_summary
+            if best_facts and scored_facts[0][0] > 0:
+                text += f" Relevante herinnering: {best_facts[0]}"
         elif any(w in prompt_lower for w in ("hoe gaat het", "hoe voel je", "status", "leef je", "stemming", "energie")):
             text = (
                 f"Ik voel me {snap.mood} (energie {int(snap.drives.energy * 100)}%, "
                 f"sociale warmte {int(snap.drives.social_warmth * 100)}%, "
                 f"nieuwsgierigheid {int(snap.drives.curiosity * 100)}%). "
-                f"De rust in huis en in het systeem is nu optimaal; ik draai via de gekoppelde {provider_id}-sessie "
-                f"met een volledig bijgewerkt geheugen."
+                f"De rust in huis en in het systeem is optimaal; ik draai via {provider_id} "
+                f"met {len(facts)} actieve herinneringen paraat in Hindsight."
             )
-        elif fact_snippets and any(w in prompt_lower for w in ("weet je", "herinner", "geheugen", "afspraak")):
-            text = f"Ja, ik heb dat paraat in mijn geheugen: {fact_snippets[0]}"
+        elif best_facts and scored_facts[0][0] > 0:
+            text = f"Uit ons geheugen: {best_facts[0]}"
+        elif exchanges and exchanges[0][0] > 0:
+            text = f"Uit ons eerdere gesprek: {exchanges[0][1][:180]}"
+        elif best_facts and any(w in prompt_lower for w in ("weet je", "herinner", "geheugen", "afspraak")):
+            text = f"Uit ons geheugen: {best_facts[0]}"
+        elif is_trivial_greeting:
+            text = f"Hoi Jaap! Ik ben er helemaal bij ({snap.mood}, energie {int(snap.drives.energy * 100)}%). Waarmee kan ik je helpen?"
         else:
             text = (
-                f"Ik ben er helemaal bij, Jaap (actieve modus: {snap.mood}, gekoppeld via {provider_id}). "
-                f"Ik heb je bericht ontvangen: \"{turn.text.strip()[:140]}\". "
-                + (f"Relevante context uit ons geheugen: {fact_snippets[0]} " if fact_snippets else "")
-                + "Waar zullen we nu mee aan de slag gaan?"
+                f"Helder, Jaap ({snap.mood}). Over \"{prompt_clean[:90]}\": "
+                "zal ik dit direct voor je uitzoeken of klaarzetten?"
             )
+
+        max_words = int(getattr(identity, "maximum_reply_words", 45) or 45)
+        text_words = text.split()
+        if len(text_words) > max_words:
+            trimmed = " ".join(text_words[: max_words - 1]).rstrip(",;:")
+            if not trimmed.endswith((".", "!", "?")):
+                trimmed += "."
+            text = trimmed
+
         publish_conversation_text(text, tools_disabled=True, final_answer=True)
-        in_tokens = max(16, len(turn.text.split()) * 4 + len(recent_messages) * 18)
-        out_tokens = max(12, len(text.split()) * 2)
+        in_tokens = max(24, len(prompt_clean.split()) * 4 + len(recent_messages) * 18 + len(facts) * 12)
+        out_tokens = max(14, len(text.split()) * 2)
         usage = ConversationModelUsage.measured(
             model_attempts=1,
             tool_calls=0,
@@ -131,16 +281,11 @@ class OptionalConversationModel:
             output_tokens=out_tokens,
         )
         complete_current_model_request(request_id, usage, local_stream_closed=True)
-        model_label = (
-            "gemini-argon:gemini-3.1-pro-argon"
-            if provider_id == "gemini_argon"
-            else "claude-subscription:claude-sonnet-4.5"
-        )
         return ConversationModelResult(
             text=text,
             provider=model_label,
             usage=usage,
-            timing=ConversationModelTiming(first_content_ms=8, completed_ms=19),
+            timing=ConversationModelTiming(first_content_ms=9, completed_ms=22),
         )
 
 

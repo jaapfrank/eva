@@ -15,7 +15,7 @@ from datetime import UTC, datetime
 import math
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from eva.contracts.living_cortex import BaseModel, ConfigDict, Field, field_validator
 
 from eva.application.native_fastpath import (
     NATIVE_ACCELERATOR_ACTIVE,

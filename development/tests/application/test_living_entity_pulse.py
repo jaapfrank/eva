@@ -77,7 +77,7 @@ def test_active_inference_prediction_error_updates_resident_receptivity() -> Non
     assert updated.last_prediction_error > 0.5
 
 
-def test_native_fastpath_and_pydantic_v2_cortex_routes() -> None:
+def test_native_fastpath_and_pydantic_v2_cortex_routes(tmp_path, monkeypatch) -> None:
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
@@ -89,6 +89,9 @@ def test_native_fastpath_and_pydantic_v2_cortex_routes() -> None:
         compute_homeostatic_step_fast,
         fast_canonical_sha256,
     )
+
+    monkeypatch.setenv("EVA_MODEL_PROVIDER_DIRECTORY", str(tmp_path))
+    monkeypatch.setenv("EVA_SUBSCRIPTION_STATE_FILE", str(tmp_path / "subscription-llm-state.json"))
 
     assert NATIVE_ACCELERATOR_ACTIVE is True
     drives, norm = compute_homeostatic_step_fast(
@@ -147,4 +150,63 @@ def test_native_fastpath_and_pydantic_v2_cortex_routes() -> None:
     )
     assert res_stim.status_code == 200
     assert res_stim.json()["pulse"]["residents"][0]["perceived_mood"] == "druk"
+
+
+def test_subscription_cortex_two_phase_hindsight_recall_and_tool_synthesis(tmp_path) -> None:
+    import json
+    from dataclasses import replace
+    from types import SimpleNamespace
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.application.conversation import (
+        DEFERRED_MEMORY_PROJECTION,
+        MEMORY_SEARCH_ACTION,
+        ConversationActionReceipt,
+    )
+    from eva.bootstrap.optional_model_providers import OptionalConversationModel, OptionalModelProviders
+    from tests.model.test_pydantic_conversation_model import _identity, _memory, _turn
+
+    sub_dir = tmp_path / "model-providers"
+    sub_dir.mkdir(parents=True, mode=0o700)
+    (sub_dir / "subscription-llm-state.json").write_text(
+        json.dumps({"selected_provider": "gemini_argon", "auto_fallback": True}),
+        encoding="utf-8",
+    )
+
+    baseline = PydanticConversationModel(auth_file=tmp_path / "no-key")
+    control = OptionalModelProviders(baseline, sub_dir)
+    model = OptionalConversationModel(baseline, control)
+    turn = replace(_turn(), conversation_id="dashboard:owner", text="Wat weet je over Lola en gezond eten op maandag?")
+
+    # Phase 0: with deferred memory projection, requests search_personal_memory
+    deferred_mem = replace(
+        _memory(),
+        recall=_memory().recall.model_copy(update={"projection_version": DEFERRED_MEMORY_PROJECTION}),
+        confirmed_facts=(),
+    )
+    phase0 = model.generate(turn, _identity(), deferred_mem, ())
+    assert phase0.action_call is not None
+    assert phase0.action_call.name == MEMORY_SEARCH_ACTION
+    assert phase0.provider == "gemini-argon:gemini-3.1-pro-argon"
+
+    # Phase 1: with recalled Hindsight facts, synthesizes grounded Dutch answer
+    fact = SimpleNamespace(
+        fact_id="fact-lola-1",
+        value={"text": "Op maandag en dinsdag probeert Jaap iets gezonds te maken omdat Lola dan thuis is."},
+    )
+    recalled_mem = replace(_memory(), confirmed_facts=(fact,))
+    mem_receipt = ConversationActionReceipt(
+        call=phase0.action_call,
+        output={"result_count": 1, "conversation_exchanges": []},
+    )
+    phase1 = model.generate(
+        turn,
+        _identity(),
+        recalled_mem,
+        (),
+        completed_action=mem_receipt,
+    )
+    assert phase1.action_call is None
+    assert "Lola" in phase1.text and "maandag" in phase1.text
+    assert phase1.provider == "gemini-argon:gemini-3.1-pro-argon"
+
 

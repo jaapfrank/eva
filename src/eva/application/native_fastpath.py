@@ -18,7 +18,7 @@ import tempfile
 import unicodedata
 from typing import Any
 
-from pydantic_core import to_json as _rust_to_json
+from eva.contracts.living_cortex import rust_to_json as _rust_to_json
 
 _C_SOURCE = r"""
 #include <math.h>
