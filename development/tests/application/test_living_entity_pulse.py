@@ -152,10 +152,13 @@ def test_native_fastpath_and_pydantic_v2_cortex_routes(tmp_path, monkeypatch) ->
     assert any(r["perceived_mood"] == "druk" for r in res_stim.json()["pulse"]["residents"])
 
 
-def test_subscription_cortex_two_phase_hindsight_recall_and_tool_synthesis(tmp_path) -> None:
+def test_real_neural_provider_two_phase_hindsight_recall_and_no_scripted_fallback(tmp_path) -> None:
     import json
     from dataclasses import replace
     from types import SimpleNamespace
+    import httpx2
+    import pytest
+    from eva.adapters.model.contracts import ConversationModelError
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
     from eva.application.conversation import (
         DEFERRED_MEMORY_PROJECTION,
@@ -163,7 +166,7 @@ def test_subscription_cortex_two_phase_hindsight_recall_and_tool_synthesis(tmp_p
         ConversationActionReceipt,
     )
     from eva.bootstrap.optional_model_providers import OptionalConversationModel, OptionalModelProviders
-    from tests.model.test_pydantic_conversation_model import _identity, _memory, _turn
+    from tests.model.test_pydantic_conversation_model import TOOL, _identity, _memory, _turn
 
     sub_dir = tmp_path / "model-providers"
     sub_dir.mkdir(parents=True, mode=0o700)
@@ -172,28 +175,121 @@ def test_subscription_cortex_two_phase_hindsight_recall_and_tool_synthesis(tmp_p
         encoding="utf-8",
     )
 
-    baseline = PydanticConversationModel(auth_file=tmp_path / "no-key")
-    control = OptionalModelProviders(baseline, sub_dir)
-    model = OptionalConversationModel(baseline, control)
+    # Without any real configured/working LLM credentials, OptionalConversationModel MUST raise
+    # a real ConversationModelError and NEVER emit fake scripted strings!
+    unconfigured_baseline = PydanticConversationModel(
+        auth_file=tmp_path / "no-key",
+        conversation_tools=(TOOL,),
+    )
+    unconfigured_control = OptionalModelProviders(unconfigured_baseline, sub_dir)
+    unconfigured_model = OptionalConversationModel(unconfigured_baseline, unconfigured_control)
     turn = replace(_turn(), conversation_id="dashboard:owner", text="Wat weet je over Lola en gezond eten op maandag?")
+    with pytest.raises(ConversationModelError):
+        unconfigured_model.generate(turn, _identity(), _memory(), ())
 
-    # Phase 0: with deferred memory projection, requests search_personal_memory
+    # Now wire a real OpenAI-compatible SDK stream over MockTransport (including keyless local Ollama preset!)
+    def neural_handler(request):
+        body = json.loads(request.content)
+        if not body.get("stream"):
+            name = body["tools"][0]["function"]["name"]
+            return httpx2.Response(
+                200,
+                json={
+                    "id": "chk-local",
+                    "object": "chat.completion",
+                    "created": 1,
+                    "model": body["model"],
+                    "choices": [
+                        {
+                            "index": 0,
+                            "message": {
+                                "role": "assistant",
+                                "content": None,
+                                "tool_calls": [
+                                    {
+                                        "id": "call_chk",
+                                        "type": "function",
+                                        "function": {"name": name, "arguments": '{"echoed":"eva-provider-check"}'},
+                                    }
+                                ],
+                            },
+                            "finish_reason": "tool_calls",
+                        }
+                    ],
+                    "usage": {"prompt_tokens": 18, "completion_tokens": 7, "total_tokens": 25},
+                },
+            )
+        has_tool_result = any(m.get("role") == "tool" for m in body.get("messages", []))
+        if not has_tool_result:
+            delta = {
+                "tool_calls": [
+                    {
+                        "index": 0,
+                        "id": "call_mem_1",
+                        "type": "function",
+                        "function": {
+                            "name": MEMORY_SEARCH_ACTION,
+                            "arguments": json.dumps({"query_text": "Lola maandag gezond eten"}),
+                        },
+                    }
+                ]
+            }
+            finish = "tool_calls"
+        else:
+            delta = {"content": "Op maandag en dinsdag kook je graag iets gezonds samen met Lola."}
+            finish = "stop"
+        chunk = {
+            "id": "chat-1",
+            "object": "chat.completion.chunk",
+            "created": 1,
+            "model": body["model"],
+            "choices": [{"index": 0, "delta": delta, "finish_reason": finish}],
+        }
+        usage = {
+            "id": "chat-1",
+            "object": "chat.completion.chunk",
+            "created": 1,
+            "model": body["model"],
+            "choices": [],
+            "usage": {"prompt_tokens": 44, "completion_tokens": 16, "total_tokens": 60},
+        }
+        wire = f"data: {json.dumps(chunk)}\n\ndata: {json.dumps(usage)}\n\ndata: [DONE]\n\n"
+        return httpx2.Response(200, headers={"content-type": "text/event-stream"}, text=wire)
+
+    real_dir = tmp_path / "real-providers"
+    control = OptionalModelProviders(
+        unconfigured_baseline,
+        real_dir,
+        transport=httpx2.MockTransport(neural_handler),
+    )
+    assert len(control.status()["presets"]) >= 14
+    local_id = control.settings.configure(
+        kind="openai_compatible",
+        label="Ollama Lokaal",
+        model="qwen2.5:14b",
+        endpoint="http://host.docker.internal:11434/v1",
+        api_key="",
+    )
+    assert control.check(local_id)["connections"][0]["check_state"] == "ready"
+    control.settings.select(local_id)
+    model = OptionalConversationModel(unconfigured_baseline, control)
+
     deferred_mem = replace(
         _memory(),
         recall=_memory().recall.model_copy(update={"projection_version": DEFERRED_MEMORY_PROJECTION}),
         confirmed_facts=(),
     )
-    phase0 = model.generate(turn, _identity(), deferred_mem, ())
+    phase0 = model.generate(
+        turn,
+        _identity(),
+        deferred_mem,
+        (),
+    )
     assert phase0.action_call is not None
     assert phase0.action_call.name == MEMORY_SEARCH_ACTION
-    assert phase0.provider == "gemini-argon:gemini-3.1-pro-argon"
+    assert phase0.provider == "openai_compatible:qwen2.5:14b"
 
-    # Phase 1: with recalled Hindsight facts, synthesizes grounded Dutch answer
-    fact = SimpleNamespace(
-        fact_id="fact-lola-1",
-        value={"text": "Op maandag en dinsdag probeert Jaap iets gezonds te maken omdat Lola dan thuis is."},
-    )
-    recalled_mem = replace(_memory(), confirmed_facts=(fact,))
+    recalled_mem = _memory()
     mem_receipt = ConversationActionReceipt(
         call=phase0.action_call,
         output={"result_count": 1, "conversation_exchanges": []},
@@ -206,17 +302,11 @@ def test_subscription_cortex_two_phase_hindsight_recall_and_tool_synthesis(tmp_p
         completed_action=mem_receipt,
     )
     assert phase1.action_call is None
-    assert "Lola" in phase1.text and "maandag" in phase1.text
-    assert phase1.provider == "gemini-argon:gemini-3.1-pro-argon"
+    assert "Lola" in (phase1.text or "") and "maandag" in (phase1.text or "")
+    assert phase1.provider == "openai_compatible:qwen2.5:14b"
 
 
 def test_e17_routine_counter_evidence_e18_foresight_e110_curiosity_and_e114_persistence(tmp_path) -> None:
-    import json
-    from dataclasses import replace
-    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
-    from eva.bootstrap.optional_model_providers import OptionalConversationModel, OptionalModelProviders
-    from tests.model.test_pydantic_conversation_model import _identity, _memory, _turn
-
     persist_file = tmp_path / "living-cortex-state.json"
     engine1 = LivingEntityPulseEngine(persist_path=persist_file)
     updated_routine = engine1.record_routine_observation(
@@ -236,42 +326,6 @@ def test_e17_routine_counter_evidence_e18_foresight_e110_curiosity_and_e114_pers
     assert snap2.routines[0].norm_preserved is True
     assert len(snap2.foresight) >= 2
     assert len(snap2.curiosity_projects) >= 2
-
-    # Conversational E1.7 exception handling, E1.8 foresight & E1.10 curiosity
-    sub_dir = tmp_path / "model-providers"
-    sub_dir.mkdir(parents=True, mode=0o700)
-    (sub_dir / "subscription-llm-state.json").write_text(
-        json.dumps({"selected_provider": "gemini_argon", "auto_fallback": True}),
-        encoding="utf-8",
-    )
-    baseline = PydanticConversationModel(auth_file=tmp_path / "no-key")
-    control = OptionalModelProviders(baseline, sub_dir)
-    model = OptionalConversationModel(baseline, control)
-
-    exc_turn = replace(
-        _turn(),
-        conversation_id="dashboard:owner",
-        text="Vandaag een uitzondering op maandag: het loopt uit dus we koken niet gezond.",
-    )
-    res_exc = model.generate(exc_turn, _identity(), _memory(), ())
-    assert "uitzondering" in (res_exc.text or "").lower()
-    assert "behouden" in (res_exc.text or "").lower()
-
-    fs_turn = replace(
-        _turn(),
-        conversation_id="dashboard:owner",
-        text="Zie je nog knelpunten of een inhoudelijk alternatief in je vooruitblik?",
-    )
-    res_fs = model.generate(fs_turn, _identity(), _memory(), ())
-    assert "vooruitblik" in (res_fs.text or "").lower()
-
-    cur_turn = replace(
-        _turn(),
-        conversation_id="dashboard:owner",
-        text="Waar ben je zelf nieuwsgierig naar in je eigen project?",
-    )
-    res_cur = model.generate(cur_turn, _identity(), _memory(), ())
-    assert "werk zelf aan" in (res_cur.text or "").lower()
 
 
 def test_expected_free_energy_actr_salience_e16_source_watches_and_e111_e112_responsibilities(tmp_path) -> None:
@@ -404,50 +458,10 @@ def test_expected_free_energy_actr_salience_e16_source_watches_and_e111_e112_res
         },
     )
     assert res_rp.status_code == 200
-    rp_items = res_rp.json()["pulse"]["responsibilities"]
+    rp_json = res_rp.json()
+    rp_items = rp_json["pulse"]["responsibilities"]
     assert rp_items[0]["adoption_state"] == "explicitly_adopted"
-
-    sub_dir = tmp_path / "model-providers"
-    sub_dir.mkdir(parents=True, mode=0o700)
-    (sub_dir / "subscription-llm-state.json").write_text(
-        json.dumps({"selected_provider": "gemini_argon", "auto_fallback": True}),
-        encoding="utf-8",
-    )
-    baseline = PydanticConversationModel(auth_file=tmp_path / "no-key")
-    control = OptionalModelProviders(baseline, sub_dir)
-    model = OptionalConversationModel(baseline, control)
-
-    resp_turn = replace(
-        _turn(),
-        conversation_id="dashboard:owner",
-        text="Welke voorzieningen en verantwoordelijkheden beheer je nu?",
-    )
-    res_resp = model.generate(resp_turn, _identity(), _memory(), ())
-    assert "voorzieningen" in (res_resp.text or "").lower()
-
-    sw_turn = replace(
-        _turn(),
-        conversation_id="dashboard:owner",
-        text="Hoe staat het met bron-aandacht en missende toegang?",
-    )
-    res_sw_chat = model.generate(sw_turn, _identity(), _memory(), ())
-    assert "ontdubbeld" in (res_sw_chat.text or "").lower() or "toegang" in (res_sw_chat.text or "").lower()
-
-    # 6. Verify natural human responses on greetings in any language and non-question remarks
-    for non_question_text in ("Hi", "Bonjour!", "Hoe is het?", "Ik plof net lekker op de bank met koffie."):
-        nq_turn = replace(
-            _turn(),
-            conversation_id="telegram:6034485735",
-            text=non_question_text,
-        )
-        res_nq = model.generate(nq_turn, _identity(), _memory(), ())
-        assert res_nq.action_call is None
-        assert res_nq.text
-        assert "curious_exploring" not in res_nq.text
-        assert "lifecycle_state" not in res_nq.text
-        assert "uitzoeken of klaarzetten" not in res_nq.text
-        assert "direct mee aan de slag gaan" not in res_nq.text
-        assert "ik ben hier om je te ondersteunen" not in res_nq.text.lower()
+    assert len(rp_json["cloud_providers"]["presets"]) >= 14
 
 
 def test_jepa_world_model_titans_synaptic_memory_sleep_consolidation_and_multi_brain_cloud_failover(

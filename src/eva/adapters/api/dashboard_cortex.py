@@ -42,7 +42,7 @@ from eva.contracts.living_cortex import (
     SubscriptionProviderInfo,
     SubscriptionSelectionRequest,
 )
-from eva.operations.model_provider_settings import ModelProviderSettings
+from eva.operations.model_provider_settings import MODEL_PROVIDER_PRESETS, ModelProviderSettings
 
 _CORTEX_STATIC_DIR = Path(__file__).resolve().parent / "cortex_static"
 _CORTEX_STATIC_ASSETS: dict[str, str] = {
@@ -116,7 +116,7 @@ def _load_subscription_state() -> dict[str, Any]:
         except Exception:
             pass
     return {
-        "selected_provider": "gemini_argon",
+        "selected_provider": "openai_codex",
         "auto_fallback": True,
         "updated_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
@@ -248,29 +248,7 @@ def _build_cloud_providers_summary(runtime: Any, sub_state: dict[str, Any]) -> d
             "detail_nl": codex_state_text,
         },
         "connections": connections_out,
-        "presets": [
-            {
-                "kind": "gemini",
-                "label": "Google Gemini Cloud",
-                "default_model": "gemini-2.5-pro",
-                "default_endpoint": "https://generativelanguage.googleapis.com/v1beta/openai",
-                "hint_nl": "Volledig in de cloud (0% lokale GPU). Gebruik een Google AI Studio API-sleutel.",
-            },
-            {
-                "kind": "anthropic",
-                "label": "Anthropic Claude Cloud",
-                "default_model": "claude-sonnet-4-5",
-                "default_endpoint": "https://api.anthropic.com",
-                "hint_nl": "Sterke natuurlijke Nederlandse toon en diep redeneren in de cloud.",
-            },
-            {
-                "kind": "openai_compatible",
-                "label": "OpenAI-compatibele Cloud (OpenRouter / Groq) of Optioneel Lokaal",
-                "default_model": "gpt-4.1",
-                "default_endpoint": "https://openrouter.ai/api/v1",
-                "hint_nl": "Koppel elke OpenAI-compatibele cloud óf optioneel een lokale server op localhost.",
-            },
-        ],
+        "presets": [dict(p) for p in MODEL_PROVIDER_PRESETS],
         "has_live_sdk_verifier": control is not None,
     }
 
@@ -1400,14 +1378,25 @@ redelijk energiek, ontspannen</p>
               <div class="llm-cards" id="llm-container" style="margin-bottom: 14px;"></div>
 
               <div style="background: #0b111e; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px;">
-                <div style="font-size: 0.87rem; font-weight: 700; color: #60a5fa; margin-bottom: 10px;">➕ Cloud-LLM of Optioneel Lokale Server Koppelen</div>
+                <div style="font-size: 0.87rem; font-weight: 700; color: #60a5fa; margin-bottom: 10px;">➕ Cloud-LLM of Optioneel Lokale Server Koppelen (15 Providers)</div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
                   <div>
-                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">Provider Type</label>
+                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">Kies LLM-Provider (Cloud of Lokaal)</label>
                     <select id="cp-kind" onchange="onCloudKindChange()" style="width:100%;padding:8px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;">
-                      <option value="gemini">Google Gemini Cloud (Geen GPU nodig)</option>
-                      <option value="anthropic">Anthropic Claude Cloud (Geen GPU nodig)</option>
-                      <option value="openai_compatible">OpenAI-compatibel (Cloud of Optioneel Lokaal)</option>
+                      <option value="gemini_cloud">Google Gemini Cloud (Geen GPU nodig)</option>
+                      <option value="anthropic_claude">Anthropic Claude Cloud (Geen GPU nodig)</option>
+                      <option value="openai_api">OpenAI Platform API (GPT-4.1 / o3)</option>
+                      <option value="openrouter">OpenRouter (300+ Modellen in 1 sleutel)</option>
+                      <option value="xai_grok">xAI Grok Cloud</option>
+                      <option value="deepseek">DeepSeek Cloud (V3 / R1)</option>
+                      <option value="mistral">Mistral AI (Europese Cloud)</option>
+                      <option value="groq">Groq LPU Ultra-Fast Cloud</option>
+                      <option value="cerebras">Cerebras Wafer-Scale Cloud</option>
+                      <option value="together_ai">Together AI Cloud</option>
+                      <option value="fireworks_ai">Fireworks AI Cloud</option>
+                      <option value="perplexity_sonar">Perplexity Sonar Cloud</option>
+                      <option value="ollama_local">Ollama (Optioneel Lokaal · Geen sleutel nodig)</option>
+                      <option value="lmstudio_local">LM Studio / llama.cpp (Optioneel Lokaal · Geen sleutel nodig)</option>
                     </select>
                   </div>
                   <div>
@@ -1417,12 +1406,12 @@ redelijk energiek, ontspannen</p>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
                   <div>
-                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">Endpoint URL (HTTPS voor cloud, localhost voor lokaal)</label>
+                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">Endpoint URL (HTTPS voor cloud, localhost/docker-host voor lokaal)</label>
                     <input id="cp-endpoint" type="text" value="https://generativelanguage.googleapis.com/v1beta/openai" style="width:100%;padding:8px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;" />
                   </div>
                   <div>
-                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">API-Sleutel (versleuteld opgeslagen, nooit zichtbaar)</label>
-                    <input id="cp-apikey" type="password" placeholder="Plak je Gemini / Claude / Cloud API-key…" autocomplete="off" style="width:100%;padding:8px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;" />
+                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">API-Sleutel (leeg laten voor lokale Ollama / LM Studio)</label>
+                    <input id="cp-apikey" type="password" placeholder="Plak je API-sleutel (of laat leeg bij lokaal)…" autocomplete="off" style="width:100%;padding:8px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;" />
                   </div>
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
@@ -1792,40 +1781,47 @@ redelijk energiek, ontspannen</p>
       if (res.ok) renderState(await res.json());
     }
 
+    const CLOUD_PRESET_MAP = {
+      gemini_cloud: { kind: 'gemini', label: 'Google Gemini Cloud', model: 'gemini-2.5-pro', endpoint: 'https://generativelanguage.googleapis.com/v1beta/openai', requiresKey: true, hint: 'Volledig in Google Cloud (0% lokale GPU). Gebruik je Google AI Studio API-sleutel.' },
+      anthropic_claude: { kind: 'anthropic', label: 'Anthropic Claude Cloud', model: 'claude-sonnet-4-5', endpoint: 'https://api.anthropic.com', requiresKey: true, hint: 'Volledig in Anthropic Cloud (0% lokale GPU). Gebruik je Anthropic API-sleutel.' },
+      openai_api: { kind: 'openai_compatible', label: 'OpenAI Platform API', model: 'gpt-4.1', endpoint: 'https://api.openai.com/v1', requiresKey: true, hint: 'Rechtstreeks via het officiële OpenAI Platform met een eigen API-sleutel.' },
+      openrouter: { kind: 'openai_compatible', label: 'OpenRouter (300+ Modellen)', model: 'anthropic/claude-sonnet-4.5', endpoint: 'https://openrouter.ai/api/v1', requiresKey: true, hint: 'Eén sleutel voor honderden modellen (Claude, Gemini, GPT, Qwen, Llama, DeepSeek).' },
+      xai_grok: { kind: 'openai_compatible', label: 'xAI Grok Cloud', model: 'grok-3', endpoint: 'https://api.x.ai/v1', requiresKey: true, hint: 'xAI Grok via de officiële OpenAI-compatibele cloud-API.' },
+      deepseek: { kind: 'openai_compatible', label: 'DeepSeek Cloud', model: 'deepseek-chat', endpoint: 'https://api.deepseek.com/v1', requiresKey: true, hint: 'DeepSeek V3 / R1 via de officiële cloud-API.' },
+      mistral: { kind: 'openai_compatible', label: 'Mistral AI (Europese Cloud)', model: 'mistral-large-latest', endpoint: 'https://api.mistral.ai/v1', requiresKey: true, hint: 'Europese AI-provider (Mistral Large / Small) via Le Plateforme.' },
+      groq: { kind: 'openai_compatible', label: 'Groq LPU Ultra-Fast Cloud', model: 'llama-3.3-70b-versatile', endpoint: 'https://api.groq.com/openai/v1', requiresKey: true, hint: 'Extreem lage latentie op Groq LPU-hardware (geen lokale GPU nodig).' },
+      cerebras: { kind: 'openai_compatible', label: 'Cerebras Wafer-Scale Cloud', model: 'llama-3.3-70b', endpoint: 'https://api.cerebras.ai/v1', requiresKey: true, hint: 'Razendsnelle cloud-inferentie op Cerebras Wafer-Scale Engines.' },
+      together_ai: { kind: 'openai_compatible', label: 'Together AI Cloud', model: 'Qwen/Qwen2.5-72B-Instruct-Turbo', endpoint: 'https://api.together.xyz/v1', requiresKey: true, hint: 'Open-weights topmodellen (Qwen, Llama, DeepSeek) in de cloud.' },
+      fireworks_ai: { kind: 'openai_compatible', label: 'Fireworks AI Cloud', model: 'accounts/fireworks/models/deepseek-v3', endpoint: 'https://api.fireworks.ai/inference/v1', requiresKey: true, hint: 'Snelle productie-inferentie voor open-weights modellen in de cloud.' },
+      perplexity_sonar: { kind: 'openai_compatible', label: 'Perplexity Sonar Cloud', model: 'sonar-pro', endpoint: 'https://api.perplexity.ai', requiresKey: true, hint: 'Perplexity Sonar API via OpenAI-compatibel HTTPS endpoint.' },
+      ollama_local: { kind: 'openai_compatible', label: 'Ollama (Lokaal)', model: 'qwen2.5:14b', endpoint: 'http://host.docker.internal:11434/v1', requiresKey: false, hint: 'Optioneel lokaal draaien zonder API-sleutel wanneer Ollama op je systeem actief is.' },
+      lmstudio_local: { kind: 'openai_compatible', label: 'LM Studio / llama.cpp (Lokaal)', model: 'local-model', endpoint: 'http://host.docker.internal:1234/v1', requiresKey: false, hint: 'Optioneel lokale OpenAI-server zonder API-sleutel (LM Studio op 1234 of llama.cpp op 8080).' }
+    };
+
     function onCloudKindChange() {
-      const kind = document.getElementById('cp-kind').value;
-      const modelEl = document.getElementById('cp-model');
-      const epEl = document.getElementById('cp-endpoint');
-      const hintEl = document.getElementById('cp-hint');
-      if (kind === 'gemini') {
-        modelEl.value = 'gemini-2.5-pro';
-        epEl.value = 'https://generativelanguage.googleapis.com/v1beta/openai';
-        hintEl.textContent = 'Volledig in Google Cloud (0% lokale GPU). Gebruik je Google AI Studio API-key.';
-      } else if (kind === 'anthropic') {
-        modelEl.value = 'claude-sonnet-4-5';
-        epEl.value = 'https://api.anthropic.com';
-        hintEl.textContent = 'Volledig in Anthropic Cloud (0% lokale GPU). Gebruik je Anthropic API-key.';
-      } else {
-        modelEl.value = 'gpt-4.1';
-        epEl.value = 'https://openrouter.ai/api/v1';
-        hintEl.textContent = 'Gebruik elke HTTPS OpenAI-compatibele cloud óf optioneel http://127.0.0.1:11434/v1 voor lokaal.';
-      }
+      const presetKey = document.getElementById('cp-kind').value;
+      const p = CLOUD_PRESET_MAP[presetKey] || CLOUD_PRESET_MAP.gemini_cloud;
+      document.getElementById('cp-model').value = p.model;
+      document.getElementById('cp-endpoint').value = p.endpoint;
+      document.getElementById('cp-hint').textContent = p.hint;
     }
 
     async function configureCloudProvider() {
-      const kind = document.getElementById('cp-kind').value;
+      const presetKey = document.getElementById('cp-kind').value;
+      const p = CLOUD_PRESET_MAP[presetKey] || { kind: 'openai_compatible', label: presetKey, requiresKey: true };
+      const kind = p.kind;
       const model = document.getElementById('cp-model').value.trim();
       const endpoint = document.getElementById('cp-endpoint').value.trim();
       const apiKey = document.getElementById('cp-apikey').value.trim();
       const notice = document.getElementById('llm-notice');
-      if (!apiKey) {
+      const isLocalEndpoint = endpoint.startsWith('http://127.0.0.1') || endpoint.startsWith('http://localhost') || endpoint.startsWith('http://host.docker.internal') || endpoint.startsWith('http://[::1]');
+      if (!apiKey && p.requiresKey && !isLocalEndpoint) {
         notice.style.color = '#fcd34d';
-        notice.textContent = '⚠️ Vul eerst een geldige API-sleutel in om de verbinding te verifiëren.';
+        notice.textContent = '⚠️ Vul eerst een geldige API-sleutel in om deze cloudverbinding te verifiëren.';
         return;
       }
       notice.style.color = '#7dd3fc';
       notice.textContent = '⏳ Verbinding versleuteld opslaan en live testen bij provider…';
-      const labels = { gemini: 'Google Gemini Cloud', anthropic: 'Anthropic Claude Cloud', openai_compatible: 'OpenAI-compatibel' };
       const res = await fetch('/internal/v1/dashboard/cortex/cloud-provider', {
         method: 'POST',
         credentials: 'same-origin',
@@ -1833,7 +1829,7 @@ redelijk energiek, ontspannen</p>
         body: JSON.stringify({
           action: 'configure_and_activate',
           kind,
-          label: labels[kind] || kind,
+          label: p.label,
           model,
           endpoint,
           api_key: apiKey,
@@ -1846,14 +1842,14 @@ redelijk energiek, ontspannen</p>
         renderState(data);
         if (data.cloud_providers && data.cloud_providers.selected_id) {
           notice.style.color = '#6ee7b7';
-          notice.textContent = `✓ ${labels[kind] || kind} (${model}) succesvol geverifieerd en geactiveerd met Auto-Failover!`;
+          notice.textContent = `✓ ${p.label} (${model}) succesvol geverifieerd en geactiveerd met Auto-Failover!`;
         } else {
           notice.style.color = '#fcd34d';
-          notice.textContent = '⚠️ Verbinding opgeslagen, maar de live SDK-test slaagde niet (controleer API-sleutel of modelnaam).';
+          notice.textContent = '⚠️ Verbinding opgeslagen, maar de live SDK-test slaagde niet (controleer API-sleutel, modelnaam of serverstatus).';
         }
       } else {
         notice.style.color = '#fda4af';
-        notice.textContent = '❌ Kon verbinding niet opslaan (controleer HTTPS endpoint en velden).';
+        notice.textContent = '❌ Kon verbinding niet opslaan (controleer endpoint en velden).';
       }
     }
 
@@ -2371,13 +2367,7 @@ def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None
         control, settings = _resolve_model_provider_settings(runtime)
         try:
             if parsed.action == "use_default_codex":
-                cur_sel = settings.read().get("selected_id")
-                if cur_sel:
-                    raw_path = settings._state_path
-                    if raw_path.is_file():
-                        data = json.loads(raw_path.read_text(encoding="utf-8"))
-                        data["selected_id"] = None
-                        raw_path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+                settings.select(None)
                 _save_subscription_state("openai_codex", True)
             elif parsed.action == "configure_and_activate":
                 conn_id = settings.configure(

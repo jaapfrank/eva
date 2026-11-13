@@ -189,8 +189,7 @@ class PublicLookupActions:
 
 
 def build_public_lookup(settings, engine, delegated_actions):
-    if (delegated_actions is None or settings.conversation_contact_model is None
-            or settings.runtime_resource_budget is None):
+    if delegated_actions is None or settings.runtime_resource_budget is None:
         return None
     from pathlib import Path
     from eva.adapters.model.public_lookup import PublicLookupModel

@@ -73,6 +73,9 @@ def build_private_conversation_resources(settings, engine, *, group_consent,
         private_source_resolver=original_sources,
         development_projection=development,
     )
+    import os
+
+    max_reply_words = max(40, int(os.environ.get("EVA_MAXIMUM_REPLY_WORDS", "110")))
     identity = IdentityProfile(
         name=settings.identity_name,
         description=settings.identity_description,
@@ -87,7 +90,7 @@ def build_private_conversation_resources(settings, engine, *, group_consent,
             "feedback gaf. Herzie een bestaande bijstelling met haar nieuwste bronverwijzingen. "
             "Maak van een eenmalig verzoek geen algemene voorkeur en bewaar geen dubbele bijstelling.",
         ),
-        maximum_reply_words=110,
+        maximum_reply_words=max_reply_words,
         identity_pack=identity_pack,
     )
     return memory, identity
