@@ -54,14 +54,17 @@ In `src/eva/voice_service/codex_media.py` en `src/eva/voice_service/codex_backen
 
 ## 4. Volgorde van de 5 Gecombineerde Fasen (Post-LLM Architectuur)
 
-1. **Fase 1 (Core & Gezinshoofd-Regie — NU AFGEROND IN CODE & LIVE):**
+1. **Fase 1 (Core & Gezinshoofd-Regie — AFGEROND IN CODE & LIVE):**
    - Native C **Liquid Time-Constant (`dx/dt`) ODE-kern** (`eva_liquid_ode_step` met variabele tijdconstanten $\tau_i(x, I)$ en RK4-integratie, 0 tokens in rust).
    - **15 LLM-providers** als verwisselbaar taalorgaan zonder nep-fallbacks.
    - **Gezinshoofd-Beheer (`HouseholdHeadSettings`):** 100% gesloten Telegram (`default-deny`), eenmalige 256-bit `/start inv_<token>` uitnodigingslinks voor gezinsleden/gasten, leden pauzeren/intrekken zonder herstart, én direct aanpassen van Eva's persoonlijkheid, spreekstijl en vaste huisregels (met revisieherstel) via zowel het Cortex-dashboard als Jaaps Telegram-chat.
-2. **Fase 2 (Huis-Proprioceptie, Zelfstandige LAN-Ontdekking & Digitale Organogenese):**
-   - Actieve LAN-scanner (mDNS, SSDP/UPnP, ONVIF, RTSP, Lidl/Tuya, Shelly, Hue, Chromecast, Matter — óók zonder Home Assistant).
-   - **Spatial Presence Field:** fusie van LAN/Wi-Fi-signaalrimpel, Hue/Zigbee LQI/RSSI-variatie en sensoren om beweging per ruimte te voelen zonder camera-spionage of LLM-tokens.
-   - **Pre-LLM wachtwoordkluis** + **Digitale Organogenese** (éénmalige LLM-synthese naar getoetste 2 ms deterministische micro-drivers/reflexen).
+2. **Fase 2 (Huis-Proprioceptie, Zelfstandige LAN-Ontdekking & Digitale Organogenese — AFGEROND IN CODE, ONAFHANKELIJK SECURITY-GEKEURD & LIVE):**
+   - **Actieve RFC1918 LAN-scanner (`LanProprioceptionScanner`):** ontdekt zelfstandig apparaten op het thuisnetwerk via mDNS, SSDP/UPnP, HTTP/TLS, ONVIF, RTSP, Tuya/Lidl, Shelly, Philips Hue CLIP v2, Google Cast en MQTT — óók zonder Home Assistant — met strikte SSRF-, IP/poort/TLS-pinning en anti-spoofingbescherming (`C-02`).
+   - **Spatial Presence Field (0 LLM-tokens):** berekent per kamer aanwezigheid en bewegingsenergie uit Zigbee/Hue LQI-rimpels, Wi-Fi RTT-jitter en sensorsignalen met exponentieel verval ($\tau = 90\text{s} / 240\text{s}$) en voedt rechtstreeks Eva's C/SIMD Liquid ODE-kern (`dx/dt`).
+   - **Pre-LLM `AES-256-GCM` Kluis (`PreLlmCredentialVault`, `0o600`):** onderschept `/kluis` en `/wachtwoord` vóór SQLite, PostgreSQL `conversation_journal` en elk taalmodel (zowel in Telegram met directe chatverwijdering + HMAC-brugbewijs als in het webdashboard).
+   - **Digitale Organogenese (`register_custom_organ` & `poll_organ`):** native micro-drivers (Hue, Shelly, HA, TCP/RTT) én AST-gevalideerde custom Python micro-organen in een geïsoleerd `python3 -I` subproces (`RLIMIT_CPU=2s`, `RLIMIT_FSIZE=0`, `RLIMIT_AS=256MB`, `SHA-256` integriteitspinning en maximaal 4 JSON-RPC kanaalverzoeken zonder dat geheimen ooit het subproces binnenkomen).
+   - **Volledige gast-isolatie (`H-04`):** gasten en ongekende externe afzenders krijgen nooit LAN-, apparaat-, kamer- of `huisrust`-context te zien, en onbevestigde netwerkbanners komen nooit ongefilterd in LLM-prompts terecht.
+   - **Live geverifieerd op thuisnetwerk (`eva2-living-core:fase2-complete-20261113` & `eva2-living-worker:fase2-complete-20261113`):** 11 fysieke apparaten op het primaire `/24`-thuisnetwerk direct ontdekt in `pending_consent` (Philips Hue Bridge CLIP v2 + Zigbee LQI, 2× Google Cast / Google TV, Sonos-speaker, Home Assistant, MQTT/Zigbee-broker en 5× UniFi-netwerkapparaten), met `compatible: true` tussen `core` en `delegated-work-worker`.
 3. **Fase 3 (Onfeilbare Taakaflevering, Causale Tijdmachine & Genetische Zelfreparatie):**
    - Eén geconsolideerde claimtransactie in `delegated_work_delivery.py` (`P0-02`), duurzame 429/503-hervatting (`E1.14`), lokaal **Structural Causal Model (`oorzaak → gevolg`)** met nachtelijke counterfactual droom-replay, en onafhankelijk getoetste zelfreparatie (`E4.16`/`E4.19`).
 4. **Fase 4 (`Eva HoloStage` op UniFi Screen, Chromecast/Google TV & iPhone/Android + Sub-300ms Spraak + Stem/Gezichtsherkenning):**

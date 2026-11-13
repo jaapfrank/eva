@@ -741,7 +741,14 @@ class HouseholdHeadSettings:
             }
 
         speaker_name = matched["display_name"] if matched else "Gesprekspartner"
-        speaker_role: RoleKind = matched["role"] if matched else "gezin"
+        if matched is not None:
+            speaker_role: RoleKind = matched["role"]
+        elif conversation_id.startswith("whatsapp:") or (
+            self.state_file.is_file() and conversation_id and not conversation_id.startswith("dashboard:")
+        ):
+            speaker_role = "gast"
+        else:
+            speaker_role = "gezin"
 
         if speaker_role == "gast":
             guest_note = (
@@ -840,7 +847,11 @@ class HouseholdHeadSettings:
                     "/rol <Naam> <gezin|gast> — wijzig rol\n"
                     "/intrekken <Naam> — pauzeer persoon of trek link in\n"
                     "/heractiveren <Naam> — activeer gepauzeerde persoon\n"
-                    "/eva — bekijk of wijzig Eva's stijl & huisregels"
+                    "/eva — bekijk of wijzig Eva's stijl & huisregels\n"
+                    "/netwerk — scan je thuisnetwerk op apparaten & camera's\n"
+                    "/koppel <apparaat-id> [kamer] — keur apparaat goed & activeer orgaan\n"
+                    "/kluis <apparaat-id> <geheim> — sla wachtwoord versleuteld op (buiten LLM & gewist uit chat)\n"
+                    "/huisveld — bekijk ruimtelijk bewegingsveld & actieve organen"
                 )
                 return "\n".join(lines)
 
@@ -943,7 +954,151 @@ class HouseholdHeadSettings:
                     "Onbekend /eva-subcommando. Gebruik /eva voor het overzicht, of pas alles "
                     "visueel aan in het Gezinshoofd-paneel van het dashboard."
                 )
-        except ValueError as exc:
+
+            if cmd in ("/netwerk", "/scan", "/apparaten"):
+                from eva.application.home_proprioception import HomeProprioceptionManager
+
+                hp = HomeProprioceptionManager(self.directory)
+                subnets = [s.strip() for s in arg.split(",") if s.strip()] if arg else None
+                st = hp.run_lan_scan(subnets=subnets, max_subnets=3 if subnets else 1, now=current)
+                devs = st["devices"]
+                if not devs:
+                    return (
+                        f"LAN-scan uitgevoerd op {', '.join(st['scanned_subnets']) or 'lokaal netwerk'} — "
+                        "nog geen ondersteunde slimme apparaten gevonden.\n"
+                        "Tip: zit je IoT/camera-apparatuur op een apart VLAN? Stuur bijv. `/scan 10.0.30.0/24`."
+                    )
+                lines = [f"Thuisnetwerk-scan ({', '.join(st['scanned_subnets'])}):"]
+                pending = [d for d in devs if d["consent_status"] == "pending_consent"]
+                approved = [d for d in devs if d["consent_status"] == "approved"]
+                if pending:
+                    lines.append("\nWacht op jouw toestemming:")
+                    for d in pending:
+                        auth_lbl = (
+                            "wachtwoord nodig"
+                            if d["auth_requirement"] in ("password_or_token", "rtsp_credentials")
+                            else ("Hue-knop" if d["auth_requirement"] == "pairing_button" else "direct")
+                        )
+                        lines.append(f"- {d['display_name']} [{d['device_id']}] · {auth_lbl}")
+                if approved:
+                    lines.append("\nGekoppeld & actief:")
+                    for d in approved:
+                        vault_lbl = " · 🔐 kluis actief" if d.get("has_credential") else ""
+                        lines.append(
+                            f"- {d['display_name']} [{d['device_id']}] ({d['room_id']}){vault_lbl}"
+                        )
+                lines.append(
+                    "\nActies:\n"
+                    "/koppel <apparaat-id> [kamer] — geef toestemming & activeer\n"
+                    "/negeer <apparaat-id> — negeer apparaat\n"
+                    "/kluis <apparaat-id> <wachtwoord/token> — versleuteld opslaan buiten LLM"
+                )
+                return "\n".join(lines)
+
+            if cmd == "/koppel":
+                if not arg:
+                    return "Gebruik: /koppel <apparaat-id> [optioneel kamernaam]"
+                from eva.application.home_proprioception import HomeProprioceptionManager
+
+                hp = HomeProprioceptionManager(self.directory)
+                parts_k = arg.split(maxsplit=1)
+                dev_ref = parts_k[0]
+                room_ref = parts_k[1].strip() if len(parts_k) > 1 else None
+                st = hp.set_device_consent(
+                    device_id=dev_ref,
+                    consent_status="approved",
+                    room_id=room_ref,
+                    now=current,
+                )
+                matched_id = st.get("matched_device_id")
+                matched_dev = next(
+                    (d for d in st["devices"] if d["device_id"] == matched_id),
+                    None,
+                )
+                if matched_dev and matched_dev["kind"] == "philips_hue_bridge" and not matched_dev.get("has_credential"):
+                    try:
+                        hp.pair_philips_hue_bridge(matched_dev["device_id"], now=current)
+                        return (
+                            f"Philips Hue Bridge '{matched_dev['display_name']}' is goedgekeurd én direct gekoppeld "
+                            "met een sleutel in mijn versleutelde kluis!"
+                        )
+                    except (ValueError, RuntimeError) as hue_err:
+                        return f"Hue Bridge goedgekeurd. Nog 1 stap voor koppeling: {hue_err}"
+                if (
+                    matched_dev
+                    and matched_dev["auth_requirement"] in ("password_or_token", "rtsp_credentials")
+                    and not matched_dev.get("has_credential")
+                ):
+                    return (
+                        f"'{matched_dev['display_name']}' is goedgekeurd (digitaal orgaan klaar in kamer '{matched_dev['room_id']}').\n"
+                        f"Stuur nu veilig het wachtwoord of token met:\n"
+                        f"/kluis {matched_dev['device_id']} <wachtwoord-of-token>\n"
+                        "(Ik sla dit AES-256 versleuteld op buiten het taalmodel en wis je bericht direct uit de chat.)"
+                    )
+                dev_label = matched_dev["display_name"] if matched_dev else dev_ref
+                return f"'{dev_label}' is goedgekeurd en het digitale orgaan is direct geactiveerd."
+
+            if cmd == "/negeer":
+                if not arg:
+                    return "Gebruik: /negeer <apparaat-id>"
+                from eva.application.home_proprioception import HomeProprioceptionManager
+
+                hp = HomeProprioceptionManager(self.directory)
+                hp.set_device_consent(device_id=arg, consent_status="ignored", now=current)
+                return f"Apparaat '{arg}' staat op genegeerd; ik vraag er niet meer om."
+
+            if cmd == "/kamer":
+                tokens = arg.split(maxsplit=1)
+                if len(tokens) != 2:
+                    return "Gebruik: /kamer <apparaat-id> <kamernaam>"
+                from eva.application.home_proprioception import HomeProprioceptionManager
+
+                hp = HomeProprioceptionManager(self.directory)
+                hp.assign_device_room(device_id=tokens[0], room_id=tokens[1], now=current)
+                return f"Apparaat '{tokens[0]}' is gekoppeld aan ruimte '{tokens[1]}'."
+
+            if cmd == "/huisveld":
+                from eva.application.home_proprioception import HomeProprioceptionManager
+
+                hp = HomeProprioceptionManager(self.directory)
+                st = hp.status(now=current)
+                lines = ["Ruimtelijk Aanwezigheidsveld & Digitale Organen (0 tokens):"]
+                if st["rooms"]:
+                    for r in st["rooms"]:
+                        pct = int(round(r["occupancy_probability"] * 100))
+                        mot = int(round(r["motion_energy"] * 100))
+                        mods = ", ".join(r["active_modalities"]) or "rust"
+                        lines.append(f"- {r['room_id']}: aanwezigheid {pct}% · beweging {mot}% ({mods})")
+                else:
+                    lines.append("- Nog geen actieve kamer-signalen gemeten.")
+                if st["organs"]:
+                    lines.append(f"\nActieve digitale organen ({len(st['organs'])}):")
+                    for org in st["organs"]:
+                        lines.append(f"- {org['organ_id']} [{org['organ_type']}] · {org['status']}: {org['last_result_summary']}")
+                lines.append(f"\nVersleutelde kluis-items: {st['vault_entries_count']}")
+                return "\n".join(lines)
+
+            if cmd in ("/kluis", "/wachtwoord"):
+                if not arg or len(arg.split(maxsplit=1)) < 2:
+                    return (
+                        "Gebruik: /kluis <apparaat-id> <wachtwoord-of-token>\n"
+                        "Dit wordt vóór het taalmodel onderschept, AES-256-GCM versleuteld opgeslagen "
+                        "en direct uit de Telegram-chat verwijderd."
+                    )
+                dev_id, secret_val = arg.split(maxsplit=1)
+                from eva.application.home_proprioception import HomeProprioceptionManager
+
+                hp = HomeProprioceptionManager(self.directory)
+                meta = hp.store_device_secret(
+                    device_ref=dev_id,
+                    raw_secret=secret_val,
+                    now=current,
+                )
+                return (
+                    f"🔐 Geheim veilig versleuteld opgeslagen in mijn kluis voor '{meta['device_id']}' "
+                    "(buiten het taalmodel en buiten het gesprekslogboek)."
+                )
+        except (ValueError, PermissionError, RuntimeError) as exc:
             return f"Kon wijziging niet toepassen: {exc}"
 
         return None

@@ -780,10 +780,13 @@ class PostgresHindsightMemoryRuntime:
         from eva.adapters.model.contracts import (
             ConversationModelRateLimited, ConversationModelUnavailable,
         )
+        from contextlib import nullcontext
         from eva.application.initiative_execution import current_initiative
         if current_initiative() is not None:
             return self._respond_admitted(turn, recent_messages)
-        with self._cold_path.foreground():
+        cold_path = getattr(self, "_cold_path", None)
+        fg_ctx = cold_path.foreground() if cold_path is not None else nullcontext()
+        with fg_ctx:
             try:
                 return self._respond_admitted(turn, recent_messages)
             except (ConversationModelRateLimited, ConversationModelUnavailable):

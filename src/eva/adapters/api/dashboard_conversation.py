@@ -148,7 +148,8 @@ async function readReplyStream(response, onDelta) {
   } finally {await reader.cancel().catch(()=>{});reader.releaseLock();}
 }
 async function submitMessage(text,clearInput=true){
-  activeRequests++;const userNode=message('user',text);if(clearInput){input.value='';input.focus();}send.disabled=activeRequests>=8;
+  const shownText=/^\\/(?:kluis|wachtwoord)(?:@\\w+)?(?:\\s|$)/iu.test(text.trim())?'/kluis [geheim versleuteld naar kluis]':text;
+  activeRequests++;const userNode=message('user',shownText);if(clearInput){input.value='';input.focus();}send.disabled=activeRequests>=8;
   const pending=state('Eva denkt na…');userNode.after(pending);let draft='';
   try {
     const response=await fetch('/internal/v1/dashboard/conversation/respond',{

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { TransportJournal, createTransportHandler } from './standalone.mjs';
+import { TransportJournal, computeTelegramVaultProof, createTransportHandler, telegramReplyContext } from './standalone.mjs';
 const bindings = [{ telegram_user_id: 12, allowed_chat_ids: ['12'] }];
 function ctx(id, text = 'hallo', sender = 12, sent = []) {
   const message = { message_id: id, text, from: { id: sender }, chat: { id: sender }, date: 1000 };
@@ -100,5 +100,108 @@ test('one-time 256-bit invite admits private user while invalid token stays sile
   await h.handler(ctx(23, `/start ${validToken}`, 99, sent));
   assert.equal(sent.length, 2);
   assert.equal(h.calls.length, 1);
+  h.journal.close();
+});
+
+test('pre-LLM /kluis intercepts password before SQLite & LLM, deletes chat message, and redacts journal even on error', async () => {
+  const sent = [];
+  const deleted = [];
+  const storedSecrets = [];
+  const h = harness({
+    storeVaultSecret: async ({ telegramUserId, deviceId, secretValue }) => {
+      if (deviceId === 'reject_me') throw new Error('HTTP 403');
+      storedSecrets.push({ telegramUserId, deviceId, secretValue });
+      return { stored: true, reply_text: `Geheim veilig opgeslagen voor ${deviceId}` };
+    },
+  });
+
+  // 1. Valid /kluis command with super-secret password
+  const c1 = ctx(30, '/kluis cam_voordeur MijnSuperGeheimeWachtwoord!99', 12, sent);
+  c1.message.chat.type = 'private';
+  c1.api = { deleteMessage: async (chatId, msgId) => { deleted.push([chatId, msgId]); } };
+  await h.handler(c1);
+
+  assert.equal(h.calls.length, 0); // LLM coreRequest NEVER invoked!
+  assert.deepEqual(deleted, [[12, 30]]); // Original password message deleted from Telegram chat!
+  assert.equal(storedSecrets.length, 1);
+  assert.equal(storedSecrets[0].deviceId, 'cam_voordeur');
+  assert.equal(storedSecrets[0].secretValue, 'MijnSuperGeheimeWachtwoord!99');
+  assert.match(sent[0].text, /Geheim veilig opgeslagen voor cam_voordeur/);
+
+  // SQLite journal must NEVER contain the plaintext password
+  const dump1 = JSON.stringify(h.journal.db.prepare('SELECT * FROM telegram_transport').all());
+  assert.equal(dump1.includes('MijnSuperGeheimeWachtwoord!99'), false);
+  assert.equal(dump1.includes('[REDACTED]'), true);
+
+  // 2. Rejected /kluis (e.g. non-owner 403 or invalid id) STILL deletes chat message and redacts SQLite
+  const c2 = ctx(31, '/wachtwoord reject_me AnderGeheimWachtwoord#42', 12, sent);
+  c2.message.chat.type = 'private';
+  c2.api = { deleteMessage: async (chatId, msgId) => { deleted.push([chatId, msgId]); } };
+  await h.handler(c2);
+
+  assert.equal(h.calls.length, 0);
+  assert.deepEqual(deleted, [[12, 30], [12, 31]]);
+  const dump2 = JSON.stringify(h.journal.db.prepare('SELECT * FROM telegram_transport').all());
+  assert.equal(dump2.includes('AnderGeheimWachtwoord#42'), false);
+  h.journal.close();
+});
+
+test('security hardening: uppercase /Kluis, caption secrets, link_preview_options stripping, group refusal, and reply-context scrub', async () => {
+  const sent = [];
+  const storedCalls = [];
+  const h = harness({
+    bindings: [{ telegram_user_id: 12, allowed_chat_ids: ['12', '-999'] }],
+    storeVaultSecret: async payload => {
+      storedCalls.push(payload);
+      return { stored: true, reply_text: `Opgeslagen voor ${payload.deviceId}` };
+    },
+  });
+
+  // 1. Photo caption with uppercase /Kluis + link_preview_options + deleteMessage failing
+  const cCap = ctx(40, undefined, 12, sent);
+  delete cCap.message.text;
+  cCap.message.caption = '/Kluis ha_10_0_20_74 https://secret:GeheimToken999@10.0.20.74';
+  cCap.message.link_preview_options = { url: 'https://secret:GeheimToken999@10.0.20.74' };
+  cCap.message.chat.type = 'private';
+  cCap.api = { deleteMessage: async () => { throw new Error('Telegram delete failed'); } };
+  await h.handler(cCap);
+
+  assert.equal(h.calls.length, 0);
+  assert.equal(storedCalls.length, 1);
+  assert.equal(storedCalls[0].messageDeleted, false);
+  assert.match(sent[0].text, /handmatig/);
+
+  // Verify link_preview_options & caption were completely stripped from SQLite
+  const sqlDump = JSON.stringify(h.journal.db.prepare('SELECT * FROM telegram_transport').all());
+  assert.equal(sqlDump.includes('GeheimToken999'), false);
+  assert.equal(sqlDump.includes('link_preview_options'), false);
+
+  // 2. Group chat /kluis is intercepted, redacted, never stored, and never forwarded to LLM
+  const cGroup = ctx(41, '/kluis cam_tuin GroepsGeheim888!', 12, sent);
+  cGroup.message.chat = { id: -999, type: 'supergroup' };
+  await h.handler(cGroup);
+  assert.equal(h.calls.length, 0);
+  assert.equal(storedCalls.length, 1); // unchanged
+  const sqlDump2 = JSON.stringify(h.journal.db.prepare('SELECT * FROM telegram_transport').all());
+  assert.equal(sqlDump2.includes('GroepsGeheim888!'), false);
+
+  // 3. telegramReplyContext refuses to quote an un-deleted /kluis message
+  const replyCtx = telegramReplyContext({
+    message_id: 50,
+    chat: { id: 12, type: 'private' },
+    reply_to_message: {
+      message_id: 49,
+      chat: { id: 12, type: 'private' },
+      date: 1000,
+      text: '/kluis cam_tuin OudGeheim777',
+    },
+  });
+  assert.equal(replyCtx, null);
+
+  // 4. Bridge HMAC proof is 64-char hex and changes with token
+  const p1 = computeTelegramVaultProof('123456:ABCDEF');
+  const p2 = computeTelegramVaultProof('123456:ABCDEF_DIFFERENT');
+  assert.equal(p1.length, 64);
+  assert.notEqual(p1, p2);
   h.journal.close();
 });

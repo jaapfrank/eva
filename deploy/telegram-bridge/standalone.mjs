@@ -1,4 +1,5 @@
 /** Transport-only Telegram composition: no legacy agent or autonomous loop. */
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -64,6 +65,7 @@ export function telegramReplyContext(message) {
       || source.message_id >= message.message_id) return null;
   const text = source.text ?? source.caption;
   if (typeof text !== 'string' || !text.trim() || Buffer.byteLength(text, 'utf8') > 16384) return null;
+  if (VAULT_CMD_RE.test(text.trim())) return null;
   if (!Number.isSafeInteger(source.date) || source.date < 0) return null;
   const occurredAt = new Date(source.date * 1000).toISOString().replace(/\.000Z$/u, 'Z');
   const result = {source_ref: `telegram:${message.chat.id}:${source.message_id}`,
@@ -77,8 +79,14 @@ export function telegramReplyContext(message) {
 }
 
 const INVITE_START_RE = /^\/start(?:@\w+)?\s+(inv_[A-Za-z0-9_-]{42,46})$/u;
+const VAULT_CMD_RE = /^\/(?:kluis|wachtwoord)(?:@\w+)?(?:\s+(.*))?$/isu;
+const VAULT_ARGS_RE = /^([A-Za-z0-9_.:-]{2,64})\s+(.+)$/su;
 
-export function createTransportHandler({ journal, bindings, baseUrl, photoProvider = null, downloadFile, makeDraft, coreRequest = askEva2Canary, redeemInvite = null, refreshBindings = null }) {
+export function computeTelegramVaultProof(botToken) {
+  return crypto.createHmac('sha256', String(botToken || '').trim()).update('EvaTelegramVaultAuth/v1').digest('hex');
+}
+
+export function createTransportHandler({ journal, bindings, baseUrl, photoProvider = null, downloadFile, makeDraft, coreRequest = askEva2Canary, redeemInvite = null, refreshBindings = null, storeVaultSecret = null }) {
   const dynamicAllowedIds = new Set();
   const pausedIds = new Set();
   let lastSyncAt = 0;
@@ -161,6 +169,97 @@ export function createTransportHandler({ journal, bindings, baseUrl, photoProvid
         }
       }
       journal.noteAccessRequest(message);
+      return;
+    }
+    const rawCandidateText = String(message?.text ?? message?.caption ?? '').trim();
+    const vaultCmdMatch = VAULT_CMD_RE.exec(rawCandidateText);
+    if (vaultCmdMatch) {
+      const argTail = typeof vaultCmdMatch[1] === 'string' ? vaultCmdMatch[1].trim() : '';
+      const parsedArgs = argTail ? VAULT_ARGS_RE.exec(argTail) : null;
+      const safeDeviceRef = parsedArgs ? parsedArgs[1] : '';
+      const redactedUpdate = {
+        update_id: ctx.update.update_id,
+        message: {
+          message_id: message.message_id,
+          date: message.date,
+          chat: { id: message.chat.id, type: message.chat.type },
+          from: { id: message.from.id },
+          text: safeDeviceRef ? `/kluis ${safeDeviceRef} [REDACTED]` : '/kluis [REDACTED]',
+        },
+      };
+      if (!journal.claim(redactedUpdate)) return;
+      const vid = ctx.update.update_id;
+      let messageDeleted = false;
+      if (argTail && typeof ctx.api?.deleteMessage === 'function') {
+        messageDeleted = await ctx.api.deleteMessage(message.chat.id, message.message_id).then(() => true, () => false);
+      }
+      const replyOpts = {
+        reply_parameters: { message_id: message.message_id, allow_sending_without_reply: true },
+      };
+      if (message.chat?.type !== 'private') {
+        const groupWarn = labelEva2TelegramFailure(
+          'Gebruik /kluis uitsluitend in een privéchat met mij. Verwijder het bericht uit deze groep en wijzig zo nodig het wachtwoord.'
+        );
+        try {
+          journal.record(vid, 'failed', { response: groupWarn });
+          await ctx.reply(groupWarn, replyOpts);
+        } catch {
+          journal.record(vid, 'delivery_uncertain');
+        }
+        return;
+      }
+      if (!parsedArgs || typeof storeVaultSecret !== 'function') {
+        const usageMsg = labelEva2TelegramReply(
+          'Gebruik: /kluis <apparaat-id> <wachtwoord-of-sleutel>\n'
+          + 'Je bericht met het geheim wordt direct uit de chat gewist en versleuteld (AES-256-GCM) opgeslagen buiten het taalmodel om.'
+        );
+        try {
+          journal.record(vid, 'delivery_pending', { response: usageMsg });
+          const sent = await ctx.reply(usageMsg, replyOpts);
+          if (sent?.chat?.id === message.chat.id && typeof sent?.message_id === 'number') {
+            journal.record(vid, 'delivered', { receipt: `telegram:${sent.chat.id}:${sent.message_id}` });
+          } else {
+            journal.record(vid, 'delivery_uncertain');
+          }
+        } catch {
+          journal.record(vid, 'delivery_uncertain');
+        }
+        return;
+      }
+      try {
+        const stored = await storeVaultSecret({
+          telegramUserId: message.from.id,
+          chatId: String(message.chat.id),
+          deviceId: parsedArgs[1],
+          secretValue: parsedArgs[2],
+          messageDeleted,
+        });
+        let baseReply = stored?.reply_text || 'Kon geheim niet opslaan in de kluis.';
+        if (!messageDeleted && !baseReply.includes('handmatig')) {
+          baseReply += '\n⚠️ Let op: verwijder je oorspronkelijke bericht nog even handmatig uit Telegram.';
+        }
+        const replyMsg = labelEva2TelegramReply(baseReply);
+        journal.record(vid, 'delivery_pending', { response: replyMsg });
+        const sent = await ctx.reply(replyMsg, replyOpts);
+        if (sent?.chat?.id === message.chat.id && typeof sent?.message_id === 'number') {
+          journal.record(vid, 'delivered', { receipt: `telegram:${sent.chat.id}:${sent.message_id}` });
+        } else {
+          journal.record(vid, 'delivery_uncertain');
+        }
+      } catch (err) {
+        journal.record(vid, 'failed');
+        const safeErr = typeof err?.safeDetail === 'string' && err.safeDetail.trim()
+          ? err.safeDetail.trim().slice(0, 200)
+          : 'Kluisopslag geweigerd of mislukt (alleen het gezinshoofd kan geheimen opslaan).';
+        try {
+          await ctx.reply(
+            labelEva2TelegramFailure(safeErr),
+            replyOpts
+          );
+        } catch {
+          journal.record(vid, 'delivery_uncertain');
+        }
+      }
       return;
     }
     if (!journal.claim(ctx.update)) return;
@@ -260,9 +359,37 @@ export async function main() {
     if (!res.ok) return null;
     return res.json();
   };
+  const bridgeProof = computeTelegramVaultProof(token);
+  const storeVaultSecret = async ({ telegramUserId, chatId, deviceId, secretValue, messageDeleted = true }) => {
+    const res = await fetch(`${baseUrl}/internal/v1/telegram/vault/store`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'X-Eva-Telegram-Bridge-Proof': bridgeProof,
+      },
+      body: JSON.stringify({
+        telegram_user_id: telegramUserId,
+        chat_id: chatId,
+        device_id: deviceId,
+        secret_value: secretValue,
+        message_deleted: Boolean(messageDeleted),
+      }),
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      const err = new Error(`HTTP ${res.status}`);
+      if (typeof body?.detail === 'string' && body.detail.trim()) {
+        err.safeDetail = body.detail.trim().slice(0, 200);
+      }
+      throw err;
+    }
+    return res.json();
+  };
   await refreshBindings().catch(() => {});
   bot.on('message', createTransportHandler({ journal, bindings: trust.bindings, baseUrl, photoProvider,
-    redeemInvite, refreshBindings,
+    redeemInvite, refreshBindings, storeVaultSecret,
     makeDraft: ctx => createEva2DraftSink({ chatId: ctx.chat.id, draftId: ctx.message.message_id, sendDraft: bot.api.raw.sendMessageDraft?.bind(bot.api.raw) }),
     downloadFile: async (ctx, file) => {
       const info = await ctx.api.getFile(file.file_id);

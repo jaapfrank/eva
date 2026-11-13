@@ -6,11 +6,19 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
+import hmac
+import json
+import os
+from pathlib import Path
+import re
+import secrets
 from typing import Any, Callable, Protocol
 from uuid import UUID
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
+
+_PRE_LLM_VAULT_CMD_RE = re.compile(r"^/(?:kluis|wachtwoord)(?:@\w+)?(?:\s+(.*))?$", re.IGNORECASE | re.DOTALL)
 
 from eva.adapters.api.cockpit import cockpit_progress
 from eva.adapters.api.dashboard_assets import DASHBOARD_ASSETS, DASHBOARD_ENTRY
@@ -869,6 +877,69 @@ def create_app(
         dashboard_access.require(request)
         if set(payload) != {"text"} or not isinstance(payload["text"], str):
             raise HTTPException(status_code=422, detail="owner conversation is invalid")
+        vault_match = _PRE_LLM_VAULT_CMD_RE.match(payload["text"].strip())
+        if vault_match is not None:
+            hh = _runtime_household_settings()
+            arg_tail = (vault_match.group(1) or "").strip()
+            parts_v = arg_tail.split(maxsplit=1) if arg_tail else []
+            if len(parts_v) < 2:
+                vault_reply_text = (
+                    "Gebruik: /kluis <apparaat-id> <wachtwoord-of-token> — "
+                    "dit wordt vóór het taalmodel onderschept en buiten het gesprekslogboek versleuteld opgeslagen."
+                )
+            else:
+                from eva.application.home_proprioception import HomeProprioceptionManager
+
+                try:
+                    meta = HomeProprioceptionManager(hh.directory).store_device_secret(
+                        device_ref=parts_v[0],
+                        raw_secret=parts_v[1],
+                    )
+                    vault_reply_text = (
+                        f"🔐 Geheim veilig AES-256-GCM versleuteld opgeslagen in mijn kluis voor '{meta['device_id']}' "
+                        "(volledig buiten het taalmodel en buiten het gesprekslogboek)."
+                    )
+                except ValueError as err:
+                    vault_reply_text = f"Kon geheim niet in kluis opslaan: {err}"
+            now_iso = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+            msg_id = f"vault-local:{secrets.token_hex(8)}"
+            text_sha = hashlib.sha256(vault_reply_text.encode("utf-8")).hexdigest()
+            if "application/x-ndjson" in request.headers.get("accept", ""):
+                ndjson_line = (
+                    json.dumps(
+                        {
+                            "contract": "EvaInternalGroundedReply/v1",
+                            "conversation_id": "dashboard:owner",
+                            "evidence_memory_ids": [],
+                            "generated_at": now_iso,
+                            "message_id": msg_id,
+                            "provider": "vault-pre-llm",
+                            "text": vault_reply_text,
+                            "text_sha256": text_sha,
+                        },
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    ).encode("utf-8")
+                    + b"\n"
+                )
+                return StreamingResponse(
+                    iter((ndjson_line,)),
+                    media_type="application/x-ndjson",
+                    headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
+                )
+            return JSONResponse(
+                {
+                    "contract": "EvaDashboardGroundedReply/v1",
+                    "conversation_id": "dashboard:owner",
+                    "evidence_memory_ids": [],
+                    "generated_at": now_iso,
+                    "message_id": msg_id,
+                    "provider": "vault-pre-llm",
+                    "text": vault_reply_text,
+                    "text_sha256": text_sha,
+                },
+                headers={"Cache-Control": "no-store"},
+            )
         respond_as_owner = getattr(runtime, "dashboard_turn", None)
         if not callable(respond_as_owner):
             raise HTTPException(
@@ -1280,6 +1351,21 @@ def create_app(
                     "text": owner_cmd_reply,
                     "text_sha256": hashlib.sha256(owner_cmd_reply.encode()).hexdigest(),
                 }
+            if _PRE_LLM_VAULT_CMD_RE.match(text.strip()) is not None:
+                refusal_text = (
+                    "Alleen het gezinshoofd mag apparaat-wachtwoorden in de kluis opslaan (via een privéchat). "
+                    "Verwijder dit bericht uit de chat."
+                )
+                return {
+                    "contract": "EvaInternalGroundedReply/v1",
+                    "conversation_id": conversation_id,
+                    "evidence_memory_ids": [],
+                    "generated_at": occurred_at,
+                    "message_id": durable_message_id,
+                    "provider": "vault-pre-llm",
+                    "text": refusal_text,
+                    "text_sha256": hashlib.sha256(refusal_text.encode("utf-8")).hexdigest(),
+                }
             operation_id = f"telegram-canary:{chat_id}:{message_id}"
             admission = runtime.admit_telegram_canary(
                 telegram_user_id=telegram_user_id,
@@ -1412,6 +1498,68 @@ def create_app(
         if redeemed is None:
             return JSONResponse({"admitted": False}, headers={"Cache-Control": "no-store"})
         return JSONResponse(redeemed, headers={"Cache-Control": "no-store"})
+
+    @app.post("/internal/v1/telegram/vault/store")
+    def store_telegram_vault_secret(payload: dict[str, Any], request: Request) -> JSONResponse:
+        if not {"telegram_user_id", "chat_id", "device_id", "secret_value"} <= set(payload) or (
+            set(payload) - {"telegram_user_id", "chat_id", "device_id", "secret_value", "message_deleted"}
+        ):
+            raise HTTPException(status_code=422, detail="invalid vault store request")
+        token_file = os.environ.get("EVA_TELEGRAM_BOT_TOKEN_FILE", "").strip()
+        if token_file and Path(token_file).is_file():
+            bot_token = Path(token_file).read_text(encoding="utf-8").strip()
+            if bot_token:
+                expected_proof = hmac.new(
+                    bot_token.encode("utf-8"),
+                    b"EvaTelegramVaultAuth/v1",
+                    hashlib.sha256,
+                ).hexdigest()
+                given_proof = request.headers.get("x-eva-telegram-bridge-proof", "").strip()
+                if not given_proof or not hmac.compare_digest(given_proof, expected_proof):
+                    raise HTTPException(
+                        status_code=403,
+                        detail="Ongeldige Telegram-brugauthenticatie voor kluisopslag",
+                    )
+        tg_uid = payload.get("telegram_user_id")
+        chat_id = str(payload.get("chat_id") or "").strip()
+        dev_id = str(payload.get("device_id") or "").strip()
+        secret_raw = payload.get("secret_value")
+        msg_deleted = payload.get("message_deleted", True)
+        if (
+            not isinstance(tg_uid, int)
+            or isinstance(tg_uid, bool)
+            or not isinstance(secret_raw, str)
+            or not isinstance(msg_deleted, bool)
+            or not dev_id
+            or not secret_raw.strip()
+        ):
+            raise HTTPException(status_code=422, detail="invalid vault store parameters")
+        hh = _runtime_household_settings()
+        if tg_uid != hh.owner_telegram_id or chat_id != str(hh.owner_telegram_id):
+            raise HTTPException(status_code=403, detail="Alleen het gezinshoofd mag geheimen in de kluis opslaan")
+        from eva.application.home_proprioception import HomeProprioceptionManager
+
+        hp = HomeProprioceptionManager(hh.directory)
+        try:
+            meta = hp.store_device_secret(
+                device_ref=dev_id,
+                raw_secret=secret_raw,
+            )
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+        delete_note = (
+            "je bericht met het wachtwoord is direct uit de chat gewist"
+            if msg_deleted
+            else "⚠️ verwijder je oorspronkelijke bericht nog even handmatig uit Telegram"
+        )
+        reply_text = (
+            f"🔐 Geheim veilig AES-256-GCM versleuteld opgeslagen in mijn kluis voor '{meta['device_id']}' "
+            f"(buiten het taalmodel om; {delete_note})."
+        )
+        return JSONResponse(
+            {"stored": True, "device_id": meta["device_id"], "reply_text": reply_text},
+            headers={"Cache-Control": "no-store"},
+        )
 
     @app.post("/internal/v1/goals/admit")
     def admit_durable_goal(payload: dict[str, Any]) -> dict[str, Any]:

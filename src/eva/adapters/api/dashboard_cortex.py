@@ -16,6 +16,7 @@ Exposes:
 
 from __future__ import annotations
 
+import asyncio
 from datetime import UTC, datetime
 import json
 import os
@@ -25,6 +26,8 @@ from typing import Any
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
+from eva.adapters.api.installer_request_json import read_small_json_request
+from eva.application.home_proprioception import HomeProprioceptionManager
 from eva.application.household_head_settings import HouseholdHeadSettings
 from eva.application.living_entity_pulse import (
     HomeostaticDrives,
@@ -207,6 +210,11 @@ def _resolve_household_head_settings(runtime: Any) -> HouseholdHeadSettings:
     return HouseholdHeadSettings(settings.directory)
 
 
+def _resolve_home_proprioception(runtime: Any) -> HomeProprioceptionManager:
+    _, settings = _resolve_model_provider_settings(runtime)
+    return HomeProprioceptionManager(settings.directory)
+
+
 def _build_cloud_providers_summary(runtime: Any, sub_state: dict[str, Any]) -> dict[str, Any]:
     control, settings = _resolve_model_provider_settings(runtime)
     try:
@@ -341,6 +349,7 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
     cloud_summary = _build_cloud_providers_summary(runtime, sub_state)
     providers = _build_subscription_providers(runtime, sub_state, cloud_summary)
     household_head = _resolve_household_head_settings(runtime).status(now=now)
+    home_proprioception = _resolve_home_proprioception(runtime).status(now=now)
 
     try:
         health = runtime.health()
@@ -357,6 +366,7 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
         "observed_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pulse": pulse,
         "household_head": household_head,
+        "home_proprioception": home_proprioception,
         "cloud_providers": cloud_summary,
         "subscriptions": {
             "selected_provider": sub_state["selected_provider"],
@@ -370,6 +380,7 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
             "native_c_simd_fastpath": NATIVE_ACCELERATOR_ACTIVE,
             "liquid_ode_rk4_c": True,
             "household_head_regie": True,
+            "home_proprioception_active": True,
             "postgres_rls_uuid_optimized": True,
             "jepa_world_model_c": True,
             "titans_o1_synaptic_memory": True,
@@ -1121,6 +1132,7 @@ redelijk energiek, ontspannen</p>
           <button type="button" class="eva-tab" data-tab="memory">Geheugen</button>
           <button type="button" class="eva-tab" data-tab="tasks">Taken</button>
           <button type="button" class="eva-tab" data-tab="household">👑 Gezin &amp; Eva</button>
+          <button type="button" class="eva-tab" data-tab="network">📡 Huis &amp; Netwerk</button>
           <button type="button" class="eva-tab" data-tab="brain">Brein &amp; Cloud</button>
         </nav>
         <div class="topbar-right">
@@ -1576,6 +1588,76 @@ redelijk energiek, ontspannen</p>
             </section>
           </div>
         </section>
+
+        <!-- TAB 7: HUIS, NETWERK, KLUIS & DIGITALE ORGANEN (Fase 2) -->
+        <section class="tab-view" id="tab-network" aria-label="Huis, Netwerk &amp; Digitale Organen">
+          <div class="grid-2">
+            <!-- KOLOM 1: LAN-ONTDEKKING & TOESTEMMING + PRE-LLM AES-256-GCM KLUIS -->
+            <section class="panel-card">
+              <h2 class="panel-title">
+                <span>📡 Thuisnetwerk &amp; Apparaten</span>
+                <span class="badge emerald" id="hp-scan-badge">SSRF-Beveiligd LAN</span>
+              </h2>
+              <p class="panel-sub">Eva ontdekt zelf slimme apparaten op je thuisnetwerk (Hue, Home Assistant, camera's, Shelly, Sonos, Cast, UniFi) en vraagt altijd eerst toestemming voordat ze koppelt.</p>
+              <div id="hp-notice" style="margin-bottom: 10px; font-size: 0.84rem; font-weight: 600; color: #6ee7b7;"></div>
+
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+                <span id="hp-subnets-meta" style="font-size:0.78rem;color:#94a3b8;">Subnets: automatisch gedetecteerd</span>
+                <button class="btn primary" id="hp-scan-btn" onclick="scanHomeLan()">🔍 Scan Thuisnetwerk Nu</button>
+              </div>
+
+              <div class="llm-cards" id="hp-devices-container" style="margin-bottom:16px;"></div>
+
+              <div style="background:#0b111e;border:1px solid rgba(56,189,248,0.28);border-radius:12px;padding:14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+                  <div style="font-weight:700;font-size:0.9rem;color:#7dd3fc;">🔐 Pre-LLM Kluis (AES-256-GCM)</div>
+                  <span class="badge violet" id="hp-vault-badge">0 sleutels</span>
+                </div>
+                <p style="margin:0 0 10px;font-size:0.79rem;color:#94a3b8;line-height:1.45;">Camera-wachtwoorden, RTSP-logins en tokens gaan rechtstreeks versleuteld de kluis in en komen <strong>nooit</strong> in prompts, database-logs of het taalmodel terecht. Via Telegram verwijdert <code>/kluis &lt;id&gt; &lt;geheim&gt;</code> je wachtwoordbericht direct uit de chat.</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+                  <input id="hp-vault-device" type="text" placeholder="Apparaat-ID (bijv. cam_10_0_20_81)" style="padding:8px 10px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.82rem;" />
+                  <input id="hp-vault-user" type="text" placeholder="Gebruiker (optioneel)" style="padding:8px 10px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.82rem;" />
+                </div>
+                <div style="display:grid;grid-template-columns:1fr auto;gap:8px;">
+                  <input id="hp-vault-secret" type="password" autocomplete="new-password" placeholder="Wachtwoord of API-sleutel (AES-256-GCM)" style="padding:8px 10px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.82rem;" />
+                  <button class="btn primary" onclick="storeVaultSecretUi()">🔒 Kluis Opslaan</button>
+                </div>
+              </div>
+            </section>
+
+            <!-- KOLOM 2: RUIMTELIJK AANWEZIGHEIDSVELD (HUE/ZIGBEE/WIFI) & DIGITALE ORGANEN -->
+            <section class="panel-card">
+              <h2 class="panel-title">
+                <span>🌊 Ruimtelijk Huisveld &amp; Organen</span>
+                <span class="badge cyan">0-Token Proprioceptie</span>
+              </h2>
+              <p class="panel-sub">Bewegingsdetectie zonder extra sensoren of LLM-tokens: Zigbee LQI-rimpelingen (zoals Hue MotionAware), Wi-Fi RTT-jitter en lichtschakelaars voeden rechtstreeks Eva's C/SIMD Liquid ODE.</p>
+
+              <div id="hp-rooms-container" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;"></div>
+
+              <div style="background:#0b111e;border:1px solid var(--border-subtle);border-radius:10px;padding:11px;margin-bottom:16px;">
+                <div style="font-size:0.8rem;font-weight:700;color:#cbd5e1;margin-bottom:8px;">⚡ Test Signaalpuls (Zigbee LQI / Kamerbeweging)</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;">
+                  <input id="hp-sim-room" type="text" value="woonkamer" placeholder="Kamer (bijv. woonkamer)" style="padding:7px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.8rem;" />
+                  <select id="hp-sim-kind" style="padding:7px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.8rem;">
+                    <option value="zigbee_lqi">Zigbee LQI Rimpeling (Hue)</option>
+                    <option value="wifi_rtt_ms">Wi-Fi RTT Jitter</option>
+                    <option value="motion_binary">Directe Bewegingspuls</option>
+                  </select>
+                  <button class="btn" onclick="simulateRoomSignalUi()">Stuur Puls</button>
+                </div>
+              </div>
+
+              <h3 style="font-size:0.92rem;margin:0 0 8px;color:#f8fafc;">🧬 Actieve Digitale Organen (AST-Sandbox &amp; Capability-Pinned)</h3>
+              <div class="llm-cards" id="hp-organs-container"></div>
+
+              <div style="margin-top:14px;background:#0b111e;border:1px solid var(--border-subtle);border-radius:10px;padding:11px;font-size:0.78rem;color:#cbd5e1;">
+                <strong style="color:#7dd3fc;">💬 Via Telegram (Gezinshoofd):</strong><br/>
+                <code>/netwerk</code> · <code>/koppel &lt;id&gt; [kamer]</code> · <code>/negeer &lt;id&gt;</code> · <code>/kamer &lt;id&gt; &lt;kamer&gt;</code> · <code>/kluis &lt;id&gt; &lt;geheim&gt;</code> · <code>/huisveld</code>
+              </div>
+            </section>
+          </div>
+        </section>
       </main>
 
       <button type="button" class="discover-cta" id="discover-eva-btn" onclick="switchTab('chat')">
@@ -1987,6 +2069,99 @@ redelijk energiek, ontspannen</p>
           `;
         }
       }
+
+      // Huis-Proprioceptie, LAN-Ontdekking, Kluis & Digitale Organen (Fase 2)
+      const hp = data.home_proprioception;
+      if (hp) {
+        const scanBadge = document.getElementById('hp-scan-badge');
+        if (scanBadge) {
+          scanBadge.textContent = hp.last_scan_at ? `Laatste scan: ${hp.last_scan_at.slice(11, 19)} UTC` : 'Nog niet gescand';
+        }
+        const subnetsMeta = document.getElementById('hp-subnets-meta');
+        if (subnetsMeta) {
+          const subs = (hp.scanned_subnets || []).join(', ') || 'automatisch';
+          subnetsMeta.textContent = `Subnets: ${subs} · ${(hp.devices || []).length} apparaten`;
+        }
+        const vaultBadge = document.getElementById('hp-vault-badge');
+        if (vaultBadge) {
+          const vc = hp.vault_entries_count || 0;
+          vaultBadge.textContent = `${vc} versleuteld${vc === 1 ? ' geheim' : 'e geheimen'}`;
+        }
+
+        const devBox = document.getElementById('hp-devices-container');
+        if (devBox) {
+          const devs = hp.devices || [];
+          if (devs.length === 0) {
+            devBox.innerHTML = `<div style="font-size:0.82rem;color:#94a3b8;padding:10px;background:#0b111e;border-radius:8px;border:1px solid var(--border-subtle);">Nog geen apparaten gescand. Klik op <strong>Scan Thuisnetwerk Nu</strong> of stuur <code>/netwerk</code> via Telegram.</div>`;
+          } else {
+            const statusPill = {
+              approved: '<span class="badge emerald">✓ Gekoppeld</span>',
+              pending_consent: '<span class="badge amber">⏳ Wacht op toestemming</span>',
+              ignored: '<span class="badge">🔇 Genegeerd</span>'
+            };
+            devBox.innerHTML = devs.map(d => {
+              const st = d.consent_status || 'pending_consent';
+              const isHue = d.kind === 'philips_hue_bridge';
+              const credBadge = d.has_credential ? `<span class="badge violet" style="margin-left:4px;">🔐 Kluis</span>` : '';
+              return `
+                <div class="llm-card ${st === 'approved' ? 'active' : ''}" style="${st === 'ignored' ? 'opacity:0.58;' : ''}">
+                  <div class="llm-head">
+                    <h3>${esc(d.display_name)} <small style="color:#94a3b8;">(${esc(d.ip)}:${esc(d.port)} · ${esc(d.room_id || 'algemeen')})</small></h3>
+                    <div>${statusPill[st] || ''}${credBadge}</div>
+                  </div>
+                  <p style="margin:2px 0 8px;font-size:0.78rem;color:#cbd5e1;">ID: <code>${esc(d.device_id)}</code> · RTT: ${esc(d.rtt_ms)} ms${d.organ_summary ? ` · ${esc(d.organ_summary)}` : ''}</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                    ${st !== 'approved' ? `<button class="btn primary" style="padding:4px 9px;font-size:0.75rem;" data-hp-action="approve_device" data-hp-device="${esc(d.device_id)}">✓ Goedkeuren</button>` : ''}
+                    ${isHue ? `<button class="btn" style="padding:4px 9px;font-size:0.75rem;" data-hp-action="pair_hue" data-hp-device="${esc(d.device_id)}">💡 Koppel Hue-Knop</button>` : ''}
+                    ${st === 'approved' ? `<button class="btn" style="padding:4px 9px;font-size:0.75rem;" data-hp-action="poll_organ" data-hp-device="${esc(d.device_id)}">⚡ Test Orgaan</button>` : ''}
+                    ${st !== 'ignored' ? `<button class="btn" style="padding:4px 9px;font-size:0.75rem;" data-hp-action="ignore_device" data-hp-device="${esc(d.device_id)}">✕ Negeren</button>` : ''}
+                    ${d.has_credential ? `<button class="btn" style="padding:4px 9px;font-size:0.75rem;" data-hp-action="delete_vault_secret" data-hp-device="${esc(d.device_id)}">🗑️ Wis Kluis</button>` : ''}
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+
+        const roomsBox = document.getElementById('hp-rooms-container');
+        if (roomsBox) {
+          const rooms = hp.rooms || [];
+          if (rooms.length === 0) {
+            roomsBox.innerHTML = `<div style="font-size:0.81rem;color:#94a3b8;padding:10px;background:#0b111e;border-radius:8px;border:1px solid var(--border-subtle);">Nog geen kamersignalen gemeten. Koppel een apparaat of stuur een testpuls hieronder.</div>`;
+          } else {
+            roomsBox.innerHTML = rooms.map(r => {
+              const occPct = Math.round((r.occupancy_probability || 0) * 100);
+              const motPct = Math.round((r.motion_energy || 0) * 100);
+              const mods = (r.active_modalities || []).join(', ') || 'idle';
+              return `
+                <div style="background:#0b111e;padding:10px 12px;border-radius:10px;border:1px solid var(--border-subtle);">
+                  <div style="display:flex;justify-content:space-between;font-size:0.81rem;margin-bottom:5px;">
+                    <strong>🏠 ${esc(r.room_id)} <small style="color:#94a3b8;font-weight:400;">(${esc(mods)})</small></strong>
+                    <span style="color:#38bdf8;font-weight:700;">Aanwezigheid ${occPct}% · Beweging ${motPct}%</span>
+                  </div>
+                  <div class="bar-track"><div class="bar-fill" style="width:${occPct}%;background:linear-gradient(90deg,#10b981,#38bdf8);"></div></div>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+
+        const organsBox = document.getElementById('hp-organs-container');
+        if (organsBox) {
+          const organs = hp.organs || [];
+          organsBox.innerHTML = organs.length === 0
+            ? `<div style="font-size:0.8rem;color:#94a3b8;">Zodra je een apparaat goedkeurt, activeert Eva automatisch het bijbehorende digitale orgaan.</div>`
+            : organs.map(o => `
+              <div class="llm-card active" style="padding:9px 12px;">
+                <div class="llm-head" style="margin-bottom:3px;">
+                  <h3 style="font-size:0.83rem;">🧬 ${esc(o.organ_id)} <small style="color:#94a3b8;">(${esc(o.organ_type)})</small></h3>
+                  <span class="badge emerald">${esc(o.status)}${o.last_latency_ms !== undefined && o.last_latency_ms !== null ? ` · ${esc(o.last_latency_ms)} ms` : ''}</span>
+                </div>
+                <p style="margin:0;font-size:0.76rem;color:#cbd5e1;">${esc(o.last_result_summary || '')} <code style="color:#64748b;">sha256:${esc((o.code_sha256 || '').slice(0, 12))}</code></p>
+              </div>
+            `).join('');
+        }
+      }
     }
 
     async function loadState() {
@@ -2285,9 +2460,84 @@ redelijk energiek, ontspannen</p>
 
     document.addEventListener('click', (ev) => {
       const btn = ev.target && ev.target.closest ? ev.target.closest('[data-hh-action]') : null;
-      if (!btn) return;
-      manageHouseholdMember(btn.dataset.hhAction || '', btn.dataset.hhTarget || '', btn.dataset.hhRole || '');
+      if (btn) {
+        manageHouseholdMember(btn.dataset.hhAction || '', btn.dataset.hhTarget || '', btn.dataset.hhRole || '');
+        return;
+      }
+      const hpBtn = ev.target && ev.target.closest ? ev.target.closest('[data-hp-action]') : null;
+      if (hpBtn) {
+        manageHomeProprioception(hpBtn.dataset.hpAction || '', { device_id: hpBtn.dataset.hpDevice || '' });
+      }
     });
+
+    async function manageHomeProprioception(action, extra) {
+      const notice = document.getElementById('hp-notice');
+      if (notice) {
+        notice.style.color = '#7dd3fc';
+        notice.textContent = action === 'scan_lan' ? '⏳ Thuisnetwerk veilig scannen…' : '⏳ Actie uitvoeren…';
+      }
+      const res = await fetch('/internal/v1/dashboard/cortex/proprioception', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({ action }, extra || {}))
+      });
+      if (res.ok) {
+        const out = await res.json();
+        renderState(out.cortex || out);
+        if (notice) {
+          notice.style.color = '#6ee7b7';
+          notice.textContent = out.message || '✓ Thuisnetwerk & proprioceptie bijgewerkt.';
+        }
+      } else {
+        const err = await res.json().catch(() => ({}));
+        if (notice) {
+          notice.style.color = '#fda4af';
+          notice.textContent = '❌ ' + (err.detail || 'Kon actie niet uitvoeren.');
+        }
+      }
+    }
+
+    async function scanHomeLan() {
+      await manageHomeProprioception('scan_lan', {});
+    }
+
+    async function storeVaultSecretUi() {
+      const devEl = document.getElementById('hp-vault-device');
+      const userEl = document.getElementById('hp-vault-user');
+      const secEl = document.getElementById('hp-vault-secret');
+      const notice = document.getElementById('hp-notice');
+      const deviceId = (devEl ? devEl.value : '').trim();
+      const username = (userEl ? userEl.value : '').trim();
+      const secretValue = secEl ? secEl.value : '';
+      if (!deviceId || !secretValue.trim()) {
+        if (notice) {
+          notice.style.color = '#fcd34d';
+          notice.textContent = '⚠️ Vul zowel een apparaat-ID als een wachtwoord/sleutel in.';
+        }
+        return;
+      }
+      if (secEl) secEl.value = '';
+      await manageHomeProprioception('store_vault_secret', {
+        device_id: deviceId,
+        username,
+        secret_value: secretValue
+      });
+    }
+
+    async function simulateRoomSignalUi() {
+      const roomEl = document.getElementById('hp-sim-room');
+      const kindEl = document.getElementById('hp-sim-kind');
+      const roomId = (roomEl ? roomEl.value : 'woonkamer').trim() || 'woonkamer';
+      const metricKind = kindEl ? kindEl.value : 'zigbee_lqi';
+      const sampleVal = metricKind === 'motion_binary' ? 1.0 : (metricKind === 'zigbee_lqi' ? (185 + Math.round(Math.random() * 35)) : (1.5 + Math.random() * 12.0));
+      await manageHomeProprioception('ingest_signal', {
+        room_id: roomId,
+        source_id: 'cortex_probe',
+        metric_kind: metricKind,
+        value: sampleVal
+      });
+    }
 
     async function manageHouseholdMember(action, target, role) {
       const notice = document.getElementById('hh-member-notice');
@@ -2360,7 +2610,10 @@ redelijk energiek, ontspannen</p>
     }
 
     async function sendChatTurn(text) {
-      appendChatBubble('user', text);
+      const shownText = /^\\/(?:kluis|wachtwoord)(?:@\\w+)?(?:\\s|$)/iu.test(text.trim())
+        ? '/kluis [geheim versleuteld naar kluis]'
+        : text;
+      appendChatBubble('user', shownText);
       const pending = appendChatBubble('eva', 'Eva denkt na…');
       const dot = document.getElementById('presence-dot');
       const st = document.getElementById('presence-status-text');
@@ -2939,6 +3192,115 @@ def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None
             {
                 "cortex": build_cortex_state_payload(runtime),
                 "created_invite": created_invite,
+            },
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+        )
+
+    @app.post("/internal/v1/dashboard/cortex/proprioception")
+    async def manage_home_proprioception(request: Request) -> JSONResponse:
+        access.require(request)
+        if access.token is None and not (
+            getattr(runtime, "_dashboard_owner_principal_id", None)
+            or getattr(runtime, "_optional_model_providers", None)
+            or getattr(runtime, "_model_provider_control", None)
+        ):
+            raise HTTPException(
+                status_code=403,
+                detail="Dashboard-eigenaarstoegang vereist voor netwerk- en kluisacties",
+            )
+        if request.query_params:
+            raise HTTPException(status_code=422, detail="Queryparameters niet toegestaan")
+        if request.headers.get("content-type", "").split(";", 1)[0].strip() != "application/json":
+            raise HTTPException(status_code=415, detail="JSON-verzoek vereist")
+        payload = await read_small_json_request(request, 32768, "proprioception")
+        if not isinstance(payload, dict):
+            raise HTTPException(status_code=422, detail="Ongeldig verzoek")
+
+        action = str(payload.get("action") or "").strip()
+        hp = _resolve_home_proprioception(runtime)
+
+        def _execute_sync() -> tuple[str, dict[str, Any] | None]:
+            if action == "scan_lan":
+                raw_subnets = payload.get("subnets")
+                subnets = [str(s) for s in raw_subnets] if isinstance(raw_subnets, list) else None
+                st = hp.run_lan_scan(subnets=subnets, max_subnets=3 if subnets else 1)
+                return (
+                    f"✓ Netwerkscan voltooid ({len(st.get('devices', []))} apparaten op het thuisnetwerk).",
+                    None,
+                )
+            if action == "approve_device":
+                room_raw = str(payload.get("room_id") or "").strip() or None
+                hp.set_device_consent(
+                    device_id=str(payload.get("device_id") or ""),
+                    consent_status="approved",
+                    room_id=room_raw,
+                )
+                return "✓ Apparaat goedgekeurd en digitaal orgaan geactiveerd.", None
+            if action == "ignore_device":
+                hp.set_device_consent(
+                    device_id=str(payload.get("device_id") or ""),
+                    consent_status="ignored",
+                )
+                return "✓ Apparaat op negeren gezet.", None
+            if action == "assign_room":
+                hp.assign_device_room(
+                    device_id=str(payload.get("device_id") or ""),
+                    room_id=str(payload.get("room_id") or ""),
+                )
+                return "✓ Kamer gekoppeld aan apparaat.", None
+            if action == "pair_hue":
+                res = hp.pair_philips_hue_bridge(str(payload.get("device_id") or ""))
+                return str(res.get("message") or "✓ Hue Bridge gekoppeld."), res
+            if action == "store_vault_secret":
+                meta = hp.store_device_secret(
+                    device_ref=str(payload.get("device_id") or ""),
+                    raw_secret=str(payload.get("secret_value") or ""),
+                    username=str(payload.get("username") or ""),
+                    credential_kind=str(payload.get("credential_kind") or "password_or_token"),
+                )
+                return f"🔐 Geheim versleuteld (AES-256-GCM) opgeslagen voor '{meta['device_id']}'.", meta
+            if action == "delete_vault_secret":
+                deleted = hp.vault.delete_secret(str(payload.get("device_id") or ""))
+                msg = "🗑️ Kluis-geheim verwijderd." if deleted else "Geen geheim gevonden voor dit apparaat."
+                return msg, None
+            if action == "poll_organ":
+                res = hp.poll_organ(str(payload.get("device_id") or ""))
+                return f"⚡ {res['summary']} ({res['latency_ms']} ms)", res
+            if action == "ingest_signal":
+                metric_raw = str(payload.get("metric_kind") or "zigbee_lqi")
+                if metric_raw not in ("zigbee_lqi", "wifi_rtt_ms", "motion_binary", "light_state"):
+                    raise ValueError("Ongeldig signaaltype")
+                val_raw = payload.get("value", 0.0)
+                if isinstance(val_raw, bool) or not isinstance(val_raw, (int, float)):
+                    raise ValueError("Signaalwaarde moet numeriek zijn")
+                room_snap = hp.ingest_signal_sample(
+                    room_id=str(payload.get("room_id") or "algemeen"),
+                    source_id=str(payload.get("source_id") or "manual"),
+                    metric_kind=metric_raw,  # type: ignore[arg-type]
+                    value=float(val_raw),
+                )
+                return f"🌊 Ruimtelijk huisveld bijgewerkt voor '{room_snap['room_id']}'.", room_snap
+            if action == "register_custom_organ":
+                organ = hp.register_custom_organ(
+                    device_id=str(payload.get("device_id") or ""),
+                    source_code=str(payload.get("source_code") or ""),
+                    run_live_probe=(payload.get("run_live_probe") is True),
+                )
+                return f"🧬 Custom digitaal orgaan '{organ['organ_id']}' gevalideerd en geactiveerd.", organ
+            raise ValueError("Onbekende proprioceptie-actie")
+
+        try:
+            message_nl, result_meta = await asyncio.to_thread(_execute_sync)
+        except PermissionError as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
+        except (ValueError, RuntimeError, TimeoutError) as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+        return JSONResponse(
+            {
+                "cortex": build_cortex_state_payload(runtime),
+                "message": message_nl,
+                "result": result_meta,
             },
             headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
         )

@@ -77,29 +77,38 @@ class OptionalConversationModel:
             )
 
         ode_note = ""
-        try:
-            from eva.application.living_entity_pulse import LivingEntityPulseEngine
+        if ctx["speaker_role"] in ("gezinshoofd", "gezin"):
+            try:
+                from eva.application.living_entity_pulse import LivingEntityPulseEngine
 
-            pulse_engine = LivingEntityPulseEngine.get()
-            if ctx["speaker_role"] in ("gezinshoofd", "gezin"):
+                pulse_engine = LivingEntityPulseEngine.get()
                 snap = pulse_engine.record_turn(
                     principal_id=turn.principal_id,
                     user_text=turn.text,
                     display_name=ctx["speaker_name"],
                 )
-            else:
-                snap = pulse_engine.snapshot()
-            ode = snap.liquid_ode
-            ode_note = (
-                f"Continue Liquid-tijdskern (dx/dt): alertheid={ode.state.get('arousal', 0.5):.2f}, "
-                f"sociale afstemming={ode.state.get('social_attunement', 0.6):.2f}, "
-                f"huisrust={ode.state.get('home_proprioception', 0.85):.2f} "
-                f"(τ_eff={ode.mean_tau_seconds}s)."
-            )
-        except Exception:
-            pass
+                ode = snap.liquid_ode
+                ode_note = (
+                    f"Continue Liquid-tijdskern (dx/dt): alertheid={ode.state.get('arousal', 0.5):.2f}, "
+                    f"sociale afstemming={ode.state.get('social_attunement', 0.6):.2f}, "
+                    f"huisrust={ode.state.get('home_proprioception', 0.85):.2f} "
+                    f"(τ_eff={ode.mean_tau_seconds}s)."
+                )
+            except Exception:
+                pass
 
-        if hh.state_file.is_file() and ctx["speaker_role"] == "gast":
+        proprioception_note = ""
+        if ctx["speaker_role"] in ("gezinshoofd", "gezin"):
+            try:
+                from eva.application.home_proprioception import HomeProprioceptionManager
+
+                proprioception_note = HomeProprioceptionManager(
+                    self.control.settings.directory
+                ).build_household_awareness_note()
+            except Exception:
+                proprioception_note = ""
+
+        if ctx["speaker_role"] == "gast":
             avail = kwargs.get("available_actions")
             if avail is not None:
                 safe_guest_actions = tuple(a for a in avail if a == "memory_search")
@@ -120,7 +129,7 @@ class OptionalConversationModel:
             except Exception:
                 pass
 
-        extra_notes = [n for n in (ctx["self_context_note"], ode_note) if n]
+        extra_notes = [n for n in (ctx["self_context_note"], ode_note, proprioception_note) if n]
         if extra_notes:
             existing_sc = tuple(kwargs.get("self_context") or ())
             kwargs = {**kwargs, "self_context": (*existing_sc, *extra_notes)}
