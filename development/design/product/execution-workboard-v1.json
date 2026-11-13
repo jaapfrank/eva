@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-11-07",
+  "lastUpdated": "2026-11-13",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E4.16",
@@ -10506,17 +10506,11 @@
         "status": "in_progress",
         "nextAction": "De zaak van 26 oktober is onafhankelijk gereproduceerd en de bewaarde kandidaat werkt in de geïsoleerde vergelijking. De huidige zoekroute is al hersteld en een gewone live zoekopdracht gaf antwoord. Voor de volledige autonome kringloop ontbreekt nog een actuele, reproduceerbare interne fout met geldige bronbinding.",
         "finishOrder": [
-          "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
-          "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
-          "P0-03 · Versterk onafhankelijke reviewerherkomst en scheid pure validators van de bestaande hash-/receipt-/rollback-dispatch in reviewed_component_application.py. Geen verzwakking van huidige releasebeveiliging.",
-          "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
-          "P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.",
-          "P1-03 · Actuele importgrenzen gemeten. De actieve correcties bij ontvangstbewijzen en onderzoek zijn geïnstalleerd en teruggelezen. De werkmapcontrole telt 169 resterende signalen.",
-          "P1-04 · Groepsprivacy, expliciete speakerbevoegdheid en de geldigheid van persoonlijke werkteruggave zijn geïnstalleerd en getest. Het kindbeleid is vastgelegd. Persoonlijke kindfuncties blijven gesloten tot afzonderlijke toestemming en acceptatie.",
-          "P1-06 · Modelberichten krijgen hun eigen gebeurtenistype en de controle op recente meldingen leest elke tijdlijn eenmaal. Beide correcties zijn geïnstalleerd en gecontroleerd.",
-          "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
-          "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
-          "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
+          "Fase 1 · Menselijke entiteit, brede 1-klik LLM-keuze (>10 providers + lokale auto-detectie zonder GPU-plicht) & nul-techniek kanaal-/gezinskennismaking: na installeren + persoonlijkheid + LLM kiezen direct praten, zonder handmatig agent/principal-beheer en zonder ambtelijk systeemjargon (M3.3, E1.10, E1.13, E2.1, E2.2, E2.5, O1.1).",
+          "Fase 2 · Zelfstandige netwerkontdekking (óók zonder Home Assistant, zoals Lidl/Tuya-, ONVIF- of RTSP-camera's en losse netwerkapparaten) & veilige gespreks-inlogkluis: Eva ontdekt zelf het LAN, vraagt in gewoon gesprek toestemming om te koppelen en vangt wachtwoorden/sleutels via 1-tik kluisveld of vóór-het-model onderschepte Telegram-invoer veilig af zonder lek naar cloud-prompts (E1.6, E1.12, E2.8, E4.15).",
+          "Fase 3 · Kernbetrouwbaarheid, één geconsolideerde afleverroute & onafhankelijk getoetste zelfreparatie (P0-01..P0-03, P1-01): consolideer de drie claimstappen in delegated_work_delivery.py, overleef provider-429/503 duurzaam zonder dubbel effect (E1.14) en sluit autonome foutreparatie, reviewerherkomst en beheerde updates in reviewed_component_application.py (E4.16, E4.19; E4.18 technisch behouden).",
+          "Fase 4 · Levend dagelijks initiatief zonder tokenverspilling & natuurlijke full-duplex spraak in huis (P1-02, P2-01, P2-03): zuinige veranderingspoort, selectief geheugen en blijvende eigen aandacht (E1.6–E1.12, E4.11, AU-008) plus C3.5→C3.4→C4.1→C3.6 op beide fysieke speakers (C3.1 geaccepteerd; P1-03/P1-04/P1-06 grenzen blijven gelden).",
+          "Fase 5 · Parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2): start veilige praktijkwaarneming direct op de geïnstalleerde kandidaat en rond zeven dagen gebruik + eindoordeel af (P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken)."
         ],
         "comparisonExecution": "parked_no_new_series",
         "updatedAt": "2026-11-07T16:22:10.472360+00:00",
@@ -11117,6 +11111,27 @@
           "result": "De modeladapter hergebruikt geen oud gebeurtenistype voor een nieuw bericht. De controle op recente meldingen leest elke eerdere tijdlijn eenmaal. Beide correcties draaien op kern en werkuitvoerder. Alle 67 gerichte controles zijn geslaagd.",
           "remaining": "De brede importgrenzencontrole bevat 169 bestaande signalen. Algemene snelheidswinst is niet gemeten.",
           "evidence": "development/evidence/reassessment/p1-06-core-boundaries-verified-20261107.json"
+        },
+        "previousFinishOrderBefore20261113": [
+          "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
+          "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
+          "P0-03 · Versterk onafhankelijke reviewerherkomst en scheid pure validators van de bestaande hash-/receipt-/rollback-dispatch in reviewed_component_application.py. Geen verzwakking van huidige releasebeveiliging.",
+          "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
+          "P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.",
+          "P1-03 · Actuele importgrenzen gemeten. De actieve correcties bij ontvangstbewijzen en onderzoek zijn geïnstalleerd en teruggelezen. De werkmapcontrole telt 169 resterende signalen.",
+          "P1-04 · Groepsprivacy, expliciete speakerbevoegdheid en de geldigheid van persoonlijke werkteruggave zijn geïnstalleerd en getest. Het kindbeleid is vastgelegd. Persoonlijke kindfuncties blijven gesloten tot afzonderlijke toestemming en acceptatie.",
+          "P1-06 · Modelberichten krijgen hun eigen gebeurtenistype en de controle op recente meldingen leest elke tijdlijn eenmaal. Beide correcties zijn geïnstalleerd en gecontroleerd.",
+          "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
+          "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
+          "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
+        ],
+        "ownerCombinedRoadmap20261113": {
+          "date": "2026-11-13",
+          "summary": "Eigenaar vraagt vóór verdere implementatie eerst alle afrondingsstappen te combineren tot één logisch plan en verder te kijken naar een niet-technische out-of-the-box Eva: installeren, persoonlijkheid geven, brede LLM-keuze, zelfstandig netwerkapparaten vinden (ook zonder Home Assistant, zoals losse Lidl-camera's), veilig in gesprek om toestemming en wachtwoord vragen, en zonder technische agent/gebruiker-koppelingen met mensen in gesprek gaan.",
+          "documents": [
+            "development/docs/PROJECTDOEL.md",
+            "development/docs/AFRONDINGSPLAN.md"
+          ]
         }
       }
     },
@@ -17748,17 +17763,11 @@
       "status": "in_progress",
       "nextAction": "De zaak van 26 oktober is onafhankelijk gereproduceerd en de bewaarde kandidaat werkt in de geïsoleerde vergelijking. De huidige zoekroute is al hersteld en een gewone live zoekopdracht gaf antwoord. Voor de volledige autonome kringloop ontbreekt nog een actuele, reproduceerbare interne fout met geldige bronbinding.",
       "finishOrder": [
-        "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
-        "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
-        "P0-03 · Versterk onafhankelijke reviewerherkomst en scheid pure validators van de bestaande hash-/receipt-/rollback-dispatch in reviewed_component_application.py. Geen verzwakking van huidige releasebeveiliging.",
-        "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
-        "P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.",
-        "P1-03 · Actuele importgrenzen gemeten. De actieve correcties bij ontvangstbewijzen en onderzoek zijn geïnstalleerd en teruggelezen. De werkmapcontrole telt 169 resterende signalen.",
-        "P1-04 · Groepsprivacy, expliciete speakerbevoegdheid en de geldigheid van persoonlijke werkteruggave zijn geïnstalleerd en getest. Het kindbeleid is vastgelegd. Persoonlijke kindfuncties blijven gesloten tot afzonderlijke toestemming en acceptatie.",
-        "P1-06 · Modelberichten krijgen hun eigen gebeurtenistype en de controle op recente meldingen leest elke tijdlijn eenmaal. Beide correcties zijn geïnstalleerd en gecontroleerd.",
-        "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
-        "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
-        "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
+        "Fase 1 · Menselijke entiteit, brede 1-klik LLM-keuze (>10 providers + lokale auto-detectie zonder GPU-plicht) & nul-techniek kanaal-/gezinskennismaking: na installeren + persoonlijkheid + LLM kiezen direct praten, zonder handmatig agent/principal-beheer en zonder ambtelijk systeemjargon (M3.3, E1.10, E1.13, E2.1, E2.2, E2.5, O1.1).",
+        "Fase 2 · Zelfstandige netwerkontdekking (óók zonder Home Assistant, zoals Lidl/Tuya-, ONVIF- of RTSP-camera's en losse netwerkapparaten) & veilige gespreks-inlogkluis: Eva ontdekt zelf het LAN, vraagt in gewoon gesprek toestemming om te koppelen en vangt wachtwoorden/sleutels via 1-tik kluisveld of vóór-het-model onderschepte Telegram-invoer veilig af zonder lek naar cloud-prompts (E1.6, E1.12, E2.8, E4.15).",
+        "Fase 3 · Kernbetrouwbaarheid, één geconsolideerde afleverroute & onafhankelijk getoetste zelfreparatie (P0-01..P0-03, P1-01): consolideer de drie claimstappen in delegated_work_delivery.py, overleef provider-429/503 duurzaam zonder dubbel effect (E1.14) en sluit autonome foutreparatie, reviewerherkomst en beheerde updates in reviewed_component_application.py (E4.16, E4.19; E4.18 technisch behouden).",
+        "Fase 4 · Levend dagelijks initiatief zonder tokenverspilling & natuurlijke full-duplex spraak in huis (P1-02, P2-01, P2-03): zuinige veranderingspoort, selectief geheugen en blijvende eigen aandacht (E1.6–E1.12, E4.11, AU-008) plus C3.5→C3.4→C4.1→C3.6 op beide fysieke speakers (C3.1 geaccepteerd; P1-03/P1-04/P1-06 grenzen blijven gelden).",
+        "Fase 5 · Parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2): start veilige praktijkwaarneming direct op de geïnstalleerde kandidaat en rond zeven dagen gebruik + eindoordeel af (P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken)."
       ],
       "comparisonExecution": "parked_no_new_series",
       "updatedAt": "2026-11-07T16:22:10.472360+00:00",
@@ -18359,6 +18368,27 @@
         "result": "De modeladapter hergebruikt geen oud gebeurtenistype voor een nieuw bericht. De controle op recente meldingen leest elke eerdere tijdlijn eenmaal. Beide correcties draaien op kern en werkuitvoerder. Alle 67 gerichte controles zijn geslaagd.",
         "remaining": "De brede importgrenzencontrole bevat 169 bestaande signalen. Algemene snelheidswinst is niet gemeten.",
         "evidence": "development/evidence/reassessment/p1-06-core-boundaries-verified-20261107.json"
+      },
+      "previousFinishOrderBefore20261113": [
+        "P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.",
+        "P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.",
+        "P0-03 · Versterk onafhankelijke reviewerherkomst en scheid pure validators van de bestaande hash-/receipt-/rollback-dispatch in reviewed_component_application.py. Geen verzwakking van huidige releasebeveiliging.",
+        "P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.",
+        "P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.",
+        "P1-03 · Actuele importgrenzen gemeten. De actieve correcties bij ontvangstbewijzen en onderzoek zijn geïnstalleerd en teruggelezen. De werkmapcontrole telt 169 resterende signalen.",
+        "P1-04 · Groepsprivacy, expliciete speakerbevoegdheid en de geldigheid van persoonlijke werkteruggave zijn geïnstalleerd en getest. Het kindbeleid is vastgelegd. Persoonlijke kindfuncties blijven gesloten tot afzonderlijke toestemming en acceptatie.",
+        "P1-06 · Modelberichten krijgen hun eigen gebeurtenistype en de controle op recente meldingen leest elke tijdlijn eenmaal. Beide correcties zijn geïnstalleerd en gecontroleerd.",
+        "P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.",
+        "P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.",
+        "P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding."
+      ],
+      "ownerCombinedRoadmap20261113": {
+        "date": "2026-11-13",
+        "summary": "Eigenaar vraagt vóór verdere implementatie eerst alle afrondingsstappen te combineren tot één logisch plan en verder te kijken naar een niet-technische out-of-the-box Eva: installeren, persoonlijkheid geven, brede LLM-keuze, zelfstandig netwerkapparaten vinden (ook zonder Home Assistant, zoals losse Lidl-camera's), veilig in gesprek om toestemming en wachtwoord vragen, en zonder technische agent/gebruiker-koppelingen met mensen in gesprek gaan.",
+        "documents": [
+          "development/docs/PROJECTDOEL.md",
+          "development/docs/AFRONDINGSPLAN.md"
+        ]
       }
     },
     "goalRevision": {
@@ -20901,7 +20931,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-07T16:22:10.472360+00:00",
+  "updatedAt": "2026-11-13T16:50:00+01:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -20983,7 +21013,7 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-07T16:22:10.472360+00:00",
+  "lastUpdatedAt": "2026-11-13T16:50:00+01:00",
   "checkedAt": "2026-11-07T16:22:10.472360+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",

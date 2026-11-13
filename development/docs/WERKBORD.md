@@ -21,17 +21,11 @@ Volgende stap: Volg het automatisch aangenomen hersteldoel voor dezelfde fout do
 
 ## Prioriteitsvolgorde (gegenereerd)
 
-1. P0-01 · Lees de echte geïnstalleerde core/worker-release, claims, provider-503 en receipts terug. E4.16 blijft de huidige taak; historisch geïnstalleerde delen zijn niet de volledige autonome herstelketen.
-2. P0-02 · Consolideer de drie overlappende aflever-claimstappen in delegated_work_delivery.py, met kanaalneutrale ontvangers, publieke transactiegrens en zichtbare foutcodes. Bewaar exact-once, STOP, privacy en bestaande resultaten; E4.18-technische afsluiting blijft staan.
-3. P0-03 · Versterk onafhankelijke reviewerherkomst en scheid pure validators van de bestaande hash-/receipt-/rollback-dispatch in reviewed_component_application.py. Geen verzwakking van huidige releasebeveiliging.
-4. P1-01 · Rond E1.14/oorzaak provideruitval af met duurzame pauze en herstel zonder dubbel extern effect; een tweede modelprovider vereist expliciete toestemming en kosten-/privacyscope.
-5. P1-02 · Eén ongewijzigde privébeoordeling overslaan is geïnstalleerd en geïsoleerd gecontroleerd. De live besparing blijft open door de eerdere onzekere 429.
-6. P1-03 · Actuele importgrenzen gemeten. De actieve correcties bij ontvangstbewijzen en onderzoek zijn geïnstalleerd en teruggelezen. De werkmapcontrole telt 169 resterende signalen.
-7. P1-04 · Groepsprivacy, expliciete speakerbevoegdheid en de geldigheid van persoonlijke werkteruggave zijn geïnstalleerd en getest. Het kindbeleid is vastgelegd. Persoonlijke kindfuncties blijven gesloten tot afzonderlijke toestemming en acceptatie.
-8. P1-06 · Modelberichten krijgen hun eigen gebeurtenistype en de controle op recente meldingen leest elke tijdlijn eenmaal. Beide correcties zijn geïnstalleerd en gecontroleerd.
-9. P1-05 · Start bestaande veilige gezinswaarnemingen vroeg en parallel op de geïnstalleerde kandidaat. Noteer nut, hinder, gemiste kansen en taakuitkomsten; geen permanente tweede schaduwdaemon.
-10. P2-01/02/03 · Maak E1.6–E1.14 dagelijks initiatief, E4.15/E4.16/E4.19 werkelijke autonome reparatie/uitvinding/hergebruik en de bestaande C3.5→C3.4→C4.1→C3.6 spraakroute af, met echte mensen en beide speakers. C3.1 is op 6 november door eigenaar geaccepteerd.
-11. P2-04 · Bewijs F2.1 zeven dagen gezinsgebruik en F2.2 expliciete eigenaaracceptatie op dezelfde geïnstalleerde kandidaat. P2.1-vergelijking geparkeerd; optionele C4.3 en extra futuristische UI pas daarna. E2.6 is door eigenaar ingetrokken, zonder functieafronding.
+1. Fase 1 · Menselijke entiteit, brede 1-klik LLM-keuze (>10 providers + lokale auto-detectie zonder GPU-plicht) & nul-techniek kanaal-/gezinskennismaking: na installeren + persoonlijkheid + LLM kiezen direct praten, zonder handmatig agent/principal-beheer en zonder ambtelijk systeemjargon (M3.3, E1.10, E1.13, E2.1, E2.2, E2.5, O1.1).
+2. Fase 2 · Zelfstandige netwerkontdekking (óók zonder Home Assistant, zoals Lidl/Tuya-, ONVIF- of RTSP-camera's en losse netwerkapparaten) & veilige gespreks-inlogkluis: Eva ontdekt zelf het LAN, vraagt in gewoon gesprek toestemming om te koppelen en vangt wachtwoorden/sleutels via 1-tik kluisveld of vóór-het-model onderschepte Telegram-invoer veilig af zonder lek naar cloud-prompts (E1.6, E1.12, E2.8, E4.15).
+3. Fase 3 · Kernbetrouwbaarheid, één geconsolideerde afleverroute & onafhankelijk getoetste zelfreparatie (P0-01..P0-03, P1-01): consolideer de drie claimstappen in delegated_work_delivery.py, overleef provider-429/503 duurzaam zonder dubbel effect (E1.14) en sluit autonome foutreparatie, reviewerherkomst en beheerde updates in reviewed_component_application.py (E4.16, E4.19; E4.18 technisch behouden).
+4. Fase 4 · Levend dagelijks initiatief zonder tokenverspilling & natuurlijke full-duplex spraak in huis (P1-02, P2-01, P2-03): zuinige veranderingspoort, selectief geheugen en blijvende eigen aandacht (E1.6–E1.12, E4.11, AU-008) plus C3.5→C3.4→C4.1→C3.6 op beide fysieke speakers (C3.1 geaccepteerd; P1-03/P1-04/P1-06 grenzen blijven gelden).
+5. Fase 5 · Parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2): start veilige praktijkwaarneming direct op de geïnstalleerde kandidaat en rond zeven dagen gebruik + eindoordeel af (P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken).
 
 ## Open taken
 

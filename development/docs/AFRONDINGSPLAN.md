@@ -1,64 +1,65 @@
-# Eva — geprioriteerd afrondingsplan
+# Eva — gecombineerd afrondingsplan
 
-**Eén bron voor actuele uitvoering en bewezen voortgang:** [execution-workboard-v1.json](../design/product/execution-workboard-v1.json), met `currentWork` en `audit.deliveryPlan`. [WERKBORD.md](WERKBORD.md) is een projectie, geen tweede status. **P0 = eerst, P1 = daarna, P2 = productafronding, P3 = optioneel.** Onderstaande prionummers zijn volgordelabels voor bestaande taken en problemen, géén extra taken of afgegeven acceptaties.
+**Eén bron voor actuele uitvoering en bewezen voortgang:** [execution-workboard-v1.json](../design/product/execution-workboard-v1.json), met `currentWork` en `audit.deliveryPlan`. [WERKBORD.md](WERKBORD.md) is een projectie, geen tweede status. Op instructie van de eigenaar (13 november 2026) zijn de losse P0/P1/P2-stappen en de out-of-the-box producteisen samengevoegd tot **vijf gecombineerde afrondingsfasen (Fase 1 t/m Fase 5)**, met volledig behoud van alle 103 geregistreerde deeltaken, veiligheidscriteria en oorspronkelijke bewijseisen.
 
-## Uitgangspositie — GitHub, 5 november 2026
+## Uitgangspositie — GitHub, 5 november 2026 (exact behouden ijkpunt)
 
-- **83/103** kleine taken technisch afgerond; **20 open**: 9 bezig, 10 gepland, 1 geblokkeerd. Slechts **4/24** oorspronkelijke uitkomsten afgesloten. Getelde deeltaken zijn geen percentage productgereedheid.
-- **E4.16 staat op `in_progress`**. De eerdere begrensde correcties en compact overzicht zijn **geïnstalleerd en onafhankelijk teruggelezen**. Lokaal is ook de begrensde 429-hervatting geïnstalleerd; de opvolger stopte op HTTP400 zonder exact operatiebewijs. Bij aanvang van de lokale uitvoering was de handoffcorrectie getest maar nog niet geïnstalleerd; de actuele oplevering en readback staan uitsluitend in het JSON-werkbord. Volledig autonome foutafhandeling en later hergebruik zijn **niet** bewezen. Geen werk dubbel uitvoeren.
-- **E4.18 is technisch afgesloten.** Dat zegt niet dat álle actieve dubbele code verdwenen is. De **110 importgrensschendingen** zijn de **oude meting van 13 oktober**; de actuele waarde is onbekend en moet opnieuw gemeten worden.
-- Productproblemen: provider-503 bij echte schoolvraag, 22.633 tokens voor één stilte-afweging, onvolledige spraakonderbreking, nog geen bewezen algemene gezinscontinuïteit. `P2.1` is geparkeerd; `F2.1` en `F2.2` zijn open.
-- Dit is **bron-/bewijscontrole op GitHub**, geen nieuwe live-audit van Windows/WSL of bevestiging van de werkelijk draaiende release.
+- **83/103** kleine taken technisch afgerond; **20 open**: 9 bezig, 10 gepland, 1 geblokkeerd (waarvan `E2.6` door eigenaar ingetrokken → 19 open). Slechts **4/24** oorspronkelijke uitkomsten afgesloten. Getelde deeltaken zijn geen percentage productgereedheid.
+- **E4.16 staat op `in_progress`**. De eerdere begrensde correcties en compact overzicht zijn **geïnstalleerd en onafhankelijk teruggelezen**. Lokaal is ook de begrensde 429-hervatting geïnstalleerd; de opvolger stopte op HTTP400 zonder exact operatiebewijs. Volledig autonome foutafhandeling en later hergebruik zijn **niet** bewezen. Geen werk dubbel uitvoeren.
+- **E4.18 is technisch afgesloten.** Dat zegt niet dat álle actieve dubbele code verdwenen is. De **110 importgrensschendingen** zijn de **oude meting van 13 oktober**; op het werkbord zijn inmiddels 169 werkmapsignalen gemeten en actieve ontvangst-/onderzoeksgrenzen hersteld.
+- Productproblemen die deze gecombineerde fasen oplossen: stijve/ambtelijke gesprekshouding, beperkte 3-provider LLM-keuze, te technische kanaal-/persoonskoppeling, afhankelijkheid van vooraf ingericht Home Assistant i.p.v. zelfstandige netwerkontdekking, provider-503/429 bij lopend werk, dubbele afleverclaims in `delegated_work_delivery.py`, en openstaande full-duplex spraak- en gezinsacceptatie (`F2.1`/`F2.2`). `P2.1` blijft geparkeerd.
 
-## P0 — code, echte fouten en veilige aflevering
+---
 
-| Prio | Werk / bestaande kaart | Aanpassing en aantoonbare eindcontrole |
-| --- | --- | --- |
-| **P0-01** | Werkelijke runtime en bestaande fouten, primair **E4.16** | Vergelijk exacte geïnstalleerde core/worker-profielen, actuele claims, providerfouten, receipts en Git-commit. Bind één mislukte gebruikerstaak aan concrete oorzaak. Geen oude pogingen opnieuw dispatchen. |
-| **P0-02** | Dubbele aflevercode, **E4.18-nazorg** | Consolideer drie overlappende claimtransacties in `delegated_work_delivery.py`, houd selectors/autoriteitsregels apart, vervang toegang tot private storevelden, maak Telegram alleen kanaaladapter, log veilige foutcodes. **Test concurrentie, lease-verval, intrekking, crash en geen dubbele aflevering.** |
-| **P0-03** | Update-/reviewketen, **E4.16/E4.19** | Scheid validatie van dispatch in `reviewed_component_application.py`. Bewaar fsync, lock, hashes, receipts, unknown state, rollback. Verifieer échte onafhankelijke reviewerherkomst; een niet-lege reviewersnaam is onvoldoende. Bewijs een gecontroleerde update en teruglezing. |
+## De 5 Gecombineerde Afrondingsfasen
 
-**P0 is pas klaar** wanneer echte regressies (geen dubbele effecten, geen verkeerde ontvanger, STOP, persoonsgegevens, herstel naar laatst werkende release) aantoonbaar geslaagd zijn. Niet eerst grote cosmetische splitsingen doorvoeren. [Concrete bestandsingrepen](VEREENVOUDIGING.md).
+### Fase 1 — Menselijke entiteit, brede 1-klik LLM-keuze & nul-techniek kennismaking
+*Combineert natuurlijke gesprekshouding (`M3.3`/`E1.10`/`E1.13`), uitbreiding van het providercontract (`E2.5`) en frictieloze onboarding/persoonskoppeling (`O1.1`/`E2.1`/`E2.2`).*
 
-## P1 — continuïteit, efficiëntie en veilige gezinsproef
+| Onderdeel | Concrete realisatie en eindcontrole |
+| --- | --- |
+| **1A · Menselijk gesprek & doorpakken** | Ontdoe `pydantic_conversation.py` en `conversation.py` van verstikkend compliance-proza terwijl persoons-, privacy- en receipt-grenzen hard in Python/Postgres blijven. Schaal denkkracht automatisch op bij kritische of meerstaps-vragen (niet blijven hangen op `none`-reasoning) en pak door tot er een echt resultaat of gerichte menselijke vraag ligt. |
+| **1B · Brede LLM-catalogus (>10 routes)** | Breid de 3 huidige keuzes onder één uniform adaptercontract uit met 1-klik ondersteuning voor o.a. OpenAI API, OpenRouter, Google Gemini, Anthropic Claude, Mistral, DeepSeek, Groq, xAI/Grok, Qwen/DashScope, eigen OpenAI-compatibele endpoints én automatische detectie van lokale servers (Ollama, LM Studio, llama.cpp op localhost/LAN) zonder verplichte GPU of stille betaalde fallback. |
+| **1C · Out-of-the-box kanalen & gezinsleden** | Na *Installeren → Persoonlijkheid geven → LLM klikken* geen handmatig agent-/principal-/UUID-beheer meer: 1-stap Telegram/mobiele webapp-koppeling waarbij de eerste koppeling de eigenaar vastlegt, en "voordeur-kennismaking" of 1-klik uitnodigingslink voor gezinsleden en gasten (Eva vraagt de eigenaar in gewoon gesprek wie er aanklopt en maakt zelf de gescheiden privacygrens aan). |
 
-| Prio | Werk / bestaande kaart | Aanpassing en bewijs |
-| --- | --- | --- |
-| **P1-01** | Provider-503, **E1.14/E4.16** | Maak een bestaande taak duurzaam wachtend, toon bruikbare fout en vervolg; herstel bij uitval/herstart zonder dubbel extern effect. Optionele tweede provider alleen na **expliciete toestemming, kosten- en privacycontrole**; geen stille betaalde fallback. |
-| **P1-02** | Token- en tijdverspilling, aandacht/E1.6 | Meet tokens **per uitkomst**, niet per poging. Gebruik een goedkope `niets-relevants-veranderd`-poort vóór nieuwe modelafweging, behoud geplande aandacht/urgentie en legitimeer een nieuwe modelronde met vers bronbewijs. Vergelijk echt token- en foutverbruik vóór/na. |
-| **P1-03** | Importgrenzen, actuele architectuur | Voer `src/tools/check_architecture.py` opnieuw uit op werkelijke huidige bronstand. Sorteer bevindingen op risico en dynamisch gebruik; los actieve grensschendingen in de aangeraakte hotspots op. **Niet** de oude 110 als actuele telling gebruiken. |
-| **P1-04** | Adversarial gedrag en kinderen, vóór brede gezinsuitrol | Bestaande mandaatgrenzen tegen prompt-injectie behouden; voeg gerichte misbruikcases toe voor geïmporteerde tekst, bevoegdheidsverhoging, groepsgesprek, persoonsverwisseling, intrekking en gedeelde speakers. Leg kindbeleid vast (toestemming ouder, privédata, camera-/spraakidentiteit, zichtbare stop/wisbediening). |
-| **P1-05** | **F2.1** voorbereiden en direct waarnemen | Start de gewone gezinswaarnemingen **parallel** zodra de veilig bestaande route bruikbaar is. Noteer nuttige, gemiste en storende initiatieven en werkelijke onderbrekingen; gebruik eerst bestaande eventlogs. Een nieuwe permanente schaduwmodus is **niet nodig**. |
-| **P1-06** | Grote kern-/adapterbestanden gericht beoordelen | `pydantic_conversation.py` (~4.971 regels), `conversation_actions.py` (~3.581) en `sensory_events.py` (~2.456) dragen veel verantwoordelijkheden. Meet imports, echte foutpaden, testdekking en wijzigingsrisico; splits alleen aantoonbaar overlappende of foutgevoelige verantwoordelijkheden. Geen generieke totale herbouw. |
+### Fase 2 — Zelfstandige netwerkontdekking (óók zonder Home Assistant) & veilige inlogkluis
+*Combineert bronontdekking (`E1.6`/`I2.1`), camera-/apparaatadoptie (`E2.8`/`E1.12`) en eigen adapterbouw (`E4.15`).*
 
-## P2 — het daadwerkelijke product afmaken
+| Onderdeel | Concrete realisatie en eindcontrole |
+| --- | --- |
+| **2A · Actieve & passieve LAN-ontdekking** | Eva verkent binnen eigenaarmandaat zelf het lokale netwerk (mDNS/Zeroconf, SSDP/UPnP, ONVIF/WS-Discovery, RTSP-poorten, Tuya/SmartLife/Lidl-camera's, Shelly, Hue, Chromecast/Sonos/AirPlay, Matter én optioneel Home Assistant). Gebruikers zonder Home Assistant met alleen losse netwerkcamera's of slimme apparaten worden volwaardig ondersteund. |
+| **2B · Toestemming & veilige wachtwoordvraag via chat** | Vindt Eva een apparaat, dan meldt ze dit in gewone taal en vraagt ze of ze mag koppelen. Is een wachtwoord, pincode of apparaatsleutel nodig, dan biedt ze een 1-tik kluisveld én veilige Telegram-invoer waarbij de gateway het wachtwoord **vóór het taalmodel** onderschept in Eva’s lokale versleutelde kluis en het bericht direct uit de chat verwijdert (`deleteMessage`). Wachtwoorden komen nooit in cloud-prompts, geheugen of logs terecht. |
+| **2C · Ontbrekende apparaatkoppeling zelf maken** | Herkent Eva een apparaat waarvoor nog geen kant-en-klare connector actief is, dan gebruikt ze haar bestaande ontwikkelroute (`E4.15`) om veilig een passende driver/skill voor te bereiden, te laten toetsen en na toestemming blijvend als *Household Artifact* (`E1.12`) te beheren. |
 
-| Prio | Werk / bestaande kaart | Eindresultaat |
-| --- | --- | --- |
-| **P2-01** | **E1.6–E1.14**, eigen initiatief | Eén werkelijke bronverandering → zelfstandig passend initiatief/stilte → blijvende verantwoordelijkheid en later vervolg. Continuïteit bij modeluitval is eerst P1-01; bouw geen tweede scheduler. |
-| **P2-02** | **E4.15/E4.16/E4.19**, zelf verbeteren | Eva ontdekt een echte behoefte of fout, vergelijkt bestaand hulpmiddel, realiseert een veilige uitbreiding, krijgt onafhankelijke beoordeling, installeert en gebruikt haar **later opnieuw**. Behoud de bestaande camera-/begroetingsacceptatie als E4.15-voorbeeld, niet als aparte kern. |
-| **P2-03** | **C3.5, C3.1, C3.4, C4.1, C3.6**, spraak | Behoud één gedeelde stem/kern. Controleer zachte beginwoorden, antwoordlatentie, natuurlijk ritme, onderbreken tijdens spreken en reconnect op **beide fysieke speakers**. Een interne PCM- of API-ack is geen menselijke luisteracceptatie. |
-| **P2-04** | **F2.1 → F2.2**, eindgebruik | Rond de afgesproken **zeven dagen** op één geïnstalleerde kandidaat af; registreer frustratie, hulp, missers, resultaten, fouten, kosten en feedback. De eigenaar beoordeelt pas daarna expliciet of Eva nuttig en prettig genoeg is. |
+### Fase 3 — Kernbetrouwbaarheid, veilige taakaflevering & autonome zelfreparatie (`P0` + `P1-01` + `P2-02`)
+*Combineert `P0-01` (`E4.16`), `P0-02` (`E4.18`-nazorg), `P0-03` (`E4.16`/`E4.19`) en `P1-01` (`E1.14`).*
 
-## P3 — nu niet bouwen
+| Onderdeel | Concrete realisatie en eindcontrole |
+| --- | --- |
+| **3A · Eén onfeilbare taakafleverroute (`P0-02`)** | Consolideer de drie overlappende claimtransacties in `delegated_work_delivery.py`, houd kanaaladapters dun, bewaar exact-once aflevering, STOP, lease-verval en intrekking zonder taken die stil in `ambiguous` achterblijven. |
+| **3B · Provider-uitval duurzaam overleven (`P1-01` / `E1.14`)** | Maak taken bij HTTP 429/503 duurzaam wachtend met heldere status en automatische hervatting zonder dubbel extern effect. |
+| **3C · Onafhankelijk getoetste zelfreparatie & updates (`P0-01`, `P0-03`, `E4.16`, `E4.19`)** | Scheid validatie van dispatch in `reviewed_component_application.py` met echte onafhankelijke reviewerherkomst, fsync/hashes/rollback, en bewijs in de live installatie dat Eva een echte fout zelfstandig repareert, veilig toepast en de verbetering later daadwerkelijk hergebruikt. |
 
-- **E2.6 WhatsApp**, **C4.3 telefoonspraak**, extra apparaten of nieuwe platforms zijn optioneel. Laat ze geen P0–P2 blokkeren.
-- Een altijd-aan ambient klein model, nieuwe kennisgraaf, tweede uitvoeringsframework, nieuwe queue, volledige microVM-architectuur of omvangrijke autonomie-UI is geen bewezen noodzaak. Eerst de bestaande grenzen testen.
-- Een uitgebreid autonomielevel per actie, een `Waarom?`-knop en variantenarchief zijn zinvol **na** stabiele uitvoering, tenzij een concrete veiligheidstest ze eerder noodzakelijk maakt.
-- **P2.1 externe eindvergelijking** blijft geparkeerd; geen claim dat Eva beter is dan OpenClaw/Hermes.
+### Fase 4 — Levend dagelijks initiatief & full-duplex spraak in huis (`P1-02` + `P2-01` + `P2-03`)
+*Combineert zuinige aandacht (`P1-02`), dagelijks initiatief/eigenheid (`E1.6–E1.13`, `E4.11`, `AU-008`) en spraakafronding (`C3.5`, `C3.4`, `C4.1`, `C3.6`).*
 
-## Lokale integratie
-De PR loopt achter op 19 lokale commits en 150 werkmapwijzigingen. Historie, bewijs,
-runtimeconfiguratie en taakkaarten worden niet uit de PR teruggezet. Alleen relevante
-documentatie, generator en prioriteitsvolgorde worden gericht geïntegreerd.
-De volledige lokale doel-/planteksten blijven exact bewaard in het
-[integratiearchief](../archive/history/20261105-technical-finalization/before/development/docs/AFRONDINGSPLAN.md).
-Documentbewerking en documentzoeken blijven bestaande gebruikersuitkomsten, zonder
-nieuwe index op voorhand. De actuele canonieke E4.16-criteria en installatie gaan voor
-de oudere GitHub-uitgangspositie; geen onzekere oude effecten opnieuw uitvoeren.
+| Onderdeel | Concrete realisatie en eindcontrole |
+| --- | --- |
+| **4A · Zelf leven zonder tokenverspilling** | Goedkope veranderingspoort vóór nieuwe modelrondes; Eva signaleert uit zichzelf zinvolle veranderingen in huis, netwerk of lopende projecten, handelt binnen mandaat of blijft bewust stil, en bewaart alleen duurzame kernkennis (`E4.11`). |
+| **4B · Natuurlijke full-duplex spraak op de speakers** | Eén gedeelde Eva-stem en kern met behoud van zachte beginwoorden (`C3.5`), natuurlijk spreekritme (`C3.4`), direct onderbreken tijdens spreken op beide fysieke speakers (`C4.1`) en automatisch herstel na verbindingsuitval (`C3.6`). |
 
-## Werkwijze en statusregels
+### Fase 5 — Vroege gezinswaarneming, 7 dagen praktijkbewijs & eindacceptatie (`P1-05` + `P2-04`)
+*Combineert `P1-05`, `F2.1` en `F2.2`.*
 
-**Bestaande uitkomst → exacte fout → gerichte codeaanpassing → positieve én negatieve tests → echt onafhankelijke beoordeling → geïnstalleerde readback → menselijk gebruik → uitsluitend dan status bijwerken.**
+| Onderdeel | Concrete realisatie en eindcontrole |
+| --- | --- |
+| **5A · Parallelle praktijkwaarneming (`P1-05`)** | Start directe waarneming van echt gebruik op de geïnstalleerde kandidaat via bestaande eventlogs zodra de veilige route draait, zonder te wachten op optionele extra's. |
+| **5B · Zeven dagen gezinsgebruik & eindoordeel (`F2.1` → `F2.2`)** | Draai zeven aaneengesloten dagen op één stabiele geïnstalleerde release; meet nuttige hulp, gemiste kansen, onderbrekingen, fouten en kosten eerlijk terug, waarna de eigenaar beslist over eindacceptatie (`F2.2`). |
 
-Houd bewijs, foutgeschiedenis en oorspronkelijke criteria in het JSON-werkbord; verzin geen nieuwe hoofdkaart of nieuwe bron van waarheid. De oude gedetailleerde planning blijft exact in het [archief](../archive/history/20261105-documentatie-opruiming/AFRONDINGSPLAN.md). Volgorde veranderen verandert geen afgesloten taak of acceptatie. Het afsluiten van P0/P1 mag de gezinsproef niet onnodig vertragen.
+---
+
+## Randvoorwaarden & behouden afspraken
+
+- **Nu niet blokkerend (`P3`):** `E2.6` (WhatsApp met eigen nummer) blijft door eigenaar ingetrokken; `C4.3` (telefoonspraak) en `P2.1` (externe benchmarkvergelijking) blijven geparkeerd en blokkeren Fase 1–5 niet.
+- **Geen tweede brein of stille kosten:** Eén kern, geheugen, planner en rechtenmodel; geen tweede permanente schaduwdaemon, geen ongevraagde betaalde fallback en geen verzwakking van kind-/groepsprivacy (`P1-04`) of importgrenzen (`P1-03` / `P1-06`). Concrete bestandsingrepen staan in [VEREENVOUDIGING.md](VEREENVOUDIGING.md); de vorige plantekst blijft exact bewaard in het [integratiearchief](../archive/history/20261105-technical-finalization/before/development/docs/AFRONDINGSPLAN.md) en [opruimarchief](../archive/history/20261105-documentatie-opruiming/AFRONDINGSPLAN.md).
+- **Werkwijze:** **Gecombineerde uitkomst → exacte oorzaak/ontwerp → gerichte bouw → positieve én negatieve tests → onafhankelijke review → live installatie + core/worker-profielcontrole → menselijk gebruik → pas dan status bijwerken.**
