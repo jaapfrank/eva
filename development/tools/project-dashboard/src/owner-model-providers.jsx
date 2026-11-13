@@ -1,7 +1,7 @@
 import React from 'react';
 
 const endpoint = '/internal/v1/dashboard/model-providers';
-const kinds = { anthropic: 'Claude / Anthropic', openai_compatible: 'OpenAI-compatible API' };
+const kinds = { anthropic: 'Claude / Anthropic', gemini: 'Google Gemini (Cloud API)', openai_compatible: 'OpenAI-compatible API' };
 const checkLabels = { unchecked: 'Nog niet gecontroleerd', ready: 'Modelcontrole geslaagd', failed: 'Modelcontrole niet geslaagd' };
 const initialForm = { kind: 'anthropic', label: '', model: '', endpoint: 'https://api.anthropic.com', workspace_id: '' };
 const fieldStyle = { display: 'block', width: '100%', boxSizing: 'border-box', minWidth: 0, padding: '.5rem', font: 'inherit' };
@@ -118,7 +118,8 @@ export default function OwnerModelProviders() {
         <h3>Modelverbinding toevoegen</h3>
         <p>Gebruik een eigen API-sleutel. Een Claude-abonnement wordt hier niet als API-aanmelding gebruikt. Bewaren start geen modelverzoek.</p>
         <label>Provider<select aria-label="Provider" name="kind" value={form.kind} disabled={busy} style={fieldStyle} onChange={event => {
-          clearKey(); setForm({ ...initialForm, kind: event.target.value, endpoint: event.target.value === 'anthropic' ? 'https://api.anthropic.com' : '' });
+          const v = event.target.value;
+          clearKey(); setForm({ ...initialForm, kind: v, endpoint: v === 'anthropic' ? 'https://api.anthropic.com' : (v === 'gemini' ? 'https://generativelanguage.googleapis.com/v1beta/openai' : '') });
         }}>{Object.entries(kinds).map(([kind, label]) => <option key={kind} value={kind}>{label}</option>)}</select></label>
         <label>Naam voor deze verbinding<input name="label" value={form.label} onChange={change} required maxLength={80} disabled={busy} style={fieldStyle} autoComplete="off" /></label>
         <label>Model-ID<input name="model" value={form.model} onChange={change} required maxLength={160} disabled={busy} style={fieldStyle} autoComplete="off" spellCheck={false} /></label>

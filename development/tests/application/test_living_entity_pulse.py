@@ -536,10 +536,24 @@ def test_jepa_world_model_titans_synaptic_memory_sleep_consolidation_and_multi_b
     client = TestClient(app)
 
     html = client.get("/internal/v1/dashboard/cortex").text
-    assert "Multi-Brein Cloud & Optioneel Lokaal LLM Beheer" in html
+    assert "Van context naar actie." in html
+    assert "Multi-Brein Cloud &amp; Optioneel Lokaal LLM Beheer" in html or "Multi-Brein Cloud & Optioneel Lokaal LLM Beheer" in html
     assert "JEPA Causaal Wereldmodel" in html
     assert "Titans O(1) Synaptisch Geheugen" in html
     assert "1-Klik Zonder API-Key" not in html
+    assert "1-Klik Abonnements-LLM Kiezer" not in html
+
+    res_glb = client.get("/internal/v1/dashboard/cortex/assets/eva.glb")
+    assert res_glb.status_code == 200
+    assert res_glb.headers["content-type"] == "model/gltf-binary"
+    assert len(res_glb.content) > 5_000_000
+
+    for js_asset in ("three.core.min.js", "three.module.min.js", "BufferGeometryUtils.js", "GLTFLoader.js"):
+        res_js = client.get(f"/internal/v1/dashboard/cortex/assets/{js_asset}")
+        assert res_js.status_code == 200
+        assert "javascript" in res_js.headers["content-type"]
+
+    assert client.get("/internal/v1/dashboard/cortex/assets/unknown.txt").status_code == 404
 
     res_cp = client.post(
         "/internal/v1/dashboard/cortex/cloud-provider",
