@@ -27,6 +27,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
 from eva.adapters.api.installer_request_json import read_small_json_request
+from eva.application.holostage import HoloStageManager
 from eva.application.home_proprioception import HomeProprioceptionManager
 from eva.application.household_head_settings import HouseholdHeadSettings
 from eva.application.living_entity_pulse import (
@@ -350,6 +351,13 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
     providers = _build_subscription_providers(runtime, sub_state, cloud_summary)
     household_head = _resolve_household_head_settings(runtime).status(now=now)
     home_proprioception = _resolve_home_proprioception(runtime).status(now=now)
+    _, mp_settings = _resolve_model_provider_settings(runtime)
+    holostage_summary = HoloStageManager(mp_settings.directory).build_stage_state(
+        viewer_kind="owner",
+        viewer_label="Gezinshoofd Cockpit",
+        form_factor="cockpit",
+        now=now,
+    )
 
     try:
         health = runtime.health()
@@ -367,6 +375,7 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
         "pulse": pulse,
         "household_head": household_head,
         "home_proprioception": home_proprioception,
+        "holostage": holostage_summary,
         "cloud_providers": cloud_summary,
         "subscriptions": {
             "selected_provider": sub_state["selected_provider"],
@@ -384,6 +393,9 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
             "postgres_rls_uuid_optimized": True,
             "jepa_world_model_c": True,
             "causal_world_model_pearl": True,
+            "holostage_multimodal_stage": True,
+            "biometric_presence_fusion": True,
+            "single_hop_clause_voice": True,
             "titans_o1_synaptic_memory": True,
             "multilingual_concept_guard": True,
             "eva_3d_glb_ready": (_CORTEX_STATIC_DIR / "eva.glb").is_file(),
@@ -1113,6 +1125,7 @@ redelijk energiek, ontspannen</p>
             <span id="presence-status-text">Aanwezig</span>
           </span>
           <span class="badge emerald" id="mood-badge">Sereen &amp; Observerend</span>
+          <a href="/internal/v1/dashboard/holostage" class="presence-status-pill" style="text-decoration:none;border-color:rgba(56,189,248,.45);color:#7dd3fc">✨ HoloStage</a>
         </div>
       </div>
 

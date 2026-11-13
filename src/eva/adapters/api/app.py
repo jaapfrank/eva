@@ -672,6 +672,8 @@ def create_app(
     install_dashboard_model_providers(app, access=dashboard_access, runtime=runtime)
     from eva.adapters.api.dashboard_cortex import install_dashboard_cortex
     install_dashboard_cortex(app, access=dashboard_access, runtime=runtime)
+    from eva.adapters.api.dashboard_holostage import install_dashboard_holostage
+    install_dashboard_holostage(app, access=dashboard_access, runtime=runtime, voice_config=dashboard_voice)
     from eva.adapters.api.dashboard_packages import install_dashboard_packages
     install_dashboard_packages(app, access=dashboard_access, runtime=runtime)
     from eva.adapters.api.dashboard_whatsapp import install_dashboard_whatsapp
