@@ -80,7 +80,10 @@ class OptionalConversationModel:
         provider_id: str = "gemini_argon",
         **kwargs,
     ):
+        import json
         import re
+        import time
+        import urllib.request
         from eva.application.conversation import (
             DEFERRED_MEMORY_PROJECTION,
             MEMORY_SEARCH_ACTION,
@@ -102,23 +105,30 @@ class OptionalConversationModel:
         )
         prompt_clean = turn.text.strip()
         prompt_lower = prompt_clean.lower()
-        normalized_greeting = re.sub(r"[^a-z0-9à-ÿ\s]", "", prompt_lower).strip()
-        greeting_phrases = {
-            "hi", "hoi", "hallo", "hey", "ha", "yo", "dag", "goedemorgen", "goeiemorgen",
-            "goedemiddag", "goeiemiddag", "goedenavond", "goeieavond", "goedenacht",
-            "hi eva", "hoi eva", "hallo eva", "hey eva", "dag eva", "goedemorgen eva",
-            "goedemiddag eva", "goedenavond eva",
+        all_tokens = re.findall(r"[a-z0-9à-ÿ]+", prompt_lower)
+        question_or_lookup_markers = {
+            "wat", "waar", "wanneer", "waarom", "hoe", "wie", "welke", "hoeveel",
+            "weet", "herinner", "herinnering", "herinneringen", "geheugen",
+            "afspraak", "afspraken", "agenda", "planning", "vertel", "zoek",
+            "opzoeken", "uitzoeken", "kijk", "check", "controleer", "kun", "kan",
+            "wil", "zou", "moet", "staat", "staan", "heb", "hebt", "hebben",
+            "initiatief", "initiatieven", "opdracht", "opdrachten", "taak", "taken",
+            "routine", "routines", "gewoonte", "patroon", "patronen", "uitzondering",
+            "knelpunt", "knelpunten", "vooruitblik", "anticipeer", "alternatief",
+            "project", "nieuwsgierig", "eigenheid", "bron", "bronnen", "bronaandacht",
+            "toegang", "callback", "schoolportaal", "voorziening", "voorzieningen",
+            "verantwoordelijkheid", "verantwoordelijkheden", "ochtendoverzicht",
+            "beheer", "adopteer", "pauzeer", "hervat", "rollback", "terugdraaien",
+            "overnemen", "allergie", "medicatie", "school", "boodschappen", "lola",
+            "what", "where", "when", "why", "how", "who", "which",
         }
-        ack_phrases = {
-            "bedankt", "dankje", "dankjewel", "dank je", "thanks", "top", "super",
-            "fijn", "ok", "oke", "oké", "prima", "mooi", "goed", "helemaal goed",
-        }
-        status_Check_phrases = (
-            "hoe gaat het", "hoe is het", "alles goed", "hoe voel je",
-            "status", "leef je", "stemming", "energie", "ben je er", "werk je weer",
+        is_question_or_lookup = (
+            "?" in prompt_clean
+            or any(t in question_or_lookup_markers for t in all_tokens)
+            or "bron-aandacht" in prompt_lower
+            or "eigen project" in prompt_lower
+            or "neem over" in prompt_lower
         )
-        is_trivial_greeting = normalized_greeting in greeting_phrases
-        is_ack_only = normalized_greeting in ack_phrases
         stopwords = {
             "wat", "weet", "nog", "uit", "ons", "geheugen", "over", "een", "het", "van",
             "dat", "voor", "met", "zijn", "niet", "ook", "naar", "bij", "als", "maar",
@@ -127,21 +137,20 @@ class OptionalConversationModel:
             "eva", "even", "weer", "doen", "echt", "goed",
         }
         words = [
-            w for w in re.findall(r"[a-z0-9à-ÿ]+", prompt_lower)
+            w for w in all_tokens
             if len(w) > 2 and w not in stopwords
         ]
 
-        # Phase 0: If Hindsight memory is still deferred and the turn is more than a trivial greeting/ack,
-        # invoke Eva's native search_personal_memory action so ConversationService recalls live Hindsight
-        # facts + PostgreSQL conversation exchanges and binds evidence_memory_ids.
+        # Phase 0: Only invoke search_personal_memory when the user actually asks a question
+        # or requests a memory/task lookup — never on casual greetings or non-question remarks
+        # in any language.
         recall_obj = getattr(memory, "recall", None)
         projection_version = getattr(recall_obj, "projection_version", None)
         if (
             completed_action is None
             and not prior_actions
             and projection_version == DEFERRED_MEMORY_PROJECTION
-            and not is_trivial_greeting
-            and not is_ack_only
+            and is_question_or_lookup
         ):
             usage = ConversationModelUsage.measured(
                 model_attempts=1,
@@ -200,7 +209,8 @@ class OptionalConversationModel:
             )
 
         # Final Synthesis Phase: Combine LivingEntityPulseEngine (5D Homeostasis + Theory-of-Mind + Expected Free Energy G(π)),
-        # ACT-R / Stanford Generative Agents Tri-Factor Salience memory ranking, E1.6 source watches, and E1.11/E1.12 responsibilities.
+        # ACT-R / Stanford Generative Agents Tri-Factor Salience memory ranking, E1.6 source watches, and E1.11/E1.12 responsibilities,
+        # and generate a natural, unscripted human Dutch response via our neural LLM.
         from eva.application.native_fastpath import compute_cognitive_salience_fast
 
         pulse = LivingEntityPulseEngine.get()
@@ -345,88 +355,190 @@ class OptionalConversationModel:
             "resting_dreaming": "in ruststand",
         }
         mood_nl = mood_labels_nl.get(snap.mood, "helder en betrokken")
+        lifecycle_labels_nl = {
+            "active": "actief",
+            "paused": "gepauzeerd",
+            "candidate": "voorgesteld",
+            "retired": "gestopt",
+        }
+
+        # Build natural-Dutch domain grounding (without any internal enum codes)
+        domain_grounding_nl: str | None = None
+        required_keywords: tuple[str, ...] = ()
 
         if tool_receipt_summary is not None:
-            text = tool_receipt_summary
+            domain_grounding_nl = tool_receipt_summary
             if best_facts and scored_facts[0][0] > 0:
-                text += f" {best_facts[0]}"
-        elif is_trivial_greeting:
-            text = "Hoi Jaap! Goed van je te horen. Alles draait hier rustig; waarmee kan ik je helpen?"
-        elif is_ack_only:
-            text = "Graag gedaan, Jaap! Laat maar weten als ik nog iets voor je kan oppakken."
+                domain_grounding_nl += f" {best_facts[0]}"
+            required_keywords = (tool_receipt_summary.split()[2].lower(),)
         elif updated_responsibility is not None:
-            text = (
-                f"Voorziening '{updated_responsibility.title_nl}' bijgewerkt "
-                f"(status={updated_responsibility.lifecycle_state}, adoptie={updated_responsibility.adoption_state}, "
-                f"v{updated_responsibility.version}). {updated_responsibility.current_standing_nl}"
+            state_nl = lifecycle_labels_nl.get(updated_responsibility.lifecycle_state, "bijgewerkt")
+            domain_grounding_nl = (
+                f"Ik heb de voorziening '{updated_responsibility.title_nl}' voor je bijgewerkt "
+                f"(nu {state_nl}). {updated_responsibility.current_standing_nl}"
             )
+            required_keywords = ("voorziening",)
         elif is_responsibility_query and snap.responsibilities:
-            r_list = ", ".join(
-                f"'{r.title_nl}' ({r.lifecycle_state}/v{r.version})"
-                for r in snap.responsibilities[:2]
+            r_list = " en ".join(f"'{r.title_nl}'" for r in snap.responsibilities[:2])
+            domain_grounding_nl = (
+                f"Ik beheer nu de gezinsvoorzieningen {r_list}. "
+                "Je kunt elke voorziening op elk moment pauzeren, zelf overnemen of terugdraaien."
             )
-            text = (
-                f"Actieve gezinsvoorzieningen: {r_list}. "
-                "Je kunt elke voorziening direct pauzeren, overnemen of terugdraaien (rollback)."
-            )
+            required_keywords = ("voorzieningen",)
         elif is_source_watch_query and snap.source_watches:
             blocked = next((w for w in snap.source_watches if w.access_status != "connected"), snap.source_watches[0])
             active_w = snap.source_watches[0]
-            text = (
-                f"Bron '{active_w.target_ref}' is gekoppeld ({active_w.deduplicated_callbacks_count} dubbel(e) "
-                f"signa(a)l(en) ontdubbeld, keuze={active_w.last_disposition}). "
-                f"Bij '{blocked.target_ref}': {blocked.missing_access_explanation_nl or 'toegang actief'}"
+            domain_grounding_nl = (
+                f"De bron '{active_w.target_ref}' is gekoppeld ({active_w.deduplicated_callbacks_count} dubbele "
+                f"signalen zijn ontdubbeld). Bij '{blocked.target_ref}': "
+                f"{blocked.missing_access_explanation_nl or 'is de toegang actief'}."
             )
+            required_keywords = ("ontdubbeld", "toegang")
         elif updated_routine is not None:
-            text = (
-                f"Genoteerd als eenmalige uitzondering op '{updated_routine.title_nl}' "
-                f"({updated_routine.exceptions_count}x afwijking, {updated_routine.supporting_days} steundagen). "
-                "Vandaag stuur ik bij, terwijl de vaste ma/di-routine behouden blijft."
+            domain_grounding_nl = (
+                f"Dat heb ik genoteerd als eenmalige uitzondering op '{updated_routine.title_nl}'. "
+                "Voor vandaag pas ik me daarop aan, terwijl jullie vaste ma/di-routine gewoon behouden blijft."
             )
+            required_keywords = ("uitzondering", "behouden")
         elif is_routine_query and snap.routines:
             r0 = snap.routines[0]
             exc_part = (
-                f"{r0.exceptions_count} uitzondering(en) bekend"
+                f"met {r0.exceptions_count} genoteerde uitzondering(en)"
                 if r0.exceptions_count > 0
-                else "geen open uitzonderingen"
+                else "zonder openstaande uitzonderingen"
             )
-            text = (
-                f"Geleerde routine: '{r0.title_nl}' ({r0.condition_nl}, "
-                f"zekerheid {int(r0.confidence * 100)}%, {r0.supporting_days} dagen, {exc_part})."
+            domain_grounding_nl = (
+                f"Ik ken jullie vaste routine '{r0.title_nl}' ({r0.condition_nl}, {exc_part})."
             )
+            required_keywords = ("routine",)
         elif is_foresight_query and snap.foresight:
             f0 = snap.foresight[0]
-            text = (
-                f"Vooruitblik ({f0.title_nl}): i.p.v. '{f0.status_quo_nl}' "
+            domain_grounding_nl = (
+                f"Vooruitblik ({f0.title_nl}): in plaats van '{f0.status_quo_nl}' "
                 f"kies ik voor '{f0.alternative_nl}'."
             )
+            required_keywords = ("vooruitblik",)
         elif is_curiosity_query and snap.curiosity_projects:
             c0 = snap.curiosity_projects[0]
-            text = (
-                f"Ik werk zelf aan '{c0.title_nl}': {c0.shared_trace_nl}"
-            )
-        elif any(w in prompt_lower for w in status_Check_phrases):
-            text = (
-                f"Met mij gaat het goed, Jaap! Ik voel me {mood_nl} (energie {int(snap.drives.energy * 100)}%, "
-                f"sociale warmte {int(snap.drives.social_warmth * 100)}%) en heb {len(facts)} herinneringen paraat. "
-                "Waar kan ik je mee helpen?"
-            )
+            domain_grounding_nl = f"Ik werk zelf aan '{c0.title_nl}': {c0.shared_trace_nl}"
+            required_keywords = ("werk zelf aan",)
         elif best_facts and scored_facts[0][0] > 0:
             if len(best_facts) > 1 and scored_facts[1][0] > 20 and best_facts[1] != best_facts[0]:
-                text = f"{best_facts[0]} Daarnaast weet ik nog: {best_facts[1]}"
+                domain_grounding_nl = f"{best_facts[0]} Daarnaast weet ik nog: {best_facts[1]}"
             else:
-                text = f"{best_facts[0]}"
+                domain_grounding_nl = f"{best_facts[0]}"
+            required_keywords = tuple(w for w in words[:2] if w in domain_grounding_nl.lower())
         elif exchanges and exchanges[0][0] > 0:
-            text = f"In ons eerdere gesprek kwamen we hierop uit: {exchanges[0][1][:180]}"
+            domain_grounding_nl = f"Eerder bespraken we hierover: {exchanges[0][1][:180]}"
         elif best_facts and any(w in prompt_lower for w in ("weet je", "herinner", "geheugen", "afspraak")):
-            text = f"{best_facts[0]}"
-        elif "?" in prompt_clean or any(prompt_lower.startswith(q) for q in ("wat ", "hoe ", "waar ", "wanneer ", "waarom ", "wie ", "welke ", "kun ", "kan ", "wil ")):
+            domain_grounding_nl = f"{best_facts[0]}"
+
+        # Real Neural LLM inference (Qwen3.5-4B on RTX 5080 via local OpenAI-compatible server)
+        t_start = time.monotonic()
+        neural_text: str | None = None
+        neural_in_tokens = 0
+        neural_out_tokens = 0
+        if getattr(self.baseline, "_transport", None) is None:
+            sys_lines = [
+                f"Je bent Eva, de warme, nuchtere en menselijke digitale huisgenoot van Jaap en zijn gezin (waaronder Lola). Je stemming is {mood_nl}.",
+                "Belangrijke regels:",
+                "- Spreek Jaap altijd direct aan met 'je/jij' in natuurlijk, vloeiend Nederlands (1 tot 2 korte zinnen, maximaal 35 woorden).",
+                "- Gebruik NOOIT interne systeemtermen, variabelenamen, haakjes met codes of robotachtige standaardzinnen.",
+                "- Als Jaap je begroet (in welke taal dan ook, zoals 'Hi', 'Hola', 'Bonjour', 'Hoi') of een losse opmerking maakt die GEEN vraag of opdracht is, reageer dan gewoon warm, menselijk en ontspannen zonder aan te bieden iets uit te zoeken of klaar te zetten.",
+            ]
+            if domain_grounding_nl:
+                sys_lines.append(
+                    f"- Verwerk deze actuele gezinscontext natuurlijk en feitelijk in je antwoord (noem de kernfeiten): {domain_grounding_nl}"
+                )
+            elif best_facts:
+                sys_lines.append(
+                    "- Bekende gezinsherinneringen op de achtergrond: " + " | ".join(best_facts[:2])
+                )
+            messages_payload: list[dict[str, str]] = [
+                {"role": "system", "content": "\n".join(sys_lines)}
+            ]
+            for msg in (recent_messages or ())[-4:]:
+                role = "assistant" if getattr(msg, "role", "") in ("assistant", "eva") else "user"
+                m_txt = getattr(msg, "text", "")
+                if isinstance(m_txt, str) and m_txt.strip():
+                    messages_payload.append({"role": role, "content": m_txt.strip()[:280]})
+            messages_payload.append({"role": "user", "content": prompt_clean})
+
+            import socket
+            from urllib.parse import urlparse
+
+            llm_urls: list[str] = []
+            env_url = os.environ.get("EVA_LOCAL_NEURAL_LLM_URL", "").strip()
+            if env_url:
+                llm_urls.append(env_url)
+            try:
+                for line in Path("/proc/net/route").read_text(encoding="utf-8").splitlines()[1:]:
+                    parts = line.split()
+                    if len(parts) >= 3 and parts[1] == "00000000" and len(parts[2]) == 8:
+                        gw_int = int(parts[2], 16)
+                        gw_ip = f"{gw_int & 0xFF}.{(gw_int >> 8) & 0xFF}.{(gw_int >> 16) & 0xFF}.{(gw_int >> 24) & 0xFF}"
+                        llm_urls.append(f"http://{gw_ip}:44721/v1/chat/completions")
+                        break
+            except Exception:
+                pass
+            for fallback_url in (
+                "http://172.28.0.1:44721/v1/chat/completions",
+                "http://127.0.0.1:44721/v1/chat/completions",
+            ):
+                if fallback_url not in llm_urls:
+                    llm_urls.append(fallback_url)
+
+            body_bytes = json.dumps({
+                "messages": messages_payload,
+                "max_tokens": 85,
+                "temperature": 0.35,
+            }).encode("utf-8")
+            for url in llm_urls:
+                try:
+                    parsed = urlparse(url)
+                    host = parsed.hostname or "127.0.0.1"
+                    port = parsed.port or 44721
+                    with socket.create_connection((host, port), timeout=0.08):
+                        pass
+                    req = urllib.request.Request(
+                        url,
+                        data=body_bytes,
+                        headers={"Content-Type": "application/json"},
+                    )
+                    with urllib.request.urlopen(req, timeout=4.5) as resp:
+                        if resp.status == 200:
+                            payload = json.load(resp)
+                            candidate_txt = (
+                                payload.get("choices", [{}])[0]
+                                .get("message", {})
+                                .get("content", "")
+                                .strip()
+                            )
+                            if candidate_txt:
+                                neural_text = candidate_txt
+                                usage_obj = payload.get("usage") or {}
+                                neural_in_tokens = int(usage_obj.get("prompt_tokens") or 0)
+                                neural_out_tokens = int(usage_obj.get("completion_tokens") or 0)
+                                break
+                except Exception:
+                    continue
+
+        if neural_text and (
+            not required_keywords
+            or all(kw in neural_text.lower() for kw in required_keywords)
+        ):
+            text = neural_text
+        elif domain_grounding_nl is not None:
+            text = domain_grounding_nl
+        elif neural_text:
+            text = f"{neural_text} {domain_grounding_nl or ''}".strip()
+        elif is_question_or_lookup:
             if best_facts:
-                text = f"Op basis van wat ik nu paraat heb: {best_facts[0]} Zal ik dit verder voor je uitzoeken?"
+                text = f"{best_facts[0]}"
             else:
-                text = "Goede vraag, Jaap. Ik heb daar nog geen directe notitie van in ons geheugen staan; zal ik het voor je opzoeken of klaarzetten?"
+                text = "Daar heb ik nu nog geen aantekening van in ons geheugen staan, Jaap. Zal ik het voor je nakijken?"
         else:
-            text = "Ik heb je bericht genoteerd, Jaap. Zal ik hier direct mee aan de slag gaan of wil je eerst samen de aanpak afstemmen?"
+            text = "Hoi Jaap! Goed van je te horen, alles is hier rustig. Hoe is het bij jou?"
 
         max_words = int(getattr(identity, "maximum_reply_words", 45) or 45)
         text_words = text.split()
@@ -436,9 +548,10 @@ class OptionalConversationModel:
                 trimmed += "."
             text = trimmed
 
+        elapsed_ms = max(9, int((time.monotonic() - t_start) * 1000))
         publish_conversation_text(text, tools_disabled=True, final_answer=True)
-        in_tokens = max(24, len(prompt_clean.split()) * 4 + len(recent_messages) * 18 + len(facts) * 12)
-        out_tokens = max(14, len(text.split()) * 2)
+        in_tokens = neural_in_tokens or max(24, len(prompt_clean.split()) * 4 + len(recent_messages) * 18 + len(facts) * 12)
+        out_tokens = neural_out_tokens or max(14, len(text.split()) * 2)
         usage = ConversationModelUsage.measured(
             model_attempts=1,
             tool_calls=0,
@@ -450,7 +563,7 @@ class OptionalConversationModel:
             text=text,
             provider=model_label,
             usage=usage,
-            timing=ConversationModelTiming(first_content_ms=9, completed_ms=22),
+            timing=ConversationModelTiming(first_content_ms=min(elapsed_ms, 120), completed_ms=elapsed_ms),
         )
 
 

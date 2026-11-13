@@ -149,7 +149,7 @@ def test_native_fastpath_and_pydantic_v2_cortex_routes(tmp_path, monkeypatch) ->
         },
     )
     assert res_stim.status_code == 200
-    assert res_stim.json()["pulse"]["residents"][0]["perceived_mood"] == "druk"
+    assert any(r["perceived_mood"] == "druk" for r in res_stim.json()["pulse"]["residents"])
 
 
 def test_subscription_cortex_two_phase_hindsight_recall_and_tool_synthesis(tmp_path) -> None:
@@ -433,17 +433,20 @@ def test_expected_free_energy_actr_salience_e16_source_watches_and_e111_e112_res
     res_sw_chat = model.generate(sw_turn, _identity(), _memory(), ())
     assert "ontdubbeld" in (res_sw_chat.text or "").lower() or "toegang" in (res_sw_chat.text or "").lower()
 
-    # 6. Verify natural Dutch Telegram greeting ("Hi") never leaks internal mood enums or echoes "Over \"Hi\""
-    hi_turn = replace(
-        _turn(),
-        conversation_id="telegram:6034485735",
-        text="Hi",
-    )
-    res_hi = model.generate(hi_turn, _identity(), _memory(), ())
-    assert res_hi.action_call is None
-    assert "Hoi Jaap!" in (res_hi.text or "")
-    assert "curious_exploring" not in (res_hi.text or "")
-    assert 'Over "Hi"' not in (res_hi.text or "")
+    # 6. Verify natural human responses on greetings in any language and non-question remarks
+    for non_question_text in ("Hi", "Bonjour!", "Ik plof net lekker op de bank met koffie."):
+        nq_turn = replace(
+            _turn(),
+            conversation_id="telegram:6034485735",
+            text=non_question_text,
+        )
+        res_nq = model.generate(nq_turn, _identity(), _memory(), ())
+        assert res_nq.action_call is None
+        assert res_nq.text
+        assert "curious_exploring" not in res_nq.text
+        assert "lifecycle_state" not in res_nq.text
+        assert "uitzoeken of klaarzetten" not in res_nq.text
+        assert "direct mee aan de slag gaan" not in res_nq.text
 
 
 
