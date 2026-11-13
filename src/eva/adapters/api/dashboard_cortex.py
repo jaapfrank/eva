@@ -26,6 +26,7 @@ from eva.application.living_entity_pulse import (
 from eva.application.native_fastpath import NATIVE_ACCELERATOR_ACTIVE
 from eva.contracts.living_cortex import (
     CortexStimulusRequest,
+    RoutineObservationRequest,
     SubscriptionProviderId,
     SubscriptionProviderInfo,
     SubscriptionSelectionRequest,
@@ -47,7 +48,10 @@ _DEFAULT_WORKBOARD_SUMMARY: dict[str, Any] = {
         {"id": "TL-001..003", "title": "Multi-step Tool-uitvoering & Zelfstandige MCP-Connectors", "status": "done", "category": "Zelfstandig Werk"},
         {"id": "AU-001..007", "title": "Eigenaarmandaat, Duurzame Hulpagent & Privaat Voorstel", "status": "done", "category": "Eigen Initiatief"},
         {"id": "PERF-001..004", "title": "Postgres RLS/Index Fix (26s -> 1ms), Healthcheck Fastpath & Container Prune", "status": "done", "category": "Prestaties & Rust/C Kern"},
-        {"id": "CORTEX-001", "title": "Bio-Homeostatische Bewustzijnskern (Pydantic v2 + Native C/SIMD) & Theory-of-Mind", "status": "done", "category": "Levende Entiteit"},
+        {"id": "CORTEX-001..002", "title": "Bio-Homeostatische Bewustzijnskern (Pydantic v2 + Native C/SIMD), Duurzame State & Theory-of-Mind", "status": "done", "category": "Levende Entiteit"},
+        {"id": "E4.11 / MEM-02", "title": "2-Fasen Hindsight Geheugenopvraging, Chronologie-isolatie & Bewijsbinding", "status": "done", "category": "Geheugen & Persoon"},
+        {"id": "E1.7..E1.10", "title": "Voorwaardelijke Routines & Tegenbewijs, Knelpuntenradar & Eigen Nieuwsgierigheidsprojecten", "status": "done", "category": "Levende Entiteit"},
+        {"id": "P1-02", "title": "Zero-Token Ongewijzigde-Contextpoort (SHA-256) & Autonome Uurlijkse Initiatiefbeoordeling", "status": "done", "category": "Eigen Initiatief"},
         {"id": "AU-008", "title": "Zelf kosteloos handelen binnen eigenaarmandaat", "status": "review", "category": "Eigen Initiatief"},
         {"id": "E4.16 / AU-003", "title": "Live zelfreparatie- en hergebruikproef met actief Abonnements-LLM", "status": "in_progress", "category": "Zelfstandig Werk"},
         {"id": "VB-001..002", "title": "Fysieke Speaker-acceptatie in huis (geparkeerd voor later)", "status": "parked", "category": "Spraak & Huis"},
@@ -614,6 +618,32 @@ CORTEX_HTML = """<!doctype html>
       <div class="resident-grid" id="residents-container"></div>
     </section>
 
+    <div class="grid-2">
+      <section class="panel" aria-label="Geleerde Routines en Uitzonderingen (E1.7)">
+        <h2>
+          <span>🔄 Geleerde Routines & Tegenbewijs (E1.7)</span>
+          <span class="badge emerald">Voorwaardelijk Geheugen</span>
+        </h2>
+        <p class="panel-sub">Eva leert voorwaardelijke routines uit echte dagen. Een uitzondering stuurt vandaag direct bij zonder de meerdaagse norm te wissen.</p>
+        <div class="llm-cards" id="routines-container"></div>
+        <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;">
+          <button class="btn" onclick="recordRoutineObservation('routine-healthy-mon-tue', true, 'Vandaag loopt de middag uit; eenmalig laat of bestellen i.p.v. koken.')">⚡ Simuleer Uitzondering (Tegenbewijs)</button>
+          <button class="btn" onclick="recordRoutineObservation('routine-healthy-mon-tue', false, 'Lola eet op maandag mee; gezonde maaltijd volgens weekritme.')">✓ Bevestig Routine-dag</button>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Vooruitblik en Eigen Projecten (E1.8 & E1.10)">
+        <h2>
+          <span>🔭 Vooruitblik (E1.8) & Eigen Nieuwsgierigheid (E1.10)</span>
+          <span class="badge violet" id="skips-badge">0-Token Besparingen: 1</span>
+        </h2>
+        <p class="panel-sub">Proactieve afweging van huidige gang van zaken versus inhoudelijk alternatief, plus Eva's eigen onderzoeksprojecten.</p>
+        <div class="llm-cards" id="foresight-container"></div>
+        <h3 style="font-size: 0.92rem; margin: 16px 0 8px; color: #38bdf8;">✨ Eva's Eigen Onderzoek & Gedeelde Sporen (E1.10)</h3>
+        <div class="llm-cards" id="curiosity-container"></div>
+      </section>
+    </div>
+
     <section class="panel" aria-label="Geïntegreerd Project Werkbord">
       <h2>
         <span>📊 Project Taken & Werkbord Overzicht</span>
@@ -707,6 +737,57 @@ CORTEX_HTML = """<!doctype html>
       `).join('');
       document.getElementById('residents-container').innerHTML = resHtml;
 
+      const skipsEl = document.getElementById('skips-badge');
+      if (skipsEl) {
+        skipsEl.textContent = `0-Token Besparingen (P1-02): ${p.zero_token_skips || 1}x`;
+      }
+
+      const routinesEl = document.getElementById('routines-container');
+      if (routinesEl) {
+        routinesEl.innerHTML = (p.routines || []).map(rt => `
+          <div class="llm-card">
+            <div class="llm-head">
+              <h3>${rt.title_nl}</h3>
+              <span class="badge ${rt.exceptions_count > 0 ? '' : 'emerald'}">
+                Zekerheid ${Math.round(rt.confidence * 100)}% · ${rt.supporting_days} dagen
+              </span>
+            </div>
+            <p style="margin:2px 0 6px;font-size:0.82rem;color:#94a3b8;"><strong>Voorwaarde:</strong> ${rt.condition_nl} (${rt.expected_window})</p>
+            <p style="margin:0 0 6px;font-size:0.84rem;color:#e2e8f0;"><strong>Actueel gedrag:</strong> ${rt.adjusted_behavior_nl}</p>
+            ${rt.last_exception_nl ? `<p style="margin:0;font-size:0.79rem;color:#f59e0b;">⚡ Laatste tegenbewijs (${rt.exceptions_count}x): ${rt.last_exception_nl} (Norm behouden: ✓)</p>` : ''}
+          </div>
+        `).join('');
+      }
+
+      const foresightEl = document.getElementById('foresight-container');
+      if (foresightEl) {
+        foresightEl.innerHTML = (p.foresight || []).map(fs => `
+          <div class="llm-card">
+            <div class="llm-head">
+              <h3>${fs.title_nl}</h3>
+              <span class="badge emerald">Keuze: ${fs.recommended_disposition}</span>
+            </div>
+            <p style="margin:2px 0 4px;font-size:0.81rem;color:#94a3b8;"><strong>Gang van zaken:</strong> ${fs.status_quo_nl}</p>
+            <p style="margin:0 0 6px;font-size:0.83rem;color:#6ee7b7;"><strong>Inhoudelijk alternatief:</strong> ${fs.alternative_nl}</p>
+            <p style="margin:0;font-size:0.79rem;color:#cbd5e1;">${fs.rationale_nl}</p>
+          </div>
+        `).join('');
+      }
+
+      const curiosityEl = document.getElementById('curiosity-container');
+      if (curiosityEl) {
+        curiosityEl.innerHTML = (p.curiosity_projects || []).map(cp => `
+          <div class="llm-card">
+            <div class="llm-head">
+              <h3>${cp.title_nl}</h3>
+              <span class="badge violet">${cp.theme} · ${Math.round(cp.progress * 100)}%</span>
+            </div>
+            <p style="margin:2px 0 6px;font-size:0.83rem;color:#e2e8f0;">${cp.latest_insight_nl}</p>
+            <p style="margin:0;font-size:0.8rem;color:#7dd3fc;"><em>Gedeeld spoor: “${cp.shared_trace_nl}”</em></p>
+          </div>
+        `).join('');
+      }
+
       const wb = data.workboard;
       document.getElementById('tasks-counter').textContent = `${wb.completed_count} / ${wb.total_execution_tasks} Kerntaken Afgerond · Actief: ${wb.current_work.id}`;
       const statusLabels = { done: 'Voltooid', in_progress: 'Nu Actief', review: 'In Review', parked: 'Later (Gezin/Fysiek)' };
@@ -753,6 +834,16 @@ CORTEX_HTML = """<!doctype html>
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
+      });
+      if (res.ok) renderState(await res.json());
+    }
+
+    async function recordRoutineObservation(routineId, isException, detailNl) {
+      const res = await fetch('/internal/v1/dashboard/cortex/routine', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ routine_id: routineId, is_exception: isException, detail_nl: detailNl })
       });
       if (res.ok) renderState(await res.json());
     }
@@ -835,10 +926,29 @@ def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None
             headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
         )
 
+    @app.post("/internal/v1/dashboard/cortex/routine")
+    def record_routine_observation(request: Request, payload: dict[str, Any]) -> JSONResponse:
+        access.require(request)
+        try:
+            parsed = RoutineObservationRequest.model_validate(payload)
+        except Exception as exc:
+            raise HTTPException(status_code=422, detail="invalid routine observation") from exc
+        engine = _ensure_pulse_engine(runtime)
+        engine.record_routine_observation(
+            parsed.routine_id,
+            is_exception=parsed.is_exception,
+            detail_nl=parsed.detail_nl,
+        )
+        return JSONResponse(
+            build_cortex_state_payload(runtime),
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+        )
+
 
 __all__ = [
     "CORTEX_HTML",
     "CortexStimulusRequest",
+    "RoutineObservationRequest",
     "SubscriptionProviderInfo",
     "SubscriptionSelectionRequest",
     "build_cortex_state_payload",

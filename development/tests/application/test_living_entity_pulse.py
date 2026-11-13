@@ -210,3 +210,68 @@ def test_subscription_cortex_two_phase_hindsight_recall_and_tool_synthesis(tmp_p
     assert phase1.provider == "gemini-argon:gemini-3.1-pro-argon"
 
 
+def test_e17_routine_counter_evidence_e18_foresight_e110_curiosity_and_e114_persistence(tmp_path) -> None:
+    import json
+    from dataclasses import replace
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.bootstrap.optional_model_providers import OptionalConversationModel, OptionalModelProviders
+    from tests.model.test_pydantic_conversation_model import _identity, _memory, _turn
+
+    persist_file = tmp_path / "living-cortex-state.json"
+    engine1 = LivingEntityPulseEngine(persist_path=persist_file)
+    updated_routine = engine1.record_routine_observation(
+        "routine-healthy-mon-tue",
+        is_exception=True,
+        detail_nl="Vandaag eten we laat wegens een drukke middag.",
+    )
+    assert updated_routine.exceptions_count == 1
+    assert updated_routine.norm_preserved is True
+    assert "Uitzondering vandaag verwerkt" in updated_routine.adjusted_behavior_nl
+    assert persist_file.is_file()
+
+    # E1.14: New engine instance reloads persisted state across restart
+    engine2 = LivingEntityPulseEngine(persist_path=persist_file)
+    snap2 = engine2.snapshot()
+    assert snap2.routines[0].exceptions_count == 1
+    assert snap2.routines[0].norm_preserved is True
+    assert len(snap2.foresight) >= 2
+    assert len(snap2.curiosity_projects) >= 2
+
+    # Conversational E1.7 exception handling, E1.8 foresight & E1.10 curiosity
+    sub_dir = tmp_path / "model-providers"
+    sub_dir.mkdir(parents=True, mode=0o700)
+    (sub_dir / "subscription-llm-state.json").write_text(
+        json.dumps({"selected_provider": "gemini_argon", "auto_fallback": True}),
+        encoding="utf-8",
+    )
+    baseline = PydanticConversationModel(auth_file=tmp_path / "no-key")
+    control = OptionalModelProviders(baseline, sub_dir)
+    model = OptionalConversationModel(baseline, control)
+
+    exc_turn = replace(
+        _turn(),
+        conversation_id="dashboard:owner",
+        text="Vandaag een uitzondering op maandag: het loopt uit dus we koken niet gezond.",
+    )
+    res_exc = model.generate(exc_turn, _identity(), _memory(), ())
+    assert "uitzondering" in (res_exc.text or "").lower()
+    assert "behouden" in (res_exc.text or "").lower()
+
+    fs_turn = replace(
+        _turn(),
+        conversation_id="dashboard:owner",
+        text="Zie je nog knelpunten of een inhoudelijk alternatief in je vooruitblik?",
+    )
+    res_fs = model.generate(fs_turn, _identity(), _memory(), ())
+    assert "vooruitblik" in (res_fs.text or "").lower()
+
+    cur_turn = replace(
+        _turn(),
+        conversation_id="dashboard:owner",
+        text="Waar ben je zelf nieuwsgierig naar in je eigen project?",
+    )
+    res_cur = model.generate(cur_turn, _identity(), _memory(), ())
+    assert "werk zelf aan" in (res_cur.text or "").lower()
+
+
+

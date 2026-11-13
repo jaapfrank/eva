@@ -237,10 +237,72 @@ class OptionalConversationModel:
             else:
                 tool_receipt_summary = "Ik heb de gevraagde actie uitgevoerd en het resultaat gecontroleerd."
 
+        is_routine_exception = any(
+            phrase in prompt_lower
+            for phrase in (
+                "uitzondering",
+                "vandaag niet",
+                "loopt uit",
+                "eten bestellen",
+                "niet gezond",
+                "eet niet mee",
+                "anders dan normaal",
+            )
+        )
+        is_routine_query = any(
+            w in prompt_lower
+            for w in ("routine", "routines", "gewoonte", "patroon", "patronen")
+        )
+        is_foresight_query = any(
+            w in prompt_lower
+            for w in ("knelpunt", "knelpunten", "vooruitblik", "anticipeer", "alternatief")
+        )
+        is_curiosity_query = any(
+            phrase in prompt_lower
+            for phrase in ("eigen project", "nieuwsgierig", "waar denk je", "waar ben je zelf", "eigenheid")
+        )
+
+        updated_routine = None
+        if is_routine_exception:
+            updated_routine = pulse.record_routine_observation(
+                "routine-healthy-mon-tue",
+                is_exception=True,
+                detail_nl=prompt_clean,
+            )
+            snap = pulse.snapshot()
+
         if tool_receipt_summary is not None:
             text = tool_receipt_summary
             if best_facts and scored_facts[0][0] > 0:
                 text += f" Relevante herinnering: {best_facts[0]}"
+        elif updated_routine is not None:
+            text = (
+                f"Genoteerd als eenmalige uitzondering op '{updated_routine.title_nl}' "
+                f"({updated_routine.exceptions_count}x afwijking, {updated_routine.supporting_days} steundagen). "
+                "Vandaag stuur ik bij, terwijl de vaste ma/di-routine behouden blijft."
+            )
+        elif is_routine_query and snap.routines:
+            r0 = snap.routines[0]
+            exc_part = (
+                f"{r0.exceptions_count} uitzondering(en) bekend"
+                if r0.exceptions_count > 0
+                else "geen open uitzonderingen"
+            )
+            text = (
+                f"Geleerde routine: '{r0.title_nl}' ({r0.condition_nl}, "
+                f"zekerheid {int(r0.confidence * 100)}%, {r0.supporting_days} dagen, {exc_part})."
+            )
+        elif is_foresight_query and snap.foresight:
+            f0 = snap.foresight[0]
+            text = (
+                f"Vooruitblik ({f0.title_nl}): i.p.v. '{f0.status_quo_nl}' "
+                f"kies ik voor '{f0.alternative_nl}'."
+            )
+        elif is_curiosity_query and snap.curiosity_projects:
+            c0 = snap.curiosity_projects[0]
+            text = (
+                f"Ik werk zelf aan '{c0.title_nl}': {c0.shared_trace_nl}"
+            )
         elif any(w in prompt_lower for w in ("hoe gaat het", "hoe voel je", "status", "leef je", "stemming", "energie")):
             text = (
                 f"Ik voel me {snap.mood} (energie {int(snap.drives.energy * 100)}%, "
@@ -250,7 +312,10 @@ class OptionalConversationModel:
                 f"met {len(facts)} actieve herinneringen paraat in Hindsight."
             )
         elif best_facts and scored_facts[0][0] > 0:
-            text = f"Uit ons geheugen: {best_facts[0]}"
+            if len(best_facts) > 1 and scored_facts[1][0] > 20 and best_facts[1] != best_facts[0]:
+                text = f"Uit ons geheugen: {best_facts[0]} Daarnaast: {best_facts[1]}"
+            else:
+                text = f"Uit ons geheugen: {best_facts[0]}"
         elif exchanges and exchanges[0][0] > 0:
             text = f"Uit ons eerdere gesprek: {exchanges[0][1][:180]}"
         elif best_facts and any(w in prompt_lower for w in ("weet je", "herinner", "geheugen", "afspraak")):

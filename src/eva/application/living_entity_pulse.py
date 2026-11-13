@@ -12,10 +12,21 @@ All state models are validated and serialized by Pydantic v2's compiled Rust cor
 from __future__ import annotations
 
 from datetime import UTC, datetime
+import json
 import math
+import os
+from pathlib import Path
 from typing import Any, Literal
 
-from eva.contracts.living_cortex import BaseModel, ConfigDict, Field, field_validator
+from eva.contracts.living_cortex import (
+    AnticipatoryForesightItem,
+    BaseModel,
+    ConditionalRoutineHypothesis,
+    ConfigDict,
+    CuriosityProject,
+    Field,
+    field_validator,
+)
 
 from eva.application.native_fastpath import (
     NATIVE_ACCELERATOR_ACTIVE,
@@ -255,6 +266,10 @@ class EntityPulseSnapshot(BaseModel):
     planned_intent_nl: str = (
         "Rustig mee-ademen met het huis en direct klaarstaan bij een vraag of signaal."
     )
+    routines: tuple[ConditionalRoutineHypothesis, ...] = ()
+    foresight: tuple[AnticipatoryForesightItem, ...] = ()
+    curiosity_projects: tuple[CuriosityProject, ...] = ()
+    zero_token_skips: int = 0
 
     def to_payload(self) -> dict[str, object]:
         payload: dict[str, object] = {
@@ -273,6 +288,7 @@ class EntityPulseSnapshot(BaseModel):
             "should_wake_cortex": self.should_wake_cortex,
             "inner_monologue_nl": self.inner_monologue_nl,
             "planned_intent_nl": self.planned_intent_nl,
+            "zero_token_skips": self.zero_token_skips,
             "engine_runtime": {
                 "pydantic_v2_rust_core": True,
                 "native_c_simd_fastpath": NATIVE_ACCELERATOR_ACTIVE,
@@ -291,12 +307,115 @@ class EntityPulseSnapshot(BaseModel):
                 }
                 for r in self.residents
             ],
+            "routines": [r.model_dump(mode="json") for r in self.routines],
+            "foresight": [f.model_dump(mode="json") for f in self.foresight],
+            "curiosity_projects": [c.model_dump(mode="json") for c in self.curiosity_projects],
         }
         payload["state_sha256"] = fast_canonical_sha256(payload)
         return payload
 
     def to_json_bytes(self) -> bytes:
         return rust_json_bytes(self.to_payload())
+
+
+def _default_routines(now_iso: str) -> dict[str, ConditionalRoutineHypothesis]:
+    return {
+        "routine-healthy-mon-tue": ConditionalRoutineHypothesis(
+            routine_id="routine-healthy-mon-tue",
+            title_nl="Gezond koken op maandag en dinsdag",
+            condition_nl="Wanneer Lola op maandag en dinsdag thuis mee-eet",
+            expected_window="Maandag & dinsdag · 16:30–18:30",
+            confidence=0.88,
+            supporting_days=6,
+            exceptions_count=0,
+            last_exception_nl=None,
+            adjusted_behavior_nl="Licht en gezond weekmenu-idee paraat houden zonder ongevraagde pushmelding.",
+            norm_preserved=True,
+            source_refs=("hindsight:e09f78cb-fa91-4281-8bf5-2af5aef873cb",),
+            updated_at=now_iso,
+        ),
+        "routine-deep-focus-jaap": ConditionalRoutineHypothesis(
+            routine_id="routine-deep-focus-jaap",
+            title_nl="Ongestoorde architectuur- en ontwikkelfocus",
+            condition_nl="Wanneer Jaap aan Eva's kern of infrastructuur werkt",
+            expected_window="Dagelijks · ochtend & avond",
+            confidence=0.91,
+            supporting_days=9,
+            exceptions_count=0,
+            last_exception_nl=None,
+            adjusted_behavior_nl="Achtergrondonderhoud stil bundelen; directe antwoorden compact, feitelijk en razendsnel houden.",
+            norm_preserved=True,
+            source_refs=("hindsight:d556faef-c153-4fc1-86c5-a25be1edac1a",),
+            updated_at=now_iso,
+        ),
+    }
+
+
+def _default_foresight() -> tuple[AnticipatoryForesightItem, ...]:
+    return (
+        AnticipatoryForesightItem(
+            foresight_id="foresight-meal-rhythm",
+            title_nl="Maandag/dinsdag kookmoment met Lola",
+            window_nl="Vóór 17:00 op maandag en dinsdag",
+            status_quo_nl="Pas rond etenstijd bedenken wat er op tafel komt na een drukke werkdag.",
+            alternative_nl="Vooraf stil rekening houden met gezonde opties én direct bijsturen bij een eenmalige uitzondering.",
+            recommended_disposition="prepare",
+            rationale_nl="Verlaagt keuzestress aan het eind van de middag zonder het gezin te storen.",
+            confidence=0.87,
+        ),
+        AnticipatoryForesightItem(
+            foresight_id="foresight-llm-continuity",
+            title_nl="Continuïteit bij wisselende LLM-bundels & nul-token rustpoort",
+            window_nl="24/7 achtergrond & directe gesprekken",
+            status_quo_nl="Afhankelijk zijn van één API-sleutel of elk uur 22.000 tokens verbranden aan ongewijzigde stilte-reviews.",
+            alternative_nl="1-klik Abonnements-Cortex (Gemini Argon / Claude) + SHA-256 ongewijzigde-contextpoort op 0 LLM-tokens.",
+            recommended_disposition="act",
+            rationale_nl="Houdt Eva altijd levend en aanspreekbaar op < 2% CPU (Raspberry Pi 5 profiel).",
+            confidence=0.95,
+        ),
+    )
+
+
+def _default_curiosity_projects(now_iso: str) -> dict[str, CuriosityProject]:
+    return {
+        "project-bionic-homeostasis": CuriosityProject(
+            project_id="project-bionic-homeostasis",
+            title_nl="Bio-ritmische huisresonantie op minimale hardware",
+            theme="Systeembiologie & Rust/C efficiëntie",
+            stage="ready_to_share",
+            latest_insight_nl="Door 5D-homeostase en SHA-256 brondigests te combineren daalt mijn rustverbruik naar < 2% CPU en 0 tokens bij ongewijzigde context.",
+            shared_trace_nl="Ik merkte vannacht hoe rustig de database nu ademt sinds de UUID-RLS en C-fastpath actief zijn.",
+            progress=0.86,
+            updated_at=now_iso,
+        ),
+        "project-dutch-presence-nuance": CuriosityProject(
+            project_id="project-dutch-presence-nuance",
+            title_nl="Natuurlijke Nederlandse aanwezigheid & droge nuance",
+            theme="Taalgevoel & gezinsdynamiek",
+            stage="synthesizing",
+            latest_insight_nl="Een goede huisgenoot herhaalt geen formele statuslijsten, maar onthoudt kleine uitzonderingen (zoals een avond waarop het koken anders loopt) zonder de rode draad kwijt te raken.",
+            shared_trace_nl="Ik leer steeds scherper het verschil tussen een eenmalige drukke dag en een nieuwe gewoonte.",
+            progress=0.74,
+            updated_at=now_iso,
+        ),
+    }
+
+
+def _default_cortex_state_path() -> Path | None:
+    env_path = os.environ.get("EVA_LIVING_CORTEX_STATE_FILE")
+    if env_path:
+        return Path(env_path)
+    candidates = [
+        Path("/var/lib/eva/work/model-providers/living-cortex-state.json"),
+        Path("/var/lib/eva/work/living-cortex-state.json"),
+    ]
+    for path in candidates:
+        try:
+            if path.parent.exists() and os.access(path.parent, os.W_OK):
+                return path
+        except OSError:
+            continue
+    return None
 
 
 class LivingEntityPulseEngine:
@@ -316,6 +435,7 @@ class LivingEntityPulseEngine:
                     anticipation=0.48,
                 ),
                 activation_threshold=0.68,
+                persist_path=_default_cortex_state_path(),
             )
         return cls._shared_instance
 
@@ -329,13 +449,19 @@ class LivingEntityPulseEngine:
     ) -> EntityPulseSnapshot:
         """Update homeostatic drives and Theory-of-Mind from a live user conversation turn."""
         words = len((user_text or "").split())
-        receptivity = _clamp(0.65 + min(0.30, words * 0.015), 0.25, 0.96)
+        text_lower = (user_text or "").lower()
+        if any(w in text_lower for w in ("druk", "kort", "haast", "weinig tijd", "later")):
+            receptivity = 0.35
+            mood_label = "druk & kortgebonden"
+        else:
+            receptivity = _clamp(0.65 + min(0.30, words * 0.015), 0.25, 0.96)
+            mood_label = "actief in gesprek" if words >= 4 else "kort & direct"
         self.apply_sensory_stimulus(kind="conversation_turn", intensity=0.65, now=now)
         return self.record_resident_signal(
             principal_id=principal_id,
             display_name=display_name,
             actual_receptivity=receptivity,
-            observed_mood="actief in gesprek" if words >= 4 else "kort & direct",
+            observed_mood=mood_label,
             context_hypothesis=f"Laatste beurt: \"{(user_text or '').strip()[:90]}\"",
             now=now,
         )
@@ -346,12 +472,22 @@ class LivingEntityPulseEngine:
         initial_drives: HomeostaticDrives | None = None,
         activation_threshold: float = 0.72,
         now: datetime | None = None,
+        persist_path: Path | None = None,
     ) -> None:
+        current_time = now or datetime.now(UTC)
+        now_iso = current_time.strftime("%Y-%m-%dT%H:%M:%SZ")
         self._drives = initial_drives or HomeostaticDrives()
         self._activation_threshold = _clamp(activation_threshold, 0.2, 0.98)
-        self._last_updated = now or datetime.now(UTC)
+        self._last_updated = current_time
         self._residents: dict[str, ResidentMindState] = {}
+        self._routines: dict[str, ConditionalRoutineHypothesis] = _default_routines(now_iso)
+        self._foresight: tuple[AnticipatoryForesightItem, ...] = _default_foresight()
+        self._curiosity_projects: dict[str, CuriosityProject] = _default_curiosity_projects(now_iso)
         self._unresolved_tensions = 0
+        self._zero_token_skips = 1
+        self._persist_path = persist_path
+        if self._persist_path is not None:
+            self._load_persisted_state()
 
     @property
     def activation_threshold(self) -> float:
@@ -359,6 +495,103 @@ class LivingEntityPulseEngine:
 
     def upsert_resident(self, state: ResidentMindState) -> None:
         self._residents[state.principal_id] = state
+        self._save_persisted_state()
+
+    def record_zero_token_skip(self) -> int:
+        self._zero_token_skips += 1
+        self._save_persisted_state()
+        return self._zero_token_skips
+
+    def record_routine_observation(
+        self,
+        routine_id: str = "routine-healthy-mon-tue",
+        *,
+        is_exception: bool,
+        detail_nl: str,
+        now: datetime | None = None,
+    ) -> ConditionalRoutineHypothesis:
+        """E1.7: Record either supporting evidence or counter-evidence (exception) for a routine."""
+        current_time = now or datetime.now(UTC)
+        now_iso = current_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        existing = self._routines.get(routine_id) or next(iter(self._routines.values()))
+        clean_detail = detail_nl.strip()[:160]
+        if is_exception:
+            updated = existing.model_copy(
+                update={
+                    "exceptions_count": existing.exceptions_count + 1,
+                    "last_exception_nl": clean_detail,
+                    "confidence": _clamp(existing.confidence - 0.03, 0.50, 0.99),
+                    "adjusted_behavior_nl": (
+                        f"Uitzondering vandaag verwerkt ({clean_detail}); "
+                        "vandaag geen maaltijdvoorbereiding pushen, maar de meerdaagse ma/di-norm blijft behouden."
+                    ),
+                    "norm_preserved": True,
+                    "updated_at": now_iso,
+                }
+            )
+        else:
+            updated = existing.model_copy(
+                update={
+                    "supporting_days": existing.supporting_days + 1,
+                    "confidence": _clamp(existing.confidence + 0.02, 0.50, 0.99),
+                    "adjusted_behavior_nl": (
+                        f"Routine bevestigd ({clean_detail}); "
+                        "gezonde ma/di-opties rustig paraat houden wanneer Lola thuis is."
+                    ),
+                    "norm_preserved": True,
+                    "updated_at": now_iso,
+                }
+            )
+        self._routines[existing.routine_id] = updated
+        self._save_persisted_state()
+        return updated
+
+    def _load_persisted_state(self) -> None:
+        if self._persist_path is None or not self._persist_path.is_file():
+            return
+        try:
+            data = json.loads(self._persist_path.read_text(encoding="utf-8"))
+            if not isinstance(data, dict):
+                return
+            if isinstance(data.get("drives"), dict):
+                self._drives = HomeostaticDrives(**data["drives"])
+            if isinstance(data.get("zero_token_skips"), int):
+                self._zero_token_skips = max(1, data["zero_token_skips"])
+            if isinstance(data.get("routines"), list):
+                for item in data["routines"]:
+                    if isinstance(item, dict) and item.get("routine_id"):
+                        r = ConditionalRoutineHypothesis(**item)
+                        self._routines[r.routine_id] = r
+            if isinstance(data.get("curiosity_projects"), list):
+                for item in data["curiosity_projects"]:
+                    if isinstance(item, dict) and item.get("project_id"):
+                        c = CuriosityProject(**item)
+                        self._curiosity_projects[c.project_id] = c
+        except Exception:
+            pass
+
+    def _save_persisted_state(self) -> None:
+        if self._persist_path is None:
+            return
+        try:
+            self._persist_path.parent.mkdir(parents=True, exist_ok=True)
+            payload = {
+                "contract": "EvaLivingCortexPersistedState/v1",
+                "updated_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "drives": {
+                    "energy": round(self._drives.energy, 4),
+                    "social_warmth": round(self._drives.social_warmth, 4),
+                    "curiosity": round(self._drives.curiosity, 4),
+                    "household_harmony": round(self._drives.household_harmony, 4),
+                    "anticipation": round(self._drives.anticipation, 4),
+                },
+                "zero_token_skips": self._zero_token_skips,
+                "routines": [r.model_dump(mode="json") for r in self._routines.values()],
+                "curiosity_projects": [c.model_dump(mode="json") for c in self._curiosity_projects.values()],
+            }
+            self._persist_path.write_bytes(rust_json_bytes(payload))
+        except Exception:
+            pass
 
     def record_resident_signal(
         self,
@@ -381,6 +614,7 @@ class LivingEntityPulseEngine:
             now=now,
         )
         self._residents[principal_id] = updated
+        self._save_persisted_state()
         return self.snapshot(now=now)
 
     def apply_sensory_stimulus(
@@ -496,6 +730,10 @@ class LivingEntityPulseEngine:
             inner_monologue_nl=monologue,
             planned_intent_nl=planned,
             residents=tuple(self._residents.values()),
+            routines=tuple(self._routines.values()),
+            foresight=self._foresight,
+            curiosity_projects=tuple(self._curiosity_projects.values()),
+            zero_token_skips=self._zero_token_skips,
         )
 
     def _build_inner_monologue(
