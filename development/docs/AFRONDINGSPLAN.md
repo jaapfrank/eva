@@ -42,13 +42,14 @@
 | **3B · Causale Gebeurtenisgraaf & Counterfactual Droom-Ontdekking** | Bouw een echt lokaal **Structural Causal Model (`oorzaak → gevolg`)** over huis-, energie-, netwerk- en gezinsgebeurtenissen. Tijdens nachtelijke droom-consolidatie speelt Eva tijdslijnen tegenfeitelijk af om verborgen oorzaken en dreigende storingen wiskundig te bewijzen (geen statistische LLM-gokken) én overleeft ze provider-429/503 duurzaam (`E1.14`). |
 | **3C · Onafhankelijk getoetste zelfreparatie & genetische zelfverbetering (`E4.16`, `E4.19`)** | Scheid validatie van dispatch in `reviewed_component_application.py` met onafhankelijke reviewerherkomst en rollback, zodat Eva echte fouten en trage paden zelfstandig ontdekt, repareert, installeert en aantoonbaar hergebruikt. |
 
-### Fase 4 — Zero-UI Anticipatie, Bio-Sociale Co-Regulatie & Ruimtelijke Spraak (`P1-02` + `P2-01` + `P2-03`)
-*Combineert voorspellende voorbereiding (`P1-02`, `E1.6–E1.13`, `E4.11`, `AU-008`) en ruimtelijke full-duplex spraak (`C3.5`, `C3.4`, `C4.1`, `C3.6`).*
+### Fase 4 — Eva HoloScreen (UniFi APK), Sub-300ms Spraak & Zero-UI Anticipatie (`P1-02` + `P2-01` + `P2-03`)
+*Combineert voorspellende voorbereiding (`P1-02`, `E1.6–E1.13`, `E4.11`, `AU-008`), belichaamd wand-/kamerscherm en sub-300ms full-duplex spraak (`C3.5`, `C3.4`, `C4.1`, `C3.6`).*
 
 | Onderdeel | Concrete realisatie en eindcontrole |
 | --- | --- |
 | **4A · Zero-UI Voorbereiding & Bio-Sociale Co-Regulatie** | Eva zet op basis van haar causale wereldmodel en veranderingspoort oplossingen stil klaar *vóór* je erom vraagt (*Anticipatory Staged Reality*), past timing, toon en informatiedichtheid aan op je gemeten cognitieve druk, en bewaart alleen duurzame kernkennis (`E4.11`). |
-| **4B · Ruimtelijke Full-Duplex Stem in Huis** | Eén gedeelde Eva-identiteit die haar aanwezigheid meebeweegt met waar jullie in huis zijn, met behoud van zachte beginwoorden (`C3.5`), menselijk spreekritme (`C3.4`), sub-seconde barge-in onderbreking op beide speakers (`C4.1`) en zelfherstel (`C3.6`). |
+| **4B · Eva HoloScreen APK (UniFi Display) & "Op het scherm toveren"** | Lichtgewicht Android Kiosk-APK voor het UniFi-scherm (met hardware-AEC microfoon, speaker en *100% on-device* blikdetectie/*gaze-to-talk* zodat aankijken volstaat zonder wake-word of cloud-video). Terwijl Eva praat, tovert ze live bijpassende interactieve kaarten naast haar 3D-verschijning: bijv. Home Assistant-boodschappenlijst live bijwerken/tonen én voorlezen, schooldag/eetschema voor Lola, deurbel/huisstatus of Eva's eigen ontdekkingen. |
+| **4C · Sub-300ms Full-Duplex Spraak zonder trage LiveKit/HA-waterval** | Vervang de trage seriële keten (*wachten op volledige HA-STT stilte → volledig LLM-antwoord → volledige TTS*) door een directe lokale LAN-audiostream met **Native Speech-to-Speech Realtime** (OpenAI Realtime / Gemini Live Audio) én **speculatieve eerste-zinsdeel streaming + 2ms spiergeheugen-reflexen** voor tekst-LLMs, met behoud van zachte beginwoorden (`C3.5`), vlot ritme (`C3.4`), directe barge-in onderbreking (`C4.1`) en zelfherstel (`C3.6`). |
 
 ### Fase 5 — Symbiotische Co-Evolutie, 7 dagen praktijkbewijs & eindacceptatie (`P1-05` + `P2-04`)
 *Combineert `P1-05`, `F2.1` en `F2.2`.*
