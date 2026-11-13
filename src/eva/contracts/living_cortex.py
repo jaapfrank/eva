@@ -131,15 +131,101 @@ class RoutineObservationRequest(BaseModel):
     detail_nl: str = "Vandaag loopt de middag anders; eenmalige uitzondering zonder de weekroutine te wissen."
 
 
+class ActiveInferencePolicyEvaluation(BaseModel):
+    """Pydantic v2 contract for Karl Friston's Expected Free Energy G(pi) policy evaluation."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    policy_id: str
+    label_nl: str
+    expected_free_energy_g: float
+    epistemic_value: float = Field(ge=0.0, le=1.0)
+    pragmatic_value: float = Field(ge=0.0, le=1.0)
+    interruption_cost: float = Field(ge=0.0, le=1.0)
+    posterior_probability: float = Field(ge=0.0, le=1.0)
+    selected: bool = False
+
+
+class AttentionSourceWatch(BaseModel):
+    """Pydantic v2 contract for E1.6: autonomous source-change watch with deduplication & missing-access explanation."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    watch_id: str
+    source_kind: str
+    target_ref: str
+    purpose_nl: str
+    access_status: Literal["connected", "missing_access", "degraded"] = "connected"
+    missing_access_explanation_nl: str | None = None
+    last_event_sha256: str | None = None
+    deduplicated_callbacks_count: int = Field(default=0, ge=0)
+    last_disposition: Literal["silence", "action", "pending"] = "silence"
+    last_rationale_nl: str = ""
+    updated_at: str = ""
+
+
+class HouseholdResponsibilityArtifact(BaseModel):
+    """Pydantic v2 contract for E1.11 & E1.12: recurring family responsibility & household provision lifecycle."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    artifact_id: str
+    title_nl: str
+    owner_principal_id: str
+    desired_outcome_nl: str
+    boundaries_nl: str
+    lifecycle_state: Literal["proposed", "active", "paused", "rejected", "retired"] = "active"
+    adoption_state: Literal[
+        "proposed",
+        "trial_active",
+        "explicitly_adopted",
+        "implicit_trial_confirmed",
+        "paused_by_owner",
+        "rolled_back",
+    ] = "explicitly_adopted"
+    version: int = Field(default=1, ge=1)
+    previous_version_summary_nl: str | None = None
+    can_rollback: bool = False
+    current_standing_nl: str
+    evidence_memory_ids: tuple[str, ...] = ()
+    updated_at: str = ""
+
+
+class SourceWatchEventRequest(BaseModel):
+    """Pydantic v2 validated request to simulate or record a source-watch change or missing-access check (E1.6)."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    watch_id: str = "watch-calendar-transition"
+    event_payload_sha256: str = "e106a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e"
+    summary_nl: str = "Nieuwe middagwijziging gedetecteerd op gekoppelde bron."
+    access_available: bool = True
+
+
+class ResponsibilityActionRequest(BaseModel):
+    """Pydantic v2 validated request to adopt, pause, resume, take over, or roll back a household responsibility (E1.11/E1.12)."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    artifact_id: str = "household-provision:weekday-evening-calm"
+    action: Literal["adopt", "pause", "resume", "take_over", "rollback", "retire"] = "adopt"
+    note_nl: str = "Bewust bevestigd door gezinslid."
+
+
 __all__ = [
+    "ActiveInferencePolicyEvaluation",
     "AnticipatoryForesightItem",
+    "AttentionSourceWatch",
     "BaseModel",
     "ConditionalRoutineHypothesis",
     "ConfigDict",
     "CortexStimulusRequest",
     "CuriosityProject",
     "Field",
+    "HouseholdResponsibilityArtifact",
+    "ResponsibilityActionRequest",
     "RoutineObservationRequest",
+    "SourceWatchEventRequest",
     "SubscriptionProviderId",
     "SubscriptionProviderInfo",
     "SubscriptionSelectionRequest",

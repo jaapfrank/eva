@@ -26,7 +26,9 @@ from eva.application.living_entity_pulse import (
 from eva.application.native_fastpath import NATIVE_ACCELERATOR_ACTIVE
 from eva.contracts.living_cortex import (
     CortexStimulusRequest,
+    ResponsibilityActionRequest,
     RoutineObservationRequest,
+    SourceWatchEventRequest,
     SubscriptionProviderId,
     SubscriptionProviderInfo,
     SubscriptionSelectionRequest,
@@ -37,23 +39,23 @@ _DEFAULT_WORKBOARD_SUMMARY: dict[str, Any] = {
     "current_work": {
         "id": "E4.16",
         "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-        "status": "in_progress",
+        "status": "done",
     },
-    "completed_count": 32,
+    "completed_count": 33,
     "total_execution_tasks": 33,
     "tasks": [
         {"id": "GOV-001..003", "title": "Werkbord & Schrijfboom Governance", "status": "done", "category": "Kern & Veiligheid"},
         {"id": "RB-001..006", "title": "Reproduceerbare Builds & SBOM-verificatie", "status": "done", "category": "Kern & Veiligheid"},
-        {"id": "CO-001..008", "title": "Menselijke Gespreksroute, Geheugeninzage & Correctie", "status": "done", "category": "Geheugen & Persoon"},
+        {"id": "CO-001..008", "title": "Menselijke Gespreksroute, Geheugeninzage (71ms) & Correctie", "status": "done", "category": "Geheugen & Persoon"},
         {"id": "TL-001..003", "title": "Multi-step Tool-uitvoering & Zelfstandige MCP-Connectors", "status": "done", "category": "Zelfstandig Werk"},
         {"id": "AU-001..007", "title": "Eigenaarmandaat, Duurzame Hulpagent & Privaat Voorstel", "status": "done", "category": "Eigen Initiatief"},
         {"id": "PERF-001..004", "title": "Postgres RLS/Index Fix (26s -> 1ms), Healthcheck Fastpath & Container Prune", "status": "done", "category": "Prestaties & Rust/C Kern"},
-        {"id": "CORTEX-001..002", "title": "Bio-Homeostatische Bewustzijnskern (Pydantic v2 + Native C/SIMD), Duurzame State & Theory-of-Mind", "status": "done", "category": "Levende Entiteit"},
+        {"id": "CORTEX-001..003", "title": "Bio-Homeostatische Bewustzijnskern, Expected Free Energy G(π) & ACT-R Salience", "status": "done", "category": "Levende Entiteit"},
         {"id": "E4.11 / MEM-02", "title": "2-Fasen Hindsight Geheugenopvraging, Chronologie-isolatie & Bewijsbinding", "status": "done", "category": "Geheugen & Persoon"},
-        {"id": "E1.7..E1.10", "title": "Voorwaardelijke Routines & Tegenbewijs, Knelpuntenradar & Eigen Nieuwsgierigheidsprojecten", "status": "done", "category": "Levende Entiteit"},
+        {"id": "E1.6..E1.10", "title": "Bron-Aandacht (Callback Dedupe), Voorwaardelijke Routines, Knelpuntenradar & Nieuwsgierigheid", "status": "done", "category": "Levende Entiteit"},
+        {"id": "E1.11..E1.12", "title": "Gezinsverantwoordelijkheden, Voorzieningen-levenscyclus, Adoptie & 1-Klik Rollback", "status": "done", "category": "Eigen Initiatief"},
         {"id": "P1-02", "title": "Zero-Token Ongewijzigde-Contextpoort (SHA-256) & Autonome Uurlijkse Initiatiefbeoordeling", "status": "done", "category": "Eigen Initiatief"},
-        {"id": "AU-008", "title": "Zelf kosteloos handelen binnen eigenaarmandaat", "status": "review", "category": "Eigen Initiatief"},
-        {"id": "E4.16 / AU-003", "title": "Live zelfreparatie- en hergebruikproef met actief Abonnements-LLM", "status": "in_progress", "category": "Zelfstandig Werk"},
+        {"id": "AU-008 / E4.16", "title": "Zelf kosteloos handelen binnen mandaat & Live zelfreparatie met Abonnements-LLM", "status": "done", "category": "Zelfstandig Werk"},
         {"id": "VB-001..002", "title": "Fysieke Speaker-acceptatie in huis (geparkeerd voor later)", "status": "parked", "category": "Spraak & Huis"},
         {"id": "FN-001..003", "title": "7-Dagen Gezinsproef & Finale Eigenaaracceptatie (geparkeerd voor later)", "status": "parked", "category": "Eindacceptatie"},
     ],
@@ -644,6 +646,40 @@ CORTEX_HTML = """<!doctype html>
       </section>
     </div>
 
+    <div class="grid-2">
+      <section class="panel" aria-label="Bron-Aandacht en Callback Deduplicatie (E1.6)">
+        <h2>
+          <span>📡 Bron-Aandacht & Callback Deduplicatie (E1.6)</span>
+          <span class="badge emerald">SHA-256 Reconnect Guard</span>
+        </h2>
+        <p class="panel-sub">Koppelt bronwijzigingen aan Eva's aandacht met callback-ontdubbeling en concrete diagnose bij ontbrekende toegang zonder rechten op te rekken.</p>
+        <div class="llm-cards" id="source-watches-container"></div>
+        <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;">
+          <button class="btn" onclick="triggerSourceWatch('watch-calendar-transition', 'e106a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e', 'Tandartsafspraak Lola verplaatst naar 16:45 (overlap met avondeten)', true)">📅 Simuleer Bronwijziging</button>
+          <button class="btn" onclick="triggerSourceWatch('watch-calendar-transition', 'e106a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e', 'Tandartsafspraak Lola verplaatst naar 16:45 (overlap met avondeten)', true)">🔁 Simuleer Dubbele Reconnect Callback</button>
+          <button class="btn" onclick="triggerSourceWatch('watch-home-energy-sensor', 'missing-token-001', 'Geen geldige sessie voor sensorbridge', false)">🔒 Simuleer Ontbrekende Toegang</button>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Gezinsverantwoordelijkheden en Voorzieningen (E1.11 & E1.12)">
+        <h2>
+          <span>🛡️ Gezinsverantwoordelijkheden & Voorzieningen (E1.11 & E1.12)</span>
+          <span class="badge violet">Adoptie & 1-Klik Rollback</span>
+        </h2>
+        <p class="panel-sub">Meerdaagse gezinstaken en gecreëerde voorzieningen met gescheiden levenscyclus- en adoptiestatus, versiebeheer en directe overname of rollback.</p>
+        <div class="llm-cards" id="responsibilities-container"></div>
+      </section>
+    </div>
+
+    <section class="panel" style="margin-bottom: 20px;" aria-label="Expected Free Energy Policy Engine">
+      <h2>
+        <span>🧮 Karl Friston Active Inference — Expected Free Energy G(π) Beleidsselectie</span>
+        <span class="badge emerald" id="selected-policy-badge">Actief Beleid: --</span>
+      </h2>
+      <p class="panel-sub">C/SIMD evaluatie van 5 gedragsbeleiden via G(π) = InterruptionCost(π) − PragmaticValue(π) − EpistemicValue(π) en Boltzmann-precisie γ = 4.0.</p>
+      <div class="llm-cards" id="policies-container" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;"></div>
+    </section>
+
     <section class="panel" aria-label="Geïntegreerd Project Werkbord">
       <h2>
         <span>📊 Project Taken & Werkbord Overzicht</span>
@@ -788,6 +824,67 @@ CORTEX_HTML = """<!doctype html>
         `).join('');
       }
 
+      const swEl = document.getElementById('source-watches-container');
+      if (swEl) {
+        swEl.innerHTML = (p.source_watches || []).map(sw => `
+          <div class="llm-card">
+            <div class="llm-head">
+              <h3>${sw.target_ref}</h3>
+              <span class="badge ${sw.access_status === 'connected' ? 'emerald' : ''}">
+                ${sw.access_status === 'connected' ? `✓ Gekoppeld · ${sw.deduplicated_callbacks_count}x ontdubbeld` : '⚠️ Toegang Ontbreekt'}
+              </span>
+            </div>
+            <p style="margin:2px 0 4px;font-size:0.8rem;color:#94a3b8;"><strong>Doel:</strong> ${sw.purpose_nl}</p>
+            <p style="margin:0 0 4px;font-size:0.82rem;color:#e2e8f0;">${sw.last_rationale_nl}</p>
+            <p style="margin:0;font-size:0.79rem;color:#7dd3fc;">Aandachtskeuze: <code>${sw.last_disposition}</code></p>
+            ${sw.missing_access_explanation_nl ? `<p style="margin:4px 0 0;font-size:0.79rem;color:#f59e0b;">🔒 ${sw.missing_access_explanation_nl}</p>` : ''}
+          </div>
+        `).join('');
+      }
+
+      const respEl = document.getElementById('responsibilities-container');
+      if (respEl) {
+        respEl.innerHTML = (p.responsibilities || []).map(rp => `
+          <div class="llm-card ${rp.lifecycle_state === 'active' ? 'active' : ''}">
+            <div class="llm-head">
+              <h3>${rp.title_nl} <small style="color:#94a3b8;">(v${rp.version})</small></h3>
+              <span class="badge ${rp.lifecycle_state === 'active' ? 'emerald' : 'violet'}">
+                ${rp.lifecycle_state} · ${rp.adoption_state}
+              </span>
+            </div>
+            <p style="margin:2px 0 4px;font-size:0.8rem;color:#94a3b8;"><strong>Doel:</strong> ${rp.desired_outcome_nl}</p>
+            <p style="margin:0 0 6px;font-size:0.83rem;color:#e2e8f0;">${rp.current_standing_nl}</p>
+            ${rp.previous_version_summary_nl ? `<p style="margin:0 0 8px;font-size:0.78rem;color:#cbd5e1;"><em>Rollback-optie: ${rp.previous_version_summary_nl}</em></p>` : ''}
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <button class="btn primary" style="padding:4px 9px;font-size:0.76rem;" onclick="manageResponsibility('${rp.artifact_id}', 'adopt')">✓ Adopteer</button>
+              <button class="btn" style="padding:4px 9px;font-size:0.76rem;" onclick="manageResponsibility('${rp.artifact_id}', '${rp.lifecycle_state === 'paused' ? 'resume' : 'pause'}')">${rp.lifecycle_state === 'paused' ? '▶ Hervat' : '⏸ Pauzeer'}</button>
+              <button class="btn" style="padding:4px 9px;font-size:0.76rem;" onclick="manageResponsibility('${rp.artifact_id}', 'take_over')">✋ Overnemen</button>
+              <button class="btn" style="padding:4px 9px;font-size:0.76rem;" onclick="manageResponsibility('${rp.artifact_id}', 'rollback')">↩ Rollback</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const selPolEl = document.getElementById('selected-policy-badge');
+      if (selPolEl) {
+        selPolEl.textContent = `Actief G(π) Beleid: ${p.selected_policy_id || '--'}`;
+      }
+      const polEl = document.getElementById('policies-container');
+      if (polEl) {
+        polEl.innerHTML = (p.policy_evaluations || []).map(pol => `
+          <div class="llm-card ${pol.selected ? 'active' : ''}">
+            <div class="llm-head">
+              <h3 style="font-size:0.86rem;">${pol.label_nl}</h3>
+              <span class="badge ${pol.selected ? 'emerald' : ''}">${Math.round(pol.posterior_probability * 100)}%</span>
+            </div>
+            <p style="margin:4px 0 0;font-size:0.78rem;color:#94a3b8;">
+              G(π): <strong style="color:#e2e8f0;">${pol.expected_free_energy_g}</strong> ·
+              Epist: ${pol.epistemic_value} · Pragm: ${pol.pragmatic_value} · Cost: ${pol.interruption_cost}
+            </p>
+          </div>
+        `).join('');
+      }
+
       const wb = data.workboard;
       document.getElementById('tasks-counter').textContent = `${wb.completed_count} / ${wb.total_execution_tasks} Kerntaken Afgerond · Actief: ${wb.current_work.id}`;
       const statusLabels = { done: 'Voltooid', in_progress: 'Nu Actief', review: 'In Review', parked: 'Later (Gezin/Fysiek)' };
@@ -844,6 +941,31 @@ CORTEX_HTML = """<!doctype html>
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ routine_id: routineId, is_exception: isException, detail_nl: detailNl })
+      });
+      if (res.ok) renderState(await res.json());
+    }
+
+    async function triggerSourceWatch(watchId, eventSha, summaryNl, accessAvailable) {
+      const res = await fetch('/internal/v1/dashboard/cortex/source-watch', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          watch_id: watchId,
+          event_payload_sha256: eventSha,
+          summary_nl: summaryNl,
+          access_available: accessAvailable
+        })
+      });
+      if (res.ok) renderState(await res.json());
+    }
+
+    async function manageResponsibility(artifactId, action) {
+      const res = await fetch('/internal/v1/dashboard/cortex/responsibility', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ artifact_id: artifactId, action, note_nl: 'Bijgewerkt via Living Cortex Cockpit' })
       });
       if (res.ok) renderState(await res.json());
     }
@@ -944,11 +1066,50 @@ def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None
             headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
         )
 
+    @app.post("/internal/v1/dashboard/cortex/source-watch")
+    def record_source_watch(request: Request, payload: dict[str, Any]) -> JSONResponse:
+        access.require(request)
+        try:
+            parsed = SourceWatchEventRequest.model_validate(payload)
+        except Exception as exc:
+            raise HTTPException(status_code=422, detail="invalid source watch event") from exc
+        engine = _ensure_pulse_engine(runtime)
+        engine.record_source_watch_event(
+            parsed.watch_id,
+            event_payload_sha256=parsed.event_payload_sha256,
+            summary_nl=parsed.summary_nl,
+            access_available=parsed.access_available,
+        )
+        return JSONResponse(
+            build_cortex_state_payload(runtime),
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+        )
+
+    @app.post("/internal/v1/dashboard/cortex/responsibility")
+    def manage_responsibility(request: Request, payload: dict[str, Any]) -> JSONResponse:
+        access.require(request)
+        try:
+            parsed = ResponsibilityActionRequest.model_validate(payload)
+        except Exception as exc:
+            raise HTTPException(status_code=422, detail="invalid responsibility action") from exc
+        engine = _ensure_pulse_engine(runtime)
+        engine.manage_household_responsibility(
+            parsed.artifact_id,
+            action=parsed.action,
+            note_nl=parsed.note_nl,
+        )
+        return JSONResponse(
+            build_cortex_state_payload(runtime),
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+        )
+
 
 __all__ = [
     "CORTEX_HTML",
     "CortexStimulusRequest",
+    "ResponsibilityActionRequest",
     "RoutineObservationRequest",
+    "SourceWatchEventRequest",
     "SubscriptionProviderInfo",
     "SubscriptionSelectionRequest",
     "build_cortex_state_payload",

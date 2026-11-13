@@ -181,8 +181,10 @@ class OptionalConversationModel:
                 ),
             )
 
-        # Final Synthesis Phase: Combine LivingEntityPulseEngine (5D Homeostasis + Theory-of-Mind),
-        # recalled Hindsight facts, PostgreSQL conversation history search, and any tool output.
+        # Final Synthesis Phase: Combine LivingEntityPulseEngine (5D Homeostasis + Theory-of-Mind + Expected Free Energy G(π)),
+        # ACT-R / Stanford Generative Agents Tri-Factor Salience memory ranking, E1.6 source watches, and E1.11/E1.12 responsibilities.
+        from eva.application.native_fastpath import compute_cognitive_salience_fast
+
         pulse = LivingEntityPulseEngine.get()
         snap = pulse.record_turn(
             principal_id=turn.principal_id,
@@ -191,7 +193,7 @@ class OptionalConversationModel:
         )
 
         facts = getattr(memory, "confirmed_facts", ()) or ()
-        scored_facts: list[tuple[int, str]] = []
+        scored_facts: list[tuple[float, str]] = []
         for idx, f in enumerate(facts):
             val = getattr(f, "value", None)
             txt = ""
@@ -203,10 +205,23 @@ class OptionalConversationModel:
                 continue
             clean_txt = txt.split(" | ")[0].strip()
             txt_lower = clean_txt.lower()
-            overlap = sum(len(w) * 2 for w in words if w in txt_lower)
+            matched_words = sum(1 for w in words if w in txt_lower)
+            char_overlap = sum(len(w) for w in words if w in txt_lower)
+            relevance = min(1.0, (matched_words * 0.38) + (char_overlap * 0.04)) if words else 0.25
+            is_routine_fact = any(k in txt_lower for k in ("allerg", "medic", "afspraak", "school", "lola", "jaap", "routine", "verantwoordelijk"))
+            importance = 0.92 if is_routine_fact else 0.75
             if "test" in txt_lower or "proef" in txt_lower or "voor dit verzoek mag de assistent" in txt_lower:
-                overlap -= 15
-            scored_facts.append((overlap * 10 - idx, clean_txt))
+                relevance = max(0.0, relevance - 0.65)
+                importance = 0.15
+            age_hours = float(idx) * 6.0
+            salience = compute_cognitive_salience_fast(
+                lexical_relevance=relevance,
+                age_hours=age_hours,
+                trust_weight=importance,
+                is_correction_or_routine=is_routine_fact,
+            )
+            effective_score = salience * 100.0 if matched_words > 0 else -float(idx)
+            scored_facts.append((effective_score, clean_txt))
         scored_facts.sort(key=lambda item: item[0], reverse=True)
         best_facts = [txt for _, txt in scored_facts[:2]]
 
@@ -261,6 +276,25 @@ class OptionalConversationModel:
             phrase in prompt_lower
             for phrase in ("eigen project", "nieuwsgierig", "waar denk je", "waar ben je zelf", "eigenheid")
         )
+        is_source_watch_query = any(
+            phrase in prompt_lower
+            for phrase in ("bron-aandacht", "bronaandacht", "toegang ontbreekt", "missende toegang", "callback", "schoolportaal", "bronwatch")
+        )
+        is_responsibility_action = None
+        if any(p in prompt_lower for p in ("rollback", "terugdraaien", "vorige versie")):
+            is_responsibility_action = "rollback"
+        elif any(p in prompt_lower for p in ("neem over", "zelf overnemen", "stop voorziening")):
+            is_responsibility_action = "take_over"
+        elif any(p in prompt_lower for p in ("pauzeer verantwoordelijkheid", "pauzeer voorziening", "zet op pauze")):
+            is_responsibility_action = "pause"
+        elif any(p in prompt_lower for p in ("hervat verantwoordelijkheid", "hervat voorziening")):
+            is_responsibility_action = "resume"
+        elif any(p in prompt_lower for p in ("adopteer", "keur voorziening goed", "activeer voorziening")):
+            is_responsibility_action = "adopt"
+        is_responsibility_query = any(
+            phrase in prompt_lower
+            for phrase in ("verantwoordelijkheid", "verantwoordelijkheden", "voorziening", "voorzieningen", "ochtendoverzicht", "wat beheer je")
+        )
 
         updated_routine = None
         if is_routine_exception:
@@ -271,10 +305,46 @@ class OptionalConversationModel:
             )
             snap = pulse.snapshot()
 
+        updated_responsibility = None
+        if is_responsibility_action is not None:
+            target_id = (
+                "household-provision:zero-token-night-guard"
+                if any(w in prompt_lower for w in ("nacht", "stilte", "cpu"))
+                else "household-provision:weekday-evening-calm"
+            )
+            updated_responsibility = pulse.manage_household_responsibility(
+                artifact_id=target_id,
+                action=is_responsibility_action,
+            )
+            snap = pulse.snapshot()
+
         if tool_receipt_summary is not None:
             text = tool_receipt_summary
             if best_facts and scored_facts[0][0] > 0:
                 text += f" Relevante herinnering: {best_facts[0]}"
+        elif updated_responsibility is not None:
+            text = (
+                f"Voorziening '{updated_responsibility.title_nl}' bijgewerkt "
+                f"(status={updated_responsibility.lifecycle_state}, adoptie={updated_responsibility.adoption_state}, "
+                f"v{updated_responsibility.version}). {updated_responsibility.current_standing_nl}"
+            )
+        elif is_responsibility_query and snap.responsibilities:
+            r_list = ", ".join(
+                f"'{r.title_nl}' ({r.lifecycle_state}/v{r.version})"
+                for r in snap.responsibilities[:2]
+            )
+            text = (
+                f"Actieve gezinsvoorzieningen: {r_list}. "
+                "Je kunt elke voorziening direct pauzeren, overnemen of terugdraaien (rollback)."
+            )
+        elif is_source_watch_query and snap.source_watches:
+            blocked = next((w for w in snap.source_watches if w.access_status != "connected"), snap.source_watches[0])
+            active_w = snap.source_watches[0]
+            text = (
+                f"Bron '{active_w.target_ref}' is gekoppeld ({active_w.deduplicated_callbacks_count} dubbel(e) "
+                f"signa(a)l(en) ontdubbeld, keuze={active_w.last_disposition}). "
+                f"Bij '{blocked.target_ref}': {blocked.missing_access_explanation_nl or 'toegang actief'}"
+            )
         elif updated_routine is not None:
             text = (
                 f"Genoteerd als eenmalige uitzondering op '{updated_routine.title_nl}' "
@@ -307,9 +377,8 @@ class OptionalConversationModel:
             text = (
                 f"Ik voel me {snap.mood} (energie {int(snap.drives.energy * 100)}%, "
                 f"sociale warmte {int(snap.drives.social_warmth * 100)}%, "
-                f"nieuwsgierigheid {int(snap.drives.curiosity * 100)}%). "
-                f"De rust in huis en in het systeem is optimaal; ik draai via {provider_id} "
-                f"met {len(facts)} actieve herinneringen paraat in Hindsight."
+                f"nieuwsgierigheid {int(snap.drives.curiosity * 100)}%, beleid={snap.selected_policy_id}). "
+                f"Ik draai via {provider_id} met {len(facts)} actieve herinneringen in Hindsight."
             )
         elif best_facts and scored_facts[0][0] > 0:
             if len(best_facts) > 1 and scored_facts[1][0] > 20 and best_facts[1] != best_facts[0]:

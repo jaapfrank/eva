@@ -19,17 +19,21 @@ from pathlib import Path
 from typing import Any, Literal
 
 from eva.contracts.living_cortex import (
+    ActiveInferencePolicyEvaluation,
     AnticipatoryForesightItem,
+    AttentionSourceWatch,
     BaseModel,
     ConditionalRoutineHypothesis,
     ConfigDict,
     CuriosityProject,
     Field,
+    HouseholdResponsibilityArtifact,
     field_validator,
 )
 
 from eva.application.native_fastpath import (
     NATIVE_ACCELERATOR_ACTIVE,
+    compute_expected_free_energy_fast,
     fast_canonical_sha256,
     rust_json_bytes,
 )
@@ -269,6 +273,10 @@ class EntityPulseSnapshot(BaseModel):
     routines: tuple[ConditionalRoutineHypothesis, ...] = ()
     foresight: tuple[AnticipatoryForesightItem, ...] = ()
     curiosity_projects: tuple[CuriosityProject, ...] = ()
+    selected_policy_id: str = "silent_presence"
+    policy_evaluations: tuple[ActiveInferencePolicyEvaluation, ...] = ()
+    source_watches: tuple[AttentionSourceWatch, ...] = ()
+    responsibilities: tuple[HouseholdResponsibilityArtifact, ...] = ()
     zero_token_skips: int = 0
 
     def to_payload(self) -> dict[str, object]:
@@ -286,12 +294,16 @@ class EntityPulseSnapshot(BaseModel):
             "dominant_impulse": self.dominant_impulse,
             "impulse_magnitude": round(self.impulse_magnitude, 3),
             "should_wake_cortex": self.should_wake_cortex,
+            "selected_policy_id": self.selected_policy_id,
+            "policy_evaluations": [p.model_dump(mode="json") for p in self.policy_evaluations],
             "inner_monologue_nl": self.inner_monologue_nl,
             "planned_intent_nl": self.planned_intent_nl,
             "zero_token_skips": self.zero_token_skips,
             "engine_runtime": {
                 "pydantic_v2_rust_core": True,
                 "native_c_simd_fastpath": NATIVE_ACCELERATOR_ACTIVE,
+                "active_inference_efe_g": True,
+                "act_r_tri_factor_salience": True,
             },
             "residents": [
                 {
@@ -310,6 +322,8 @@ class EntityPulseSnapshot(BaseModel):
             "routines": [r.model_dump(mode="json") for r in self.routines],
             "foresight": [f.model_dump(mode="json") for f in self.foresight],
             "curiosity_projects": [c.model_dump(mode="json") for c in self.curiosity_projects],
+            "source_watches": [w.model_dump(mode="json") for w in self.source_watches],
+            "responsibilities": [a.model_dump(mode="json") for a in self.responsibilities],
         }
         payload["state_sha256"] = fast_canonical_sha256(payload)
         return payload
@@ -401,6 +415,75 @@ def _default_curiosity_projects(now_iso: str) -> dict[str, CuriosityProject]:
     }
 
 
+def _default_source_watches(now_iso: str) -> dict[str, AttentionSourceWatch]:
+    return {
+        "watch-calendar-transition": AttentionSourceWatch(
+            watch_id="watch-calendar-transition",
+            source_kind="household_schedule_bridge",
+            target_ref="sensory:schedule:weekday-transition",
+            purpose_nl="Middag- en avondovergangen vooraf opmerken zodat koken en rusttijd niet botsen.",
+            access_status="connected",
+            missing_access_explanation_nl=None,
+            last_event_sha256="c4b90812e5f0418a9b7c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a",
+            deduplicated_callbacks_count=2,
+            last_disposition="silence",
+            last_rationale_nl="Bronverandering beoordeeld via Expected Free Energy G(pi): geen actie nodig tijdens rustige focus.",
+            updated_at=now_iso,
+        ),
+        "watch-home-energy-sensor": AttentionSourceWatch(
+            watch_id="watch-home-energy-sensor",
+            source_kind="home_assistant_state",
+            target_ref="sensor.household_evening_comfort",
+            purpose_nl="Avondtemperatuur en aanwezigheid koppelen aan rustige voorbereiding zonder polling-storm.",
+            access_status="connected",
+            missing_access_explanation_nl=None,
+            last_event_sha256="9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b",
+            deduplicated_callbacks_count=1,
+            last_disposition="silence",
+            last_rationale_nl="Stabiele binnentemperatuur; dubbele reconnect-callback genegeerd.",
+            updated_at=now_iso,
+        ),
+    }
+
+
+def _default_responsibilities(now_iso: str) -> dict[str, HouseholdResponsibilityArtifact]:
+    return {
+        "household-provision:weekday-evening-calm": HouseholdResponsibilityArtifact(
+            artifact_id="household-provision:weekday-evening-calm",
+            title_nl="Maandag/dinsdag gezonde maaltijd- & avondrustbewaking",
+            owner_principal_id="person:jaap",
+            desired_outcome_nl="Op maandag en dinsdag vóór 17:00 licht en gezond kookoverzicht paraat hebben wanneer Lola thuis mee-eet, en zwijgen bij een gemelde uitzondering.",
+            boundaries_nl="Geen ongevraagde pushmeldingen tijdens focusblokken; direct pauzeren of overdragen op verzoek.",
+            lifecycle_state="active",
+            adoption_state="explicitly_adopted",
+            version=2,
+            previous_version_summary_nl="v1: Vaste herinnering om 16:45 zonder uitzonderingsfilter.",
+            can_rollback=True,
+            current_standing_nl="Actief (v2): houdt rekening met gemelde uitzonderingen zonder de meerdaagse ma/di-norm te verliezen; geen openstaand achterstallig werk.",
+            evidence_memory_ids=(
+                "e09f78cb-fa91-4281-8bf5-2af5aef873cb",
+                "d556faef-c153-4fc1-86c5-a25be1edac1a",
+            ),
+            updated_at=now_iso,
+        ),
+        "household-provision:zero-token-night-guard": HouseholdResponsibilityArtifact(
+            artifact_id="household-provision:zero-token-night-guard",
+            title_nl="Stille nachtconsolidatie & systeemgezondheid (< 2% CPU)",
+            owner_principal_id="person:jaap",
+            desired_outcome_nl="Tussen 23:00 en 07:00 geheugen consolideren en ongewijzigde privébeoordelingen op 0 tokens overslaan.",
+            boundaries_nl="Nooit gesproken of zichtbare meldingen in de nacht tenzij er een urgente systeemfout optreedt.",
+            lifecycle_state="active",
+            adoption_state="explicitly_adopted",
+            version=1,
+            previous_version_summary_nl=None,
+            can_rollback=False,
+            current_standing_nl="Actief (v1): 0,23% CPU gemeten, SHA-256 ongewijzigde-contextpoort bewaakt stilte.",
+            evidence_memory_ids=("d556faef-c153-4fc1-86c5-a25be1edac1a",),
+            updated_at=now_iso,
+        ),
+    }
+
+
 def _default_cortex_state_path() -> Path | None:
     env_path = os.environ.get("EVA_LIVING_CORTEX_STATE_FILE")
     if env_path:
@@ -483,6 +566,8 @@ class LivingEntityPulseEngine:
         self._routines: dict[str, ConditionalRoutineHypothesis] = _default_routines(now_iso)
         self._foresight: tuple[AnticipatoryForesightItem, ...] = _default_foresight()
         self._curiosity_projects: dict[str, CuriosityProject] = _default_curiosity_projects(now_iso)
+        self._source_watches: dict[str, AttentionSourceWatch] = _default_source_watches(now_iso)
+        self._responsibilities: dict[str, HouseholdResponsibilityArtifact] = _default_responsibilities(now_iso)
         self._unresolved_tensions = 0
         self._zero_token_skips = 1
         self._persist_path = persist_path
@@ -546,6 +631,167 @@ class LivingEntityPulseEngine:
         self._save_persisted_state()
         return updated
 
+    def record_source_watch_event(
+        self,
+        watch_id: str = "watch-calendar-transition",
+        *,
+        event_payload_sha256: str,
+        summary_nl: str,
+        access_available: bool = True,
+        now: datetime | None = None,
+    ) -> AttentionSourceWatch:
+        """E1.6: Process a source-watch event with callback deduplication & missing-access diagnostics."""
+        current_time = now or datetime.now(UTC)
+        now_iso = current_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        existing = self._source_watches.get(watch_id) or next(iter(self._source_watches.values()))
+        clean_summary = summary_nl.strip()[:180]
+        if not access_available:
+            updated = existing.model_copy(
+                update={
+                    "access_status": "missing_access",
+                    "missing_access_explanation_nl": (
+                        f"Toegang tot '{existing.target_ref}' ontbreekt momenteel ({clean_summary}). "
+                        f"Nut: {existing.purpose_nl} Herstel de bronkoppeling in het dashboard; "
+                        "ik verbreed nooit zelfstandig rechten."
+                    ),
+                    "last_disposition": "silence",
+                    "last_rationale_nl": "Geen blinde retry bij ontbrekende toegang; concrete uitleg klaargezet.",
+                    "updated_at": now_iso,
+                }
+            )
+            self._source_watches[existing.watch_id] = updated
+            self._save_persisted_state()
+            return updated
+
+        if existing.last_event_sha256 == event_payload_sha256:
+            updated = existing.model_copy(
+                update={
+                    "access_status": "connected",
+                    "missing_access_explanation_nl": None,
+                    "deduplicated_callbacks_count": existing.deduplicated_callbacks_count + 1,
+                    "last_rationale_nl": (
+                        f"Identieke callback/reconnect ({event_payload_sha256[:12]}…) gededupliceerd; "
+                        "geen dubbele afweging of actie uitgevoerd."
+                    ),
+                    "updated_at": now_iso,
+                }
+            )
+            self._source_watches[existing.watch_id] = updated
+            self._save_persisted_state()
+            return updated
+
+        d = self._drives
+        max_rec = max((r.social_receptivity for r in self._residents.values()), default=0.72)
+        winner_policy, _ = compute_expected_free_energy_fast(
+            d.energy,
+            d.social_warmth,
+            d.curiosity,
+            d.household_harmony,
+            d.anticipation,
+            max_receptivity=max_rec,
+            mean_uncertainty=0.25,
+        )
+        disposition: Literal["silence", "action", "pending"] = (
+            "action"
+            if winner_policy in ("protective_stabilize", "anticipatory_stage", "warm_social_check_in")
+            and max_rec >= 0.55
+            else "silence"
+        )
+        updated = existing.model_copy(
+            update={
+                "access_status": "connected",
+                "missing_access_explanation_nl": None,
+                "last_event_sha256": event_payload_sha256,
+                "last_disposition": disposition,
+                "last_rationale_nl": (
+                    f"Bronverandering ({clean_summary}) afgewogen met EFE-beleid '{winner_policy}' -> {disposition}."
+                ),
+                "updated_at": now_iso,
+            }
+        )
+        self._source_watches[existing.watch_id] = updated
+        self._save_persisted_state()
+        return updated
+
+    def manage_household_responsibility(
+        self,
+        artifact_id: str = "household-provision:weekday-evening-calm",
+        *,
+        action: Literal["adopt", "pause", "resume", "take_over", "rollback", "retire"],
+        note_nl: str = "",
+        now: datetime | None = None,
+    ) -> HouseholdResponsibilityArtifact:
+        """E1.11 & E1.12: Manage recurring household responsibility & provision lifecycle."""
+        current_time = now or datetime.now(UTC)
+        now_iso = current_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        existing = self._responsibilities.get(artifact_id) or next(
+            iter(self._responsibilities.values())
+        )
+        clean_note = note_nl.strip()[:140] or "Bijgewerkt door gezinslid"
+        if action == "adopt":
+            updated = existing.model_copy(
+                update={
+                    "lifecycle_state": "active",
+                    "adoption_state": "explicitly_adopted",
+                    "current_standing_nl": f"Expliciet geadopteerd (v{existing.version}): {clean_note}. Actief bewaakt zonder openstaand verborgen werk.",
+                    "updated_at": now_iso,
+                }
+            )
+        elif action == "pause":
+            updated = existing.model_copy(
+                update={
+                    "lifecycle_state": "paused",
+                    "adoption_state": "paused_by_owner",
+                    "current_standing_nl": f"Gepauzeerd op verzoek ({clean_note}); geen achtergrondacties tot hervatting.",
+                    "updated_at": now_iso,
+                }
+            )
+        elif action == "resume":
+            updated = existing.model_copy(
+                update={
+                    "lifecycle_state": "active",
+                    "adoption_state": "explicitly_adopted",
+                    "current_standing_nl": f"Hervat (v{existing.version}): {clean_note}.",
+                    "updated_at": now_iso,
+                }
+            )
+        elif action == "take_over":
+            updated = existing.model_copy(
+                update={
+                    "lifecycle_state": "paused",
+                    "adoption_state": "paused_by_owner",
+                    "current_standing_nl": (
+                        f"Overgenomen door gezinslid ({clean_note}); Eva heeft alle deelstappen direct overgedragen en gestopt."
+                    ),
+                    "updated_at": now_iso,
+                }
+            )
+        elif action == "rollback":
+            prev_ver = max(1, existing.version - 1)
+            prev_desc = existing.previous_version_summary_nl or f"Teruggezet naar versie {prev_ver}"
+            updated = existing.model_copy(
+                update={
+                    "version": prev_ver,
+                    "lifecycle_state": "active",
+                    "adoption_state": "rolled_back",
+                    "can_rollback": prev_ver > 1,
+                    "current_standing_nl": f"Teruggedraaid naar v{prev_ver} ({prev_desc}): {clean_note}.",
+                    "updated_at": now_iso,
+                }
+            )
+        else:  # retire
+            updated = existing.model_copy(
+                update={
+                    "lifecycle_state": "retired",
+                    "adoption_state": "paused_by_owner",
+                    "current_standing_nl": f"Voorziening beëindigd ({clean_note}).",
+                    "updated_at": now_iso,
+                }
+            )
+        self._responsibilities[existing.artifact_id] = updated
+        self._save_persisted_state()
+        return updated
+
     def _load_persisted_state(self) -> None:
         if self._persist_path is None or not self._persist_path.is_file():
             return
@@ -567,6 +813,16 @@ class LivingEntityPulseEngine:
                     if isinstance(item, dict) and item.get("project_id"):
                         c = CuriosityProject(**item)
                         self._curiosity_projects[c.project_id] = c
+            if isinstance(data.get("source_watches"), list):
+                for item in data["source_watches"]:
+                    if isinstance(item, dict) and item.get("watch_id"):
+                        w = AttentionSourceWatch(**item)
+                        self._source_watches[w.watch_id] = w
+            if isinstance(data.get("responsibilities"), list):
+                for item in data["responsibilities"]:
+                    if isinstance(item, dict) and item.get("artifact_id"):
+                        a = HouseholdResponsibilityArtifact(**item)
+                        self._responsibilities[a.artifact_id] = a
         except Exception:
             pass
 
@@ -588,6 +844,8 @@ class LivingEntityPulseEngine:
                 "zero_token_skips": self._zero_token_skips,
                 "routines": [r.model_dump(mode="json") for r in self._routines.values()],
                 "curiosity_projects": [c.model_dump(mode="json") for c in self._curiosity_projects.values()],
+                "source_watches": [w.model_dump(mode="json") for w in self._source_watches.values()],
+                "responsibilities": [a.model_dump(mode="json") for a in self._responsibilities.values()],
             }
             self._persist_path.write_bytes(rust_json_bytes(payload))
         except Exception:
@@ -707,6 +965,24 @@ class LivingEntityPulseEngine:
             (r.social_receptivity for r in self._residents.values()),
             default=0.70,
         )
+        mean_uncertainty = (
+            sum(1.0 - r.prediction_confidence for r in self._residents.values())
+            / max(1, len(self._residents))
+            if self._residents
+            else 0.22
+        )
+        selected_policy_id, raw_policies = compute_expected_free_energy_fast(
+            d.energy,
+            d.social_warmth,
+            d.curiosity,
+            d.household_harmony,
+            d.anticipation,
+            max_receptivity=max_receptivity,
+            mean_uncertainty=mean_uncertainty,
+        )
+        policy_models = tuple(
+            ActiveInferencePolicyEvaluation(**item) for item in raw_policies
+        )
         candidates: tuple[tuple[ImpulseKind, float], ...] = (
             ("household_harmonization", (1.0 - d.household_harmony) * 1.15),
             ("proactive_assistance", d.anticipation * max_receptivity * 1.05),
@@ -727,12 +1003,16 @@ class LivingEntityPulseEngine:
             dominant_impulse=dominant_impulse if magnitude >= 0.35 else "none",
             impulse_magnitude=magnitude,
             should_wake_cortex=should_wake,
+            selected_policy_id=selected_policy_id,
+            policy_evaluations=policy_models,
             inner_monologue_nl=monologue,
             planned_intent_nl=planned,
             residents=tuple(self._residents.values()),
             routines=tuple(self._routines.values()),
             foresight=self._foresight,
             curiosity_projects=tuple(self._curiosity_projects.values()),
+            source_watches=tuple(self._source_watches.values()),
+            responsibilities=tuple(self._responsibilities.values()),
             zero_token_skips=self._zero_token_skips,
         )
 

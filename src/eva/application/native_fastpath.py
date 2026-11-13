@@ -142,6 +142,91 @@ void eva_active_inference_update(
     out_state[3] = round(pred_err * 10000.0) / 10000.0;
     out_state[4] = round(new_conf * 10000.0) / 10000.0;
 }
+
+void eva_expected_free_energy_policies(
+    double energy,
+    double warmth,
+    double curiosity,
+    double harmony,
+    double anticipation,
+    double max_receptivity,
+    double mean_uncertainty,
+    double *out_g,
+    double *out_epistemic,
+    double *out_pragmatic,
+    double *out_interruption,
+    double *out_posterior,
+    int *out_best_idx
+) {
+    /* 5 policies:
+       0 = silent_presence
+       1 = protective_stabilize
+       2 = epistemic_curiosity
+       3 = anticipatory_stage
+       4 = warm_social_check_in
+    */
+    double intr_base = clamp01(1.0 - max_receptivity);
+    double tension = clamp01(1.0 - harmony);
+
+    /* Epistemic value (information gain / uncertainty resolution) */
+    out_epistemic[0] = 0.12 + 0.15 * (1.0 - energy);
+    out_epistemic[1] = 0.35 * tension + 0.25 * mean_uncertainty;
+    out_epistemic[2] = 0.55 * curiosity + 0.35 * mean_uncertainty;
+    out_epistemic[3] = 0.40 * anticipation + 0.20 * mean_uncertainty;
+    out_epistemic[4] = 0.30 * warmth + 0.35 * mean_uncertainty * max_receptivity;
+
+    /* Pragmatic value (homeostatic setpoint fulfillment) */
+    out_pragmatic[0] = 0.38 + 0.35 * (1.0 - energy) + 0.25 * intr_base;
+    out_pragmatic[1] = 0.85 * tension + 0.20 * anticipation;
+    out_pragmatic[2] = 0.50 * curiosity * energy * harmony;
+    out_pragmatic[3] = 0.72 * anticipation * energy;
+    out_pragmatic[4] = 0.68 * warmth * max_receptivity * energy;
+
+    /* Interruption / metabolic cost */
+    out_interruption[0] = 0.02;
+    out_interruption[1] = 0.12 + 0.15 * intr_base;
+    out_interruption[2] = 0.08 + 0.10 * (1.0 - energy);
+    out_interruption[3] = 0.10 + 0.18 * intr_base;
+    out_interruption[4] = 0.18 + 0.55 * intr_base;
+
+    const double gamma = 4.0;
+    double max_neg_g = -1e9;
+    int best = 0;
+    for (int k = 0; k < 5; k++) {
+        out_epistemic[k] = round(clamp01(out_epistemic[k]) * 10000.0) / 10000.0;
+        out_pragmatic[k] = round(clamp01(out_pragmatic[k]) * 10000.0) / 10000.0;
+        out_interruption[k] = round(clamp01(out_interruption[k]) * 10000.0) / 10000.0;
+        double g = out_interruption[k] - out_pragmatic[k] - out_epistemic[k];
+        out_g[k] = round(g * 10000.0) / 10000.0;
+        double neg_g = -gamma * g;
+        if (neg_g > max_neg_g) {
+            max_neg_g = neg_g;
+            best = k;
+        }
+    }
+    double sum_exp = 0.0;
+    for (int k = 0; k < 5; k++) {
+        out_posterior[k] = exp(-gamma * out_g[k] - max_neg_g);
+        sum_exp += out_posterior[k];
+    }
+    for (int k = 0; k < 5; k++) {
+        out_posterior[k] = round((out_posterior[k] / sum_exp) * 10000.0) / 10000.0;
+    }
+    *out_best_idx = best;
+}
+
+double eva_cognitive_salience_score(
+    double lexical_relevance,
+    double age_hours,
+    double trust_weight,
+    int is_correction_or_routine
+) {
+    double rel = clamp01(lexical_relevance);
+    double recency = exp(-0.012 * (age_hours < 0.0 ? 0.0 : age_hours));
+    double importance = clamp01(0.65 * trust_weight + (is_correction_or_routine ? 0.35 : 0.10));
+    double score = 0.45 * rel + 0.30 * recency + 0.25 * importance;
+    return round(clamp01(score) * 10000.0) / 10000.0;
+}
 """
 
 _HERE = Path(__file__).resolve().parent
@@ -178,7 +263,33 @@ def _load_native_lib() -> ctypes.CDLL | None:
                     ctypes.POINTER(ctypes.c_double),
                 ]
                 lib.eva_active_inference_update.restype = None
-                return lib
+                if hasattr(lib, "eva_expected_free_energy_policies") and hasattr(
+                    lib, "eva_cognitive_salience_score"
+                ):
+                    lib.eva_expected_free_energy_policies.argtypes = [
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_int),
+                    ]
+                    lib.eva_expected_free_energy_policies.restype = None
+                    lib.eva_cognitive_salience_score.argtypes = [
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_int,
+                    ]
+                    lib.eva_cognitive_salience_score.restype = ctypes.c_double
+                    return lib
             except OSError:
                 continue
     try:
@@ -337,6 +448,140 @@ def compute_active_inference_fast(
     )
 
 
+_POLICY_CATALOG: tuple[tuple[str, str], ...] = (
+    ("silent_presence", "Rustige waakzaamheid & zero-token luisteren"),
+    ("protective_stabilize", "Harmonie herstellen & open knelpunten voorbereiden"),
+    ("epistemic_curiosity", "Eigen onderzoeksproject of patroonverfijning tijdens rust"),
+    ("anticipatory_stage", "Overgangsmoment voorbereiden vóór drukte"),
+    ("warm_social_check_in", "Warme, korte afstemming bij hoge ontvankelijkheid"),
+)
+
+
+def compute_expected_free_energy_fast(
+    energy: float,
+    warmth: float,
+    curiosity: float,
+    harmony: float,
+    anticipation: float,
+    *,
+    max_receptivity: float = 0.72,
+    mean_uncertainty: float = 0.24,
+) -> tuple[str, tuple[dict[str, Any], ...]]:
+    """Evaluate candidate policies via Karl Friston's Expected Free Energy G(pi) in C/SIMD."""
+    if _NATIVE_LIB is not None and hasattr(_NATIVE_LIB, "eva_expected_free_energy_policies"):
+        out_g = (ctypes.c_double * 5)()
+        out_ep = (ctypes.c_double * 5)()
+        out_pr = (ctypes.c_double * 5)()
+        out_in = (ctypes.c_double * 5)()
+        out_po = (ctypes.c_double * 5)()
+        best_idx = ctypes.c_int(0)
+        _NATIVE_LIB.eva_expected_free_energy_policies(
+            energy,
+            warmth,
+            curiosity,
+            harmony,
+            anticipation,
+            max_receptivity,
+            mean_uncertainty,
+            out_g,
+            out_ep,
+            out_pr,
+            out_in,
+            out_po,
+            ctypes.byref(best_idx),
+        )
+        winner_idx = int(best_idx.value)
+        policies = tuple(
+            {
+                "policy_id": _POLICY_CATALOG[k][0],
+                "label_nl": _POLICY_CATALOG[k][1],
+                "expected_free_energy_g": float(out_g[k]),
+                "epistemic_value": float(out_ep[k]),
+                "pragmatic_value": float(out_pr[k]),
+                "interruption_cost": float(out_in[k]),
+                "posterior_probability": float(out_po[k]),
+                "selected": k == winner_idx,
+            }
+            for k in range(5)
+        )
+        return _POLICY_CATALOG[winner_idx][0], policies
+
+    intr_base = max(0.0, min(1.0, 1.0 - max_receptivity))
+    tension = max(0.0, min(1.0, 1.0 - harmony))
+    ep = [
+        0.12 + 0.15 * (1.0 - energy),
+        0.35 * tension + 0.25 * mean_uncertainty,
+        0.55 * curiosity + 0.35 * mean_uncertainty,
+        0.40 * anticipation + 0.20 * mean_uncertainty,
+        0.30 * warmth + 0.35 * mean_uncertainty * max_receptivity,
+    ]
+    pr = [
+        0.38 + 0.35 * (1.0 - energy) + 0.25 * intr_base,
+        0.85 * tension + 0.20 * anticipation,
+        0.50 * curiosity * energy * harmony,
+        0.72 * anticipation * energy,
+        0.68 * warmth * max_receptivity * energy,
+    ]
+    ic = [
+        0.02,
+        0.12 + 0.15 * intr_base,
+        0.08 + 0.10 * (1.0 - energy),
+        0.10 + 0.18 * intr_base,
+        0.18 + 0.55 * intr_base,
+    ]
+    g_vals = []
+    for k in range(5):
+        ep[k] = round(max(0.0, min(1.0, ep[k])), 4)
+        pr[k] = round(max(0.0, min(1.0, pr[k])), 4)
+        ic[k] = round(max(0.0, min(1.0, ic[k])), 4)
+        g_vals.append(round(ic[k] - pr[k] - ep[k], 4))
+    gamma = 4.0
+    max_neg_g = max(-gamma * g for g in g_vals)
+    exps = [math.exp(-gamma * g - max_neg_g) for g in g_vals]
+    total_exp = sum(exps)
+    post = [round(v / total_exp, 4) for v in exps]
+    winner_idx = min(range(5), key=lambda i: g_vals[i])
+    policies = tuple(
+        {
+            "policy_id": _POLICY_CATALOG[k][0],
+            "label_nl": _POLICY_CATALOG[k][1],
+            "expected_free_energy_g": g_vals[k],
+            "epistemic_value": ep[k],
+            "pragmatic_value": pr[k],
+            "interruption_cost": ic[k],
+            "posterior_probability": post[k],
+            "selected": k == winner_idx,
+        }
+        for k in range(5)
+    )
+    return _POLICY_CATALOG[winner_idx][0], policies
+
+
+def compute_cognitive_salience_fast(
+    lexical_relevance: float,
+    age_hours: float = 1.0,
+    trust_weight: float = 0.9,
+    is_correction_or_routine: bool = False,
+) -> float:
+    """Compute ACT-R + Generative Agents Tri-Factor Memory Activation score in C/SIMD."""
+    if _NATIVE_LIB is not None and hasattr(_NATIVE_LIB, "eva_cognitive_salience_score"):
+        return float(
+            _NATIVE_LIB.eva_cognitive_salience_score(
+                float(lexical_relevance),
+                float(age_hours),
+                float(trust_weight),
+                1 if is_correction_or_routine else 0,
+            )
+        )
+    rel = max(0.0, min(1.0, lexical_relevance))
+    recency = math.exp(-0.012 * max(0.0, age_hours))
+    importance = max(
+        0.0,
+        min(1.0, 0.65 * trust_weight + (0.35 if is_correction_or_routine else 0.10)),
+    )
+    return round(max(0.0, min(1.0, 0.45 * rel + 0.30 * recency + 0.25 * importance)), 4)
+
+
 def fast_canonical_sha256(payload: Any) -> str:
     """Compute canonical JSON SHA-256 using C-level NFC check and sorted UTF-8 serialization."""
     if hasattr(payload, "model_dump"):
@@ -361,6 +606,8 @@ def rust_json_bytes(payload: Any) -> bytes:
 __all__ = [
     "NATIVE_ACCELERATOR_ACTIVE",
     "compute_active_inference_fast",
+    "compute_cognitive_salience_fast",
+    "compute_expected_free_energy_fast",
     "compute_homeostatic_step_fast",
     "fast_canonical_sha256",
     "rust_json_bytes",

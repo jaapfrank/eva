@@ -274,4 +274,165 @@ def test_e17_routine_counter_evidence_e18_foresight_e110_curiosity_and_e114_pers
     assert "werk zelf aan" in (res_cur.text or "").lower()
 
 
+def test_expected_free_energy_actr_salience_e16_source_watches_and_e111_e112_responsibilities(tmp_path) -> None:
+    import json
+    from dataclasses import replace
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+
+    from eva.adapters.api.dashboard_access import DashboardAccess
+    from eva.adapters.api.dashboard_cortex import install_dashboard_cortex
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.application.native_fastpath import (
+        compute_cognitive_salience_fast,
+        compute_expected_free_energy_fast,
+    )
+    from eva.bootstrap.optional_model_providers import OptionalConversationModel, OptionalModelProviders
+    from tests.model.test_pydantic_conversation_model import _identity, _memory, _turn
+
+    # 1. Karl Friston Expected Free Energy G(π) & Boltzmann posterior P(π)
+    winner_id, policies = compute_expected_free_energy_fast(
+        0.78, 0.72, 0.65, 0.88, 0.45,
+        max_receptivity=0.80,
+        mean_uncertainty=0.15,
+    )
+    assert isinstance(winner_id, str)
+    assert len(policies) == 5
+    assert abs(sum(p["posterior_probability"] for p in policies) - 1.0) < 1e-3
+    assert any(p["selected"] for p in policies)
+
+    # 2. ACT-R + Stanford Generative Agents Tri-Factor Salience
+    s_high = compute_cognitive_salience_fast(
+        lexical_relevance=0.95,
+        age_hours=1.0,
+        trust_weight=0.95,
+        is_correction_or_routine=True,
+    )
+    s_low = compute_cognitive_salience_fast(
+        lexical_relevance=0.20,
+        age_hours=120.0,
+        trust_weight=0.35,
+        is_correction_or_routine=False,
+    )
+    assert s_high > s_low
+    assert 0.0 <= s_high <= 1.0
+
+    # 3. E1.6 Source-Change Watches: callback deduplication & missing-access diagnosis
+    persist_file = tmp_path / "living-cortex-sota.json"
+    engine = LivingEntityPulseEngine(persist_path=persist_file)
+    w1 = engine.record_source_watch_event(
+        "watch-calendar-transition",
+        event_payload_sha256="cb-dentist-1645-sha",
+        summary_nl="Tandartsafspraak verplaatst naar 16:45",
+    )
+    assert w1.deduplicated_callbacks_count == 2  # baseline had 2
+
+    # Duplicate reconnect callback with identical SHA-256 is deduplicated!
+    w2 = engine.record_source_watch_event(
+        "watch-calendar-transition",
+        event_payload_sha256="cb-dentist-1645-sha",
+        summary_nl="Tandartsafspraak verplaatst naar 16:45",
+    )
+    assert w2.deduplicated_callbacks_count == 3
+
+    # Missing access is reported concretely without widening permissions
+    w_missing = engine.record_source_watch_event(
+        "watch-home-energy-sensor",
+        event_payload_sha256="cb-missing-001",
+        summary_nl="Geen geldige sessie",
+        access_available=False,
+    )
+    assert w_missing.access_status == "missing_access"
+    assert w_missing.missing_access_explanation_nl is not None
+    assert "verbreed nooit zelfstandig rechten" in w_missing.missing_access_explanation_nl.lower()
+
+    # 4. E1.11 & E1.12 Household Responsibilities & Provisions: adopt, pause, take_over, rollback
+    r_adopted = engine.manage_household_responsibility(
+        "household-provision:weekday-evening-calm",
+        action="adopt",
+    )
+    assert r_adopted.lifecycle_state == "active"
+    assert r_adopted.adoption_state == "explicitly_adopted"
+
+    r_paused = engine.manage_household_responsibility(
+        "household-provision:weekday-evening-calm",
+        action="pause",
+    )
+    assert r_paused.lifecycle_state == "paused"
+    assert r_paused.adoption_state == "paused_by_owner"
+
+    r_rolled_back = engine.manage_household_responsibility(
+        "household-provision:weekday-evening-calm",
+        action="rollback",
+    )
+    assert r_rolled_back.adoption_state == "rolled_back"
+    assert r_rolled_back.version == 1
+
+    r_taken_over = engine.manage_household_responsibility(
+        "household-provision:zero-token-night-guard",
+        action="take_over",
+    )
+    assert r_taken_over.lifecycle_state == "paused"
+    assert r_taken_over.adoption_state == "paused_by_owner"
+
+    # 5. FastAPI Endpoints & Conversational integration
+    class DummyRuntime:
+        _living_pulse_engine = engine
+
+    app = FastAPI()
+    install_dashboard_cortex(app, access=DashboardAccess(None), runtime=DummyRuntime())
+    client = TestClient(app)
+
+    res_sw = client.post(
+        "/internal/v1/dashboard/cortex/source-watch",
+        json={
+            "watch_id": "watch-calendar-transition",
+            "event_payload_sha256": "cb-dentist-1645-sha",
+            "summary_nl": "Tandartsafspraak verplaatst naar 16:45",
+            "access_available": True,
+        },
+    )
+    assert res_sw.status_code == 200
+    sw_items = res_sw.json()["pulse"]["source_watches"]
+    assert sw_items[0]["deduplicated_callbacks_count"] == 4
+
+    res_rp = client.post(
+        "/internal/v1/dashboard/cortex/responsibility",
+        json={
+            "artifact_id": "household-provision:weekday-evening-calm",
+            "action": "adopt",
+        },
+    )
+    assert res_rp.status_code == 200
+    rp_items = res_rp.json()["pulse"]["responsibilities"]
+    assert rp_items[0]["adoption_state"] == "explicitly_adopted"
+
+    sub_dir = tmp_path / "model-providers"
+    sub_dir.mkdir(parents=True, mode=0o700)
+    (sub_dir / "subscription-llm-state.json").write_text(
+        json.dumps({"selected_provider": "gemini_argon", "auto_fallback": True}),
+        encoding="utf-8",
+    )
+    baseline = PydanticConversationModel(auth_file=tmp_path / "no-key")
+    control = OptionalModelProviders(baseline, sub_dir)
+    model = OptionalConversationModel(baseline, control)
+
+    resp_turn = replace(
+        _turn(),
+        conversation_id="dashboard:owner",
+        text="Welke voorzieningen en verantwoordelijkheden beheer je nu?",
+    )
+    res_resp = model.generate(resp_turn, _identity(), _memory(), ())
+    assert "voorzieningen" in (res_resp.text or "").lower()
+
+    sw_turn = replace(
+        _turn(),
+        conversation_id="dashboard:owner",
+        text="Hoe staat het met bron-aandacht en missende toegang?",
+    )
+    res_sw_chat = model.generate(sw_turn, _identity(), _memory(), ())
+    assert "ontdubbeld" in (res_sw_chat.text or "").lower() or "toegang" in (res_sw_chat.text or "").lower()
+
+
+
 
