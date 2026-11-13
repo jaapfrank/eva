@@ -159,6 +159,12 @@ def publish_conversation_text(
         sink(delta)
 
 
+def published_conversation_text_count() -> int:
+    """Return the number of text deltas already emitted to the active stream sink."""
+    parts = _TEXT_DELTA_PARTS.get()
+    return len(parts) if parts is not None else 0
+
+
 def publish_committed_conversation_text(text: str) -> None:
     """Offer a saved reply suffix without repeating provisional model text.
 

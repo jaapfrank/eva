@@ -254,6 +254,9 @@ class PostgresOperationalTimeline:
         self._scope_value = scope
         self._role = role
 
+    def apply_scope(self, connection: sa.Connection) -> None:
+        self._scope(connection)
+
     def _scope(self, connection: sa.Connection) -> None:
         connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
         connection.execute(

@@ -31,9 +31,9 @@ def saved_work_artifacts(store, work) -> SavedWorkArtifacts | None:
     namespace = 'background-work:' + hashlib.sha256(spec.execution_id.encode()).hexdigest()
     source_scope = external_timeline_scope(spec.source.tenant_id, spec.source.installation_id,
                                           'saved result source scope is absent')
-    timeline = PostgresOperationalTimeline(store._engine, source_scope)
-    with store._engine.begin() as connection:
-        timeline._scope(connection)
+    timeline = PostgresOperationalTimeline(store.engine, source_scope)
+    with store.engine.begin() as connection:
+        timeline.apply_scope(connection)
         rows = connection.execute(sa.select(operational_events).where(
             operational_events.c.tenant_id == source_scope.tenant_id,
             operational_events.c.installation_id == source_scope.installation_id,
@@ -63,7 +63,7 @@ def saved_work_artifacts(store, work) -> SavedWorkArtifacts | None:
     def require_source(turn):
         if canonical_sha256(PostgresConversationJournal._ingress_data(turn)) != spec.source_ingress_sha256:
             raise ValueError('saved result original ingress differs')
-    source = _SourceTurnLoader(store._engine, SimpleNamespace(
+    source = _SourceTurnLoader(store.engine, SimpleNamespace(
         scope=source_scope, authorize_turn=require_source))(spec.source.model_dump(mode='json'))
     manifest, pieces = [], ['Volledig opgeslagen resultaat']
     for path, (step, thread) in sorted(latest.items()):

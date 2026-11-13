@@ -23,6 +23,7 @@ from eva.contracts.living_cortex import (
     AnticipatoryForesightItem,
     AttentionSourceWatch,
     BaseModel,
+    CausalWorldGraphSnapshot,
     ConceptSpaceSnapshot,
     ConditionalRoutineHypothesis,
     ConfigDict,
@@ -38,6 +39,7 @@ from eva.contracts.living_cortex import (
     field_validator,
 )
 
+from eva.application.causal_world_model import CausalWorldModel
 from eva.application.native_fastpath import (
     NATIVE_ACCELERATOR_ACTIVE,
     compute_concept_vector_fast,
@@ -289,6 +291,7 @@ class EntityPulseSnapshot(BaseModel):
     source_watches: tuple[AttentionSourceWatch, ...] = ()
     responsibilities: tuple[HouseholdResponsibilityArtifact, ...] = ()
     world_model: WorldModelState = Field(default_factory=WorldModelState)
+    causal_graph: CausalWorldGraphSnapshot = Field(default_factory=CausalWorldGraphSnapshot)
     synaptic_memory: SynapticMemorySnapshot = Field(default_factory=SynapticMemorySnapshot)
     concept_space: ConceptSpaceSnapshot = Field(default_factory=ConceptSpaceSnapshot)
     jarvis_staged_actions: tuple[JarvisStagedAction, ...] = ()
@@ -323,11 +326,13 @@ class EntityPulseSnapshot(BaseModel):
                 "active_inference_efe_g": True,
                 "act_r_tri_factor_salience": True,
                 "jepa_world_model_c": True,
+                "causal_world_model_pearl": True,
                 "titans_o1_synaptic_memory": True,
                 "multilingual_concept_guard": True,
             },
             "liquid_ode": self.liquid_ode.model_dump(mode="json"),
             "world_model": self.world_model.model_dump(mode="json"),
+            "causal_graph": self.causal_graph.model_dump(mode="json"),
             "synaptic_memory": self.synaptic_memory.model_dump(mode="json"),
             "concept_space": self.concept_space.model_dump(mode="json"),
             "jarvis_staged_actions": [a.model_dump(mode="json") for a in self.jarvis_staged_actions],
@@ -699,12 +704,43 @@ class LivingEntityPulseEngine:
         self._last_stimulus_intensity: float = 0.0
         self._last_liquid_ode: LiquidOdeSnapshot = LiquidOdeSnapshot(native_c_active=NATIVE_ACCELERATOR_ACTIVE)
         self._persist_path = persist_path
+        causal_persist = (
+            persist_path.with_name("causal-world-model.json")
+            if persist_path is not None
+            else None
+        )
+        self._causal_model = CausalWorldModel(persist_path=causal_persist)
         if self._persist_path is not None:
             self._load_persisted_state()
 
     @property
     def activation_threshold(self) -> float:
         return self._activation_threshold
+
+    @property
+    def causal_model(self) -> CausalWorldModel:
+        return self._causal_model
+
+    def record_causal_event(
+        self,
+        variable_id: str,
+        *,
+        intensity: float = 1.0,
+        active: bool = True,
+        now: datetime | None = None,
+    ) -> None:
+        raw = str(variable_id or "").strip()
+        if "." in raw:
+            dom, var = raw.split(".", 1)
+        else:
+            dom, var = "household", raw or "event"
+        self._causal_model.record_event(
+            dom,
+            var,
+            active=active,
+            magnitude=_clamp(float(intensity)),
+            occurred_at=now,
+        )
 
     def upsert_resident(self, state: ResidentMindState) -> None:
         self._residents[state.principal_id] = state
@@ -998,6 +1034,24 @@ class LivingEntityPulseEngine:
             anticipation=self._drives.anticipation,
         )
 
+        # Counterfactual Dream Replay (0 LLM tokens): evaluate Pearl backdoor-adjusted causal graph
+        causal_snap = self._causal_model.run_counterfactual_dream_replay()
+        for insight in causal_snap.counterfactual_insights[:2]:
+            if insight.confidence >= 0.45:
+                card_id = f"jarvis-causal-{insight.insight_id}"
+                existing_card = self._jarvis_staged_actions.get(card_id)
+                if existing_card is not None and existing_card.status in ("confirmed", "dismissed"):
+                    continue
+                self._jarvis_staged_actions[card_id] = JarvisStagedAction(
+                    action_id=card_id,
+                    title_nl=f"Causale preventie: {insight.root_cause_id} → {insight.target_effect_id}",
+                    prepared_summary_nl=insight.preventative_action_nl,
+                    why_now_nl=insight.counterfactual_question_nl,
+                    confidence=insight.confidence,
+                    status="staged",
+                    updated_at=now_iso,
+                )
+
         # Ensure proactive morning/day Jarvis card is ready after sleep consolidation
         if "jarvis-stage-morning-brief" not in self._jarvis_staged_actions:
             self._jarvis_staged_actions["jarvis-stage-morning-brief"] = JarvisStagedAction(
@@ -1011,20 +1065,47 @@ class LivingEntityPulseEngine:
                 status="staged",
                 updated_at=now_iso,
             )
+        self._prune_jarvis_staged_actions()
 
         cycles = self._last_sleep_consolidation.cycles_completed + 1
+        edges_n = len(causal_snap.verified_causal_edges)
+        dreams_n = len(causal_snap.counterfactual_insights)
         self._last_sleep_consolidation = SleepConsolidationSummary(
             cycles_completed=cycles,
             last_consolidated_at=now_iso,
             pruned_noise_synapses=pruned,
             reinforced_routines_count=reinforced,
+            causal_edges_discovered=edges_n,
+            counterfactual_dreams_replayed=dreams_n,
             dream_insight_nl=(
                 f"Droomcyclus #{cycles} voltooid: {pruned} ruis-synapsen gesnoeid, "
-                f"{reinforced} gewoontepatronen versterkt (‖M‖_F = {self._synaptic_frob:.3f}) en Jarvis-voorbereiding geactualiseerd."
+                f"{reinforced} gewoontepatronen versterkt (‖M‖_F = {self._synaptic_frob:.3f}), "
+                f"{edges_n} causale oorzaak→gevolg verbanden en {dreams_n} tegenfeitelijke droomscenario's doorgerekend."
             ),
         )
         self._save_persisted_state()
         return self._last_sleep_consolidation
+
+    def _prune_jarvis_staged_actions(self, max_cards: int = 32) -> None:
+        if len(self._jarvis_staged_actions) <= max_cards:
+            return
+        dynamic = [
+            (cid, card)
+            for cid, card in self._jarvis_staged_actions.items()
+            if cid.startswith("jarvis-causal-")
+        ]
+        # Prefer evicting oldest staged dynamic causal cards first so resident confirmed/dismissed
+        # decisions are retained as long as possible within the bounded window.
+        dynamic.sort(
+            key=lambda kv: (
+                0 if kv[1].status == "staged" else 1,
+                kv[1].updated_at or "",
+                kv[1].confidence,
+            )
+        )
+        excess = len(self._jarvis_staged_actions) - max_cards
+        for cid, _ in dynamic[:excess]:
+            self._jarvis_staged_actions.pop(cid, None)
 
     def _load_persisted_state(self) -> None:
         if self._persist_path is None or not self._persist_path.is_file():
@@ -1062,6 +1143,7 @@ class LivingEntityPulseEngine:
                     if isinstance(item, dict) and item.get("action_id"):
                         ja = JarvisStagedAction(**item)
                         self._jarvis_staged_actions[ja.action_id] = ja
+                self._prune_jarvis_staged_actions()
             if isinstance(data.get("synaptic_m"), list) and len(data["synaptic_m"]) == 64:
                 self._synaptic_m = tuple(float(x) for x in data["synaptic_m"])
             if isinstance(data.get("synaptic_s"), list) and len(data["synaptic_s"]) == 64:
@@ -1177,6 +1259,7 @@ class LivingEntityPulseEngine:
                 household_harmony=d.household_harmony,
                 anticipation=_clamp(d.anticipation + 0.20 * s),
             )
+            self.record_causal_event("presence.room_transition", intensity=s, now=current_time)
         elif kind == "household_anomaly":
             self._unresolved_tensions += 1
             self._drives = HomeostaticDrives(
@@ -1186,6 +1269,7 @@ class LivingEntityPulseEngine:
                 household_harmony=_clamp(d.household_harmony - 0.22 * s),
                 anticipation=_clamp(d.anticipation + 0.25 * s),
             )
+            self.record_causal_event("household.unresolved_tension", intensity=s, now=current_time)
         elif kind in ("task_completed", "provider_recovered"):
             self._unresolved_tensions = max(0, self._unresolved_tensions - 1)
             self._drives = HomeostaticDrives(
@@ -1195,6 +1279,8 @@ class LivingEntityPulseEngine:
                 household_harmony=_clamp(d.household_harmony + 0.18 * s),
                 anticipation=_clamp(d.anticipation - 0.12 * s),
             )
+            if kind == "provider_recovered":
+                self.record_causal_event("provider.failover_recovered", intensity=s, now=current_time)
         return self.snapshot(now=current_time)
 
     def _advance_to(self, now: datetime, *, stimulus_intensity: float = 0.0) -> None:
@@ -1339,6 +1425,7 @@ class LivingEntityPulseEngine:
             source_watches=tuple(self._source_watches.values()),
             responsibilities=tuple(self._responsibilities.values()),
             world_model=world_model_state,
+            causal_graph=self._causal_model.snapshot(),
             synaptic_memory=synaptic_snap,
             concept_space=self._last_concept_space,
             jarvis_staged_actions=tuple(self._jarvis_staged_actions.values()),

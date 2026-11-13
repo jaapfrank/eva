@@ -273,6 +273,53 @@ class JarvisStagedAction(BaseModel):
     updated_at: str = ""
 
 
+class CausalStructuralEdge(BaseModel):
+    """Directed structural causal edge X -> Y estimated via Pearl backdoor-adjustment over circadian confounder Z."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    cause_id: str
+    effect_id: str
+    backdoor_ace: float = Field(default=0.0, ge=-1.0, le=1.0)
+    raw_association_lift: float = Field(default=0.0, ge=-1.0, le=1.0)
+    probability_of_necessity: float = Field(default=0.0, ge=0.0, le=1.0)
+    probability_of_sufficiency: float = Field(default=0.0, ge=0.0, le=1.0)
+    median_lag_seconds: float = Field(default=0.0, ge=0.0)
+    support_count: int = Field(default=0, ge=0)
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+    spurious_confounded: bool = False
+
+
+class CounterfactualDreamInsight(BaseModel):
+    """Counterfactual replay verdict Y_{do(X=0)}(u) produced during sleep consolidation."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    insight_id: str
+    root_cause_id: str
+    target_effect_id: str
+    backdoor_ace: float = Field(default=0.0, ge=-1.0, le=1.0)
+    probability_of_necessity: float = Field(default=0.0, ge=0.0, le=1.0)
+    median_lag_seconds: float = Field(default=0.0, ge=0.0)
+    counterfactual_question_nl: str
+    preventative_action_nl: str
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
+class CausalWorldGraphSnapshot(BaseModel):
+    """Snapshot of Eva's 0-token Structural Causal Model (oorzaak -> gevolg)."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    total_events_recorded: int = Field(default=0, ge=0)
+    verified_causal_edges: tuple[CausalStructuralEdge, ...] = ()
+    rejected_spurious_edges: int = Field(default=0, ge=0)
+    counterfactual_insights: tuple[CounterfactualDreamInsight, ...] = ()
+    status_nl: str = (
+        "Structureel Causaal Wereldmodel actief (Pearl do-calculus + tijd-van-dag confounder-correctie op 0 LLM-tokens)"
+    )
+
+
 class SleepConsolidationSummary(BaseModel):
     """Nightly episodic-to-semantic sleep/dream consolidation telemetry."""
 
@@ -282,6 +329,8 @@ class SleepConsolidationSummary(BaseModel):
     last_consolidated_at: str = ""
     pruned_noise_synapses: int = Field(default=0, ge=0)
     reinforced_routines_count: int = Field(default=2, ge=0)
+    causal_edges_discovered: int = Field(default=0, ge=0)
+    counterfactual_dreams_replayed: int = Field(default=0, ge=0)
     dream_insight_nl: str = (
         "Episodische patronen geordend; ruis uit synaptische gewichten gefilterd en weekritme aangescherpt."
     )
@@ -348,11 +397,14 @@ __all__ = [
     "AnticipatoryForesightItem",
     "AttentionSourceWatch",
     "BaseModel",
+    "CausalStructuralEdge",
+    "CausalWorldGraphSnapshot",
     "CloudProviderConfigureRequest",
     "ConceptSpaceSnapshot",
     "ConditionalRoutineHypothesis",
     "ConfigDict",
     "CortexStimulusRequest",
+    "CounterfactualDreamInsight",
     "CuriosityProject",
     "Field",
     "HouseholdResponsibilityArtifact",

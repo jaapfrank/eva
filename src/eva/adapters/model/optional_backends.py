@@ -1,6 +1,119 @@
 """Upstream PydanticAI providers with explicit credentials and no SDK retries."""
+import asyncio
 from contextlib import asynccontextmanager
 from pydantic_ai.models.wrapper import WrapperModel
+
+from eva.adapters.model.contracts import ConversationModelError
+from eva.adapters.model.openai_codex_provider import CodexProviderError
+from eva.application.cancellation import WorkInterrupted
+
+
+_TIMEOUT_ERROR_NAMES = frozenset({
+    "APITimeoutError",
+    "ConnectTimeout",
+    "PoolTimeout",
+    "ReadTimeout",
+    "TimeoutException",
+    "WriteTimeout",
+})
+
+_TRANSPORT_ERROR_NAMES = frozenset({
+    "APIConnectionError",
+    "ConnectError",
+    "NetworkError",
+    "ProtocolError",
+    "ProxyError",
+    "ReadError",
+    "RemoteProtocolError",
+    "TransportError",
+    "WriteError",
+})
+
+
+def _classify_upstream_provider_error(error: BaseException) -> CodexProviderError | None:
+    """Map upstream SDK/HTTP status and transport errors to safe CodexProviderError categories.
+
+    Raw upstream exception bodies and headers are never chained into the raised error so
+    API keys, workspace headers, or private prompts cannot leak into logs or tracebacks.
+    """
+    if isinstance(
+        error,
+        (
+            CodexProviderError,
+            ConversationModelError,
+            WorkInterrupted,
+            asyncio.CancelledError,
+            KeyboardInterrupt,
+        ),
+    ):
+        return None
+    if type(error) is RuntimeError and str(error) in {
+        "model connection changed",
+        "provider usage is unconfirmed",
+    }:
+        return None
+
+    pending: list[BaseException] = [error]
+    seen: set[int] = set()
+    saw_timeout = False
+    saw_transport = False
+
+    while pending and len(seen) < 10:
+        current = pending.pop(0)
+        if id(current) in seen:
+            continue
+        seen.add(id(current))
+
+        if isinstance(
+            current,
+            (
+                ConversationModelError,
+                WorkInterrupted,
+                asyncio.CancelledError,
+                KeyboardInterrupt,
+            ),
+        ):
+            return None
+
+        status = getattr(current, "status_code", None)
+        if type(status) is not int:
+            response = getattr(current, "response", None)
+            resp_status = getattr(response, "status_code", None)
+            if type(resp_status) is int:
+                status = resp_status
+
+        if type(status) is int:
+            if status == 429:
+                return CodexProviderError("rate_limited", http_error=error)
+            if status in (401, 402, 403):
+                return CodexProviderError("credentials_rejected", http_error=error)
+            if status == 413:
+                return CodexProviderError("request_too_large", http_error=error)
+            if status == 408 or 500 <= status <= 599:
+                return CodexProviderError("unavailable", http_error=error)
+            if 400 <= status <= 499:
+                return CodexProviderError("configuration", http_error=error)
+
+        cls_name = type(current).__name__
+        if isinstance(current, TimeoutError) or cls_name in _TIMEOUT_ERROR_NAMES:
+            saw_timeout = True
+        elif isinstance(current, ConnectionError) or cls_name in _TRANSPORT_ERROR_NAMES:
+            saw_transport = True
+
+        cause = current.__cause__ or current.__context__
+        if cause is not None:
+            pending.append(cause)
+
+    if saw_timeout:
+        return CodexProviderError("deadline", http_error=error)
+    if saw_transport:
+        return CodexProviderError("unavailable", http_error=error)
+    # Catch-all scrub for any remaining upstream SDK/protocol exception (e.g.
+    # ModelRequestRejectedError, UnexpectedModelBehavior, APIError without status)
+    # so raw upstream bodies/headers never escape via __cause__.
+    if isinstance(error, Exception):
+        return CodexProviderError("protocol", http_error=error)
+    return None
 
 
 class OptionalBackend(WrapperModel):
@@ -62,6 +175,11 @@ class OptionalBackend(WrapperModel):
                 if result.usage.input_tokens <= 0:
                     raise RuntimeError('provider usage is unconfirmed')
                 return result
+        except BaseException as error:
+            mapped = _classify_upstream_provider_error(error)
+            if mapped is not None:
+                raise mapped from None
+            raise
         finally:
             await self.client.close()
 
@@ -75,5 +193,10 @@ class OptionalBackend(WrapperModel):
                     yield stream
                     if stream.usage.input_tokens <= 0:
                         raise RuntimeError('provider usage is unconfirmed')
+        except BaseException as error:
+            mapped = _classify_upstream_provider_error(error)
+            if mapped is not None:
+                raise mapped from None
+            raise
         finally:
             await self.client.close()

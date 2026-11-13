@@ -66,26 +66,24 @@ class ScheduledFailureSource:
         return (table.c.tenant_id == self.work.scope.tenant_id,
                 table.c.installation_id == self.work.scope.installation_id)
 
-    def candidates(self):
-        with self.work._engine.begin() as connection:
-            self.work._scope(connection)
+    def candidates(self) -> tuple[str, ...]:
+        with self.work.delivery_transaction() as connection:
             rows = connection.execute(sa.select(checkpoints.c.thread_id).where(
                 *self._where(checkpoints), checkpoints.c.thread_id.startswith("scheduled-work:"),
                 ~checkpoints.c.thread_id.contains(":provider-recovery:"),
-                checkpoints.c.phase == "blocked").order_by(checkpoints.c.updated_at, checkpoints.c.thread_id))
-            for row in rows:
-                yield row.thread_id
+                checkpoints.c.phase == "blocked").order_by(checkpoints.c.updated_at, checkpoints.c.thread_id)).all()
+        return tuple(row.thread_id for row in rows)
 
-    def load(self, schedule_id):
+    def load(self, schedule_id, *, connection=None):
+        from contextlib import nullcontext
         if not isinstance(schedule_id, str) or not schedule_id.startswith("scheduled-work:"):
             return None
-        with self.work._engine.begin() as connection:
-            self.work._scope(connection)
-            state = connection.execute(sa.select(checkpoints).where(
+        with (self.work.delivery_transaction() if connection is None else nullcontext(connection)) as active:
+            state = active.execute(sa.select(checkpoints).where(
                 *self._where(checkpoints), checkpoints.c.thread_id == schedule_id)).mappings().one_or_none()
             if state is None or state["phase"] != "blocked":
                 return None
-            rows = connection.execute(sa.select(events).where(*self._where(events),
+            rows = active.execute(sa.select(events).where(*self._where(events),
                 events.c.thread_id == schedule_id, events.c.sequence.in_((1, state["revision"])))
                 .order_by(events.c.sequence)).mappings().all()
             if (len(rows) != 2 or rows[0]["event_type"] != "WORK_START_SCHEDULED"
@@ -101,8 +99,8 @@ class ScheduledFailureSource:
                     or not schedule_id.startswith("scheduled-work:" + str(owner) + ":")
                     or binding["conversation_id"] != request["source"]["conversation_id"]):
                 raise ValueError("scheduled failure private binding differs")
-            self.work._validate_owner_binding(connection, owner_principal_id=owner,
-                                              principal_binding_id=principal_binding)
+            self.work.validate_delivery_authority(active, owner_principal_id=owner,
+                                                  principal_binding_id=principal_binding)
             title = request.get("task") or "Geplande hervatting"
             reason = rows[-1]["payload"]["data"].get("reason") or "De geplande opdracht kon niet worden gestart."
             completed_at = rows[-1]["occurred_at"].isoformat().replace("+00:00", "Z")
@@ -120,12 +118,13 @@ class PrivateCompletionSources:
         self.schedules = ScheduledFailureSource(work_store)
         self.documents = documents
 
-    def candidates(self):
-        yield from self.schedules.candidates()
+    def candidates(self) -> tuple[str, ...]:
+        items = list(self.schedules.candidates())
         if self.documents is not None:
-            yield from self.documents.candidates()
+            items.extend(self.documents.candidates())
+        return tuple(items)
 
-    def load(self, identifier):
+    def load(self, identifier, *, connection=None):
         if identifier.startswith("scheduled-work:"):
-            return self.schedules.load(identifier)
+            return self.schedules.load(identifier, connection=connection)
         return None if self.documents is None else self.documents.load(identifier)

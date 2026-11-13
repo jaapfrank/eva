@@ -383,6 +383,7 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
             "home_proprioception_active": True,
             "postgres_rls_uuid_optimized": True,
             "jepa_world_model_c": True,
+            "causal_world_model_pearl": True,
             "titans_o1_synaptic_memory": True,
             "multilingual_concept_guard": True,
             "eva_3d_glb_ready": (_CORTEX_STATIC_DIR / "eva.glb").is_file(),
