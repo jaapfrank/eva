@@ -1216,6 +1216,17 @@ def create_app(
         background_tasks.add_task(runtime.after_response, turn, reply)
         return grounded_reply_wire(reply)
 
+    def _runtime_household_settings() -> Any:
+        from eva.application.household_head_settings import HouseholdHeadSettings
+
+        for attr in ("_model_provider_control", "_optional_model_providers"):
+            ctrl = getattr(runtime, attr, None)
+            settings_obj = getattr(ctrl, "settings", None)
+            directory = getattr(settings_obj, "directory", None)
+            if directory is not None:
+                return HouseholdHeadSettings(directory)
+        return HouseholdHeadSettings()
+
     @app.post("/internal/v1/telegram/canary/respond")
     def respond_telegram_canary(
         payload: dict[str, Any], background_tasks: BackgroundTasks, request: Request
@@ -1244,6 +1255,31 @@ def create_app(
             now = datetime.strptime(occurred_at, "%Y-%m-%dT%H:%M:%SZ").replace(
                 tzinfo=UTC
             )
+            hh_settings = _runtime_household_settings()
+            sender_status = hh_settings.resolve_telegram_sender(
+                telegram_user_id, now=now
+            )
+            if not sender_status["admitted"]:
+                raise HTTPException(status_code=403, detail="Telegram sender is not admitted")
+            conversation_id = f"telegram:{chat_id}"
+            durable_message_id = f"telegram:{chat_id}:{message_id}"
+            owner_cmd_reply = hh_settings.handle_owner_telegram_command(
+                telegram_user_id=telegram_user_id,
+                chat_id=chat_id,
+                text=text,
+                now=now,
+            )
+            if owner_cmd_reply is not None:
+                return {
+                    "contract": "EvaInternalGroundedReply/v1",
+                    "conversation_id": conversation_id,
+                    "evidence_memory_ids": [],
+                    "generated_at": occurred_at,
+                    "message_id": durable_message_id,
+                    "provider": "gezinshoofd-local",
+                    "text": owner_cmd_reply,
+                    "text_sha256": hashlib.sha256(owner_cmd_reply.encode()).hexdigest(),
+                }
             operation_id = f"telegram-canary:{chat_id}:{message_id}"
             admission = runtime.admit_telegram_canary(
                 telegram_user_id=telegram_user_id,
@@ -1252,8 +1288,6 @@ def create_app(
                 operation_id=operation_id,
                 now=now,
             )
-            conversation_id = f"telegram:{chat_id}"
-            durable_message_id = f"telegram:{chat_id}:{message_id}"
             if admission.local_reply is not None:
                 local_text = admission.local_reply
                 return {
@@ -1298,7 +1332,11 @@ def create_app(
                 turn = replace(turn, media_context=ConversationMediaContext(**media))
             runtime.admit_turn_audience(turn)
             delegated_reply = None
-            delegated = getattr(runtime, "respond_telegram_delegated_work", None)
+            delegated = (
+                getattr(runtime, "respond_telegram_delegated_work", None)
+                if sender_status["role"] in ("gezinshoofd", "gezin")
+                else None
+            )
             if delegated is not None:
                 delegated_reply = delegated(
                     turn,
@@ -1312,6 +1350,8 @@ def create_app(
             ) and not chat_id.startswith("-"):
                 return conversation_stream_response(runtime, turn, recent)
             reply = runtime.respond(turn, recent)
+        except HTTPException:
+            raise
         except ConversationConflict as error:
             raise HTTPException(status_code=409, detail=str(error)) from error
         except (KeyError, TypeError, ValueError) as error:
@@ -1323,6 +1363,55 @@ def create_app(
             ) from error
         background_tasks.add_task(runtime.after_response, turn, reply)
         return grounded_reply_wire(reply)
+
+    @app.get("/internal/v1/telegram/bindings/active")
+    def get_active_telegram_bindings() -> JSONResponse:
+        hh = _runtime_household_settings()
+        return JSONResponse(
+            hh.active_telegram_bindings(),
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.post("/internal/v1/telegram/bindings/sync")
+    def sync_active_telegram_bindings(payload: dict[str, Any]) -> JSONResponse:
+        hh = _runtime_household_settings()
+        if isinstance(payload, dict):
+            bot_username = str(payload.get("bot_username") or "").strip()
+            if bot_username:
+                hh.register_bot_username(bot_username, force=False)
+        return JSONResponse(
+            hh.active_telegram_bindings(),
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.post("/internal/v1/telegram/invites/redeem")
+    def redeem_telegram_invite(payload: dict[str, Any]) -> JSONResponse:
+        if not {"token", "telegram_user_id"} <= set(payload) or (
+            set(payload) - {"token", "telegram_user_id", "first_name", "username"}
+        ):
+            raise HTTPException(status_code=422, detail="invalid invite redeem request")
+        raw_token = payload.get("token")
+        tg_uid = payload.get("telegram_user_id")
+        first_name = str(payload.get("first_name") or "")[:128]
+        username = payload.get("username")
+        if (
+            not isinstance(raw_token, str)
+            or not isinstance(tg_uid, int)
+            or isinstance(tg_uid, bool)
+            or tg_uid < 1
+            or (username is not None and not isinstance(username, str))
+        ):
+            raise HTTPException(status_code=422, detail="invalid invite redeem parameters")
+        hh = _runtime_household_settings()
+        redeemed = hh.redeem_telegram_invite(
+            raw_token=raw_token,
+            telegram_user_id=tg_uid,
+            first_name=first_name,
+            username=username,
+        )
+        if redeemed is None:
+            return JSONResponse({"admitted": False}, headers={"Cache-Control": "no-store"})
+        return JSONResponse(redeemed, headers={"Cache-Control": "no-store"})
 
     @app.post("/internal/v1/goals/admit")
     def admit_durable_goal(payload: dict[str, Any]) -> dict[str, Any]:

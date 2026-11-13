@@ -76,10 +76,90 @@ export function telegramReplyContext(message) {
   return result;
 }
 
-export function createTransportHandler({ journal, bindings, baseUrl, photoProvider = null, downloadFile, makeDraft, coreRequest = askEva2Canary }) {
+const INVITE_START_RE = /^\/start(?:@\w+)?\s+(inv_[A-Za-z0-9_-]{42,46})$/u;
+
+export function createTransportHandler({ journal, bindings, baseUrl, photoProvider = null, downloadFile, makeDraft, coreRequest = askEva2Canary, redeemInvite = null, refreshBindings = null }) {
+  const dynamicAllowedIds = new Set();
+  const pausedIds = new Set();
+  let lastSyncAt = 0;
+
+  async function maybeSyncBindings(force = false) {
+    if (typeof refreshBindings !== 'function') return;
+    const now = Date.now();
+    if (!force && now - lastSyncAt < 5000) return;
+    lastSyncAt = now;
+    try {
+      const state = await refreshBindings();
+      if (Array.isArray(state?.active_telegram_user_ids)) {
+        dynamicAllowedIds.clear();
+        for (const uid of state.active_telegram_user_ids) {
+          if (Number.isSafeInteger(uid) && uid > 0) dynamicAllowedIds.add(uid);
+        }
+      }
+      if (Array.isArray(state?.paused_telegram_user_ids)) {
+        pausedIds.clear();
+        for (const uid of state.paused_telegram_user_ids) {
+          if (Number.isSafeInteger(uid) && uid > 0) pausedIds.add(uid);
+        }
+      }
+    } catch {
+      // Keep last known bindings if core is momentarily unreachable.
+    }
+  }
+
+  function isAdmittedMessage(message) {
+    const uid = message?.from?.id;
+    if (!Number.isSafeInteger(uid) || uid < 1 || !message?.chat) return false;
+    if (pausedIds.has(uid)) return false;
+    if (permittedMessage(message, bindings)) return true;
+    return String(message.chat.id) === String(uid) && dynamicAllowedIds.has(uid);
+  }
+
   return async ctx => {
     const message = ctx.message;
-    if (!permittedMessage(message, bindings)) {
+    await maybeSyncBindings(false);
+    if (!isAdmittedMessage(message)) {
+      const rawText = typeof message?.text === 'string' ? message.text.trim() : '';
+      const inviteMatch = message?.chat && message?.from && String(message.chat.id) === String(message.from.id)
+        ? INVITE_START_RE.exec(rawText)
+        : null;
+      if (inviteMatch && typeof redeemInvite === 'function') {
+        const alreadyHandled = Boolean(
+          journal.db.prepare('SELECT 1 FROM telegram_transport WHERE update_id=?').get(ctx.update.update_id)
+        );
+        if (alreadyHandled) return;
+        let redeemed = null;
+        try {
+          redeemed = await redeemInvite({
+            token: inviteMatch[1],
+            telegramUserId: message.from.id,
+            firstName: String(message.from.first_name ?? '').slice(0, 128),
+            username: typeof message.from.username === 'string' ? message.from.username.slice(0, 64) : null,
+          });
+        } catch {
+          redeemed = null;
+        }
+        if (redeemed?.admitted === true && typeof redeemed.welcome_text === 'string' && redeemed.welcome_text.trim()) {
+          dynamicAllowedIds.add(message.from.id);
+          pausedIds.delete(message.from.id);
+          if (!journal.claim(ctx.update)) return;
+          const welcomeId = ctx.update.update_id;
+          const welcomeText = labelEva2TelegramReply(redeemed.welcome_text);
+          try {
+            journal.record(welcomeId, 'delivery_pending', { response: welcomeText });
+            const res = await ctx.reply(welcomeText, {
+              reply_parameters: { message_id: message.message_id, allow_sending_without_reply: false },
+            });
+            if (res?.chat?.id !== message.chat.id || typeof res?.message_id !== 'number') {
+              throw new Error('Telegram welcome receipt mismatch');
+            }
+            journal.record(welcomeId, 'delivered', { receipt: `telegram:${res.chat.id}:${res.message_id}` });
+          } catch {
+            journal.record(welcomeId, 'delivery_uncertain');
+          }
+          return;
+        }
+      }
       journal.noteAccessRequest(message);
       return;
     }
@@ -126,7 +206,10 @@ export function createTransportHandler({ journal, bindings, baseUrl, photoProvid
       // A send in progress may already have reached Telegram. Preserve uncertainty instead of dispatching again.
       const row = journal.db.prepare('SELECT state FROM telegram_transport WHERE update_id=?').get(id);
       if (row?.state === 'delivery_pending') journal.record(id, 'delivery_uncertain');
-      else {
+      else if (String(error?.message || '').includes('HTTP 403')) {
+        pausedIds.add(message.from.id);
+        journal.record(id, 'failed');
+      } else {
         journal.record(id, 'failed');
         try { await deliver(labelEva2TelegramFailure(String(error.message || error).slice(0, 160))); }
         catch { journal.record(id, 'delivery_uncertain'); }
@@ -148,8 +231,38 @@ export async function main() {
   const journal = new TransportJournal(required('EVA_TELEGRAM_TRANSPORT_DB'));
   const photoProvider = process.env.EVA_TELEGRAM_PHOTO_PROVIDER_MODULE
     ? await import(pathToFileURL(process.env.EVA_TELEGRAM_PHOTO_PROVIDER_MODULE).href) : null;
+  const baseUrl = required('EVA2_CANARY_URL');
   const bot = new Bot(token);
-  bot.on('message', createTransportHandler({ journal, bindings: trust.bindings, baseUrl: required('EVA2_CANARY_URL'), photoProvider,
+  try { await bot.init(); } catch { /* bot.init will also run inside polling if offline at boot */ }
+  const botUsername = bot.botInfo?.username || '';
+  const refreshBindings = async () => {
+    const res = await fetch(`${baseUrl}/internal/v1/telegram/bindings/sync`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ bot_username: botUsername }),
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!res.ok) return null;
+    return res.json();
+  };
+  const redeemInvite = async ({ token: invToken, telegramUserId, firstName, username }) => {
+    const res = await fetch(`${baseUrl}/internal/v1/telegram/invites/redeem`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        token: invToken,
+        telegram_user_id: telegramUserId,
+        first_name: firstName,
+        username,
+      }),
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) return null;
+    return res.json();
+  };
+  await refreshBindings().catch(() => {});
+  bot.on('message', createTransportHandler({ journal, bindings: trust.bindings, baseUrl, photoProvider,
+    redeemInvite, refreshBindings,
     makeDraft: ctx => createEva2DraftSink({ chatId: ctx.chat.id, draftId: ctx.message.message_id, sendDraft: bot.api.raw.sendMessageDraft?.bind(bot.api.raw) }),
     downloadFile: async (ctx, file) => {
       const info = await ctx.api.getFile(file.file_id);

@@ -63,21 +63,68 @@ class OptionalConversationModel:
                 others.append(conn_id)
         return preferred + others
 
-    def _record_pulse_telemetry(self, turn) -> None:
+    def _prepare_household_and_pulse(self, turn, args, kwargs):
+        from eva.application.household_head_settings import HouseholdHeadSettings
+
+        hh = HouseholdHeadSettings(self.control.settings.directory)
+        ctx = hh.build_turn_context(
+            principal_id=turn.principal_id,
+            conversation_id=turn.conversation_id,
+        )
+        if not ctx["allowed"]:
+            raise ConversationModelError(
+                "Deze koppeling is momenteel gepauzeerd door het gezinshoofd."
+            )
+
+        ode_note = ""
         try:
             from eva.application.living_entity_pulse import LivingEntityPulseEngine
 
-            LivingEntityPulseEngine.get().record_turn(
-                principal_id=turn.principal_id,
-                user_text=turn.text,
-                display_name=(
-                    "Jaap"
-                    if "dashboard:" in turn.conversation_id or "6034485735" in turn.conversation_id
-                    else "Bewoner"
-                ),
+            pulse_engine = LivingEntityPulseEngine.get()
+            if ctx["speaker_role"] in ("gezinshoofd", "gezin"):
+                snap = pulse_engine.record_turn(
+                    principal_id=turn.principal_id,
+                    user_text=turn.text,
+                    display_name=ctx["speaker_name"],
+                )
+            else:
+                snap = pulse_engine.snapshot()
+            ode = snap.liquid_ode
+            ode_note = (
+                f"Continue Liquid-tijdskern (dx/dt): alertheid={ode.state.get('arousal', 0.5):.2f}, "
+                f"sociale afstemming={ode.state.get('social_attunement', 0.6):.2f}, "
+                f"huisrust={ode.state.get('home_proprioception', 0.85):.2f} "
+                f"(τ_eff={ode.mean_tau_seconds}s)."
             )
         except Exception:
             pass
+
+        if hh.state_file.is_file() and ctx["speaker_role"] == "gast":
+            avail = kwargs.get("available_actions")
+            if avail is not None:
+                safe_guest_actions = tuple(a for a in avail if a == "memory_search")
+                kwargs = {**kwargs, "available_actions": safe_guest_actions}
+
+        if not args:
+            return args, kwargs
+
+        new_args = list(args)
+        ident = new_args[0]
+        if hasattr(ident, "name") and hasattr(ident, "description") and hh.state_file.is_file():
+            try:
+                new_args[0] = replace(
+                    ident,
+                    name=ctx["eva_display_name"],
+                    description=ctx["eva_persona_summary"],
+                )
+            except Exception:
+                pass
+
+        extra_notes = [n for n in (ctx["self_context_note"], ode_note) if n]
+        if extra_notes:
+            existing_sc = tuple(kwargs.get("self_context") or ())
+            kwargs = {**kwargs, "self_context": (*existing_sc, *extra_notes)}
+        return tuple(new_args), kwargs
 
     def generate(self, turn, *args, **kwargs):
         import json
@@ -90,7 +137,7 @@ class OptionalConversationModel:
         ):
             return self.baseline.generate(turn, *args, **kwargs)
 
-        self._record_pulse_telemetry(turn)
+        args, kwargs = self._prepare_household_and_pulse(turn, args, kwargs)
         state = self.control.settings.read()
         identifier = state["selected_id"]
         sub_candidate = self.control.settings.directory / "subscription-llm-state.json"

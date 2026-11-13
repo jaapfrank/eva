@@ -25,6 +25,7 @@ from typing import Any
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
+from eva.application.household_head_settings import HouseholdHeadSettings
 from eva.application.living_entity_pulse import (
     HomeostaticDrives,
     LivingEntityPulseEngine,
@@ -189,6 +190,9 @@ def _ensure_pulse_engine(runtime: Any) -> LivingEntityPulseEngine:
 
 
 def _resolve_model_provider_settings(runtime: Any) -> tuple[Any | None, ModelProviderSettings]:
+    existing = getattr(runtime, "_optional_model_providers", None)
+    if existing is not None and getattr(existing, "settings", None) is not None:
+        return existing, existing.settings
     from eva.bootstrap.optional_model_providers import attach_optional_models
 
     control = attach_optional_models(runtime)
@@ -196,6 +200,11 @@ def _resolve_model_provider_settings(runtime: Any) -> tuple[Any | None, ModelPro
         return control, control.settings
     directory = Path(os.environ.get("EVA_MODEL_PROVIDER_DIRECTORY", "/var/lib/eva/work/model-providers"))
     return None, ModelProviderSettings(directory)
+
+
+def _resolve_household_head_settings(runtime: Any) -> HouseholdHeadSettings:
+    _, settings = _resolve_model_provider_settings(runtime)
+    return HouseholdHeadSettings(settings.directory)
 
 
 def _build_cloud_providers_summary(runtime: Any, sub_state: dict[str, Any]) -> dict[str, Any]:
@@ -331,6 +340,7 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
     sub_state = _load_subscription_state()
     cloud_summary = _build_cloud_providers_summary(runtime, sub_state)
     providers = _build_subscription_providers(runtime, sub_state, cloud_summary)
+    household_head = _resolve_household_head_settings(runtime).status(now=now)
 
     try:
         health = runtime.health()
@@ -346,6 +356,7 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
         "contract": "EvaLivingCortexState/v1",
         "observed_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pulse": pulse,
+        "household_head": household_head,
         "cloud_providers": cloud_summary,
         "subscriptions": {
             "selected_provider": sub_state["selected_provider"],
@@ -357,6 +368,8 @@ def build_cortex_state_payload(runtime: Any) -> dict[str, Any]:
         "architecture": {
             "pydantic_v2_rust_core": True,
             "native_c_simd_fastpath": NATIVE_ACCELERATOR_ACTIVE,
+            "liquid_ode_rk4_c": True,
+            "household_head_regie": True,
             "postgres_rls_uuid_optimized": True,
             "jepa_world_model_c": True,
             "titans_o1_synaptic_memory": True,
@@ -1078,7 +1091,7 @@ CORTEX_HTML = """<!doctype html>
           </div>
         </div>
 
-        <h1 class="presence-hero-name">Eva</h1>
+        <h1 class="presence-hero-name" id="eva-hero-name">Eva</h1>
         <p class="presence-mood-prose" id="eva-mood-prose">rustig, tevreden,
 redelijk energiek, ontspannen</p>
 
@@ -1107,6 +1120,7 @@ redelijk energiek, ontspannen</p>
           <button type="button" class="eva-tab" data-tab="chat">Gesprek</button>
           <button type="button" class="eva-tab" data-tab="memory">Geheugen</button>
           <button type="button" class="eva-tab" data-tab="tasks">Taken</button>
+          <button type="button" class="eva-tab" data-tab="household">👑 Gezin &amp; Eva</button>
           <button type="button" class="eva-tab" data-tab="brain">Brein &amp; Cloud</button>
         </nav>
         <div class="topbar-right">
@@ -1462,6 +1476,105 @@ redelijk energiek, ontspannen</p>
               <div class="llm-cards" id="policies-container"></div>
             </section>
           </div>
+
+          <section class="panel" aria-label="Continue Liquid Time-Constant Neural ODE (C/SIMD RK4)" style="margin-top: 16px;">
+            <h2>
+              <span>🌊 Continue Liquid Time-Constant Bewustzijnskern (dx/dt · C/SIMD RK4)</span>
+              <span class="badge emerald" id="liquid-ode-badge">τ_eff: --s · v_φ: --</span>
+            </h2>
+            <p class="panel-sub">Geen beurt-voor-beurt bevriezing: Eva evolueert continu in echte fysieke tijd via een 6D niet-lineaire differentiaalvergelijking met variabele tijdsconstante τ_eff(x, I) op 0 LLM-tokens.</p>
+            <div id="liquid-ode-container" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;"></div>
+          </section>
+        </section>
+
+        <!-- TAB 6: GEZINSHOOFD REGIE (Mensen toevoegen/beheren + Eva live aanpassen) -->
+        <section class="tab-view" id="tab-household" aria-label="Gezinshoofd Regie">
+          <h2 class="hero-heading">Gezinshoofd-Regie: Mensen &amp; Eva.</h2>
+          <p class="hero-subtitle">Voeg gezinsleden of gasten toe met één beveiligde klik (Telegram blijft 100% gesloten voor onbekenden) en pas Eva's karakter, toon en huisregels direct live aan.</p>
+
+          <div class="grid-2">
+            <section class="panel" aria-label="Gezin, Gasten en 1-Klik Telegram Uitnodiging">
+              <h2>
+                <span>👨‍👧 Gezin &amp; Gasten (100% Privé Poort)</span>
+                <span class="badge emerald" id="hh-privacy-badge">256-Bit Invite-Only · Vreemden Geblokkeerd</span>
+              </h2>
+              <p class="panel-sub">Alleen <strong>Jaap (gezinshoofd)</strong> en <strong>Lola (gezin)</strong> vormen het kerngezin. Gasten krijgen een vriendelijke eigen gesprekslijn zonder inzage in jullie privégeheugen of agenda.</p>
+              <div id="hh-member-notice" style="margin-bottom: 10px; font-size: 0.84rem; font-weight: 600; color: #6ee7b7;"></div>
+
+              <div class="llm-cards" id="hh-members-container" style="margin-bottom: 14px;"></div>
+
+              <div style="background: #0b111e; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px; margin-bottom: 12px;">
+                <div style="font-size: 0.88rem; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">🔗 1-Klik Eenmalige Telegram-Uitnodigingslink Maken</div>
+                <p style="margin: 0 0 10px; font-size: 0.78rem; color: #94a3b8;">Stuur deze eenmalige link via WhatsApp/SMS naar degene die je wilt toevoegen. Zodra diegene op <em>Start</em> tikt in Telegram, koppelt Eva hem/haar automatisch en verbrandt de sleutel direct.</p>
+                <div style="display: grid; grid-template-columns: 1.3fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                  <div>
+                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">Naam van persoon</label>
+                    <input id="hh-invite-name" type="text" placeholder="Bijv. Sanne of Oma Marjan" style="width:100%;padding:8px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;" />
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">Rol &amp; Privacygrens</label>
+                    <select id="hh-invite-role" style="width:100%;padding:8px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;">
+                      <option value="gast">Gast (Eigen lijn · Geen privédata gezin)</option>
+                      <option value="gezin">Gezinslid (Volledig onderdeel gezin)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:0.75rem;color:#94a3b8;margin-bottom:3px;">Geldig (uur)</label>
+                    <input id="hh-invite-ttl" type="number" min="1" max="168" value="48" style="width:100%;padding:8px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;" />
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <input id="hh-invite-notes" type="text" placeholder="Optionele notitie voor Eva (bijv. buurman, oppastante)…" style="flex:1;min-width:190px;padding:8px 9px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.81rem;" />
+                  <button class="btn primary" onclick="createTelegramInvite()">✨ Maak Uitnodigingslink</button>
+                </div>
+                <div id="hh-created-invite-box" style="display:none;margin-top:12px;padding:11px;border-radius:10px;background:rgba(16,185,129,0.11);border:1px solid rgba(16,185,129,0.45);"></div>
+              </div>
+
+              <div id="hh-invites-list"></div>
+
+              <div style="margin-top:12px;background:#0b111e;border:1px solid var(--border-subtle);border-radius:10px;padding:11px;font-size:0.78rem;color:#cbd5e1;">
+                <strong style="color:#7dd3fc;">📱 Ook direct vanaf je telefoon in Telegram (alleen voor Jaap):</strong><br/>
+                <code>/gezin</code> · <code>/uitnodigen Sanne gast</code> · <code>/rol Sanne gezin</code> · <code>/intrekken Sanne</code> · <code>/heractiveren Sanne</code>
+              </div>
+            </section>
+
+            <section class="panel" aria-label="Eva Live Aanpassen">
+              <h2>
+                <span>✨ Eva Direct Aanpassen (Live Zonder Herstart)</span>
+                <span class="badge violet" id="hh-revision-badge">Revisie #1</span>
+              </h2>
+              <p class="panel-sub">Pas Eva's naam, karakter, spreekstijl en vaste huisregels aan. Elke wijziging werkt direct bij het eerstvolgende bericht én je kunt altijd met 1 klik terug naar de vorige versie.</p>
+              <div id="hh-profile-notice" style="margin-bottom: 10px; font-size: 0.84rem; font-weight: 600; color: #6ee7b7;"></div>
+
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div>
+                  <label style="display:block;font-size:0.77rem;color:#94a3b8;margin-bottom:4px;">Naam van je huisgenoot</label>
+                  <input id="hh-eva-name" type="text" value="Eva" style="width:100%;padding:8px 10px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.86rem;font-weight:600;" />
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.77rem;color:#94a3b8;margin-bottom:4px;">Persoonlijkheid &amp; Karakter</label>
+                  <textarea id="hh-eva-persona" rows="3" style="width:100%;padding:8px 10px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;line-height:1.45;resize:vertical;"></textarea>
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.77rem;color:#94a3b8;margin-bottom:4px;">Spreekstijl &amp; Toon</label>
+                  <textarea id="hh-eva-tone" rows="3" style="width:100%;padding:8px 10px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.83rem;line-height:1.45;resize:vertical;"></textarea>
+                </div>
+                <div>
+                  <label style="display:block;font-size:0.77rem;color:#94a3b8;margin-bottom:4px;">Vaste Huisregels &amp; Gezinsgrenzen (één regel per regel)</label>
+                  <textarea id="hh-eva-rules" rows="5" style="width:100%;padding:8px 10px;border-radius:8px;background:#131c2e;color:#f8fafc;border:1px solid rgba(148,163,184,0.28);font-size:0.82rem;line-height:1.45;resize:vertical;"></textarea>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:4px;">
+                  <button class="btn" id="hh-rollback-btn" onclick="rollbackEvaProfile()" disabled>↩ Vorige Versie Herstellen</button>
+                  <button class="btn primary" onclick="saveEvaProfile()">💾 Wijzigingen Direct Activeren</button>
+                </div>
+              </div>
+
+              <div style="margin-top:14px;background:#0b111e;border:1px solid var(--border-subtle);border-radius:10px;padding:11px;font-size:0.78rem;color:#cbd5e1;">
+                <strong style="color:#7dd3fc;">💬 Of wijzig Eva onderweg via Telegram:</strong><br/>
+                <code>/eva</code> · <code>/eva stijl Lekker kort, warm en droogkomisch</code> · <code>/eva regel + Vraag nooit naar buren op de oprit</code> · <code>/eva herstel</code>
+              </div>
+            </section>
+          </div>
         </section>
       </main>
 
@@ -1774,6 +1887,106 @@ redelijk energiek, ontspannen</p>
           <td><span class="status-pill status-${esc(t.status)}">${statusLabels[t.status] || esc(t.status)}</span></td>
         </tr>
       `).join('');
+
+      // Liquid Time-Constant (dx/dt) Neural ODE (C/SIMD RK4)
+      const ode = p.liquid_ode || {};
+      const odeState = ode.state || {};
+      const odeTau = ode.tau_effective_seconds || {};
+      const odeBadge = document.getElementById('liquid-ode-badge');
+      const odeBox = document.getElementById('liquid-ode-container');
+      if (odeBadge && odeBox && odeState.arousal !== undefined) {
+        odeBadge.textContent = `τ_gem: ${ode.mean_tau_seconds}s · v_φ: ${ode.phase_velocity} · ${ode.native_c_active ? 'RK4 C/SIMD' : 'RK4 Python'}`;
+        const odeDims = [
+          { k: 'arousal', label: '⚡ Arousal (Waakzaamheid)', c: '#38bdf8' },
+          { k: 'social_attunement', label: '💛 Sociale Afstemming', c: '#f59e0b' },
+          { k: 'epistemic_drive', label: '🔭 Epistemische Drang', c: '#a855f7' },
+          { k: 'home_proprioception', label: '🏡 Huis-Proprioceptie', c: '#10b981' },
+          { k: 'temporal_anticipation', label: '⏱️ Temporele Anticipatie', c: '#ec4899' },
+          { k: 'affective_coherence', label: '🌊 Affectieve Coherentie', c: '#60a5fa' }
+        ];
+        odeBox.innerHTML = odeDims.map(dim => {
+          const pct = Math.round((odeState[dim.k] || 0) * 100);
+          const tauVal = odeTau[dim.k] !== undefined ? `${odeTau[dim.k]}s` : '--';
+          return `<div style="background:#0b111e;padding:10px 12px;border-radius:10px;border:1px solid var(--border-subtle);">
+            <div style="display:flex;justify-content:space-between;font-size:0.79rem;margin-bottom:5px;">
+              <span>${dim.label}</span><strong style="color:${dim.c};">${pct}% · τ=${tauVal}</strong>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${dim.c};"></div></div>
+          </div>`;
+        }).join('');
+      }
+
+      // Gezinshoofd-Regie (Mensen, Uitnodigingen & Eva Profiel)
+      const hh = data.household_head;
+      if (hh && hh.eva_profile) {
+        const heroEl = document.getElementById('eva-hero-name');
+        if (heroEl && hh.eva_profile.display_name) heroEl.textContent = hh.eva_profile.display_name;
+        const revBadge = document.getElementById('hh-revision-badge');
+        if (revBadge) revBadge.textContent = `Revisie #${hh.revision || 1}`;
+        const rbBtn = document.getElementById('hh-rollback-btn');
+        if (rbBtn) rbBtn.disabled = !hh.can_rollback_profile;
+
+        if (window._hhLoadedRevision !== hh.revision) {
+          window._hhLoadedRevision = hh.revision;
+          const nameInput = document.getElementById('hh-eva-name');
+          const personaInput = document.getElementById('hh-eva-persona');
+          const toneInput = document.getElementById('hh-eva-tone');
+          const rulesInput = document.getElementById('hh-eva-rules');
+          if (nameInput) nameInput.value = hh.eva_profile.display_name || 'Eva';
+          if (personaInput) personaInput.value = hh.eva_profile.persona_summary || '';
+          if (toneInput) toneInput.value = hh.eva_profile.tone_guidelines || '';
+          if (rulesInput) rulesInput.value = (hh.eva_profile.household_rules || []).join('\\n');
+        }
+
+        const roleLabels = {
+          gezinshoofd: '👑 Gezinshoofd',
+          gezin: '🏡 Gezinslid',
+          gast: '🤝 Gast (Gescheiden Privacy)'
+        };
+        const membersBox = document.getElementById('hh-members-container');
+        if (membersBox) {
+          membersBox.innerHTML = (hh.members || []).map(m => {
+            const isOwner = m.role === 'gezinshoofd';
+            const active = m.status === 'active';
+            const nextRole = m.role === 'gezin' ? 'gast' : 'gezin';
+            return `
+              <div class="llm-card ${active ? 'active' : ''}" style="${active ? '' : 'opacity:0.65;'}">
+                <div class="llm-head">
+                  <h3>${esc(m.display_name)} <small style="color:#94a3b8;">${m.telegram_user_id ? `(Telegram #${esc(m.telegram_user_id)})` : '(Nog niet gekoppeld)'}</small></h3>
+                  <span class="badge ${isOwner || m.role === 'gezin' ? 'emerald' : 'violet'}">${roleLabels[m.role] || esc(m.role)}${active ? '' : ' · Gepauzeerd'}</span>
+                </div>
+                ${m.notes ? `<p style="margin:2px 0 8px;font-size:0.79rem;color:#94a3b8;">${esc(m.notes)}</p>` : ''}
+                ${isOwner ? '' : `
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                    <button class="btn" style="padding:4px 9px;font-size:0.75rem;" data-hh-action="set_role" data-hh-target="${esc(m.member_id)}" data-hh-role="${nextRole}">⇄ Zet op ${nextRole === 'gezin' ? 'Gezinslid' : 'Gast'}</button>
+                    <button class="btn" style="padding:4px 9px;font-size:0.75rem;" data-hh-action="${active ? 'pause_member' : 'activate_member'}" data-hh-target="${esc(m.member_id)}" data-hh-role="">${active ? '⏸ Pauzeer Toegang' : '▶ Heractiveer'}</button>
+                    <button class="btn" style="padding:4px 9px;font-size:0.75rem;" data-hh-action="remove_member" data-hh-target="${esc(m.member_id)}" data-hh-role="">✕ Verwijder</button>
+                  </div>
+                `}
+              </div>
+            `;
+          }).join('');
+        }
+
+        const invitesBox = document.getElementById('hh-invites-list');
+        if (invitesBox) {
+          const pendingInvites = (hh.invites || []).filter(i => i.status === 'pending');
+          invitesBox.innerHTML = pendingInvites.length === 0 ? '' : `
+            <div style="font-size:0.8rem;font-weight:700;color:#94a3b8;margin-bottom:6px;">Openstaande eenmalige uitnodigingen (${pendingInvites.length})</div>
+            <div class="llm-cards">
+              ${pendingInvites.map(inv => `
+                <div class="llm-card" style="padding:9px 12px;">
+                  <div class="llm-head" style="margin-bottom:2px;">
+                    <h3 style="font-size:0.83rem;">🎟️ ${esc(inv.label)} (${inv.role === 'gezin' ? 'Gezinslid' : 'Gast'})</h3>
+                    <button class="btn" style="padding:3px 8px;font-size:0.73rem;" data-hh-action="revoke_invite" data-hh-target="${esc(inv.invite_id)}" data-hh-role="">✕ Intrekken</button>
+                  </div>
+                  <p style="margin:0;font-size:0.75rem;color:#94a3b8;">Geldig t/m ${esc(inv.expires_at)}</p>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+      }
     }
 
     async function loadState() {
@@ -1955,6 +2168,145 @@ redelijk energiek, ontspannen</p>
         body: JSON.stringify({ artifact_id: artifactId, action, note_nl: 'Bijgewerkt via 3D Cortex Cockpit' })
       });
       if (res.ok) renderState(await res.json());
+    }
+
+    async function saveEvaProfile() {
+      const notice = document.getElementById('hh-profile-notice');
+      const displayName = document.getElementById('hh-eva-name').value.trim();
+      const personaSummary = document.getElementById('hh-eva-persona').value.trim();
+      const toneGuidelines = document.getElementById('hh-eva-tone').value.trim();
+      const householdRules = document.getElementById('hh-eva-rules').value
+        .split(/\\r?\\n/)
+        .map(s => s.trim())
+        .filter(Boolean);
+      notice.style.color = '#7dd3fc';
+      notice.textContent = '⏳ Wijzigingen direct activeren…';
+      const res = await fetch('/internal/v1/dashboard/cortex/household-head', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'update_profile',
+          display_name: displayName,
+          persona_summary: personaSummary,
+          tone_guidelines: toneGuidelines,
+          household_rules: householdRules
+        })
+      });
+      if (res.ok) {
+        const out = await res.json();
+        renderState(out.cortex || out);
+        notice.style.color = '#6ee7b7';
+        notice.textContent = '✓ Eva is direct bijgewerkt! Het eerstvolgende gesprek gebruikt meteen je nieuwe instellingen.';
+      } else {
+        const err = await res.json().catch(() => ({}));
+        notice.style.color = '#fda4af';
+        notice.textContent = '❌ ' + (err.detail || 'Kon wijziging niet opslaan.');
+      }
+    }
+
+    async function rollbackEvaProfile() {
+      const notice = document.getElementById('hh-profile-notice');
+      const res = await fetch('/internal/v1/dashboard/cortex/household-head', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'rollback_profile' })
+      });
+      if (res.ok) {
+        const out = await res.json();
+        renderState(out.cortex || out);
+        notice.style.color = '#6ee7b7';
+        notice.textContent = '↩ Vorige versie van Eva is direct hersteld.';
+      }
+    }
+
+    async function createTelegramInvite() {
+      const notice = document.getElementById('hh-member-notice');
+      const box = document.getElementById('hh-created-invite-box');
+      const label = document.getElementById('hh-invite-name').value.trim();
+      const role = document.getElementById('hh-invite-role').value;
+      const ttl = parseInt(document.getElementById('hh-invite-ttl').value || '48', 10);
+      const notes = document.getElementById('hh-invite-notes').value.trim();
+      if (!label) {
+        notice.style.color = '#fcd34d';
+        notice.textContent = '⚠️ Vul eerst een naam in voor degene die je wilt uitnodigen.';
+        return;
+      }
+      const res = await fetch('/internal/v1/dashboard/cortex/household-head', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'create_invite',
+          label,
+          role,
+          ttl_hours: isNaN(ttl) ? 48 : ttl,
+          notes
+        })
+      });
+      if (res.ok) {
+        const out = await res.json();
+        renderState(out.cortex || out);
+        const inv = out.created_invite;
+        document.getElementById('hh-invite-name').value = '';
+        document.getElementById('hh-invite-notes').value = '';
+        if (inv) {
+          window._lastCreatedInviteLink = inv.deep_link || inv.start_command;
+          box.style.display = 'block';
+          box.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+              <strong style="color:#6ee7b7;font-size:0.86rem;">✓ Eenmalige link klaar voor ${esc(inv.label)} (${inv.role === 'gezin' ? 'Gezinslid' : 'Gast'})</strong>
+              <button class="btn primary" style="padding:4px 10px;font-size:0.76rem;" onclick="copyInviteLink()">📋 Kopieer Link</button>
+            </div>
+            <div style="word-break:break-all;font-family:monospace;font-size:0.79rem;background:#0b111e;padding:8px;border-radius:6px;color:#e2e8f0;margin-bottom:4px;">${esc(inv.deep_link)}</div>
+            <div style="font-size:0.74rem;color:#94a3b8;">Of laat ${esc(inv.label)} handmatig sturen naar je bot: <code>${esc(inv.start_command)}</code> (verbrandt automatisch na 1x gebruik).</div>
+          `;
+          notice.style.color = '#6ee7b7';
+          notice.textContent = `✓ Uitnodiging aangemaakt voor ${inv.label}.`;
+        }
+      } else {
+        const err = await res.json().catch(() => ({}));
+        notice.style.color = '#fda4af';
+        notice.textContent = '❌ ' + (err.detail || 'Kon uitnodiging niet aanmaken.');
+      }
+    }
+
+    async function copyInviteLink() {
+      const link = window._lastCreatedInviteLink || '';
+      if (!link) return;
+      try {
+        await navigator.clipboard.writeText(link);
+        const notice = document.getElementById('hh-member-notice');
+        notice.style.color = '#6ee7b7';
+        notice.textContent = '📋 Uitnodigingslink gekopieerd naar klembord!';
+      } catch (_) {}
+    }
+
+    document.addEventListener('click', (ev) => {
+      const btn = ev.target && ev.target.closest ? ev.target.closest('[data-hh-action]') : null;
+      if (!btn) return;
+      manageHouseholdMember(btn.dataset.hhAction || '', btn.dataset.hhTarget || '', btn.dataset.hhRole || '');
+    });
+
+    async function manageHouseholdMember(action, target, role) {
+      const notice = document.getElementById('hh-member-notice');
+      const res = await fetch('/internal/v1/dashboard/cortex/household-head', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, target, role: role || 'gast' })
+      });
+      if (res.ok) {
+        const out = await res.json();
+        renderState(out.cortex || out);
+        notice.style.color = '#6ee7b7';
+        notice.textContent = '✓ Gezins- en toegangsinstelling direct bijgewerkt.';
+      } else {
+        const err = await res.json().catch(() => ({}));
+        notice.style.color = '#fda4af';
+        notice.textContent = '❌ ' + (err.detail || 'Kon actie niet uitvoeren.');
+      }
     }
 
     // LIVE STREAMING CHAT CONTROLLER (Connected to /internal/v1/dashboard/conversation/respond)
@@ -2511,6 +2863,83 @@ def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None
         )
         return JSONResponse(
             build_cortex_state_payload(runtime),
+            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+        )
+
+    @app.post("/internal/v1/dashboard/cortex/household-head")
+    def manage_household_head(request: Request, payload: dict[str, Any]) -> JSONResponse:
+        access.require(request)
+        if not isinstance(payload, dict):
+            raise HTTPException(status_code=422, detail="Ongeldig verzoek")
+        action = str(payload.get("action") or "").strip()
+        hh = _resolve_household_head_settings(runtime)
+        created_invite: dict[str, Any] | None = None
+        try:
+            if action == "update_profile":
+                rules_raw = payload.get("household_rules")
+                rules_list = (
+                    [str(x) for x in rules_raw]
+                    if isinstance(rules_raw, list)
+                    else None
+                )
+                hh.update_eva_profile(
+                    display_name=payload.get("display_name"),
+                    persona_summary=payload.get("persona_summary"),
+                    tone_guidelines=payload.get("tone_guidelines"),
+                    household_rules=rules_list,
+                )
+            elif action == "rollback_profile":
+                hh.rollback_eva_profile()
+            elif action == "create_invite":
+                role_val = "gezin" if payload.get("role") == "gezin" else "gast"
+                ttl_raw = payload.get("ttl_hours", 48)
+                if isinstance(ttl_raw, bool) or not isinstance(ttl_raw, int):
+                    ttl_raw = 48
+                invite_res = hh.create_invite(
+                    label=str(payload.get("label") or ""),
+                    role=role_val,
+                    notes=str(payload.get("notes") or ""),
+                    ttl_hours=ttl_raw,
+                )
+                created_invite = {
+                    "invite_id": invite_res["invite_id"],
+                    "label": invite_res["label"],
+                    "role": invite_res["role"],
+                    "expires_at": invite_res["expires_at"],
+                    "start_command": invite_res["start_command"],
+                    "deep_link": invite_res["deep_link"],
+                    "bot_username": invite_res["bot_username"],
+                }
+            elif action in (
+                "pause_member",
+                "activate_member",
+                "remove_member",
+                "set_role",
+                "revoke_invite",
+                "upsert_member",
+            ):
+                role_val = "gezin" if payload.get("role") == "gezin" else "gast"
+                tg_id = payload.get("telegram_user_id")
+                hh.update_member_or_invite(
+                    action=action,  # type: ignore[arg-type]
+                    target=str(payload.get("target") or ""),
+                    role=role_val,
+                    display_name=str(payload.get("display_name") or ""),
+                    telegram_user_id=tg_id if isinstance(tg_id, int) and not isinstance(tg_id, bool) else None,
+                    notes=str(payload.get("notes") or ""),
+                )
+            else:
+                raise ValueError("Onbekende gezinshoofd-actie")
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+        engine = _ensure_pulse_engine(runtime)
+        engine.apply_sensory_stimulus(kind="conversation_turn", intensity=0.55)
+        return JSONResponse(
+            {
+                "cortex": build_cortex_state_payload(runtime),
+                "created_invite": created_invite,
+            },
             headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
         )
 

@@ -30,6 +30,7 @@ from eva.contracts.living_cortex import (
     Field,
     HouseholdResponsibilityArtifact,
     JarvisStagedAction,
+    LiquidOdeSnapshot,
     SleepConsolidationSummary,
     SynapticMemorySnapshot,
     WorldModelState,
@@ -41,6 +42,7 @@ from eva.application.native_fastpath import (
     NATIVE_ACCELERATOR_ACTIVE,
     compute_concept_vector_fast,
     compute_expected_free_energy_fast,
+    evolve_liquid_ode_fast,
     fast_canonical_sha256,
     rust_json_bytes,
     simulate_world_model_fast,
@@ -291,6 +293,7 @@ class EntityPulseSnapshot(BaseModel):
     concept_space: ConceptSpaceSnapshot = Field(default_factory=ConceptSpaceSnapshot)
     jarvis_staged_actions: tuple[JarvisStagedAction, ...] = ()
     last_sleep_consolidation: SleepConsolidationSummary = Field(default_factory=SleepConsolidationSummary)
+    liquid_ode: LiquidOdeSnapshot = Field(default_factory=LiquidOdeSnapshot)
     zero_token_skips: int = 0
 
     def to_payload(self) -> dict[str, object]:
@@ -316,12 +319,14 @@ class EntityPulseSnapshot(BaseModel):
             "engine_runtime": {
                 "pydantic_v2_rust_core": True,
                 "native_c_simd_fastpath": NATIVE_ACCELERATOR_ACTIVE,
+                "liquid_ode_rk4_c": self.liquid_ode.native_c_active,
                 "active_inference_efe_g": True,
                 "act_r_tri_factor_salience": True,
                 "jepa_world_model_c": True,
                 "titans_o1_synaptic_memory": True,
                 "multilingual_concept_guard": True,
             },
+            "liquid_ode": self.liquid_ode.model_dump(mode="json"),
             "world_model": self.world_model.model_dump(mode="json"),
             "synaptic_memory": self.synaptic_memory.model_dump(mode="json"),
             "concept_space": self.concept_space.model_dump(mode="json"),
@@ -454,7 +459,7 @@ def _default_source_watches(now_iso: str) -> dict[str, AttentionSourceWatch]:
         ),
         "watch-home-energy-sensor": AttentionSourceWatch(
             watch_id="watch-home-energy-sensor",
-            source_kind="home_assistant_state",
+            source_kind="home_environment_state",
             target_ref="sensor.household_evening_comfort",
             purpose_nl="Avondtemperatuur en aanwezigheid koppelen aan rustige voorbereiding zonder polling-storm.",
             access_status="connected",
@@ -690,6 +695,9 @@ class LivingEntityPulseEngine:
         )
         self._unresolved_tensions = 0
         self._zero_token_skips = 1
+        self._liquid_vec: tuple[float, ...] = (0.48, 0.62, 0.58, 0.88, 0.34, 0.86)
+        self._last_stimulus_intensity: float = 0.0
+        self._last_liquid_ode: LiquidOdeSnapshot = LiquidOdeSnapshot(native_c_active=NATIVE_ACCELERATOR_ACTIVE)
         self._persist_path = persist_path
         if self._persist_path is not None:
             self._load_persisted_state()
@@ -1068,6 +1076,10 @@ class LivingEntityPulseEngine:
                 self._last_concept_space = ConceptSpaceSnapshot(**data["last_concept_space"])
             if isinstance(data.get("last_sleep_consolidation"), dict):
                 self._last_sleep_consolidation = SleepConsolidationSummary(**data["last_sleep_consolidation"])
+            if isinstance(data.get("liquid_vec"), list) and len(data["liquid_vec"]) == 6:
+                self._liquid_vec = tuple(_clamp(float(v)) for v in data["liquid_vec"])
+            if isinstance(data.get("last_liquid_ode"), dict):
+                self._last_liquid_ode = LiquidOdeSnapshot(**data["last_liquid_ode"])
         except Exception:
             pass
 
@@ -1099,6 +1111,8 @@ class LivingEntityPulseEngine:
                 "synaptic_frob": self._synaptic_frob,
                 "last_concept_space": self._last_concept_space.model_dump(mode="json"),
                 "last_sleep_consolidation": self._last_sleep_consolidation.model_dump(mode="json"),
+                "liquid_vec": list(self._liquid_vec),
+                "last_liquid_ode": self._last_liquid_ode.model_dump(mode="json"),
             }
             self._persist_path.write_bytes(rust_json_bytes(payload))
         except Exception:
@@ -1143,7 +1157,8 @@ class LivingEntityPulseEngine:
     ) -> EntityPulseSnapshot:
         """Shift internal homeostatic drives in response to real-world events."""
         current_time = now or datetime.now(UTC)
-        self._advance_to(current_time)
+        self._last_stimulus_intensity = _clamp(intensity)
+        self._advance_to(current_time, stimulus_intensity=self._last_stimulus_intensity)
         s = _clamp(intensity)
         d = self._drives
         if kind == "conversation_turn":
@@ -1182,14 +1197,36 @@ class LivingEntityPulseEngine:
             )
         return self.snapshot(now=current_time)
 
-    def _advance_to(self, now: datetime) -> None:
+    def _advance_to(self, now: datetime, *, stimulus_intensity: float = 0.0) -> None:
         elapsed = max(0.0, (now - self._last_updated).total_seconds())
         hour_float = now.hour + now.minute / 60.0
         self._drives = self._drives.evolve(
             elapsed_seconds=elapsed,
             hour_of_day=hour_float,
-            household_quiet=True,
+            household_quiet=stimulus_intensity < 0.25,
             unresolved_tensions=self._unresolved_tensions,
+        )
+        house_act = _clamp(
+            0.20 + 0.45 * max((r.social_receptivity for r in self._residents.values()), default=0.35),
+            0.05,
+            0.95,
+        )
+        ode_res = evolve_liquid_ode_fast(
+            self._liquid_vec,
+            dt_seconds=max(elapsed, 0.25 if stimulus_intensity > 0.0 else 0.0),
+            hour_of_day=hour_float,
+            stimulus_intensity=stimulus_intensity,
+            house_activity=house_act,
+            unresolved_tension=min(1.0, self._unresolved_tensions * 0.25),
+        )
+        self._liquid_vec = tuple(ode_res["state_vector"])
+        self._last_liquid_ode = LiquidOdeSnapshot(
+            state=ode_res["state"],
+            tau_effective_seconds=ode_res["tau_effective_seconds"],
+            mean_tau_seconds=ode_res["mean_tau_seconds"],
+            phase_velocity=ode_res["phase_velocity"],
+            rk4_substeps=ode_res["rk4_substeps"],
+            native_c_active=ode_res["native_c_active"],
         )
         self._last_updated = now
 
@@ -1306,6 +1343,7 @@ class LivingEntityPulseEngine:
             concept_space=self._last_concept_space,
             jarvis_staged_actions=tuple(self._jarvis_staged_actions.values()),
             last_sleep_consolidation=self._last_sleep_consolidation,
+            liquid_ode=self._last_liquid_ode,
             zero_token_skips=self._zero_token_skips,
         )
 

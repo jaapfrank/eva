@@ -830,6 +830,17 @@ class PostgresExternalConversationTools:
     def _authorize(self, turn: ConversationTurn) -> None:
         from eva.application.initiative_execution import require_initiative_context
         require_initiative_context(turn)
+        if turn.principal_id.startswith("telegram:"):
+            suffix = turn.principal_id.removeprefix("telegram:")
+            if suffix.isdigit():
+                from eva.application.household_head_settings import HouseholdHeadSettings
+                sender_info = HouseholdHeadSettings().resolve_telegram_sender(int(suffix))
+                if sender_info["provisioned"] and (
+                    not sender_info["admitted"] or sender_info["role"] == "gast"
+                ):
+                    raise ConversationConflict(
+                        "external household tool requires admitted household membership"
+                    )
         if self._authorize_turn is not None:
             self._authorize_turn(turn)
         elif turn.audience.kind != "private_person":

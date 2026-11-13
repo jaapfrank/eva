@@ -67,3 +67,38 @@ test('blocked private account records bounded identity metadata, not content or 
   assert.equal(h.journal.db.prepare('SELECT count(*) AS n FROM telegram_access_requests').get().n, 1);
   h.journal.close();
 });
+test('one-time 256-bit invite admits private user while invalid token stays silent (default-deny)', async () => {
+  const validToken = 'inv_' + 'A'.repeat(43);
+  let used = false;
+  const sent = [];
+  const h = harness({
+    redeemInvite: async ({ token, telegramUserId }) => {
+      if (token === validToken && !used) {
+        used = true;
+        return { admitted: true, welcome_text: `Welkom gebruiker ${telegramUserId}!` };
+      }
+      return { admitted: false };
+    },
+  });
+  // Invalid token from stranger 77 -> 0 replies, 0 core calls
+  await h.handler(ctx(20, '/start inv_' + 'B'.repeat(43), 77, sent));
+  assert.equal(sent.length, 0);
+  assert.equal(h.calls.length, 0);
+
+  // Valid single-use token from invited person 88 -> welcomed and immediately able to chat
+  await h.handler(ctx(21, `/start ${validToken}`, 88, sent));
+  assert.equal(sent.length, 1);
+  assert.match(sent[0].text, /Welkom gebruiker 88/);
+  assert.equal(h.calls.length, 0);
+
+  // Subsequent normal message from admitted user 88 reaches Eva2 core
+  await h.handler(ctx(22, 'hoi eva', 88, sent));
+  assert.equal(h.calls.length, 1);
+  assert.equal(h.calls[0].fromId, 88);
+
+  // Replaying the burned token from stranger 99 -> 0 replies, 0 core calls
+  await h.handler(ctx(23, `/start ${validToken}`, 99, sent));
+  assert.equal(sent.length, 2);
+  assert.equal(h.calls.length, 1);
+  h.journal.close();
+});

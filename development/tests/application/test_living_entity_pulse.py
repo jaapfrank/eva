@@ -707,6 +707,233 @@ def test_jepa_world_model_titans_synaptic_memory_sleep_consolidation_and_multi_b
     assert "Google Gemini Cloud" in failover_res.text
 
 
+def test_fase1_liquid_ode_rk4_and_household_head_regie_end_to_end(tmp_path) -> None:
+    import json
+    from dataclasses import replace
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+
+    from eva.adapters.api.dashboard_access import DashboardAccess
+    from eva.adapters.api.dashboard_cortex import install_dashboard_cortex
+    from eva.application.household_head_settings import (
+        DEFAULT_LOLA_TELEGRAM_ID,
+        DEFAULT_OWNER_TELEGRAM_ID,
+        HouseholdHeadSettings,
+    )
+    from eva.application.native_fastpath import evolve_liquid_ode_fast
+    from eva.operations.model_provider_settings import ModelProviderSettings
+
+    # 1. Liquid Time-Constant (dx/dt) Neural ODE: calm vs sensory stimulus tau contraction
+    calm_state = evolve_liquid_ode_fast(
+        (0.32, 0.72, 0.54, 0.80, 0.44, 0.86),
+        dt_seconds=12.0,
+        hour_of_day=14.0,
+        stimulus_intensity=0.0,
+    )
+    excited_state = evolve_liquid_ode_fast(
+        (0.32, 0.72, 0.54, 0.80, 0.44, 0.86),
+        dt_seconds=12.0,
+        hour_of_day=14.0,
+        stimulus_intensity=0.95,
+        house_activity=0.80,
+        unresolved_tension=0.35,
+    )
+    assert excited_state["mean_tau_seconds"] < calm_state["mean_tau_seconds"]
+    assert excited_state["phase_velocity"] > calm_state["phase_velocity"]
+    assert excited_state["state"]["arousal"] > calm_state["state"]["arousal"]
+    assert all(
+        0.0 <= excited_state["state"][k] <= 1.0
+        for k in (
+            "arousal",
+            "social_attunement",
+            "epistemic_drive",
+            "home_proprioception",
+            "temporal_anticipation",
+            "affective_coherence",
+        )
+    )
+
+    # Pulse engine persists liquid_ode state across restarts
+    persist_file = tmp_path / "living-ode.json"
+    engine1 = LivingEntityPulseEngine(persist_path=persist_file)
+    engine1.apply_sensory_stimulus(kind="conversation_turn", intensity=0.85)
+    snap1 = engine1.snapshot().to_payload()
+    assert "liquid_ode" in snap1
+    assert snap1["engine_runtime"]["liquid_ode_rk4_c"] is True
+    engine2 = LivingEntityPulseEngine(persist_path=persist_file)
+    assert engine2.snapshot().liquid_ode.state["arousal"] > 0.0
+
+    # 2. Unprovisioned read-only invariant (must NOT create storage directory!)
+    unprov_dir = tmp_path / "unprovisioned-hh"
+    hh_ro = HouseholdHeadSettings(unprov_dir)
+    ro_status = hh_ro.status()
+    assert not unprov_dir.exists()
+    member_names = [m["display_name"] for m in ro_status["members"]]
+    assert member_names == ["Jaap", "Lola"]
+
+    # 3. 256-bit single-use Telegram invite: sha256-only on disk, single-use burn, guest privacy boundary
+    hh_dir = tmp_path / "provisioned-hh"
+    hh = HouseholdHeadSettings(hh_dir)
+    hh.register_bot_username("EvaThuisBot")
+    inv = hh.create_invite(label="Sanne", role="gast", notes="Buurvrouw")
+    assert inv["deep_link"].startswith("https://t.me/EvaThuisBot?start=inv_")
+    raw_token = inv["start_command"].split(" ", 1)[1]
+
+    disk_text = (hh_dir / "household-head-state.json").read_text(encoding="utf-8")
+    assert raw_token not in disk_text
+    assert "token_sha256" in disk_text
+
+    # Stranger with wrong token -> None
+    assert hh.redeem_telegram_invite(raw_token="inv_" + "A" * 43, telegram_user_id=999111222) is None
+
+    # Valid redemption -> admitted once as gast
+    redeemed = hh.redeem_telegram_invite(
+        raw_token=raw_token,
+        telegram_user_id=888777666,
+        first_name="Sanne",
+        username="sanne_nl",
+    )
+    assert redeemed is not None and redeemed["admitted"] is True
+    assert redeemed["member"]["role"] == "gast"
+
+    # Replay of exact same token -> burned (returns None)
+    assert hh.redeem_telegram_invite(raw_token=raw_token, telegram_user_id=888777666) is None
+
+    # Guest turn context enforces strict privacy separation from Jaap & Lola (no rule/guest leakage)
+    henk_inv = hh.create_invite(label="BuurmanHenk", role="gast")
+    hh.redeem_telegram_invite(
+        raw_token=henk_inv["start_command"].split(" ", 1)[1],
+        telegram_user_id=777666555,
+        first_name="Henk",
+    )
+    guest_ctx = hh.build_turn_context(
+        principal_id="telegram:888777666",
+        conversation_id="telegram:888777666",
+    )
+    assert guest_ctx["allowed"] is True
+    assert guest_ctx["speaker_role"] == "gast"
+    assert "deel NOOIT" in guest_ctx["self_context_note"]
+    assert "BuurmanHenk" not in guest_ctx["self_context_note"]
+    assert "Vaste huisregels" not in guest_ctx["self_context_note"]
+
+    # Unknown Telegram user is strictly denied once household state is provisioned
+    stranger_ctx = hh.build_turn_context(
+        principal_id="telegram:123123123",
+        conversation_id="telegram:123123123",
+    )
+    assert stranger_ctx["allowed"] is False
+    assert hh.resolve_telegram_sender(123123123)["admitted"] is False
+
+    # NaN / Inf & 6-hour RK4 stability check
+    nan_ode = evolve_liquid_ode_fast(
+        (float("nan"), float("inf"), -float("inf"), 0.5, 0.5, 0.5),
+        dt_seconds=float("nan"),
+        hour_of_day=float("nan"),
+        stimulus_intensity=float("inf"),
+    )
+    assert all(0.0 <= v <= 1.0 for v in nan_ode["state"].values())
+    long_ode = evolve_liquid_ode_fast(
+        (0.32, 0.72, 0.54, 0.80, 0.44, 0.86),
+        dt_seconds=21600.0,
+        hour_of_day=14.0,
+        stimulus_intensity=0.95,
+    )
+    assert long_ode["rk4_substeps"] == 1800
+
+    # Hard runtime tool stripping for guests + no household resident pollution
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.application.memory_audience import MemoryAudience
+    from eva.bootstrap.optional_model_providers import OptionalConversationModel, OptionalModelProviders
+    from tests.model.test_pydantic_conversation_model import _identity, _memory, _turn
+
+    guest_ctrl = OptionalModelProviders(PydanticConversationModel(auth_file=tmp_path / "no-auth"), hh_dir)
+    guest_opt = OptionalConversationModel(guest_ctrl.baseline, guest_ctrl)
+    guest_turn = replace(
+        _turn(),
+        principal_id="telegram:888777666",
+        audience=MemoryAudience.private_person(principal_id="telegram:888777666"),
+        conversation_id="telegram:888777666",
+        text="Welke lampen staan er aan in huis?",
+    )
+    _, filtered_kw = guest_opt._prepare_household_and_pulse(
+        guest_turn,
+        (_identity(), _memory(), ()),
+        {"available_actions": ("memory_search", "read_home_assistant_state", "set_home_assistant_light")},
+    )
+    assert filtered_kw["available_actions"] == ("memory_search",)
+    resident_ids = {r.principal_id for r in LivingEntityPulseEngine.get().snapshot().residents}
+    assert "telegram:888777666" not in resident_ids
+
+    # Owner slash-commands work ONLY for Jaap (DEFAULT_OWNER_TELEGRAM_ID) in his private DM
+    assert (
+        hh.handle_owner_telegram_command(
+            telegram_user_id=DEFAULT_LOLA_TELEGRAM_ID,
+            chat_id=str(DEFAULT_LOLA_TELEGRAM_ID),
+            text="/uitnodigen Test gast",
+        )
+        is None
+    )
+    owner_reply = hh.handle_owner_telegram_command(
+        telegram_user_id=DEFAULT_OWNER_TELEGRAM_ID,
+        chat_id=str(DEFAULT_OWNER_TELEGRAM_ID),
+        text="/eva stijl Kort, warm, scherp en met droge humor.",
+    )
+    assert owner_reply is not None and "bijgewerkt" in owner_reply.lower()
+    assert "droge humor" in hh.status()["eva_profile"]["tone_guidelines"]
+
+    rb_reply = hh.handle_owner_telegram_command(
+        telegram_user_id=DEFAULT_OWNER_TELEGRAM_ID,
+        chat_id=str(DEFAULT_OWNER_TELEGRAM_ID),
+        text="/eva herstel",
+    )
+    assert rb_reply is not None and "teruggezet" in rb_reply.lower()
+
+    # 4. Dashboard Cortex Household-Head API endpoint
+    class DummyControl:
+        def __init__(self, directory):
+            self.settings = ModelProviderSettings(directory)
+
+    class DummyRuntime:
+        _living_pulse_engine = engine1
+        _optional_model_providers = DummyControl(hh_dir)
+
+    app = FastAPI()
+    install_dashboard_cortex(app, access=DashboardAccess(None), runtime=DummyRuntime())
+    client = TestClient(app)
+
+    st_res = client.get("/internal/v1/dashboard/cortex/state")
+    assert st_res.status_code == 200
+    st_json = st_res.json()
+    assert st_json["household_head"]["contract"] == "EvaHouseholdHeadView/v1"
+    assert isinstance(st_json["pulse"]["liquid_ode"]["native_c_active"], bool)
+    assert "arousal" in st_json["pulse"]["liquid_ode"]["state"]
+
+    upd_res = client.post(
+        "/internal/v1/dashboard/cortex/household-head",
+        json={
+            "action": "update_profile",
+            "display_name": "Eva",
+            "persona_summary": "Scherpe, warme huisgenoot van Jaap en Lola.",
+            "tone_guidelines": "Vlot en natuurlijk Nederlands.",
+            "household_rules": ["Alleen Jaap en Lola horen bij het gezin."],
+        },
+    )
+    assert upd_res.status_code == 200
+    assert (
+        upd_res.json()["cortex"]["household_head"]["eva_profile"]["persona_summary"]
+        == "Scherpe, warme huisgenoot van Jaap en Lola."
+    )
+
+    inv_res = client.post(
+        "/internal/v1/dashboard/cortex/household-head",
+        json={"action": "create_invite", "label": "Oma Marjan", "role": "gast", "ttl_hours": 24},
+    )
+    assert inv_res.status_code == 200
+    assert inv_res.json()["created_invite"]["label"] == "Oma Marjan"
+    assert "start=inv_" in inv_res.json()["created_invite"]["deep_link"]
+
+
+
 
 
 

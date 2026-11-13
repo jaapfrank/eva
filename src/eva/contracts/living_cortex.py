@@ -287,6 +287,37 @@ class SleepConsolidationSummary(BaseModel):
     )
 
 
+class LiquidOdeSnapshot(BaseModel):
+    """Continuous 6D Liquid Time-Constant (dx/dt) Neural ODE state evolved via RK4 in C/SIMD."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    state: dict[str, float] = Field(
+        default_factory=lambda: {
+            "arousal": 0.48,
+            "social_attunement": 0.62,
+            "epistemic_drive": 0.58,
+            "home_proprioception": 0.88,
+            "temporal_anticipation": 0.34,
+            "affective_coherence": 0.86,
+        }
+    )
+    tau_effective_seconds: dict[str, float] = Field(
+        default_factory=lambda: {
+            "arousal": 24.0,
+            "social_attunement": 32.0,
+            "epistemic_drive": 64.0,
+            "home_proprioception": 58.0,
+            "temporal_anticipation": 46.0,
+            "affective_coherence": 115.0,
+        }
+    )
+    mean_tau_seconds: float = Field(default=56.5, ge=0.0)
+    phase_velocity: float = Field(default=0.0012, ge=0.0)
+    rk4_substeps: int = Field(default=1, ge=1)
+    native_c_active: bool = True
+
+
 class CloudProviderConfigureRequest(BaseModel):
     """Pydantic v2 validated request to configure, check, or select a real Cloud/Optional-Local LLM in Cortex."""
 
@@ -327,6 +358,7 @@ __all__ = [
     "HouseholdResponsibilityArtifact",
     "JarvisActionDecisionRequest",
     "JarvisStagedAction",
+    "LiquidOdeSnapshot",
     "ResponsibilityActionRequest",
     "RoutineObservationRequest",
     "SleepConsolidationSummary",

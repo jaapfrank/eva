@@ -24,10 +24,12 @@ _C_SOURCE = r"""
 #include <math.h>
 
 static inline double clamp01(double v) {
+    if (!isfinite(v)) return 0.0;
     return v < 0.0 ? 0.0 : (v > 1.0 ? 1.0 : v);
 }
 
 static inline double clamp_range(double v, double lo, double hi) {
+    if (!isfinite(v)) return lo;
     return v < lo ? lo : (v > hi ? hi : v);
 }
 
@@ -352,6 +354,140 @@ void eva_titans_synaptic_step(
     }
     *out_frobenius_norm = round(sqrt(frob_sq) * 10000.0) / 10000.0;
 }
+
+/* Liquid Time-Constant (LTC) 6D Continuous Neural ODE with RK4 integration:
+   x = [arousal, social_attunement, epistemic_drive, home_proprioception, temporal_anticipation, affective_coherence]
+   dx_i/dt = -(1/tau0_i) * (x_i - base_i) + g_i(x, I) * (A_i - x_i)
+   tau_eff_i(x, I) = 1.0 / ((1.0 / tau0_i) + g_i(x, I))
+*/
+static inline double ltc_sigmoid(double z) {
+    if (z > 16.0) return 1.0;
+    if (z < -16.0) return 0.0;
+    return 1.0 / (1.0 + exp(-z));
+}
+
+static void ltc_rhs(
+    const double *x,
+    const double *base,
+    const double *reversal_a,
+    const double *tau0,
+    const double *gain_w,
+    double stimulus,
+    double tension,
+    double *dxdt,
+    double *tau_eff_out
+) {
+    /* Lateral liquid coupling across the 6 neurons */
+    const double lateral[6][6] = {
+        { 0.00,  0.35,  0.25, -0.20,  0.30,  0.10},
+        { 0.30,  0.00,  0.20,  0.25,  0.15,  0.35},
+        { 0.25,  0.15,  0.00,  0.30,  0.20,  0.20},
+        {-0.15,  0.20,  0.10,  0.00, -0.10,  0.45},
+        { 0.35,  0.20,  0.25, -0.10,  0.00,  0.15},
+        {-0.10,  0.30,  0.15,  0.40,  0.10,  0.00}
+    };
+    const double stim_drive[6] = {3.2, 2.8, 2.1, 2.4, 2.6, 1.6};
+    const double bias[6] = {-1.35, -1.20, -1.40, -1.50, -1.30, -1.60};
+
+    for (int i = 0; i < 6; i++) {
+        double recurrent = bias[i] + stim_drive[i] * stimulus + (i == 3 || i == 0 ? 1.8 * tension : 0.4 * tension);
+        for (int j = 0; j < 6; j++) {
+            recurrent += lateral[i][j] * x[j];
+        }
+        double g = gain_w[i] * ltc_sigmoid(recurrent);
+        double leak = 1.0 / tau0[i];
+        dxdt[i] = -leak * (x[i] - base[i]) + g * (reversal_a[i] - x[i]);
+        if (tau_eff_out != 0) {
+            tau_eff_out[i] = 1.0 / (leak + g);
+        }
+    }
+}
+
+void eva_liquid_ode_step(
+    const double *x_in,
+    double dt_seconds,
+    double hour_of_day,
+    double stimulus_intensity,
+    double house_activity,
+    double unresolved_tension,
+    double *x_out,
+    double *tau_eff_out,
+    double *out_phase_velocity,
+    int *out_substeps
+) {
+    const double pi = 3.14159265358979323846;
+    const double tau0[6] = {240.0, 900.0, 1800.0, 1200.0, 1500.0, 3600.0};
+    const double gain_w[6] = {0.14, 0.08, 0.045, 0.06, 0.07, 0.03};
+
+    double clean_stim_in = clamp01(stimulus_intensity);
+    double clean_act = clamp01(house_activity);
+    double stim = clamp01(0.75 * clean_stim_in + 0.35 * clean_act);
+    double tens = clamp01(unresolved_tension);
+    double dt = clamp_range(dt_seconds, 0.0, 21600.0);
+    double hod = isfinite(hour_of_day) ? fmod(fmod(hour_of_day, 24.0) + 24.0, 24.0) : 12.0;
+
+    double circ = cos(((hod - 14.5) / 24.0) * 2.0 * pi);
+    int daytime = (hod >= 7.0 && hod <= 22.5) ? 1 : 0;
+    double morning_peak = exp(-pow((hod - 7.75) / 1.4, 2.0));
+    double evening_peak = exp(-pow((hod - 17.75) / 1.6, 2.0));
+    double trans = morning_peak > evening_peak ? morning_peak : evening_peak;
+
+    double base[6];
+    base[0] = clamp01(0.42 + 0.28 * circ + 0.15 * clean_act);
+    base[1] = daytime ? 0.58 : 0.28;
+    base[2] = clamp01(0.45 + 0.22 * circ * (1.0 - tens));
+    base[3] = clamp01(0.88 - 0.42 * tens);
+    base[4] = clamp01(0.24 + 0.52 * trans + 0.15 * tens);
+    base[5] = clamp01(0.84 - 0.25 * tens);
+
+    double reversal_a[6];
+    reversal_a[0] = clamp01(0.92 * stim + 0.35 * tens + 0.25);
+    reversal_a[1] = clamp01(0.90 * stim + (daytime ? 0.45 : 0.25));
+    reversal_a[2] = clamp01(0.82 - 0.30 * tens + 0.15 * stim);
+    reversal_a[3] = clamp01(0.94 - 0.65 * tens);
+    reversal_a[4] = clamp01(0.45 + 0.45 * trans + 0.30 * stim);
+    reversal_a[5] = clamp01(0.90 - 0.35 * tens + 0.10 * stim);
+
+    double x[6];
+    for (int i = 0; i < 6; i++) {
+        x[i] = isfinite(x_in[i]) ? clamp01(x_in[i]) : 0.60;
+    }
+
+    int steps = (int)ceil(dt / 12.0);
+    if (steps < 1) steps = 1;
+    if (steps > 1800) steps = 1800;
+    double h = dt / (double)steps;
+
+    double k1[6], k2[6], k3[6], k4[6], tmp[6];
+    if (dt > 1e-6) {
+        for (int s = 0; s < steps; s++) {
+            ltc_rhs(x, base, reversal_a, tau0, gain_w, stim, tens, k1, 0);
+            for (int i = 0; i < 6; i++) tmp[i] = clamp01(x[i] + 0.5 * h * k1[i]);
+            ltc_rhs(tmp, base, reversal_a, tau0, gain_w, stim, tens, k2, 0);
+            for (int i = 0; i < 6; i++) tmp[i] = clamp01(x[i] + 0.5 * h * k2[i]);
+            ltc_rhs(tmp, base, reversal_a, tau0, gain_w, stim, tens, k3, 0);
+            for (int i = 0; i < 6; i++) tmp[i] = clamp01(x[i] + h * k3[i]);
+            ltc_rhs(tmp, base, reversal_a, tau0, gain_w, stim, tens, k4, 0);
+            for (int i = 0; i < 6; i++) {
+                x[i] = clamp01(x[i] + (h / 6.0) * (k1[i] + 2.0 * k2[i] + 2.0 * k3[i] + k4[i]));
+            }
+            /* Exponentially relax transient stimulus impulse over longer horizons */
+            stim *= exp(-h / 45.0);
+        }
+    }
+
+    double inst_dx[6];
+    ltc_rhs(x, base, reversal_a, tau0, gain_w, clamp01(0.75 * clean_stim_in + 0.35 * clean_act), tens, inst_dx, tau_eff_out);
+
+    double vel_sq = 0.0;
+    for (int i = 0; i < 6; i++) {
+        x_out[i] = round(clamp01(x[i]) * 10000.0) / 10000.0;
+        tau_eff_out[i] = round(clamp_range(tau_eff_out[i], 1.0, 7200.0) * 100.0) / 100.0;
+        vel_sq += inst_dx[i] * inst_dx[i];
+    }
+    *out_phase_velocity = round(sqrt(vel_sq) * 1000000.0) / 1000000.0;
+    *out_substeps = steps;
+}
 """
 
 _HERE = Path(__file__).resolve().parent
@@ -393,6 +529,7 @@ def _load_native_lib() -> ctypes.CDLL | None:
                     and hasattr(lib, "eva_cognitive_salience_score")
                     and hasattr(lib, "eva_world_model_simulate")
                     and hasattr(lib, "eva_titans_synaptic_step")
+                    and hasattr(lib, "eva_liquid_ode_step")
                 ):
                     lib.eva_expected_free_energy_policies.argtypes = [
                         ctypes.c_double,
@@ -437,6 +574,19 @@ def _load_native_lib() -> ctypes.CDLL | None:
                         ctypes.POINTER(ctypes.c_double),
                     ]
                     lib.eva_titans_synaptic_step.restype = None
+                    lib.eva_liquid_ode_step.argtypes = [
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.c_double,
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_double),
+                        ctypes.POINTER(ctypes.c_int),
+                    ]
+                    lib.eva_liquid_ode_step.restype = None
                     return lib
             except OSError:
                 continue
@@ -1049,6 +1199,155 @@ def compute_concept_vector_fast(text: str) -> dict[str, Any]:
     }
 
 
+def _finite_clamp(val: Any, lo: float, hi: float, default: float) -> float:
+    try:
+        fv = float(val)
+    except (TypeError, ValueError):
+        return default
+    if not math.isfinite(fv):
+        return default
+    return max(lo, min(hi, fv))
+
+
+def evolve_liquid_ode_fast(
+    state_in: tuple[float, ...] | list[float],
+    *,
+    dt_seconds: float,
+    hour_of_day: float,
+    stimulus_intensity: float = 0.0,
+    house_activity: float = 0.25,
+    unresolved_tension: float = 0.0,
+) -> dict[str, Any]:
+    """Evolve Eva's 6D Liquid Time-Constant (dx/dt) ODE via RK4 in compiled C/SIMD at 0 LLM tokens."""
+    padded = [_finite_clamp(v, 0.0, 1.0, 0.60) for v in list(state_in)[:6]]
+    while len(padded) < 6:
+        padded.append(0.60)
+    dt = _finite_clamp(dt_seconds, 0.0, 21600.0, 0.0)
+    stim = _finite_clamp(stimulus_intensity, 0.0, 1.0, 0.0)
+    act = _finite_clamp(house_activity, 0.0, 1.0, 0.25)
+    tens = _finite_clamp(unresolved_tension, 0.0, 1.0, 0.0)
+    hod_raw = float(hour_of_day) if isinstance(hour_of_day, (int, float)) and math.isfinite(float(hour_of_day)) else 12.0
+    hod = ((hod_raw % 24.0) + 24.0) % 24.0
+
+    labels = (
+        "arousal",
+        "social_attunement",
+        "epistemic_drive",
+        "home_proprioception",
+        "temporal_anticipation",
+        "affective_coherence",
+    )
+
+    if _NATIVE_LIB is not None and hasattr(_NATIVE_LIB, "eva_liquid_ode_step"):
+        c_in = (ctypes.c_double * 6)(*padded)
+        c_out = (ctypes.c_double * 6)()
+        c_tau = (ctypes.c_double * 6)()
+        c_vel = ctypes.c_double()
+        c_steps = ctypes.c_int()
+        _NATIVE_LIB.eva_liquid_ode_step(
+            c_in,
+            dt,
+            hod,
+            stim,
+            act,
+            tens,
+            c_out,
+            c_tau,
+            ctypes.byref(c_vel),
+            ctypes.byref(c_steps),
+        )
+        state_vec = tuple(float(c_out[i]) for i in range(6))
+        tau_vec = tuple(float(c_tau[i]) for i in range(6))
+        return {
+            "state": dict(zip(labels, state_vec)),
+            "state_vector": state_vec,
+            "tau_effective_seconds": dict(zip(labels, tau_vec)),
+            "mean_tau_seconds": round(sum(tau_vec) / 6.0, 2),
+            "phase_velocity": float(c_vel.value),
+            "rk4_substeps": int(c_steps.value),
+            "native_c_active": True,
+        }
+
+    # Identical pure-Python RK4 fallback
+    tau0 = (240.0, 900.0, 1800.0, 1200.0, 1500.0, 3600.0)
+    gain_w = (0.14, 0.08, 0.045, 0.06, 0.07, 0.03)
+    lateral = (
+        (0.00, 0.35, 0.25, -0.20, 0.30, 0.10),
+        (0.30, 0.00, 0.20, 0.25, 0.15, 0.35),
+        (0.25, 0.15, 0.00, 0.30, 0.20, 0.20),
+        (-0.15, 0.20, 0.10, 0.00, -0.10, 0.45),
+        (0.35, 0.20, 0.25, -0.10, 0.00, 0.15),
+        (-0.10, 0.30, 0.15, 0.40, 0.10, 0.00),
+    )
+    stim_drive = (3.2, 2.8, 2.1, 2.4, 2.6, 1.6)
+    bias = (-1.35, -1.20, -1.40, -1.50, -1.30, -1.60)
+    combined_stim = max(0.0, min(1.0, 0.75 * stim + 0.35 * act))
+    circ = math.cos(((hod - 14.5) / 24.0) * 2.0 * math.pi)
+    daytime = 7.0 <= hod <= 22.5
+    trans = max(
+        math.exp(-((hod - 7.75) / 1.4) ** 2),
+        math.exp(-((hod - 17.75) / 1.6) ** 2),
+    )
+    base = (
+        max(0.0, min(1.0, 0.42 + 0.28 * circ + 0.15 * act)),
+        0.58 if daytime else 0.28,
+        max(0.0, min(1.0, 0.45 + 0.22 * circ * (1.0 - tens))),
+        max(0.0, min(1.0, 0.88 - 0.42 * tens)),
+        max(0.0, min(1.0, 0.24 + 0.52 * trans + 0.15 * tens)),
+        max(0.0, min(1.0, 0.84 - 0.25 * tens)),
+    )
+    rev_a = (
+        max(0.0, min(1.0, 0.92 * combined_stim + 0.35 * tens + 0.25)),
+        max(0.0, min(1.0, 0.90 * combined_stim + (0.45 if daytime else 0.25))),
+        max(0.0, min(1.0, 0.82 - 0.30 * tens + 0.15 * combined_stim)),
+        max(0.0, min(1.0, 0.94 - 0.65 * tens)),
+        max(0.0, min(1.0, 0.45 + 0.45 * trans + 0.30 * combined_stim)),
+        max(0.0, min(1.0, 0.90 - 0.35 * tens + 0.10 * combined_stim)),
+    )
+
+    def rhs(xv: list[float], st: float) -> tuple[list[float], list[float]]:
+        dx: list[float] = []
+        teff: list[float] = []
+        for i in range(6):
+            rec = bias[i] + stim_drive[i] * st + (1.8 * tens if i in (0, 3) else 0.4 * tens)
+            rec += sum(lateral[i][j] * xv[j] for j in range(6))
+            sig = 1.0 / (1.0 + math.exp(-max(-16.0, min(16.0, rec))))
+            g = gain_w[i] * sig
+            leak = 1.0 / tau0[i]
+            dx.append(-leak * (xv[i] - base[i]) + g * (rev_a[i] - xv[i]))
+            teff.append(1.0 / (leak + g))
+        return dx, teff
+
+    x = list(padded)
+    steps = max(1, min(1800, int(math.ceil(dt / 12.0)) if dt > 0 else 1))
+    h = dt / steps
+    cur_s = combined_stim
+    if dt > 1e-6:
+        for _ in range(steps):
+            k1, _ = rhs(x, cur_s)
+            k2, _ = rhs([max(0.0, min(1.0, x[i] + 0.5 * h * k1[i])) for i in range(6)], cur_s)
+            k3, _ = rhs([max(0.0, min(1.0, x[i] + 0.5 * h * k2[i])) for i in range(6)], cur_s)
+            k4, _ = rhs([max(0.0, min(1.0, x[i] + h * k3[i])) for i in range(6)], cur_s)
+            x = [
+                max(0.0, min(1.0, x[i] + (h / 6.0) * (k1[i] + 2.0 * k2[i] + 2.0 * k3[i] + k4[i])))
+                for i in range(6)
+            ]
+            cur_s *= math.exp(-h / 45.0)
+    inst_dx, tau_raw = rhs(x, combined_stim)
+    state_vec = tuple(round(v, 4) for v in x)
+    tau_vec = tuple(round(max(1.0, min(7200.0, t)), 2) for t in tau_raw)
+    vel = round(math.sqrt(sum(d * d for d in inst_dx)), 6)
+    return {
+        "state": dict(zip(labels, state_vec)),
+        "state_vector": state_vec,
+        "tau_effective_seconds": dict(zip(labels, tau_vec)),
+        "mean_tau_seconds": round(sum(tau_vec) / 6.0, 2),
+        "phase_velocity": vel,
+        "rk4_substeps": steps,
+        "native_c_active": False,
+    }
+
+
 def fast_canonical_sha256(payload: Any) -> str:
     """Compute canonical JSON SHA-256 using C-level NFC check and sorted UTF-8 serialization."""
     if hasattr(payload, "model_dump"):
@@ -1077,6 +1376,7 @@ __all__ = [
     "compute_concept_vector_fast",
     "compute_expected_free_energy_fast",
     "compute_homeostatic_step_fast",
+    "evolve_liquid_ode_fast",
     "fast_canonical_sha256",
     "rust_json_bytes",
     "simulate_world_model_fast",
