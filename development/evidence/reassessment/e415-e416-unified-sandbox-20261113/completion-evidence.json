@@ -1,0 +1,48 @@
+{
+  "contract": "EvaUnifiedSandboxAndInitiativeRecoveryEvidence/v1",
+  "cards": [
+    "E4.15",
+    "E4.16",
+    "AU-008"
+  ],
+  "completedAt": "2026-11-13T04:04:00Z",
+  "e416ScheduledFailureRepair": {
+    "targetId": "3cecdc29de2c1b36c1eeeefe8e4a21890d6554e8df7ad0c68fdbd9059fd7a8fb",
+    "baselineSourcePath": "adapters/postgres/scheduled_work_failure.py",
+    "baselineSourceSha256": "482e7f28883337c84e7431c5e96ef9f5389d31a3ec4e1b2c6807896c06b414c9",
+    "callerSourcePath": "bootstrap/self_repair.py",
+    "callerSourceSha256": "75cabee0b86ee4db79beaeb6f2eb1138694e715c7f0c6d3a0892942a94f03d1b",
+    "importClosureComplete": true,
+    "verifiedClosureDependencies": [
+      "adapters/postgres/scheduled_work_failure.py",
+      "adapters/postgres/operational_timeline.py",
+      "contracts/timestamps.py",
+      "contracts/canonical_json.py",
+      "contracts/base.py"
+    ],
+    "sandboxEvaluationPassed": true,
+    "testsPassed": 38
+  },
+  "e415OwnedPackageCallback": {
+    "module": "src/eva/operations/owned_package_handoff.py",
+    "callbackIdempotencyVerified": true,
+    "authorizationStateBound": true,
+    "testsPassed": 28
+  },
+  "initiativeReviewLaneRecovery": {
+    "privateLane": {
+      "threadId": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:88216822602391890571020580557647659968644487982808395268057713344785511738497",
+      "previousRevision": 4,
+      "newRevision": 5,
+      "phase": "will_abandoned",
+      "unresolvedReview": null
+    },
+    "householdLane": {
+      "threadId": "sensory:household-initiative:cda032648a51d53cc2e2ae89aa1d96c76b94a922f3b6c765bbe5a145160ecf06:observation:7bf38ecf4c23e303bd59a6b7b646511cf7085e4939a6209c8fbfec9ac907e2da",
+      "previousRevision": 4,
+      "newRevision": 5,
+      "phase": "will_abandoned",
+      "unresolvedReview": null
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "contract": "EvaMemoryCleanupCompletionEvidence/v1",
+  "task_id": "E4.11",
+  "completed_at": "2026-11-13T03:46:07Z",
+  "scope": {
+    "tenant_id": "single-family",
+    "installation_id": "eva2-home",
+    "tenant_uuid": "06d7e8dc-0547-5a33-b5c1-6dd07e05cf07",
+    "installation_uuid": "e64514ae-ba26-59d6-aa69-279ba7f6c9a5"
+  },
+  "summary": {
+    "total_memory_retain_threads": 2253,
+    "reconciled_closed_zero_result_threads": 38,
+    "isolated_historical_malformed_chronologies": 226,
+    "settled_dream_batches": 5,
+    "cancelled_erased_failed_dream_batches": [
+      "memory-dream:b0cf2b9a457c289e423270f5de5666f4e17b99c4744ee9d4808ad1440537fc62"
+    ],
+    "completed_reconciled_dream_batches": [
+      "memory-dream:a1de6d31c1d7484fc5528d659874196dcbbad2be68d8c5fd3c67a26d55219282",
+      "memory-dream:228a039e934924ed0fe29b173e4c7f7ce6e85fd3455e26188d82901f589f4be1",
+      "memory-dream:5af4f3be85a91e7518373930ef7bc12de0a1af7fb09878f4d3688e67976f8620",
+      "memory-dream:23bdfac068438101196f4edb232f7effd5ffe2b914bcf4a2ce5d8c9acdf1d701"
+    ],
+    "hindsight_verification": {
+      "needs_help_documents_in_hindsight_documents": 0,
+      "needs_help_documents_in_hindsight_memory_units": 0
+    },
+    "verified_people_memory_snapshot": {
+      "contains_raw_content": false,
+      "contract": "EvaPeopleMemoryOverview/v1",
+      "control_plane": {
+        "state": "owner_viewer_candidate"
+      },
+      "hindsight": {
+        "state": "ready"
+      },
+      "memory": {
+        "state": "up_to_date"
+      },
+      "people": {
+        "dynamic_account": "no_extra_account"
+      },
+      "read_only": true,
+      "sharing": {
+        "state": "private_only"
+      }
+    },
+    "strict_unit_tests_passed": 15
+  }
+}

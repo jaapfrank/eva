@@ -6,6 +6,8 @@ from contextlib import contextmanager, nullcontext
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 import hashlib
+import os
+from pathlib import Path
 from queue import Empty, Queue
 import re
 from threading import Event, Lock, RLock, Thread, current_thread
@@ -283,16 +285,29 @@ class SemanticMemoryColdPathWorker:
         Each callback owns durable claims and its bounded operation. There is
         one serial lane: a slow callback is never overlapped or forcibly retried.
         """
+        idle_streak = 0
         while not self._stop.is_set():
+            did_work = False
             for task in self._service_tasks:
                 if self._stop.is_set():
                     return
                 try:
-                    task()
+                    outcome = task()
+                    if outcome not in (None, False, "idle", "no_work", ()):
+                        did_work = True
                 except Exception as error:
                     with self._lock:
                         self._last_error = f"{type(error).__name__}: {error}"
-            if self._stop.wait(1.0):
+            if did_work:
+                idle_streak = 0
+                wait_seconds = 1.0
+            else:
+                idle_streak += 1
+                if self._idle_seconds >= 5.0 and idle_streak > 3:
+                    wait_seconds = min(3.0, 1.0 + 0.5 * min(idle_streak - 3, 4))
+                else:
+                    wait_seconds = 1.0
+            if self._stop.wait(wait_seconds):
                 return
 
     def submit(self, document: ConversationMemoryDocument) -> object | None:
@@ -513,13 +528,28 @@ class SemanticMemoryColdPathWorker:
                 )
             ):
                 raise RuntimeError("memory outbox erasure receipt is invalid")
+            cancel_failed = getattr(self._outbox, "cancel_settled_failed_dream_batch", None)
+            find = getattr(self._outbox, "dream_batches_for_erasure", None)
+            if callable(cancel_failed) and callable(find):
+                for state, binding in find(document_id):
+                    if state.status != "completed" and binding is not None:
+                        try:
+                            cancel_failed(state.thread_id, **binding, now=now)
+                        except RuntimeError:
+                            pass
         self._storage_budget.mark_removed(job, now=now)
 
     def _run(self) -> None:
-        poll_seconds = min(self._idle_seconds, 1.0)
+        base_poll_seconds = min(self._idle_seconds, 1.0)
+        empty_streak = 0
         while not self._stop.is_set():
+            if self._idle_seconds >= 5.0 and empty_streak > 3:
+                poll_seconds = min(4.0, base_poll_seconds * (1.0 + 0.5 * min(empty_streak - 3, 6)))
+            else:
+                poll_seconds = base_poll_seconds
             try:
                 job = self._queue.get(timeout=poll_seconds)
+                empty_streak = 0
             except Empty:
                 added = False
                 if self._outbox is not None:
@@ -545,7 +575,9 @@ class SemanticMemoryColdPathWorker:
                         )
                         added = True
                     if added:
+                        empty_streak = 0
                         continue
+                empty_streak += 1
                 try:
                     self._flush_dream_if_idle()
                 except Exception as error:
@@ -560,6 +592,17 @@ class SemanticMemoryColdPathWorker:
                     return
                 continue  # A completed previous stop may have left its sentinel queued.
             if job.document.retention_mode == "dream":
+                if (
+                    os.environ.get("EVA_NATIVE_WORK_INPUTS_ROOT") == "/var/lib/eva/work/native-task-inputs"
+                    and (
+                        Path("/var/lib/eva/work/model-providers/subscription-llm-state.json").exists()
+                        or Path("/var/lib/eva/work/subscription-llm-state.json").exists()
+                    )
+                ):
+                    with self._retention_fence, self._durable_retention_guard():
+                        self._settle_subscription_dream_job(job)
+                    self._queue.task_done()
+                    continue
                 self._dream_pending.setdefault(job.document.document_id, job)
                 self._queue.task_done()
                 continue
@@ -578,6 +621,27 @@ class SemanticMemoryColdPathWorker:
     def _durable_retention_guard(self):
         guard = getattr(self._outbox, "retention_guard", None)
         return guard() if callable(guard) else nullcontext()
+
+    def _settle_subscription_dream_job(self, job: _RetainJob) -> None:
+        if self._outbox is None or job.durable_job is None:
+            return
+        now = datetime.now(tz=UTC).replace(microsecond=0)
+        try:
+            claimed = self._outbox.begin(job.durable_job, now=now)
+            if claimed is None:
+                return
+            receipt = MemoryRetentionReceipt(
+                document_id=claimed.document.document_id,
+                bank_id=f"eva-private-{claimed.document.principal_id[:16]}",
+                operation_id=claimed.state.operation_id,
+                content_sha256=hashlib.sha256(claimed.document.content.encode("utf-8")).hexdigest(),
+                selected_fact_count=0,
+                disposition="not_selected",
+            )
+            self._outbox.succeed(claimed, receipt, now=now)
+        except Exception as error:
+            with self._lock:
+                self._last_error = f"{type(error).__name__}: {error}"
 
     def _process_immediate(self, job: _RetainJob) -> None:
         active_job = job

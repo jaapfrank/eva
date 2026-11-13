@@ -12,6 +12,7 @@ import OwnerBrowser from './owner-browser.jsx';
 import OwnerWork from './owner-work.jsx';
 import OwnerHealth from './owner-health.jsx';
 import OwnerModelProviders from './owner-model-providers.jsx';
+import OwnerLivingCortex from './owner-living-cortex.jsx';
 import OwnerWhatsApp from './owner-whatsapp.jsx';
 import OwnerMemoryView from './owner-memory-view.jsx';
 import { ownerSections, ownerSection, ownerSectionHref } from './owner-navigation.mjs';
@@ -402,6 +403,7 @@ function Dashboard() {
       {identity.error && <p role="alert">Eva’s actuele identiteit kon niet worden opgehaald. De andere secties blijven afzonderlijk beschikbaar.</p>}
       {selected === 'overview' && <>
         <p className="owner-intro">Volg wat {name} doet en beheer wat ze van jou onthoudt.</p>
+        <OwnerLivingCortex />
         <div className="owner-shortcuts">{ownerSections.filter(item => item.id !== 'overview').map(item => <a key={item.id} href={ownerSectionHref(item.id)}>
           <span className="owner-shortcut-icon" aria-hidden="true">{item.icon}</span><h2>{item.label}</h2><p>{item.description}</p><strong>Openen →</strong></a>)}</div>
       </>}
@@ -417,7 +419,7 @@ function Dashboard() {
         setSelected('memory');
         window.location.hash = ownerSectionHref('memory');
       }} />}
-      {selected === 'connections' && <><OwnerModelProviders /><OwnerWhatsApp /><OwnerHealth /><section className="owner-panel"><h2>Optionele verbindingen</h2>
+      {selected === 'connections' && <><OwnerLivingCortex /><OwnerModelProviders /><OwnerWhatsApp /><OwnerHealth /><section className="owner-panel"><h2>Optionele verbindingen</h2>
         <p>Modelproviders en WhatsApp beheer je hierboven. Iedere verbinding blijft optioneel.</p>
       </section><OwnerBrowser /></>}
     </main>

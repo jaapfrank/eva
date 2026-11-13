@@ -8,6 +8,7 @@ from eva.operations.unified_sandbox import (
     SandboxCandidateFile,
     UnifiedSandboxEvaluator,
     resolve_eva_import_closure,
+    verify_e416_scheduled_failure_repair_in_sandbox,
 )
 
 
@@ -91,3 +92,9 @@ def test_resolve_eva_import_closure_covers_e416_scheduled_work_failure_dependenc
     assert "contracts/timestamps.py" in closure
     assert "contracts/canonical_json.py" in closure
     assert "contracts/base.py" in closure
+
+    res = verify_e416_scheduled_failure_repair_in_sandbox(repo_eva_root)
+    assert res.passed is True
+    assert res.test_passed == 3
+    assert "contracts/timestamps.py" in res.closure_imports
+    assert "contracts/base.py" in res.closure_imports

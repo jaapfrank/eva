@@ -1298,7 +1298,12 @@ def create_runtime_app() -> FastAPI:
 
     settings = RuntimeSettings.from_environment()
     engine = sa.create_engine(
-        sqlalchemy_postgres_dsn(settings.database_dsn), pool_pre_ping=True
+        sqlalchemy_postgres_dsn(settings.database_dsn),
+        pool_pre_ping=True,
+        connect_args={
+            "prepare_threshold": None,
+            "options": "-c plan_cache_mode=force_custom_plan",
+        },
     )
     try:
         require_restore_activation(engine)

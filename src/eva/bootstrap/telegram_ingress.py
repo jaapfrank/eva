@@ -100,7 +100,14 @@ def main() -> int:
     bindings = load_principal_bindings(
         _required_environment("EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE")
     )
-    engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
+    engine = sa.create_engine(
+        sqlalchemy_postgres_dsn(database_dsn),
+        pool_pre_ping=True,
+        connect_args={
+            "prepare_threshold": None,
+            "options": "-c plan_cache_mode=force_custom_plan",
+        },
+    )
     provider = TelegramBotApiAdapter(
         bot_token=token,
         api_base_url=os.environ.get(

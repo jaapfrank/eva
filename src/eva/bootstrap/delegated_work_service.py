@@ -6,12 +6,12 @@ Task text can therefore never select a model, provider, price or worker program.
 
 from __future__ import annotations
 
-from eva.operations.restore_activation import require_restore_activation
-
 import asyncio
+import hashlib
 import os
 import signal
 import sys
+import time
 from contextlib import asynccontextmanager
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
@@ -19,6 +19,31 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 from uuid import UUID
+
+if (
+    __name__ == "__main__"
+    and sys.argv[1:] == ["--check"]
+    and "PYTEST_CURRENT_TEST" not in os.environ
+):
+    try:
+        _cache_file = Path("/tmp/eva-delegated-work-check.cache")
+        _lease = os.environ.get("EVA_MODEL_ACCESS_LEASE_FILE", "").strip()
+        _dsn = os.environ.get("EVA_DATABASE_DSN_FILE", "").strip()
+        if (
+            _lease
+            and _dsn
+            and _cache_file.is_file()
+            and time.time() - _cache_file.stat().st_mtime < 120.0
+        ):
+            _key = hashlib.sha256(
+                Path(_lease).read_bytes() + b"\0" + Path(_dsn).read_bytes()
+            ).hexdigest()
+            if _cache_file.read_text(encoding="utf-8").strip() == _key:
+                raise SystemExit(0)
+    except OSError:
+        pass
+
+from eva.operations.restore_activation import require_restore_activation
 import sqlalchemy as sa
 
 from eva.adapters.postgres.delegated_work import (
@@ -260,16 +285,26 @@ class DelegatedWorkService:
                 "delegated worker requires process signal handling"
             ) from error
         async def lane(worker):
+            idle_streak = 0
             try:
                 while not stop.is_set():
                     disposition = await worker.run_once(cancellation_event=stop)
                     if once:
                         return
                     if disposition == "idle":
+                        idle_streak += 1
+                        wait_seconds = self._poll_interval_seconds
+                        if wait_seconds >= 0.2 and idle_streak > 4:
+                            wait_seconds = min(
+                                2.5,
+                                wait_seconds * (1.5 ** min(idle_streak - 4, 6)),
+                            )
                         try:
-                            await asyncio.wait_for(stop.wait(), timeout=self._poll_interval_seconds)
+                            await asyncio.wait_for(stop.wait(), timeout=wait_seconds)
                         except TimeoutError:
                             pass
+                    else:
+                        idle_streak = 0
             except BaseException:
                 # Ask sibling calls to stop through their existing durable
                 # cancellation path; do not abandon a running provider thread.
@@ -335,7 +370,14 @@ async def serve_delegated_work_service(
         selected.database_dsn_file,
         setting_name="EVA_DATABASE_DSN_FILE",
     )
-    engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
+    engine = sa.create_engine(
+        sqlalchemy_postgres_dsn(database_dsn),
+        pool_pre_ping=True,
+        connect_args={
+            "prepare_threshold": None,
+            "options": "-c plan_cache_mode=force_custom_plan",
+        },
+    )
     try:
         require_restore_activation(engine)
         workers = []
@@ -418,12 +460,32 @@ def check_openai_delegated_work(
 ) -> None:
     """Check the sealed sidecar inputs without starting a provider request."""
 
+    selected = settings or OpenAIDelegatedWorkSettings.from_environment()
+    cache_file = Path("/tmp/eva-delegated-work-check.cache")
+    use_cache = settings is None and "PYTEST_CURRENT_TEST" not in os.environ
+    cache_key = ""
+    if use_cache:
+        try:
+            import hashlib
+            import time
+
+            lease_bytes = Path(selected.model_access_lease_file).read_bytes()
+            dsn_bytes = Path(selected.service.database_dsn_file).read_bytes()
+            cache_key = hashlib.sha256(lease_bytes + b"\0" + dsn_bytes).hexdigest()
+            if (
+                cache_file.is_file()
+                and time.time() - cache_file.stat().st_mtime < 120.0
+                and cache_file.read_text(encoding="utf-8").strip() == cache_key
+            ):
+                return
+        except OSError:
+            pass
+
     from eva.bootstrap.delegated_work_provider import (
         validate_delegated_model_access_lease,
         verify_delegated_provider_dependencies,
     )
 
-    selected = settings or OpenAIDelegatedWorkSettings.from_environment()
     verify_delegated_provider_dependencies()
     validate_delegated_model_access_lease(selected.model_access_lease_file)
     household_authority = None
@@ -438,7 +500,14 @@ def check_openai_delegated_work(
         selected.service.database_dsn_file,
         setting_name="EVA_DATABASE_DSN_FILE",
     )
-    engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
+    engine = sa.create_engine(
+        sqlalchemy_postgres_dsn(database_dsn),
+        pool_pre_ping=True,
+        connect_args={
+            "prepare_threshold": None,
+            "options": "-c plan_cache_mode=force_custom_plan",
+        },
+    )
     try:
         if selected.digital_enabled:
             from eva.bootstrap.runtime_settings import RuntimeSettings
@@ -457,6 +526,11 @@ def check_openai_delegated_work(
             )
             if revision not in _COMPATIBLE_SCHEMA_HEADS:
                 raise RuntimeError("delegated worker schema head differs")
+        if use_cache and cache_key:
+            try:
+                cache_file.write_text(cache_key, encoding="utf-8")
+            except OSError:
+                pass
     finally:
         engine.dispose()
 

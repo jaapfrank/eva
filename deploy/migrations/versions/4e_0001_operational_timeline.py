@@ -26,8 +26,8 @@ def _create_table(table: sa.Table) -> None:
 def _scope_table(table: sa.Table, *, mutable: bool) -> None:
     full_name = f"{table.schema}.{table.name}"
     predicate = (
-        "tenant_id::text = current_setting('eva.tenant_id', true) "
-        "AND installation_id::text = current_setting('eva.installation_id', true)"
+        "tenant_id = NULLIF(current_setting('eva.tenant_id', true), '')::uuid "
+        "AND installation_id = NULLIF(current_setting('eva.installation_id', true), '')::uuid"
     )
     op.execute(f"ALTER TABLE {full_name} OWNER TO eva_migrator")
     op.execute(f"REVOKE ALL ON TABLE {full_name} FROM PUBLIC, eva_runtime, eva_dbos")

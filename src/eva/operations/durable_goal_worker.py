@@ -47,7 +47,14 @@ def main(*, select_goals=None, worker_factory=None, failure_handler=None) -> int
     poll_seconds = float(os.environ.get("EVA_DURABLE_GOAL_POLL_SECONDS", "2"))
     if not 0.2 <= poll_seconds <= 60:
         raise RuntimeError("EVA_DURABLE_GOAL_POLL_SECONDS is outside 0.2..60")
-    engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
+    engine = sa.create_engine(
+        sqlalchemy_postgres_dsn(database_dsn),
+        pool_pre_ping=True,
+        connect_args={
+            "prepare_threshold": None,
+            "options": "-c plan_cache_mode=force_custom_plan",
+        },
+    )
     try:
         require_restore_activation(engine)
     except BaseException:

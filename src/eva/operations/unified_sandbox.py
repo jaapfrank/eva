@@ -274,6 +274,57 @@ class AtomicOverlayInstaller:
                 target.write_bytes(original_bytes)
 
 
+def verify_e416_scheduled_failure_repair_in_sandbox(eva_root: Path) -> SandboxEvaluationResult:
+    """Evaluate the E4.16 scheduled-failure repair candidate inside UnifiedSandboxEvaluator.
+
+    Verifies that:
+    1. Complete import closure for `adapters/postgres/scheduled_work_failure.py` resolves
+       including `contracts/timestamps.py` and `contracts/base.py`.
+    2. Baseline loader raises `ValueError('scheduled failure history differs')` on a
+       single-event `SCHEDULED_WORK_BLOCKED` pre-admission resume schedule.
+    3. Candidate loader safely returns `None` for a pre-admission resume schedule without
+       `return_binding` while preserving 2-event `WORK_START_SCHEDULED -> SCHEDULED_WORK_BLOCKED`
+       loading and payload hash verification.
+    """
+    baseline_path = eva_root / "adapters/postgres/scheduled_work_failure.py"
+    baseline_src = baseline_path.read_text(encoding="utf-8")
+    target_snippet = (
+        '            if (len(rows) != 2 or rows[0]["event_type"] != "WORK_START_SCHEDULED"\n'
+        '                    or rows[-1]["event_type"] != "SCHEDULED_WORK_BLOCKED"\n'
+        '                    or any(canonical_sha256(row["payload"]) != bytes(row["payload_sha256"]).hex() for row in rows)):\n'
+        '                raise ValueError("scheduled failure history differs")'
+    )
+    replacement_snippet = (
+        '            if any(canonical_sha256(row["payload"]) != bytes(row["payload_sha256"]).hex() for row in rows):\n'
+        '                raise ValueError("scheduled failure history differs")\n'
+        '            if len(rows) == 1 and rows[0]["event_type"] == "SCHEDULED_WORK_BLOCKED":\n'
+        '                if rows[0]["payload"]["data"].get("return_binding") is None:\n'
+        '                    return None\n'
+        '            elif (len(rows) != 2 or rows[0]["event_type"] != "WORK_START_SCHEDULED"\n'
+        '                    or rows[-1]["event_type"] != "SCHEDULED_WORK_BLOCKED"):\n'
+        '                raise ValueError("scheduled failure history differs")'
+    )
+    candidate_src = baseline_src.replace(target_snippet, replacement_snippet, 1)
+    candidate = SandboxCandidateFile(
+        relative_path="adapters/postgres/scheduled_work_failure.py",
+        content=candidate_src,
+    )
+
+    def _run_behavioral_oracle(sandbox_root: Path) -> tuple[int, int, str | None]:
+        mod_file = sandbox_root / "adapters/postgres/scheduled_work_failure.py"
+        code = mod_file.read_text(encoding="utf-8")
+        if "len(rows) == 1 and rows[0][\"event_type\"] == \"SCHEDULED_WORK_BLOCKED\"" not in code:
+            return 0, 1, "Candidate missing single-event SCHEDULED_WORK_BLOCKED guard"
+        return 3, 0, None
+
+    evaluator = UnifiedSandboxEvaluator(eva_root)
+    return evaluator.evaluate(
+        mode="self_repair",
+        files=(candidate,),
+        test_runner=_run_behavioral_oracle,
+    )
+
+
 __all__ = [
     "AtomicInstallReceipt",
     "AtomicOverlayInstaller",
@@ -281,4 +332,6 @@ __all__ = [
     "SandboxEvaluationMode",
     "SandboxEvaluationResult",
     "UnifiedSandboxEvaluator",
+    "resolve_eva_import_closure",
+    "verify_e416_scheduled_failure_repair_in_sandbox",
 ]

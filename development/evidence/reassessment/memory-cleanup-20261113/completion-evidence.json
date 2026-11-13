@@ -1,0 +1,28 @@
+{
+  "contract": "EvaMemoryChronologyCleanupEvidence/v1",
+  "recorded_at": "2026-11-13T04:53:00Z",
+  "task_id": "E4.11",
+  "scope": "Technical cleanup of historical memory-retain and memory-dream timelines while preserving all original events, payload hashes, and provenance.",
+  "module": "src/eva/adapters/postgres/memory_chronology_cleanup.py",
+  "cutoff_utc": "2026-10-25T00:12:26Z",
+  "results": {
+    "reconciled_needs_help_retain_threads": 38,
+    "isolated_malformed_historical_retain_threads": 226,
+    "settled_dream_batches": 5,
+    "remaining_needs_help": 0,
+    "remaining_retry_scheduled": 0,
+    "remaining_invalid_active_retain_timelines": 0
+  },
+  "live_verification": {
+    "endpoint": "GET /internal/v1/dashboard/people-memory",
+    "memory_state": "up_to_date",
+    "hindsight_state": "ready",
+    "verified_after_live_conversation_turn": true,
+    "conversation_provider": "gemini-argon:gemini-3.1-pro-argon"
+  },
+  "unit_tests": {
+    "suite": "development/tests/postgres/test_people_memory_overview.py",
+    "passed": 15,
+    "failed": 0
+  }
+}

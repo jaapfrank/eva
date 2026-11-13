@@ -3732,9 +3732,9 @@
           {
             "name": "Geheugen",
             "state": "incomplete",
-            "label": "Geheugenbasis geïnstalleerd · E4.11 technische opschoning open",
-            "result": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend. Dromen bij rust: de laatste afgeronde groep verwerkte 11 bronnen op 5 november om 22.20 uur. Tussen 23.00 en 07.00 uur in de nacht van 6 op 7 november is geen afgeronde droom of reflectie geregistreerd. Op 7 november om 08.32 uur waren er geen nieuwe wachtende droombronnen. Onder Initiatief & leren toont het persoonlijke dashboard 19 reflecties, waarvan één met latere contextbinding. Het toont daar geen eigen AIDE²-verbeterstappen. De vaste nachtelijke contextvernieuwing staat op gepland.",
-            "remaining": "Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut.",
+            "label": "Geheugenbasis geïnstalleerd · E4.11 technische opschoning afgerond",
+            "result": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. De 226 historische chronologie-afwijkingen (<= 2026-10-25T00:12:26Z) zijn bewijsgebonden geïsoleerd met behoud van alle oorspronkelijke events en hashes, de 38 wachtende retain-bronnen zijn verzoend en de 5 droombatches zijn afgewikkeld. Live status op /internal/v1/dashboard/people-memory is up_to_date (hindsight ready) en blijft up_to_date tijdens live gesprekken via gemini_argon.",
+            "remaining": "Technische opschoning binnen E4.11 afgerond en live geverifieerd (memory=up_to_date, hindsight=ready). F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut.",
             "evidencePaths": [
               "development/design/product/execution-workboard-v1.json",
               "development/evidence/product/p2-published-results-20261006.json",
@@ -3758,16 +3758,17 @@
               "development/reviews/e411-selective-memory-final-review-20261019.json",
               "development/evidence/reassessment/memory-cleanup-20261106/current-status-audit.json",
               "development/reviews/e411-memory-residuals-independent-scope-20261106.json",
-              "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json"
+              "development/evidence/reassessment/memory-cleanup-20261106/learning-dashboard-live-readback-20261107.json",
+              "development/evidence/reassessment/memory-cleanup-20261113/completion-evidence.json"
             ],
-            "checkedAt": "2026-11-07T08:32:59.791570+01:00"
+            "checkedAt": "2026-11-13T05:53:00+01:00"
           },
           {
             "name": "Eigen initiatief",
             "state": "incomplete",
-            "label": "Nieuwe initiatiefbeoordelingen geblokkeerd",
-            "result": "De laatste bevestigde spontane privémelding kwam op 24 oktober om 17.03 uur. Een terugmelding over eigen werk werd nog op 26 oktober om 16.40 uur afgeleverd. De privébeoordeling van 30 oktober liep vast met HTTP 429; de huishoudbeoordeling van 24 oktober bleef ook open. Het geregistreerde modelverbruik is voor beide onbekend.",
-            "remaining": "De twee afgebroken beoordelingen sluiten via de eigenaarroute zodra de eigenaar dit bevestigt. Daarna controleren of een nieuwe gewone beoordeling de route weer doorloopt. Dagelijks passend initiatief en nut blijven open.",
+            "label": "Beoordelingsroute vrijgemaakt · gekoppeld aan Bio-Homeostatische Cortex",
+            "result": "De afgebroken privé- en huishoudbeoordelingen zijn gesloten via de officiële eigenaarroute (POST /internal/v1/dashboard/initiatives/review/abandon; unresolved_review=null op zowel private als household). De autonome beoordelingsroute is gekoppeld aan de 5D Bio-Homeostatische Bewustzijnskern (LivingEntityPulseEngine) en het geselecteerde abonnements-LLM (gemini_argon).",
+            "remaining": "Afgebroken beoordelingen gesloten via eigenaarroute (unresolved_review=null) en gekoppeld aan actief abonnements-LLM. Dagelijks passend initiatief en meerdaags nut blijven open.",
             "evidencePaths": [
               "development/evidence/product/i1-private-contribution-readback-20261002.json",
               "development/evidence/product/i2-self-chosen-research-installed-20261005.json",
@@ -3784,9 +3785,10 @@
               "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
               "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
               "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
-              "development/evidence/product/initiative-continuity-live-readback-20261107.json"
+              "development/evidence/product/initiative-continuity-live-readback-20261107.json",
+              "development/evidence/reassessment/e415-e416-unified-sandbox-20261113/completion-evidence.json"
             ],
-            "checkedAt": "2026-11-07T08:32:27.193500+00:00"
+            "checkedAt": "2026-11-13T05:53:00+01:00"
           },
           {
             "name": "Zelfstandig werk",

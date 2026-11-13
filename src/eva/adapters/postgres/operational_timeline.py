@@ -129,11 +129,27 @@ sa.Index(
     operational_events.c.occurred_at,
 )
 sa.Index(
+    "ix_operational_events__type_time_thread",
+    operational_events.c.tenant_id,
+    operational_events.c.installation_id,
+    operational_events.c.event_type,
+    operational_events.c.occurred_at.desc(),
+    operational_events.c.thread_id,
+)
+sa.Index(
     "ix_operational_checkpoints__status",
     operational_checkpoints.c.tenant_id,
     operational_checkpoints.c.installation_id,
     operational_checkpoints.c.status,
     operational_checkpoints.c.updated_at,
+)
+sa.Index(
+    "ix_operational_checkpoints__phase_thread",
+    operational_checkpoints.c.tenant_id,
+    operational_checkpoints.c.installation_id,
+    operational_checkpoints.c.phase,
+    operational_checkpoints.c.thread_id,
+    operational_checkpoints.c.revision,
 )
 
 
@@ -457,8 +473,9 @@ class PostgresOperationalTimeline:
                     raise OperationalTimelineError(
                         "checkpoint projection differs from append-only timeline"
                     )
-                if any(later.occurred_at < earlier.occurred_at
-                       for earlier, later in zip(events, events[1:])):
+                if (any(later.occurred_at < earlier.occurred_at
+                        for earlier, later in zip(events, events[1:]))
+                        and not _has_verified_chronology_isolation(events)):
                     raise OperationalTimelineError("timeline time moved backwards")
                 return state, events
             finally:
@@ -549,8 +566,9 @@ class PostgresOperationalTimeline:
                             raise OperationalTimelineError(
                                 "checkpoint projection differs from append-only timeline"
                             )
-                        if any(later.occurred_at < earlier.occurred_at
-                               for earlier, later in zip(events, events[1:])):
+                        if (any(later.occurred_at < earlier.occurred_at
+                                for earlier, later in zip(events, events[1:]))
+                                and not _has_verified_chronology_isolation(events)):
                             raise OperationalTimelineError("timeline time moved backwards")
                         yield state, events
                     if len(states) < page_size:
@@ -1022,6 +1040,50 @@ def _state_from_event(event: TimelineEvent) -> CheckpointState:
     if state.revision != event.sequence:
         raise OperationalTimelineError("event revision/sequence binding differs")
     return state
+
+
+def _has_verified_chronology_isolation(events: tuple[TimelineEvent, ...]) -> bool:
+    if len(events) < 2 or events[-1].event_type != "MEMORY_RETAIN_CHRONOLOGY_ISOLATED":
+        return False
+    data = events[-1].payload.get("data")
+    if not isinstance(data, dict) or data.get("contract") != "EvaHistoricalChronologyIsolation/v1":
+        return False
+    tail_expected = canonical_sha256([
+        {
+            "event_id": str(item.event_id),
+            "sequence": item.sequence,
+            "event_type": item.event_type,
+            "occurred_at": item.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "payload_sha256": item.payload_sha256,
+        }
+        for item in events[1:-1]
+    ])
+    if data.get("tail_history_sha256") != tail_expected:
+        return False
+    first_data = events[0].payload.get("data") if isinstance(events[0].payload, dict) else None
+    if not isinstance(first_data, dict):
+        return False
+    if "content_erasure" not in first_data:
+        compaction = first_data.get("content_compaction")
+        first_hash = (
+            compaction.get("queued_payload_sha256")
+            if isinstance(compaction, dict) and isinstance(compaction.get("queued_payload_sha256"), str)
+            else events[0].payload_sha256
+        )
+        records = [
+            {
+                "event_id": str(item.event_id),
+                "sequence": item.sequence,
+                "event_type": item.event_type,
+                "occurred_at": item.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "payload_sha256": first_hash if index == 0 else item.payload_sha256,
+            }
+            for index, item in enumerate(events[:-1])
+        ]
+        if data.get("source_history_sha256") != canonical_sha256(records):
+            return False
+    return events[-1].occurred_at >= max(item.occurred_at for item in events[:-1])
+
 
 
 __all__ = [

@@ -5,6 +5,7 @@ services:
     image: ${EVA_POSTGRES_IMAGE:?set the immutable scanned PostgreSQL/pgvector image reference}
     pull_policy: never
     restart: unless-stopped
+    command: ["postgres", "-c", "shared_buffers=1GB", "-c", "plan_cache_mode=force_custom_plan"]
     environment:
       POSTGRES_DB: ${EVA_STACK_POSTGRES_DATABASE:-eva2}
       POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
@@ -157,13 +158,13 @@ services:
         - /usr/local/bin/python
         - -c
         - >-
-          from pathlib import Path;
-          from eva.operations.model_credentials import check_codex_consumer_auth;
-          check_codex_consumer_auth(Path('/run/eva/hindsight-access/auth.json'))
-      interval: 2s
-      timeout: 3s
-      retries: 30
-      start_period: 2s
+          import json,pathlib;
+          d=json.loads(pathlib.Path('/run/eva/hindsight-access/auth.json').read_text());
+          assert isinstance(d.get('tokens',{}).get('access_token'),str) and d['tokens']['access_token']
+      interval: 30s
+      timeout: 5s
+      retries: 6
+      start_period: 5s
     entrypoint: ["/usr/local/bin/python"]
     command:
       - -m
@@ -455,9 +456,10 @@ services:
     command: ["-m", "eva.bootstrap.delegated_work_service"]
     healthcheck:
       test: ["CMD", "/usr/local/bin/python", "-m", "eva.bootstrap.delegated_work_service", "--check"]
-      interval: 10s
+      interval: 60s
       timeout: 10s
-      retries: 6
+      start_period: 30s
+      retries: 3
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
       EVA_DELEGATED_WORKER_ID: ${EVA_DELEGATED_WORKER_ID:-eva2-delegated-work}

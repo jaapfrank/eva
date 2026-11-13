@@ -1144,6 +1144,10 @@ class PostgresPeopleMemoryOverview:
                 try:
                     observed.add(self._validate_memory_timeline(state, events))
                 except PeopleMemoryOverviewError as error:
+                    isolated = self._isolated_historical_chronology(state, events)
+                    if isolated is not None:
+                        observed.add(isolated)
+                        continue
                     if self._bound_reconciled_history(state, events):
                         return "unavailable", "historical_reconciled_attention"
                     if str(error) in {
@@ -1208,6 +1212,129 @@ class PostgresPeopleMemoryOverview:
             raise PeopleMemoryOverviewError("memory closed-result source is not failed")
         self._require_event_state(event, phase="memory_not_selected", status="completed",
             retry_count=prior["retry_count"], last_error_fingerprint=prior["last_error_fingerprint"])
+
+    def _isolated_historical_chronology(
+        self, state: CheckpointState, events: tuple[TimelineEvent, ...]
+    ) -> MemoryFlowState | None:
+        """Accept an explicitly isolated historical chronology without declaring its prefix valid."""
+        if len(events) < 2 or events[-1].event_type != "MEMORY_RETAIN_CHRONOLOGY_ISOLATED":
+            return None
+        try:
+            for event in events:
+                self._event_data(event)
+            first = events[0]
+            queued_data = self._event_data(first)
+            erasure = queued_data.get("content_erasure")
+            document = (
+                _erased_memory_status_source(queued_data)
+                if erasure is not None
+                else conversation_memory_document_from_outbox_data(queued_data)
+            )
+            source_content_sha256 = (
+                None
+                if isinstance(document, _ErasedMemoryStatusSource)
+                else document.content_compaction.content_sha256
+                if isinstance(document, CompactedPrivateMemorySource)
+                else hashlib.sha256(document.content.encode()).hexdigest()
+            )
+            operation_id = str(uuid5(NAMESPACE_URL, document.document_id))
+            if (
+                first.event_type != "MEMORY_RETAIN_QUEUED"
+                or document.tenant_id != self._tenant_id
+                or document.installation_id != self._installation_id
+                or state.thread_id != PostgresMemoryOutbox._thread_id(document.document_id)
+                or any(event.operation_id != operation_id for event in events)
+                or state.status != "completed"
+            ):
+                return None
+            self._require_event_state(first, phase="memory_queued", status="active", retry_count=0)
+            last = events[-1]
+            data = self._event_data(last)
+            expected_keys = {
+                "contract",
+                "document_id",
+                "content_sha256",
+                "terminal_disposition",
+                "source_history_sha256",
+                "tail_history_sha256",
+                "proof_sha256",
+            }
+            if (
+                set(data) != expected_keys
+                or data["contract"] != "EvaHistoricalChronologyIsolation/v1"
+                or data["document_id"] != document.document_id
+                or not isinstance(data["proof_sha256"], str)
+                or not _SHA256.fullmatch(data["proof_sha256"])
+                or not isinstance(data["source_history_sha256"], str)
+                or not _SHA256.fullmatch(data["source_history_sha256"])
+                or not isinstance(data["tail_history_sha256"], str)
+                or not _SHA256.fullmatch(data["tail_history_sha256"])
+            ):
+                return None
+            history_records = [
+                {
+                    "event_id": str(item.event_id),
+                    "sequence": item.sequence,
+                    "event_type": item.event_type,
+                    "occurred_at": item.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "payload_sha256": item.payload_sha256,
+                }
+                for item in events[:-1]
+            ]
+            if isinstance(document, CompactedPrivateMemorySource):
+                history_records[0]["payload_sha256"] = document.content_compaction.queued_payload_sha256
+            if data["tail_history_sha256"] != canonical_sha256(history_records[1:]):
+                return None
+            if (
+                not isinstance(document, _ErasedMemoryStatusSource)
+                and data["source_history_sha256"] != canonical_sha256(history_records)
+            ):
+                return None
+            prior = events[-2].payload["checkpoint"]
+            disposition = data["terminal_disposition"]
+            if erasure is not None:
+                if state.phase not in {"memory_erased", "memory_not_selected", "memory_retained"}:
+                    return None
+                self._require_event_state(
+                    last,
+                    phase=state.phase,
+                    status="completed",
+                    retry_count=prior["retry_count"],
+                    last_error_fingerprint=prior["last_error_fingerprint"],
+                )
+                return "no_signals"
+            if data["content_sha256"] != source_content_sha256:
+                return None
+            if disposition == "retained":
+                if state.phase != "memory_retained" or not any(
+                    item.event_type == "MEMORY_RETAIN_SUCCEEDED"
+                    and self._event_data(item).get("document_id") == document.document_id
+                    and self._event_data(item).get("content_sha256") == source_content_sha256
+                    for item in events[:-1]
+                ):
+                    return None
+                self._require_event_state(
+                    last,
+                    phase="memory_retained",
+                    status="completed",
+                    retry_count=prior["retry_count"],
+                    last_error_fingerprint=prior["last_error_fingerprint"],
+                )
+                return "up_to_date"
+            if disposition == "not_selected":
+                if state.phase != "memory_not_selected":
+                    return None
+                self._require_event_state(
+                    last,
+                    phase="memory_not_selected",
+                    status="completed",
+                    retry_count=prior["retry_count"],
+                    last_error_fingerprint=prior["last_error_fingerprint"],
+                )
+                return "up_to_date"
+            return None
+        except Exception:
+            return None
 
     def _bound_reconciled_history(self, state, events) -> bool:
         """Diagnose a bound legacy result without accepting its invalid history."""

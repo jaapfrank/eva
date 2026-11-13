@@ -15,8 +15,8 @@ Volgende stap: Volg het automatisch aangenomen hersteldoel voor dezelfde fout do
 | Uitkomst | Stand | Nog niet bewezen |
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
-| Geheugen | Geheugenbasis geïnstalleerd · E4.11 technische opschoning open | Technische opschoning open binnen E4.11. Actuele controle 6 november: 226 ongeldige verwerkingstijdlijnen; 211 eindigen op memory_retained, dus dit is geen bewezen verwijderlijst. Oude groepen 35 probleembronnen en 80 onvolledig gebonden uitvoerpayloads worden opnieuw beoordeeld. Per bron aantonen wat weg kan, noodzakelijke herkomst behouden en een bruikbaar actueel verwerkingsoverzicht herstellen. F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut. |
-| Eigen initiatief | Nieuwe initiatiefbeoordelingen geblokkeerd | De twee afgebroken beoordelingen sluiten via de eigenaarroute zodra de eigenaar dit bevestigt. Daarna controleren of een nieuwe gewone beoordeling de route weer doorloopt. Dagelijks passend initiatief en nut blijven open. |
+| Geheugen | Geheugenbasis geïnstalleerd · E4.11 technische opschoning afgerond | Technische opschoning binnen E4.11 afgerond en live geverifieerd (memory=up_to_date, hindsight=ready). F2.1/F2.2 blijven uitsluitend gezinsacceptatie en meerdaags nut. |
+| Eigen initiatief | Beoordelingsroute vrijgemaakt · gekoppeld aan Bio-Homeostatische Cortex | Afgebroken beoordelingen gesloten via eigenaarroute (unresolved_review=null) en gekoppeld aan actief abonnements-LLM. Dagelijks passend initiatief en meerdaags nut blijven open. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
 ## Prioriteitsvolgorde (gegenereerd)

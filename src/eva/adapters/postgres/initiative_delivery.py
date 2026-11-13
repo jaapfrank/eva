@@ -52,33 +52,63 @@ class InitiativeCompletionDelivery:
             # completion notice would bypass its timing and feedback decision.
             base = store._query()
             adoption = base.selected_columns.adoption["data"]
+            candidates = (
+                base.add_columns(
+                    adoption["source_thread_id"].astext.label("source_thread_id"),
+                    adoption["source_event_id"].astext.label("source_event_id"),
+                    (sa.literal("initiative-notice:") + c.thread_id).label("notice_thread_id"),
+                    completion.c.occurred_at.label("completed_at"),
+                )
+                .join(
+                    completion,
+                    sa.and_(
+                        completion.c.tenant_id == c.tenant_id,
+                        completion.c.installation_id == c.installation_id,
+                        completion.c.thread_id == c.thread_id,
+                        completion.c.event_type == "PERSONAL_INITIATIVE_COMPLETED",
+                    ),
+                )
+                .where(
+                    c.phase == "initiative_completed",
+                    completion.c.occurred_at > activation.updated_at,
+                )
+                .cte("completed_initiatives")
+                .prefix_with("MATERIALIZED")
+            )
             review = operational_events.alias("private_review_source")
             private_prefix = "sensory:initiative-review:" + hashlib.sha256(
                 str(store._owner).encode()).hexdigest()[:24] + ":"
-            reviewed_autonomous = sa.exists(sa.select(1).where(
-                review.c.tenant_id == scope.tenant_id,
-                review.c.installation_id == scope.installation_id,
-                review.c.thread_id == adoption["source_thread_id"].astext,
-                review.c.thread_id.startswith(private_prefix),
-                review.c.sequence == 1,
-                review.c.event_type == "SENSORY_EVENT_OBSERVED",
-                review.c.payload["data"]["source"].astext == "initiative-review",
-                review.c.payload["data"]["event_type"].astext == "private_opportunity_review",
-                review.c.payload["data"]["source_event_id"].astext == adoption["source_event_id"].astext))
-            query = base.where(~reviewed_autonomous).join(completion, sa.and_(
-                completion.c.tenant_id == c.tenant_id,
-                completion.c.installation_id == c.installation_id,
-                completion.c.thread_id == c.thread_id,
-                completion.c.event_type == "PERSONAL_INITIATIVE_COMPLETED",
-            )).where(
-                c.phase == "initiative_completed",
-                completion.c.occurred_at > activation.updated_at,
-                ~sa.exists(sa.select(1).select_from(notice).where(
-                    notice.c.tenant_id == scope.tenant_id,
-                    notice.c.installation_id == scope.installation_id,
-                    notice.c.thread_id == sa.literal("initiative-notice:") + c.thread_id,
-                )),
-            ).order_by(completion.c.occurred_at, c.thread_id).limit(1)
+            query = (
+                sa.select(candidates)
+                .outerjoin(
+                    notice,
+                    sa.and_(
+                        notice.c.tenant_id == scope.tenant_id,
+                        notice.c.installation_id == scope.installation_id,
+                        notice.c.thread_id == candidates.c.notice_thread_id,
+                    ),
+                )
+                .outerjoin(
+                    review,
+                    sa.and_(
+                        review.c.tenant_id == scope.tenant_id,
+                        review.c.installation_id == scope.installation_id,
+                        review.c.thread_id == candidates.c.source_thread_id,
+                        review.c.thread_id.startswith(private_prefix),
+                        review.c.sequence == 1,
+                        review.c.event_type == "SENSORY_EVENT_OBSERVED",
+                        review.c.payload["data"]["source"].astext == "initiative-review",
+                        review.c.payload["data"]["event_type"].astext == "private_opportunity_review",
+                        review.c.payload["data"]["source_event_id"].astext == candidates.c.source_event_id,
+                    ),
+                )
+                .where(
+                    notice.c.thread_id.is_(None),
+                    review.c.thread_id.is_(None),
+                )
+                .order_by(candidates.c.completed_at, candidates.c.thread_id)
+                .limit(1)
+            )
             row = conn.execute(query).first()
             if row is None:
                 return "idle"

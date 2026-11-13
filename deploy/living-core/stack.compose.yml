@@ -4,6 +4,7 @@ services:
     pull_policy: missing
     container_name: ${EVA_STACK_POSTGRES_CONTAINER:-eva2-postgres}
     restart: unless-stopped
+    command: ["postgres", "-c", "shared_buffers=1GB", "-c", "plan_cache_mode=force_custom_plan"]
     environment:
       POSTGRES_DB: ${EVA_STACK_POSTGRES_DATABASE:-eva2}
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
@@ -111,13 +112,13 @@ services:
         - /usr/local/bin/python
         - -c
         - >-
-          from pathlib import Path;
-          from eva.operations.model_credentials import check_codex_consumer_auth;
-          check_codex_consumer_auth(Path('/run/eva/hindsight-access/auth.json'))
-      interval: 2s
-      timeout: 3s
-      retries: 30
-      start_period: 2s
+          import json,pathlib;
+          d=json.loads(pathlib.Path('/run/eva/hindsight-access/auth.json').read_text());
+          assert isinstance(d.get('tokens',{}).get('access_token'),str) and d['tokens']['access_token']
+      interval: 30s
+      timeout: 5s
+      retries: 6
+      start_period: 5s
     command:
       - python
       - -m

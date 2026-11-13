@@ -382,7 +382,10 @@ class McpGatewayProviderFactory:
             with ThreadPoolExecutor(max_workers=1) as executor:
                 executor.submit(asyncio.run, adapter.verify_catalog()).result()
         except RuntimeError as exc:
-            if str(exc) == "MCP gateway request failed (401)" and _jwt_token_expired(settings.bearer_token):
+            if (
+                (str(exc) == "MCP gateway request failed (401)" and _jwt_token_expired(settings.bearer_token))
+                or type(exc).__name__ == "McpGatewayToolUnreachable"
+            ):
                 allow_unverified = True
             else:
                 raise

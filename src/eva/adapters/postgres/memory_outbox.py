@@ -590,6 +590,31 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             data={"reason": "native_operation_absent_before_erasure",
                   "bank_id": bank_id, "operation_id": operation_id})
 
+    def cancel_settled_failed_dream_batch(self, thread_id: str, *, bank_id: str,
+                                          operation_id: str, now: datetime):
+        events = self._timeline.events(thread_id)
+        if not events:
+            raise RuntimeError("dream batch has no manifest")
+        members = self._dream_members(events[0].payload.get("data"), thread_id)
+        bindings = [event.payload.get("data") for event in events
+                    if event.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
+        if bindings != [{"bank_id": bank_id, "operation_id": operation_id}]:
+            raise RuntimeError("settled failed dream operation binding differs")
+        for member in members:
+            source_events = self._timeline.events(self._thread_id(member["document_id"]))
+            source = source_events[0].payload.get("data") if source_events else None
+            if not isinstance(source, dict) or not source.get("content_erasure"):
+                raise RuntimeError("settled failed dream batch still has non-erased member")
+        current = self._timeline.load(thread_id)
+        if current.status == "completed":
+            return current
+        return self._timeline.transition(thread_id=thread_id, expected_revision=current.revision,
+            checkpoint_id=thread_id+":failed-erased", operation_id=current.operation_id,
+            occurred_at=now, event_type="MEMORY_DREAM_BATCH_CANCELLED",
+            phase="memory_dream_cancelled", status="completed",
+            data={"reason": "native_operation_failed_and_all_members_erased",
+                  "bank_id": bank_id, "operation_id": operation_id})
+
     def read_dream_batch(self, thread_id: str) -> DurableDreamMemoryBatch:
         if not re.fullmatch('memory-dream:[0-9a-f]{64}', thread_id):
             raise ValueError('dream batch identity is invalid')
@@ -1124,6 +1149,111 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             operation_id=current.operation_id, occurred_at=now, data=data,
             event_type="MEMORY_RETAIN_RESULT_RECONCILED", phase="memory_not_selected",
             status="completed", retry_count=current.retry_count,
+            last_error_fingerprint=current.last_error_fingerprint,
+        )
+
+    def isolate_historical_chronology(
+        self, thread_id: str, *, proof_sha256: str, now: datetime,
+    ) -> CheckpointState:
+        """Append an explicit, hash-bound boundary isolating historical chronology defects."""
+        if (not isinstance(thread_id, str) or not re.fullmatch(r"memory-retain:[0-9a-f]{64}", thread_id)
+                or not isinstance(proof_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", proof_sha256)):
+            raise RuntimeError("historical chronology isolation parameters are invalid")
+        current = self._timeline.load(thread_id)
+        events = self._timeline.events(thread_id)
+        if len(events) < 2 or events[0].event_type != "MEMORY_RETAIN_QUEUED":
+            raise RuntimeError("historical chronology isolation requires queued history")
+        queued_data = events[0].payload.get("data") if isinstance(events[0].payload, dict) else None
+        if not isinstance(queued_data, dict):
+            raise RuntimeError("historical chronology isolation source is malformed")
+        erasure = queued_data.get("content_erasure")
+        document_id = queued_data.get("document_id")
+        if (not isinstance(document_id, str) or not document_id
+                or thread_id != self._thread_id(document_id)
+                or queued_data.get("tenant_id") != self._tenant_id
+                or queued_data.get("installation_id") != self._installation_id):
+            raise RuntimeError("historical chronology isolation source scope differs")
+        operation_id = str(uuid5(NAMESPACE_URL, document_id))
+        if any(event.operation_id != operation_id for event in events):
+            raise RuntimeError("historical chronology isolation operation binding differs")
+        prefix = events[:-1] if events[-1].event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED" else events
+        if erasure is not None:
+            content_sha256 = "erased"
+            terminal_disposition = "erased"
+            target_phase = current.phase if current.phase in {"memory_erased", "memory_not_selected", "memory_retained"} else "memory_erased"
+        else:
+            document = self._document_from_data(queued_data)
+            content_sha256 = (
+                document.content_compaction.content_sha256
+                if isinstance(document, CompactedPrivateMemorySource)
+                else hashlib.sha256(document.content.encode("utf-8")).hexdigest()
+            )
+            if current.phase == "memory_retained" and current.status == "completed":
+                if not any(
+                    event.event_type == "MEMORY_RETAIN_SUCCEEDED"
+                    and isinstance(event.payload.get("data"), dict)
+                    and event.payload["data"].get("document_id") == document_id
+                    and event.payload["data"].get("content_sha256") == content_sha256
+                    for event in prefix
+                ):
+                    raise RuntimeError("historical retained chronology lacks matching success receipt")
+                terminal_disposition = "retained"
+                target_phase = "memory_retained"
+            elif current.phase in {"memory_not_selected", "memory_needs_help"}:
+                terminal_disposition = "not_selected"
+                target_phase = "memory_not_selected"
+            else:
+                raise RuntimeError("historical chronology state cannot be isolated")
+        compaction = queued_data.get("content_compaction")
+        first_hash = (
+            compaction.get("queued_payload_sha256")
+            if isinstance(compaction, dict) and isinstance(compaction.get("queued_payload_sha256"), str)
+            else prefix[0].payload_sha256
+        )
+        source_history_sha256 = canonical_sha256([
+            {
+                "event_id": str(event.event_id),
+                "sequence": event.sequence,
+                "event_type": event.event_type,
+                "occurred_at": event.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "payload_sha256": first_hash if index == 0 else event.payload_sha256,
+            }
+            for index, event in enumerate(prefix)
+        ])
+        tail_history_sha256 = canonical_sha256([
+            {
+                "event_id": str(event.event_id),
+                "sequence": event.sequence,
+                "event_type": event.event_type,
+                "occurred_at": event.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "payload_sha256": event.payload_sha256,
+            }
+            for event in prefix[1:]
+        ])
+        data = {
+            "contract": "EvaHistoricalChronologyIsolation/v1",
+            "document_id": document_id,
+            "content_sha256": content_sha256,
+            "terminal_disposition": terminal_disposition,
+            "source_history_sha256": source_history_sha256,
+            "tail_history_sha256": tail_history_sha256,
+            "proof_sha256": proof_sha256,
+        }
+        if events[-1].event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED":
+            if events[-1].payload.get("data") != data:
+                raise RuntimeError("historical chronology isolation replay differs")
+            return current
+        return self._timeline.transition(
+            thread_id=current.thread_id,
+            expected_revision=current.revision,
+            checkpoint_id=current.thread_id + ":chronology-isolated",
+            operation_id=current.operation_id,
+            occurred_at=now,
+            data=data,
+            event_type="MEMORY_RETAIN_CHRONOLOGY_ISOLATED",
+            phase=target_phase,
+            status="completed",
+            retry_count=current.retry_count,
             last_error_fingerprint=current.last_error_fingerprint,
         )
 
