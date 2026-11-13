@@ -55,15 +55,19 @@ class OptionalConversationModel:
             sub_state = json.loads(sub_file.read_text(encoding="utf-8"))
         except Exception:
             return self.baseline.generate(turn, *args, **kwargs)
-        selected_provider = sub_state.get("selected_provider", "gemini_argon")
+        selected_provider = sub_state.get("selected_provider", "openai_codex")
         auto_fallback = bool(sub_state.get("auto_fallback", True))
-        if selected_provider == "openai_codex":
+        cred_ready = False
+        try:
+            cred_ready = bool(self.baseline.credential_status().ready)
+        except Exception:
+            cred_ready = False
+        if selected_provider == "openai_codex" or cred_ready:
             try:
                 return self.baseline.generate(turn, *args, **kwargs)
             except ConversationModelError:
                 if not auto_fallback:
                     raise
-                selected_provider = "gemini_argon"
         return self._generate_subscription_cortex_turn(turn, *args, provider_id=selected_provider, **kwargs)
 
     def _generate_subscription_cortex_turn(
@@ -471,22 +475,6 @@ class OptionalConversationModel:
             env_url = os.environ.get("EVA_LOCAL_NEURAL_LLM_URL", "").strip()
             if env_url:
                 llm_urls.append(env_url)
-            try:
-                for line in Path("/proc/net/route").read_text(encoding="utf-8").splitlines()[1:]:
-                    parts = line.split()
-                    if len(parts) >= 3 and parts[1] == "00000000" and len(parts[2]) == 8:
-                        gw_int = int(parts[2], 16)
-                        gw_ip = f"{gw_int & 0xFF}.{(gw_int >> 8) & 0xFF}.{(gw_int >> 16) & 0xFF}.{(gw_int >> 24) & 0xFF}"
-                        llm_urls.append(f"http://{gw_ip}:44721/v1/chat/completions")
-                        break
-            except Exception:
-                pass
-            for fallback_url in (
-                "http://172.28.0.1:44721/v1/chat/completions",
-                "http://127.0.0.1:44721/v1/chat/completions",
-            ):
-                if fallback_url not in llm_urls:
-                    llm_urls.append(fallback_url)
 
             body_bytes = json.dumps({
                 "messages": messages_payload,
@@ -580,7 +568,7 @@ class OptionalModelProviders:
             'connections':[{k:v for k,v in row.items() if k!='workspace_id'} | {'selected':identifier==state['selected_id']}
                 for identifier,row in state['connections'].items()],
             'adapters':[{'kind':kind,'label':label,'installed':importlib.util.find_spec(module) is not None}
-                for kind,label,module in [('anthropic','Claude / Anthropic','anthropic'),('openai_compatible','OpenAI-compatibele API','openai')]],
+                for kind,label,module in [('gemini','Google Gemini (Cloud API)','openai'),('anthropic','Claude / Anthropic','anthropic'),('openai_compatible','OpenAI-compatibele API (Cloud of optioneel lokaal)','openai')]],
             'meaning':'Optioneel voor privétekst via website en Telegram. Dezelfde Eva, geheugen en acties; achtergrondwerk/initiatief blijven Astra. Spraak blijft bij de bestaande uitvoerder. Aanmelding met API-sleutel; providerkosten apart. Uitschakelen stopt nieuwe aanvragen, geen reeds begonnen actie.'}
 
     def check(self, identifier, *, admission_check=None):

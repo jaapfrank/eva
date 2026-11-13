@@ -54,7 +54,9 @@ class ModelProviderSettings:
         with self._lock(): return self._load()
 
     def configure(self, *, kind, label, model, endpoint, api_key, workspace_id=''):
-        if kind not in {'anthropic','openai_compatible'}: raise ValueError('unsupported model adapter')
+        if kind not in {'anthropic','gemini','openai_compatible'}: raise ValueError('unsupported model adapter')
+        if kind=='gemini' and not endpoint:
+            endpoint='https://generativelanguage.googleapis.com/v1beta/openai'
         for value, limit in [(label,80),(model,160),(endpoint,500),(workspace_id,160)]:
             if not isinstance(value,str) or len(value)>limit or value!=value.strip() or any(ord(c)<32 or ord(c)==127 for c in value):
                 raise ValueError('invalid model configuration')
@@ -66,6 +68,8 @@ class ModelProviderSettings:
             raise ValueError('remote model connections require HTTPS')
         if kind=='anthropic' and endpoint.rstrip('/')!='https://api.anthropic.com':
             raise ValueError('Anthropic uses its official API endpoint')
+        if kind=='gemini' and endpoint.rstrip('/')!='https://generativelanguage.googleapis.com/v1beta/openai':
+            raise ValueError('Gemini uses Google official OpenAI-compatible HTTPS endpoint')
         if not isinstance(api_key,str): raise ValueError('API key required')
         self.directory.mkdir(mode=0o700,parents=True,exist_ok=True)
         self._require_directory()
