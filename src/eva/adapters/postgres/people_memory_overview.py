@@ -1133,19 +1133,103 @@ class PostgresPeopleMemoryOverview:
     def _safe_memory_flow(self) -> MemoryFlowState:
         return self._memory_flow_status()[0]
 
+    def _memory_retain_storage_digest(self) -> tuple[object, ...] | None:
+        timeline = getattr(self, "_timeline", None)
+        engine = getattr(timeline, "_engine", None)
+        scope_val = getattr(timeline, "_scope_value", None)
+        if (
+            not isinstance(timeline, PostgresOperationalTimeline)
+            or engine is None
+            or scope_val is None
+            or "iter_threads" in timeline.__dict__
+            or "_validate_memory_timeline" in self.__dict__
+        ):
+            return None
+        with engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                timeline._scope(connection)
+                row = connection.execute(
+                    sa.text(
+                        """
+                        SELECT
+                          (SELECT count(*)::text || ':' || coalesce(bit_xor(hashtextextended(
+                              thread_id || ':' || checkpoint_id || ':' || coalesce(operation_id, '') || ':'
+                              || phase || ':' || status || ':' || retry_count::text || ':'
+                              || coalesce(encode(last_error_fingerprint, 'hex'), '') || ':'
+                              || revision::text || ':' || xmin::text, 0)), 0)::text
+                           FROM eva_core.operational_checkpoints
+                           WHERE tenant_id = :tenant_id
+                             AND installation_id = :installation_id
+                             AND thread_id >= 'memory-retain:'
+                             AND thread_id < 'memory-retain;'),
+                          (SELECT count(*)::text || ':' || coalesce(bit_xor(hashtextextended(
+                              event_id::text || ':' || thread_id || ':' || sequence::text || ':'
+                              || checkpoint_id || ':' || coalesce(operation_id, '') || ':'
+                              || event_type || ':' || encode(payload_sha256, 'hex') || ':' || xmin::text, 0)), 0)::text
+                           FROM eva_core.operational_events
+                           WHERE tenant_id = :tenant_id
+                             AND installation_id = :installation_id
+                             AND thread_id >= 'memory-retain:'
+                             AND thread_id < 'memory-retain;')
+                        """
+                    ),
+                    {
+                        "tenant_id": scope_val.tenant_id,
+                        "installation_id": scope_val.installation_id,
+                    },
+                ).one()
+                return (str(row[0]), str(row[1]), id(canonical_sha256))
+            finally:
+                transaction.rollback()
+
     def _memory_flow_status(self) -> tuple[MemoryFlowState, MemoryFlowDiagnostic | None]:
         try:
             if self._timeline.list_checkpoints(thread_prefix="memory-dream:",
                     statuses=("needs_help",), limit=1):
                 return "needs_help", None
+            storage_digest = self._memory_retain_storage_digest()
+            if (
+                storage_digest is not None
+                and self.__dict__.get("_last_memory_flow_digest") == storage_digest
+                and "_last_memory_flow_result" in self.__dict__
+            ):
+                return self.__dict__["_last_memory_flow_result"]
             threads = self._timeline.iter_threads(thread_prefix="memory-retain:")
             observed: set[MemoryFlowState] = set()
+            cache: dict[object, MemoryFlowState] = self.__dict__.setdefault(
+                "_validated_retain_cache", {}
+            )
+            if len(cache) > 8192:
+                cache.clear()
             for state, events in threads:
+                cache_key = (
+                    state,
+                    tuple(
+                        (
+                            item.event_id,
+                            item.sequence,
+                            item.checkpoint_id,
+                            item.operation_id,
+                            item.event_type,
+                            item.payload_sha256,
+                            item.occurred_at,
+                        )
+                        for item in events
+                    ),
+                )
+                cached_flow = cache.get(cache_key)
+                if cached_flow is not None:
+                    observed.add(cached_flow)
+                    continue
                 try:
-                    observed.add(self._validate_memory_timeline(state, events))
+                    flow = self._validate_memory_timeline(state, events)
+                    cache[cache_key] = flow
+                    observed.add(flow)
                 except PeopleMemoryOverviewError as error:
                     isolated = self._isolated_historical_chronology(state, events)
                     if isolated is not None:
+                        cache[cache_key] = isolated
                         observed.add(isolated)
                         continue
                     if self._bound_reconciled_history(state, events):
@@ -1165,8 +1249,16 @@ class PostgresPeopleMemoryOverview:
             )
             for priority in priorities:
                 if priority in observed:
-                    return priority, None
-            return "no_signals", None
+                    result = (priority, None)
+                    if storage_digest is not None:
+                        self.__dict__["_last_memory_flow_digest"] = storage_digest
+                        self.__dict__["_last_memory_flow_result"] = result
+                    return result
+            result = ("no_signals", None)
+            if storage_digest is not None:
+                self.__dict__["_last_memory_flow_digest"] = storage_digest
+                self.__dict__["_last_memory_flow_result"] = result
+            return result
         except OperationalTimelineError as error:
             if str(error) == "timeline time moved backwards":
                 return "unavailable", "historical_timeline_attention"

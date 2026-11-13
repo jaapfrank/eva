@@ -14,6 +14,7 @@ def upgrade():
         BEGIN
             IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = current_user AND rolsuper) THEN
                 ALTER FUNCTION pg_catalog.textcat(text, text) LEAKPROOF;
+                ALTER FUNCTION pg_catalog.textlike(text, text) LEAKPROOF;
                 ALTER FUNCTION pg_catalog.jsonb_object_field_text(jsonb, text) LEAKPROOF;
                 ALTER FUNCTION pg_catalog.jsonb_object_field(jsonb, text) LEAKPROOF;
             END IF;

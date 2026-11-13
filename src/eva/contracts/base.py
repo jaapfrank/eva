@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import unicodedata
 from datetime import datetime
 from typing import Annotated, Any, Literal, TypeAlias
@@ -117,17 +118,32 @@ type JsonScalar = str | JsonInteger | bool | None
 type JsonValue = JsonScalar | list[JsonValue] | dict[str, JsonValue]
 
 
+_FORBIDDEN_UNICODE_RE = re.compile(
+    "[\x00\ud800-\udfff\ufdd0-\ufdef"
+    + "".join(
+        chr((plane << 16) | suffix)
+        for plane in range(17)
+        for suffix in (0xFFFE, 0xFFFF)
+    )
+    + "]"
+)
+
+
 def _validate_unicode(value: str) -> None:
-    if unicodedata.normalize("NFC", value) != value:
+    if value.isascii():
+        if "\x00" in value:
+            raise ValueError("NUL is forbidden")
+        return
+    if not unicodedata.is_normalized("NFC", value):
         raise ValueError("all strings and object keys must be NFC normalized")
-    for character in value:
-        codepoint = ord(character)
+    match = _FORBIDDEN_UNICODE_RE.search(value)
+    if match is not None:
+        codepoint = ord(match.group(0))
         if 0xD800 <= codepoint <= 0xDFFF:
             raise ValueError("surrogate code points are forbidden")
-        if 0xFDD0 <= codepoint <= 0xFDEF or (codepoint & 0xFFFF) in {0xFFFE, 0xFFFF}:
-            raise ValueError("Unicode noncharacters are forbidden")
         if codepoint == 0:
             raise ValueError("NUL is forbidden")
+        raise ValueError("Unicode noncharacters are forbidden")
 
 
 def validate_json_value(value: Any, *, depth: int = 0) -> None:
