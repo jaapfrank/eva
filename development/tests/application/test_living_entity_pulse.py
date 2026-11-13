@@ -433,6 +433,19 @@ def test_expected_free_energy_actr_salience_e16_source_watches_and_e111_e112_res
     res_sw_chat = model.generate(sw_turn, _identity(), _memory(), ())
     assert "ontdubbeld" in (res_sw_chat.text or "").lower() or "toegang" in (res_sw_chat.text or "").lower()
 
+    # 6. Verify natural Dutch Telegram greeting ("Hi") never leaks internal mood enums or echoes "Over \"Hi\""
+    hi_turn = replace(
+        _turn(),
+        conversation_id="telegram:6034485735",
+        text="Hi",
+    )
+    res_hi = model.generate(hi_turn, _identity(), _memory(), ())
+    assert res_hi.action_call is None
+    assert "Hoi Jaap!" in (res_hi.text or "")
+    assert "curious_exploring" not in (res_hi.text or "")
+    assert 'Over "Hi"' not in (res_hi.text or "")
+
+
 
 
 

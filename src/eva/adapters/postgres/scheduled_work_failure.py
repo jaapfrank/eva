@@ -71,6 +71,7 @@ class ScheduledFailureSource:
             self.work._scope(connection)
             rows = connection.execute(sa.select(checkpoints.c.thread_id).where(
                 *self._where(checkpoints), checkpoints.c.thread_id.startswith("scheduled-work:"),
+                ~checkpoints.c.thread_id.contains(":provider-recovery:"),
                 checkpoints.c.phase == "blocked").order_by(checkpoints.c.updated_at, checkpoints.c.thread_id))
             for row in rows:
                 yield row.thread_id

@@ -102,28 +102,46 @@ class OptionalConversationModel:
         )
         prompt_clean = turn.text.strip()
         prompt_lower = prompt_clean.lower()
+        normalized_greeting = re.sub(r"[^a-z0-9à-ÿ\s]", "", prompt_lower).strip()
+        greeting_phrases = {
+            "hi", "hoi", "hallo", "hey", "ha", "yo", "dag", "goedemorgen", "goeiemorgen",
+            "goedemiddag", "goeiemiddag", "goedenavond", "goeieavond", "goedenacht",
+            "hi eva", "hoi eva", "hallo eva", "hey eva", "dag eva", "goedemorgen eva",
+            "goedemiddag eva", "goedenavond eva",
+        }
+        ack_phrases = {
+            "bedankt", "dankje", "dankjewel", "dank je", "thanks", "top", "super",
+            "fijn", "ok", "oke", "oké", "prima", "mooi", "goed", "helemaal goed",
+        }
+        status_Check_phrases = (
+            "hoe gaat het", "hoe is het", "alles goed", "hoe voel je",
+            "status", "leef je", "stemming", "energie", "ben je er", "werk je weer",
+        )
+        is_trivial_greeting = normalized_greeting in greeting_phrases
+        is_ack_only = normalized_greeting in ack_phrases
         stopwords = {
             "wat", "weet", "nog", "uit", "ons", "geheugen", "over", "een", "het", "van",
             "dat", "voor", "met", "zijn", "niet", "ook", "naar", "bij", "als", "maar",
             "dan", "hoe", "wie", "waar", "wanneer", "welke", "kan", "kun", "heb", "hebt",
             "heeft", "mijn", "jouw", "deze", "dit", "die", "haar", "hem", "hun", "wordt",
+            "eva", "even", "weer", "doen", "echt", "goed",
         }
         words = [
             w for w in re.findall(r"[a-z0-9à-ÿ]+", prompt_lower)
             if len(w) > 2 and w not in stopwords
         ]
 
-        # Phase 0: If Hindsight memory is still deferred and the turn is more than a trivial greeting,
+        # Phase 0: If Hindsight memory is still deferred and the turn is more than a trivial greeting/ack,
         # invoke Eva's native search_personal_memory action so ConversationService recalls live Hindsight
         # facts + PostgreSQL conversation exchanges and binds evidence_memory_ids.
         recall_obj = getattr(memory, "recall", None)
         projection_version = getattr(recall_obj, "projection_version", None)
-        is_trivial_greeting = prompt_lower in {"hoi", "hallo", "hey", "goedemorgen", "goedenavond", "goedemiddag", "bedankt", "dankje", "ok", "oke"}
         if (
             completed_action is None
             and not prior_actions
             and projection_version == DEFERRED_MEMORY_PROJECTION
             and not is_trivial_greeting
+            and not is_ack_only
         ):
             usage = ConversationModelUsage.measured(
                 model_attempts=1,
@@ -318,10 +336,24 @@ class OptionalConversationModel:
             )
             snap = pulse.snapshot()
 
+        mood_labels_nl = {
+            "serene_observant": "rustig en aandachtig",
+            "warm_engaged": "warm en betrokken",
+            "deep_focus": "goed gefocust",
+            "curious_exploring": "helder en nieuwsgierig",
+            "protective_attentive": "alert en zorgzaam",
+            "resting_dreaming": "in ruststand",
+        }
+        mood_nl = mood_labels_nl.get(snap.mood, "helder en betrokken")
+
         if tool_receipt_summary is not None:
             text = tool_receipt_summary
             if best_facts and scored_facts[0][0] > 0:
-                text += f" Relevante herinnering: {best_facts[0]}"
+                text += f" {best_facts[0]}"
+        elif is_trivial_greeting:
+            text = "Hoi Jaap! Goed van je te horen. Alles draait hier rustig; waarmee kan ik je helpen?"
+        elif is_ack_only:
+            text = "Graag gedaan, Jaap! Laat maar weten als ik nog iets voor je kan oppakken."
         elif updated_responsibility is not None:
             text = (
                 f"Voorziening '{updated_responsibility.title_nl}' bijgewerkt "
@@ -373,29 +405,28 @@ class OptionalConversationModel:
             text = (
                 f"Ik werk zelf aan '{c0.title_nl}': {c0.shared_trace_nl}"
             )
-        elif any(w in prompt_lower for w in ("hoe gaat het", "hoe voel je", "status", "leef je", "stemming", "energie")):
+        elif any(w in prompt_lower for w in status_Check_phrases):
             text = (
-                f"Ik voel me {snap.mood} (energie {int(snap.drives.energy * 100)}%, "
-                f"sociale warmte {int(snap.drives.social_warmth * 100)}%, "
-                f"nieuwsgierigheid {int(snap.drives.curiosity * 100)}%, beleid={snap.selected_policy_id}). "
-                f"Ik draai via {provider_id} met {len(facts)} actieve herinneringen in Hindsight."
+                f"Met mij gaat het goed, Jaap! Ik voel me {mood_nl} (energie {int(snap.drives.energy * 100)}%, "
+                f"sociale warmte {int(snap.drives.social_warmth * 100)}%) en heb {len(facts)} herinneringen paraat. "
+                "Waar kan ik je mee helpen?"
             )
         elif best_facts and scored_facts[0][0] > 0:
             if len(best_facts) > 1 and scored_facts[1][0] > 20 and best_facts[1] != best_facts[0]:
-                text = f"Uit ons geheugen: {best_facts[0]} Daarnaast: {best_facts[1]}"
+                text = f"{best_facts[0]} Daarnaast weet ik nog: {best_facts[1]}"
             else:
-                text = f"Uit ons geheugen: {best_facts[0]}"
+                text = f"{best_facts[0]}"
         elif exchanges and exchanges[0][0] > 0:
-            text = f"Uit ons eerdere gesprek: {exchanges[0][1][:180]}"
+            text = f"In ons eerdere gesprek kwamen we hierop uit: {exchanges[0][1][:180]}"
         elif best_facts and any(w in prompt_lower for w in ("weet je", "herinner", "geheugen", "afspraak")):
-            text = f"Uit ons geheugen: {best_facts[0]}"
-        elif is_trivial_greeting:
-            text = f"Hoi Jaap! Ik ben er helemaal bij ({snap.mood}, energie {int(snap.drives.energy * 100)}%). Waarmee kan ik je helpen?"
+            text = f"{best_facts[0]}"
+        elif "?" in prompt_clean or any(prompt_lower.startswith(q) for q in ("wat ", "hoe ", "waar ", "wanneer ", "waarom ", "wie ", "welke ", "kun ", "kan ", "wil ")):
+            if best_facts:
+                text = f"Op basis van wat ik nu paraat heb: {best_facts[0]} Zal ik dit verder voor je uitzoeken?"
+            else:
+                text = "Goede vraag, Jaap. Ik heb daar nog geen directe notitie van in ons geheugen staan; zal ik het voor je opzoeken of klaarzetten?"
         else:
-            text = (
-                f"Helder, Jaap ({snap.mood}). Over \"{prompt_clean[:90]}\": "
-                "zal ik dit direct voor je uitzoeken of klaarzetten?"
-            )
+            text = "Ik heb je bericht genoteerd, Jaap. Zal ik hier direct mee aan de slag gaan of wil je eerst samen de aanpak afstemmen?"
 
         max_words = int(getattr(identity, "maximum_reply_words", 45) or 45)
         text_words = text.split()
