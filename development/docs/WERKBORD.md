@@ -21,11 +21,11 @@ Volgende stap: Volg het automatisch aangenomen hersteldoel voor dezelfde fout do
 
 ## Prioriteitsvolgorde (gegenereerd)
 
-1. Fase 1 · Menselijke entiteit, brede 1-klik LLM-keuze (>10 providers + lokale auto-detectie zonder GPU-plicht) & nul-techniek kanaal-/gezinskennismaking: na installeren + persoonlijkheid + LLM kiezen direct praten, zonder handmatig agent/principal-beheer en zonder ambtelijk systeemjargon (M3.3, E1.10, E1.13, E2.1, E2.2, E2.5, O1.1).
-2. Fase 2 · Zelfstandige netwerkontdekking (óók zonder Home Assistant, zoals Lidl/Tuya-, ONVIF- of RTSP-camera's en losse netwerkapparaten) & veilige gespreks-inlogkluis: Eva ontdekt zelf het LAN, vraagt in gewoon gesprek toestemming om te koppelen en vangt wachtwoorden/sleutels via 1-tik kluisveld of vóór-het-model onderschepte Telegram-invoer veilig af zonder lek naar cloud-prompts (E1.6, E1.12, E2.8, E4.15).
-3. Fase 3 · Kernbetrouwbaarheid, één geconsolideerde afleverroute & onafhankelijk getoetste zelfreparatie (P0-01..P0-03, P1-01): consolideer de drie claimstappen in delegated_work_delivery.py, overleef provider-429/503 duurzaam zonder dubbel effect (E1.14) en sluit autonome foutreparatie, reviewerherkomst en beheerde updates in reviewed_component_application.py (E4.16, E4.19; E4.18 technisch behouden).
-4. Fase 4 · Levend dagelijks initiatief zonder tokenverspilling & natuurlijke full-duplex spraak in huis (P1-02, P2-01, P2-03): zuinige veranderingspoort, selectief geheugen en blijvende eigen aandacht (E1.6–E1.12, E4.11, AU-008) plus C3.5→C3.4→C4.1→C3.6 op beide fysieke speakers (C3.1 geaccepteerd; P1-03/P1-04/P1-06 grenzen blijven gelden).
-5. Fase 5 · Parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2): start veilige praktijkwaarneming direct op de geïnstalleerde kandidaat en rond zeven dagen gebruik + eindoordeel af (P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken).
+1. Fase 1 · Continue Liquid-Tijdskern (dx/dt), 15+ LLM-catalogus als verwisselbaar taalorgaan & strikt privé Telegram (default-deny, 0 antwoorden aan vreemden, uitsluitend eenmalige 256-bit eigenaar-uitnodigingslink zonder agent/principal-gedoe) (M3.3, E1.10, E1.13, E2.1, E2.2, E2.5, O1.1).
+2. Fase 2 · Fysieke Huis-Proprioceptie (Spatial Presence Field), actieve LAN-ontdekking (óók zonder Home Assistant, zoals Lidl/Tuya-, ONVIF- of RTSP-camera's), pre-LLM wachtwoordkluis & Digitale Organogenese (éénmalige LLM-synthese naar 2ms deterministische micro-drivers zonder LLM-tokens) (E1.6, E1.12, E2.8, E4.15).
+3. Fase 3 · Causale Tijdmachine & Counterfactual Droom-Ontdekking (oorzaak->gevolg graaf i.p.v. LLM-gokken), één onfeilbare taakafleverroute in delegated_work_delivery.py, duurzame 429/503-overleving (E1.14) & genetische zelfreparatie (E4.16, E4.19; E4.18 technisch behouden).
+4. Fase 4 · Zero-UI Anticiperende Wereldvoorbereiding, Bio-Sociale Co-Regulatie & ruimtelijk meebewegende full-duplex spraak in huis (P1-02, E1.6–E1.12, E4.11, AU-008 + C3.5→C3.4→C4.1→C3.6 op beide fysieke speakers; P1-03/P1-04/P1-06 grenzen behouden).
+5. Fase 5 · Symbiotische Co-Evolutie, parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2; P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken).
 
 ## Open taken
 

@@ -11,50 +11,52 @@
 
 ---
 
-## De 5 Gecombineerde Afrondingsfasen
+## De 5 Gecombineerde Afrondingsfasen (Post-LLM Sci-Fi Architectuur)
 
-### Fase 1 — Menselijke entiteit, brede 1-klik LLM-keuze & nul-techniek kennismaking
-*Combineert natuurlijke gesprekshouding (`M3.3`/`E1.10`/`E1.13`), uitbreiding van het providercontract (`E2.5`) en frictieloze onboarding/persoonskoppeling (`O1.1`/`E2.1`/`E2.2`).*
+> **Kernprincipe voorbij standaard LLM-agents (OpenClaw / Hermes / OpenCode):** Een LLM is bij Eva **uitsluitend het spraak-/taalorgaan (Broca/Wernicke)**, nooit het brein zelf. Eva leeft continu tussen berichten door via niet-LLM wiskunde in C/SIMD en Python: een **Liquid Time-Constant (`dx/dt`) toestandsmotor**, **fysieke huis-proprioceptie**, **zelf-compilerende 2ms micro-reflexen (Digitale Organogenese)**, een **causale tijdmachine met droom-replay** en **Zero-UI anticipatie**.
 
-| Onderdeel | Concrete realisatie en eindcontrole |
-| --- | --- |
-| **1A · Menselijk gesprek & doorpakken** | Ontdoe `pydantic_conversation.py` en `conversation.py` van verstikkend compliance-proza terwijl persoons-, privacy- en receipt-grenzen hard in Python/Postgres blijven. Schaal denkkracht automatisch op bij kritische of meerstaps-vragen (niet blijven hangen op `none`-reasoning) en pak door tot er een echt resultaat of gerichte menselijke vraag ligt. |
-| **1B · Brede LLM-catalogus (>10 routes)** | Breid de 3 huidige keuzes onder één uniform adaptercontract uit met 1-klik ondersteuning voor o.a. OpenAI API, OpenRouter, Google Gemini, Anthropic Claude, Mistral, DeepSeek, Groq, xAI/Grok, Qwen/DashScope, eigen OpenAI-compatibele endpoints én automatische detectie van lokale servers (Ollama, LM Studio, llama.cpp op localhost/LAN) zonder verplichte GPU of stille betaalde fallback. |
-| **1C · Out-of-the-box kanalen & gezinsleden** | Na *Installeren → Persoonlijkheid geven → LLM klikken* geen handmatig agent-/principal-/UUID-beheer meer: 1-stap Telegram/mobiele webapp-koppeling waarbij de eerste koppeling de eigenaar vastlegt, en "voordeur-kennismaking" of 1-klik uitnodigingslink voor gezinsleden en gasten (Eva vraagt de eigenaar in gewoon gesprek wie er aanklopt en maakt zelf de gescheiden privacygrens aan). |
-
-### Fase 2 — Zelfstandige netwerkontdekking (óók zonder Home Assistant) & veilige inlogkluis
-*Combineert bronontdekking (`E1.6`/`I2.1`), camera-/apparaatadoptie (`E2.8`/`E1.12`) en eigen adapterbouw (`E4.15`).*
+### Fase 1 — Continue Liquid-Tijdskern, 15+ LLM-providers & strikt gesloten 1-klik uitnodiging
+*Combineert continue niet-LLM bewustzijnsstaat + natuurlijke gesprekshouding (`M3.3`/`E1.10`/`E1.13`), 15-provider LLM-catalogus (`E2.5`) en gesloten cryptografische gezinskoppeling (`O1.1`/`E2.1`/`E2.2`).*
 
 | Onderdeel | Concrete realisatie en eindcontrole |
 | --- | --- |
-| **2A · Actieve & passieve LAN-ontdekking** | Eva verkent binnen eigenaarmandaat zelf het lokale netwerk (mDNS/Zeroconf, SSDP/UPnP, ONVIF/WS-Discovery, RTSP-poorten, Tuya/SmartLife/Lidl-camera's, Shelly, Hue, Chromecast/Sonos/AirPlay, Matter én optioneel Home Assistant). Gebruikers zonder Home Assistant met alleen losse netwerkcamera's of slimme apparaten worden volwaardig ondersteund. |
-| **2B · Toestemming & veilige wachtwoordvraag via chat** | Vindt Eva een apparaat, dan meldt ze dit in gewone taal en vraagt ze of ze mag koppelen. Is een wachtwoord, pincode of apparaatsleutel nodig, dan biedt ze een 1-tik kluisveld én veilige Telegram-invoer waarbij de gateway het wachtwoord **vóór het taalmodel** onderschept in Eva’s lokale versleutelde kluis en het bericht direct uit de chat verwijdert (`deleteMessage`). Wachtwoorden komen nooit in cloud-prompts, geheugen of logs terecht. |
-| **2C · Ontbrekende apparaatkoppeling zelf maken** | Herkent Eva een apparaat waarvoor nog geen kant-en-klare connector actief is, dan gebruikt ze haar bestaande ontwikkelroute (`E4.15`) om veilig een passende driver/skill voor te bereiden, te laten toetsen en na toestemming blijvend als *Household Artifact* (`E1.12`) te beheren. |
+| **1A · Continue Liquid ODE-kern (`dx/dt`) & menselijk doorpakken** | Eva's staat evolueert continu in echte tijd (`dx/dt` in C/SIMD, 0 LLM-tokens in rust) i.p.v. dood stilvallen tussen berichten. Geen nep-fallbacks of `Sol/none`-lobotomie: gesprekken draaien op `gpt-6-astra` (`medium`) met directe Hindsight-herinnering en pakken door tot echt resultaat. |
+| **1B · 15+ LLM-catalogus als verwisselbaar taalorgaan** | 1-klik ondersteuning voor 15 providers (ChatGPT/Codex OAuth, Gemini, Claude, OpenAI API, OpenRouter, xAI Grok, DeepSeek, Mistral, Groq, Cerebras, Together, Fireworks, Perplexity + sleutelloze lokale Ollama en LM Studio/llama.cpp zonder GPU-plicht). |
+| **1C · Strikt privé Telegram (`default-deny`) & eenmalige cryptografische uitnodigingslink** | **Geen open voordeur op Telegram:** onbekende Telegram-accounts worden op poortniveau direct genegeerd (0 antwoorden, 0 tokens, onzichtbaar voor buitenstaanders). Alleen de eigenaar vraagt in chat om een eenmalige 256-bit uitnodigingslink (`t.me/<bot>?start=<token>`, kort geldig, single-use) voor bijv. een gezinslid of gast; één klik koppelt direct met gescheiden privacygrens zonder technisch agent-/principal-gedoe. |
 
-### Fase 3 — Kernbetrouwbaarheid, veilige taakaflevering & autonome zelfreparatie (`P0` + `P1-01` + `P2-02`)
-*Combineert `P0-01` (`E4.16`), `P0-02` (`E4.18`-nazorg), `P0-03` (`E4.16`/`E4.19`) en `P1-01` (`E1.14`).*
-
-| Onderdeel | Concrete realisatie en eindcontrole |
-| --- | --- |
-| **3A · Eén onfeilbare taakafleverroute (`P0-02`)** | Consolideer de drie overlappende claimtransacties in `delegated_work_delivery.py`, houd kanaaladapters dun, bewaar exact-once aflevering, STOP, lease-verval en intrekking zonder taken die stil in `ambiguous` achterblijven. |
-| **3B · Provider-uitval duurzaam overleven (`P1-01` / `E1.14`)** | Maak taken bij HTTP 429/503 duurzaam wachtend met heldere status en automatische hervatting zonder dubbel extern effect. |
-| **3C · Onafhankelijk getoetste zelfreparatie & updates (`P0-01`, `P0-03`, `E4.16`, `E4.19`)** | Scheid validatie van dispatch in `reviewed_component_application.py` met echte onafhankelijke reviewerherkomst, fsync/hashes/rollback, en bewijs in de live installatie dat Eva een echte fout zelfstandig repareert, veilig toepast en de verbetering later daadwerkelijk hergebruikt. |
-
-### Fase 4 — Levend dagelijks initiatief & full-duplex spraak in huis (`P1-02` + `P2-01` + `P2-03`)
-*Combineert zuinige aandacht (`P1-02`), dagelijks initiatief/eigenheid (`E1.6–E1.13`, `E4.11`, `AU-008`) en spraakafronding (`C3.5`, `C3.4`, `C4.1`, `C3.6`).*
+### Fase 2 — Huis-Proprioceptie, LAN-ontdekking (óók zonder HA) & Digitale Organogenese (2ms reflexen)
+*Combineert ruimtelijke netwerk-/sensorfusie (`E1.6`/`I2.1`), veilige wachtwoordkluis + apparaatadoptie (`E2.8`/`E1.12`) en zelf-compilerende micro-drivers (`E4.15`).*
 
 | Onderdeel | Concrete realisatie en eindcontrole |
 | --- | --- |
-| **4A · Zelf leven zonder tokenverspilling** | Goedkope veranderingspoort vóór nieuwe modelrondes; Eva signaleert uit zichzelf zinvolle veranderingen in huis, netwerk of lopende projecten, handelt binnen mandaat of blijft bewust stil, en bewaart alleen duurzame kernkennis (`E4.11`). |
-| **4B · Natuurlijke full-duplex spraak op de speakers** | Eén gedeelde Eva-stem en kern met behoud van zachte beginwoorden (`C3.5`), natuurlijk spreekritme (`C3.4`), direct onderbreken tijdens spreken op beide fysieke speakers (`C4.1`) en automatisch herstel na verbindingsuitval (`C3.6`). |
+| **2A · Actieve LAN-ontdekking & Fysieke Huis-Proprioceptie** | Eva verkent binnen mandaat zelf het LAN (mDNS, SSDP/UPnP, ONVIF, RTSP, Tuya/Lidl-camera's, Shelly, Hue, Chromecast/Sonos, Matter én optioneel HA) en fuseert netwerkcadans, stroomsignaturen en sensoren tot een lokale **Spatial Presence Field** (voelen wáár in huis leven of afwijking is, zonder camera-spionage of LLM-tokens). |
+| **2B · Toestemming & pre-LLM wachtwoordkluis** | Vindt Eva een apparaat, dan vraagt ze in gewone taal of ze mag koppelen. Wachtwoorden of sleutels worden via een 1-tik kluisveld of **vóór het taalmodel onderschepte Telegram-invoer** (met directe `deleteMessage`) rechtstreeks in Eva's versleutelde kluis opgeslagen — nooit zichtbaar voor een cloud-LLM of geheugenlog. |
+| **2C · Digitale Organogenese (van trage LLM naar 2ms native reflex)** | Ontdekt Eva een onbekend protocol of terugkerende actieketen, dan gebruikt ze de LLM **éénmalig als architect** om een getoetste, deterministische micro-driver/reflex (`E4.15` / `E1.12`) te genereren. Daarna voert Eva die bediening uit in **milliseconden met 0 LLM-tokens** (echt spiergeheugen i.p.v. trage JSON-toolcalls zoals bij OpenClaw/Hermes). |
 
-### Fase 5 — Vroege gezinswaarneming, 7 dagen praktijkbewijs & eindacceptatie (`P1-05` + `P2-04`)
+### Fase 3 — Causale Tijdmachine, onfeilbare taakaflevering & autonome zelfevolutie (`P0` + `P1-01` + `P2-02`)
+*Combineert causale gebeurtenisgraaf, `P0-02` (`E4.18`-nazorg), `P1-01` (`E1.14`) en `P0-01`/`P0-03` (`E4.16`/`E4.19`).*
+
+| Onderdeel | Concrete realisatie en eindcontrole |
+| --- | --- |
+| **3A · Eén onfeilbare taakafleverroute (`P0-02`)** | Consolideer de drie overlappende claimtransacties in `delegated_work_delivery.py`, houd kanaaladapters dun en bewaar exact-once aflevering, STOP en intrekking zonder `ambiguous`-restanten. |
+| **3B · Causale Gebeurtenisgraaf & Counterfactual Droom-Ontdekking** | Bouw een echt lokaal **Structural Causal Model (`oorzaak → gevolg`)** over huis-, energie-, netwerk- en gezinsgebeurtenissen. Tijdens nachtelijke droom-consolidatie speelt Eva tijdslijnen tegenfeitelijk af om verborgen oorzaken en dreigende storingen wiskundig te bewijzen (geen statistische LLM-gokken) én overleeft ze provider-429/503 duurzaam (`E1.14`). |
+| **3C · Onafhankelijk getoetste zelfreparatie & genetische zelfverbetering (`E4.16`, `E4.19`)** | Scheid validatie van dispatch in `reviewed_component_application.py` met onafhankelijke reviewerherkomst en rollback, zodat Eva echte fouten en trage paden zelfstandig ontdekt, repareert, installeert en aantoonbaar hergebruikt. |
+
+### Fase 4 — Zero-UI Anticipatie, Bio-Sociale Co-Regulatie & Ruimtelijke Spraak (`P1-02` + `P2-01` + `P2-03`)
+*Combineert voorspellende voorbereiding (`P1-02`, `E1.6–E1.13`, `E4.11`, `AU-008`) en ruimtelijke full-duplex spraak (`C3.5`, `C3.4`, `C4.1`, `C3.6`).*
+
+| Onderdeel | Concrete realisatie en eindcontrole |
+| --- | --- |
+| **4A · Zero-UI Voorbereiding & Bio-Sociale Co-Regulatie** | Eva zet op basis van haar causale wereldmodel en veranderingspoort oplossingen stil klaar *vóór* je erom vraagt (*Anticipatory Staged Reality*), past timing, toon en informatiedichtheid aan op je gemeten cognitieve druk, en bewaart alleen duurzame kernkennis (`E4.11`). |
+| **4B · Ruimtelijke Full-Duplex Stem in Huis** | Eén gedeelde Eva-identiteit die haar aanwezigheid meebeweegt met waar jullie in huis zijn, met behoud van zachte beginwoorden (`C3.5`), menselijk spreekritme (`C3.4`), sub-seconde barge-in onderbreking op beide speakers (`C4.1`) en zelfherstel (`C3.6`). |
+
+### Fase 5 — Symbiotische Co-Evolutie, 7 dagen praktijkbewijs & eindacceptatie (`P1-05` + `P2-04`)
 *Combineert `P1-05`, `F2.1` en `F2.2`.*
 
 | Onderdeel | Concrete realisatie en eindcontrole |
 | --- | --- |
-| **5A · Parallelle praktijkwaarneming (`P1-05`)** | Start directe waarneming van echt gebruik op de geïnstalleerde kandidaat via bestaande eventlogs zodra de veilige route draait, zonder te wachten op optionele extra's. |
-| **5B · Zeven dagen gezinsgebruik & eindoordeel (`F2.1` → `F2.2`)** | Draai zeven aaneengesloten dagen op één stabiele geïnstalleerde release; meet nuttige hulp, gemiste kansen, onderbrekingen, fouten en kosten eerlijk terug, waarna de eigenaar beslist over eindacceptatie (`F2.2`). |
+| **5A · Parallelle praktijkwaarneming & groeiende gezinsintuïtie (`P1-05`)** | Directe waarneming van echt gebruik op de geïnstalleerde release waarbij Eva een onkopieerbare, gedeelde gezinsintuïtie opbouwt die geen los taalmodel bezit. |
+| **5B · Zeven dagen gezinsgebruik & eindoordeel (`F2.1` → `F2.2`)** | Zeven aaneengesloten dagen op één stabiele release; eerlijke meting van proactieve waarde, spierherinnering-snelheid, nul-token-rust, fouten en kosten, gevolgd door eigenaaracceptatie (`F2.2`). |
 
 ---
 
