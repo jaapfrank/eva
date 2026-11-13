@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { TransportJournal, computeTelegramVaultProof, createTransportHandler, telegramReplyContext } from './standalone.mjs';
+import { chatComplete as eva2PhotoChatComplete, imageMsg as eva2ImageMsg } from './src/integrations/eva2photo_provider.mjs';
 const bindings = [{ telegram_user_id: 12, allowed_chat_ids: ['12'] }];
 function ctx(id, text = 'hallo', sender = 12, sent = []) {
   const message = { message_id: id, text, from: { id: sender }, chat: { id: sender }, date: 1000 };
@@ -204,4 +208,62 @@ test('security hardening: uppercase /Kluis, caption secrets, link_preview_option
   assert.equal(p1.length, 64);
   assert.notEqual(p1, p2);
   h.journal.close();
+});
+
+test('pure Eva2 photo provider parses SSE, refreshes on 401 with 0o600 atomic write, and uses zero Bottie/SQLite dependencies', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'eva2-photo-test-'));
+  const authPath = path.join(dir, 'auth.json');
+  fs.writeFileSync(
+    authPath,
+    JSON.stringify({
+      access_token: 'old_tok_123',
+      refresh_token: 'ref_tok_456',
+      expires_at: Date.now() + 3600_000,
+      account_id: 'acc_999',
+    }),
+    { mode: 0o600 },
+  );
+
+  let callCount = 0;
+  const fakeFetch = async (url, init) => {
+    callCount += 1;
+    if (callCount === 1) {
+      // First Responses call returns 401 -> triggers OAuth refresh
+      assert.match(url, /chatgpt\.com\/backend-api\/codex\/responses/);
+      return new Response('unauthorized', { status: 401 });
+    }
+    if (callCount === 2) {
+      // Token refresh call
+      assert.match(url, /auth\.openai\.com\/oauth\/token/);
+      return new Response(
+        JSON.stringify({ access_token: 'fresh_tok_789', refresh_token: 'ref_tok_new', expires_in: 3600 }),
+        { status: 200, headers: { 'content-type': 'application/json' } },
+      );
+    }
+    // Retried Responses call with fresh token succeeds with SSE stream
+    assert.equal(init.headers.Authorization, 'Bearer fresh_tok_789');
+    const sse = [
+      'data: {"type":"response.completed","response":{"output":[{"type":"message","content":[{"type":"output_text","text":"Een kop koffie op tafel."}]}],"usage":{"input_tokens":120,"output_tokens":8}}}',
+      'data: [DONE]',
+      '',
+    ].join('\n');
+    return new Response(sse, { status: 200, headers: { 'content-type': 'text/event-stream' } });
+  };
+
+  const msg = eva2ImageMsg('Wat zie je?', 'data:image/jpeg;base64,AAAA');
+  assert.equal(msg.content[1].type, 'input_image');
+
+  const out = await eva2PhotoChatComplete({
+    instructions: 'Beschrijf de foto.',
+    input: [msg],
+    authFile: authPath,
+    fetchImpl: fakeFetch,
+  });
+  assert.equal(out.text, 'Een kop koffie op tafel.');
+  assert.equal(callCount, 3);
+  const statMode = fs.statSync(authPath).mode & 0o777;
+  assert.equal(statMode, 0o600);
+  const updatedAuth = JSON.parse(fs.readFileSync(authPath, 'utf8'));
+  assert.equal(updatedAuth.access_token, 'fresh_tok_789');
+  fs.rmSync(dir, { recursive: true, force: true });
 });

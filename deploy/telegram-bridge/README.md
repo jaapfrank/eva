@@ -10,11 +10,10 @@ Uncertain model or delivery attempts are retained and are not automatically repl
 
 Configure the existing token and trusted principal-binding files, current Eva2 URL,
 a private transport database path and the installed third-party dependency manifest.
-The photo provider is an explicit optional provider-only module dependency. The
-current installation temporarily retains the original provider implementation and
-its existing OAuth/usage journal; this does not start Eva1. Removing that retained
-provider dependency is separate from stopping the old agent and must preserve the
-ordinary photo route. Voice/audio uploads remain unsupported, as before this switch.
+The photo provider is an explicit optional provider-only module dependency
+(`src/integrations/eva2photo_provider.mjs`), running natively in Eva2 without
+any legacy Bottie/Eva1 code or SQLite database. Voice/audio uploads remain
+unsupported, as before this switch.
 
 Only one poller may own the bot: the installed standalone service conflicts with
 `eva.service`. Before stopping that legacy service, detach its lifecycle dependency
@@ -120,5 +119,5 @@ an idle, graceful service handoff with the existing known-generation stop fence;
 keep uncertain deliveries for inspection and never resend them as a test. Retain
 the previous prefix and configuration for a separately verified return.
 
-The retained photo-provider library and its dependencies are separate from this
-grammY closure. This recipe neither updates Bottie's agent nor starts Eva1.
+The Eva2-native photo-provider module (`src/integrations/eva2photo_provider.mjs`)
+has zero external package dependencies and replaces the retired legacy library.

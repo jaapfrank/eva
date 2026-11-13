@@ -63,7 +63,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
    zichtbare token. Deze opdracht start Eva niet en schrijft niets:
 
    ```bash
-   cd /home/administrator/project/Bottie-candidates/v2/eva2
+   cd /home/administrator/project/Eva2
    PYTHONPATH=src:. python3 src/tools/discover_telegram_test_accounts.py
    ```
 
@@ -77,7 +77,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
    shellgeschiedenis of een document.
 
    ```bash
-   cd /home/administrator/project/Bottie-candidates/v2/eva2
+   cd /home/administrator/project/Eva2
    sudo env PYTHONPATH=src:. python3 src/tools/prepare_telegram_test_config.py \
      --owner-telegram-user-id <NUMERIEK_ID_VAN_ACCOUNT_A> \
      --owner-principal-id test:persoon-a \
@@ -102,7 +102,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 6. Start daarna uitsluitend de afgescheiden teststack:
 
    ```bash
-   cd /home/administrator/project/Bottie-candidates/v2/eva2
+   cd /home/administrator/project/Eva2
    sudo env PYTHONPATH=src:. python3 -m tools.telegram_test_launch \
      --env-file /run/eva2-test/telegram-test.env
    ```
@@ -129,7 +129,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
     Telegram-provider-ID.
 
     ```bash
-    cd /home/administrator/project/Bottie-candidates/v2/eva2
+    cd /home/administrator/project/Eva2
     sudo env PYTHONPATH=src:. python3 src/tools/capture_telegram_test_receipt.py \
       --output /var/tmp/eva2-telegram-native-test-receipt-2026-08-26.json
     ```
