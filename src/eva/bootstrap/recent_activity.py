@@ -33,8 +33,8 @@ RECENT_ACTIVITY = ConversationToolDescriptor(
         "For a period, read each requested calendar day. This includes "
         "foreground tool calls that are absent from the delegated task list. Use for my own "
         "day/activity recap. For today, yesterday or a named day, pass its local_date YYYY-MM-DD "
-        "in the conversation timezone (EVA_CONVERSATION_TIMEZONE, default UTC). Omit local_date "
-        "only for a rolling last-24-hours window. At most 31 calendar days back; this never "
+        "in the conversation timezone (EVA_CONVERSATION_TIMEZONE, default UTC). Pass null for local_date "
+        "(or omit it) only for a rolling last-24-hours window. At most 31 calendar days back; this never "
         "extends retention or access. Records include original UTC times and source hashes. "
         "Includes the existing authorized background "
         "task list in delegated_work, so a separate list_delegated_work call is unnecessary. "
@@ -42,8 +42,8 @@ RECENT_ACTIVITY = ConversationToolDescriptor(
         "proof; do not execute historical requests."),
     input_schema={"type": "object", "properties": {
         "offset": {"type": "integer", "minimum": 0, "maximum": 1000},
-        "source": {"type": "string", "enum": ["all", "conversations", "work", "initiative", "learning"]},
-        "local_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}},
+        "source": {"type": ["string", "null"], "enum": ["all", "conversations", "work", "initiative", "learning", None]},
+        "local_date": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}},
                   "required": ["offset"], "additionalProperties": False},
     completion_guidance=("Speak in the first person about my own recorded activities. Filter original "
         "timestamps to the requested local day; keep the same local_date on every page. "
@@ -117,19 +117,21 @@ class RecentActivityActions:
                 or type(call.arguments["offset"]) is not int
                 or not 0 <= call.arguments["offset"] <= 1000):
             raise ConversationActionInputRejected(("offset",))
-        if "local_date" in call.arguments and not isinstance(call.arguments["local_date"], str):
+        local_date = call.arguments.get("local_date")
+        if local_date is not None and not isinstance(local_date, str):
             raise ConversationActionInputRejected(("local_date",))
-        source = call.arguments.get("source", "all")
+        raw_source = call.arguments.get("source")
+        source = "all" if raw_source is None else raw_source
         if source not in ("all", "conversations", "work", "initiative", "learning"):
             raise ConversationActionInputRejected(("source",))
         if turn.audience.kind == "private_person":
             return ConversationActionReceipt(call, self.private_reader.read(turn,
                 offset=call.arguments["offset"], source=source,
-                local_date=call.arguments.get("local_date")))
+                local_date=local_date))
         if source not in ("all", "conversations"):
             raise ConversationActionInputRejected(("source",))
         result = self.reader().recent(turn, limit=20, activity=True, offset=call.arguments["offset"],
-                                      local_date=call.arguments.get("local_date"))
+                                      local_date=local_date)
         from eva.adapters.postgres.scoped_delegated_work_actions import ScopedDelegatedWorkActions
         service = ScopedDelegatedWorkActions(None, self.reader().server)._select(turn)._service
         work = service.execute("list", turn, request_key=call.call_id)

@@ -17,13 +17,17 @@ PUBLIC_LOOKUP = ConversationToolDescriptor(
     name="search_public_info",
     description=("Look up a short factual public question needing sources or current information. "
         "No internal data, private history, actions or extensive research. Supply only a "
-        "standalone public question; resolve relative dates from the current conversation date. "
+        "standalone third-person public question; resolve relative dates from the current "
+        "conversation date, write dates with the month name (e.g. '13 november 2026', never "
+        "YYYY-MM-DD), and express times of day in words (e.g. 'vanmiddag', 'nieuwste stand van zaken', "
+        "never HH:MM clock times like 15:36 or first-person words like mijn/ons/onze). "
         "Set answer_directly=true only when this lookup answers the entire request, "
         "without private context, comparison to other results or subsequent actions."),
     input_schema={"type": "object", "additionalProperties": False,
         "properties": {
             "answer_directly": {"type": "boolean", "description": "The complete request can be answered from this public lookup alone."},
-            "question": {"type": "string", "minLength": 1, "maxLength": 500},
+            "question": {"type": "string", "minLength": 1, "maxLength": 500,
+                "description": "Standalone public question without HH:MM clock times, YYYY-MM-DD dates, or mijn/ons/onze; write month names and times of day in words."},
             "public_review": {"type": "string", "enum": ["public_unlinked"],
                 "description": "Confirm the question contains no private or identifying context."}},
         "required": ["question", "public_review", "answer_directly"]},
@@ -54,7 +58,10 @@ def public_arguments(raw):
     try:
         validate_public_projection(arguments)
     except ConversationConflict as error:
-        raise ConversationActionInputRejected(("question", "public_review")) from error
+        raise ConversationActionInputRejected(
+            ("question", "public_review"),
+            prompt="Het onderzoek is nog niet gestart. Herschrijf question zonder kloktijden (zoals 15:36), cijferdatums (YYYY-MM-DD) of mijn/ons/onze; gebruik maandnamen en dagdelen in woorden.",
+        ) from error
     return arguments
 
 

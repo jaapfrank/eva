@@ -106,6 +106,21 @@ class ConversationActionInputRejected(ConversationClarificationRequired):
         super().__init__(prompt)
 
 
+_INTERNAL_REJECTION_MARKERS = re.compile(
+    r"(?:\b[a-z]+_[a-z0-9_]+\b|\b(?:Herschrijf|Gebruik een zoekterm|Laat|laat|omit|Pass|Provide|Supply)\b)"
+)
+
+
+def _human_input_rejection_text(prompt: str) -> str:
+    """Keep developer schema/field repair instructions out of human-facing replies."""
+    if _INTERNAL_REJECTION_MARKERS.search(prompt):
+        return (
+            "Die stap is nog niet gestart omdat mijn eigen zoek- of toolopdracht intern niet goed was "
+            "opgebouwd. Zal ik het meteen opnieuw voor je uitvoeren?"
+        )
+    return prompt
+
+
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 _TOOL_NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]{0,63}")
 _TEXT_DELTA_SINK: ContextVar[Callable[[str], None] | None] = ContextVar(
@@ -1219,9 +1234,11 @@ class LivingConversation:
                 "state a concrete inability. "
                 "The tools offered on this turn define current capability; an older failure or "
                 "recalled limitation does not establish that lookup is unavailable now. "
-                "Only send a standalone public question, never private context or memories. "
+                "Only send a standalone third-person public question, never private context, memories, "
+                "first-person possessives (mijn/ons/onze), HH:MM clock times (like 15:36), or YYYY-MM-DD dates. "
                 "Keep relevant public locations and resolve dates from the current date; write "
-                "dates with the month name. Ask for clarification when essential details are missing. "
+                "dates with the month name and times of day in words (e.g. 'vanmiddag', 'nieuwste stand'). "
+                "Ask for clarification when essential details are missing. "
                 "Use background work for extensive investigation. A failed lookup is not a reason "
                 "to repeat it automatically or silently start a background task.")
         if voice is not None:
@@ -1401,7 +1418,10 @@ class LivingConversation:
             call = generated.action_call
             if call is None:
                 if repairing_input:
-                    generated = replace(generated, text=input_rejection_prompt)
+                    generated = replace(
+                        generated,
+                        text=_human_input_rejection_text(input_rejection_prompt),
+                    )
                 break
             checkpoint()
             check_cancellation()
@@ -1485,13 +1505,20 @@ class LivingConversation:
                         "status": "invalid_input", "action_admitted": False,
                         "invalid_fields": list(clarification.fields),
                         "reason": clarification.prompt,
-                        "instruction": "Correct the tool arguments using its schema. No work has started.",
+                        "instruction": (
+                            f"Call {call.name} again right now with corrected arguments matching reason and its schema. "
+                            "Do not reply with plain text without calling the corrected tool; no work has started."
+                        ),
                     })
                     continue
                 return GroundedReply(
                     conversation_id=turn.conversation_id,
                     message_id=turn.message_id,
-                    text=clarification.prompt,
+                    text=(
+                        _human_input_rejection_text(clarification.prompt)
+                        if isinstance(clarification, ConversationActionInputRejected)
+                        else clarification.prompt
+                    ),
                     evidence_memory_ids=tuple(
                         item.fact_id for item in memory.recall.selected
                     ),

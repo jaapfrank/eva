@@ -4684,10 +4684,26 @@ class PydanticConversationModel:
                 "correcties of gebeurtenissen. Geef dan nog geen feitelijk eindantwoord maar kies één "
                 "compacte zoekquery. Vraagt iemand wat die eerder vond, wilde, koos of zei, "
                 "dan is dit verplicht als het feit ontbreekt. Antwoord bij gewone kennis, "
-                "smalltalk en aanwezige context direct zonder tool."
+                "smalltalk en aanwezige context direct zonder tool. "
+                "Wijst de gebruiker erop dat een eerder antwoord intussen achterhaald kan zijn "
+                "(zoals een latere tijd op de dag) of dat een gevraagde zoek- of werkstap alsnog "
+                "moet gebeuren, voer dan direct de passende aangeboden tool uit met geldige argumenten "
+                "in plaats van alleen uit te leggen waarom het eerder niet lukte."
             )
         if completed_action is not None:
-            if completed_action.call.name == "stop_spoken_task":
+            if (
+                isinstance(completed_action.output, dict)
+                and completed_action.output.get("status") == "invalid_input"
+                and completed_action.output.get("action_admitted") is False
+            ):
+                action_guidance_parts.append(
+                    f"De vorige aanroep van {completed_action.call.name} is NIET gestart omdat de "
+                    "argumenten niet aan de invoerregels voldeden (zie invalid_fields en reason in "
+                    f"de action receipt). Roep {completed_action.call.name} nu direct éénmaal opnieuw "
+                    "aan met gecorrigeerde argumenten zonder verboden patronen. Geef géén los "
+                    "tekstantwoord zonder geldige tool-aanroep."
+                )
+            elif completed_action.call.name == "stop_spoken_task":
                 action_guidance_parts.append(
                     "Het stopverzoek voor de genoemde opdracht is opgeslagen. Een begonnen "
                     "stap kan nog afronden. Claim geen terugdraaiing. Voer bij een doelcorrectie "
