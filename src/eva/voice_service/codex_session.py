@@ -12,6 +12,16 @@ import os
 import tempfile
 from pathlib import Path
 
+SUPPORTED_REALTIME_V3_VOICES = frozenset(
+    {"juniper", "maple", "spruce", "ember", "vale", "breeze", "arbor", "sol", "cove"}
+)
+
+
+def normalize_realtime_v3_voice(voice: str | None) -> str:
+    candidate = (voice or "").strip().lower() if isinstance(voice, str) else ""
+    return candidate if candidate in SUPPORTED_REALTIME_V3_VOICES else "juniper"
+
+
 class VoiceTransportError(RuntimeError):
     pass
 
@@ -23,7 +33,7 @@ class CodexVoiceSession:
         self.media_only = media_only
         self.context_sender = context_sender
         self.on_input_turn = on_input_turn
-        self.voice_name = voice
+        self.voice_name = normalize_realtime_v3_voice(voice)
         self._error_salt = secrets.token_bytes(32)
         self.account_id = None
         self.events = asyncio.Queue(maxsize=512)
@@ -200,11 +210,12 @@ class CodexVoiceSession:
         """Wait for real startup events; an RPC ACK alone is not success."""
         if not offer_sdp.startswith("v=0") or len(offer_sdp) > 131072:
             raise ValueError("Invalid voice SDP offer")
+        selected_voice = normalize_realtime_v3_voice(voice) if voice else self.voice_name
         await self.request("thread/realtime/start", {
             "threadId": self.thread, "outputModality": output_modality, "version": "v3",
             "transport": {"type": "webrtc", "sdp": offer_sdp},
             "clientManagedHandoffs": self.media_only, "delegationAckFiller": False, "codexResponseHandoffMode": "commentary",
-            "model": "gpt-live-1-codex", "voice": voice or self.voice_name,
+            "model": "gpt-live-1-codex", "voice": selected_voice,
             "includeStartupContext": False, "prompt": prompt})
         try:
             async with asyncio.timeout(self.timeout):
@@ -215,6 +226,13 @@ class CodexVoiceSession:
                     if params.get("threadId") != self.thread:
                         continue
                     if event["method"] in {"thread/realtime/error", "thread/realtime/closed"}:
+                        if self.backend is not None:
+                            raw_err = str(params.get("message") or "").encode("utf-8", errors="replace")
+                            self.backend.diagnostic(
+                                "realtime_startup_failed",
+                                event_method=event["method"],
+                                error_sha256=hashlib.sha256(self._error_salt + raw_err[:4096]).hexdigest(),
+                            )
                         raise VoiceTransportError("Voice session failed after startup acknowledgment")
                     if event["method"] == "thread/realtime/started":
                         accepted = True

@@ -853,7 +853,7 @@
     "executionStep": "Provide complete proven original import closure for the same independent assessment",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-14T19:18:00+00:00",
+    "checkedAt": "2026-11-14T19:33:00+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -10530,7 +10530,7 @@
           "Fase 5 · Symbiotische Co-Evolutie, parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2; P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken)."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-14T19:18:00+00:00",
+        "updatedAt": "2026-11-14T19:33:00+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10809,7 +10809,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-14T19:18:00+00:00",
+        "checkedAt": "2026-11-14T19:33:00+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -11181,12 +11181,12 @@
               "independentlyReviewed": true,
               "installedLive": true,
               "liveImages": [
-                "eva2-living-core:worker-health-20261114 (sha256:302074a6440a5cd46bbe3841dd516c07477f13c7c8cb492f2b6e880b86b489f5)",
-                "eva2-living-worker:worker-health-20261114 (sha256:5f8acaadbf61852a96da0fc36ce24300a1011339a0f7c1fe4b0a061a0c4435a6)",
-                "eva2-voice-media:realtime-speech-20261114"
+                "eva2-living-core:phone-voice-20261114 (sha256:9a418f5c701ac4df2165b97b7627c66ecb6799ef6e5b24764862dee4138d682e)",
+                "eva2-living-worker:phone-voice-20261114 (sha256:1b83f85a850a24c8c320fe5799224a0e08eb6f8a129370e6123b384359a852b7)",
+                "eva2-voice-media:phone-voice-20261114 (sha256:f007c7b484e86ac8e3707befbb6df18964e9a1fd2d9760a91e13b5f71d23cf9f)"
               ],
               "householdAcceptanceClaimed": false,
-              "summary": "3D Eva HoloStage (cockpit, unifi_screen, tv_cast Cast V2 TLS :8009, pocket PWA voor Jaap & Lola), Native Speech-to-Speech Realtime (marin) + ~250ms clause spraakstroom, Tailscale Funnel HTTPS (jaap.diplodocus-goldeye.ts.net) & Home LAN (:44712) gateway, camera-ringbuffer met Telegram-fotobijlage, en MCP-gateway timeout-veerkracht met begrensde 3s probe."
+              "summary": "3D Eva HoloStage (cockpit, unifi_screen, tv_cast Cast V2 TLS :8009, pocket PWA voor Jaap & Lola), Native Speech-to-Speech Realtime (juniper v3, ~3.8s snelle WebRTC-opbouw + synchrone mobiele Safari/Chrome startAudio-unlock) + ~250ms clause spraakstroom, Tailscale Funnel HTTPS (jaap.diplodocus-goldeye.ts.net) & Home LAN (:44712) gateway, camera-ringbuffer met Telegram-fotobijlage, en MCP-gateway timeout-veerkracht."
             },
             "fase5": {
               "status": "observing_in_progress",
@@ -11197,15 +11197,17 @@
               "summary": "Privacy-veilige HouseholdObservationLedger + PostgresHouseholdObservationProbe actief op /internal/v1/dashboard/household-observation voor Jaap & Lola: meet 168-uurs/7-dagen aaneengesloten releasestabiliteit (F2.1), nul-token-rust, <2ms reflexen en eerlijke NULL-kosten vóór expliciete eigenaaracceptatie (F2.2).",
               "workerHealthAndVoiceObservation20261114": {
                 "status": "installed_verified",
-                "installedComposeSha256": "3f8712c7d32fa60297c61f0fbb03a4d4cbf3552bea286e5715237fb04cc2f78e",
-                "coreImage": "sha256:302074a6440a5cd46bbe3841dd516c07477f13c7c8cb492f2b6e880b86b489f5",
-                "workerImage": "sha256:5f8acaadbf61852a96da0fc36ce24300a1011339a0f7c1fe4b0a061a0c4435a6",
+                "installedComposeSha256": "0c581f8592bd4b228d8447838e2e710a64fdc5c5ccdef1852230c9aab9a6e108",
+                "coreImage": "sha256:9a418f5c701ac4df2165b97b7627c66ecb6799ef6e5b24764862dee4138d682e",
+                "workerImage": "sha256:1b83f85a850a24c8c320fe5799224a0e08eb6f8a129370e6123b384359a852b7",
                 "coldWorkerCheckSeconds": 3.42,
                 "post120sWorkerHealthStatus": "healthy",
                 "post120sWorkerFailingStreak": 0,
                 "delegatedRuntimeProfilesCompatible": true,
                 "realtimeVoiceOpenObservation": "channel=voice_realtime, used_model=False",
-                "windowsLanFirewallRuleEnabled": true
+                "windowsLanFirewallRuleEnabled": true,
+                "voiceMediaImage": "sha256:f007c7b484e86ac8e3707befbb6df18964e9a1fd2d9760a91e13b5f71d23cf9f",
+                "realtimeV3Voice": "juniper"
               }
             }
           }
@@ -17864,7 +17866,7 @@
         "Fase 5 · Symbiotische Co-Evolutie, parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2; P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken)."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-14T19:18:00+00:00",
+      "updatedAt": "2026-11-14T19:33:00+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -18143,7 +18145,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-14T19:18:00+00:00",
+      "checkedAt": "2026-11-14T19:33:00+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -18515,12 +18517,12 @@
             "independentlyReviewed": true,
             "installedLive": true,
             "liveImages": [
-              "eva2-living-core:worker-health-20261114 (sha256:302074a6440a5cd46bbe3841dd516c07477f13c7c8cb492f2b6e880b86b489f5)",
-              "eva2-living-worker:worker-health-20261114 (sha256:5f8acaadbf61852a96da0fc36ce24300a1011339a0f7c1fe4b0a061a0c4435a6)",
-              "eva2-voice-media:realtime-speech-20261114"
+              "eva2-living-core:phone-voice-20261114 (sha256:9a418f5c701ac4df2165b97b7627c66ecb6799ef6e5b24764862dee4138d682e)",
+              "eva2-living-worker:phone-voice-20261114 (sha256:1b83f85a850a24c8c320fe5799224a0e08eb6f8a129370e6123b384359a852b7)",
+              "eva2-voice-media:phone-voice-20261114 (sha256:f007c7b484e86ac8e3707befbb6df18964e9a1fd2d9760a91e13b5f71d23cf9f)"
             ],
             "householdAcceptanceClaimed": false,
-            "summary": "3D Eva HoloStage (cockpit, unifi_screen, tv_cast Cast V2 TLS :8009, pocket PWA voor Jaap & Lola), Native Speech-to-Speech Realtime (marin) + ~250ms clause spraakstroom, Tailscale Funnel HTTPS (jaap.diplodocus-goldeye.ts.net) & Home LAN (:44712) gateway, camera-ringbuffer met Telegram-fotobijlage, en MCP-gateway timeout-veerkracht met begrensde 3s probe."
+            "summary": "3D Eva HoloStage (cockpit, unifi_screen, tv_cast Cast V2 TLS :8009, pocket PWA voor Jaap & Lola), Native Speech-to-Speech Realtime (juniper v3, ~3.8s snelle WebRTC-opbouw + synchrone mobiele Safari/Chrome startAudio-unlock) + ~250ms clause spraakstroom, Tailscale Funnel HTTPS (jaap.diplodocus-goldeye.ts.net) & Home LAN (:44712) gateway, camera-ringbuffer met Telegram-fotobijlage, en MCP-gateway timeout-veerkracht."
           },
           "fase5": {
             "status": "observing_in_progress",
@@ -18531,15 +18533,17 @@
             "summary": "Privacy-veilige HouseholdObservationLedger + PostgresHouseholdObservationProbe actief op /internal/v1/dashboard/household-observation voor Jaap & Lola: meet 168-uurs/7-dagen aaneengesloten releasestabiliteit (F2.1), nul-token-rust, <2ms reflexen en eerlijke NULL-kosten vóór expliciete eigenaaracceptatie (F2.2).",
             "workerHealthAndVoiceObservation20261114": {
               "status": "installed_verified",
-              "installedComposeSha256": "3f8712c7d32fa60297c61f0fbb03a4d4cbf3552bea286e5715237fb04cc2f78e",
-              "coreImage": "sha256:302074a6440a5cd46bbe3841dd516c07477f13c7c8cb492f2b6e880b86b489f5",
-              "workerImage": "sha256:5f8acaadbf61852a96da0fc36ce24300a1011339a0f7c1fe4b0a061a0c4435a6",
+              "installedComposeSha256": "0c581f8592bd4b228d8447838e2e710a64fdc5c5ccdef1852230c9aab9a6e108",
+              "coreImage": "sha256:9a418f5c701ac4df2165b97b7627c66ecb6799ef6e5b24764862dee4138d682e",
+              "workerImage": "sha256:1b83f85a850a24c8c320fe5799224a0e08eb6f8a129370e6123b384359a852b7",
               "coldWorkerCheckSeconds": 3.42,
               "post120sWorkerHealthStatus": "healthy",
               "post120sWorkerFailingStreak": 0,
               "delegatedRuntimeProfilesCompatible": true,
               "realtimeVoiceOpenObservation": "channel=voice_realtime, used_model=False",
-              "windowsLanFirewallRuleEnabled": true
+              "windowsLanFirewallRuleEnabled": true,
+              "voiceMediaImage": "sha256:f007c7b484e86ac8e3707befbb6df18964e9a1fd2d9760a91e13b5f71d23cf9f",
+              "realtimeV3Voice": "juniper"
             }
           }
         }

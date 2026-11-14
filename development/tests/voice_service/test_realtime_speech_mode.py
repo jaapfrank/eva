@@ -8,7 +8,11 @@ from eva.voice_service.codex_media import (
     REALTIME_SPEECH_PROMPT,
     VOICE_PROMPT,
 )
-from eva.voice_service.codex_session import CodexVoiceSession
+from eva.voice_service.codex_session import (
+    CodexVoiceSession,
+    SUPPORTED_REALTIME_V3_VOICES,
+    normalize_realtime_v3_voice,
+)
 
 
 class RealtimeSpeechModeTests(unittest.IsolatedAsyncioTestCase):
@@ -24,10 +28,16 @@ class RealtimeSpeechModeTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(realtime.native_realtime)
         self.assertIsNone(realtime.renderer)
 
-    async def test_codex_voice_session_forwards_selected_voice_to_realtime_start(self):
+    async def test_codex_voice_session_forwards_supported_v3_voice_and_normalizes_unsupported_voice(self):
+        self.assertIn("juniper", SUPPORTED_REALTIME_V3_VOICES)
+        self.assertIn("maple", SUPPORTED_REALTIME_V3_VOICES)
+        self.assertEqual(normalize_realtime_v3_voice("marin"), "juniper")
+        self.assertEqual(normalize_realtime_v3_voice("maple"), "maple")
+        self.assertEqual(normalize_realtime_v3_voice(None), "juniper")
+
         captured = {}
         session = CodexVoiceSession(
-            "unused", lambda: ("tok", "acc"), None, timeout=0.05, media_only=False, voice="marin"
+            "unused", lambda: ("tok", "acc"), None, timeout=0.05, media_only=False, voice="maple"
         )
         session.thread = "t-1"
 
@@ -42,10 +52,15 @@ class RealtimeSpeechModeTests(unittest.IsolatedAsyncioTestCase):
         ans = await session.start("v=0\r\n", prompt=REALTIME_SPEECH_PROMPT)
         self.assertEqual(ans, "v=0-ans")
         self.assertEqual(captured["method"], "thread/realtime/start")
-        self.assertEqual(captured["params"]["voice"], "marin")
+        self.assertEqual(captured["params"]["voice"], "maple")
         self.assertFalse(captured["params"]["clientManagedHandoffs"])
         self.assertEqual(captured["params"]["prompt"], REALTIME_SPEECH_PROMPT)
         self.assertNotEqual(REALTIME_SPEECH_PROMPT, VOICE_PROMPT)
+
+        fallback_session = CodexVoiceSession(
+            "unused", lambda: ("tok", "acc"), None, timeout=0.05, media_only=True, voice="marin"
+        )
+        self.assertEqual(fallback_session.voice_name, "juniper")
 
 
 if __name__ == "__main__":

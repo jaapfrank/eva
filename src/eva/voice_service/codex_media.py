@@ -8,11 +8,11 @@ import httpx
 from pathlib import Path
 from types import SimpleNamespace
 from uuid import UUID, uuid4, uuid5
-from aiortc import RTCPeerConnection, RTCSessionDescription, AudioStreamTrack
+from aiortc import RTCConfiguration, RTCPeerConnection, RTCSessionDescription, AudioStreamTrack
 from av import AudioFrame, AudioResampler
 from livekit import rtc
 from eva.voice_service.codex_backend import EvaVoiceBackend
-from eva.voice_service.codex_session import CodexVoiceSession
+from eva.voice_service.codex_session import CodexVoiceSession, normalize_realtime_v3_voice
 
 # Neither transport owns Eva's identity or memory. Only the core does.
 VOICE_PROMPT = """You are an input transcription transport. Listen to Dutch speech.
@@ -318,7 +318,11 @@ class CodexMediaSession:
             self.renderer=CodexMediaSession(self.config,self.state,self.current,
                 render_only=True,speech_output=self.speech_output)
             self.renderer.prewarm()
-        self.peer=RTCPeerConnection();self.microphone=MicrophoneTrack(
+        try:
+            self.peer=RTCPeerConnection(RTCConfiguration(iceServers=[]))
+        except TypeError:
+            self.peer=RTCPeerConnection()
+        self.microphone=MicrophoneTrack(
             lambda dropped, queued: self.diagnostic('microphone_overrun',
                 dropped_frames=dropped, queued_frames=queued),
             input_suppressed=lambda: bool(getattr(self.source,'input_suppressed',False)))
@@ -711,7 +715,7 @@ class CodexMediaSession:
             self.bridge=await EvaVoiceBackend(self.state.backend,self.state.session_id,self.current,
             self.state.notify,state=self.state,refresh_context=agent.refresh_saved_context).open()
             self.bridge.allow_handoffs=self.native_realtime
-        realtime_voice=self.config.get('realtime_voice') or ('marin' if self.native_realtime else 'juniper')
+        realtime_voice=normalize_realtime_v3_voice(self.config.get('realtime_voice'))
         self.voice=CodexVoiceSession(self.config['codex_executable'],
             lambda:access_lease(self.config['codex_auth_file']),self.bridge,
             media_only=not self.native_realtime,

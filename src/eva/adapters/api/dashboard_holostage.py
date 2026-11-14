@@ -847,9 +847,13 @@ HOLOSTAGE_HTML = """<!doctype html>
       const attempt = { closedServer: false };
       liveSession = attempt;
       syncVoiceButtons();
-      setVoicePill('⏳ Live spraakverbinding openen (~8 sec)…', true);
+      setVoicePill('⏳ Live spraakverbinding openen (~4 sec)…', true);
 
       try {
+        const room = attempt.room = new window.LivekitClient.Room({ adaptiveStream: true, dynacast: true });
+        // Unlock mobile Safari/Chrome WebAudio synchronously inside user tap gesture
+        room.startAudio().catch(() => {});
+
         // Request mic upfront while user gesture is active
         attempt.stream = await navigator.mediaDevices.getUserMedia({
           audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
@@ -871,12 +875,13 @@ HOLOSTAGE_HTML = """<!doctype html>
           return;
         }
 
-        const room = attempt.room = new window.LivekitClient.Room({ adaptiveStream: true, dynacast: true });
-
         room.on(window.LivekitClient.RoomEvent.TrackSubscribed, track => {
           if (liveSession !== attempt || track.kind !== 'audio') return;
           const el = track.attach();
+          el.autoplay = true;
+          el.playsInline = true;
           $('remote-audio').append(el);
+          if (typeof el.play === 'function') el.play().catch(() => {});
           if (track.mediaStreamTrack) attachStreamAnalyser(track.mediaStreamTrack);
         });
 
@@ -922,7 +927,7 @@ HOLOSTAGE_HTML = """<!doctype html>
 
         await room.connect(connection.url, connection.token, { rtcConfig: connection.rtc_config || {} });
         if (liveSession !== attempt) return;
-        await room.startAudio();
+        await room.startAudio().catch(() => {});
         if (liveSession !== attempt) return;
         await room.localParticipant.publishTrack(attempt.stream.getAudioTracks()[0], {
           source: window.LivekitClient.Track.Source.Microphone
