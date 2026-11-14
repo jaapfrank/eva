@@ -16,17 +16,27 @@ from eva.voice_service.codex_session import (
 
 
 class RealtimeSpeechModeTests(unittest.IsolatedAsyncioTestCase):
-    async def test_default_mode_remains_legacy_while_realtime_speech_enables_native_audio_and_handoffs(self):
+    async def test_single_core_mode_enforced_even_when_legacy_realtime_speech_configured(self):
         legacy = CodexMediaSession({}, SimpleNamespace(session_id="00000000-0000-0000-0000-000000000001"), lambda: None)
         self.assertFalse(legacy.native_realtime)
 
-        realtime = CodexMediaSession(
+        # Even if a config carries legacy "voice_mode": "realtime_speech", production
+        # CodexMediaSession must never allow raw provider weights ("Ik ben ChatGPT")
+        # to bypass Eva's authoritative Core + literal speech renderer.
+        coerced = CodexMediaSession(
             {"voice_mode": "realtime_speech"},
             SimpleNamespace(session_id="00000000-0000-0000-0000-000000000002"),
             lambda: None,
         )
-        self.assertTrue(realtime.native_realtime)
-        self.assertIsNone(realtime.renderer)
+        self.assertFalse(coerced.native_realtime)
+
+        isolated_proto = CodexMediaSession(
+            {"_unsafe_test_realtime_speech": True},
+            SimpleNamespace(session_id="00000000-0000-0000-0000-000000000003"),
+            lambda: None,
+        )
+        self.assertTrue(isolated_proto.native_realtime)
+        self.assertIsNone(isolated_proto.renderer)
 
     async def test_codex_voice_session_forwards_supported_v3_voice_and_normalizes_unsupported_voice(self):
         self.assertIn("juniper", SUPPORTED_REALTIME_V3_VOICES)

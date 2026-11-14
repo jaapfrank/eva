@@ -495,12 +495,13 @@ HOLOSTAGE_HTML = """<!doctype html>
     .drawer-sec:last-child { border-bottom: 0; }
     .drawer-sec h3 { margin: 0 0 8px 0; font-size: 0.9rem; color: #e2e8f0; }
     .chip-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
-    #remote-audio { display: none; }
+    #remote-audio, #stage-tts-audio { display: none; }
   </style>
 </head>
 <body data-mode="cockpit">
   <canvas id="eva-canvas" aria-label="Eva 3D Huiskamer"></canvas>
   <div id="remote-audio"></div>
+  <audio id="stage-tts-audio" preload="auto" playsinline></audio>
 
   <header class="top-hud">
     <div class="top-left">
@@ -598,50 +599,215 @@ HOLOSTAGE_HTML = """<!doctype html>
 
     let stageState = null;
     let evaSpeaking = false;
+    let ttsSpeaking = false;
     let voiceEnergy = 0.0;
+    let vowelFormant = 0.5;
     let cameraTargetX = 0.0;
     let lastSpokenUtteranceId = null;
+    let activeRemoteTrack = null;
 
-    // WebAudio Analyser wired directly to Eva's LiveKit WebRTC remote audio stream
+    // WebAudio Analyser + WebRTC RTP AudioLevel wired to Eva's voice & TTS streams
     let audioCtx = null;
+    let silentSink = null;
+    let activeStreamSource = null;
+    let activeStreamAnalyser = null;
     let activeAnalyser = null;
     let freqBins = null;
+    let timeBins = null;
+    const attachedAudioElements = new WeakMap();
+
+    function disconnectStreamAnalyser() {
+      if (activeStreamSource) {
+        try { activeStreamSource.disconnect(); } catch (_e) {}
+        activeStreamSource = null;
+      }
+      if (activeStreamAnalyser) {
+        try { activeStreamAnalyser.disconnect(); } catch (_e) {}
+        if (activeAnalyser === activeStreamAnalyser) activeAnalyser = null;
+        activeStreamAnalyser = null;
+      }
+    }
+
+    function ensureAudioContext() {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return null;
+      if (!audioCtx) {
+        audioCtx = new Ctx();
+        silentSink = audioCtx.createGain();
+        silentSink.gain.value = 0.0;
+        silentSink.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      return audioCtx;
+    }
 
     function attachStreamAnalyser(mediaStreamTrack) {
       try {
-        const Ctx = window.AudioContext || window.webkitAudioContext;
-        if (!Ctx || !mediaStreamTrack) return;
-        if (!audioCtx) audioCtx = new Ctx();
-        if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+        disconnectStreamAnalyser();
+        const ctx = ensureAudioContext();
+        if (!ctx || !mediaStreamTrack) return;
         const stream = new MediaStream([mediaStreamTrack]);
-        const src = audioCtx.createMediaStreamSource(stream);
-        const analyser = audioCtx.createAnalyser();
+        const src = ctx.createMediaStreamSource(stream);
+        const analyser = ctx.createAnalyser();
         analyser.fftSize = 256;
-        analyser.smoothingTimeConstant = 0.72;
+        analyser.smoothingTimeConstant = 0.62;
         src.connect(analyser);
+        // Connect through zero-gain sink so Chromium/Safari pull WebRTC audio frames
+        if (silentSink) analyser.connect(silentSink);
+        activeStreamSource = src;
+        activeStreamAnalyser = analyser;
         activeAnalyser = analyser;
         freqBins = new Uint8Array(analyser.frequencyBinCount);
+        timeBins = new Uint8Array(analyser.fftSize);
       } catch (_e) {}
     }
 
     function attachElementAnalyser(audioEl) {
       try {
-        const Ctx = window.AudioContext || window.webkitAudioContext;
-        if (!Ctx || !audioEl) return;
-        if (!audioCtx) audioCtx = new Ctx();
-        if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
-        const src = audioCtx.createMediaElementSource(audioEl);
-        const analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 256;
-        analyser.smoothingTimeConstant = 0.72;
-        src.connect(analyser);
-        analyser.connect(audioCtx.destination);
+        const ctx = ensureAudioContext();
+        if (!ctx || !audioEl) return;
+        let analyser = attachedAudioElements.get(audioEl);
+        if (!analyser) {
+          const src = ctx.createMediaElementSource(audioEl);
+          analyser = ctx.createAnalyser();
+          analyser.fftSize = 256;
+          analyser.smoothingTimeConstant = 0.62;
+          src.connect(analyser);
+          analyser.connect(ctx.destination);
+          attachedAudioElements.set(audioEl, analyser);
+        }
         activeAnalyser = analyser;
         freqBins = new Uint8Array(analyser.frequencyBinCount);
+        timeBins = new Uint8Array(analyser.fftSize);
       } catch (_e) {}
     }
 
-    // --- 1. Full-Screen Three.js 3D Eva Stage ---
+    function readWebRtcRtpAudioLevel() {
+      try {
+        const receivers = [];
+        if (activeRemoteTrack?.receiver) receivers.push(activeRemoteTrack.receiver);
+        const subPc = liveSession?.room?.engine?.pcManager?.subscriber?.pc;
+        if (subPc && typeof subPc.getReceivers === 'function') {
+          for (const r of subPc.getReceivers()) {
+            if (r?.track?.kind === 'audio' && !receivers.includes(r)) receivers.push(r);
+          }
+        }
+        let best = 0.0;
+        const nowPerf = performance.now();
+        for (const r of receivers) {
+          if (typeof r.getSynchronizationSources !== 'function') continue;
+          const sources = r.getSynchronizationSources() || [];
+          for (const s of sources) {
+            if (typeof s.audioLevel === 'number' && (!s.timestamp || (nowPerf - s.timestamp) < 400)) {
+              // Map typical speech RTP audioLevel (0.01..0.35) cleanly into [0..1]
+              const mapped = Math.min(1.0, Math.pow(Math.max(0, s.audioLevel * 3.2), 0.72));
+              if (mapped > best) best = mapped;
+            }
+          }
+        }
+        return best;
+      } catch (_e) {
+        return 0.0;
+      }
+    }
+
+    // --- 1. Full-Screen Three.js 3D Eva Stage (Natural Standing Posture & 60fps Lip-Sync) ---
+    function buildSphereContouredMouth(THREE) {
+      // Head bone local space: 1 unit = 1 cm (Armature scale = 0.01).
+      // Painted mouth center on eva.glb is (-0.16, 14.39, 18.05), R_face ~= 15 cm.
+      const rig = new THREE.Group();
+      rig.position.set(-0.12, 14.39, 18.18);
+      rig.rotation.x = 0.03;
+
+      const zContour = (dx, dy) => -((dx * dx + dy * dy) / 30.0);
+
+      // 1. Inner oral cavity (curved ellipse flush with face shell)
+      const segU = 20, segV = 12;
+      const cavPositions = [];
+      const cavIndices = [];
+      for (let iv = 0; iv <= segV; iv++) {
+        const r = iv / segV;
+        for (let iu = 0; iu <= segU; iu++) {
+          const th = (iu / segU) * Math.PI * 2;
+          const dx = Math.cos(th) * 1.65 * r;
+          const dy = Math.sin(th) * 1.05 * r;
+          cavPositions.push(dx, dy, zContour(dx, dy));
+        }
+      }
+      for (let iv = 0; iv < segV; iv++) {
+        for (let iu = 0; iu < segU; iu++) {
+          const a = iv * (segU + 1) + iu;
+          const b = a + segU + 1;
+          cavIndices.push(a, b, a + 1, b, b + 1, a + 1);
+        }
+      }
+      const cavGeo = new THREE.BufferGeometry();
+      cavGeo.setAttribute('position', new THREE.Float32BufferAttribute(cavPositions, 3));
+      cavGeo.setIndex(cavIndices);
+      const cavMat = new THREE.MeshBasicMaterial({
+        color: 0x26121b, side: THREE.DoubleSide,
+        polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2
+      });
+      const cavity = new THREE.Mesh(cavGeo, cavMat);
+      cavity.scale.set(0.85, 0.02, 1.0);
+      cavity.visible = false;
+      rig.add(cavity);
+
+      // 2. Subtle warm tongue contour inside lower cavity
+      const tngPositions = [];
+      const tngIndices = [];
+      for (let iv = 0; iv <= 6; iv++) {
+        const r = iv / 6;
+        for (let iu = 0; iu <= 14; iu++) {
+          const th = Math.PI + (iu / 14) * Math.PI;
+          const dx = Math.cos(th) * 1.05 * r;
+          const dy = -0.18 + Math.sin(th) * 0.62 * r;
+          tngPositions.push(dx, dy, zContour(dx, dy) + 0.02);
+        }
+      }
+      for (let iv = 0; iv < 6; iv++) {
+        for (let iu = 0; iu < 14; iu++) {
+          const a = iv * 15 + iu;
+          const b = a + 15;
+          tngIndices.push(a, b, a + 1, b, b + 1, a + 1);
+        }
+      }
+      const tngGeo = new THREE.BufferGeometry();
+      tngGeo.setAttribute('position', new THREE.Float32BufferAttribute(tngPositions, 3));
+      tngGeo.setIndex(tngIndices);
+      const tongue = new THREE.Mesh(tngGeo, new THREE.MeshBasicMaterial({
+        color: 0xb5546a, side: THREE.DoubleSide,
+        polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3
+      }));
+      tongue.visible = false;
+      rig.add(tongue);
+
+      // 3. Articulated upper & lower curved lip arcs matching Eva's charcoal eye palette
+      const lipMat = new THREE.MeshBasicMaterial({
+        color: 0x2b313a,
+        polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4
+      });
+      function makeLipArc(signY, archSign) {
+        const pts = [];
+        for (let i = 0; i <= 12; i++) {
+          const u = (i / 12) * 2 - 1; // -1 .. +1
+          const dx = u * 1.62;
+          const cornerLift = 0.22 * (u * u);
+          const arch = archSign * 0.16 * (1 - u * u);
+          const dy = cornerLift + arch + signY * 0.04;
+          pts.push(new THREE.Vector3(dx, dy, zContour(dx, dy) + 0.05));
+        }
+        const curve = new THREE.CatmullRomCurve3(pts);
+        return new THREE.Mesh(new THREE.TubeGeometry(curve, 20, 0.17, 8, false), lipMat);
+      }
+      const upperLip = makeLipArc(1, 1);
+      const lowerLip = makeLipArc(-1, -1);
+      rig.add(upperLip);
+      rig.add(lowerLip);
+
+      return { rig, cavity, tongue, upperLip, lowerLip };
+    }
+
     function init3DStage() {
       const canvas = $('eva-canvas');
       let renderer;
@@ -673,21 +839,54 @@ HOLOSTAGE_HTML = """<!doctype html>
       scene.add(halo);
 
       let avatarRoot = null;
-      let mixer = null;
+      let baseFloorY = 0.04;
+      const bones = {};
+      const restQuats = {};
+      const jawMeshes = [];
+      let mouthParts = null;
+
       const loader = new GLTFLoader();
       loader.load('/internal/v1/dashboard/holostage/assets/eva.glb', gltf => {
         avatarRoot = gltf.scene;
+        // Keep Eva's symmetric standing rest pose (feet planted flat, NO walking_man loop!)
+        avatarRoot.traverse(node => {
+          if (node.isBone && node.name) {
+            bones[node.name] = node;
+            restQuats[node.name] = node.quaternion.clone();
+          }
+          if (node.isSkinnedMesh && node.geometry?.attributes?.position) {
+            const pos = node.geometry.attributes.position;
+            const jawArr = new Float32Array(pos.array.length);
+            jawArr.set(pos.array);
+            for (let i = 0; i < pos.count; i++) {
+              const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+              if (z > 0.08 && y >= 1.20 && y <= 1.315) {
+                const wx = Math.max(0, 1 - Math.abs(x) / 0.14);
+                const wy = Math.sin(Math.PI * Math.max(0, Math.min(1, (y - 1.20) / 0.115)));
+                const w = wx * wy;
+                jawArr[i * 3 + 1] = y - 0.017 * w;
+                jawArr[i * 3 + 2] = z - 0.005 * w;
+              }
+            }
+            node.geometry.morphAttributes.position = [new THREE.BufferAttribute(jawArr, 3)];
+            node.updateMorphTargets();
+            jawMeshes.push(node);
+          }
+        });
+
+        if (bones.Head) {
+          mouthParts = buildSphereContouredMouth(THREE);
+          bones.Head.add(mouthParts.rig);
+        }
+
         const box = new THREE.Box3().setFromObject(avatarRoot);
         const size = box.getSize(new THREE.Vector3());
         const scale = 1.68 / Math.max(size.y, 0.01);
         avatarRoot.scale.setScalar(scale);
         const centered = new THREE.Box3().setFromObject(avatarRoot);
-        avatarRoot.position.y = -centered.min.y + 0.04;
+        baseFloorY = -centered.min.y + 0.04;
+        avatarRoot.position.y = baseFloorY;
         scene.add(avatarRoot);
-        if (gltf.animations && gltf.animations.length > 0) {
-          mixer = new THREE.AnimationMixer(avatarRoot);
-          mixer.clipAction(gltf.animations[0]).play();
-        }
       });
 
       const resize = () => {
@@ -700,40 +899,176 @@ HOLOSTAGE_HTML = """<!doctype html>
       window.addEventListener('resize', resize);
       resize();
 
+      const tmpEuler = new THREE.Euler();
+      const tmpQuat = new THREE.Quaternion();
+      const targetQuat = new THREE.Quaternion();
+      function poseBone(name, rx, ry, rz, alpha) {
+        const b = bones[name];
+        const rest = restQuats[name];
+        if (!b || !rest) return;
+        tmpEuler.set(rx, ry, rz, 'XYZ');
+        tmpQuat.setFromEuler(tmpEuler);
+        targetQuat.copy(rest).multiply(tmpQuat);
+        b.quaternion.slerp(targetQuat, alpha);
+      }
+
       let lookX = 0.0;
+      let mouthOpen = 0.0;
+      let mouthWidth = 1.0;
+      let speakActivity = 0.0;
       const clock = new THREE.Clock();
+
       function animate() {
         requestAnimationFrame(animate);
         const dt = Math.min(clock.getDelta(), 0.1);
         const t = clock.elapsedTime;
-        if (mixer) mixer.update(dt);
+        const smoothFast = Math.min(1, dt * 18.0);
+        const smoothPose = Math.min(1, dt * 6.5);
 
+        // --- Multi-source real-time voice energy (WebAudio + WebRTC RTP + speech cadence fallback) ---
+        let analyserLevel = 0.0;
         if (activeAnalyser && freqBins) {
           activeAnalyser.getByteFrequencyData(freqBins);
-          let sum = 0;
-          for (let i = 2; i < 36; i++) sum += freqBins[i];
-          const instant = Math.min(1.0, (sum / (34 * 155)));
-          voiceEnergy = voiceEnergy * 0.72 + instant * 0.28;
-          evaSpeaking = voiceEnergy > 0.06 || liveVoiceState === 'speaking';
-        } else {
-          voiceEnergy *= 0.86;
+          let lowSum = 0, midHighSum = 0;
+          for (let i = 2; i < 12; i++) lowSum += freqBins[i];
+          for (let i = 12; i < 40; i++) midHighSum += freqBins[i];
+          const totalAvg = (lowSum + midHighSum) / (38 * 140);
+          analyserLevel = Math.min(1.0, totalAvg);
+          if (timeBins && analyserLevel < 0.02) {
+            activeAnalyser.getByteTimeDomainData(timeBins);
+            let sq = 0;
+            for (let i = 0; i < timeBins.length; i++) {
+              const d = (timeBins[i] - 128) / 128;
+              sq += d * d;
+            }
+            const rms = Math.sqrt(sq / timeBins.length);
+            if (rms > 0.012) analyserLevel = Math.min(1.0, rms * 3.8);
+          }
+          if (lowSum + midHighSum > 60) {
+            const ratio = (midHighSum / 28) / Math.max(1, lowSum / 10);
+            vowelFormant += (Math.max(0.0, Math.min(1.0, ratio * 0.75)) - vowelFormant) * Math.min(1, dt * 12.0);
+          }
+        }
+
+        const rtpLevel = liveSession ? readWebRtcRtpAudioLevel() : 0.0;
+        const measuredLevel = Math.max(analyserLevel, rtpLevel);
+        const stateSpeaking = (liveVoiceState === 'speaking') || ttsSpeaking;
+        let instantEnergy = measuredLevel;
+        if (stateSpeaking && measuredLevel < 0.02) {
+          // Fallback syllable cadence when mobile OS mutes WebAudio tap on hardware AEC stream
+          const syll = Math.max(0,
+            Math.sin(t * 11.4) * 0.52 +
+            Math.sin(t * 7.1 + 0.9) * 0.44 +
+            Math.sin(t * 17.3 + 2.1) * 0.22
+          );
+          instantEnergy = Math.min(0.88, syll * 0.78);
+          vowelFormant = 0.5 + 0.35 * Math.sin(t * 6.2);
+        }
+
+        const attack = instantEnergy > voiceEnergy ? Math.min(1, dt * 24.0) : Math.min(1, dt * 13.0);
+        voiceEnergy += (instantEnergy - voiceEnergy) * attack;
+        evaSpeaking = stateSpeaking || voiceEnergy > 0.055;
+        speakActivity += ((evaSpeaking ? 1.0 : 0.0) - speakActivity) * Math.min(1, dt * 5.0);
+
+        // Articulated syllable mouth opening & vowel width ('oh' narrow vs 'aa'/'ee' wider)
+        const syllableFlutter = evaSpeaking ? (0.84 + 0.16 * Math.sin(t * 18.5)) : 0.0;
+        const targetMouthOpen = evaSpeaking
+          ? Math.min(1.0, Math.max(0.04, (voiceEnergy * 1.28 - 0.03) * syllableFlutter))
+          : 0.0;
+        mouthOpen += (targetMouthOpen - mouthOpen) * smoothFast;
+        const smileIdle = (userVoiceState === 'speaking') ? 1.06 : 1.0;
+        const targetWidth = evaSpeaking
+          ? (0.78 + 0.34 * vowelFormant - 0.12 * mouthOpen)
+          : smileIdle;
+        mouthWidth += (targetWidth - mouthWidth) * Math.min(1, dt * 14.0);
+
+        if (mouthParts) {
+          const openCm = mouthOpen * 1.05; // up to ~2.1cm total lip separation in Head space
+          mouthParts.upperLip.position.y = openCm * 0.38;
+          mouthParts.lowerLip.position.y = -openCm * 0.66;
+          mouthParts.upperLip.scale.set(mouthWidth, 1.0, 1.0);
+          mouthParts.lowerLip.scale.set(mouthWidth * 0.96, 1.0, 1.0);
+          const showInside = mouthOpen > 0.045;
+          mouthParts.cavity.visible = showInside;
+          mouthParts.tongue.visible = mouthOpen > 0.10;
+          if (showInside) {
+            mouthParts.cavity.scale.set(mouthWidth * 0.92, Math.max(0.06, mouthOpen * 0.95), 1.0);
+            mouthParts.tongue.scale.set(mouthWidth * 0.84, Math.max(0.10, mouthOpen * 0.82), 1.0);
+            mouthParts.tongue.position.y = -openCm * 0.24;
+          }
+        }
+        for (const m of jawMeshes) {
+          if (m.morphTargetInfluences && m.morphTargetInfluences.length > 0) {
+            m.morphTargetInfluences[0] = mouthOpen * 0.85;
+          }
         }
 
         // Smooth camera pan when cards are conjured so Eva stands left of the hologram card
         lookX += (cameraTargetX - lookX) * Math.min(1, dt * 5.0);
         camera.position.x = lookX * 0.55;
-        camera.lookAt(lookX, 1.18, 0);
+        camera.lookAt(lookX, 1.24, 0);
 
+        // --- Natural Humanoid Standing, Breathing, Eye Contact & Conversational Gestures ---
         if (avatarRoot) {
-          avatarRoot.rotation.y = Math.sin(t * 0.65) * 0.06 + (evaSpeaking ? Math.sin(t * 9.5) * 0.025 * (0.4 + voiceEnergy) : 0);
-          avatarRoot.position.y = 0.04 + Math.sin(t * 1.45) * 0.008 + (voiceEnergy * 0.018);
+          const breath = Math.sin(t * 1.55) * 0.5 + 0.5;
+          const sway = Math.sin(t * 0.43) * 0.65 + Math.sin(t * 0.27 + 1.1) * 0.35;
+          const userTalking = (userVoiceState === 'speaking');
+          const thinking = (liveVoiceState === 'thinking');
+
+          // Feet stay calmly planted; gentle natural hip weight-shift only (never marching/spinning!)
+          avatarRoot.position.x = sway * 0.012;
+          avatarRoot.position.y = baseFloorY + breath * 0.0025;
+          avatarRoot.rotation.y = sway * 0.032 - lookX * 0.12;
+
+          // Spine breathing & subtle contrapposto counterbalance
+          poseBone('Spine02', 0.0, sway * 0.015, -sway * 0.022, smoothPose);
+          poseBone('Spine01', -breath * 0.024, sway * 0.018, 0.0, smoothPose);
+          poseBone('Spine', -breath * 0.028 - speakActivity * 0.022, speakActivity * Math.sin(t * 1.35) * 0.025, 0.0, smoothPose);
+
+          // Neck & Head: lift rest pose (-27.8 deg) up by -0.17 rad into warm eye contact with viewer
+          const listenNod = userTalking ? (Math.sin(t * 3.9) * 0.034 - 0.02) : 0.0;
+          const listenTilt = userTalking ? 0.068 : (thinking ? -0.055 : 0.0);
+          const thinkYaw = thinking ? 0.085 : 0.0;
+          const speakNod = speakActivity * (-mouthOpen * 0.048 + Math.sin(t * 4.8) * 0.022);
+          const speakTurn = speakActivity * Math.sin(t * 1.65) * 0.052;
+          const idleGazeY = Math.sin(t * 0.52 + 0.4) * 0.035;
+          const idleTiltZ = Math.sin(t * 0.37) * 0.022;
+
+          poseBone('neck', -0.045 - breath * 0.01, (idleGazeY + speakTurn + thinkYaw) * 0.35, (idleTiltZ + listenTilt) * 0.3, smoothPose);
+          poseBone(
+            'Head',
+            -0.165 + listenNod + speakNod + breath * 0.012,
+            (idleGazeY + speakTurn + thinkYaw) * 0.75,
+            idleTiltZ + listenTilt + speakActivity * Math.sin(t * 1.18) * 0.032,
+            smoothPose
+          );
+
+          // Relaxed shoulders & arms at sides + expressive alternating forearm/hand gestures when speaking
+          const gEnv = speakActivity * (0.38 + 0.62 * Math.min(1, voiceEnergy * 1.4));
+          const gLeft = Math.max(0, Math.sin(t * 2.15) * 0.65 + Math.sin(t * 1.15 + 0.5) * 0.35) * gEnv;
+          const gRight = Math.max(0, Math.sin(t * 1.85 + 1.9) * 0.65 + Math.sin(t * 1.05 + 2.4) * 0.35) * gEnv;
+
+          poseBone('LeftShoulder', 0.0, 0.0, -breath * 0.016, smoothPose);
+          poseBone('RightShoulder', 0.0, 0.0, breath * 0.016, smoothPose);
+
+          // +localZ on LeftArm / -localZ on RightArm relaxes arms inward toward body; -localX swings slightly forward
+          poseBone('LeftArm', -0.03 - gLeft * 0.16, gLeft * 0.08, 0.11 - breath * 0.014 - gLeft * 0.04, smoothPose);
+          poseBone('RightArm', -0.03 - gRight * 0.16, -gRight * 0.08, -0.11 + breath * 0.014 + gRight * 0.04, smoothPose);
+
+          // -localX bends elbows naturally forward & upward during speech
+          poseBone('LeftForeArm', -0.07 - breath * 0.015 - gLeft * 0.42, gLeft * 0.14, 0.02, smoothPose);
+          poseBone('RightForeArm', -0.07 - breath * 0.015 - gRight * 0.44, -gRight * 0.14, -0.02, smoothPose);
+
+          poseBone('LeftHand', -gLeft * 0.12, gLeft * 0.18, gLeft * 0.15, smoothPose);
+          poseBone('RightHand', -gRight * 0.12, -gRight * 0.18, -gRight * 0.15, smoothPose);
         }
-        const pulse = 1.0 + (voiceEnergy * 0.34) + Math.sin(t * 2.4) * 0.025;
+
+        const pulse = 1.0 + (voiceEnergy * 0.30) + Math.sin(t * 2.1) * 0.02;
         halo.scale.setScalar(pulse);
         haloMat.color.setHex(
           stageState?.privacy_shield?.active ? 0xf59e0b : (evaSpeaking || liveSession ? 0x10b981 : 0x38bdf8)
         );
-        haloMat.opacity = liveSession ? (0.48 + voiceEnergy * 0.38) : 0.36;
+        haloMat.opacity = liveSession ? (0.46 + voiceEnergy * 0.36) : 0.34;
         renderer.render(scene, camera);
       }
       animate();
@@ -764,37 +1099,124 @@ HOLOSTAGE_HTML = """<!doctype html>
       strip.scrollTop = strip.scrollHeight;
     }
 
-    // --- 3. Neural Audio Helper for TV Cast / Text Mode ---
-    let currentStageAudio = null;
-    async function playNeuralSpeech(text) {
-      const clean = (text || '').trim();
-      if (!clean) return;
+    // --- 3. Neural Audio Queue for TV Cast & Streaming Typed Chat ---
+    const ttsQueue = [];
+    let ttsDraining = false;
+    let ttsUnlocked = false;
+    let ttsGeneration = 0;
+    let activeTtsCancel = null;
+
+    function unlockStageAudio() {
       try {
-        const res = await fetch('/internal/v1/dashboard/holostage/speech-audio', {
-          method: 'POST', headers: hdrs, body: JSON.stringify({ text: clean })
-        });
-        if (!res.ok) return;
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        if (currentStageAudio) {
-          try { currentStageAudio.pause(); } catch (_e) {}
+        ensureAudioContext();
+        const el = $('stage-tts-audio');
+        if (!el || ttsUnlocked) return;
+        ttsUnlocked = true;
+        // Tiny 40ms silent WAV unlocks persistent HTMLAudioElement inside user tap gesture on iOS/Android
+        el.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+        el.muted = true;
+        const p = el.play();
+        if (p && typeof p.then === 'function') {
+          p.then(() => {
+            el.muted = false;
+            if (!ttsSpeaking && el.src && el.src.startsWith('data:')) {
+              el.pause();
+              el.removeAttribute('src');
+            }
+          }).catch(() => { el.muted = false; });
+        } else {
+          el.muted = false;
         }
-        const audio = new Audio(url);
-        currentStageAudio = audio;
-        attachElementAnalyser(audio);
-        evaSpeaking = true;
-        audio.onended = () => { evaSpeaking = false; URL.revokeObjectURL(url); };
-        audio.onerror = () => { evaSpeaking = false; URL.revokeObjectURL(url); };
-        await audio.play();
-      } catch (_e) {
-        evaSpeaking = false;
+      } catch (_e) {}
+    }
+
+    function stopNeuralSpeechQueue() {
+      ttsGeneration += 1;
+      for (const it of ttsQueue.splice(0)) {
+        if (it?.urlPromise) {
+          it.urlPromise.then(u => { if (u) URL.revokeObjectURL(u); }).catch(() => {});
+        }
+      }
+      ttsSpeaking = false;
+      const el = $('stage-tts-audio');
+      if (el) {
+        try { el.pause(); } catch (_e) {}
+      }
+      if (activeTtsCancel) {
+        const cancel = activeTtsCancel;
+        activeTtsCancel = null;
+        cancel();
       }
     }
 
-    // --- 4. Real Continuous Full-Duplex LiveKit + Codex Voice Session ---
+    async function fetchSpeechBlobUrl(cleanText) {
+      const res = await fetch('/internal/v1/dashboard/holostage/speech-audio', {
+        method: 'POST', headers: hdrs, body: JSON.stringify({ text: cleanText })
+      });
+      if (!res.ok) return null;
+      const blob = await res.blob();
+      return URL.createObjectURL(blob);
+    }
+
+    async function drainNeuralSpeechQueue() {
+      if (ttsDraining) return;
+      ttsDraining = true;
+      try {
+        while (ttsQueue.length > 0) {
+          const item = ttsQueue.shift();
+          const url = await item.urlPromise.catch(() => null);
+          if (!url || item.gen !== ttsGeneration) {
+            if (url) URL.revokeObjectURL(url);
+            continue;
+          }
+          const el = $('stage-tts-audio') || new Audio();
+          el.muted = false;
+          el.src = url;
+          attachElementAnalyser(el);
+          ttsSpeaking = true;
+          evaSpeaking = true;
+          await new Promise(resolve => {
+            let settled = false;
+            const done = () => {
+              if (settled) return;
+              settled = true;
+              el.onended = null;
+              el.onerror = null;
+              el.onpause = null;
+              if (activeTtsCancel === done) activeTtsCancel = null;
+              URL.revokeObjectURL(url);
+              resolve();
+            };
+            activeTtsCancel = done;
+            el.onended = done;
+            el.onerror = done;
+            el.onpause = done;
+            const p = el.play();
+            if (p && typeof p.catch === 'function') p.catch(done);
+          });
+        }
+      } finally {
+        ttsDraining = false;
+        if (ttsQueue.length === 0) {
+          ttsSpeaking = false;
+          if (!liveSession) evaSpeaking = false;
+        }
+      }
+    }
+
+    function playNeuralSpeech(text, reset = false) {
+      const clean = (text || '').trim();
+      if (!clean) return;
+      if (reset) stopNeuralSpeechQueue();
+      ttsQueue.push({ gen: ttsGeneration, urlPromise: fetchSpeechBlobUrl(clean) });
+      drainNeuralSpeechQueue();
+    }
+
+    // --- 4. Real Continuous Full-Duplex LiveKit + Single-Core Eva Voice Session ---
     const VOICE_BASE = '/internal/v1/dashboard/holostage/voice';
     let liveSession = null;
     let liveVoiceState = 'idle';
+    let userVoiceState = 'idle';
     const seenFinalSegments = new Set();
 
     function setVoicePill(text, isLive = false) {
@@ -813,8 +1235,10 @@ HOLOSTAGE_HTML = """<!doctype html>
       const attempt = liveSession;
       liveSession = null;
       liveVoiceState = 'idle';
+      userVoiceState = 'idle';
+      activeRemoteTrack = null;
       evaSpeaking = false;
-      activeAnalyser = null;
+      disconnectStreamAnalyser();
       syncVoiceButtons();
       setVoicePill(reasonText, false);
       $('remote-audio').replaceChildren();
@@ -844,6 +1268,8 @@ HOLOSTAGE_HTML = """<!doctype html>
         return;
       }
 
+      stopNeuralSpeechQueue();
+      ensureAudioContext();
       const attempt = { closedServer: false };
       liveSession = attempt;
       syncVoiceButtons();
@@ -877,6 +1303,7 @@ HOLOSTAGE_HTML = """<!doctype html>
 
         room.on(window.LivekitClient.RoomEvent.TrackSubscribed, track => {
           if (liveSession !== attempt || track.kind !== 'audio') return;
+          activeRemoteTrack = track;
           const el = track.attach();
           el.autoplay = true;
           el.playsInline = true;
@@ -903,6 +1330,7 @@ HOLOSTAGE_HTML = """<!doctype html>
             const ev = JSON.parse(new TextDecoder().decode(payload));
             if (ev.type === 'voice_state') {
               liveVoiceState = ev.state || 'listening';
+              if (liveVoiceState === 'speaking') userVoiceState = 'listening';
               const labels = {
                 listening: '🟢 Eva luistert — praat gewoon door',
                 thinking: '💭 Eva denkt even na…',
@@ -910,6 +1338,11 @@ HOLOSTAGE_HTML = """<!doctype html>
               };
               setVoicePill(labels[ev.state] || '🟢 Gesprek actief', true);
               refreshState();
+            } else if (ev.type === 'user_voice_state') {
+              userVoiceState = ev.state || 'listening';
+              if (userVoiceState === 'speaking') {
+                setVoicePill('👂 Eva luistert naar je…', true);
+              }
             } else if (ev.type === 'work_finished' || ev.type === 'stt_final') {
               refreshState();
             }
@@ -1219,6 +1652,10 @@ HOLOSTAGE_HTML = """<!doctype html>
         return;
       }
 
+      // Stop any previous speech first, then unlock persistent audio element inside submit gesture
+      stopNeuralSpeechQueue();
+      unlockStageAudio();
+
       const turnId = 'turn-' + Date.now();
       upsertTranscript(turnId + ':u', 'user', text);
       try {
@@ -1231,6 +1668,7 @@ HOLOSTAGE_HTML = """<!doctype html>
         let buf = '';
         let acc = '';
         let finalReply = '';
+        let queuedClauses = 0;
         while (true) {
           const { value, done } = await reader.read();
           if (done) break;
@@ -1243,16 +1681,22 @@ HOLOSTAGE_HTML = """<!doctype html>
             if (msg.type === 'stage_delta') {
               acc += msg.text;
               upsertTranscript(turnId + ':e', 'eva', acc);
+            } else if (msg.type === 'speech_clause' && msg.text) {
+              queuedClauses += 1;
+              playNeuralSpeech(msg.text, false);
             } else if (msg.type === 'stage_state' && msg.stage) {
               renderState(msg.stage);
             } else if (msg.type === 'final') {
+              if (msg.shield_interrupted) {
+                stopNeuralSpeechQueue();
+              }
               finalReply = msg.text || acc;
               upsertTranscript(turnId + ':e', 'eva', finalReply);
               if (msg.stage) renderState(msg.stage);
             }
           }
         }
-        if (finalReply) playNeuralSpeech(finalReply);
+        if (finalReply && queuedClauses === 0) playNeuralSpeech(finalReply, true);
       } catch (_e) {}
     };
 

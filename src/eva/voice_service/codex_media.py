@@ -200,7 +200,9 @@ class CodexMediaSession:
     def __init__(self, config, state, check, *, render_only=False, speech_output=None):
         self.config,self.state,self.check=config,state,check
         self.render_only=render_only
-        self.native_realtime=bool(not render_only and config.get('voice_mode')=='realtime_speech')
+        # Neither transport owns Eva's identity or memory: never let raw provider
+        # realtime weights answer directly as a second persona (e.g. "ChatGPT").
+        self.native_realtime=bool(not render_only and config.get('_unsafe_test_realtime_speech') is True)
         self.speech_output=speech_output
         self._literal_tts=None
         self.renderer=None
@@ -613,6 +615,9 @@ class CodexMediaSession:
                 updates.append((value,None if deferred else self.say(value)))
         try:
             async with self._core_lock:
+                if (not self.closed and self.renderer is not None
+                        and getattr(self.renderer,'_speaking_handle',None) is None):
+                    self.emit('agent_state_changed',new_state='thinking')
                 try:
                     answer=await self.bridge.dispatch(text,key,spoken_update=spoken_update)
                 except (httpx.HTTPError,RuntimeError) as error:
@@ -639,8 +644,16 @@ class CodexMediaSession:
         # A cancelled speech handle is never replayed by this path.
         if not answer:
             self.last_activity=time.monotonic()
+            if (not self.closed and self.renderer is not None
+                    and getattr(self.renderer,'_speaking_handle',None) is None):
+                self.emit('agent_state_changed',new_state='listening')
             return  # Verified silent completion keeps listening; no empty TTS.
-        if not await self.response_allowed(generation):return
+        if not await self.response_allowed(generation):
+            if (not self.closed and self.renderer is not None
+                    and getattr(self.renderer,'_speaking_handle',None) is None
+                    and not self._input_open):
+                self.emit('agent_state_changed',new_state='listening')
+            return
         handle=self.say(answer)
         try:
             await handle.task

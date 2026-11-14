@@ -209,7 +209,7 @@ def create_app():
             # would otherwise discard a real correction during the first answer.
             if config.get("voice_engine") == "codex":
                 from eva.voice_service.codex_media import CodexMediaSession
-                session = CodexMediaSession(config, state, check)
+                session = CodexMediaSession(config, state, check, speech_output=tts_source)
             else:
                 session = AgentSession(stt=HomeAssistantSTT(stt_source, check, vad=vad), tts=streaming_speech_output(tts_source, check),
                                        vad=vad, turn_detection="vad", allow_interruptions=True,

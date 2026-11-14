@@ -965,3 +965,20 @@ def test_fullscreen_default_conjure_on_demand_livekit_html_and_manage_holostage_
     assert r_cast.output["status"] == "device_offline"
     assert "stg_" not in json.dumps(r_cast.output)
 
+
+def test_holostage_natural_standing_rig_lipsync_and_streaming_tts_contract() -> None:
+    from eva.adapters.api.dashboard_holostage import HOLOSTAGE_HTML
+
+    # Walking loop must NEVER be played automatically anymore
+    assert "clipAction(gltf.animations[0]).play()" not in HOLOSTAGE_HTML
+    # Natural standing bone rig + sphere-contoured 3D mouth + GPU jaw morph + WebRTC RTP lip-sync
+    assert "buildSphereContouredMouth" in HOLOSTAGE_HTML
+    assert "morphAttributes.position" in HOLOSTAGE_HTML
+    assert "getSynchronizationSources" in HOLOSTAGE_HTML
+    assert "silentSink" in HOLOSTAGE_HTML
+    assert "'Head'," in HOLOSTAGE_HTML
+    assert "poseBone('LeftForeArm'" in HOLOSTAGE_HTML
+    assert "msg.type === 'speech_clause'" in HOLOSTAGE_HTML
+    assert 'id="stage-tts-audio"' in HOLOSTAGE_HTML
+
+

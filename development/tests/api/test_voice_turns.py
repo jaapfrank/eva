@@ -168,13 +168,13 @@ def test_unconfirmed_audio_is_not_reported_as_interruption_or_completion():
     assert runtime.context.recent[0].playback_status=='unconfirmed'
 
 
-def test_private_return_open_records_voice_realtime_observation_only_when_authorized(tmp_path):
+def test_voice_respond_records_voice_realtime_turn_while_work_open_does_not_double_count(tmp_path):
     from eva.application.household_observation import HouseholdObservationLedger
 
     client, config, runtime = setup()
     ledger = HouseholdObservationLedger(
         state_file=tmp_path / "obs" / "ledger-v1.json",
-        release_id="rel-voice-open-test",
+        release_id="rel-voice-single-core-test",
     )
     runtime._household_observation = ledger
     runtime._dashboard_owner_principal_id = "person:owner"
@@ -182,14 +182,19 @@ def test_private_return_open_records_voice_realtime_observation_only_when_author
     headers = {"Authorization": "Bearer " + TOKEN}
     session_id = str(uuid4())
 
-    # 1. poll/renew/close must NOT inflate voice_realtime turn count
-    res_poll = client.post("/internal/v1/voice-session/work/poll", headers=headers, json={"session_id": session_id})
-    assert res_poll.status_code == 200
+    # 1. Opening/polling a voice session before any utterance is spoken must NOT record a phantom turn
+    for op in ("open", "poll"):
+        res_op = client.post(f"/internal/v1/voice-session/work/{op}", headers=headers, json={"session_id": session_id})
+        assert res_op.status_code == 200
     assert ledger.snapshot(include_external_probe=False)["symbiotic_metrics"]["turns_jaap"] == 0
 
-    # 2. Authorized open records exactly 1 voice_realtime activity for owner-jaap
-    res_open = client.post("/internal/v1/voice-session/work/open", headers=headers, json={"session_id": session_id})
-    assert res_open.status_code == 200
+    # 2. Actual spoken utterance routed through Eva's Single Core (/respond) records 1 voice_realtime turn
+    data = payload()
+    data["session_id"] = session_id
+    data["text"] = "Wie ben jij?"
+    res_turn = client.post(PATH, headers=headers, json=data)
+    assert res_turn.status_code == 200
+    assert "final" in res_turn.text
     snap = ledger.snapshot(include_external_probe=False)["symbiotic_metrics"]
     assert snap["turns_jaap"] == 1
     assert snap["channel_turns"]["voice_realtime"] == 1
