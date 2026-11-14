@@ -1499,6 +1499,7 @@ def create_runtime_app() -> FastAPI:
     from eva.bootstrap.holostage_runtime import (
         HoloStageConversationActions,
         HoloStageSpeechBridge,
+        HoloStageVisionBridge,
         MANAGE_HOLOSTAGE,
     )
     from eva.bootstrap.camera_photo_runtime import (
@@ -2119,6 +2120,7 @@ def create_runtime_app() -> FastAPI:
     runtime._holostage_speech = HoloStageSpeechBridge.from_runtime_settings(
         settings, dashboard_voice=dashboard_voice
     )
+    runtime._holostage_vision = HoloStageVisionBridge.from_runtime_settings(settings)
     native_voice = (None if household_voice is None else household_voice.build_service(
         runtime=runtime, engine=engine, work_server=household_work_server,
     ))

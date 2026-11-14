@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from eva.adapters.connectors.holostage_speech import HoloStageSpeechBridge
+from eva.adapters.model.holostage_vision import HoloStageVisionBridge
 from eva.application.cast_v2_protocol import query_or_launch_approved_cast_device
 from eva.application.conversation import (
     ConversationActionInputRejected,
@@ -129,9 +130,40 @@ class HoloStageConversationActions:
         owner_id = getattr(runtime, "_dashboard_owner_principal_id", None)
         return bool(owner_id and getattr(turn, "principal_id", None) == owner_id)
 
-    def active_context(self, turn: Any) -> tuple[Any, ...]:
-        _ = turn
-        return ()
+    def active_context(self, turn: Any) -> tuple[str, ...]:
+        if not self.available_for(turn):
+            return ()
+        runtime = self._runtime_loader()
+        if runtime is None:
+            return ()
+        try:
+            mgr = self._resolve_manager(runtime)
+            raw_ts = getattr(turn, "occurred_at", None) or getattr(turn, "received_at", None)
+            if isinstance(raw_ts, str) and raw_ts.strip():
+                now = datetime.fromisoformat(raw_ts.strip().replace("Z", "+00:00")).astimezone(UTC).replace(microsecond=0)
+            elif isinstance(raw_ts, datetime):
+                now = raw_ts.astimezone(UTC).replace(microsecond=0)
+            else:
+                now = datetime.now(UTC).replace(microsecond=0)
+            if mgr.biometrics.is_privacy_shield_active(now=now)[0]:
+                mgr.clear_ephemeral_visual_context()
+                return ()
+            items: list[str] = []
+            vis_ctx = mgr.get_ephemeral_visual_context(now=now)
+            if vis_ctx is not None:
+                items.append(
+                    f"Actief live camerabeeld op HoloStage ({vis_ctx['source_label']}, "
+                    f"{vis_ctx['age_seconds']}s geleden getoond, niet opgeslagen): {vis_ctx['summary_nl']}"
+                )
+            conv_id = str(getattr(turn, "conversation_id", ""))
+            if conv_id.startswith(("voice:", "dashboard:")):
+                st = mgr.build_stage_state(viewer_kind="owner", form_factor="cockpit", now=now)
+                conjured = st.get("cards", {}).get("conjured_cards") or []
+                if conjured:
+                    items.append(f"Zichtbare hologramkaarten op Eva HoloStage: {', '.join(str(c) for c in conjured)}.")
+            return tuple(items)
+        except Exception:
+            return ()
 
     def pending(self, turn: Any, *, step_index: int = 0) -> None:
         _ = (turn, step_index)
@@ -431,5 +463,6 @@ class HoloStageConversationActions:
 __all__ = [
     "HoloStageConversationActions",
     "HoloStageSpeechBridge",
+    "HoloStageVisionBridge",
     "MANAGE_HOLOSTAGE",
 ]

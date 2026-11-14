@@ -40,6 +40,7 @@ function allowedStagePath(method, pathname) {
       pathname === '/internal/v1/dashboard/holostage/session' ||
       pathname === '/internal/v1/dashboard/holostage/action' ||
       pathname === '/internal/v1/dashboard/holostage/turn-stream' ||
+      pathname === '/internal/v1/dashboard/holostage/vision-turn' ||
       pathname === '/internal/v1/dashboard/holostage/speech-audio'
     );
   }

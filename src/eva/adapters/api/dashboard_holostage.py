@@ -1,4 +1,4 @@
-"""Fase 4 — Eva HoloStage Full-Screen 3D Stage, LiveKit Continuous Voice & Conjure-On-Demand Cards.
+"""Fase 4 — Eva HoloStage Full-Screen 3D Stage, LiveKit Continuous Voice, Camera Co-Pilot & Conjure-On-Demand Cards.
 
 Exposes:
 - GET  /internal/v1/dashboard/holostage                  -> Full-screen 3D Eva (`cockpit`, `unifi_screen`, `tv_cast`, `pocket`)
@@ -9,6 +9,7 @@ Exposes:
 - POST /internal/v1/dashboard/holostage/speech-audio     -> Neural Dutch TTS audio for ambient Cast TVs & text replies
 - POST /internal/v1/dashboard/holostage/action           -> Conjure/dismiss cards, shopping list, biometrics & Cast V2 (`DashCast 84912283`)
 - POST /internal/v1/dashboard/holostage/turn-stream      -> Sub-300ms clause-chunked NDJSON stream + live stage card updates
+- POST /internal/v1/dashboard/holostage/vision-turn      -> Zero-retention camera co-pilot (`Eva Ziet Echt Mee`) + live voice context
 """
 
 from __future__ import annotations
@@ -306,6 +307,9 @@ HOLOSTAGE_HTML = """<!doctype html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="manifest" href="/internal/v1/dashboard/holostage/manifest.json" />
   <meta name="theme-color" content="#060b16" />
   <title>Eva — 3D Huiskamer &amp; Doorlopend Gesprek</title>
@@ -333,7 +337,7 @@ HOLOSTAGE_HTML = """<!doctype html>
     }
     * { box-sizing: border-box; }
     html, body {
-      margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden;
+      margin: 0; padding: 0; width: 100vw; height: 100vh; height: 100dvh; overflow: hidden;
       background:
         radial-gradient(circle at 50% 42%, rgba(56, 189, 248, 0.16), transparent 56%),
         radial-gradient(circle at 50% 88%, rgba(16, 185, 129, 0.09), transparent 48%),
@@ -342,14 +346,18 @@ HOLOSTAGE_HTML = """<!doctype html>
       font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
     }
     #eva-canvas {
-      position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1;
+      position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; z-index: 1;
     }
 
-    /* Top bar — subtle floating glass, zero visual clutter */
+    /* Top bar — subtle floating glass, safe-area aware */
     .top-hud {
-      position: fixed; top: 18px; left: 22px; right: 22px; z-index: 10;
+      position: fixed;
+      top: calc(14px + env(safe-area-inset-top, 0px));
+      left: calc(16px + env(safe-area-inset-left, 0px));
+      right: calc(16px + env(safe-area-inset-right, 0px));
+      z-index: 10;
       display: flex; justify-content: space-between; align-items: flex-start;
-      gap: 12px; pointer-events: none;
+      gap: 10px; pointer-events: none;
     }
     .top-left, .top-right {
       display: flex; flex-wrap: wrap; gap: 8px; align-items: center; pointer-events: auto;
@@ -365,6 +373,13 @@ HOLOSTAGE_HTML = """<!doctype html>
       background: rgba(6, 78, 59, 0.58);
       color: #d1fae5;
       box-shadow: 0 0 22px rgba(16, 185, 129, 0.22);
+    }
+    .pill.vision-on {
+      border-color: rgba(34, 211, 238, 0.72);
+      background: rgba(8, 51, 68, 0.68);
+      color: #cffafe;
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.24);
+      cursor: pointer;
     }
     .pill.shield-on {
       border-color: var(--amber); color: #fde68a; background: rgba(120, 53, 15, 0.62);
@@ -434,10 +449,12 @@ HOLOSTAGE_HTML = """<!doctype html>
     }
     .muted { color: var(--muted); font-size: 0.82rem; }
 
-    /* Bottom floating conversation & voice dock */
+    /* Bottom floating conversation, camera co-pilot & voice dock */
     .bottom-dock {
-      position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
-      width: min(760px, calc(100vw - 32px)); z-index: 10;
+      position: fixed; left: 50%;
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      transform: translateX(-50%);
+      width: min(780px, calc(100vw - 24px)); z-index: 10;
       display: flex; flex-direction: column; gap: 10px; align-items: center;
     }
     .transcript-strip {
@@ -453,29 +470,87 @@ HOLOSTAGE_HTML = """<!doctype html>
     .turn-line.user { color: #bae6fd; }
     .turn-line.eva { color: #f8fafc; font-weight: 500; }
     .dock-controls {
-      width: 100%; display: flex; align-items: center; gap: 10px;
-      padding: 9px 12px; border-radius: 999px;
+      width: 100%; display: flex; align-items: center; gap: 8px;
+      padding: 8px 11px; border-radius: 999px;
       background: var(--glass); border: 1px solid var(--border);
       backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
       box-shadow: 0 16px 38px rgba(2, 6, 23, 0.5);
     }
     .dock-controls form {
-      flex: 1; display: flex; gap: 8px; align-items: center; margin: 0;
+      flex: 1; min-width: 0; display: flex; gap: 7px; align-items: center; margin: 0;
     }
     .dock-controls input {
-      border-radius: 999px; background: rgba(6, 11, 22, 0.65);
-      border-color: rgba(148, 163, 184, 0.14); padding: 9px 15px;
+      min-width: 0; border-radius: 999px; background: rgba(6, 11, 22, 0.65);
+      border-color: rgba(148, 163, 184, 0.14); padding: 9px 14px;
+    }
+    button.btn-cam-toggle {
+      border-radius: 999px; padding: 9px 13px; font-size: 0.92rem;
+      border-color: rgba(56, 189, 248, 0.34);
+      background: rgba(14, 29, 54, 0.82);
+      white-space: nowrap;
+    }
+    button.btn-cam-toggle.cam-active {
+      border-color: rgba(34, 211, 238, 0.85);
+      background: rgba(8, 66, 88, 0.88);
+      box-shadow: 0 0 18px rgba(34, 211, 238, 0.28);
+    }
+
+    /* Floating Camera Co-Pilot PIP ("Eva Ziet Echt Mee") */
+    .camera-pip {
+      position: fixed;
+      left: calc(16px + env(safe-area-inset-left, 0px));
+      bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+      width: min(276px, calc(100vw - 32px));
+      z-index: 11;
+      background: rgba(10, 18, 36, 0.92);
+      border: 1px solid rgba(34, 211, 238, 0.45);
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: 0 20px 44px rgba(2, 6, 23, 0.68), 0 0 24px rgba(34, 211, 238, 0.14);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      animation: holoMaterialize 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .camera-pip[hidden] { display: none !important; }
+    .camera-pip-head {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; font-weight: 700; color: #cffafe; margin-bottom: 7px;
+    }
+    .camera-pip-view {
+      position: relative; width: 100%; aspect-ratio: 4 / 3;
+      border-radius: 12px; overflow: hidden; background: #020617;
+      border: 1px solid rgba(56, 189, 248, 0.24);
+    }
+    .camera-pip-view video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .camera-pip-flash {
+      position: absolute; inset: 0; background: #e0f2fe; opacity: 0;
+      pointer-events: none; transition: opacity 0.22s ease;
+    }
+    .camera-pip-flash.flash-on { opacity: 0.72; }
+    .camera-pip-actions {
+      display: flex; gap: 6px; margin-top: 8px;
+    }
+    .camera-pip-actions button.btn-snap {
+      flex: 1; border-radius: 11px; padding: 8px 10px; font-size: 0.8rem; font-weight: 700;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.95), rgba(16, 185, 129, 0.92));
+      border-color: rgba(165, 243, 252, 0.6); color: #021c24;
     }
 
     /* Ambient TV Cast mode: 100% pure 3D Eva + clean cinema subtitle + conjured cards only */
     body[data-mode="tv_cast"] .top-right,
     body[data-mode="tv_cast"] .dock-controls,
+    body[data-mode="tv_cast"] .camera-pip,
     body[data-mode="tv_cast"] .admin-drawer {
       display: none !important;
     }
     body[data-mode="tv_cast"] .transcript-strip {
       font-size: 1.25rem; text-align: center; max-height: none;
       background: rgba(6, 11, 22, 0.78);
+    }
+    @media (max-width: 640px) {
+      button.btn-call-start, button.btn-call-end { padding: 10px 14px; font-size: 0.85rem; }
+      .dock-controls input { padding: 8px 11px; font-size: 0.84rem; }
     }
 
     /* Discreet Owner Admin Drawer (closed by default) */
@@ -506,13 +581,32 @@ HOLOSTAGE_HTML = """<!doctype html>
   <header class="top-hud">
     <div class="top-left">
       <span class="pill" id="voice-pill">🎙️ Klik op Start gesprek om te praten</span>
-      <span class="pill" id="shield-pill" hidden>🛡️ Privéschild actief</span>
+      <span class="pill vision-on" id="vision-pill" title="Klik om cameracontext te wissen" hidden>👁️ Eva ziet camerabeeld</span>
+      <span class="pill shield-on" id="shield-pill" hidden>🛡️ Privéschild actief</span>
     </div>
     <div class="top-right">
       <button type="button" id="btn-clear-cards" class="btn-sm" hidden>✕ Kaarten verbergen</button>
       <button type="button" id="btn-toggle-admin" class="btn-sm" hidden>⚙️ Beheer &amp; TV</button>
     </div>
   </header>
+
+  <!-- Floating Camera Co-Pilot PIP (strictly opt-in, zero disk retention) -->
+  <aside class="camera-pip" id="camera-pip" hidden>
+    <div class="camera-pip-head">
+      <span>📷 Laat Eva meekijken</span>
+      <div style="display:flex;gap:5px">
+        <button type="button" id="btn-camera-flip" class="btn-sm" title="Draai camera">🔄</button>
+        <button type="button" id="btn-camera-close" class="btn-sm" title="Sluit camera">✕</button>
+      </div>
+    </div>
+    <div class="camera-pip-view">
+      <video id="camera-video" autoplay playsinline muted></video>
+      <div class="camera-pip-flash" id="camera-flash"></div>
+    </div>
+    <div class="camera-pip-actions">
+      <button type="button" id="btn-camera-snap" class="btn-snap">👁️ Toon aan Eva</button>
+    </div>
+  </aside>
 
   <!-- Conjure-on-demand floating hologram cards (hidden when conjured_cards == []) -->
   <aside class="conjured-overlay" id="conjured-overlay" hidden></aside>
@@ -577,6 +671,7 @@ HOLOSTAGE_HTML = """<!doctype html>
     <div class="dock-controls">
       <button type="button" id="btn-voice-start" class="btn-call-start">🎙️ Start gesprek</button>
       <button type="button" id="btn-voice-end" class="btn-call-end" hidden>⏹️ Beëindig gesprek</button>
+      <button type="button" id="btn-camera-toggle" class="btn-cam-toggle" title="Laat Eva meekijken via je camera" hidden>📷</button>
       <form id="chat-form">
         <input id="chat-input" maxlength="4000" autocomplete="off" placeholder="Of typ iets tegen Eva (bijv. 'Laat de boodschappenlijst zien')…" />
         <button type="submit" id="btn-chat-send">Stuur</button>
@@ -605,6 +700,10 @@ HOLOSTAGE_HTML = """<!doctype html>
     let cameraTargetX = 0.0;
     let lastSpokenUtteranceId = null;
     let activeRemoteTrack = null;
+    let cameraStream = null;
+    let cameraOpenSeq = 0;
+    let cameraFacingMode = 'environment';
+    let visionSnapBusy = false;
 
     // WebAudio Analyser + WebRTC RTP AudioLevel wired to Eva's voice & TTS streams
     let audioCtx = null;
@@ -821,6 +920,199 @@ HOLOSTAGE_HTML = """<!doctype html>
       return { rig, cavity, tongue, upperLip, lowerLip };
     }
 
+    function buildContouredEyeRig(THREE, skinnedMesh, headBone) {
+      const bonesArr = skinnedMesh?.skeleton?.bones;
+      const inverses = skinnedMesh?.skeleton?.boneInverses;
+      const headIdx = Array.isArray(bonesArr) ? bonesArr.indexOf(headBone) : -1;
+      const headInv = (headIdx >= 0 && inverses && inverses[headIdx]) ? inverses[headIdx] : null;
+      const pos = skinnedMesh?.geometry?.attributes?.position;
+      if (!headInv || !pos) return null;
+
+      // Sample front-head vertices once to conform eyelids & iris glints to Eva's recessed eye sockets
+      const samples = [];
+      for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+        if (z > 0.15 && y >= 1.33 && y <= 1.51 && Math.abs(x) <= 0.20) {
+          samples.push(x, y, z);
+        }
+      }
+      function surfaceZ(mx, my) {
+        let bestZ = 0.232 - 0.14 * Math.hypot(mx, my - 1.418);
+        let bestD2 = 1e9;
+        for (let i = 0; i < samples.length; i += 3) {
+          const dx = samples[i] - mx;
+          const dy = samples[i + 1] - my;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < bestD2) {
+            bestD2 = d2;
+            bestZ = samples[i + 2];
+          }
+        }
+        return Math.max(0.205, Math.min(0.262, bestZ));
+      }
+
+      const bindMat = skinnedMesh.bindMatrix || null;
+      const tmpV = new THREE.Vector3();
+      function writeHeadLocal(arr, idx, mx, my, mz) {
+        tmpV.set(mx, my, mz);
+        if (bindMat) tmpV.applyMatrix4(bindMat);
+        tmpV.applyMatrix4(headInv);
+        arr[idx * 3] = tmpV.x;
+        arr[idx * 3 + 1] = tmpV.y;
+        arr[idx * 3 + 2] = tmpV.z;
+      }
+
+      const lidMat = new THREE.MeshStandardMaterial({
+        color: 0xfbfdff,
+        roughness: 0.24,
+        metalness: 0.04,
+        side: THREE.DoubleSide
+      });
+      const glintMat = new THREE.MeshBasicMaterial({
+        color: 0x67e8f9,
+        transparent: true,
+        opacity: 0.58,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        side: THREE.DoubleSide
+      });
+
+      const group = new THREE.Group();
+      const lidMeshes = [];
+      const glints = [];
+      const cols = 12;
+      const rows = 4;
+
+      function makeLidMesh(cx, cy, rx, ry, isUpper) {
+        const sign = isUpper ? 1 : -1;
+        const seamY = cy - 0.004; // upper lid covers ~66%, lower lid ~34% for natural human blink
+        const vCount = (cols + 1) * (rows + 1);
+        const openArr = new Float32Array(vCount * 3);
+        const closedArr = new Float32Array(vCount * 3);
+        const indices = [];
+
+        let vi = 0;
+        for (let r = 0; r <= rows; r++) {
+          const vFrac = r / rows; // 0 = outer socket rim, 1 = leading lash edge
+          for (let c = 0; c <= cols; c++) {
+            const u = (c / cols) * 2 - 1; // -1 .. +1
+            const mx = cx + u * rx;
+            const arc = Math.sqrt(Math.max(0.02, 1 - u * u));
+            const rimY = cy + sign * ry * arc;
+            const openY = rimY - sign * (0.0025 * vFrac);
+            const closedTargetY = seamY + (isUpper ? -0.0012 : 0.0012) * arc;
+            const closedY = rimY + (closedTargetY - rimY) * vFrac;
+            const domeBulge = Math.sin(vFrac * Math.PI) * 0.0032 * arc;
+
+            writeHeadLocal(openArr, vi, mx, openY, surfaceZ(mx, openY) + 0.0038);
+            writeHeadLocal(closedArr, vi, mx, closedY, surfaceZ(mx, closedY) + 0.0044 + domeBulge);
+            vi++;
+          }
+        }
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const a = r * (cols + 1) + c;
+            const b = a + 1;
+            const d = a + (cols + 1);
+            const e = d + 1;
+            indices.push(a, d, b, b, d, e);
+          }
+        }
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(openArr, 3));
+        geo.morphAttributes.position = [new THREE.BufferAttribute(closedArr, 3)];
+        geo.setIndex(indices);
+        geo.computeVertexNormals();
+        const mesh = new THREE.Mesh(geo, lidMat);
+        mesh.updateMorphTargets();
+        return mesh;
+      }
+
+      function makeIrisGlint(cx, cy) {
+        const segs = 18;
+        const vCount = (segs + 1) * 2;
+        const arr = new Float32Array(vCount * 3);
+        const idx = [];
+        const baseZ = surfaceZ(cx, cy) + 0.0022;
+        let vi = 0;
+        for (let i = 0; i <= segs; i++) {
+          const ang = 0.35 + (i / segs) * (Math.PI * 1.15);
+          const ca = Math.cos(ang), sa = Math.sin(ang);
+          writeHeadLocal(arr, vi++, cx + ca * 0.022, cy + sa * 0.024, baseZ);
+          writeHeadLocal(arr, vi++, cx + ca * 0.033, cy + sa * 0.035, baseZ);
+        }
+        for (let i = 0; i < segs; i++) {
+          const a = i * 2, b = a + 1, c = a + 2, d = a + 3;
+          idx.push(a, c, b, b, c, d);
+        }
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(arr, 3));
+        geo.setIndex(idx);
+        const m = new THREE.Mesh(geo, glintMat);
+        const centerLocal = new THREE.Vector3(cx, cy, baseZ).applyMatrix4(headInv);
+        return { mesh: m, restPos: centerLocal };
+      }
+
+      for (const cx of [-0.108, 0.108]) {
+        const upper = makeLidMesh(cx, 1.418, 0.049, 0.052, true);
+        const lower = makeLidMesh(cx, 1.418, 0.049, 0.052, false);
+        lidMeshes.push({ upper, lower });
+        group.add(upper);
+        group.add(lower);
+        const glint = makeIrisGlint(cx, 1.418);
+        glints.push(glint);
+        group.add(glint.mesh);
+      }
+
+      headBone.add(group);
+      return { group, lidMeshes, glints, glintMat };
+    }
+
+    function buildLiquidNeuralField(THREE, isPocketInit) {
+      const count = isPocketInit ? 38 : 56;
+      const positions = new Float32Array(count * 3);
+      const seeds = new Float32Array(count * 4);
+      for (let i = 0; i < count; i++) {
+        const ang = (i / count) * Math.PI * 2 + (i % 5) * 0.37;
+        const rad = 0.44 + (i % 7) * 0.065;
+        const y = 0.24 + ((i * 0.618034) % 1) * 1.46;
+        positions[i * 3] = Math.cos(ang) * rad;
+        positions[i * 3 + 1] = y;
+        positions[i * 3 + 2] = Math.sin(ang) * rad - 0.12;
+        seeds[i * 4] = ang;
+        seeds[i * 4 + 1] = rad;
+        seeds[i * 4 + 2] = y;
+        seeds[i * 4 + 3] = 0.45 + (i % 9) * 0.11;
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const sprCanvas = document.createElement('canvas');
+      sprCanvas.width = 64;
+      sprCanvas.height = 64;
+      const g2d = sprCanvas.getContext('2d');
+      if (g2d) {
+        const grad = g2d.createRadialGradient(32, 32, 2, 32, 32, 30);
+        grad.addColorStop(0.0, 'rgba(255,255,255,1)');
+        grad.addColorStop(0.35, 'rgba(186,230,253,0.75)');
+        grad.addColorStop(1.0, 'rgba(56,189,248,0)');
+        g2d.fillStyle = grad;
+        g2d.fillRect(0, 0, 64, 64);
+      }
+      const tex = new THREE.CanvasTexture(sprCanvas);
+      const mat = new THREE.PointsMaterial({
+        size: isPocketInit ? 0.042 : 0.048,
+        map: tex,
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.52,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const points = new THREE.Points(geo, mat);
+      return { points, geo, mat, seeds, count };
+    }
+
     function init3DStage() {
       const canvas = $('eva-canvas');
       const isPocketInit = currentMode === 'pocket' || window.innerWidth < 768;
@@ -857,12 +1149,16 @@ HOLOSTAGE_HTML = """<!doctype html>
       halo.position.y = 0.04;
       scene.add(halo);
 
+      const neuralField = buildLiquidNeuralField(THREE, isPocketInit);
+      scene.add(neuralField.points);
+
       let avatarRoot = null;
       let baseFloorY = 0.04;
       const bones = {};
       const restQuats = {};
       const jawMeshes = [];
       let mouthParts = null;
+      let eyeParts = null;
 
       const loader = new GLTFLoader();
       loader.load('/internal/v1/dashboard/holostage/assets/eva.glb', gltf => {
@@ -896,6 +1192,9 @@ HOLOSTAGE_HTML = """<!doctype html>
         if (bones.Head) {
           mouthParts = buildSphereContouredMouth(THREE);
           bones.Head.add(mouthParts.rig);
+          if (jawMeshes.length > 0) {
+            eyeParts = buildContouredEyeRig(THREE, jawMeshes[0], bones.Head);
+          }
         }
 
         const box = new THREE.Box3().setFromObject(avatarRoot);
@@ -937,6 +1236,16 @@ HOLOSTAGE_HTML = """<!doctype html>
       let mouthOpen = 0.0;
       let mouthWidth = 1.0;
       let speakActivity = 0.0;
+      let nextBlinkAt = 2.1;
+      let blinkStart = -10.0;
+      let blinkDuration = 0.19;
+      let queuedDoubleBlink = false;
+      let lastHeadYaw = 0.0;
+      let nextSaccadeAt = 1.2;
+      let saccadeTargetX = 0.0;
+      let saccadeTargetY = 0.0;
+      let saccadeX = 0.0;
+      let saccadeY = 0.0;
       const clock = new THREE.Clock();
 
       function animate() {
@@ -1055,14 +1364,78 @@ HOLOSTAGE_HTML = """<!doctype html>
           const idleGazeY = Math.sin(t * 0.52 + 0.4) * 0.035;
           const idleTiltZ = Math.sin(t * 0.37) * 0.022;
 
+          const headYaw = (idleGazeY + speakTurn + thinkYaw) * 0.75;
           poseBone('neck', -0.045 - breath * 0.01, (idleGazeY + speakTurn + thinkYaw) * 0.35, (idleTiltZ + listenTilt) * 0.3, smoothPose);
           poseBone(
             'Head',
             -0.165 + listenNod + speakNod + breath * 0.012,
-            (idleGazeY + speakTurn + thinkYaw) * 0.75,
+            headYaw,
             idleTiltZ + listenTilt + speakActivity * Math.sin(t * 1.18) * 0.032,
             smoothPose
           );
+
+          // Lifelike 3D eye-blinking (randomized cadence + double-blinks + gaze-shift blink + attentive squint)
+          if (eyeParts) {
+            if (Math.abs(headYaw - lastHeadYaw) > 0.058 && (t - blinkStart) > 0.55) {
+              blinkStart = t;
+              blinkDuration = 0.17;
+              nextBlinkAt = t + 2.8 + Math.random() * 2.6;
+            }
+            lastHeadYaw = headYaw;
+            if (t >= nextBlinkAt) {
+              blinkStart = t;
+              blinkDuration = 0.18 + Math.random() * 0.04;
+              if (queuedDoubleBlink) {
+                queuedDoubleBlink = false;
+                nextBlinkAt = t + 2.7 + Math.random() * 2.9;
+              } else if (Math.random() < 0.18) {
+                queuedDoubleBlink = true;
+                nextBlinkAt = t + 0.24;
+              } else {
+                nextBlinkAt = t + 2.6 + Math.random() * 3.0;
+              }
+            }
+            let blinkVal = 0.0;
+            const elapsedBlink = t - blinkStart;
+            if (elapsedBlink >= 0 && elapsedBlink < blinkDuration) {
+              const closeFrac = 0.36;
+              const p = elapsedBlink / blinkDuration;
+              if (p < closeFrac) {
+                const u = p / closeFrac;
+                blinkVal = u * u * (3 - 2 * u);
+              } else {
+                const u = 1.0 - (p - closeFrac) / (1.0 - closeFrac);
+                blinkVal = u * u;
+              }
+            }
+            const warmSquint = (userTalking || thinking) ? 0.11 : (evaSpeaking ? 0.05 : 0.0);
+            const upperClose = Math.min(1.0, Math.max(blinkVal, warmSquint * 0.65));
+            const lowerClose = Math.min(1.0, Math.max(blinkVal, warmSquint * 1.35));
+            for (const pair of eyeParts.lidMeshes) {
+              if (pair.upper.morphTargetInfluences) pair.upper.morphTargetInfluences[0] = upperClose;
+              if (pair.lower.morphTargetInfluences) pair.lower.morphTargetInfluences[0] = lowerClose;
+            }
+
+            // Living iris micro-saccades (Head local space: 1 unit = 1 cm)
+            if (t >= nextSaccadeAt) {
+              nextSaccadeAt = t + (thinking ? 0.45 : 0.95) + Math.random() * 1.45;
+              const amp = thinking ? 0.34 : 0.22;
+              saccadeTargetX = (Math.random() * 2 - 1) * amp - lookX * 0.32;
+              saccadeTargetY = (Math.random() * 2 - 1) * (amp * 0.72) + (thinking ? 0.16 : 0.0);
+            }
+            saccadeX += (saccadeTargetX - saccadeX) * Math.min(1, dt * 16.0);
+            saccadeY += (saccadeTargetY - saccadeY) * Math.min(1, dt * 16.0);
+            const glintVisible = upperClose < 0.78;
+            const visualActive = !!(cameraStream || stageState?.visual_copilot?.active);
+            eyeParts.glintMat.color.setHex(
+              stageState?.privacy_shield?.active ? 0xfbbf24 : (visualActive ? 0x22d3ee : (evaSpeaking ? 0x34d399 : 0x67e8f9))
+            );
+            eyeParts.glintMat.opacity = glintVisible ? (0.46 + voiceEnergy * 0.34 + (visualActive ? 0.16 : 0.0)) : 0.0;
+            for (const g of eyeParts.glints) {
+              g.mesh.visible = glintVisible;
+              g.mesh.position.set(saccadeX, saccadeY, 0.0);
+            }
+          }
 
           // Relaxed shoulders & arms at sides + expressive alternating forearm/hand gestures when speaking
           const gEnv = speakActivity * (0.38 + 0.62 * Math.min(1, voiceEnergy * 1.4));
@@ -1084,12 +1457,36 @@ HOLOSTAGE_HTML = """<!doctype html>
           poseBone('RightHand', -gRight * 0.12, -gRight * 0.18, -gRight * 0.15, smoothPose);
         }
 
+        // Liquid-Core orbital neural field (`dx/dt` coupled harmonic drift modulated by voice & camera attention)
+        const shieldNow = !!stageState?.privacy_shield?.active;
+        const camNow = !!(cameraStream || stageState?.visual_copilot?.active);
+        const pArr = neuralField.geo.attributes.position.array;
+        const orbitSpeed = 0.22 + voiceEnergy * 0.85 + (liveVoiceState === 'thinking' ? 0.45 : 0.0);
+        const radialTighten = camNow ? 0.86 : (liveVoiceState === 'thinking' ? 0.90 : (1.0 + voiceEnergy * 0.14));
+        for (let i = 0; i < neuralField.count; i++) {
+          const s0 = neuralField.seeds[i * 4];
+          const baseR = neuralField.seeds[i * 4 + 1] * radialTighten;
+          const baseY = neuralField.seeds[i * 4 + 2];
+          const w = neuralField.seeds[i * 4 + 3];
+          const theta = s0 + t * orbitSpeed * w + Math.sin(t * 0.7 + s0) * 0.18;
+          const rNow = baseR + Math.sin(t * (1.4 * w) + s0 * 2.0) * (0.035 + voiceEnergy * 0.06);
+          const yNow = baseY + Math.sin(t * (0.95 * w) + s0) * (0.045 + voiceEnergy * 0.05);
+          pArr[i * 3] = Math.cos(theta) * rNow;
+          pArr[i * 3 + 1] = yNow;
+          pArr[i * 3 + 2] = Math.sin(theta) * rNow - 0.10;
+        }
+        neuralField.geo.attributes.position.needsUpdate = true;
+        neuralField.mat.color.setHex(
+          shieldNow ? 0xf59e0b : (camNow ? 0x22d3ee : (evaSpeaking || liveSession ? 0x10b981 : 0x38bdf8))
+        );
+        neuralField.mat.opacity = liveSession || camNow || evaSpeaking ? (0.48 + voiceEnergy * 0.34) : 0.32;
+
         const pulse = 1.0 + (voiceEnergy * 0.30) + Math.sin(t * 2.1) * 0.02;
         halo.scale.setScalar(pulse);
         haloMat.color.setHex(
-          stageState?.privacy_shield?.active ? 0xf59e0b : (evaSpeaking || liveSession ? 0x10b981 : 0x38bdf8)
+          shieldNow ? 0xf59e0b : (camNow ? 0x22d3ee : (evaSpeaking || liveSession ? 0x10b981 : 0x38bdf8))
         );
-        haloMat.opacity = liveSession ? (0.46 + voiceEnergy * 0.36) : 0.34;
+        haloMat.opacity = (liveSession || camNow) ? (0.46 + voiceEnergy * 0.36) : 0.34;
         renderer.render(scene, camera);
       }
       animate();
@@ -1237,6 +1634,7 @@ HOLOSTAGE_HTML = """<!doctype html>
     const VOICE_BASE = '/internal/v1/dashboard/holostage/voice';
     let liveSession = null;
     let liveVoiceState = 'idle';
+    let rtcInferredSpeaking = false;
     let userVoiceState = 'idle';
     const seenFinalSegments = new Set();
 
@@ -1256,6 +1654,7 @@ HOLOSTAGE_HTML = """<!doctype html>
       const attempt = liveSession;
       liveSession = null;
       liveVoiceState = 'idle';
+      rtcInferredSpeaking = false;
       userVoiceState = 'idle';
       activeRemoteTrack = null;
       evaSpeaking = false;
@@ -1333,31 +1732,71 @@ HOLOSTAGE_HTML = """<!doctype html>
           if (track.mediaStreamTrack) attachStreamAnalyser(track.mediaStreamTrack);
         });
 
+        function applyEvaAgentState(rawState, fromRtcInference = false) {
+          const mapped = rawState === 'initializing' ? 'listening' : (rawState || 'listening');
+          const prev = liveVoiceState;
+          liveVoiceState = mapped;
+          rtcInferredSpeaking = (mapped === 'speaking' && fromRtcInference);
+          if (mapped === 'speaking') userVoiceState = 'listening';
+          const labels = {
+            listening: '🟢 Eva luistert — praat gewoon door',
+            thinking: '💭 Eva denkt even na…',
+            speaking: '🗣️ Eva spreekt — je kunt haar gewoon onderbreken'
+          };
+          setVoicePill(labels[mapped] || '🟢 Gesprek actief', true);
+          if ((prev === 'thinking' && mapped === 'speaking') || (prev === 'speaking' && mapped === 'listening')) {
+            refreshState();
+          }
+        }
+
         room.on(window.LivekitClient.RoomEvent.TranscriptionReceived, (segments, participant) => {
           if (liveSession !== attempt) return;
           const isEva = participant?.identity === 'eva';
           for (const seg of segments) {
             upsertTranscript(seg.id, isEva ? 'eva' : 'user', seg.text);
-            if (!isEva && seg.final && seg.text && !seenFinalSegments.has(seg.id)) {
+            if (seg.final && seg.text && !seenFinalSegments.has(seg.id)) {
               seenFinalSegments.add(seg.id);
-              postAction({ action: 'spoken_side_effects', text: seg.text }, true).catch(() => {});
+              if (!isEva) {
+                postAction({ action: 'spoken_side_effects', text: seg.text }, true).catch(() => {});
+              } else {
+                refreshState();
+              }
             }
           }
         });
+
+        if (window.LivekitClient.RoomEvent.ParticipantAttributesChanged) {
+          room.on(window.LivekitClient.RoomEvent.ParticipantAttributesChanged, (changed, participant) => {
+            if (liveSession !== attempt || participant?.identity !== 'eva') return;
+            const lkState = changed?.['lk.agent.state'] || participant?.attributes?.['lk.agent.state'];
+            if (lkState) applyEvaAgentState(lkState, false);
+          });
+        }
+
+        if (window.LivekitClient.RoomEvent.ActiveSpeakersChanged) {
+          room.on(window.LivekitClient.RoomEvent.ActiveSpeakersChanged, speakers => {
+            if (liveSession !== attempt || !Array.isArray(speakers)) return;
+            const evaActive = speakers.some(p => p?.identity === 'eva');
+            const localActive = speakers.some(p => p?.isLocal || (p?.identity && p.identity === room.localParticipant?.identity));
+            userVoiceState = localActive ? 'speaking' : 'listening';
+            if (evaActive && liveVoiceState !== 'speaking') {
+              applyEvaAgentState('speaking', true);
+            } else if (!evaActive && rtcInferredSpeaking && liveVoiceState === 'speaking') {
+              applyEvaAgentState('listening', false);
+            } else if (localActive && !evaActive && liveVoiceState === 'listening') {
+              setVoicePill('👂 Eva luistert naar je…', true);
+            } else if (!localActive && !evaActive && liveVoiceState === 'listening') {
+              setVoicePill('🟢 Eva luistert — praat gewoon door', true);
+            }
+          });
+        }
 
         room.on(window.LivekitClient.RoomEvent.DataReceived, (payload, participant, _kind, topic) => {
           if (liveSession !== attempt || topic !== 'eva.work' || participant?.identity !== 'eva') return;
           try {
             const ev = JSON.parse(new TextDecoder().decode(payload));
             if (ev.type === 'voice_state') {
-              liveVoiceState = ev.state || 'listening';
-              if (liveVoiceState === 'speaking') userVoiceState = 'listening';
-              const labels = {
-                listening: '🟢 Eva luistert — praat gewoon door',
-                thinking: '💭 Eva denkt even na…',
-                speaking: '🗣️ Eva spreekt — je kunt haar gewoon onderbreken'
-              };
-              setVoicePill(labels[ev.state] || '🟢 Gesprek actief', true);
+              applyEvaAgentState(ev.state || 'listening');
             } else if (ev.type === 'user_voice_state') {
               userVoiceState = ev.state || 'listening';
               if (userVoiceState === 'speaking') {
@@ -1365,8 +1804,7 @@ HOLOSTAGE_HTML = """<!doctype html>
               }
             } else if (ev.type === 'stt_final' || ev.type === 'work_started') {
               if (liveVoiceState !== 'speaking') {
-                liveVoiceState = 'thinking';
-                setVoicePill('💭 Eva denkt even na…', true);
+                applyEvaAgentState('thinking');
               }
             } else if (ev.type === 'work_finished') {
               refreshState();
@@ -1661,10 +2099,48 @@ HOLOSTAGE_HTML = """<!doctype html>
       }
     }
 
+    function closeCameraPip(clearServerContext = false) {
+      cameraOpenSeq += 1;
+      const pip = $('camera-pip');
+      const vid = $('camera-video');
+      const btn = $('btn-camera-toggle');
+      if (cameraStream) {
+        for (const tr of cameraStream.getTracks()) {
+          try { tr.stop(); } catch (_e) {}
+        }
+        cameraStream = null;
+      }
+      if (vid) vid.srcObject = null;
+      if (pip) pip.hidden = true;
+      if (btn) btn.classList.remove('cam-active');
+      if (clearServerContext) {
+        postAction({ action: 'clear_visual_context' }, true).catch(() => {});
+      }
+    }
+
     function renderState(st) {
       stageState = st;
       const sh = st.privacy_shield || {};
       $('shield-pill').hidden = !sh.active;
+      if (sh.active) {
+        closeCameraPip(false);
+      }
+
+      const canCam = !!(st.viewer?.can_use_camera) && currentMode !== 'tv_cast' && !sh.active;
+      const camBtn = $('btn-camera-toggle');
+      if (camBtn) camBtn.hidden = !canCam;
+
+      const vis = st.visual_copilot || {};
+      const visPill = $('vision-pill');
+      if (visPill) {
+        if (vis.active && !sh.active) {
+          const rem = typeof vis.remaining_seconds === 'number' ? ` (${vis.remaining_seconds}s)` : '';
+          visPill.textContent = `👁️ Eva ziet je beeld${rem} ✕`;
+          visPill.hidden = false;
+        } else {
+          visPill.hidden = true;
+        }
+      }
 
       renderConjuredCards(st);
       renderAdminDrawer(st);
@@ -1755,6 +2231,190 @@ HOLOSTAGE_HTML = """<!doctype html>
         if (finalReply && queuedClauses === 0) playNeuralSpeech(finalReply, true);
       } catch (_e) {}
     };
+
+    // --- 6B. Live Multimodal Camera Co-Pilot ("Eva Ziet Echt Mee", Zero-Retention) ---
+    async function openCameraPip(facing = cameraFacingMode) {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setVoicePill('⚠️ Camera vereist een beveiligde HTTPS-link (Tailscale Funnel) of localhost', !!liveSession);
+        return;
+      }
+      if (document.hidden || stageState?.privacy_shield?.active) {
+        if (stageState?.privacy_shield?.active) {
+          setVoicePill('🛡️ Privéschild is actief — camera blijft gesloten', !!liveSession);
+        }
+        return;
+      }
+      closeCameraPip(false);
+      const mySeq = ++cameraOpenSeq;
+      cameraFacingMode = facing;
+      let stream = null;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: facing }, width: { ideal: 1280 }, height: { ideal: 960 } },
+          audio: false
+        });
+        if (mySeq !== cameraOpenSeq || document.hidden || stageState?.privacy_shield?.active) {
+          for (const tr of stream.getTracks()) {
+            try { tr.stop(); } catch (_e) {}
+          }
+          return;
+        }
+        cameraStream = stream;
+        const vid = $('camera-video');
+        vid.srcObject = stream;
+        await vid.play().catch(() => {});
+        if (mySeq !== cameraOpenSeq || document.hidden || stageState?.privacy_shield?.active) {
+          closeCameraPip(false);
+          return;
+        }
+        $('camera-pip').hidden = false;
+        $('btn-camera-toggle').classList.add('cam-active');
+      } catch (_e) {
+        if (stream) {
+          for (const tr of stream.getTracks()) {
+            try { tr.stop(); } catch (_e) {}
+          }
+        }
+        if (mySeq === cameraOpenSeq) {
+          closeCameraPip(false);
+          setVoicePill('⚠️ Kon camera niet openen — controleer toestemming van je browser', !!liveSession);
+        }
+      }
+    }
+
+    function captureCameraJpegBase64() {
+      const vid = $('camera-video');
+      if (!vid || !vid.videoWidth || !vid.videoHeight) return '';
+      const maxDim = 1024;
+      const scale = Math.min(1.0, maxDim / Math.max(vid.videoWidth, vid.videoHeight));
+      const w = Math.max(64, Math.round(vid.videoWidth * scale));
+      const h = Math.max(64, Math.round(vid.videoHeight * scale));
+      const snapCanvas = document.createElement('canvas');
+      snapCanvas.width = w;
+      snapCanvas.height = h;
+      const ctx = snapCanvas.getContext('2d');
+      if (!ctx) return '';
+      ctx.drawImage(vid, 0, 0, w, h);
+      const dataUrl = snapCanvas.toDataURL('image/jpeg', 0.82);
+      const comma = dataUrl.indexOf(',');
+      return comma >= 0 ? dataUrl.slice(comma + 1) : '';
+    }
+
+    async function snapVisionFrame() {
+      if (visionSnapBusy || !cameraStream) return;
+      const image_b64 = captureCameraJpegBase64();
+      if (!image_b64) {
+        setVoicePill('⏳ Camera stelt nog scherp — probeer nog eens', !!liveSession);
+        return;
+      }
+      visionSnapBusy = true;
+      const snapBtn = $('btn-camera-snap');
+      const flashEl = $('camera-flash');
+      snapBtn.disabled = true;
+      snapBtn.textContent = '👁️ Eva kijkt mee…';
+      if (flashEl) {
+        flashEl.classList.add('flash-on');
+        setTimeout(() => flashEl.classList.remove('flash-on'), 210);
+      }
+
+      const inp = $('chat-input');
+      const typedPrompt = inp.value.trim();
+      if (typedPrompt) inp.value = '';
+      const inLiveVoice = !!(liveSession?.room);
+      if (!inLiveVoice) {
+        stopNeuralSpeechQueue();
+        unlockStageAudio();
+      }
+
+      try {
+        const res = await fetch('/internal/v1/dashboard/holostage/vision-turn', {
+          method: 'POST',
+          headers: hdrs,
+          body: JSON.stringify({
+            image_b64,
+            media_type: 'image/jpeg',
+            text: typedPrompt,
+            mode: currentMode,
+            source_label: currentMode === 'pocket' ? 'Eva Pocket camera' : 'HoloStage camera',
+            context_only: inLiveVoice
+          })
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          setVoicePill('⚠️ ' + (errData.detail || 'Kon camerabeeld niet analyseren'), !!liveSession);
+          return;
+        }
+
+        if (inLiveVoice) {
+          const data = await res.json();
+          if (data.stage) renderState(data.stage);
+          const askText = typedPrompt || 'Kijk even mee naar wat ik je nu via mijn camera laat zien en reageer kort en behulpzaam.';
+          upsertTranscript('cam-' + Date.now(), 'user', typedPrompt ? `📷 ${typedPrompt}` : '📷 [Camerabeeld getoond]');
+          await liveSession.room.localParticipant.sendText(askText, { topic: 'lk.chat' });
+          return;
+        }
+
+        if (!res.body) return;
+        const turnId = 'vis-' + Date.now();
+        upsertTranscript(turnId + ':u', 'user', typedPrompt ? `📷 ${typedPrompt}` : '📷 [Camerabeeld getoond]');
+        const reader = res.body.getReader();
+        const dec = new TextDecoder();
+        let buf = '';
+        let acc = '';
+        let finalReply = '';
+        let queuedClauses = 0;
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buf += dec.decode(value, { stream: true });
+          const lines = buf.split('\\n');
+          buf = lines.pop() || '';
+          for (const ln of lines) {
+            if (!ln.trim()) continue;
+            const msg = JSON.parse(ln);
+            if (msg.type === 'vision_ack' && msg.stage) {
+              renderState(msg.stage);
+            } else if (msg.type === 'stage_delta') {
+              acc += msg.text;
+              upsertTranscript(turnId + ':e', 'eva', acc);
+            } else if (msg.type === 'speech_clause' && msg.text) {
+              queuedClauses += 1;
+              playNeuralSpeech(msg.text, false);
+            } else if (msg.type === 'final') {
+              if (msg.shield_interrupted) stopNeuralSpeechQueue();
+              finalReply = msg.text || acc;
+              upsertTranscript(turnId + ':e', 'eva', finalReply);
+              if (msg.stage) renderState(msg.stage);
+            }
+          }
+        }
+        if (finalReply && queuedClauses === 0) playNeuralSpeech(finalReply, true);
+      } catch (_e) {
+        setVoicePill('⚠️ Camerabeeld kon niet worden verwerkt', !!liveSession);
+      } finally {
+        visionSnapBusy = false;
+        snapBtn.disabled = false;
+        snapBtn.textContent = '👁️ Toon aan Eva';
+      }
+    }
+
+    $('btn-camera-toggle').onclick = () => {
+      if (cameraStream) closeCameraPip(false);
+      else openCameraPip(cameraFacingMode);
+    };
+    $('btn-camera-close').onclick = () => closeCameraPip(false);
+    $('btn-camera-flip').onclick = () => {
+      const nextFacing = cameraFacingMode === 'environment' ? 'user' : 'environment';
+      openCameraPip(nextFacing);
+    };
+    $('btn-camera-snap').onclick = () => snapVisionFrame();
+    $('vision-pill').onclick = () => postAction({ action: 'clear_visual_context' });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && cameraStream) closeCameraPip(false);
+    });
+    window.addEventListener('pagehide', () => {
+      if (cameraStream) closeCameraPip(false);
+    });
 
     // --- 7. Admin Drawer Controls & Voiceprint Enrollment ---
     $('btn-clear-cards').onclick = () => postAction({ action: 'dismiss_cards', card_kind: 'all' });
@@ -1986,6 +2646,7 @@ def install_dashboard_holostage(
                 viewer_kind=viewer.kind,
                 viewer_label=viewer.label,
                 form_factor=req_mode,
+                allow_owner_voice=viewer.allow_owner_voice,
             )
             if can_include_obs:
                 obs_ledger = getattr(runtime, "_household_observation", None)
@@ -2073,6 +2734,7 @@ def install_dashboard_holostage(
                     viewer_kind=viewer.kind,
                     viewer_label=viewer.label,
                     form_factor=viewer.form_factor,
+                    allow_owner_voice=viewer.allow_owner_voice,
                 )
                 return msg, (extra or {}), stage_state
 
@@ -2261,8 +2923,17 @@ def install_dashboard_holostage(
                 )
                 return _done("✓ Bezoekerskaartje bijgewerkt.")
 
+            if action == "clear_visual_context":
+                if not (viewer.kind == "owner" or viewer.allow_owner_voice):
+                    raise PermissionError("Alleen het persoonlijke apparaat van het gezinshoofd beheert cameracontext")
+                mgr.clear_ephemeral_visual_context()
+                return _done("👁️ Tijdelijke cameracontext gewist.")
+
             if action == "set_privacy_shield":
-                mgr.biometrics.set_manual_privacy_shield(bool(payload.get("locked", False)))
+                locked_flag = bool(payload.get("locked", False))
+                mgr.biometrics.set_manual_privacy_shield(locked_flag)
+                if locked_flag:
+                    mgr.clear_ephemeral_visual_context()
                 return _done("🛡️ Privéschild bijgewerkt.")
 
             if action in ("cast_query", "cast_launch"):
@@ -2423,6 +3094,7 @@ def install_dashboard_holostage(
                                 viewer_kind=viewer.kind,
                                 viewer_label=viewer.label,
                                 form_factor=req_mode,
+                                allow_owner_voice=viewer.allow_owner_voice,
                             ),
                         }
                     )
@@ -2463,6 +3135,7 @@ def install_dashboard_holostage(
                                 viewer_kind=viewer.kind,
                                 viewer_label=viewer.label,
                                 form_factor=req_mode,
+                                allow_owner_voice=viewer.allow_owner_voice,
                             ),
                         }
                     )
@@ -2489,6 +3162,7 @@ def install_dashboard_holostage(
                                 viewer_kind=viewer.kind,
                                 viewer_label=viewer.label,
                                 form_factor=req_mode,
+                                allow_owner_voice=viewer.allow_owner_voice,
                             ),
                         }
                     )
@@ -2515,6 +3189,7 @@ def install_dashboard_holostage(
                     viewer_kind=viewer.kind,
                     viewer_label=viewer.label,
                     form_factor=req_mode,
+                    allow_owner_voice=viewer.allow_owner_voice,
                 )
                 if side_effects:
                     spoken = f"Staat erop! Ik heb {', '.join(e.lstrip('+- ') for e in side_effects)} bijgewerkt."
@@ -2540,6 +3215,7 @@ def install_dashboard_holostage(
                     viewer_kind=viewer.kind,
                     viewer_label=viewer.label,
                     form_factor=req_mode,
+                    allow_owner_voice=viewer.allow_owner_voice,
                 )
                 queue.put({"type": "stage_delta", "text": spoken})
                 queue.put({"type": "speech_clause", "text": spoken, "elapsed_ms": 4})
@@ -2560,6 +3236,285 @@ def install_dashboard_holostage(
 
         return StreamingResponse(
             _ndjson_iter(),
+            media_type="application/x-ndjson",
+            headers={
+                "Cache-Control": "no-store",
+                "X-Accel-Buffering": "no",
+                "X-Content-Type-Options": "nosniff",
+            },
+        )
+
+    @app.post("/internal/v1/dashboard/holostage/vision-turn", response_model=None)
+    async def holostage_vision_turn(request: Request) -> Response:
+        """Fase 4B(3) — Zero-retention camera co-pilot (`Eva Ziet Echt Mee`) grounded in Eva's Single Core."""
+        mgr = _resolve_holostage_manager(runtime)
+        viewer = _authenticate_stage_viewer(request, access=access, runtime=runtime, mgr=mgr)
+        _enforce_post_csrf_and_framing(request, used_cookie=viewer.used_cookie)
+
+        if (
+            not (viewer.kind == "owner" or viewer.allow_owner_voice)
+            or viewer.form_factor == "tv_cast"
+            or not _has_explicit_owner_authority(access, runtime)
+        ):
+            raise HTTPException(
+                status_code=403,
+                detail="Live camerameekijken is alleen toegestaan op het persoonlijke Eva Pocket-apparaat of de Cockpit van Jaap",
+            )
+
+        payload = await read_small_json_request(request, 2_097_152, "holostage_vision_turn")
+        if not isinstance(payload, dict):
+            raise HTTPException(status_code=422, detail="Ongeldig verzoek")
+
+        req_mode = _parse_mode(str(payload.get("mode") or viewer.form_factor), viewer.form_factor)
+        if req_mode == "tv_cast":
+            raise HTTPException(status_code=403, detail="Gedeelde tv-schermen ondersteunen geen camerabeeld")
+
+        shield_active, _ = await asyncio.to_thread(mgr.biometrics.is_privacy_shield_active)
+        if shield_active:
+            await asyncio.to_thread(mgr.clear_ephemeral_visual_context)
+            raise HTTPException(
+                status_code=403,
+                detail="Privéschild is actief: camerabeeld wordt niet verwerkt zolang er een omstander aanwezig is",
+            )
+
+        raw_b64 = payload.get("image_b64")
+        if not isinstance(raw_b64, str) or not 64 <= len(raw_b64.strip()) <= 1_750_000:
+            raise HTTPException(status_code=422, detail="Ongeldig of te groot camerabeeld")
+        try:
+            frame_bytes = base64.b64decode(raw_b64.strip(), validate=True)
+        except Exception as exc:
+            raise HTTPException(status_code=422, detail="Ongeldige base64-afbeelding") from exc
+        if not 64 <= len(frame_bytes) <= 1_250_000:
+            raise HTTPException(status_code=422, detail="Camerabeeld valt buiten de toegestane grootte (max 1.25 MB)")
+
+        media_type = str(payload.get("media_type") or "image/jpeg").strip().lower()
+        if media_type not in ("image/jpeg", "image/png"):
+            raise HTTPException(status_code=422, detail="Alleen JPEG- en PNG-camerabeelden worden ondersteund")
+
+        user_text = str(payload.get("text") or "").strip()[:2000]
+        source_label = str(payload.get("source_label") or "Eva Pocket camera").strip()[:64] or "Eva Pocket camera"
+        context_only = payload.get("context_only") is True
+
+        vision_bridge = getattr(runtime, "_holostage_vision", None)
+        if vision_bridge is None or not getattr(vision_bridge, "available", False):
+            raise HTTPException(status_code=503, detail="Visuele waarneming is niet geconfigureerd")
+
+        try:
+            receipt = await asyncio.to_thread(
+                vision_bridge.analyze_frame,
+                frame_bytes,
+                media_type=media_type,
+                focus_hint=user_text,
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from None
+        except RuntimeError as exc:
+            safe_detail = getattr(exc, "detail_nl", None)
+            raise HTTPException(
+                status_code=502,
+                detail=(
+                    str(safe_detail)
+                    if isinstance(safe_detail, str) and safe_detail.strip()
+                    else "Beeldanalyse tijdelijk niet beschikbaar."
+                ),
+            ) from None
+        finally:
+            frame_bytes = b""
+
+        def _store_and_check_sync() -> tuple[dict[str, Any] | None, list[str], float, dict[str, Any]]:
+            if mgr.biometrics.is_privacy_shield_active()[0]:
+                mgr.clear_ephemeral_visual_context()
+                return None, [], 0.0, {}
+            try:
+                vis_ctx = mgr.record_ephemeral_visual_context(
+                    summary_nl=receipt.summary_nl,
+                    source_label=source_label,
+                    image_sha256=receipt.image_sha256,
+                    ttl_seconds=90,
+                )
+            except PermissionError:
+                mgr.clear_ephemeral_visual_context()
+                return None, [], 0.0, {}
+            t_fx = time.monotonic()
+            effects = (
+                mgr.apply_spoken_stage_side_effects(
+                    user_text,
+                    speaker_name=viewer.label,
+                    allow_private=True,
+                )
+                if user_text
+                else []
+            )
+            fx_ms = (time.monotonic() - t_fx) * 1000.0
+            st = mgr.build_stage_state(
+                viewer_kind=viewer.kind,
+                viewer_label=viewer.label,
+                form_factor=req_mode,
+                allow_owner_voice=viewer.allow_owner_voice,
+            )
+            return vis_ctx, effects, fx_ms, st
+
+        vis_ctx, side_effects, reflex_ms, initial_stage = await asyncio.to_thread(_store_and_check_sync)
+        if vis_ctx is None:
+            raise HTTPException(
+                status_code=403,
+                detail="Privéschild geactiveerd tijdens camerawaarneming — beeldcontext direct gewist",
+            )
+
+        obs_ledger = getattr(runtime, "_household_observation", None)
+        if obs_ledger is not None:
+            def _record_vis_obs() -> None:
+                try:
+                    if side_effects:
+                        obs_ledger.record_reflex_hit(latency_ms=reflex_ms)
+                    obs_ledger.record_turn(
+                        principal_id="owner-jaap",
+                        channel="holostage",
+                        used_model=True,
+                    )
+                except Exception:
+                    pass
+
+            await asyncio.to_thread(_record_vis_obs)
+
+        if context_only:
+            return JSONResponse(
+                {
+                    "contract": "EvaHoloStageVisionTurn/v1",
+                    "context_only": True,
+                    "observation_id": vis_ctx["observation_id"],
+                    "expires_at": vis_ctx["expires_at"],
+                    "vision_backend": receipt.backend,
+                    "vision_latency_ms": receipt.latency_ms,
+                    "stage": initial_stage,
+                },
+                headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
+            )
+
+        if not hasattr(runtime, "dashboard_turn"):
+            raise HTTPException(status_code=503, detail="Eigenaarsgesprek is niet beschikbaar")
+
+        turn_prompt = (
+            user_text
+            if user_text
+            else "Kijk even mee naar wat ik je nu via mijn camera laat zien en reageer kort en behulpzaam."
+        )
+        queue: SimpleQueue[dict[str, Any] | None] = SimpleQueue()
+
+        def _produce_vision_stream() -> None:
+            t_start = time.monotonic()
+            chunker = SentenceBoundaryChunker()
+            turn: ConversationTurn | None = None
+            stage_name = "respond"
+            shield_tripped_midstream = False
+            try:
+                queue.put(
+                    {
+                        "type": "vision_ack",
+                        "observation_id": vis_ctx["observation_id"],
+                        "expires_at": vis_ctx["expires_at"],
+                        "vision_backend": receipt.backend,
+                        "vision_latency_ms": receipt.latency_ms,
+                        "effects": side_effects,
+                        "stage": initial_stage,
+                    }
+                )
+
+                def _on_delta(delta: str) -> None:
+                    nonlocal shield_tripped_midstream
+                    if shield_tripped_midstream or mgr.biometrics.is_privacy_shield_active()[0]:
+                        shield_tripped_midstream = True
+                        return
+                    queue.put({"type": "stage_delta", "text": delta})
+                    for clause in chunker.feed(delta):
+                        queue.put(
+                            {
+                                "type": "speech_clause",
+                                "text": clause,
+                                "elapsed_ms": round((time.monotonic() - t_start) * 1000),
+                            }
+                        )
+
+                with silent_completion_scope(), stream_conversation_text(_on_delta):
+                    turn_res, reply_res = runtime.dashboard_turn(turn_prompt)
+                if not isinstance(turn_res, ConversationTurn) or not isinstance(reply_res, GroundedReply):
+                    raise ValueError("owner vision conversation result is invalid")
+                turn = turn_res
+
+                if shield_tripped_midstream or mgr.biometrics.is_privacy_shield_active()[0]:
+                    chunker.flush()
+                    mgr.clear_ephemeral_visual_context()
+                    shield_notice = (
+                        "Het privéschild is zojuist geactiveerd doordat een omstander in beeld of gehoor kwam. "
+                        "Het antwoord en de cameracontext zijn direct afgeschermd."
+                    )
+                    queue.put(
+                        {
+                            "type": "final",
+                            "text": shield_notice,
+                            "shield_interrupted": True,
+                            "stage": mgr.build_stage_state(
+                                viewer_kind=viewer.kind,
+                                viewer_label=viewer.label,
+                                form_factor=req_mode,
+                                allow_owner_voice=viewer.allow_owner_voice,
+                            ),
+                        }
+                    )
+                else:
+                    mgr.record_stage_utterance(
+                        eva_text=reply_res.text,
+                        speaker_text=user_text or "[Camerabeeld getoond]",
+                        privacy_level="private_household",
+                    )
+                    for rem_clause in chunker.flush():
+                        queue.put(
+                            {
+                                "type": "speech_clause",
+                                "text": rem_clause,
+                                "elapsed_ms": round((time.monotonic() - t_start) * 1000),
+                            }
+                        )
+                    queue.put(
+                        {
+                            "type": "final",
+                            "text": reply_res.text,
+                            "reply": grounded_reply_wire(reply_res),
+                            "stage": mgr.build_stage_state(
+                                viewer_kind=viewer.kind,
+                                viewer_label=viewer.label,
+                                form_factor=req_mode,
+                                allow_owner_voice=viewer.allow_owner_voice,
+                            ),
+                        }
+                    )
+                stage_name = "after_response"
+                runtime.after_response(turn_res, reply_res)
+            except Exception as exc:
+                if stage_name == "respond":
+                    queue.put({"type": "error", "code": "holostage_vision_turn_failed"})
+                if obs_ledger is not None:
+                    try:
+                        obs_ledger.record_runtime_fault(critical=False)
+                    except Exception:
+                        pass
+                try:
+                    record_conversation_failure(exc, turn, stage_name)
+                except Exception:
+                    pass
+            finally:
+                queue.put(None)
+
+        def _ndjson_vision_iter() -> Iterator[bytes]:
+            Thread(target=_produce_vision_stream, name="eva-holostage-vision-stream", daemon=True).start()
+            while True:
+                item = queue.get()
+                if item is None:
+                    return
+                yield json.dumps(item, ensure_ascii=False, separators=(",", ":")).encode("utf-8") + b"\n"
+
+        return StreamingResponse(
+            _ndjson_vision_iter(),
             media_type="application/x-ndjson",
             headers={
                 "Cache-Control": "no-store",

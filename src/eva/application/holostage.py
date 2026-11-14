@@ -174,6 +174,8 @@ class HoloStageManager:
 
     _SHARED_BIOMETRICS_LOCK = threading.Lock()
     _SHARED_BIOMETRICS: OrderedDict[str, BiometricPresenceFusion] = OrderedDict()
+    _SHARED_VISUAL_LOCK = threading.Lock()
+    _SHARED_VISUAL_CONTEXT: OrderedDict[str, dict[str, Any]] = OrderedDict()
 
     def __init__(
         self,
@@ -928,6 +930,81 @@ class HoloStageManager:
             state["updated_at"] = _iso(ts)
             self._write_unlocked(state)
 
+    # --- Ephemeral In-Memory Camera Co-Pilot Context (Never Written to Disk) ---
+    def _visual_store_key(self) -> str:
+        return str(self.directory.resolve(strict=False))
+
+    def record_ephemeral_visual_context(
+        self,
+        *,
+        summary_nl: str,
+        source_label: str = "Eva Pocket Camera",
+        image_sha256: str = "",
+        ttl_seconds: int = 90,
+        now: datetime | None = None,
+    ) -> dict[str, Any]:
+        ts = _utc_now(now)
+        if self.biometrics.is_privacy_shield_active(now=ts)[0]:
+            self.clear_ephemeral_visual_context()
+            raise PermissionError("Privéschild is actief: camerawaarneming wordt niet aangenomen")
+        clean_summary = _clean_text(summary_nl, field_name="Visuele waarneming", max_len=950)
+        clean_source = re.sub(r"\s+", " ", (source_label or "Eva Pocket Camera")).strip()[:64] or "Eva Pocket Camera"
+        clamped_ttl = max(10, min(180, int(ttl_seconds)))
+        entry = {
+            "observation_id": "vis_" + secrets.token_hex(6),
+            "summary_nl": clean_summary,
+            "source_label": clean_source,
+            "image_sha256": (image_sha256 or "")[:64],
+            "captured_at": _iso(ts),
+            "expires_at": _iso(ts + timedelta(seconds=clamped_ttl)),
+            "_captured_epoch": ts.timestamp(),
+            "_expires_epoch": ts.timestamp() + clamped_ttl,
+        }
+        key = self._visual_store_key()
+        with self._SHARED_VISUAL_LOCK:
+            self._SHARED_VISUAL_CONTEXT[key] = entry
+            self._SHARED_VISUAL_CONTEXT.move_to_end(key)
+            while len(self._SHARED_VISUAL_CONTEXT) > 16:
+                self._SHARED_VISUAL_CONTEXT.popitem(last=False)
+        return self._public_visual_entry(entry, ts)
+
+    @staticmethod
+    def _public_visual_entry(entry: dict[str, Any], ts: datetime) -> dict[str, Any]:
+        rem = max(0, int(round(float(entry.get("_expires_epoch", 0.0)) - ts.timestamp())))
+        age = max(0, int(round(ts.timestamp() - float(entry.get("_captured_epoch", ts.timestamp())))))
+        return {
+            "observation_id": str(entry["observation_id"]),
+            "summary_nl": str(entry["summary_nl"]),
+            "source_label": str(entry["source_label"]),
+            "image_sha256": str(entry.get("image_sha256") or ""),
+            "captured_at": str(entry["captured_at"]),
+            "expires_at": str(entry["expires_at"]),
+            "age_seconds": age,
+            "remaining_seconds": rem,
+        }
+
+    def get_ephemeral_visual_context(self, *, now: datetime | None = None) -> dict[str, Any] | None:
+        ts = _utc_now(now)
+        if self.biometrics.is_privacy_shield_active(now=ts)[0]:
+            self.clear_ephemeral_visual_context()
+            return None
+        key = self._visual_store_key()
+        with self._SHARED_VISUAL_LOCK:
+            entry = self._SHARED_VISUAL_CONTEXT.get(key)
+            if entry is None:
+                return None
+            if float(entry.get("_expires_epoch", 0.0)) <= ts.timestamp():
+                self._SHARED_VISUAL_CONTEXT.pop(key, None)
+                return None
+            if ts.timestamp() < float(entry.get("_captured_epoch", 0.0)) - 2.0:
+                return None
+            return self._public_visual_entry(entry, ts)
+
+    def clear_ephemeral_visual_context(self) -> bool:
+        key = self._visual_store_key()
+        with self._SHARED_VISUAL_LOCK:
+            return self._SHARED_VISUAL_CONTEXT.pop(key, None) is not None
+
     # --- Full Stage Payload with Strict Server-Side Privacy Redaction ---
     def build_stage_state(
         self,
@@ -935,13 +1012,17 @@ class HoloStageManager:
         viewer_kind: Literal["owner", "private_stage", "ambient_stage"] = "owner",
         viewer_label: str = "Gezinshoofd Cockpit",
         form_factor: StageFormFactor = "cockpit",
+        allow_owner_voice: bool = False,
         now: datetime | None = None,
     ) -> dict[str, Any]:
         ts = _utc_now(now)
         raw = self._read_readonly(ts)
         bio_snap = self.biometrics.snapshot(now=ts)
         shield_active = bool(bio_snap["privacy_shield_active"])
+        if shield_active:
+            self.clear_ephemeral_visual_context()
         allow_private = (viewer_kind in ("owner", "private_stage")) and not shield_active
+        vis_ctx = self.get_ephemeral_visual_context(now=ts) if allow_private else None
 
         hh_status = self.household_settings.status(now=ts)
         eva_profile = hh_status.get("eva_profile") or {}
@@ -1070,8 +1151,20 @@ class HoloStageManager:
                 "label": viewer_label,
                 "form_factor": form_factor,
                 "private_cards_visible": allow_private,
+                "can_use_camera": (viewer_kind == "owner" or allow_owner_voice) and form_factor != "tv_cast",
                 "redacted_cards_count": redacted_count,
             },
+            "visual_copilot": (
+                {
+                    "active": True,
+                    "observation_id": vis_ctx["observation_id"],
+                    "source_label": vis_ctx["source_label"],
+                    "expires_at": vis_ctx["expires_at"],
+                    "remaining_seconds": vis_ctx["remaining_seconds"],
+                }
+                if vis_ctx is not None and (viewer_kind == "owner" or allow_owner_voice)
+                else {"active": False, "observation_id": None, "source_label": None, "expires_at": None, "remaining_seconds": 0}
+            ),
             "eva": {
                 "display_name": str(eva_profile.get("display_name") or "Eva"),
                 "persona_summary": str(eva_profile.get("persona_summary") or ""),
