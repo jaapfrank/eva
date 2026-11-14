@@ -9,6 +9,7 @@ from datetime import UTC, datetime, timedelta
 import json
 import os
 from pathlib import Path
+import time
 from typing import TYPE_CHECKING, Callable
 from uuid import UUID, uuid4
 
@@ -2062,9 +2063,55 @@ def create_runtime_app() -> FastAPI:
     from eva.bootstrap.component_maintenance import compose_component_maintenance
     runtime._component_maintenance = compose_component_maintenance(
         runtime, attention_store=locals().get("context_review_store"))
+    from eva.adapters.postgres.household_observation_probe import PostgresHouseholdObservationProbe
+    from eva.application.household_observation import HouseholdObservationLedger
+    from eva.bootstrap.delegated_work_service import _provider_release
+    _rel_sel = _provider_release()
+    runtime._household_observation = HouseholdObservationLedger(
+        release_id=f"rel-{_rel_sel.worker_program_sha256[:16]}-{_rel_sel.engine_release_sha256[:16]}",
+        runtime_metrics_probe=PostgresHouseholdObservationProbe(
+            engine,
+            tenant_id=settings.dashboard_tenant_id,
+            installation_id=settings.dashboard_installation_id,
+        ),
+    )
+    _last_idle_obs_monotonic = [0.0]
+
+    def _observe_zero_token_idle_tick() -> str:
+        now_m = time.monotonic()
+        if (
+            not runtime._cold_path.foreground_active
+            and (now_m - _last_idle_obs_monotonic[0]) >= 60.0
+        ):
+            _last_idle_obs_monotonic[0] = now_m
+            try:
+                runtime._household_observation.record_zero_token_idle_tick(count=1)
+            except Exception:
+                pass
+        return "idle"
+
     if runtime._self_repair is not None:
-        runtime._cold_path._service_tasks = (*runtime._cold_path._service_tasks,
-                                            runtime._self_repair.run_once)
+        def _run_self_repair_and_observe() -> object:
+            repair_state = runtime._self_repair.run_once()
+            if repair_state == "completed":
+                try:
+                    runtime._household_observation.record_self_repair_verified(
+                        resolved_critical=True
+                    )
+                except Exception:
+                    pass
+            return repair_state
+
+        runtime._cold_path._service_tasks = (
+            *runtime._cold_path._service_tasks,
+            _run_self_repair_and_observe,
+            _observe_zero_token_idle_tick,
+        )
+    else:
+        runtime._cold_path._service_tasks = (
+            *runtime._cold_path._service_tasks,
+            _observe_zero_token_idle_tick,
+        )
     from eva.bootstrap.household_continuity import HouseholdConversationContext
     runtime._household_conversation_context = (None if household_work_server is None
         else HouseholdConversationContext(household_work_server))

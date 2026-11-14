@@ -41,14 +41,41 @@ if [[ "${backend_state}" != "Running" || -z "${dns_name}" || "${dns_name}" != *.
   exit 0
 fi
 
-# Ensure Tailscale Funnel exposes HTTPS 443 -> loopback 127.0.0.1:44714
-tailscale funnel --bg --yes 44714 >/dev/null 2>&1 || true
-
+# Pin expected public *.ts.net origin for holostage-lan.mjs Host validation
 origin="https://${dns_name}"
 tmp_run="/run/eva2-holostage-public-origin.tmp.$$"
 printf '%s\n' "${origin}" > "${tmp_run}"
 chmod 0644 "${tmp_run}"
 mv -f "${tmp_run}" "/run/eva2-holostage-public-origin"
+
+# Ensure Tailscale Funnel exposes HTTPS 443 -> loopback 127.0.0.1:44714 without blocking if tailnet ACL awaits 1-click enable
+funnel_out="$(timeout 8 tailscale funnel --bg --yes 44714 2>&1 || true)"
+enable_url="$(printf '%s\n' "${funnel_out}" | grep -Eo 'https://login\.tailscale\.com/f/funnel\?[^[:space:]]+' | head -n 1 || true)"
+if [[ -n "${enable_url}" ]]; then
+  tmp_enable="/run/eva2-tailscale-funnel-enable-url.tmp.$$"
+  (umask 0077; printf '%s\n' "${enable_url}" > "${tmp_enable}")
+  chmod 0600 "${tmp_enable}"
+  mv -f "${tmp_enable}" "/run/eva2-tailscale-funnel-enable-url"
+fi
+
+funnel_status="$(tailscale funnel status --json 2>/dev/null || echo '{}')"
+funnel_active="$(
+  python3 -c '
+import json, sys
+try:
+    d = json.loads(sys.stdin.read() or "{}")
+    allow = d.get("AllowFunnel") or {}
+    print("yes" if any(bool(v) for v in allow.values()) else "no")
+except Exception:
+    print("no")
+' <<< "${funnel_status}"
+)"
+
+if [[ "${funnel_active}" != "yes" ]]; then
+  exit 0
+fi
+
+rm -f "/run/eva2-tailscale-funnel-enable-url"
 
 if [[ -d "${MP_DIR}" ]]; then
   current=""

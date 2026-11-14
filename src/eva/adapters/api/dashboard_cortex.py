@@ -3045,6 +3045,12 @@ def install_dashboard_cortex(app: FastAPI, *, access: Any, runtime: Any) -> None
             raise HTTPException(status_code=422, detail="invalid jarvis action decision") from exc
         engine = _ensure_pulse_engine(runtime)
         engine.decide_jarvis_staged_action(parsed.action_id, decision=parsed.decision)
+        obs_ledger = getattr(runtime, "_household_observation", None)
+        if obs_ledger is not None:
+            try:
+                obs_ledger.record_proactive_decision(accepted=(parsed.decision == "confirm"))
+            except Exception:
+                pass
         return JSONResponse(
             build_cortex_state_payload(runtime),
             headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},

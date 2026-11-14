@@ -115,6 +115,7 @@ def install_voice_turns(app: FastAPI, *, access: DashboardAccess,
 def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
                       message_id, check, user_label: str = "Jaap", admit=None, request_identity=None):
     """Shared task/context stream; callers must supply a server-admitted turn."""
+    obs_ledger = getattr(runtime, "_household_observation", None)
     try:
         recent = tuple(RecentConversationMessage(
             role=user_label if item.role == "user" else "Eva",
@@ -156,6 +157,22 @@ def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
             check()
             if admit is not None:
                 turn = admit(turn)
+            if obs_ledger is not None:
+                try:
+                    norm_label = user_label.strip().lower()
+                    owner_pid = getattr(runtime, "_dashboard_owner_principal_id", None)
+                    if norm_label == "lola":
+                        v_member = "family-lola"
+                    elif norm_label == "jaap" or (owner_pid and turn.principal_id == owner_pid):
+                        v_member = "owner-jaap"
+                    elif str(turn.principal_id).startswith("household-device:"):
+                        v_member = "household-shared"
+                    else:
+                        v_member = turn.principal_id
+                    v_channel = "voice_realtime" if str(turn.conversation_id).startswith("voice:") else "native_speaker"
+                    obs_ledger.record_turn(principal_id=v_member, channel=v_channel, used_model=True)
+                except Exception:
+                    pass
             text_stream = (stream_conversation_text(
                 lambda text: event({"type": "delta", "text": text})
             ) if payload.stream_deltas else nullcontext())
@@ -170,6 +187,11 @@ def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
         except Exception as error:
             if stage == "respond":
                 event({"type": "error", "code": "voice_turn_failed"})
+                if obs_ledger is not None:
+                    try:
+                        obs_ledger.record_runtime_fault(critical=False)
+                    except Exception:
+                        pass
             _record_stream_failure(error, turn, stage)
     def stream():
         Thread(target=run, daemon=True, name="eva-voice-turn").start()

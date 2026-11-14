@@ -281,6 +281,12 @@ def repair_failed_turn(runtime, turn, error):
             result = repair.observe(turn, observation)
             if result is None or not result['created']:
                 return None
+            obs_ledger = getattr(runtime, '_household_observation', None)
+            if obs_ledger is not None:
+                try:
+                    obs_ledger.record_runtime_fault(critical=True, repaired=False)
+                except Exception:
+                    pass
             text = ('Ik ben tegen een probleempje aangelopen. Ik ga uitzoeken wat er misgaat '
                     'en het bij mezelf herstellen.' if result['admitted'] else
                     'Ik ben tegen een probleempje aangelopen. Ik heb het vastgelegd en pak '

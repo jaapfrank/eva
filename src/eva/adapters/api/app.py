@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import re
 import secrets
+import time
 from typing import Any, Callable, Protocol
 from uuid import UUID
 
@@ -674,6 +675,8 @@ def create_app(
     install_dashboard_cortex(app, access=dashboard_access, runtime=runtime)
     from eva.adapters.api.dashboard_holostage import install_dashboard_holostage
     install_dashboard_holostage(app, access=dashboard_access, runtime=runtime, voice_config=dashboard_voice)
+    from eva.adapters.api.dashboard_household_observation import install_dashboard_household_observation
+    install_dashboard_household_observation(app, access=dashboard_access, runtime=runtime)
     from eva.adapters.api.dashboard_packages import install_dashboard_packages
     install_dashboard_packages(app, access=dashboard_access, runtime=runtime)
     from eva.adapters.api.dashboard_whatsapp import install_dashboard_whatsapp
@@ -879,6 +882,8 @@ def create_app(
         dashboard_access.require(request)
         if set(payload) != {"text"} or not isinstance(payload["text"], str):
             raise HTTPException(status_code=422, detail="owner conversation is invalid")
+        obs_ledger = getattr(runtime, "_household_observation", None)
+        t0_cockpit = time.perf_counter()
         vault_match = _PRE_LLM_VAULT_CMD_RE.match(payload["text"].strip())
         if vault_match is not None:
             hh = _runtime_household_settings()
@@ -903,6 +908,16 @@ def create_app(
                     )
                 except ValueError as err:
                     vault_reply_text = f"Kon geheim niet in kluis opslaan: {err}"
+            if obs_ledger is not None:
+                try:
+                    obs_ledger.record_reflex_hit(
+                        latency_ms=(time.perf_counter() - t0_cockpit) * 1000.0
+                    )
+                    obs_ledger.record_turn(
+                        principal_id="owner-jaap", channel="cockpit", used_model=False
+                    )
+                except Exception:
+                    pass
             now_iso = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
             msg_id = f"vault-local:{secrets.token_hex(8)}"
             text_sha = hashlib.sha256(vault_reply_text.encode("utf-8")).hexdigest()
@@ -948,6 +963,13 @@ def create_app(
                 status_code=503, detail="owner conversation unavailable"
             )
         if "application/x-ndjson" in request.headers.get("accept", ""):
+            if obs_ledger is not None:
+                try:
+                    obs_ledger.record_turn(
+                        principal_id="owner-jaap", channel="cockpit", used_model=True
+                    )
+                except Exception:
+                    pass
             return dashboard_stream_response(runtime, payload["text"])
         try:
             turn, reply = respond_as_owner(payload["text"])
@@ -962,9 +984,21 @@ def create_app(
                 status_code=422, detail="owner conversation is invalid"
             ) from error
         except RuntimeError as error:
+            if obs_ledger is not None:
+                try:
+                    obs_ledger.record_runtime_fault(critical=False)
+                except Exception:
+                    pass
             raise HTTPException(
                 status_code=503, detail="owner conversation unavailable"
             ) from error
+        if obs_ledger is not None:
+            try:
+                obs_ledger.record_turn(
+                    principal_id="owner-jaap", channel="cockpit", used_model=True
+                )
+            except Exception:
+                pass
         background_tasks.add_task(runtime.after_response, turn, reply)
         return JSONResponse(
             {
@@ -1328,12 +1362,31 @@ def create_app(
             now = datetime.strptime(occurred_at, "%Y-%m-%dT%H:%M:%SZ").replace(
                 tzinfo=UTC
             )
+            obs_ledger = getattr(runtime, "_household_observation", None)
+            t0_tg = time.perf_counter()
             hh_settings = _runtime_household_settings()
             sender_status = hh_settings.resolve_telegram_sender(
                 telegram_user_id, now=now
             )
             if not sender_status["admitted"]:
+                if obs_ledger is not None:
+                    try:
+                        obs_ledger.record_turn(
+                            principal_id="rejected-stranger",
+                            channel="telegram",
+                            used_model=False,
+                        )
+                    except Exception:
+                        pass
                 raise HTTPException(status_code=403, detail="Telegram sender is not admitted")
+            tg_role = sender_status.get("role")
+            tg_member = (
+                "owner-jaap"
+                if tg_role == "gezinshoofd"
+                else "family-lola"
+                if tg_role == "gezin"
+                else None
+            )
             conversation_id = f"telegram:{chat_id}"
             durable_message_id = f"telegram:{chat_id}:{message_id}"
             owner_cmd_reply = hh_settings.handle_owner_telegram_command(
@@ -1343,6 +1396,16 @@ def create_app(
                 now=now,
             )
             if owner_cmd_reply is not None:
+                if obs_ledger is not None and tg_member is not None:
+                    try:
+                        obs_ledger.record_reflex_hit(
+                            latency_ms=(time.perf_counter() - t0_tg) * 1000.0
+                        )
+                        obs_ledger.record_turn(
+                            principal_id=tg_member, channel="telegram", used_model=False
+                        )
+                    except Exception:
+                        pass
                 return {
                     "contract": "EvaInternalGroundedReply/v1",
                     "conversation_id": conversation_id,
@@ -1354,6 +1417,16 @@ def create_app(
                     "text_sha256": hashlib.sha256(owner_cmd_reply.encode()).hexdigest(),
                 }
             if _PRE_LLM_VAULT_CMD_RE.match(text.strip()) is not None:
+                if obs_ledger is not None and tg_member is not None:
+                    try:
+                        obs_ledger.record_reflex_hit(
+                            latency_ms=(time.perf_counter() - t0_tg) * 1000.0
+                        )
+                        obs_ledger.record_turn(
+                            principal_id=tg_member, channel="telegram", used_model=False
+                        )
+                    except Exception:
+                        pass
                 refusal_text = (
                     "Alleen het gezinshoofd mag apparaat-wachtwoorden in de kluis opslaan (via een privéchat). "
                     "Verwijder dit bericht uit de chat."
@@ -1377,6 +1450,16 @@ def create_app(
                 now=now,
             )
             if admission.local_reply is not None:
+                if obs_ledger is not None and tg_member is not None:
+                    try:
+                        obs_ledger.record_reflex_hit(
+                            latency_ms=(time.perf_counter() - t0_tg) * 1000.0
+                        )
+                        obs_ledger.record_turn(
+                            principal_id=tg_member, channel="telegram", used_model=False
+                        )
+                    except Exception:
+                        pass
                 local_text = admission.local_reply
                 return {
                     "contract": "EvaInternalGroundedReply/v1",
@@ -1432,12 +1515,33 @@ def create_app(
                     chat_id=chat_id,
                 )
             if delegated_reply is not None:
+                if obs_ledger is not None and tg_member is not None:
+                    try:
+                        obs_ledger.record_turn(
+                            principal_id=tg_member, channel="telegram", used_model=True
+                        )
+                    except Exception:
+                        pass
                 return grounded_reply_wire(delegated_reply)
             if "application/x-ndjson" in request.headers.get(
                 "accept", ""
             ) and not chat_id.startswith("-"):
+                if obs_ledger is not None and tg_member is not None:
+                    try:
+                        obs_ledger.record_turn(
+                            principal_id=tg_member, channel="telegram", used_model=True
+                        )
+                    except Exception:
+                        pass
                 return conversation_stream_response(runtime, turn, recent)
             reply = runtime.respond(turn, recent)
+            if obs_ledger is not None and tg_member is not None:
+                try:
+                    obs_ledger.record_turn(
+                        principal_id=tg_member, channel="telegram", used_model=True
+                    )
+                except Exception:
+                    pass
         except HTTPException:
             raise
         except ConversationConflict as error:
@@ -1445,6 +1549,12 @@ def create_app(
         except (KeyError, TypeError, ValueError) as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
         except RuntimeError as error:
+            obs_ledger = getattr(runtime, "_household_observation", None)
+            if obs_ledger is not None:
+                try:
+                    obs_ledger.record_runtime_fault(critical=False)
+                except Exception:
+                    pass
             raise HTTPException(
                 status_code=503,
                 detail="Eva's Telegram canary is tijdelijk unavailable",

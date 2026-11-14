@@ -1118,14 +1118,20 @@ def test_v3_read_rejects_output_schema_drift_and_revokes_failed_catalog() -> Non
         assert len(handler.calls) == 1
 
 
-@pytest.mark.parametrize("http_status", [None, 503])
-def test_transport_failure_keeps_private_cause_and_sanitized_message(monkeypatch, http_status):
+@pytest.mark.parametrize("kind", ["url_error", "timeout", "connection_reset", 503])
+def test_transport_failure_keeps_private_cause_and_sanitized_message(monkeypatch, kind):
     from urllib.error import HTTPError, URLError
     from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
 
     sensitive = "https://private-host.invalid/?token=private-secret"
-    original = (URLError(sensitive) if http_status is None else
-                HTTPError(sensitive, http_status, sensitive, {}, None))
+    if kind == "url_error":
+        original = URLError(sensitive)
+    elif kind == "timeout":
+        original = TimeoutError(sensitive)
+    elif kind == "connection_reset":
+        original = ConnectionResetError(sensitive)
+    else:
+        original = HTTPError(sensitive, kind, sensitive, {}, None)
     calls = []
     def fail(request, **kwargs):
         calls.append(request)
@@ -1136,12 +1142,71 @@ def test_transport_failure_keeps_private_cause_and_sanitized_message(monkeypatch
     assert caught.value.__cause__ is original
     assert len(calls) == 1
     assert sensitive not in str(caught.value)
-    if http_status is None:
+    if kind != 503:
         assert type(caught.value) is McpGatewayUnavailable
         assert str(caught.value) == "MCP gateway request failed"
     else:
         assert type(caught.value) is RuntimeError
         assert str(caught.value) == "MCP gateway request failed (503)"
+
+
+def test_unverified_planner_fails_closed_on_timeout_and_lazily_verifies_after_recovery(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with _gateway() as (base_url, handler):
+        adapter = _adapter(base_url)
+        planner = adapter.planner(allow_unverified=True)
+        call = ConversationActionCall("lazy-1", "echo_proof", {"message": "hersteld"})
+
+        real_urlopen = mcp_gateway_module.urllib_request.urlopen
+
+        def timeout_urlopen(request, **kwargs):
+            raise TimeoutError("timed out")
+
+        monkeypatch.setattr(mcp_gateway_module.urllib_request, "urlopen", timeout_urlopen)
+        with pytest.raises(ConversationConflict, match="catalog was not verified"):
+            asyncio.run(planner.prepare(_turn(), call))
+
+        # Tampered catalog after recovery must still fail closed with RuntimeError
+        monkeypatch.setattr(mcp_gateway_module.urllib_request, "urlopen", real_urlopen)
+        handler.catalog = [_catalog_row(read_only=False)]
+        with pytest.raises(RuntimeError, match="sealed catalog"):
+            asyncio.run(planner.prepare(_turn(), call))
+
+        # Restoring exact sealed catalog allows lazy verification and tool execution
+        handler.catalog = [_catalog_row()]
+        prepared = asyncio.run(planner.prepare(_turn(), call))
+        assert prepared.tool_name == "proof-echo"
+        dispatch = asyncio.run(adapter.execute(_echo_request(_spec(), "hersteld")))
+        assert dispatch.accepted is True
+
+
+def test_concurrent_lazy_verify_on_demand_serializes_without_clearing_verified_state(
+    monkeypatch,
+) -> None:
+    adapter = _adapter("http://127.0.0.1:1")
+    catalog_fetches = 0
+
+    def slow_catalog_fetch(method: str, path: str, payload: object) -> dict[str, object]:
+        nonlocal catalog_fetches
+        assert method == "GET" and payload is None
+        catalog_fetches += 1
+        import time as _t
+
+        _t.sleep(0.03)
+        return {"tools": [_catalog_row()], "nextCursor": None}
+
+    monkeypatch.setattr(adapter, "_request_json", slow_catalog_fetch)
+    planner = adapter.planner(allow_unverified=True)
+    call = ConversationActionCall("call-race", "echo_proof", {"message": "race-safe"})
+
+    async def _run_concurrent() -> list[object]:
+        return await asyncio.gather(*(planner.prepare(_turn(), call) for _ in range(8)))
+
+    results = asyncio.run(_run_concurrent())
+    assert len(results) == 8
+    assert catalog_fetches == 1
+    assert ("proof-echo", "execute") in adapter._verified_input_schemas
 
 
 

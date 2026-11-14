@@ -540,3 +540,41 @@ def test_managed_direct_browser_is_selected_only_for_existing_single_owner_catal
     monkeypatch.setenv("EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST", "a"*64 + (","+"b"*64 if kind == "multiple_owners" else ""))
     settings = McpGatewayProviderFactory.load_settings()
     assert (settings.browser_client is not None) is (kind == "dedicated")
+
+
+def test_gateway_provider_build_survives_startup_timeout_with_bounded_probe(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from eva.adapters.connectors import mcp_gateway as mcp_gateway_module
+    from eva.application.conversation import ConversationActionCall, ConversationConflict, ConversationTurn
+
+    observed_timeouts: list[float | int | None] = []
+
+    def stall_urlopen(request, *, timeout=None):
+        observed_timeouts.append(timeout)
+        raise TimeoutError("timed out")
+
+    monkeypatch.setattr(mcp_gateway_module.urllib_request, "urlopen", stall_urlopen)
+    settings = McpGatewayProviderSettings(
+        base_url="http://127.0.0.1:4444",
+        bearer_token="private-test-token",
+        allow_plain_http=True,
+        specs=parse_mcp_gateway_catalog(_provider_catalog()),
+        principal_sha256_allowlist=(hashlib.sha256(b"owner").hexdigest(),),
+    )
+    engine = sa.create_engine("sqlite://")
+    try:
+        contribution = McpGatewayProviderFactory.build(settings, engine)
+        assert observed_timeouts == [3]
+        assert [item.name for item in contribution.conversation_tools] == ["echo_proof"]
+        ext = contribution.external_tools[0]
+        assert ext.action_names == ("echo_proof",)
+        # Runtime timeout is restored to default 15s after bounded startup probe
+        assert ext._provider._config.request_timeout_seconds == 15
+        turn = ConversationTurn.private(
+            "tenant", "installation", "owner", "chat", "msg-1", "Echo", "2026-11-14T12:00:00Z"
+        )
+        with pytest.raises(ConversationConflict, match="catalog was not verified"):
+            ext.execute(turn, ConversationActionCall("c1", "echo_proof", {"message": "hi"}), step_index=0)
+    finally:
+        engine.dispose()

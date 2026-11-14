@@ -206,6 +206,12 @@ def dashboard_stream_response(runtime: Any, text: str) -> StreamingResponse:
         except Exception as error:
             if stage == "respond":
                 queue.put(("error", "provider_rate_limited" if isinstance(error, ConversationModelRateLimited) else None))
+                obs_ledger = getattr(runtime, "_household_observation", None)
+                if obs_ledger is not None:
+                    try:
+                        obs_ledger.record_runtime_fault(critical=False)
+                    except Exception:
+                        pass
             try:
                 # dashboard_turn can fail before returning its server-bound turn.
                 _record_stream_failure(error, turn if isinstance(turn, ConversationTurn) else None, stage)
@@ -243,6 +249,12 @@ def conversation_stream_response(runtime: Any, turn: ConversationTurn,
             # Preserve the terminal contract even if the diagnostic sink fails.
             if stage == "respond":
                 queue.put(("error", "provider_rate_limited" if isinstance(error, ConversationModelRateLimited) else None))
+                obs_ledger = getattr(runtime, "_household_observation", None)
+                if obs_ledger is not None:
+                    try:
+                        obs_ledger.record_runtime_fault(critical=False)
+                    except Exception:
+                        pass
             try:
                 _record_stream_failure(error, turn, stage)
             except Exception:

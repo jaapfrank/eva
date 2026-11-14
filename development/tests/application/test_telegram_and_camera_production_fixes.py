@@ -88,7 +88,7 @@ def test_delegated_work_guidance_forbids_echoing_internal_status_tokens():
 def test_camera_snapshot_ring_buffer_observer_and_telegram_photo_claim(tmp_path):
     buf_dir = tmp_path / "camera-snapshots"
     buf = CameraSnapshotRingBuffer(buf_dir, max_items=3, ttl_seconds=3600)
-    now = datetime(2026, 11, 14, 16, 0, 0, tzinfo=UTC)
+    now = datetime.now(UTC) - timedelta(minutes=5)
 
     snap1 = CameraSnapshot("camera.achtertuin", "image/jpeg", _valid_jpeg(b"tuin1"), now)
     meta1 = buf.record_snapshot(

@@ -378,17 +378,22 @@ class McpGatewayProviderFactory:
         # Uvicorn calls synchronous app factories inside its running event loop.
         # Complete admission in an owned worker loop before exposing any tools.
         allow_unverified = False
+        adapter._config = replace(
+            config, request_timeout_seconds=min(config.request_timeout_seconds, 3)
+        )
         try:
             with ThreadPoolExecutor(max_workers=1) as executor:
                 executor.submit(asyncio.run, adapter.verify_catalog()).result()
         except RuntimeError as exc:
             if (
                 (str(exc) == "MCP gateway request failed (401)" and _jwt_token_expired(settings.bearer_token))
-                or type(exc).__name__ == "McpGatewayToolUnreachable"
+                or type(exc).__name__ in {"McpGatewayToolUnreachable", "McpGatewayUnavailable"}
             ):
                 allow_unverified = True
             else:
                 raise
+        finally:
+            adapter._config = config
         return ProviderContribution(
             provider_id="mcp_gateway",
             conversation_tools=adapter.conversation_tools(settings.specs),

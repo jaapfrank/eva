@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import asyncio
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field, replace
 import json
 import re
 from typing import Any
 from urllib import error, parse, request as urllib_request
+from weakref import WeakKeyDictionary
 
 from eva.application.conversation import (
     ConversationActionCall,
@@ -249,6 +251,9 @@ class McpGatewayToolPlanner:
         *,
         execution_timeout_seconds: int = 10,
         verification_timeout_seconds: int = 10,
+        verify_on_demand: (
+            Callable[[], Awaitable[dict[tuple[str, str], dict[str, JsonValue]]]] | None
+        ) = None,
     ) -> None:
         if (
             not specs
@@ -272,6 +277,7 @@ class McpGatewayToolPlanner:
         self._provider_input_schemas = provider_input_schemas
         self._execution_timeout_seconds = execution_timeout_seconds
         self._verification_timeout_seconds = verification_timeout_seconds
+        self._verify_on_demand = verify_on_demand
         self.action_names = tuple(self._specs)
 
     async def prepare(
@@ -296,6 +302,19 @@ class McpGatewayToolPlanner:
         observe_schema = self._provider_input_schemas.get(
             (spec.observe_tool_name, "observe")
         )
+        if (
+            (execute_schema is None or observe_schema is None)
+            and self._verify_on_demand is not None
+        ):
+            verified_schemas = await self._verify_on_demand()
+            if verified_schemas:
+                self._provider_input_schemas.update(verified_schemas)
+                execute_schema = self._provider_input_schemas.get(
+                    (spec.execute_tool_name, "execute")
+                )
+                observe_schema = self._provider_input_schemas.get(
+                    (spec.observe_tool_name, "observe")
+                )
         if execute_schema is None or observe_schema is None:
             raise ConversationConflict("MCP gateway catalog was not verified")
         validate_schema_value(
@@ -356,6 +375,9 @@ class McpGatewayToolAdapter:
         self._by_execute_name = {item.execute_tool_name: item for item in specs}
         self._verified_input_schemas: dict[tuple[str, str], dict[str, JsonValue]] = {}
         self._verified_output_schemas: dict[str, dict[str, JsonValue]] = {}
+        self._verify_locks: WeakKeyDictionary[asyncio.AbstractEventLoop, asyncio.Lock] = (
+            WeakKeyDictionary()
+        )
 
     @staticmethod
     def conversation_tools(
@@ -373,6 +395,23 @@ class McpGatewayToolAdapter:
             for item in specs
         )
 
+    async def _verify_on_demand(self) -> dict[tuple[str, str], dict[str, JsonValue]]:
+        if self._verified_input_schemas:
+            return dict(self._verified_input_schemas)
+        loop = asyncio.get_running_loop()
+        lock = self._verify_locks.get(loop)
+        if lock is None:
+            lock = asyncio.Lock()
+            self._verify_locks[loop] = lock
+        async with lock:
+            if self._verified_input_schemas:
+                return dict(self._verified_input_schemas)
+            try:
+                await self.verify_catalog()
+            except (McpGatewayToolUnreachable, McpGatewayUnavailable):
+                return {}
+            return dict(self._verified_input_schemas)
+
     def planner(self, *, allow_unverified: bool = False) -> McpGatewayToolPlanner:
         if not self._verified_input_schemas and not allow_unverified:
             raise RuntimeError("MCP gateway catalog must be verified before use")
@@ -385,6 +424,7 @@ class McpGatewayToolAdapter:
             dict(self._verified_input_schemas),
             execution_timeout_seconds=operation_timeout,
             verification_timeout_seconds=operation_timeout,
+            verify_on_demand=self._verify_on_demand if allow_unverified else None,
         )
 
     async def verify_catalog(self) -> dict[str, str]:
@@ -796,7 +836,7 @@ class McpGatewayToolAdapter:
                 raw = response.read(2_097_153)
         except error.HTTPError as exc:
             raise RuntimeError(f"MCP gateway request failed ({exc.code})") from exc
-        except error.URLError as exc:
+        except (error.URLError, TimeoutError, ConnectionError) as exc:
             raise McpGatewayUnavailable() from exc
         if len(raw) > 2_097_152:
             raise RuntimeError("MCP gateway response is too large")

@@ -1471,11 +1471,19 @@ def install_dashboard_holostage(
 
             if action == "spoken_side_effects":
                 spoken_txt = str(payload.get("text") or "").strip()
+                t_fx = time.monotonic()
                 effects = mgr.apply_spoken_stage_side_effects(
                     spoken_txt,
                     speaker_name=viewer.label,
                     allow_private=allow_priv_viewer,
                 )
+                if effects:
+                    obs_ledger = getattr(runtime, "_household_observation", None)
+                    if obs_ledger is not None:
+                        try:
+                            obs_ledger.record_reflex_hit(latency_ms=(time.monotonic() - t_fx) * 1000.0)
+                        except Exception:
+                            pass
                 return _done("✓ Spraakactie verwerkt.", {"effects": effects})
 
             if action == "set_lan_stage_origin":
@@ -1721,14 +1729,16 @@ def install_dashboard_holostage(
                 and sp_match.get("status") == "household_voice_candidate"
                 else viewer.label
             )
+            t_fx = time.monotonic()
             effects = mgr.apply_spoken_stage_side_effects(
                 raw_text,
                 speaker_name=sp_label,
                 allow_private=(viewer.kind in ("owner", "private_stage") and not sh_active),
             )
-            return sp_match, sh_active, effects
+            fx_ms = (time.monotonic() - t_fx) * 1000.0
+            return sp_match, sh_active, effects, fx_ms
 
-        speaker_match, shield_active, side_effects = await asyncio.to_thread(_prepare_turn_sync)
+        speaker_match, shield_active, side_effects, reflex_ms = await asyncio.to_thread(_prepare_turn_sync)
 
         can_use_owner_runtime = (
             (viewer.kind == "owner" or viewer.allow_owner_voice)
@@ -1736,6 +1746,38 @@ def install_dashboard_holostage(
             and not shield_active
             and hasattr(runtime, "dashboard_turn")
         )
+
+        obs_ledger = getattr(runtime, "_household_observation", None)
+        if obs_ledger is not None:
+            def _record_holostage_obs() -> None:
+                try:
+                    if side_effects:
+                        obs_ledger.record_reflex_hit(latency_ms=reflex_ms)
+                    if shield_active:
+                        return
+                    matched_member: str | None = None
+                    if (
+                        isinstance(speaker_match, dict)
+                        and speaker_match.get("status") == "household_voice_candidate"
+                        and speaker_match.get("member_id") in ("jaap", "lola")
+                    ):
+                        matched_member = (
+                            "owner-jaap" if speaker_match["member_id"] == "jaap" else "family-lola"
+                        )
+                    elif viewer.kind == "owner" or viewer.allow_owner_voice:
+                        matched_member = "owner-jaap"
+                    elif viewer.kind == "private_stage" and req_mode == "pocket":
+                        matched_member = "family-lola"
+                    if matched_member is not None:
+                        obs_ledger.record_turn(
+                            principal_id=matched_member,
+                            channel="holostage",
+                            used_model=can_use_owner_runtime,
+                        )
+                except Exception:
+                    pass
+
+            await asyncio.to_thread(_record_holostage_obs)
 
         queue: SimpleQueue[dict[str, Any] | None] = SimpleQueue()
 
@@ -1831,6 +1873,11 @@ def install_dashboard_holostage(
             except Exception as exc:
                 if stage_name == "respond":
                     queue.put({"type": "error", "code": "holostage_turn_failed"})
+                if obs_ledger is not None:
+                    try:
+                        obs_ledger.record_runtime_fault(critical=False)
+                    except Exception:
+                        pass
                 try:
                     record_conversation_failure(exc, turn, stage_name)
                 except Exception:
