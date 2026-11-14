@@ -115,11 +115,13 @@ class CameraObservationSource:
     with explicit unavailable/busy metadata. Raw images/embeddings are not retained.
     """
     def __init__(self, source, *, discovery, snapshots, vision=None, faces=None,
+                 snapshot_buffer=None,
                  refresh_seconds=300.0, minimum_interval_seconds=30.0, max_event_age_seconds=60.0):
         if refresh_seconds <= 0 or minimum_interval_seconds < 0 or max_event_age_seconds <= 0:
             raise ValueError('camera observer timing is invalid')
         self._source, self._discovery, self._snapshots = source, discovery, snapshots
         self._vision, self._faces = vision, faces
+        self._snapshot_buffer = snapshot_buffer
         self._refresh, self._interval, self._max_age = refresh_seconds, minimum_interval_seconds, max_event_age_seconds
         self._inventory = None
         self._next_refresh = 0.0
@@ -178,6 +180,16 @@ class CameraObservationSource:
                             'description', 'model', 'model_revision', 'analyzed_at')}
                     except Exception as error:
                         metadata['vision_error'] = type(error).__name__
+                if self._snapshot_buffer is not None and not stop.is_set():
+                    try:
+                        self._snapshot_buffer.record_snapshot(
+                            snapshot,
+                            area_id=device.area_id,
+                            event_occurred_at=event.occurred_at.isoformat(),
+                            scene_description=(metadata.get('scene') or {}).get('description'),
+                        )
+                    except Exception as error:
+                        _LOG.warning('camera_snapshot_buffer_failed error=%s', type(error).__name__)
                 metadata['status'] = 'observed' if ('recognition' in metadata or 'scene' in metadata) else 'analysis_unavailable'
             except Exception as error:
                 metadata['snapshot_error'] = type(error).__name__

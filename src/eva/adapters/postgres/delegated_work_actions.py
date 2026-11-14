@@ -187,10 +187,10 @@ class PostgresDelegatedWorkActions:
                         }} if operation in {"start", "research", "digital"} else {})},
                     "required": [] if key is None else [key] + (["feedback"] if operation == "initiative_feedback" else []),
                 },
-                ("Rapporteer operation_result.status en de overgebleven jobs. stop_recorded bevestigt stopverzoeken, "
+                ("Bevestig de uitkomst en de overgebleven jobs in gewoon Nederlands zonder interne statuscodes zoals stop_recorded of partial_stop letterlijk te noemen. stop_recorded bevestigt stopverzoeken, "
                  "niet dat een lopende externe handeling al beëindigd is. partial_stop betekent onvolledig."
                  if operation == "stop_related" else
-                 "Rapporteer operation_result.status. Alleen correction_saved bevestigt bewaarde bijsturing en de vervolgafspraak. "
+                 "Bevestig de uitkomst natuurlijk in gewoon Nederlands op basis van operation_result.status en noem interne statuscodes zoals correction_saved nooit letterlijk in je antwoord. Alleen correction_saved bevestigt bewaarde bijsturing en de vervolgafspraak. "
                  "De oude poging moet eerst stoppen; begonnen effecten kunnen nog afronden."
                  if operation == "revise_digital" else
                  "Zoekresultaten staan in operation_result.jobs. Open de passende work_id met get_delegated_work. "

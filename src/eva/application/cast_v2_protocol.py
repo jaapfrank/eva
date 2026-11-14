@@ -23,8 +23,10 @@ NS_CONNECTION = "urn:x-cast:com.google.cast.tp.connection"
 NS_HEARTBEAT = "urn:x-cast:com.google.cast.tp.heartbeat"
 NS_RECEIVER = "urn:x-cast:com.google.cast.receiver"
 NS_MEDIA = "urn:x-cast:com.google.cast.media"
+NS_DASHCAST = "urn:x-cast:es.offd.dashcast"
 
 DEFAULT_MEDIA_RECEIVER_APP_ID = "CC1AD845"
+DASHCAST_WEB_RECEIVER_APP_ID = "84912283"
 MAX_CAST_FRAME_BYTES = 65_536
 _APP_ID_RE = re.compile(r"^[A-Za-z0-9]{6,12}$")
 
@@ -147,6 +149,8 @@ def validate_stage_cast_url(url: str) -> str:
         for secret_key in ("token=", "secret=", "password=", "authorization=", "key=", "stg_")
     ):
         raise ValueError("Geheime tokens mogen nooit in een Cast-queryparameter staan (gebruik #fragment pairing)")
+    if parts.fragment and not re.fullmatch(r"[A-Za-z0-9_-]{1,96}", parts.fragment):
+        raise ValueError("Ongeldig HoloStage Cast-fragment")
     return url
 
 
@@ -177,10 +181,13 @@ def query_or_launch_approved_cast_device(
     *,
     device_id: str,
     stage_url: str | None = None,
-    app_id: str = DEFAULT_MEDIA_RECEIVER_APP_ID,
-    timeout_seconds: float = 3.5,
+    app_id: str | None = None,
+    timeout_seconds: float = 4.5,
 ) -> dict[str, Any]:
     """Connect to an approved LAN Google Cast device on :8009, read receiver status, and optionally launch stage."""
+    effective_app_id = app_id or (
+        DASHCAST_WEB_RECEIVER_APP_ID if stage_url else DEFAULT_MEDIA_RECEIVER_APP_ID
+    )
     st = proprioception.status()
     dev = next(
         (d for d in (st.get("devices") or []) if isinstance(d, dict) and d.get("device_id") == device_id),
@@ -216,7 +223,7 @@ def query_or_launch_approved_cast_device(
     if 8009 not in ports and "cast" not in proto_blob:
         raise ValueError("Gekozen apparaat ondersteunt geen Google Cast (:8009)")
 
-    if not _APP_ID_RE.match(app_id):
+    if not _APP_ID_RE.match(effective_app_id):
         raise ValueError("Ongeldige Cast Receiver App-ID")
     clean_url = validate_stage_cast_url(stage_url) if stage_url else None
 
@@ -275,10 +282,10 @@ def query_or_launch_approved_cast_device(
                         source_id="sender-0",
                         destination_id="receiver-0",
                         namespace=NS_RECEIVER,
-                        payload={"type": "LAUNCH", "appId": app_id, "requestId": 2},
+                        payload={"type": "LAUNCH", "appId": effective_app_id, "requestId": 2},
                     )
                 )
-                for _ in range(8):
+                for _ in range(10):
                     msg = _read_cast_frame(tls_sock, deadline)
                     ns = msg.get("namespace")
                     pl = msg.get("payload") or {}
@@ -297,7 +304,11 @@ def query_or_launch_approved_cast_device(
                         receiver_status = st_obj
                         apps = st_obj.get("applications") if isinstance(st_obj.get("applications"), list) else []
                         for app_row in apps:
-                            if isinstance(app_row, dict) and app_row.get("transportId"):
+                            if (
+                                isinstance(app_row, dict)
+                                and app_row.get("transportId")
+                                and str(app_row.get("appId") or "") == effective_app_id
+                            ):
                                 launched_transport_id = str(app_row["transportId"])
                                 break
                         if launched_transport_id:
@@ -312,28 +323,38 @@ def query_or_launch_approved_cast_device(
                             payload={"type": "CONNECT", "origin": {}},
                         )
                     )
-                    tls_sock.sendall(
-                        encode_cast_v2_frame(
-                            source_id="sender-0",
-                            destination_id=launched_transport_id,
-                            namespace=NS_MEDIA,
-                            payload={
-                                "type": "LOAD",
-                                "requestId": 3,
-                                "autoplay": True,
-                                "media": {
-                                    "contentId": clean_url,
-                                    "streamType": "LIVE",
-                                    "contentType": "text/html",
-                                    "metadata": {
-                                        "metadataType": 0,
-                                        "title": "Eva HoloStage",
-                                        "subtitle": "Gedeeld huiskamerpodium",
+                    if effective_app_id == DASHCAST_WEB_RECEIVER_APP_ID:
+                        tls_sock.sendall(
+                            encode_cast_v2_frame(
+                                source_id="sender-0",
+                                destination_id=launched_transport_id,
+                                namespace=NS_DASHCAST,
+                                payload={"url": clean_url, "force": True},
+                            )
+                        )
+                    else:
+                        tls_sock.sendall(
+                            encode_cast_v2_frame(
+                                source_id="sender-0",
+                                destination_id=launched_transport_id,
+                                namespace=NS_MEDIA,
+                                payload={
+                                    "type": "LOAD",
+                                    "requestId": 3,
+                                    "autoplay": True,
+                                    "media": {
+                                        "contentId": clean_url,
+                                        "streamType": "LIVE",
+                                        "contentType": "text/html",
+                                        "metadata": {
+                                            "metadataType": 0,
+                                            "title": "Eva HoloStage",
+                                            "subtitle": "Gedeeld 3D huiskamerpodium",
+                                        },
                                     },
                                 },
-                            },
+                            )
                         )
-                    )
 
     apps_summary = []
     for app_row in (receiver_status.get("applications") or [])[:4]:
@@ -350,6 +371,7 @@ def query_or_launch_approved_cast_device(
         "device_id": device_id,
         "label": str(dev.get("display_name") or dev.get("label") or device_id),
         "room_id": str(dev.get("room_id") or "woonkamer"),
+        "app_id": effective_app_id,
         "launched": bool(clean_url is not None and launched_transport_id),
         "active_applications": apps_summary,
         "volume_level": round(float(vol_obj.get("level", 0.5)), 2) if isinstance(vol_obj.get("level"), (int, float)) else None,
@@ -358,7 +380,9 @@ def query_or_launch_approved_cast_device(
 
 
 __all__ = [
+    "DASHCAST_WEB_RECEIVER_APP_ID",
     "DEFAULT_MEDIA_RECEIVER_APP_ID",
+    "NS_DASHCAST",
     "decode_cast_v2_body",
     "encode_cast_v2_frame",
     "query_or_launch_approved_cast_device",

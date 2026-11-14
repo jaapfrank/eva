@@ -17,12 +17,13 @@ class VoiceTransportError(RuntimeError):
 
 class CodexVoiceSession:
     def __init__(self, executable, credentials, backend, *, timeout=25, media_only=False,
-                 context_sender=None, on_input_turn=None):
+                 context_sender=None, on_input_turn=None, voice="juniper"):
         self.executable, self.credentials, self.timeout = executable, credentials, timeout
         self.backend = backend
         self.media_only = media_only
         self.context_sender = context_sender
         self.on_input_turn = on_input_turn
+        self.voice_name = voice
         self._error_salt = secrets.token_bytes(32)
         self.account_id = None
         self.events = asyncio.Queue(maxsize=512)
@@ -195,7 +196,7 @@ class CodexVoiceSession:
                     pass
                 if self.process.returncode is None:self.process.terminate()
 
-    async def start(self, offer_sdp, *, prompt, output_modality="audio"):
+    async def start(self, offer_sdp, *, prompt, output_modality="audio", voice=None):
         """Wait for real startup events; an RPC ACK alone is not success."""
         if not offer_sdp.startswith("v=0") or len(offer_sdp) > 131072:
             raise ValueError("Invalid voice SDP offer")
@@ -203,7 +204,7 @@ class CodexVoiceSession:
             "threadId": self.thread, "outputModality": output_modality, "version": "v3",
             "transport": {"type": "webrtc", "sdp": offer_sdp},
             "clientManagedHandoffs": self.media_only, "delegationAckFiller": False, "codexResponseHandoffMode": "commentary",
-            "model": "gpt-live-1-codex", "voice": "juniper",
+            "model": "gpt-live-1-codex", "voice": voice or self.voice_name,
             "includeStartupContext": False, "prompt": prompt})
         try:
             async with asyncio.timeout(self.timeout):

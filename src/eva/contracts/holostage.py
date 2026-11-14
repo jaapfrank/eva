@@ -83,6 +83,7 @@ class StageDeviceGrantSummary(BaseModel):
     form_factor: StageFormFactor
     room_id: str = Field(min_length=1, max_length=48)
     allow_private_cards_when_alone: bool = False
+    allow_owner_voice: bool = False
     status: Literal["active", "revoked", "expired"]
     created_at: str = Field(min_length=20, max_length=32)
     expires_at: str = Field(min_length=20, max_length=32)

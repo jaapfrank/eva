@@ -855,3 +855,113 @@ def test_audit_low01_spacefree_chunker_and_fast_non_shopping_regex(tmp_path: Pat
     adversarial = "zet " + ("heel veel woorden zonder einde " * 120)
     assert mgr.apply_spoken_stage_side_effects(adversarial) == []
     assert (_time.monotonic() - t0) < 0.02
+
+
+def test_fullscreen_default_conjure_on_demand_livekit_html_and_manage_holostage_tool(tmp_path: Path) -> None:
+    from types import SimpleNamespace
+    from eva.adapters.api.dashboard_holostage import HOLOSTAGE_HTML
+    from eva.application.conversation import ConversationActionCall as ToolCall, ConversationConflict
+    from eva.bootstrap.holostage_runtime import HoloStageConversationActions
+
+    # 1. Verify HOLOSTAGE_HTML uses LiveKit continuous WebRTC voice and ZERO browser speechSynthesis / SpeechRecognition
+    assert "/internal/v1/dashboard/holostage/voice/livekit-client.js" in HOLOSTAGE_HTML
+    assert "LivekitClient.Room" in HOLOSTAGE_HTML
+    assert "speechSynthesis" not in HOLOSTAGE_HTML
+    assert "SpeechRecognition" not in HOLOSTAGE_HTML
+
+    # 2. Verify initial stage state starts 100% full-screen with ZERO conjured cards
+    mgr = HoloStageManager(tmp_path)
+    init_state = mgr.build_stage_state(viewer_kind="owner", form_factor="cockpit")
+    assert init_state["cards"]["conjured_cards"] == []
+    assert init_state["cards"]["active_focus"] == "none"
+
+    # 3. Spoken "Laat de boodschappenlijst zien" conjures shopping_list; "Haal weg" dismisses all cards
+    mgr.apply_spoken_stage_side_effects("Laat de boodschappenlijst even zien", speaker_name="Jaap")
+    assert mgr.build_stage_state(viewer_kind="owner")["cards"]["conjured_cards"] == ["shopping_list"]
+    mgr.apply_spoken_stage_side_effects("Haal de kaarten maar weg", speaker_name="Jaap")
+    assert mgr.build_stage_state(viewer_kind="owner")["cards"]["conjured_cards"] == []
+
+    # 4. Private cards ('household_today', 'visitors_review') and private utterances are redacted on ambient TV
+    mgr.conjure_card("household_today", allow_private=True)
+    mgr.record_stage_utterance(eva_text="Privébericht voor Jaap", privacy_level="private_household")
+    owner_st = mgr.build_stage_state(viewer_kind="owner", form_factor="cockpit")
+    tv_st = mgr.build_stage_state(viewer_kind="ambient_stage", form_factor="tv_cast")
+    assert "household_today" in owner_st["cards"]["conjured_cards"]
+    assert owner_st["live_utterance"] is not None
+    assert "household_today" not in tv_st["cards"]["conjured_cards"]
+    assert tv_st["live_utterance"] is None
+
+    # 5. Foreground `manage_holostage` tool enforces owner authority, conjures/dismisses, handles offline Cast, and leaks zero #stg_ tokens
+    mgr.set_lan_stage_origin("http://10.0.20.46:44712")
+    with mgr.proprioception._locked():
+        mgr.proprioception._write_unlocked(
+            {
+                "contract": "EvaHomeProprioceptionState/v1",
+                "revision": 1,
+                "updated_at": "2026-11-14T14:00:00Z",
+                "last_scan_at": "2026-11-14T14:00:00Z",
+                "scanned_subnets": ["10.0.20.0/24"],
+                "devices": {
+                    "cast_schuur": {
+                        "device_id": "cast_schuur",
+                        "ip": "10.0.20.247",
+                        "approved_ip": "10.0.20.247",
+                        "port": 8009,
+                        "approved_port": 8009,
+                        "display_name": "Tv streaker schuur",
+                        "room_id": "schuur",
+                        "kind": "google_cast",
+                        "protocols": ["castv2"],
+                        "consent_status": "pending_consent",
+                        "auth_requirement": "none",
+                    }
+                },
+                "rooms": {},
+                "organs": {},
+            },
+            datetime(2026, 11, 14, 14, 0, 0, tzinfo=UTC),
+        )
+
+    fake_rt = SimpleNamespace(_holostage_manager=mgr, _dashboard_owner_principal_id="owner-jaap")
+    actions = HoloStageConversationActions(lambda: fake_rt)
+
+    owner_turn = ConversationTurn.private(
+        "tenant-1", "inst-1", "owner-jaap", "telegram:123", "msg-1", "Cast naar de schuur", "2026-11-14T15:00:00Z"
+    )
+    non_owner_turn = ConversationTurn.private(
+        "tenant-1", "inst-1", "other-user", "telegram:999", "msg-2", "Cast naar de schuur", "2026-11-14T15:00:00Z"
+    )
+    with pytest.raises(ConversationConflict):
+        actions.execute(non_owner_turn, ToolCall(call_id="c1", name="manage_holostage", arguments={"operation": "status"}))
+
+    r_conj = actions.execute(
+        owner_turn,
+        ToolCall(
+            call_id="c2",
+            name="manage_holostage",
+            arguments={"operation": "conjure_card", "card_kind": "custom_spotlight", "title": "Plan", "body_nl": "Avondeten"},
+        ),
+    )
+    assert r_conj.output["status"] == "verified"
+    assert "custom_spotlight" in mgr.build_stage_state(viewer_kind="owner")["cards"]["conjured_cards"]
+
+    # Monkeypatch Cast V2 launch to simulate powered-off schuur Chromecast timeout cleanly without network access
+    import eva.bootstrap.holostage_runtime as hr_mod
+
+    orig_launch = hr_mod.query_or_launch_approved_cast_device
+    hr_mod.query_or_launch_approved_cast_device = lambda *a, **kw: (_ for _ in ()).throw(TimeoutError("port 8009 timeout"))
+    try:
+        r_cast = actions.execute(
+            owner_turn,
+            ToolCall(
+                call_id="c3",
+                name="manage_holostage",
+                arguments={"operation": "cast_stage", "target_device": "schuur", "approve_device": True},
+            ),
+        )
+    finally:
+        hr_mod.query_or_launch_approved_cast_device = orig_launch
+
+    assert r_cast.output["status"] == "device_offline"
+    assert "stg_" not in json.dumps(r_cast.output)
+

@@ -30,5 +30,13 @@ def camera_observer_source(source):
                                               revision=os.environ['EVA_LOCAL_FACE_REVISION'])
     if vision is None and faces is None:
         raise ValueError('camera observer requires a configured local image analyzer')
+    snapshot_buffer = None
+    buffer_enabled = os.environ.get('EVA_CAMERA_SNAPSHOT_BUFFER_ENABLED', 'true').strip().lower()
+    if buffer_enabled not in {'true', 'false'}:
+        raise ValueError('EVA_CAMERA_SNAPSHOT_BUFFER_ENABLED must be true or false')
+    if buffer_enabled == 'true':
+        from eva.adapters.connectors.camera_snapshot_buffer import CameraSnapshotRingBuffer
+        snapshot_buffer = CameraSnapshotRingBuffer()
     return CameraObservationSource(source, discovery=HomeAssistantCameraDiscovery(base_url=base_url, token=token),
-        snapshots=HomeAssistantCameraSource(base_url=base_url, token=token), vision=vision, faces=faces)
+        snapshots=HomeAssistantCameraSource(base_url=base_url, token=token), vision=vision, faces=faces,
+        snapshot_buffer=snapshot_buffer)

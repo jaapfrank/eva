@@ -775,7 +775,9 @@ class HindsightMemoryEngine:
             raise HindsightProjectionProtocolError(
                 "Hindsight recall result is not an object"
             )
-        source_facts = response.get("source_facts", {})
+        source_facts = response.get("source_facts")
+        if source_facts is None:
+            source_facts = {}
         if not isinstance(source_facts, dict):
             raise HindsightProjectionProtocolError(
                 "Hindsight recall source facts are invalid"

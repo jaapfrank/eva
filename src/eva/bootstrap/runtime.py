@@ -1495,9 +1495,21 @@ def create_runtime_app() -> FastAPI:
     public_lookup_tools = () if public_lookup is None else (PUBLIC_LOOKUP,)
     from eva.bootstrap.recent_activity import RecentActivityActions, RECENT_ACTIVITY
     from eva.bootstrap.private_activity import PrivateActivityHistory
+    from eva.bootstrap.holostage_runtime import (
+        HoloStageConversationActions,
+        HoloStageSpeechBridge,
+        MANAGE_HOLOSTAGE,
+    )
+    from eva.bootstrap.camera_photo_runtime import (
+        CameraPhotoConversationActions,
+        SEND_CAMERA_PHOTO,
+    )
     activity_actions = RecentActivityActions(lambda: runtime._household_conversation_context,
         private_reader=PrivateActivityHistory(lambda: runtime))
     activity_tools = (RECENT_ACTIVITY,)
+    holostage_actions = HoloStageConversationActions(lambda: runtime)
+    camera_photo_actions = CameraPhotoConversationActions(lambda: runtime)
+    holostage_tools = (MANAGE_HOLOSTAGE, SEND_CAMERA_PHOTO)
     delegated_tools = (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
         include_research=delegated_research_profile is not None,
         include_digital=settings.delegated_digital_enabled))
@@ -1510,7 +1522,7 @@ def create_runtime_app() -> FastAPI:
         resource_budget=settings.runtime_resource_budget,
         conversation_tools=(
             (() if provider_bundle is None else provider_bundle.conversation_tools)
-            + learning_tools + public_lookup_tools + activity_tools
+            + learning_tools + public_lookup_tools + activity_tools + holostage_tools
             + delegated_tools
         ),
     )
@@ -1608,7 +1620,7 @@ def create_runtime_app() -> FastAPI:
             + (() if human_understanding_actions is None else (human_understanding_actions,))
             + (() if delegated_work_actions is None else (delegated_work_actions,))
             + (() if public_lookup is None else (public_lookup,))
-            + (activity_actions,)
+            + (activity_actions, holostage_actions, camera_photo_actions)
         ),
     )
     from eva.bootstrap.contact_catalog import discoverable_contact_actions
@@ -1622,7 +1634,7 @@ def create_runtime_app() -> FastAPI:
             resource_budget=settings.runtime_resource_budget,
             conversation_tools=(
                 (() if provider_bundle is None else provider_bundle.conversation_tools)
-                + learning_tools + public_lookup_tools + activity_tools
+                + learning_tools + public_lookup_tools + activity_tools + holostage_tools
                 + delegated_tools
             ),
         ))
@@ -2056,6 +2068,9 @@ def create_runtime_app() -> FastAPI:
     from eva.bootstrap.household_continuity import HouseholdConversationContext
     runtime._household_conversation_context = (None if household_work_server is None
         else HouseholdConversationContext(household_work_server))
+    runtime._holostage_speech = HoloStageSpeechBridge.from_runtime_settings(
+        settings, dashboard_voice=dashboard_voice
+    )
     native_voice = (None if household_voice is None else household_voice.build_service(
         runtime=runtime, engine=engine, work_server=household_work_server,
     ))

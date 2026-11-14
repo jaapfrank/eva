@@ -1,0 +1,7 @@
+[Unit]
+Description=Eva2 Tailscale Funnel & Public Stage Origin Synchronizer
+After=network-online.target tailscaled.service eva2-holostage-lan.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /home/administrator/project/Eva2/deploy/dashboard/tailscale-funnel-sync.sh

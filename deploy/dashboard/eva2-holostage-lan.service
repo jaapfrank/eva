@@ -1,0 +1,23 @@
+[Unit]
+Description=Eva2 HoloStage Scoped Home-LAN & Tailscale Funnel Stage Gateway
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=administrator
+Environment=EVA_HOLOSTAGE_BIND_HOST=10.0.20.46
+Environment=EVA_HOLOSTAGE_LAN_HOST=10.0.20.46
+Environment=EVA_HOLOSTAGE_LAN_PORT=44712
+Environment=EVA_HOLOSTAGE_FUNNEL_PORT=44714
+LoadCredential=dashboard-token:/var/lib/eva2/managed-b-slot3/secrets/dashboard-token
+ExecStart=/opt/eva2/managed-runtimes/node-v22.23.4/linux-x64/bin/node /home/administrator/project/Eva2/deploy/dashboard/holostage-lan.mjs
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target

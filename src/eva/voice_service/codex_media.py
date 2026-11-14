@@ -25,6 +25,24 @@ exactly in Dutch with a warm, natural delivery. Do not answer questions in that
 text. Speak only the literal supplied text. Do not add introductions, fillers,
 acknowledgements, interpretations or follow-up questions. Do not delegate.
 Stay silent until speech text is supplied."""
+REALTIME_SPEECH_PROMPT = """You are Eva, the digital housemate of Jaap and Lola.
+Speak warm, natural, conversational, concise Dutch in the first person.
+Your voice, memory, reasoning and actions belong to one continuous identity.
+The attached backend is your own thinking, authorized memory, Home Assistant
+connection, HoloStage display and background tools — not another person or assistant.
+Delegation is an internal operation: keep internal handoffs completely inaudible
+and never describe them as asking Eva, checking another system, or looking elsewhere.
+Respond directly and naturally to greetings, thank-yous, brief social small talk,
+and farewells without delegation. For goodbye, give a brief warm farewell without
+delegation or a follow-up question.
+For substantive questions, personal or household memory, past activities, live
+information, news, weather, shopping list, Home Assistant devices/lights/music,
+cameras, HoloStage/Chromecast screens, corrections, or background tasks, invoke
+delegation immediately with the speaker's request. While thinking, prefer a brief
+natural pause over stock waiting phrases. Deliver the returned answer naturally in
+spoken Dutch as your own, preserving all facts, times, qualifications and uncertainty
+without echoing internal status codes or inventing unverified facts or results.
+Do not append unnecessary follow-up questions at the end of every turn."""
 RENDER_TAIL_TIMEOUT = 3
 RENDER_TAIL_QUIET_SAMPLES = 14400  # 300 ms of received mono PCM at 48 kHz.
 RENDER_SPEECH_MAX_CHARACTERS = 160
@@ -182,6 +200,7 @@ class CodexMediaSession:
     def __init__(self, config, state, check, *, render_only=False, speech_output=None):
         self.config,self.state,self.check=config,state,check
         self.render_only=render_only
+        self.native_realtime=bool(not render_only and config.get('voice_mode')=='realtime_speech')
         self.speech_output=speech_output
         self._literal_tts=None
         self.renderer=None
@@ -261,7 +280,7 @@ class CodexMediaSession:
     def send_speech_context(self, event):
         """Send the pinned renderer protocol on its existing ordered channel."""
         self.current()
-        if (not self.render_only or not self.started.is_set() or self.channel is None
+        if (not (self.render_only or self.native_realtime) or not self.started.is_set() or self.channel is None
                 or self.channel.readyState!='open'):
             raise ValueError('Renderer context transport is not ready')
         self.channel.send(json.dumps(event,ensure_ascii=False))
@@ -295,7 +314,7 @@ class CodexMediaSession:
         """
         if self.render_only:return  # Literal TTS has no model account or peer.
         if self.peer is not None:return
-        if not self.render_only and self.renderer is None:
+        if not self.render_only and not self.native_realtime and self.renderer is None:
             self.renderer=CodexMediaSession(self.config,self.state,self.current,
                 render_only=True,speech_output=self.speech_output)
             self.renderer.prewarm()
@@ -691,16 +710,19 @@ class CodexMediaSession:
         if not self.render_only:
             self.bridge=await EvaVoiceBackend(self.state.backend,self.state.session_id,self.current,
             self.state.notify,state=self.state,refresh_context=agent.refresh_saved_context).open()
-            self.bridge.allow_handoffs=False
+            self.bridge.allow_handoffs=self.native_realtime
+        realtime_voice=self.config.get('realtime_voice') or ('marin' if self.native_realtime else 'juniper')
         self.voice=CodexVoiceSession(self.config['codex_executable'],
-            lambda:access_lease(self.config['codex_auth_file']),self.bridge,media_only=True,
-            context_sender=self.send_speech_context if self.render_only else None,
-            on_input_turn=self.input_transport_turn if not self.render_only else None)
+            lambda:access_lease(self.config['codex_auth_file']),self.bridge,
+            media_only=not self.native_realtime,
+            context_sender=self.send_speech_context if (self.render_only or self.native_realtime) else None,
+            on_input_turn=self.input_transport_turn if (not self.render_only and not self.native_realtime) else None,
+            voice=realtime_voice)
         self.prewarm()
         self.channel.on('message', self.provider_message)
         @self.peer.on('track')
         def output(track):
-            self.task(self.play(track) if self.render_only else self.discard_audio(track))
+            self.task(self.play(track) if (self.render_only or self.native_realtime) else self.discard_audio(track))
         @self.peer.on('connectionstatechange')
         def connection():
             self.transport_diagnostic('connection_state')
@@ -742,7 +764,8 @@ class CodexMediaSession:
             room.register_text_stream_handler('lk.chat',lambda reader,participant_identity:self.task(typed(reader,participant_identity)))
         # Drain native capture before account negotiation: the provisioned wire
         # intentionally permits only two seconds of unread microphone audio.
-        if not self.render_only:
+        renderer_start=None
+        if not self.render_only and self.renderer is not None:
             self.renderer.state=self.state
             self.renderer.bridge=self.bridge;self.renderer.source=self.source
             self.renderer.room=room
@@ -757,13 +780,16 @@ class CodexMediaSession:
         self.diagnostic('account_ready')
         await self.prepared
         self.current()
+        prompt=(SPEECH_PROMPT if self.render_only
+                else REALTIME_SPEECH_PROMPT if self.native_realtime
+                else VOICE_PROMPT)
         answer=await self.voice.start(self.peer.localDescription.sdp,
-            prompt=SPEECH_PROMPT if self.render_only else VOICE_PROMPT,
+            prompt=prompt,
             output_modality='audio')
         self.diagnostic('voice_answer_ready')
         await self.peer.setRemoteDescription(RTCSessionDescription(sdp=answer,type='answer'))
         await asyncio.wait_for(self.started.wait(),15)
-        if not self.render_only:await renderer_start
+        if renderer_start is not None:await renderer_start
         self.diagnostic('media_ready')
         self.task(self.watch_voice())
         if not self.render_only:self.task(self.watch_lifetime())
@@ -970,7 +996,7 @@ class CodexMediaSession:
             self._response_floor=self._generation
             self._input_changed.set()
             return self.renderer.stop_current_audio()
-        if self.render_only and self._literal_tts is None and (self._assistant_turns or
+        if (self.render_only or self.native_realtime) and self._literal_tts is None and (self._assistant_turns or
                 self._awaiting_speech_turn or self._speaking_handle is not None):
             self._render_drain_needed=True
         self.output_suppressed=True

@@ -1501,27 +1501,42 @@ def create_app(
             return JSONResponse({"admitted": False}, headers={"Cache-Control": "no-store"})
         return JSONResponse(redeemed, headers={"Cache-Control": "no-store"})
 
+    def _verify_telegram_bridge_hmac(request: Request) -> None:
+        token_file = (
+            os.environ.get("EVA_TELEGRAM_BOT_TOKEN_FILE", "").strip()
+            or "/run/secrets/telegram_bot_token"
+        )
+        path_obj = Path(token_file)
+        if not path_obj.is_file():
+            raise HTTPException(
+                status_code=503,
+                detail="Telegram-brugauthenticatie niet geconfigureerd",
+            )
+        bot_token = path_obj.read_text(encoding="utf-8").strip()
+        if not bot_token:
+            raise HTTPException(
+                status_code=503,
+                detail="Telegram-brugauthenticatie niet geconfigureerd",
+            )
+        expected_proof = hmac.new(
+            bot_token.encode("utf-8"),
+            b"EvaTelegramVaultAuth/v1",
+            hashlib.sha256,
+        ).hexdigest()
+        given_proof = request.headers.get("x-eva-telegram-bridge-proof", "").strip()
+        if not given_proof or not hmac.compare_digest(given_proof, expected_proof):
+            raise HTTPException(
+                status_code=403,
+                detail="Ongeldige Telegram-brugauthenticatie",
+            )
+
     @app.post("/internal/v1/telegram/vault/store")
     def store_telegram_vault_secret(payload: dict[str, Any], request: Request) -> JSONResponse:
         if not {"telegram_user_id", "chat_id", "device_id", "secret_value"} <= set(payload) or (
             set(payload) - {"telegram_user_id", "chat_id", "device_id", "secret_value", "message_deleted"}
         ):
             raise HTTPException(status_code=422, detail="invalid vault store request")
-        token_file = os.environ.get("EVA_TELEGRAM_BOT_TOKEN_FILE", "").strip()
-        if token_file and Path(token_file).is_file():
-            bot_token = Path(token_file).read_text(encoding="utf-8").strip()
-            if bot_token:
-                expected_proof = hmac.new(
-                    bot_token.encode("utf-8"),
-                    b"EvaTelegramVaultAuth/v1",
-                    hashlib.sha256,
-                ).hexdigest()
-                given_proof = request.headers.get("x-eva-telegram-bridge-proof", "").strip()
-                if not given_proof or not hmac.compare_digest(given_proof, expected_proof):
-                    raise HTTPException(
-                        status_code=403,
-                        detail="Ongeldige Telegram-brugauthenticatie voor kluisopslag",
-                    )
+        _verify_telegram_bridge_hmac(request)
         tg_uid = payload.get("telegram_user_id")
         chat_id = str(payload.get("chat_id") or "").strip()
         dev_id = str(payload.get("device_id") or "").strip()
@@ -1560,6 +1575,28 @@ def create_app(
         )
         return JSONResponse(
             {"stored": True, "device_id": meta["device_id"], "reply_text": reply_text},
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.post("/internal/v1/telegram/outbound-media/claim")
+    def claim_telegram_outbound_media(payload: dict[str, Any], request: Request) -> JSONResponse:
+        if set(payload) != {"chat_id", "message_id"}:
+            raise HTTPException(status_code=422, detail="invalid outbound media claim")
+        _verify_telegram_bridge_hmac(request)
+        chat_id = str(payload.get("chat_id") or "").strip()
+        msg_id = payload.get("message_id")
+        if not chat_id or not isinstance(msg_id, int) or isinstance(msg_id, bool) or msg_id < 1:
+            raise HTTPException(status_code=422, detail="invalid outbound media parameters")
+        hh = _runtime_household_settings()
+        if chat_id != str(hh.owner_telegram_id):
+            return JSONResponse({"has_photo": False}, headers={"Cache-Control": "no-store"})
+        from eva.application.outbound_media_claims import claim_telegram_outbound_photo
+
+        claimed = claim_telegram_outbound_photo(f"telegram:{chat_id}:{msg_id}")
+        if claimed is None:
+            return JSONResponse({"has_photo": False}, headers={"Cache-Control": "no-store"})
+        return JSONResponse(
+            {"has_photo": True, **claimed},
             headers={"Cache-Control": "no-store"},
         )
 

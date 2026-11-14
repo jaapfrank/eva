@@ -267,3 +267,28 @@ test('pure Eva2 photo provider parses SSE, refreshes on 401 with 0o600 atomic wr
   assert.equal(updatedAuth.access_token, 'fresh_tok_789');
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+test('outbound camera photo queued by Eva2 Core is claimed once and attached via sendPhoto', async () => {
+  const sentText = [];
+  const sentPhotos = [];
+  const jpegBytes = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10]);
+  const h = harness({
+    claimOutboundPhoto: async ({ chatId, messageId }) => ({
+      has_photo: true,
+      filename: 'snap_tuin.jpg',
+      image_base64: jpegBytes.toString('base64'),
+      chatId,
+      messageId,
+    }),
+    sendPhoto: async (_ctx, bytes, fname, opts) => {
+      sentPhotos.push({ bytes, fname, replyTo: opts.reply_parameters.message_id });
+    },
+  });
+  await h.handler(ctx(42, 'Heb je een foto?', 12, sentText));
+  assert.equal(sentText.length, 1);
+  assert.equal(sentPhotos.length, 1);
+  assert.equal(sentPhotos[0].fname, 'snap_tuin.jpg');
+  assert.deepEqual(sentPhotos[0].bytes, jpegBytes);
+  assert.equal(sentPhotos[0].replyTo, 42);
+  h.journal.close();
+});

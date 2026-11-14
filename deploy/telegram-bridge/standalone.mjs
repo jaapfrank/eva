@@ -86,7 +86,7 @@ export function computeTelegramVaultProof(botToken) {
   return crypto.createHmac('sha256', String(botToken || '').trim()).update('EvaTelegramVaultAuth/v1').digest('hex');
 }
 
-export function createTransportHandler({ journal, bindings, baseUrl, photoProvider = null, downloadFile, makeDraft, coreRequest = askEva2Canary, redeemInvite = null, refreshBindings = null, storeVaultSecret = null }) {
+export function createTransportHandler({ journal, bindings, baseUrl, photoProvider = null, downloadFile, makeDraft, coreRequest = askEva2Canary, redeemInvite = null, refreshBindings = null, storeVaultSecret = null, claimOutboundPhoto = null, sendPhoto = null }) {
   const dynamicAllowedIds = new Set();
   const pausedIds = new Set();
   let lastSyncAt = 0;
@@ -301,6 +301,22 @@ export function createTransportHandler({ journal, bindings, baseUrl, photoProvid
         onDraft: draft?.map(labelEva2TelegramReply), onReceipt: draft ? value => draft.receipt(value) : null });
       if (!answer) throw new Error('Message was not admitted to Eva2');
       await deliver(labelEva2TelegramReply(answer.text));
+      if (typeof claimOutboundPhoto === 'function') {
+        const outbound = await claimOutboundPhoto({
+          chatId: String(message.chat.id),
+          messageId: message.message_id,
+        }).catch(() => null);
+        if (outbound?.has_photo && typeof outbound.image_base64 === 'string' && outbound.image_base64.length > 0) {
+          const bytes = Buffer.from(outbound.image_base64, 'base64');
+          const fname = String(outbound.filename || 'camera.jpg').replace(/[^A-Za-z0-9._-]/g, '_');
+          const photoOpts = { reply_parameters: { message_id: message.message_id, allow_sending_without_reply: true } };
+          if (typeof sendPhoto === 'function') {
+            await sendPhoto(ctx, bytes, fname, photoOpts).catch(() => {});
+          } else if (typeof ctx.replyWithPhoto === 'function') {
+            await ctx.replyWithPhoto({ source: bytes, filename: fname }, photoOpts).catch(() => {});
+          }
+        }
+      }
     } catch (error) {
       // A send in progress may already have reached Telegram. Preserve uncertainty instead of dispatching again.
       const row = journal.db.prepare('SELECT state FROM telegram_transport WHERE update_id=?').get(id);
@@ -322,7 +338,7 @@ export async function main() {
   process.umask(0o077);
   const required = name => { const value = process.env[name]; if (!value) throw new Error(`${name} is required`); return value; };
   const require = createRequire(required('EVA_TELEGRAM_DEPENDENCY_MANIFEST'));
-  const { Bot } = require('grammy');
+  const { Bot, InputFile } = require('grammy');
   const token = fs.readFileSync(required('EVA_TELEGRAM_BOT_TOKEN_FILE'), 'utf8').trim();
   const trust = JSON.parse(fs.readFileSync(required('EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE'), 'utf8'));
   if (!['EvaTelegramPrincipalBindings/v1','EvaTelegramPrincipalBindings/v2'].includes(trust.contract)
@@ -388,8 +404,23 @@ export async function main() {
     return res.json();
   };
   await refreshBindings().catch(() => {});
+  const claimOutboundPhoto = async ({ chatId, messageId }) => {
+    const res = await fetch(`${baseUrl}/internal/v1/telegram/outbound-media/claim`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'X-Eva-Telegram-Bridge-Proof': bridgeProof,
+      },
+      body: JSON.stringify({ chat_id: String(chatId), message_id: Number(messageId) }),
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) return null;
+    return res.json();
+  };
   bot.on('message', createTransportHandler({ journal, bindings: trust.bindings, baseUrl, photoProvider,
-    redeemInvite, refreshBindings, storeVaultSecret,
+    redeemInvite, refreshBindings, storeVaultSecret, claimOutboundPhoto,
+    sendPhoto: (ctx, bytes, fname, opts) => ctx.replyWithPhoto(new InputFile(bytes, fname), opts),
     makeDraft: ctx => createEva2DraftSink({ chatId: ctx.chat.id, draftId: ctx.message.message_id, sendDraft: bot.api.raw.sendMessageDraft?.bind(bot.api.raw) }),
     downloadFile: async (ctx, file) => {
       const info = await ctx.api.getFile(file.file_id);

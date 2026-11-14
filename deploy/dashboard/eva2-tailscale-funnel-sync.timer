@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodic sync for Eva2 Tailscale Funnel HTTPS origin
+
+[Timer]
+OnBootSec=5s
+OnUnitActiveSec=8s
+AccuracySec=2s
+
+[Install]
+WantedBy=timers.target

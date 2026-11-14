@@ -28,12 +28,14 @@ import re
 import secrets
 import threading
 from typing import Any, Iterator, Literal
+from urllib.parse import urlsplit
 
 from eva.application.biometric_presence import BiometricPresenceFusion
-from eva.application.home_proprioception import HomeProprioceptionManager
+from eva.application.home_proprioception import HomeProprioceptionManager, is_safe_lan_ipv4
 from eva.application.household_head_settings import HouseholdHeadSettings
 from eva.contracts.holostage import (
     ShoppingListItem,
+    StageCardKind,
     StageDeviceGrantSummary,
     StageFormFactor,
     StageSpotlightCard,
@@ -43,6 +45,14 @@ STAGE_TOKEN_PATTERN = re.compile(r"^stg_[A-Za-z0-9_-]{40,48}$")
 MAX_SHOPPING_ITEMS = 64
 MAX_SPOTLIGHT_CARDS = 8
 MAX_DEVICE_GRANTS = 24
+VALID_STAGE_CARD_KINDS: tuple[StageCardKind, ...] = (
+    "shopping_list",
+    "household_today",
+    "home_overview",
+    "visitors_review",
+    "custom_spotlight",
+)
+PRIVATE_STAGE_CARD_KINDS: frozenset[str] = frozenset({"household_today", "visitors_review"})
 
 _DUTCH_WEEKDAYS = (
     "maandag",
@@ -218,7 +228,10 @@ class HoloStageManager:
             "contract": "EvaHoloStageStore/v1",
             "revision": 1,
             "updated_at": ts,
-            "active_card_focus": "shopping_list",
+            "active_card_focus": "none",
+            "lan_stage_origin": "",
+            "conjured_cards": [],
+            "live_utterance": None,
             "shopping_list": [],
             "household_notes": [
                 {
@@ -251,7 +264,7 @@ class HoloStageManager:
             return self._default_state(now)
 
         dirty = False
-        # Expire spotlight cards & device grants
+        # Expire spotlight cards, conjured overlays, live utterances & device grants
         kept_spotlights = []
         for sp in raw.get("spotlights") or []:
             if isinstance(sp, dict):
@@ -263,6 +276,37 @@ class HoloStageManager:
                 except Exception:
                     dirty = True
         raw["spotlights"] = kept_spotlights
+
+        kept_conjured = []
+        seen_kinds: set[str] = set()
+        for cj in raw.get("conjured_cards") or []:
+            if isinstance(cj, dict):
+                kind = str(cj.get("card_kind") or "")
+                if kind not in VALID_STAGE_CARD_KINDS or kind in seen_kinds:
+                    dirty = True
+                    continue
+                try:
+                    if _parse_iso(str(cj["expires_at"])) > now:
+                        kept_conjured.append(cj)
+                        seen_kinds.add(kind)
+                    else:
+                        dirty = True
+                except Exception:
+                    dirty = True
+        raw["conjured_cards"] = kept_conjured
+
+        utt = raw.get("live_utterance")
+        if isinstance(utt, dict):
+            try:
+                if _parse_iso(str(utt["expires_at"])) <= now:
+                    raw["live_utterance"] = None
+                    dirty = True
+            except Exception:
+                raw["live_utterance"] = None
+                dirty = True
+        elif utt is not None:
+            raw["live_utterance"] = None
+            dirty = True
 
         for gr in raw.get("device_grants") or []:
             if isinstance(gr, dict) and gr.get("status") == "active":
@@ -307,6 +351,118 @@ class HoloStageManager:
             os.close(fd)
         os.replace(str(tmp), str(self.state_file))
 
+    @staticmethod
+    def _conjure_in_state_unlocked(
+        state: dict[str, Any],
+        card_kind: StageCardKind,
+        *,
+        ts: datetime,
+        ttl_minutes: int = 15,
+    ) -> None:
+        clamped = max(1, min(1440, int(ttl_minutes)))
+        entry = {
+            "card_kind": card_kind,
+            "conjured_at": _iso(ts),
+            "expires_at": _iso(ts + timedelta(minutes=clamped)),
+        }
+        existing = [
+            dict(c)
+            for c in (state.get("conjured_cards") or [])
+            if isinstance(c, dict) and c.get("card_kind") != card_kind
+        ]
+        existing.insert(0, entry)
+        state["conjured_cards"] = existing[: len(VALID_STAGE_CARD_KINDS)]
+        state["active_card_focus"] = card_kind
+
+    def conjure_card(
+        self,
+        card_kind: StageCardKind,
+        *,
+        ttl_minutes: int = 15,
+        allow_private: bool = True,
+        now: datetime | None = None,
+    ) -> list[str]:
+        if card_kind not in VALID_STAGE_CARD_KINDS:
+            raise ValueError("Onbekend podiumkaarttype")
+        if card_kind in PRIVATE_STAGE_CARD_KINDS and not allow_private:
+            raise PermissionError("Privé-gezinskaart kan niet op een gedeeld of afgeschermd scherm worden getoond")
+        ts = _utc_now(now)
+        with self._locked():
+            state = self._read_unlocked(ts)
+            self._conjure_in_state_unlocked(state, card_kind, ts=ts, ttl_minutes=ttl_minutes)
+            state["updated_at"] = _iso(ts)
+            self._write_unlocked(state)
+            return [str(x["card_kind"]) for x in state["conjured_cards"]]
+
+    def dismiss_conjured_card(
+        self,
+        card_kind: str | None = None,
+        *,
+        allow_private: bool = True,
+        now: datetime | None = None,
+    ) -> list[str]:
+        ts = _utc_now(now)
+        target = (card_kind or "all").strip()
+        with self._locked():
+            state = self._read_unlocked(ts)
+            current = [dict(c) for c in (state.get("conjured_cards") or []) if isinstance(c, dict)]
+            if target in ("", "all", "*"):
+                kept = [
+                    c
+                    for c in current
+                    if (c.get("card_kind") in PRIVATE_STAGE_CARD_KINDS and not allow_private)
+                ]
+                if allow_private:
+                    state["spotlights"] = []
+                else:
+                    state["spotlights"] = [
+                        s
+                        for s in (state.get("spotlights") or [])
+                        if isinstance(s, dict) and s.get("privacy_level") == "private_household"
+                    ]
+                state["conjured_cards"] = kept
+                state["active_card_focus"] = str(kept[0]["card_kind"]) if kept else "none"
+            else:
+                if target in PRIVATE_STAGE_CARD_KINDS and not allow_private:
+                    raise PermissionError("Privé-gezinskaart kan niet vanaf een gedeeld scherm worden gesloten")
+                kept = [c for c in current if c.get("card_kind") != target]
+                state["conjured_cards"] = kept
+                if state.get("active_card_focus") == target:
+                    state["active_card_focus"] = str(kept[0]["card_kind"]) if kept else "none"
+            state["updated_at"] = _iso(ts)
+            self._write_unlocked(state)
+            return [str(x["card_kind"]) for x in state["conjured_cards"]]
+
+    def record_stage_utterance(
+        self,
+        *,
+        eva_text: str,
+        speaker_text: str = "",
+        privacy_level: Literal["shared", "private_household"] = "shared",
+        ttl_seconds: int = 45,
+        now: datetime | None = None,
+    ) -> dict[str, Any]:
+        ts = _utc_now(now)
+        spoken = _strip_markdown_for_speech(eva_text)[:900]
+        if not spoken:
+            return {}
+        clean_user = re.sub(r"\s+", " ", (speaker_text or "")).strip()[:300]
+        clamped_ttl = max(5, min(300, int(ttl_seconds)))
+        utt = {
+            "utterance_id": "utt_" + secrets.token_hex(6),
+            "speaker_text": clean_user,
+            "eva_text": spoken,
+            "privacy_level": privacy_level,
+            "created_at": _iso(ts),
+            "expires_at": _iso(ts + timedelta(seconds=clamped_ttl)),
+        }
+        with self._locked():
+            state = self._read_unlocked(ts)
+            state["live_utterance"] = utt
+            state["updated_at"] = _iso(ts)
+            self._write_unlocked(state)
+        return utt
+
     # --- Shopping List Operations ---
     def add_shopping_item(
         self,
@@ -334,7 +490,7 @@ class HoloStageManager:
                     existing["updated_at"] = _iso(ts)
                     validated = ShoppingListItem.model_validate(existing)
                     state["shopping_list"] = items
-                    state["active_card_focus"] = "shopping_list"
+                    self._conjure_in_state_unlocked(state, "shopping_list", ts=ts)
                     state["updated_at"] = _iso(ts)
                     self._write_unlocked(state)
                     return validated
@@ -355,7 +511,7 @@ class HoloStageManager:
             )
             items.append(created.model_dump(mode="json"))
             state["shopping_list"] = items
-            state["active_card_focus"] = "shopping_list"
+            self._conjure_in_state_unlocked(state, "shopping_list", ts=ts)
             state["updated_at"] = _iso(ts)
             self._write_unlocked(state)
             return created
@@ -401,29 +557,95 @@ class HoloStageManager:
             return items
 
     def apply_spoken_stage_side_effects(
-        self, text: str, *, speaker_name: str = "gezin", now: datetime | None = None
+        self,
+        text: str,
+        *,
+        speaker_name: str = "gezin",
+        allow_private: bool = True,
+        now: datetime | None = None,
     ) -> list[str]:
-        """Fast (<1ms) deterministic stage card update when a spoken turn adds/removes shopping items."""
-        if not isinstance(text, str) or not text.strip() or "boodschap" not in text.casefold():
+        """Fast (<1ms) deterministic stage card update & conjure-on-demand when asked to show/hide cards."""
+        if not isinstance(text, str) or not text.strip():
             return []
+        sample = text[:360]
+        lowered = sample.casefold()
         ts = _utc_now(now)
         effects: list[str] = []
-        add_match = _ADD_SHOPPING_RE.search(text)
-        if add_match:
-            raw_items = re.split(r"\s*(?:,|\ben\b)\s*", add_match.group(1))
-            for part in raw_items[:8]:
-                cleaned = re.sub(r"^(?:een|wat|nog|ook|graag)\s+", "", part.strip(), flags=re.IGNORECASE).strip(" .!?")
-                if 1 < len(cleaned) <= 80:
-                    item = self.add_shopping_item(label=cleaned, added_by=speaker_name, now=ts)
-                    effects.append(f"+ {item.label}")
-        rem_match = _REMOVE_SHOPPING_RE.search(text)
-        if rem_match:
-            target_txt = rem_match.group(1).strip(" .!?")
-            try:
-                self.toggle_or_remove_shopping_item(target=target_txt, action="remove", now=ts)
-                effects.append(f"- {target_txt}")
-            except ValueError:
-                pass
+
+        # 1. Dismiss / clear conjured cards ("haal maar weg", "haal de kaarten maar weg", "sluit de kaarten", "alleen eva")
+        if "boodschap" not in lowered and (
+            any(
+                phrase in lowered
+                for phrase in (
+                    "haal maar weg",
+                    "haal weg",
+                    "sluit kaart",
+                    "sluit de kaart",
+                    "verberg kaart",
+                    "verberg het overzicht",
+                    "maak het scherm leeg",
+                    "alleen eva",
+                )
+            )
+            or re.search(r"\b(?:haal|doe|verberg|sluit)\b[\w\s]{0,36}\b(?:weg|kaart|kaarten|overzicht)\b", lowered)
+        ):
+            self.dismiss_conjured_card("all", allow_private=allow_private, now=ts)
+            return ["~ kaarten verborgen"]
+
+        # 2. Shopping list mutations & conjuring
+        if "boodschap" in lowered:
+            add_match = _ADD_SHOPPING_RE.search(sample)
+            if add_match:
+                raw_items = re.split(r"\s*(?:,|\ben\b)\s*", add_match.group(1))
+                for part in raw_items[:8]:
+                    cleaned = re.sub(
+                        r"^(?:een|wat|nog|ook|graag)\s+", "", part.strip(), flags=re.IGNORECASE
+                    ).strip(" .!?")
+                    if 1 < len(cleaned) <= 80:
+                        item = self.add_shopping_item(label=cleaned, added_by=speaker_name, now=ts)
+                        effects.append(f"+ {item.label}")
+            rem_match = _REMOVE_SHOPPING_RE.search(sample)
+            if rem_match:
+                target_txt = rem_match.group(1).strip(" .!?")
+                try:
+                    self.toggle_or_remove_shopping_item(target=target_txt, action="remove", now=ts)
+                    self.conjure_card("shopping_list", now=ts)
+                    effects.append(f"- {target_txt}")
+                except ValueError:
+                    pass
+            if not effects and any(
+                kw in lowered for kw in ("laat", "toon", "zien", "tover", "staat er", "welke", "lees")
+            ):
+                self.conjure_card("shopping_list", now=ts)
+                effects.append("✨ boodschappenlijst")
+
+        # 3. Conjure household day / cooking schedule on demand (only when private access is allowed)
+        if allow_private and any(
+            kw in lowered for kw in ("kookdag", "wie kookt", "gezinsdag", "gezinsagenda")
+        ):
+            self.conjure_card("household_today", allow_private=True, now=ts)
+            effects.append("✨ gezinsdag")
+        elif allow_private and ("planning" in lowered or "agenda" in lowered) and any(
+            kw in lowered for kw in ("laat", "toon", "zien", "tover", "scherm")
+        ):
+            self.conjure_card("household_today", allow_private=True, now=ts)
+            effects.append("✨ gezinsdag")
+
+        # 4. Conjure home / rooms overview on demand
+        if any(
+            kw in lowered
+            for kw in ("huisoverzicht", "kamers zien", "toon kamers", "laat het huis zien", "cast zien")
+        ):
+            self.conjure_card("home_overview", now=ts)
+            effects.append("✨ huisoverzicht")
+
+        # 5. Conjure visitors review on demand (private)
+        if allow_private and any(
+            kw in lowered for kw in ("bezoekers zien", "toon bezoekers", "wie stond er aan de deur")
+        ):
+            self.conjure_card("visitors_review", allow_private=True, now=ts)
+            effects.append("✨ bezoekers")
+
         return effects
 
     # --- Spotlight Cards ("Op het scherm toveren") ---
@@ -457,7 +679,7 @@ class HoloStageManager:
             cards = [c for c in (state.get("spotlights") or []) if isinstance(c, dict)]
             cards.insert(0, card.model_dump(mode="json"))
             state["spotlights"] = cards[:MAX_SPOTLIGHT_CARDS]
-            state["active_card_focus"] = "custom_spotlight"
+            self._conjure_in_state_unlocked(state, "custom_spotlight", ts=ts, ttl_minutes=clamped_ttl)
             state["updated_at"] = _iso(ts)
             self._write_unlocked(state)
         return card
@@ -486,6 +708,7 @@ class HoloStageManager:
         form_factor: StageFormFactor,
         room_id: str = "woonkamer",
         allow_private_cards_when_alone: bool = False,
+        allow_owner_voice: bool = False,
         ttl_hours: int = 720,
         now: datetime | None = None,
     ) -> dict[str, Any]:
@@ -493,6 +716,8 @@ class HoloStageManager:
         clean_label = _clean_text(label, field_name="Schermnaam", max_len=80)
         clean_room = re.sub(r"[^a-z0-9_-]+", "_", (room_id or "woonkamer").lower()).strip("_")[:40] or "woonkamer"
         clamped_ttl = max(1, min(2160, int(ttl_hours)))
+        eff_allow_priv = bool(allow_private_cards_when_alone and form_factor != "tv_cast")
+        eff_owner_voice = bool(allow_owner_voice and form_factor == "pocket" and eff_allow_priv)
 
         raw_token = "stg_" + secrets.token_urlsafe(32)
         token_sha256 = hashlib.sha256(raw_token.encode("utf-8")).hexdigest()
@@ -506,7 +731,8 @@ class HoloStageManager:
             "label": clean_label,
             "form_factor": form_factor,
             "room_id": clean_room,
-            "allow_private_cards_when_alone": bool(allow_private_cards_when_alone),
+            "allow_private_cards_when_alone": eff_allow_priv,
+            "allow_owner_voice": eff_owner_voice,
             "status": "active",
             "created_at": created_iso,
             "expires_at": expires_iso,
@@ -514,6 +740,14 @@ class HoloStageManager:
         with self._locked():
             state = self._read_unlocked(ts)
             grants = [g for g in (state.get("device_grants") or []) if isinstance(g, dict)]
+            if form_factor == "tv_cast":
+                for g in grants:
+                    if (
+                        g.get("status") == "active"
+                        and g.get("form_factor") == "tv_cast"
+                        and g.get("label") == clean_label
+                    ):
+                        g["status"] = "revoked"
             active_grants = [g for g in grants if g.get("status") == "active"]
             if len(active_grants) >= MAX_DEVICE_GRANTS:
                 raise ValueError(f"Maximaal {MAX_DEVICE_GRANTS} actieve schermkoppelingen toegestaan")
@@ -528,7 +762,8 @@ class HoloStageManager:
                 label=clean_label,
                 form_factor=form_factor,
                 room_id=clean_room,
-                allow_private_cards_when_alone=bool(allow_private_cards_when_alone),
+                allow_private_cards_when_alone=eff_allow_priv,
+                allow_owner_voice=eff_owner_voice,
                 status="active",
                 created_at=created_iso,
                 expires_at=expires_iso,
@@ -553,15 +788,131 @@ class HoloStageManager:
                     continue
                 stored_hash = str(gr.get("token_sha256") or "")
                 if hmac.compare_digest(stored_hash, candidate_hash):
+                    ff = gr.get("form_factor")
+                    allow_priv = bool(gr.get("allow_private_cards_when_alone", False) and ff != "tv_cast")
                     return {
                         "grant_id": gr["grant_id"],
                         "label": gr["label"],
-                        "form_factor": gr["form_factor"],
+                        "form_factor": ff,
                         "room_id": gr["room_id"],
-                        "allow_private_cards_when_alone": bool(gr.get("allow_private_cards_when_alone", False)),
+                        "allow_private_cards_when_alone": allow_priv,
+                        "allow_owner_voice": bool(
+                            gr.get("allow_owner_voice", False) and ff == "pocket" and allow_priv
+                        ),
                         "expires_at": gr["expires_at"],
                     }
         return None
+
+    @staticmethod
+    def validate_lan_stage_origin(origin: str) -> str:
+        clean = (origin or "").strip().rstrip("/")
+        if not 10 <= len(clean) <= 128 or any(ord(c) < 33 or ord(c) > 126 for c in clean):
+            raise ValueError("Ongeldige LAN HoloStage-origin")
+        parts = urlsplit(clean)
+        if (
+            parts.scheme not in ("http", "https")
+            or not parts.hostname
+            or parts.username
+            or parts.password
+            or parts.path
+            or parts.query
+            or parts.fragment
+        ):
+            raise ValueError("LAN HoloStage-origin moet http(s)://<lan-ip>:<poort> zijn")
+        if not is_safe_lan_ipv4(parts.hostname, allow_docker_bridge=False):
+            raise ValueError("LAN HoloStage-origin vereist een veilig lokaal RFC1918 IPv4-adres")
+        if parts.port is not None and not (1024 <= parts.port <= 65535):
+            raise ValueError("LAN HoloStage-poort moet tussen 1024 en 65535 liggen")
+        return clean
+
+    def set_lan_stage_origin(self, origin: str, *, now: datetime | None = None) -> str:
+        clean = self.validate_lan_stage_origin(origin)
+        ts = _utc_now(now)
+        with self._locked():
+            state = self._read_unlocked(ts)
+            state["lan_stage_origin"] = clean
+            state["updated_at"] = _iso(ts)
+            self._write_unlocked(state)
+        return clean
+
+    def get_lan_stage_origin(self, *, now: datetime | None = None) -> str:
+        env_raw = os.environ.get("EVA_HOLOSTAGE_LAN_ORIGIN", "").strip()
+        if env_raw:
+            try:
+                return self.validate_lan_stage_origin(env_raw)
+            except ValueError:
+                pass
+        ts = _utc_now(now)
+        raw = self._read_readonly(ts)
+        stored = str(raw.get("lan_stage_origin") or "").strip()
+        if stored:
+            try:
+                return self.validate_lan_stage_origin(stored)
+            except ValueError:
+                pass
+        file_origin = self.directory / "holostage_lan_origin.txt"
+        if file_origin.is_file():
+            try:
+                return self.validate_lan_stage_origin(file_origin.read_text(encoding="utf-8").strip())
+            except (OSError, ValueError):
+                return ""
+        return ""
+
+    @staticmethod
+    def validate_public_stage_origin(origin: str) -> str:
+        clean = (origin or "").strip().rstrip("/")
+        if not 12 <= len(clean) <= 160 or any(ord(c) < 33 or ord(c) > 126 for c in clean):
+            raise ValueError("Ongeldige publieke HTTPS HoloStage-origin")
+        parts = urlsplit(clean)
+        host = (parts.hostname or "").lower()
+        if (
+            parts.scheme != "https"
+            or not host
+            or host in {"localhost", "127.0.0.1", "::1"}
+            or "." not in host
+            or parts.username
+            or parts.password
+            or parts.path
+            or parts.query
+            or parts.fragment
+        ):
+            raise ValueError("Publieke HoloStage-origin moet https://<domein> zijn")
+        if parts.port is not None and parts.port not in (443, 8443, 10000):
+            raise ValueError("Publieke HTTPS HoloStage-poort moet 443, 8443 of 10000 zijn")
+        return clean
+
+    def set_public_stage_origin(self, origin: str, *, now: datetime | None = None) -> str:
+        clean = self.validate_public_stage_origin(origin)
+        ts = _utc_now(now)
+        with self._locked():
+            state = self._read_unlocked(ts)
+            state["public_stage_origin"] = clean
+            state["updated_at"] = _iso(ts)
+            self._write_unlocked(state)
+        return clean
+
+    def get_public_stage_origin(self, *, now: datetime | None = None) -> str:
+        env_raw = os.environ.get("EVA_HOLOSTAGE_PUBLIC_ORIGIN", "").strip()
+        if env_raw:
+            try:
+                return self.validate_public_stage_origin(env_raw)
+            except ValueError:
+                pass
+        file_origin = self.directory / "holostage_public_origin.txt"
+        if file_origin.is_file():
+            try:
+                return self.validate_public_stage_origin(file_origin.read_text(encoding="utf-8").strip())
+            except (OSError, ValueError):
+                pass
+        ts = _utc_now(now)
+        raw = self._read_readonly(ts)
+        stored = str(raw.get("public_stage_origin") or "").strip()
+        if stored:
+            try:
+                return self.validate_public_stage_origin(stored)
+            except ValueError:
+                return ""
+        return ""
 
     def revoke_device_grant(self, grant_id: str, *, now: datetime | None = None) -> None:
         ts = _utc_now(now)
@@ -626,6 +977,34 @@ class HoloStageManager:
                 continue
             visible_spotlights.append(sp)
 
+        visible_conjured: list[str] = []
+        for cj in raw.get("conjured_cards") or []:
+            if not isinstance(cj, dict):
+                continue
+            kind = str(cj.get("card_kind") or "")
+            if kind not in VALID_STAGE_CARD_KINDS:
+                continue
+            if kind in PRIVATE_STAGE_CARD_KINDS and not allow_private:
+                continue
+            if kind == "custom_spotlight" and not visible_spotlights:
+                continue
+            visible_conjured.append(kind)
+        if visible_spotlights and "custom_spotlight" not in visible_conjured:
+            visible_conjured.insert(0, "custom_spotlight")
+
+        raw_utt = raw.get("live_utterance")
+        visible_utterance: dict[str, Any] | None = None
+        if isinstance(raw_utt, dict):
+            if raw_utt.get("privacy_level") == "private_household" and not allow_private:
+                visible_utterance = None
+            else:
+                visible_utterance = {
+                    "utterance_id": str(raw_utt.get("utterance_id") or ""),
+                    "speaker_text": str(raw_utt.get("speaker_text") or ""),
+                    "eva_text": str(raw_utt.get("eva_text") or ""),
+                    "created_at": str(raw_utt.get("created_at") or ""),
+                }
+
         # Summarize rooms & Cast devices without exposing sensitive LAN metadata to ambient viewers
         rooms_out = []
         raw_rooms = hp_status.get("rooms") or hp_status.get("spatial_presence", {}).get("rooms") or []
@@ -676,6 +1055,7 @@ class HoloStageManager:
                             form_factor=gr["form_factor"],
                             room_id=str(gr["room_id"]),
                             allow_private_cards_when_alone=bool(gr.get("allow_private_cards_when_alone", False)),
+                            allow_owner_voice=bool(gr.get("allow_owner_voice", False)),
                             status=gr["status"],
                             created_at=str(gr["created_at"]),
                             expires_at=str(gr["expires_at"]),
@@ -703,8 +1083,10 @@ class HoloStageManager:
                 "gaze_to_talk_active": bio_snap["gaze_to_talk_active"],
                 "household_candidate": bio_snap["household_candidate"] if allow_private else None,
             },
+            "live_utterance": visible_utterance,
             "cards": {
-                "active_focus": str(raw.get("active_card_focus") or "shopping_list"),
+                "active_focus": str(visible_conjured[0] if visible_conjured else "none"),
+                "conjured_cards": visible_conjured,
                 "shopping_list": list(raw.get("shopping_list") or []),
                 "household_today": household_today,
                 "home_overview": {
@@ -716,11 +1098,15 @@ class HoloStageManager:
             },
             "biometrics_admin": bio_snap["speaker_biometrics"] if viewer_kind == "owner" else None,
             "device_grants": grants_summary if viewer_kind == "owner" else [],
+            "lan_stage_origin": self.get_lan_stage_origin(now=ts) if viewer_kind == "owner" else None,
+            "public_stage_origin": self.get_public_stage_origin(now=ts) if viewer_kind == "owner" else None,
         }
 
 
 __all__ = [
     "HoloStageManager",
+    "PRIVATE_STAGE_CARD_KINDS",
     "STAGE_TOKEN_PATTERN",
     "SentenceBoundaryChunker",
+    "VALID_STAGE_CARD_KINDS",
 ]
