@@ -377,11 +377,18 @@ class HouseholdObservationLedger:
             }
             return self._build_summary(state, current, include_external_probe=False)
 
-    def snapshot(self, *, now: datetime | None = None) -> dict[str, Any]:
+    def snapshot(
+        self,
+        *,
+        now: datetime | None = None,
+        include_external_probe: bool = True,
+    ) -> dict[str, Any]:
         current = _utc_now(now)
         with self._locked_state(write=False, now=current) as state:
             state_copy = json.loads(json.dumps(state))
-        return self._build_summary(state_copy, current, include_external_probe=True)
+        return self._build_summary(
+            state_copy, current, include_external_probe=include_external_probe
+        )
 
     def _build_summary(
         self,

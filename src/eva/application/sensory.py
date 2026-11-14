@@ -69,6 +69,10 @@ class SensoryEventRevalidatorPort(Protocol):
     def revalidate(self, event: SensoryEvent, *, now: datetime) -> SensoryEvent: ...
 
 
+class SensoryObservationCurrentlyUnavailable(RuntimeError):
+    """Source responded authoritatively that the entity has no current state."""
+
+
 class SensoryIngestionWorker:
     """Keep connector I/O outside PostgreSQL and durably retain each event."""
 
@@ -106,4 +110,9 @@ class SensoryIngestionWorker:
         self._source.listen(self._stop, self._store.retain)
 
 
-__all__ = ["SensoryEvent", "SensoryEventRevalidatorPort", "SensoryIngestionWorker"]
+__all__ = [
+    "SensoryEvent",
+    "SensoryEventRevalidatorPort",
+    "SensoryIngestionWorker",
+    "SensoryObservationCurrentlyUnavailable",
+]

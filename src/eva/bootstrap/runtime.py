@@ -1654,6 +1654,7 @@ def create_runtime_app() -> FastAPI:
             installation_id=settings.background_installation_id,
             recovery_started_at=datetime.now(tz=UTC).replace(microsecond=0),
             historical_group_size=16,
+            decision_lease_seconds=300,
             initiative_principal_id=settings.background_principal_id,
             initiative_authorizer=lambda: runtime._initiative_authority().policy(),
         )

@@ -134,7 +134,16 @@ export function createHoloStageLanProxy({
   function isAllowedOrigin(req) {
     const origin = req.headers.origin;
     if (!origin) return true;
-    return origin === `http://${req.headers.host}` || origin === `https://${req.headers.host}`;
+    const rawHost = String(req.headers.host || '').toLowerCase();
+    const bareHttpsHost = rawHost.endsWith(':443') ? rawHost.slice(0, -4) : rawHost;
+    const bareHttpHost = rawHost.endsWith(':80') ? rawHost.slice(0, -3) : rawHost;
+    const lowerOrigin = origin.toLowerCase();
+    return (
+      lowerOrigin === `http://${rawHost}` ||
+      lowerOrigin === `http://${bareHttpHost}` ||
+      lowerOrigin === `https://${rawHost}` ||
+      lowerOrigin === `https://${bareHttpsHost}`
+    );
   }
 
   function permitted(req) {

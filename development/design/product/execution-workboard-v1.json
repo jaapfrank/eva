@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Volg het automatisch aangenomen hersteldoel voor dezelfde fout door Eva’s eigen ontwikkeltaak, onafhankelijke beoordeling, veilige installatie en bewezen later gebruik.",
+    "nextAction": "Hostproducer (eva-component-evaluation.service) en canonieke single-file compose zijn gesynchroniseerd met de actieve Core/Worker-release; sensorische hervalidatie voor slapende HA-entiteiten (unknown/unavailable) en 300s-lease draaien foutvrij (0 RECOVERY_FAILED op 41 hervalidaties). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1) zonder handmatige Codex-kandidaat.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
     "executionStep": "Provide complete proven original import closure for the same independent assessment",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-07T19:14:31.024017+00:00",
+    "checkedAt": "2026-11-14T18:59:30+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -3678,9 +3678,9 @@
           "summary": "Oorspronkelijke afhankelijkheidsketen completeren na vastgelegde beoordelingsblokkade.",
           "detail": "Eva heeft de onafhankelijke vervolgbeoordeling zelf gestart. Die stopte terecht: de oorspronkelijke code kon niet laden doordat onderliggende bronmodules ontbraken. De volledige oorspronkelijke afhankelijkheidsketen wordt nu gecontroleerd. Beide weigeringen en Eva’s kandidaat blijven behouden; er is geen geldig oordeel, installatie van de reparatie of hergebruik bewezen.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Bezig · onafhankelijke reproductie deblokkeren",
-          "checkedAt": "2026-11-07T19:14:31.024017+00:00",
-          "nextAction": "Volg het automatisch aangenomen hersteldoel voor dezelfde fout door Eva’s eigen ontwikkeltaak, onafhankelijke beoordeling, veilige installatie en bewezen later gebruik."
+          "state": "Bezig · hostproducer gesynchroniseerd & 7-daagse waarneming actief",
+          "checkedAt": "2026-11-14T18:59:30+00:00",
+          "nextAction": "Hostproducer (eva-component-evaluation.service) en canonieke single-file compose zijn gesynchroniseerd met de actieve Core/Worker-release; sensorische hervalidatie voor slapende HA-entiteiten (unknown/unavailable) en 300s-lease draaien foutvrij (0 RECOVERY_FAILED op 41 hervalidaties). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1) zonder handmatige Codex-kandidaat."
         },
         "next": {
           "taskId": "E4.15",
@@ -7257,7 +7257,7 @@
                   "E1.13"
                 ],
                 "nextAction": "Gebruik de voorbereide bestaande eigenaarbediening wanneer werkelijk gewoon gebruik beschikbaar is; geen nieuwe technische uitvalmatrix. Positieve werking, bewuste adoptie en meerdagengebruik blijven apart. Geen eigenaarhandeling nu.",
-                "checkedAt": "2026-10-24T10:17:52.011015+00:00",
+                "checkedAt": "2026-11-14T18:59:30+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [],
@@ -7287,6 +7287,14 @@
                   "checkedAt": "2026-11-07T13:09:11.244255+00:00",
                   "evidence": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
                   "fullHouseholdContinuityAcceptance": false
+                },
+                "sensoryRevalidationUnavailableSilence20261114": {
+                  "status": "installed_verified",
+                  "coreImage": "sha256:c56ca0cdc19974fbfc38c2b632dcc8ced65b3862d75e5d3b0df0b62a9575ae22",
+                  "workerImage": "sha256:30f90ec303986cf5b3fd3f6987667de6ef2ee852da0992b0576460250d210212",
+                  "decisionLeaseSeconds": 300,
+                  "postCutoverRecoveryFailedCount": 0,
+                  "postCutoverRevalidationsObserved": 41
                 }
               }
             ],
@@ -9323,7 +9331,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-07T19:14:31.024017+00:00",
+                "checkedAt": "2026-11-14T18:59:30+00:00",
                 "progress": "Eva heeft zelf een kandidaat gemaakt. De onafhankelijke beoordelaar heeft terecht geen proef verzonnen: gebonden afhankelijkheden, oorspronkelijke aanroep en privacyveilige foutinvoer ontbraken. Die invoeroverdracht wordt nu binnen dezelfde herstelzaak aangevuld; oorspronkelijke kandidaat, weigering, taak-STOP en live versies blijven behouden. Vergelijking, installatie en hergebruik zijn nog niet bewezen.",
                 "latestEvidence": "development/evidence/reassessment/e416-source-binding-repair-20261107.json",
                 "scopedTelegramRepairAuthorization": {
@@ -9828,6 +9836,15 @@
                   "installed": true,
                   "originalWorkStopPreserved": true,
                   "unpromptedIntakeProven": true
+                },
+                "hostProducerSyncAndSensoryStabilization20261114": {
+                  "status": "installed_verified",
+                  "installedComposeSha256": "dea2ff76e3f1d9c756703a71e404d3e53218dfdaf1ee7e809681f693bfdda9d5",
+                  "coreImage": "sha256:c56ca0cdc19974fbfc38c2b632dcc8ced65b3862d75e5d3b0df0b62a9575ae22",
+                  "workerImage": "sha256:30f90ec303986cf5b3fd3f6987667de6ef2ee852da0992b0576460250d210212",
+                  "currentRepairInstallationVerified": true,
+                  "delegatedRuntimeProfilesCompatible": true,
+                  "fullCardCompleted": false
                 }
               },
               {
@@ -14562,7 +14579,7 @@
                 "E1.13"
               ],
               "nextAction": "Gebruik de voorbereide bestaande eigenaarbediening wanneer werkelijk gewoon gebruik beschikbaar is; geen nieuwe technische uitvalmatrix. Positieve werking, bewuste adoptie en meerdagengebruik blijven apart. Geen eigenaarhandeling nu.",
-              "checkedAt": "2026-10-24T10:17:52.011015+00:00",
+              "checkedAt": "2026-11-14T18:59:30+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [],
@@ -14592,6 +14609,14 @@
                 "checkedAt": "2026-11-07T13:09:11.244255+00:00",
                 "evidence": "development/evidence/reassessment/p1-01-provider-503-recovery-verified-20261107.json",
                 "fullHouseholdContinuityAcceptance": false
+              },
+              "sensoryRevalidationUnavailableSilence20261114": {
+                "status": "installed_verified",
+                "coreImage": "sha256:c56ca0cdc19974fbfc38c2b632dcc8ced65b3862d75e5d3b0df0b62a9575ae22",
+                "workerImage": "sha256:30f90ec303986cf5b3fd3f6987667de6ef2ee852da0992b0576460250d210212",
+                "decisionLeaseSeconds": 300,
+                "postCutoverRecoveryFailedCount": 0,
+                "postCutoverRevalidationsObserved": 41
               }
             }
           ],
@@ -16628,7 +16653,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-07T19:14:31.024017+00:00",
+              "checkedAt": "2026-11-14T18:59:30+00:00",
               "progress": "Eva heeft zelf een kandidaat gemaakt. De onafhankelijke beoordelaar heeft terecht geen proef verzonnen: gebonden afhankelijkheden, oorspronkelijke aanroep en privacyveilige foutinvoer ontbraken. Die invoeroverdracht wordt nu binnen dezelfde herstelzaak aangevuld; oorspronkelijke kandidaat, weigering, taak-STOP en live versies blijven behouden. Vergelijking, installatie en hergebruik zijn nog niet bewezen.",
               "latestEvidence": "development/evidence/reassessment/e416-source-binding-repair-20261107.json",
               "scopedTelegramRepairAuthorization": {
@@ -17133,6 +17158,15 @@
                 "installed": true,
                 "originalWorkStopPreserved": true,
                 "unpromptedIntakeProven": true
+              },
+              "hostProducerSyncAndSensoryStabilization20261114": {
+                "status": "installed_verified",
+                "installedComposeSha256": "dea2ff76e3f1d9c756703a71e404d3e53218dfdaf1ee7e809681f693bfdda9d5",
+                "coreImage": "sha256:c56ca0cdc19974fbfc38c2b632dcc8ced65b3862d75e5d3b0df0b62a9575ae22",
+                "workerImage": "sha256:30f90ec303986cf5b3fd3f6987667de6ef2ee852da0992b0576460250d210212",
+                "currentRepairInstallationVerified": true,
+                "delegatedRuntimeProfilesCompatible": true,
+                "fullCardCompleted": false
               }
             },
             {
@@ -21109,8 +21143,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-14T17:46:06+00:00",
-  "checkedAt": "2026-11-14T17:46:06+00:00",
+  "lastUpdatedAt": "2026-11-14T18:59:30+00:00",
+  "checkedAt": "2026-11-14T18:59:30+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

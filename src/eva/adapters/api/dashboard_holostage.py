@@ -197,8 +197,13 @@ def _enforce_post_csrf_and_framing(request: Request, *, used_cookie: bool) -> No
         raise HTTPException(status_code=403, detail="Ontbrekende X-HoloStage-Client beveiligingsheader")
     origin = request.headers.get("origin")
     if origin:
-        origin_host = urlsplit(origin).netloc.lower()
+        parsed_origin = urlsplit(origin)
+        origin_host = parsed_origin.netloc.lower()
         req_host = (request.headers.get("host") or "").lower()
+        if parsed_origin.scheme == "https" and req_host.endswith(":443") and not origin_host.endswith(":443"):
+            req_host = req_host[:-4]
+        elif parsed_origin.scheme == "http" and req_host.endswith(":80") and not origin_host.endswith(":80"):
+            req_host = req_host[:-3]
         if not origin_host or (req_host and origin_host != req_host):
             raise HTTPException(status_code=403, detail="Cross-origin verzoek geweigerd")
 
@@ -216,29 +221,82 @@ _CSP_HEADER = (
 
 _PAIRING_BOOTSTRAP_HTML = """<!doctype html>
 <html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eva HoloStage — Schermkoppeling</title>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#060b16;color:#f8fafc;font:16px/1.5 system-ui,sans-serif}.box{max-width:420px;padding:28px;border:1px solid rgba(56,189,248,.3);border-radius:18px;background:#0f192d;text-align:center}h1{margin:0 0 8px;font-size:1.35rem}p{color:#94a3b8;margin:0}</style>
-</head><body><div class="box"><h1>Eva HoloStage koppelen…</h1><p id="msg">Bezig met veilige schermauthenticatie.</p></div>
+<title>Eva HoloStage — Apparaatkoppeling</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100dvh;background:radial-gradient(circle at 50% 38%,rgba(56,189,248,.14),transparent 55%),#060b16;color:#f8fafc;font:15px/1.55 system-ui,-apple-system,sans-serif}
+body{display:flex;align-items:center;justify-content:center;padding:20px}
+.box{width:100%;max-width:460px;padding:28px;border:1px solid rgba(56,189,248,.32);border-radius:20px;background:rgba(15,25,45,.94);box-shadow:0 22px 50px rgba(0,0,0,.55);text-align:left}
+h1{margin:0 0 10px;font-size:1.28rem;letter-spacing:-.01em}
+p{color:#cbd5e1;margin:0 0 12px}
+.hint{padding:11px 13px;border-radius:12px;background:rgba(8,14,28,.78);border:1px solid rgba(148,163,184,.16);font-size:.86rem;color:#94a3b8;margin-bottom:14px}
+.hint a{color:#38bdf8;text-decoration:none;font-weight:600}
+.hint a:hover{text-decoration:underline}
+form{display:flex;gap:8px;margin-top:10px}
+input{flex:1;min-width:0;padding:10px 12px;border-radius:11px;border:1px solid rgba(148,163,184,.28);background:#060b16;color:#f8fafc;font-size:.9rem}
+button{padding:10px 15px;border-radius:11px;border:1px solid rgba(110,231,183,.5);background:linear-gradient(135deg,#10b981,#059669);color:#031c14;font-weight:700;font-size:.88rem;cursor:pointer;white-space:nowrap}
+button:disabled{opacity:.55;cursor:default}
+.err{color:#fda4af;font-size:.86rem;margin-top:10px}
+</style>
+</head><body><div class="box">
+  <h1 id="hdr">🔒 Apparaat nog niet gekoppeld</h1>
+  <p id="msg">Dit publieke adres is beveiligd zodat vreemden op internet niet bij Eva kunnen. Koppel deze browser eenmalig (blijft 30 dagen bewaard).</p>
+  <div class="hint" id="pc-hint">
+    💻 <strong>Zit je op je eigen pc?</strong> Open daar rechtstreeks de <a href="http://localhost:44711/internal/v1/dashboard/holostage">Gezinshoofd Cockpit (localhost:44711)</a> — zonder koppelingslink.
+  </div>
+  <form id="pair-form">
+    <input id="pair-in" type="password" autocomplete="off" placeholder="Plak je #stg_ link of koppelcode…" />
+    <button id="pair-btn" type="submit">Koppel scherm</button>
+  </form>
+  <div id="err" class="err" hidden></div>
+</div>
 <script>
-(async()=>{
+(()=>{
+  const hdr=document.getElementById('hdr');
   const msg=document.getElementById('msg');
-  const raw=(location.hash||'').replace(/^#/,'').trim();
-  if(raw){history.replaceState(null,'',location.pathname+location.search);}
-  if(!/^stg_[A-Za-z0-9_-]{40,48}$/.test(raw)){
-    msg.textContent='Open deze pagina via http://localhost:44711/internal/v1/dashboard/holostage of gebruik een geldige #stg_ koppelingslink.';
-    return;
+  const errEl=document.getElementById('err');
+  const form=document.getElementById('pair-form');
+  const inp=document.getElementById('pair-in');
+  const btn=document.getElementById('pair-btn');
+  function extractToken(val){
+    const s=String(val||'').trim();
+    const m=s.match(/stg_[A-Za-z0-9_-]{40,48}/);
+    return m?m[0]:'';
   }
-  try{
-    const res=await fetch('/internal/v1/dashboard/holostage/session',{
-      method:'POST',
-      headers:{'content-type':'application/json','x-holostage-client':'1'},
-      body:JSON.stringify({token:raw})
-    });
-    if(!res.ok)throw new Error('rejected');
-    location.reload();
-  }catch(_e){
-    msg.textContent='Schermkoppeling is ongeldig of verlopen. Maak een nieuwe link aan via Beheer op je pc.';
+  async function pairWithToken(tok){
+    errEl.hidden=true;
+    hdr.textContent='⏳ Eva HoloStage koppelen…';
+    msg.textContent='Bezig met veilige apparaatauthenticatie.';
+    btn.disabled=true;
+    try{
+      const res=await fetch('/internal/v1/dashboard/holostage/session',{
+        method:'POST',
+        headers:{'content-type':'application/json','x-holostage-client':'1'},
+        body:JSON.stringify({token:tok})
+      });
+      if(!res.ok)throw new Error('rejected');
+      if(location.hash){history.replaceState(null,'',location.pathname+location.search);}
+      location.reload();
+    }catch(_e){
+      btn.disabled=false;
+      hdr.textContent='🔒 Koppeling niet gelukt';
+      msg.textContent='Deze koppelcode is ongeldig of ingetrokken. Maak een nieuwe link aan via ⚙️ Beheer & TV op je pc of gebruik de nieuwste link uit Telegram.';
+      errEl.textContent='Controleer of de volledige #stg_ link of code is geplakt.';
+      errEl.hidden=false;
+    }
   }
+  form.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const tok=extractToken(inp.value);
+    if(!tok){
+      errEl.textContent='Plak een geldige #stg_ koppelingslink of stg_ code.';
+      errEl.hidden=false;
+      return;
+    }
+    pairWithToken(tok);
+  });
+  const hashTok=extractToken(location.hash||'');
+  if(hashTok){pairWithToken(hashTok);}
 })();
 </script></body></html>
 """
@@ -504,6 +562,11 @@ HOLOSTAGE_HTML = """<!doctype html>
         <button type="button" class="btn-sm" data-enroll="family-lola">Stem Lola (3s)</button>
         <button type="button" class="btn-sm" id="btn-shield-toggle">🛡️ Wissel privéschild</button>
       </div>
+    </div>
+
+    <div class="drawer-sec">
+      <h3>📊 Gezinsstabiliteit (7d) &amp; HTTPS</h3>
+      <div id="obs-summary-box" class="muted">Laden…</div>
     </div>
   </aside>
 
@@ -1076,6 +1139,32 @@ HOLOSTAGE_HTML = """<!doctype html>
       $('voiceprint-list').textContent = vps.length
         ? 'Ingestelde stemmen: ' + vps.map(v => `${v.display_name} (${v.sample_count || v.samples || 1}x)`).join(', ')
         : 'Nog geen lokale stemafdruk opgeslagen.';
+
+      const obsBox = $('obs-summary-box');
+      if (obsBox) {
+        const pubOrigin = st.public_stage_origin || '';
+        const obs = st.household_observation_summary;
+        const lines = [];
+        lines.push(pubOrigin
+          ? `🔒 Publieke HTTPS: ${pubOrigin}`
+          : '🏠 Alleen thuisnetwerk (nog geen publieke HTTPS ingesteld)');
+        if (obs && obs.release_window) {
+          const w = obs.release_window;
+          const t = obs.totals || {};
+          lines.push(
+            `⏱️ Venster: ${w.contiguous_hours ?? 0}/${w.required_contiguous_hours ?? 168}u · ` +
+            `${w.distinct_active_days ?? 0}/${w.required_active_days ?? 7} actieve dagen · ` +
+            `kritieke fouten: ${w.unresolved_critical_errors ?? 0}`
+          );
+          lines.push(
+            `👨‍👩‍👧 Gebruik: Jaap ${t.turns_jaap ?? 0} · Lola ${t.turns_lola ?? 0} · gedeeld ${t.turns_shared_household ?? 0}`
+          );
+          lines.push(w.f2_2_owner_accepted
+            ? '✅ Eigenaarsacceptatie (F2.2) geregistreerd'
+            : (w.seven_day_gate_met ? '🟢 Technisch 7d-doel bereikt — klaar voor acceptatie' : '🔵 Veilige gezinsobservatie actief'));
+        }
+        obsBox.innerHTML = lines.map(l => `<div style="padding:2px 0">${esc(l)}</div>`).join('');
+      }
     }
 
     function renderState(st) {
@@ -1374,18 +1463,43 @@ def install_dashboard_holostage(
         )
 
     @app.get("/internal/v1/dashboard/holostage/state")
-    def holostage_state(request: Request, mode: str = "cockpit") -> JSONResponse:
+    async def holostage_state(request: Request, mode: str = "cockpit") -> JSONResponse:
         mgr = _resolve_holostage_manager(runtime)
         req_mode = _parse_mode(mode)
         viewer = _authenticate_stage_viewer(
             request, access=access, runtime=runtime, mgr=mgr, requested_mode=req_mode
         )
-        return JSONResponse(
-            mgr.build_stage_state(
+        can_include_obs = viewer.kind == "owner" and _has_explicit_owner_authority(access, runtime)
+
+        def _build_sync() -> dict[str, Any]:
+            payload = mgr.build_stage_state(
                 viewer_kind=viewer.kind,
                 viewer_label=viewer.label,
                 form_factor=req_mode,
-            ),
+            )
+            if can_include_obs:
+                obs_ledger = getattr(runtime, "_household_observation", None)
+                if obs_ledger is not None:
+                    try:
+                        snap = obs_ledger.snapshot(include_external_probe=False)
+                        metrics = snap.get("symbiotic_metrics") or {}
+                        rel_win = snap.get("release_window") or {}
+                        payload["household_observation_summary"] = {
+                            "release_window": rel_win,
+                            "owner_accepted": bool(rel_win.get("f2_2_owner_accepted", False)),
+                            "totals": {
+                                "turns_jaap": int(metrics.get("turns_jaap", 0)),
+                                "turns_lola": int(metrics.get("turns_lola", 0)),
+                                "turns_shared_household": int(metrics.get("turns_shared_household", 0)),
+                            },
+                        }
+                    except Exception:
+                        payload["household_observation_summary"] = None
+            return payload
+
+        body = await asyncio.to_thread(_build_sync)
+        return JSONResponse(
+            body,
             headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
         )
 

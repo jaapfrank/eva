@@ -11,7 +11,11 @@ from urllib.parse import urlsplit, urlunsplit
 
 from websockets.sync.client import connect
 
-from eva.application.sensory import SensoryEvent, SensoryAttentionSource
+from eva.application.sensory import (
+    SensoryAttentionSource,
+    SensoryEvent,
+    SensoryObservationCurrentlyUnavailable,
+)
 from eva.adapters.connectors.home_assistant import HomeAssistantConfig, HomeAssistantToolAdapter
 from eva.contracts.canonical_json import canonical_json_bytes
 
@@ -70,12 +74,16 @@ class HomeAssistantEventStream:
         state = self._states.read_entity_state(entity_id=entity_id)
         value = state.get("state")
         last_updated = state.get("last_updated")
-        if (not isinstance(value, str) or not value or value in {"unknown", "unavailable"}
-                or not isinstance(last_updated, str)):
+        if not isinstance(value, str) or not value or not isinstance(last_updated, str):
             raise RuntimeError("Home Assistant current state is unavailable")
         updated = datetime.fromisoformat(last_updated.replace("Z", "+00:00"))
-        if updated.tzinfo is None or updated > now:
+        comparable_updated = updated.replace(microsecond=0) if now.microsecond == 0 else updated
+        if updated.tzinfo is None or comparable_updated > now:
             raise RuntimeError("Home Assistant current state timestamp is invalid")
+        if value in {"unknown", "unavailable"}:
+            raise SensoryObservationCurrentlyUnavailable(
+                "Home Assistant current state is unavailable"
+            )
         attributes = state.get("attributes")
         payload = {
             "entity_id": entity_id,

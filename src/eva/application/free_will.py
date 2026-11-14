@@ -10,7 +10,11 @@ from typing import Callable, Literal, Protocol
 from eva.application.conversation import ConversationModelUsage, IdentityProfile
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
-from eva.application.sensory import SensoryEvent, SensoryEventRevalidatorPort
+from eva.application.sensory import (
+    SensoryEvent,
+    SensoryEventRevalidatorPort,
+    SensoryObservationCurrentlyUnavailable,
+)
 from eva.application.resident_attention import ResidentAttentionDecision, NextAttention
 
 
@@ -819,6 +823,18 @@ class SensoryDecisionWorker:
             event = self._revalidator.revalidate(claim.event, now=now)
             now = self._current_time(now)
             self._store.complete_revalidation(claim, event, now=now)
+        except SensoryObservationCurrentlyUnavailable:
+            self._store.complete(
+                claim,
+                FreeWillDecision(
+                    "silence",
+                    "De historische waarneming is verouderd en het apparaat rapporteert nu geen actuele toestand.",
+                    0,
+                    "eva:revalidation-state-unavailable",
+                ),
+                now=self._current_time(now),
+            )
+            return "silence"
         except Exception as error:
             self._store.fail(claim, error, now=self._current_time(now))
             return "failed"
