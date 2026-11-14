@@ -982,3 +982,25 @@ def test_holostage_natural_standing_rig_lipsync_and_streaming_tts_contract() -> 
     assert 'id="stage-tts-audio"' in HOLOSTAGE_HTML
 
 
+def test_holostage_mobile_antijank_reconnect_and_idempotent_funnel_sync() -> None:
+    from eva.adapters.api.dashboard_holostage import HOLOSTAGE_HTML
+
+    # Mobile GPU fill-rate cap + RTP audio-level throttling + DOM signature memoization
+    assert "powerPreference: 'high-performance'" in HOLOSTAGE_HTML
+    assert "isPocketInit ? 1.35 : 1.75" in HOLOSTAGE_HTML
+    assert "lastRtpSampleAt" in HOLOSTAGE_HTML
+    assert "lastCardsSig" in HOLOSTAGE_HTML
+    assert "lastAdminSig" in HOLOSTAGE_HTML
+    # Transient mobile network handoff feedback
+    assert "RoomEvent.Reconnecting" in HOLOSTAGE_HTML
+    assert "RoomEvent.Reconnected" in HOLOSTAGE_HTML
+    # Idempotent Tailscale Funnel sync script & 60s timer
+    repo_root = Path(__file__).resolve().parents[3]
+    sync_script = (repo_root / "deploy/dashboard/tailscale-funnel-sync.sh").read_text(encoding="utf-8")
+    timer_unit = (repo_root / "deploy/dashboard/eva2-tailscale-funnel-sync.timer").read_text(encoding="utf-8")
+    assert "check_funnel_configured" in sync_script
+    assert 'if [[ "${funnel_active}" != "yes" ]]; then' in sync_script
+    assert "OnUnitActiveSec=60s" in timer_unit
+
+
+

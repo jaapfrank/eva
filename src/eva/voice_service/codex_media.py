@@ -758,7 +758,7 @@ class CodexMediaSession:
             if self.config.get('wake_greeting',False):
                 self.greeting=self.task(self.greet())
         else:
-            self.source=rtc.AudioSource(48000,1,queue_size_ms=80)
+            self.source=rtc.AudioSource(48000,1,queue_size_ms=800)
             track=rtc.LocalAudioTrack.create_audio_track('Eva',self.source)
             self.output_publication = await room.local_participant.publish_track(track,rtc.TrackPublishOptions(source=rtc.TrackSource.SOURCE_MICROPHONE))
             @room.on('track_subscribed')

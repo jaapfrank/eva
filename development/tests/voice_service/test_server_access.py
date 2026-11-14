@@ -224,3 +224,48 @@ def test_private_return_lease_opens_after_media_setup(voice_config, monkeypatch)
         assert client.post('/session/end/' + response.json()['room'], headers=auth).status_code == 200
         assert order.index('return_close') > order.index('session_closed')
     assert order.count('return_open') == order.count('return_close') == 1
+
+
+@pytest.mark.parametrize("sfu_url,expect_server_relay", [
+    ("ws://127.0.0.1:7880", False),
+    ("wss://sfu.example.invalid", True),
+])
+def test_loopback_sfu_avoids_double_turn_hairpin_while_browser_keeps_relay(voice_config, monkeypatch, sfu_url, expect_server_relay):
+    from pathlib import Path
+    config_file = Path(__import__("os").environ["EVA_VOICE_CONFIG"])
+    config_file.write_text(json.dumps({**voice_config, "cloud_relay": True, "livekit_url": sfu_url}))
+    ice_rows = [{"urls": ["turns:turn.example.invalid:5349"], "username": "u1", "credential": "c1"}]
+    async def fake_ice(*args): return ice_rows
+    connect_options = []
+    class Session:
+        def __init__(self, **kwargs): pass
+        def on(self, event): return lambda callback: callback
+        async def start(self, *args, **kwargs): pass
+        async def aclose(self): pass
+    class Room:
+        remote_participants = {"owner": object()}
+        def on(self, event): return lambda callback: callback
+        async def connect(self, url, token, options=None): connect_options.append(options)
+        async def disconnect(self): pass
+    class Control:
+        def __init__(self, *args, **kwargs): self.room = self
+        async def __aenter__(self): return self
+        async def __aexit__(self, *args): pass
+        async def delete_room(self, request): pass
+    monkeypatch.setattr(server, "home_assistant_ice_servers", fake_ice)
+    monkeypatch.setattr(server, "AgentSession", Session)
+    monkeypatch.setattr(server.rtc, "Room", Room)
+    monkeypatch.setattr(server.api, "LiveKitAPI", Control)
+    auth = {"Authorization": "Bearer test-owner-secret", "Origin": voice_config["origin"]}
+    with TestClient(server.create_app()) as client:
+        res = client.post("/session", headers=auth)
+        assert res.status_code == 200
+        body = res.json()
+        assert body["rtc_config"] == {"iceTransportPolicy": "relay", "iceServers": ice_rows}
+        assert len(connect_options) == 1
+        if expect_server_relay:
+            assert connect_options[0].rtc_config is not None
+            assert connect_options[0].rtc_config.ice_transport_type == server.rtc.IceTransportType.TRANSPORT_RELAY
+        else:
+            assert connect_options[0].rtc_config is None
+        client.post("/session/end/" + body["room"], headers=auth)

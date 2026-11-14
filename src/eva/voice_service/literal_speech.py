@@ -56,7 +56,7 @@ def start_literal_renderer(session):
             token=Path(config['ha_token_file']).read_text().strip(),
             pipeline_id=config['pipeline_id'],tts_engine=config['tts_engine'],
             tts_language=config['tts_language'],tts_voice=config.get('tts_voice'),
-            audio_chunk_bytes=4096)
+            audio_chunk_bytes=1024)
     session._literal_tts=HomeAssistantTTS(source,session.current)
     session.started.set()
     session.emit('agent_state_changed',new_state='listening')

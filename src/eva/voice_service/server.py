@@ -34,7 +34,7 @@ def create_app():
     sessions = {}
     heartbeats = {}
     lock = asyncio.Lock()
-    vad = silero.VAD.load(min_speech_duration=.1, min_silence_duration=.45)
+    vad = silero.VAD.load(min_speech_duration=.1, min_silence_duration=.4)
     backend = CoreClient(config["core_url"], token)
     stt_source = HomeAssistantSpeechInput(base_url=config["ha_url"], token=ha_token,
         pipeline_id=config["pipeline_id"], expected_stt_engine=config["stt_engine"],
@@ -42,7 +42,7 @@ def create_app():
     tts_source = HomeAssistantSpeechOutput(base_url=config["ha_url"], token=ha_token,
         pipeline_id=config["pipeline_id"], tts_engine=config["tts_engine"],
         tts_language=config["tts_language"], tts_voice=config.get("tts_voice"),
-        audio_chunk_bytes=4096)
+        audio_chunk_bytes=1024)
 
     @asynccontextmanager
     async def lifespan(app):
@@ -246,7 +246,8 @@ def create_app():
             try:
                 async with asyncio.timeout(45 if config.get("voice_engine") == "codex" else 20):
                     options = rtc.RoomOptions()
-                    if ice_servers:
+                    sfu_host = urlsplit(config["livekit_url"]).hostname
+                    if ice_servers and sfu_host not in {"127.0.0.1", "localhost", "::1"}:
                         options.rtc_config = rtc.RtcConfiguration(ice_transport_type=rtc.IceTransportType.TRANSPORT_RELAY,
                             ice_servers=[rtc.IceServer(urls=row["urls"], username=row.get("username", ""), password=row.get("credential", "")) for row in ice_servers])
                     await room.connect(config["livekit_url"], credential("eva", agent=True), options=options)

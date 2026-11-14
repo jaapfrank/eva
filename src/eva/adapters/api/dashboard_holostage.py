@@ -682,31 +682,44 @@ HOLOSTAGE_HTML = """<!doctype html>
       } catch (_e) {}
     }
 
+    let lastRtpSampleAt = 0.0;
+    let cachedRtpLevel = 0.0;
+
     function readWebRtcRtpAudioLevel() {
+      const nowPerf = performance.now();
+      if ((nowPerf - lastRtpSampleAt) < 45.0) return cachedRtpLevel;
+      lastRtpSampleAt = nowPerf;
       try {
-        const receivers = [];
-        if (activeRemoteTrack?.receiver) receivers.push(activeRemoteTrack.receiver);
-        const subPc = liveSession?.room?.engine?.pcManager?.subscriber?.pc;
-        if (subPc && typeof subPc.getReceivers === 'function') {
-          for (const r of subPc.getReceivers()) {
-            if (r?.track?.kind === 'audio' && !receivers.includes(r)) receivers.push(r);
-          }
-        }
         let best = 0.0;
-        const nowPerf = performance.now();
-        for (const r of receivers) {
-          if (typeof r.getSynchronizationSources !== 'function') continue;
-          const sources = r.getSynchronizationSources() || [];
+        const primary = activeRemoteTrack?.receiver;
+        if (primary && typeof primary.getSynchronizationSources === 'function') {
+          const sources = primary.getSynchronizationSources() || [];
           for (const s of sources) {
             if (typeof s.audioLevel === 'number' && (!s.timestamp || (nowPerf - s.timestamp) < 400)) {
-              // Map typical speech RTP audioLevel (0.01..0.35) cleanly into [0..1]
               const mapped = Math.min(1.0, Math.pow(Math.max(0, s.audioLevel * 3.2), 0.72));
               if (mapped > best) best = mapped;
             }
           }
         }
+        if (best < 0.01) {
+          const subPc = liveSession?.room?.engine?.pcManager?.subscriber?.pc;
+          if (subPc && typeof subPc.getReceivers === 'function') {
+            for (const r of subPc.getReceivers()) {
+              if (r === primary || r?.track?.kind !== 'audio' || typeof r.getSynchronizationSources !== 'function') continue;
+              const sources = r.getSynchronizationSources() || [];
+              for (const s of sources) {
+                if (typeof s.audioLevel === 'number' && (!s.timestamp || (nowPerf - s.timestamp) < 400)) {
+                  const mapped = Math.min(1.0, Math.pow(Math.max(0, s.audioLevel * 3.2), 0.72));
+                  if (mapped > best) best = mapped;
+                }
+              }
+            }
+          }
+        }
+        cachedRtpLevel = best;
         return best;
       } catch (_e) {
+        cachedRtpLevel = 0.0;
         return 0.0;
       }
     }
@@ -810,13 +823,19 @@ HOLOSTAGE_HTML = """<!doctype html>
 
     function init3DStage() {
       const canvas = $('eva-canvas');
+      const isPocketInit = currentMode === 'pocket' || window.innerWidth < 768;
       let renderer;
       try {
-        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: !isPocketInit,
+          alpha: true,
+          powerPreference: 'high-performance'
+        });
       } catch (_err) {
         return;
       }
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isPocketInit ? 1.35 : 1.75));
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(34, window.innerWidth / window.innerHeight, 0.1, 50);
       camera.position.set(0, 1.38, 2.75);
@@ -892,6 +911,8 @@ HOLOSTAGE_HTML = """<!doctype html>
       const resize = () => {
         const w = window.innerWidth;
         const h = window.innerHeight;
+        const pocketNow = currentMode === 'pocket' || w < 768;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, pocketNow ? 1.35 : 1.75));
         renderer.setSize(w, h, false);
         camera.aspect = w / Math.max(h, 1);
         camera.updateProjectionMatrix();
@@ -1273,7 +1294,7 @@ HOLOSTAGE_HTML = """<!doctype html>
       const attempt = { closedServer: false };
       liveSession = attempt;
       syncVoiceButtons();
-      setVoicePill('⏳ Live spraakverbinding openen (~4 sec)…', true);
+      setVoicePill('⏳ Spraakverbinding openen…', true);
 
       try {
         const room = attempt.room = new window.LivekitClient.Room({ adaptiveStream: true, dynacast: true });
@@ -1337,18 +1358,32 @@ HOLOSTAGE_HTML = """<!doctype html>
                 speaking: '🗣️ Eva spreekt — je kunt haar gewoon onderbreken'
               };
               setVoicePill(labels[ev.state] || '🟢 Gesprek actief', true);
-              refreshState();
             } else if (ev.type === 'user_voice_state') {
               userVoiceState = ev.state || 'listening';
               if (userVoiceState === 'speaking') {
                 setVoicePill('👂 Eva luistert naar je…', true);
               }
-            } else if (ev.type === 'work_finished' || ev.type === 'stt_final') {
+            } else if (ev.type === 'stt_final' || ev.type === 'work_started') {
+              if (liveVoiceState !== 'speaking') {
+                liveVoiceState = 'thinking';
+                setVoicePill('💭 Eva denkt even na…', true);
+              }
+            } else if (ev.type === 'work_finished') {
               refreshState();
             }
           } catch (_e) {}
         });
 
+        if (window.LivekitClient.RoomEvent.Reconnecting) {
+          room.on(window.LivekitClient.RoomEvent.Reconnecting, () => {
+            if (liveSession === attempt) setVoicePill('🔄 Verbinding even herstellen…', true);
+          });
+        }
+        if (window.LivekitClient.RoomEvent.Reconnected) {
+          room.on(window.LivekitClient.RoomEvent.Reconnected, () => {
+            if (liveSession === attempt) setVoicePill('🟢 Verbinding hersteld — praat gerust verder', true);
+          });
+        }
         room.on(window.LivekitClient.RoomEvent.ParticipantDisconnected, p => {
           if (liveSession === attempt && p?.identity === 'eva') {
             endLiveVoice('De stemverbinding met Eva is gesloten.');
@@ -1404,19 +1439,28 @@ HOLOSTAGE_HTML = """<!doctype html>
       return data;
     }
 
+    let lastCardsSig = '';
+    let lastAdminSig = '';
+
     function renderConjuredCards(st) {
       const overlay = $('conjured-overlay');
       const conjured = Array.isArray(st.cards?.conjured_cards) ? st.cards.conjured_cards : [];
-      $('btn-clear-cards').hidden = conjured.length === 0;
-      cameraTargetX = (conjured.length > 0 && window.innerWidth >= 860) ? 0.42 : 0.0;
 
       if (conjured.length === 0) {
-        overlay.hidden = true;
-        overlay.replaceChildren();
+        $('btn-clear-cards').hidden = true;
+        cameraTargetX = 0.0;
+        if (lastCardsSig !== 'empty') {
+          lastCardsSig = 'empty';
+          overlay.hidden = true;
+          overlay.replaceChildren();
+        }
         return;
       }
 
-      overlay.hidden = false;
+      const cardsSig = JSON.stringify({ c: conjured, d: st.cards, v: st.viewer?.kind, wide: window.innerWidth >= 860 });
+      if (cardsSig === lastCardsSig) return;
+      lastCardsSig = cardsSig;
+
       const cardsHtml = [];
 
       for (const kind of conjured) {
@@ -1516,6 +1560,9 @@ HOLOSTAGE_HTML = """<!doctype html>
         cameraTargetX = 0.0;
         return;
       }
+      overlay.hidden = false;
+      $('btn-clear-cards').hidden = false;
+      cameraTargetX = window.innerWidth >= 860 ? 0.42 : 0.0;
       overlay.innerHTML = cardsHtml.join('');
 
       overlay.querySelectorAll('[data-dismiss-card]').forEach(btn => {
@@ -1550,6 +1597,15 @@ HOLOSTAGE_HTML = """<!doctype html>
       const isOwner = st.viewer?.kind === 'owner';
       $('btn-toggle-admin').hidden = !isOwner || currentMode === 'tv_cast';
       if (!isOwner) return;
+
+      const adminSig = JSON.stringify({
+        c: st.cards?.home_overview?.cast_targets,
+        v: st.biometrics_admin?.enrolled_members || st.speaker_biometrics?.enrolled_members,
+        p: st.public_stage_origin,
+        o: st.household_observation_summary
+      });
+      if (adminSig === lastAdminSig) return;
+      lastAdminSig = adminSig;
 
       const casts = st.cards?.home_overview?.cast_targets || [];
       const castList = $('cast-list');
@@ -1777,7 +1833,12 @@ HOLOSTAGE_HTML = """<!doctype html>
     // Boot!
     init3DStage();
     refreshState();
-    setInterval(refreshState, currentMode === 'tv_cast' ? 2500 : 6000);
+    setInterval(() => {
+      if (currentMode !== 'tv_cast' && (evaSpeaking || liveVoiceState === 'speaking' || liveVoiceState === 'thinking')) {
+        return;
+      }
+      refreshState();
+    }, currentMode === 'tv_cast' ? 2500 : 8000);
     if (currentMode !== 'tv_cast') {
       fetch(`${VOICE_BASE}/session/ready`).then(r => {
         if (r.ok && !liveSession) {
