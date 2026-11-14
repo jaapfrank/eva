@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 from contextlib import asynccontextmanager
+import os
 from pathlib import Path
 import pytest
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
@@ -283,3 +284,110 @@ def test_partial_or_invalid_owner_storage_scope_is_rejected():
                   {"EVA_DASHBOARD_TENANT_ID": "not-a-uuid", "EVA_DASHBOARD_INSTALLATION_ID": "not-a-uuid"}):
         with pytest.raises(RuntimeError):
             DelegatedWorkServiceSettings.from_environment(base | extra)
+
+
+def test_in_process_health_probe_refreshes_atomically_and_fails_closed(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    lease_file = tmp_path / "lease.json"
+    dsn_file = tmp_path / "dsn.txt"
+    cache_file = tmp_path / "eva-delegated-work-check.cache"
+    lease_file.write_text('{"ok":true}', encoding="utf-8")
+    dsn_file.write_text("postgresql://eva:secret@postgres/eva", encoding="utf-8")
+
+    state = {"revision": "4e_0012_conversation_source_lock", "lease_ok": True}
+
+    class _Conn:
+        def __enter__(self):  # type: ignore[no-untyped-def]
+            return self
+
+        def __exit__(self, *_args):  # type: ignore[no-untyped-def]
+            return None
+
+        def scalar(self, _stmt):  # type: ignore[no-untyped-def]
+            return state["revision"]
+
+    class _Engine:
+        def connect(self) -> _Conn:
+            return _Conn()
+
+    def _validate_lease(path: Path) -> None:
+        assert path == lease_file
+        if not state["lease_ok"]:
+            raise RuntimeError("lease expired")
+
+    monkeypatch.setattr(
+        "eva.bootstrap.delegated_work_provider.validate_delegated_model_access_lease",
+        _validate_lease,
+    )
+
+    assert service_module._probe_live_worker_health(
+        engine=_Engine(),  # type: ignore[arg-type]
+        lease_file=lease_file,
+        dsn_file=dsn_file,
+        cache_file=cache_file,
+    ) is True
+    assert cache_file.is_file()
+    assert (cache_file.stat().st_mode & 0o777) == 0o600
+    expected_key = service_module._compute_health_cache_key(
+        lease_file=lease_file, dsn_file=dsn_file
+    )
+    assert cache_file.read_text(encoding="utf-8") == expected_key
+
+    # Negative 1: Incompatible DB schema immediately unlinks cache (fail-closed)
+    state["revision"] = "incompatible_head"
+    assert service_module._probe_live_worker_health(
+        engine=_Engine(),  # type: ignore[arg-type]
+        lease_file=lease_file,
+        dsn_file=dsn_file,
+        cache_file=cache_file,
+    ) is False
+    assert not cache_file.exists()
+
+    # Restore valid state, then test Negative 2: expired lease unlinks cache
+    state["revision"] = "4e_0012_conversation_source_lock"
+    assert service_module._probe_live_worker_health(
+        engine=_Engine(),  # type: ignore[arg-type]
+        lease_file=lease_file,
+        dsn_file=dsn_file,
+        cache_file=cache_file,
+    ) is True
+    assert cache_file.is_file()
+    state["lease_ok"] = False
+    assert service_module._probe_live_worker_health(
+        engine=_Engine(),  # type: ignore[arg-type]
+        lease_file=lease_file,
+        dsn_file=dsn_file,
+        cache_file=cache_file,
+    ) is False
+    assert not cache_file.exists()
+
+
+def test_service_maintains_health_cache_while_serving_and_clears_on_stop() -> None:
+    import signal as sig_mod
+
+    probes: list[int] = []
+    cleanups: list[int] = []
+
+    class _ControlledWorker:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        async def run_once(self, *, cancellation_event=None):  # type: ignore[no-untyped-def]
+            self.calls += 1
+            if self.calls >= 3:
+                os.kill(os.getpid(), sig_mod.SIGINT)
+            return "idle"
+
+    svc = DelegatedWorkService(
+        _ControlledWorker(),  # type: ignore[arg-type]
+        poll_interval_seconds=0.05,
+        health_probe=lambda: (probes.append(1) or True),
+        health_refresh_seconds=0.03,
+        health_cache_cleanup=lambda: cleanups.append(1),
+    )
+    assert asyncio.run(svc.serve(once=False)) == "stopped"
+    assert len(probes) >= 1
+    assert len(cleanups) >= 1
+

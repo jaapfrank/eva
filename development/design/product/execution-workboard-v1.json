@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Hostproducer (eva-component-evaluation.service) en canonieke single-file compose zijn gesynchroniseerd met de actieve Core/Worker-release; sensorische hervalidatie voor slapende HA-entiteiten (unknown/unavailable) en 300s-lease draaien foutvrij (0 RECOVERY_FAILED op 41 hervalidaties). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1) zonder handmatige Codex-kandidaat.",
+    "nextAction": "Hostproducer (eva-component-evaluation.service), canonieke single-file compose en Core/Worker-profielen zijn gesynchroniseerd; delegated-work-worker blijft duurzaam healthy voorbij 120s TTL (45s fail-closed cache-onderhoud + vooraf gecompileerde Python 3.12 bytecode: koude check 3.4s i.p.v. 24.3s), sensorische hervalidatie draait foutvrij (0 RECOVERY_FAILED) en pure Realtime spraaksessies tellen mee in F2.1 (used_model=False). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1) zonder handmatige Codex-kandidaat.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
     "executionStep": "Provide complete proven original import closure for the same independent assessment",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-14T18:59:30+00:00",
+    "checkedAt": "2026-11-14T19:18:00+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -10530,7 +10530,7 @@
           "Fase 5 · Symbiotische Co-Evolutie, parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2; P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken)."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-13T22:10:00+00:00",
+        "updatedAt": "2026-11-14T19:18:00+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10809,7 +10809,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-13T22:10:00+00:00",
+        "checkedAt": "2026-11-14T19:18:00+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -11181,8 +11181,8 @@
               "independentlyReviewed": true,
               "installedLive": true,
               "liveImages": [
-                "eva2-living-core:mcp-obs-20261114",
-                "eva2-living-worker:mcp-obs-20261114",
+                "eva2-living-core:worker-health-20261114 (sha256:302074a6440a5cd46bbe3841dd516c07477f13c7c8cb492f2b6e880b86b489f5)",
+                "eva2-living-worker:worker-health-20261114 (sha256:5f8acaadbf61852a96da0fc36ce24300a1011339a0f7c1fe4b0a061a0c4435a6)",
                 "eva2-voice-media:realtime-speech-20261114"
               ],
               "householdAcceptanceClaimed": false,
@@ -11194,7 +11194,19 @@
               "independentlyReviewed": true,
               "installedLive": true,
               "householdAcceptanceClaimed": false,
-              "summary": "Privacy-veilige HouseholdObservationLedger + PostgresHouseholdObservationProbe actief op /internal/v1/dashboard/household-observation voor Jaap & Lola: meet 168-uurs/7-dagen aaneengesloten releasestabiliteit (F2.1), nul-token-rust, <2ms reflexen en eerlijke NULL-kosten vóór expliciete eigenaaracceptatie (F2.2)."
+              "summary": "Privacy-veilige HouseholdObservationLedger + PostgresHouseholdObservationProbe actief op /internal/v1/dashboard/household-observation voor Jaap & Lola: meet 168-uurs/7-dagen aaneengesloten releasestabiliteit (F2.1), nul-token-rust, <2ms reflexen en eerlijke NULL-kosten vóór expliciete eigenaaracceptatie (F2.2).",
+              "workerHealthAndVoiceObservation20261114": {
+                "status": "installed_verified",
+                "installedComposeSha256": "3f8712c7d32fa60297c61f0fbb03a4d4cbf3552bea286e5715237fb04cc2f78e",
+                "coreImage": "sha256:302074a6440a5cd46bbe3841dd516c07477f13c7c8cb492f2b6e880b86b489f5",
+                "workerImage": "sha256:5f8acaadbf61852a96da0fc36ce24300a1011339a0f7c1fe4b0a061a0c4435a6",
+                "coldWorkerCheckSeconds": 3.42,
+                "post120sWorkerHealthStatus": "healthy",
+                "post120sWorkerFailingStreak": 0,
+                "delegatedRuntimeProfilesCompatible": true,
+                "realtimeVoiceOpenObservation": "channel=voice_realtime, used_model=False",
+                "windowsLanFirewallRuleEnabled": true
+              }
             }
           }
         }
@@ -17852,7 +17864,7 @@
         "Fase 5 · Symbiotische Co-Evolutie, parallelle gezinswaarneming, zeven dagen echt gezinsgebruik & expliciete eigenaaracceptatie (P1-05, F2.1 → F2.2; P2.1 en C4.3 geparkeerd; E2.6 door eigenaar ingetrokken)."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-13T22:10:00+00:00",
+      "updatedAt": "2026-11-14T19:18:00+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -18131,7 +18143,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-13T22:10:00+00:00",
+      "checkedAt": "2026-11-14T19:18:00+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -18503,8 +18515,8 @@
             "independentlyReviewed": true,
             "installedLive": true,
             "liveImages": [
-              "eva2-living-core:mcp-obs-20261114",
-              "eva2-living-worker:mcp-obs-20261114",
+              "eva2-living-core:worker-health-20261114 (sha256:302074a6440a5cd46bbe3841dd516c07477f13c7c8cb492f2b6e880b86b489f5)",
+              "eva2-living-worker:worker-health-20261114 (sha256:5f8acaadbf61852a96da0fc36ce24300a1011339a0f7c1fe4b0a061a0c4435a6)",
               "eva2-voice-media:realtime-speech-20261114"
             ],
             "householdAcceptanceClaimed": false,
@@ -18516,7 +18528,19 @@
             "independentlyReviewed": true,
             "installedLive": true,
             "householdAcceptanceClaimed": false,
-            "summary": "Privacy-veilige HouseholdObservationLedger + PostgresHouseholdObservationProbe actief op /internal/v1/dashboard/household-observation voor Jaap & Lola: meet 168-uurs/7-dagen aaneengesloten releasestabiliteit (F2.1), nul-token-rust, <2ms reflexen en eerlijke NULL-kosten vóór expliciete eigenaaracceptatie (F2.2)."
+            "summary": "Privacy-veilige HouseholdObservationLedger + PostgresHouseholdObservationProbe actief op /internal/v1/dashboard/household-observation voor Jaap & Lola: meet 168-uurs/7-dagen aaneengesloten releasestabiliteit (F2.1), nul-token-rust, <2ms reflexen en eerlijke NULL-kosten vóór expliciete eigenaaracceptatie (F2.2).",
+            "workerHealthAndVoiceObservation20261114": {
+              "status": "installed_verified",
+              "installedComposeSha256": "3f8712c7d32fa60297c61f0fbb03a4d4cbf3552bea286e5715237fb04cc2f78e",
+              "coreImage": "sha256:302074a6440a5cd46bbe3841dd516c07477f13c7c8cb492f2b6e880b86b489f5",
+              "workerImage": "sha256:5f8acaadbf61852a96da0fc36ce24300a1011339a0f7c1fe4b0a061a0c4435a6",
+              "coldWorkerCheckSeconds": 3.42,
+              "post120sWorkerHealthStatus": "healthy",
+              "post120sWorkerFailingStreak": 0,
+              "delegatedRuntimeProfilesCompatible": true,
+              "realtimeVoiceOpenObservation": "channel=voice_realtime, used_model=False",
+              "windowsLanFirewallRuleEnabled": true
+            }
           }
         }
       }

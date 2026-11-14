@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Hostproducer (eva-component-evaluation.service) en canonieke single-file compose zijn gesynchroniseerd met de actieve Core/Worker-release; sensorische hervalidatie voor slapende HA-entiteiten (unknown/unavailable) en 300s-lease draaien foutvrij (0 RECOVERY_FAILED op 41 hervalidaties). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1) zonder handmatige Codex-kandidaat.
+Volgende stap: Hostproducer (eva-component-evaluation.service), canonieke single-file compose en Core/Worker-profielen zijn gesynchroniseerd; delegated-work-worker blijft duurzaam healthy voorbij 120s TTL (45s fail-closed cache-onderhoud + vooraf gecompileerde Python 3.12 bytecode: koude check 3.4s i.p.v. 24.3s), sensorische hervalidatie draait foutvrij (0 RECOVERY_FAILED) en pure Realtime spraaksessies tellen mee in F2.1 (used_model=False). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1) zonder handmatige Codex-kandidaat.
 
 ## Voortgang
 

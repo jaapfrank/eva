@@ -166,3 +166,37 @@ def test_unconfirmed_audio_is_not_reported_as_interruption_or_completion():
     response=client.post(PATH,headers={'Authorization':'Bearer '+TOKEN},json=data)
     assert response.status_code==200
     assert runtime.context.recent[0].playback_status=='unconfirmed'
+
+
+def test_private_return_open_records_voice_realtime_observation_only_when_authorized(tmp_path):
+    from eva.application.household_observation import HouseholdObservationLedger
+
+    client, config, runtime = setup()
+    ledger = HouseholdObservationLedger(
+        state_file=tmp_path / "obs" / "ledger-v1.json",
+        release_id="rel-voice-open-test",
+    )
+    runtime._household_observation = ledger
+    runtime._dashboard_owner_principal_id = "person:owner"
+    runtime.private_work_return = lambda turn, op, **kw: {"status": "idle", "result": None}
+    headers = {"Authorization": "Bearer " + TOKEN}
+    session_id = str(uuid4())
+
+    # 1. poll/renew/close must NOT inflate voice_realtime turn count
+    res_poll = client.post("/internal/v1/voice-session/work/poll", headers=headers, json={"session_id": session_id})
+    assert res_poll.status_code == 200
+    assert ledger.snapshot(include_external_probe=False)["symbiotic_metrics"]["turns_jaap"] == 0
+
+    # 2. Authorized open records exactly 1 voice_realtime activity for owner-jaap
+    res_open = client.post("/internal/v1/voice-session/work/open", headers=headers, json={"session_id": session_id})
+    assert res_open.status_code == 200
+    snap = ledger.snapshot(include_external_probe=False)["symbiotic_metrics"]
+    assert snap["turns_jaap"] == 1
+    assert snap["channel_turns"]["voice_realtime"] == 1
+
+    # 3. Revoked grant on open must fail closed (403) without recording an observation
+    config.valid = False
+    res_denied = client.post("/internal/v1/voice-session/work/open", headers=headers, json={"session_id": str(uuid4())})
+    assert res_denied.status_code == 403
+    assert ledger.snapshot(include_external_probe=False)["symbiotic_metrics"]["turns_jaap"] == 1
+

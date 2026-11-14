@@ -88,6 +88,24 @@ def install_voice_turns(app: FastAPI, *, access: DashboardAccess,
             config.check(grant)
         except (ValueError, RuntimeError, OSError):
             raise HTTPException(403, "private return unavailable") from None
+        if operation == "open":
+            obs_ledger = getattr(runtime, "_household_observation", None)
+            if obs_ledger is not None:
+                try:
+                    owner_pid = getattr(runtime, "_dashboard_owner_principal_id", None)
+                    v_member = (
+                        "owner-jaap"
+                        if (owner_pid and grant.principal_id == owner_pid)
+                        or not str(grant.principal_id).startswith("household-")
+                        else grant.principal_id
+                    )
+                    obs_ledger.record_turn(
+                        principal_id=v_member,
+                        channel="voice_realtime",
+                        used_model=False,
+                    )
+                except Exception:
+                    pass
         return {"contract": "EvaPrivateWorkReturn/v1", **result}
 
     @app.get("/internal/v1/voice-session/ready")

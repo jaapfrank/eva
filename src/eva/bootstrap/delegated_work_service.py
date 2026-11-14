@@ -11,8 +11,9 @@ import hashlib
 import os
 import signal
 import sys
+import tempfile
 import time
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -20,25 +21,29 @@ from pathlib import Path
 from typing import Literal
 from uuid import UUID
 
+_HEALTH_CACHE_FILE = Path("/tmp/eva-delegated-work-check.cache")
+_HEALTH_CACHE_TTL_SECONDS = 120.0
+_HEALTH_CACHE_REFRESH_SECONDS = 45.0
+
 if (
     __name__ == "__main__"
     and sys.argv[1:] == ["--check"]
     and "PYTEST_CURRENT_TEST" not in os.environ
 ):
     try:
-        _cache_file = Path("/tmp/eva-delegated-work-check.cache")
         _lease = os.environ.get("EVA_MODEL_ACCESS_LEASE_FILE", "").strip()
         _dsn = os.environ.get("EVA_DATABASE_DSN_FILE", "").strip()
         if (
             _lease
             and _dsn
-            and _cache_file.is_file()
-            and time.time() - _cache_file.stat().st_mtime < 120.0
+            and not _HEALTH_CACHE_FILE.is_symlink()
+            and _HEALTH_CACHE_FILE.is_file()
+            and time.time() - _HEALTH_CACHE_FILE.stat().st_mtime < _HEALTH_CACHE_TTL_SECONDS
         ):
             _key = hashlib.sha256(
                 Path(_lease).read_bytes() + b"\0" + Path(_dsn).read_bytes()
             ).hexdigest()
-            if _cache_file.read_text(encoding="utf-8").strip() == _key:
+            if _HEALTH_CACHE_FILE.read_text(encoding="utf-8").strip() == _key:
                 raise SystemExit(0)
     except OSError:
         pass
@@ -246,6 +251,60 @@ def _research_composition(settings: OpenAIDelegatedWorkSettings):
         resource_budget=budget)
 
 
+def _compute_health_cache_key(*, lease_file: str | Path, dsn_file: str | Path) -> str:
+    lease_bytes = Path(lease_file).read_bytes()
+    dsn_bytes = Path(dsn_file).read_bytes()
+    return hashlib.sha256(lease_bytes + b"\0" + dsn_bytes).hexdigest()
+
+
+def _write_health_cache_atomic(cache_file: Path, cache_key: str) -> None:
+    if cache_file.is_symlink() or cache_file.parent.is_symlink():
+        raise OSError("refusing symlinked health cache path")
+    fd, tmp_name = tempfile.mkstemp(prefix=".eva-dw-health-", dir=str(cache_file.parent))
+    try:
+        os.fchmod(fd, 0o600)
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(cache_key)
+            handle.flush()
+        os.replace(tmp_name, cache_file)
+    except BaseException:
+        with suppress(OSError):
+            os.unlink(tmp_name)
+        raise
+
+
+def _clear_health_cache(cache_file: Path = _HEALTH_CACHE_FILE) -> None:
+    with suppress(OSError):
+        if not cache_file.is_symlink():
+            cache_file.unlink(missing_ok=True)
+
+
+def _probe_live_worker_health(
+    *,
+    engine: sa.Engine,
+    lease_file: Path,
+    dsn_file: str | Path,
+    cache_file: Path = _HEALTH_CACHE_FILE,
+) -> bool:
+    """Verify live model lease + schema head in-process and refresh atomic health cache."""
+    from eva.bootstrap.delegated_work_provider import validate_delegated_model_access_lease
+
+    try:
+        validate_delegated_model_access_lease(lease_file)
+        with engine.connect() as connection:
+            revision = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if revision not in _COMPATIBLE_SCHEMA_HEADS:
+                raise RuntimeError("delegated worker schema head differs")
+        key = _compute_health_cache_key(lease_file=lease_file, dsn_file=dsn_file)
+        _write_health_cache_atomic(cache_file, key)
+        return True
+    except Exception:
+        _clear_health_cache(cache_file)
+        return False
+
+
 class DelegatedWorkService:
     """Poll one PostgreSQL authority through a bounded set of worker lanes."""
 
@@ -256,6 +315,9 @@ class DelegatedWorkService:
         poll_interval_seconds: float,
         additional_workers: tuple[DelegatedWorkWorker, ...] = (),
         health_port: int | None = None,
+        health_probe: Callable[[], bool] | None = None,
+        health_refresh_seconds: float = _HEALTH_CACHE_REFRESH_SECONDS,
+        health_cache_cleanup: Callable[[], None] | None = None,
     ) -> None:
         if not 0.05 <= poll_interval_seconds <= 5:
             raise ValueError("delegated worker poll interval must be 0.05..5 seconds")
@@ -263,7 +325,12 @@ class DelegatedWorkService:
             raise ValueError("delegated service needs at most two distinct workers")
         if health_port is not None and (type(health_port) is not int or not 1 <= health_port <= 65535):
             raise ValueError("delegated worker health port must be 1..65535")
+        if health_refresh_seconds <= 0:
+            raise ValueError("delegated worker health refresh interval must be positive")
         self._health_port = health_port
+        self._health_probe = health_probe
+        self._health_refresh_seconds = health_refresh_seconds
+        self._health_cache_cleanup = health_cache_cleanup
         self._worker = worker
         self._workers = (worker, *additional_workers)
         self._poll_interval_seconds = poll_interval_seconds
@@ -313,6 +380,25 @@ class DelegatedWorkService:
 
         tasks = [asyncio.create_task(lane(worker))
                  for worker in (self._workers[:1] if once else self._workers)]
+
+        async def maintain_health_cache() -> None:
+            while not stop.is_set():
+                if not tasks or any(t.done() for t in tasks):
+                    if self._health_cache_cleanup is not None:
+                        self._health_cache_cleanup()
+                    return
+                if self._health_probe is not None:
+                    await asyncio.to_thread(self._health_probe)
+                try:
+                    await asyncio.wait_for(stop.wait(), timeout=self._health_refresh_seconds)
+                except TimeoutError:
+                    pass
+
+        health_task = (
+            asyncio.create_task(maintain_health_cache())
+            if (not once and self._health_probe is not None)
+            else None
+        )
         group = asyncio.gather(*tasks)
         try:
             try:
@@ -329,6 +415,12 @@ class DelegatedWorkService:
                 raise
             return "stopped" if stop.is_set() else "completed"
         finally:
+            if health_task is not None:
+                health_task.cancel()
+                with suppress(asyncio.CancelledError):
+                    await health_task
+            if self._health_cache_cleanup is not None:
+                self._health_cache_cleanup()
             for requested_signal in installed:
                 loop.remove_signal_handler(requested_signal)
 
@@ -409,11 +501,25 @@ async def serve_delegated_work_service(
                 release=lane_release,
                 clock=clock or (lambda: datetime.now(UTC).replace(microsecond=0)),
             ))
+        lease_env = os.environ.get("EVA_MODEL_ACCESS_LEASE_FILE", "").strip()
+        enable_live_probe = bool(
+            not once and "PYTEST_CURRENT_TEST" not in os.environ and lease_env
+        )
         service = DelegatedWorkService(
             workers[0],
             additional_workers=tuple(workers[1:]),
             poll_interval_seconds=selected.poll_interval_seconds,
             health_port=selected.health_port,
+            health_probe=(
+                (lambda: _probe_live_worker_health(
+                    engine=engine,
+                    lease_file=Path(lease_env),
+                    dsn_file=selected.database_dsn_file,
+                ))
+                if enable_live_probe
+                else None
+            ),
+            health_cache_cleanup=(_clear_health_cache if enable_live_probe else None),
         )
         return await service.serve(once=once)
     finally:
@@ -461,20 +567,19 @@ def check_openai_delegated_work(
     """Check the sealed sidecar inputs without starting a provider request."""
 
     selected = settings or OpenAIDelegatedWorkSettings.from_environment()
-    cache_file = Path("/tmp/eva-delegated-work-check.cache")
+    cache_file = _HEALTH_CACHE_FILE
     use_cache = settings is None and "PYTEST_CURRENT_TEST" not in os.environ
     cache_key = ""
     if use_cache:
         try:
-            import hashlib
-            import time
-
-            lease_bytes = Path(selected.model_access_lease_file).read_bytes()
-            dsn_bytes = Path(selected.service.database_dsn_file).read_bytes()
-            cache_key = hashlib.sha256(lease_bytes + b"\0" + dsn_bytes).hexdigest()
+            cache_key = _compute_health_cache_key(
+                lease_file=selected.model_access_lease_file,
+                dsn_file=selected.service.database_dsn_file,
+            )
             if (
-                cache_file.is_file()
-                and time.time() - cache_file.stat().st_mtime < 120.0
+                not cache_file.is_symlink()
+                and cache_file.is_file()
+                and time.time() - cache_file.stat().st_mtime < _HEALTH_CACHE_TTL_SECONDS
                 and cache_file.read_text(encoding="utf-8").strip() == cache_key
             ):
                 return
@@ -527,10 +632,8 @@ def check_openai_delegated_work(
             if revision not in _COMPATIBLE_SCHEMA_HEADS:
                 raise RuntimeError("delegated worker schema head differs")
         if use_cache and cache_key:
-            try:
-                cache_file.write_text(cache_key, encoding="utf-8")
-            except OSError:
-                pass
+            with suppress(OSError):
+                _write_health_cache_atomic(cache_file, cache_key)
     finally:
         engine.dispose()
 
