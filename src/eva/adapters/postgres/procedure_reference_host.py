@@ -139,12 +139,31 @@ class PostgresProcedureReferenceHost:
             raise ProcedureReferenceRejected("readback path differs")
         gateway = self.gateway_factory()
         async def observe():
-            await gateway.verify_catalog()
+            unreachable_error: RuntimeError | None = None
+            try:
+                await gateway.verify_catalog()
+            except RuntimeError as exc:
+                if (type(exc).__name__ != "McpGatewayToolUnreachable"
+                        or not getattr(gateway, "_verified_input_schemas", None)):
+                    raise
+                unreachable_error = exc
             self.require_current()
             wrapper = PostgresExternalConversationTools(self.engine, gateway.planner(), gateway,
                                                        authorize_turn=self.authority.authorize_turn)
             command = wrapper._request_from_admission(original, admission["action_name"],
                                                        admission, admission.get("step_index", 0), historical=True)
+            if unreachable_error is not None:
+                verified = getattr(gateway, "_verified_input_schemas", None) or {}
+                spec = (getattr(gateway, "_by_execute_name", None) or {}).get(
+                    getattr(command, "tool_name", None)
+                )
+                observe_name = (
+                    getattr(command, "observation_tool_name", None)
+                    or getattr(spec, "observe_tool_name", None)
+                    or getattr(command, "tool_name", None)
+                )
+                if (observe_name, "observe") not in verified:
+                    raise unreachable_error
             authorize_background_dispatch(self.turn)
             from eva.application.initiative_execution import require_initiative_context
             guard = require_initiative_context(self.turn)

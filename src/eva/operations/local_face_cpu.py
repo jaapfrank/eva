@@ -53,15 +53,23 @@ def extract(data: bytes, models: dict[str, Path]) -> dict:
     if "CPUExecutionProvider" not in ort.get_available_providers():
         raise RuntimeError("installed local face runtime lacks CPU execution")
     options = ort.SessionOptions()
-    options.intra_op_num_threads = 2
+    options.intra_op_num_threads = 1
     options.inter_op_num_threads = 1
     options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
-    sessions = {name: ort.InferenceSession(str(path), sess_options=options,
-                  providers=["CPUExecutionProvider"]) for name, path in models.items()}
-    if any(session.get_providers() != ["CPUExecutionProvider"] for session in sessions.values()):
-        raise RuntimeError("local face session did not select CPU-only execution")
-    detector = SCRFD(model_file=str(models["det_10g.onnx"]), session=sessions["det_10g.onnx"])
-    recognizer = ArcFaceONNX(model_file=str(models["w600k_r50.onnx"]), session=sessions["w600k_r50.onnx"])
+    options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_DISABLE_ALL
+
+    def cpu_session(path: Path) -> ort.InferenceSession:
+        session = ort.InferenceSession(
+            str(path), sess_options=options, providers=["CPUExecutionProvider"]
+        )
+        if session.get_providers() != ["CPUExecutionProvider"]:
+            raise RuntimeError("local face session did not select CPU-only execution")
+        return session
+
+    detector = SCRFD(
+        model_file=str(models["det_10g.onnx"]),
+        session=cpu_session(models["det_10g.onnx"]),
+    )
     # ctx_id >= 0 avoids resetting already CPU-only sessions; no GPU is created.
     detector.prepare(0, input_size=(640, 640), det_thresh=0.5)
     with Image.open(io.BytesIO(data)) as opened:
@@ -70,8 +78,14 @@ def extract(data: bytes, models: dict[str, Path]) -> dict:
         rgb = ImageOps.exif_transpose(opened).convert("RGB")
         image = np.array(rgb)[:, :, ::-1].copy()
     boxes, keypoints = detector.detect(image, max_num=9, metric="default")
+    if len(boxes) == 0:
+        return {"aantal": 0, "gezichten": []}
     if len(boxes) > 8:
         raise ValueError("face count exceeds the observation bound")
+    recognizer = ArcFaceONNX(
+        model_file=str(models["w600k_r50.onnx"]),
+        session=cpu_session(models["w600k_r50.onnx"]),
+    )
     faces = []
     for index, box in enumerate(boxes):
         if keypoints is None:

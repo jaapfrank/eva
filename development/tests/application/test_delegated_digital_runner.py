@@ -2204,3 +2204,36 @@ def test_provider_neutral_failures_keep_worker_semantics_without_concrete_adapte
     assert outcome.status == status and outcome.result is None
     assert outcome.retryable is False
     assert tools.calls == [] and journal.usages == []
+
+
+@pytest.mark.parametrize("kind,expected_status,expected_failures", [
+    ("chained_unavailable", "provider_unavailable", 0),
+    ("chained_unreachable", "provider_unavailable", 0),
+    ("direct_unreachable", "provider_unavailable", 0),
+    ("unchained_conflict", "internal_error", 1),
+])
+def test_mcp_gateway_unverified_or_unreachable_maps_to_provider_unavailable_without_self_repair(
+    kind: str, expected_status: str, expected_failures: int,
+) -> None:
+    from eva.adapters.connectors.mcp_gateway import McpGatewayToolUnreachable, McpGatewayUnavailable
+
+    _, spec, _, tools, _, runner, _ = fixture()
+    tools.release.set()
+    failures = []
+    runner.failure_observer = lambda *args: failures.append(args)
+
+    def fail_execute(turn, call, *, step_index):
+        if kind == "chained_unavailable":
+            raise ConversationConflict("MCP gateway catalog was not verified") from McpGatewayUnavailable()
+        if kind == "chained_unreachable":
+            raise ConversationConflict("MCP gateway catalog was not verified") from McpGatewayToolUnreachable("unreachable")
+        if kind == "direct_unreachable":
+            raise McpGatewayToolUnreachable("unreachable")
+        raise ConversationConflict("MCP gateway catalog was not verified")
+
+    tools.execute = fail_execute
+    outcome = asyncio.run(runner.run(spec, call_id=f"call:{kind}"))
+    assert outcome.status == expected_status
+    assert outcome.result is None and outcome.retryable is False
+    assert len(failures) == expected_failures
+

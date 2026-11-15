@@ -1239,3 +1239,226 @@ def test_gateway_sends_private_session_header_only_on_rpc_posts(monkeypatch, ses
     assert all(headers["authorization"] == "Bearer private-token" for _, _, headers in calls)
     if session_id is not None:
         assert session_id not in repr(config)
+
+
+def test_unreachable_sibling_tool_does_not_poison_reachable_catalog_or_mask_tampering() -> None:
+    from eva.adapters.connectors.mcp_gateway import McpGatewayToolUnreachable
+
+    row_a = _catalog_row("proof-echo")
+    row_b = _catalog_row("proof-optional")
+    spec_a = _spec(catalog_hash=_catalog_hash(row_a))
+    spec_b = McpGatewayToolSpec(
+        contract="EvaMcpGatewayProvider/v2",
+        descriptor=ConversationToolDescriptor(
+            name="echo_optional",
+            description="Optional sibling tool.",
+            input_schema=SCHEMA,
+        ),
+        execute_tool_name="proof-optional",
+        observe_tool_name="proof-optional",
+        execute_catalog_name="proof-optional",
+        observe_catalog_name="proof-optional",
+        execute_catalog_sha256=_catalog_hash(row_b),
+        observe_catalog_sha256=_catalog_hash(row_b),
+        execute_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
+        observe_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
+        proof_bindings=(McpGatewayProofBinding("message", "text"),),
+    )
+    with _gateway() as (base_url, handler):
+        handler.catalog = [row_a, {**row_b, "reachable": False}]
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True),
+            (spec_a, spec_b),
+        )
+        with pytest.raises(McpGatewayToolUnreachable):
+            asyncio.run(adapter.verify_catalog())
+        assert ("proof-echo", "execute") in adapter._verified_input_schemas
+        assert ("proof-optional", "execute") not in adapter._verified_input_schemas
+
+        planner = adapter.planner(allow_unverified=True)
+        call_a = ConversationActionCall("call-a", "echo_proof", {"message": "gezond"})
+        call_b = ConversationActionCall("call-b", "echo_optional", {"message": "offline"})
+
+        prepared_a = asyncio.run(planner.prepare(_turn(), call_a))
+        assert prepared_a.tool_name == "proof-echo"
+        assert asyncio.run(adapter.execute(_echo_request(spec_a, "gezond"))).accepted is True
+
+        with pytest.raises(ConversationConflict, match="catalog was not verified") as unavailable_exc:
+            asyncio.run(planner.prepare(_turn(), call_b))
+        assert isinstance(unavailable_exc.value.__cause__, McpGatewayToolUnreachable)
+        assert ("proof-echo", "execute") in adapter._verified_input_schemas
+
+        # Once sibling becomes reachable with its sealed schema, lazy verify admits it.
+        handler.catalog = [row_a, row_b]
+        prepared_b = asyncio.run(planner.prepare(_turn(), call_b))
+        assert prepared_b.tool_name == "proof-optional"
+
+        # Tampered sibling during re-verification revokes both adapter and planner schemas.
+        adapter._verified_input_schemas.pop(("proof-optional", "execute"))
+        planner._provider_input_schemas.pop(("proof-optional", "execute"))
+        handler.catalog = [row_a, {**row_b, "annotations": {"readOnlyHint": False}}]
+        with pytest.raises(RuntimeError, match="sealed catalog"):
+            asyncio.run(planner.prepare(_turn(), call_b))
+        assert adapter._verified_input_schemas == {}
+        assert planner._provider_input_schemas == {}
+
+
+def test_multithread_verify_on_demand_never_wipes_healthy_schemas_or_cause(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from concurrent.futures import ThreadPoolExecutor
+    import threading
+    import time
+    from eva.adapters.connectors.mcp_gateway import (
+        McpGatewayToolUnreachable,
+        McpGatewayUnavailable,
+    )
+
+    row_a = _catalog_row("proof-echo")
+    row_b = _catalog_row("proof-optional")
+    spec_a = _spec(catalog_hash=_catalog_hash(row_a))
+    spec_b = McpGatewayToolSpec(
+        contract="EvaMcpGatewayProvider/v2",
+        descriptor=ConversationToolDescriptor(
+            name="echo_optional",
+            description="Optional sibling tool.",
+            input_schema=SCHEMA,
+        ),
+        execute_tool_name="proof-optional",
+        observe_tool_name="proof-optional",
+        execute_catalog_name="proof-optional",
+        observe_catalog_name="proof-optional",
+        execute_catalog_sha256=_catalog_hash(row_b),
+        observe_catalog_sha256=_catalog_hash(row_b),
+        execute_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
+        observe_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
+        proof_bindings=(McpGatewayProofBinding("message", "text"),),
+    )
+    adapter = McpGatewayToolAdapter(
+        McpGatewayConfig("http://127.0.0.1:9", "token", allow_plain_http=True),
+        (spec_a, spec_b),
+    )
+    mode = ["partial"]
+    in_flight = 0
+    max_in_flight = 0
+    counter_lock = threading.Lock()
+
+    def fake_request_json(method: str, path: str, payload: object) -> dict[str, object]:
+        nonlocal in_flight, max_in_flight
+        if method == "GET":
+            with counter_lock:
+                in_flight += 1
+                max_in_flight = max(max_in_flight, in_flight)
+            try:
+                time.sleep(0.02)
+                if mode[0] == "unavailable":
+                    raise McpGatewayUnavailable()
+                return {"tools": [row_a, {**row_b, "reachable": False}], "nextCursor": None}
+            finally:
+                with counter_lock:
+                    in_flight -= 1
+        assert isinstance(payload, dict)
+        return {
+            "jsonrpc": "2.0",
+            "id": payload["id"],
+            "result": {"structuredContent": {"text": "gezond"}},
+        }
+
+    monkeypatch.setattr(adapter, "_request_json", fake_request_json)
+    with pytest.raises(McpGatewayToolUnreachable):
+        asyncio.run(adapter.verify_catalog())
+    planner = adapter.planner(allow_unverified=True)
+    call_a = ConversationActionCall("call-a", "echo_proof", {"message": "gezond"})
+    call_b = ConversationActionCall("call-b", "echo_optional", {"message": "offline"})
+    req_a = _echo_request(spec_a, "gezond")
+
+    mode[0] = "unavailable"
+
+    def worker_healthy() -> bool:
+        prepared = asyncio.run(planner.prepare(_turn(), call_a))
+        assert prepared.tool_name == "proof-echo"
+        dispatch = asyncio.run(adapter.execute(req_a))
+        return dispatch.accepted
+
+    def worker_unreachable() -> type[BaseException]:
+        with pytest.raises(ConversationConflict, match="catalog was not verified") as exc_info:
+            asyncio.run(planner.prepare(_turn(), call_b))
+        assert exc_info.value.__cause__ is not None
+        return type(exc_info.value.__cause__)
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futs_b = [pool.submit(worker_unreachable) for _ in range(4)]
+        futs_a = [pool.submit(worker_healthy) for _ in range(12)]
+        assert all(f.result() is True for f in futs_a)
+        assert all(f.result() is McpGatewayUnavailable for f in futs_b)
+
+    assert max_in_flight == 1
+    assert ("proof-echo", "execute") in adapter._verified_input_schemas
+
+
+def test_cancelled_waiter_does_not_leak_verify_lock(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import threading
+    from eva.adapters.connectors.mcp_gateway import McpGatewayToolUnreachable
+
+    row_a = _catalog_row("proof-echo")
+    row_b = _catalog_row("proof-optional")
+    spec_a = _spec(catalog_hash=_catalog_hash(row_a))
+    spec_b = McpGatewayToolSpec(
+        contract="EvaMcpGatewayProvider/v2",
+        descriptor=ConversationToolDescriptor(
+            name="echo_optional",
+            description="Optional sibling tool.",
+            input_schema=SCHEMA,
+        ),
+        execute_tool_name="proof-optional",
+        observe_tool_name="proof-optional",
+        execute_catalog_name="proof-optional",
+        observe_catalog_name="proof-optional",
+        execute_catalog_sha256=_catalog_hash(row_b),
+        observe_catalog_sha256=_catalog_hash(row_b),
+        execute_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
+        observe_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
+        proof_bindings=(McpGatewayProofBinding("message", "text"),),
+    )
+    adapter = McpGatewayToolAdapter(
+        McpGatewayConfig("http://127.0.0.1:9", "token", allow_plain_http=True),
+        (spec_a, spec_b),
+    )
+    first_entered = threading.Event()
+    release_first = threading.Event()
+    reachable = [False]
+
+    def gated_request_json(method: str, path: str, payload: object) -> dict[str, object]:
+        assert method == "GET"
+        if not first_entered.is_set():
+            first_entered.set()
+            assert release_first.wait(timeout=5.0)
+        return {"tools": [row_a, {**row_b, "reachable": reachable[0]}], "nextCursor": None}
+
+    monkeypatch.setattr(adapter, "_request_json", gated_request_json)
+    planner = adapter.planner(allow_unverified=True)
+    call_b = ConversationActionCall("call-b", "echo_optional", {"message": "wacht"})
+
+    async def scenario() -> None:
+        task1 = asyncio.create_task(planner.prepare(_turn(), call_b))
+        assert await asyncio.to_thread(first_entered.wait, 5.0)
+        task2 = asyncio.create_task(planner.prepare(_turn(), call_b))
+        await asyncio.sleep(0.05)
+        task2.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await task2
+        release_first.set()
+        with pytest.raises(ConversationConflict, match="catalog was not verified") as exc1:
+            await task1
+        assert isinstance(exc1.value.__cause__, McpGatewayToolUnreachable)
+
+        reachable[0] = True
+        prepared = await asyncio.wait_for(planner.prepare(_turn(), call_b), timeout=2.0)
+        assert prepared.tool_name == "proof-optional"
+
+    asyncio.run(scenario())
+
+
+

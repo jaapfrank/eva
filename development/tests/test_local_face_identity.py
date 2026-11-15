@@ -236,3 +236,117 @@ def test_cpu_helper_requires_exact_existing_model_files_before_loading(tmp_path,
     first.unlink()
     with pytest.raises(ValueError, match="missing"):
         local_face_cpu.pinned_models(tmp_path)
+
+
+def test_cpu_extract_uses_single_thread_no_graph_opt_and_skips_recognizer_when_empty(tmp_path, monkeypatch):
+    from types import ModuleType, SimpleNamespace
+    from eva.operations import local_face_cpu
+
+    jpeg_bytes = b"\xff\xd8\xff\xd9"
+    models = {"det_10g.onnx": tmp_path / "det_10g.onnx", "w600k_r50.onnx": tmp_path / "w600k_r50.onnx"}
+
+    created_sessions = []
+    detected = [[], None]
+    recognizer_providers = ["CPUExecutionProvider"]
+
+    class FakeImageArray:
+        shape = (64, 64, 3)
+
+        def __getitem__(self, _item):
+            return self
+
+        def copy(self):
+            return self
+
+    class FakeOpenedImage:
+        width = 64
+        height = 64
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def convert(self, _mode):
+            return self
+
+    class FakeSessionOptions:
+        intra_op_num_threads = 0
+        inter_op_num_threads = 0
+        execution_mode = None
+        graph_optimization_level = None
+
+    class FakeSession:
+        def __init__(self, path, sess_options, providers):
+            created_sessions.append((path, sess_options.intra_op_num_threads, sess_options.inter_op_num_threads,
+                                     sess_options.graph_optimization_level, providers))
+            self._path = path
+
+        def get_providers(self):
+            return recognizer_providers if self._path.endswith("w600k_r50.onnx") else ["CPUExecutionProvider"]
+
+    fake_ort = ModuleType("onnxruntime")
+    fake_ort.get_available_providers = lambda: ["CPUExecutionProvider"]
+    fake_ort.SessionOptions = FakeSessionOptions
+    fake_ort.ExecutionMode = SimpleNamespace(ORT_SEQUENTIAL="seq")
+    fake_ort.GraphOptimizationLevel = SimpleNamespace(ORT_DISABLE_ALL="disable_all")
+    fake_ort.InferenceSession = FakeSession
+
+    fake_cv2 = ModuleType("cv2")
+    fake_cv2.setNumThreads = lambda _n: None
+    fake_np = ModuleType("numpy")
+    fake_np.array = lambda _rgb: FakeImageArray()
+
+    fake_pil = ModuleType("PIL")
+    fake_pil_image = ModuleType("PIL.Image")
+    fake_pil_image.open = lambda _bio: FakeOpenedImage()
+    fake_pil_imageops = ModuleType("PIL.ImageOps")
+    fake_pil_imageops.exif_transpose = lambda img: img
+    fake_pil.Image = fake_pil_image
+    fake_pil.ImageOps = fake_pil_imageops
+
+    fake_common = ModuleType("insightface.app.common")
+    fake_common.Face = lambda bbox, kps, det_score: SimpleNamespace(
+        bbox=bbox, kps=kps, det_score=det_score, normed_embedding=[1.0] + [0.0] * 511
+    )
+    fake_arcface = ModuleType("insightface.model_zoo.arcface_onnx")
+    fake_arcface.ArcFaceONNX = lambda model_file, session: SimpleNamespace(get=lambda img, face: face)
+    fake_scrfd = ModuleType("insightface.model_zoo.scrfd")
+    fake_scrfd.SCRFD = lambda model_file, session: SimpleNamespace(
+        prepare=lambda *a, **kw: None,
+        detect=lambda img, max_num, metric: tuple(detected),
+    )
+
+    for name, mod in [
+        ("cv2", fake_cv2),
+        ("numpy", fake_np),
+        ("onnxruntime", fake_ort),
+        ("PIL", fake_pil),
+        ("PIL.Image", fake_pil_image),
+        ("PIL.ImageOps", fake_pil_imageops),
+        ("insightface", ModuleType("insightface")),
+        ("insightface.app", ModuleType("insightface.app")),
+        ("insightface.app.common", fake_common),
+        ("insightface.model_zoo", ModuleType("insightface.model_zoo")),
+        ("insightface.model_zoo.arcface_onnx", fake_arcface),
+        ("insightface.model_zoo.scrfd", fake_scrfd),
+    ]:
+        monkeypatch.setitem(sys.modules, name, mod)
+
+    empty = local_face_cpu.extract(jpeg_bytes, models)
+    assert empty == {"aantal": 0, "gezichten": []}
+    assert len(created_sessions) == 1
+    assert created_sessions[0][0].endswith("det_10g.onnx")
+    assert created_sessions[0][1:] == (1, 1, "disable_all", ["CPUExecutionProvider"])
+
+    created_sessions.clear()
+    detected[:] = [[[4.0, 4.0, 44.0, 44.0, 0.95]], [[[10.0, 10.0]] * 5]]
+    one = local_face_cpu.extract(jpeg_bytes, models)
+    assert one["aantal"] == 1
+    assert [path_str.rsplit("/", 1)[-1] for path_str, *_ in created_sessions] == ["det_10g.onnx", "w600k_r50.onnx"]
+
+    recognizer_providers[:] = ["CUDAExecutionProvider"]
+    with pytest.raises(RuntimeError, match="CPU-only"):
+        local_face_cpu.extract(jpeg_bytes, models)
+

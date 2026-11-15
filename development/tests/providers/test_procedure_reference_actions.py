@@ -377,3 +377,70 @@ def test_conversation_dispatches_native_eligibility_only_to_registered_receipt_o
     assert not actions.can_continue_after(turn, receipt("absent", "candidates"))
     assert not actions.can_continue_after(turn, receipt("legacy_action", "candidates"))
     assert calls == ["list_reusable_procedures", "list_reusable_procedures"]
+
+
+@pytest.mark.parametrize("scenario", ["sibling_unreachable", "save_route_unreachable", "tampered"])
+def test_procedure_read_current_tolerates_unreachable_sibling_but_fails_closed_on_save_or_tamper(
+    monkeypatch, scenario,
+):
+    from types import SimpleNamespace as NS
+    import eva.adapters.postgres.procedure_reference_host as module
+    from eva.adapters.connectors.mcp_gateway import McpGatewayToolUnreachable
+    from eva.application.procedure_references import ProcedureScope
+
+    turn = _private_turn()
+    scope = ProcedureScope(turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id)
+
+    class Gateway:
+        def __init__(self):
+            self._verified_input_schemas = (
+                {("workspace-read", "observe"): {"type": "object"}}
+                if scenario == "sibling_unreachable"
+                else {("other-tool", "observe"): {"type": "object"}}
+                if scenario == "save_route_unreachable"
+                else {}
+            )
+
+        async def verify_catalog(self):
+            if scenario == "tampered":
+                raise RuntimeError("MCP gateway tool differs from the sealed catalog")
+            raise McpGatewayToolUnreachable("MCP gateway tool is not safely executable: unreachable")
+
+        def planner(self):
+            return None
+
+        async def observe(self, command, dispatch):
+            return NS(
+                disposition="verified",
+                evidence={"source": "mcp_gateway_readback"},
+                observed={"content": "Herbruikbare procedure"},
+            )
+
+    class Wrapper:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def _request_from_admission(self, *args, **kwargs):
+            return NS(tool_name="workspace-save", observation_tool_name="workspace-read")
+
+    monkeypatch.setattr(module, "PostgresExternalConversationTools", Wrapper)
+    host = object.__new__(module.PostgresProcedureReferenceHost)
+    host.turn = turn
+    host.engine = None
+    host.private_owner_resolver = None
+    host.load_turn = lambda source: turn
+    host.timeline = None
+    host.authority = NS(authorize_turn=lambda _: None)
+    host.gateway_factory = Gateway
+    host.require_current = lambda: None
+    host._selected = (turn, {"action_arguments": {"path": "procedure.md"}, "action_name": "save_workspace_document"})
+
+    if scenario == "sibling_unreachable":
+        assert host.read_current(scope, "procedure.md") == b"Herbruikbare procedure"
+    elif scenario == "save_route_unreachable":
+        with pytest.raises(McpGatewayToolUnreachable):
+            host.read_current(scope, "procedure.md")
+    else:
+        with pytest.raises(RuntimeError, match="sealed catalog"):
+            host.read_current(scope, "procedure.md")
+

@@ -7,9 +7,9 @@ from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field, replace
 import json
 import re
+import threading
 from typing import Any
 from urllib import error, parse, request as urllib_request
-from weakref import WeakKeyDictionary
 
 from eva.application.conversation import (
     ConversationActionCall,
@@ -296,26 +296,36 @@ class McpGatewayToolPlanner:
         observe_arguments = _project_arguments(
             call.arguments, spec.observe_argument_bindings
         )
-        execute_schema = self._provider_input_schemas.get(
-            (spec.execute_tool_name, "execute")
-        )
-        observe_schema = self._provider_input_schemas.get(
-            (spec.observe_tool_name, "observe")
-        )
+        schemas = self._provider_input_schemas
+        execute_schema = schemas.get((spec.execute_tool_name, "execute"))
+        observe_schema = schemas.get((spec.observe_tool_name, "observe"))
+        cause: Exception | None = None
         if (
             (execute_schema is None or observe_schema is None)
             and self._verify_on_demand is not None
         ):
-            verified_schemas = await self._verify_on_demand()
-            if verified_schemas:
-                self._provider_input_schemas.update(verified_schemas)
-                execute_schema = self._provider_input_schemas.get(
-                    (spec.execute_tool_name, "execute")
-                )
-                observe_schema = self._provider_input_schemas.get(
-                    (spec.observe_tool_name, "observe")
-                )
+            owner = getattr(self._verify_on_demand, "__self__", None)
+            verify_with_cause = getattr(owner, "_verify_on_demand_result", None)
+            try:
+                if callable(verify_with_cause) and self._verify_on_demand == getattr(
+                    owner, "_verify_on_demand", None
+                ):
+                    verified_schemas, cause = await verify_with_cause()
+                else:
+                    verified_schemas = await self._verify_on_demand()
+                    cause = getattr(owner, "_last_verify_error", None)
+            except Exception:
+                self._provider_input_schemas = {}
+                raise
+            updated = dict(verified_schemas)
+            self._provider_input_schemas = updated
+            execute_schema = updated.get((spec.execute_tool_name, "execute"))
+            observe_schema = updated.get((spec.observe_tool_name, "observe"))
         if execute_schema is None or observe_schema is None:
+            if isinstance(cause, (McpGatewayUnavailable, McpGatewayToolUnreachable)):
+                raise ConversationConflict(
+                    "MCP gateway catalog was not verified"
+                ) from cause
             raise ConversationConflict("MCP gateway catalog was not verified")
         validate_schema_value(
             execute_arguments,
@@ -375,8 +385,15 @@ class McpGatewayToolAdapter:
         self._by_execute_name = {item.execute_tool_name: item for item in specs}
         self._verified_input_schemas: dict[tuple[str, str], dict[str, JsonValue]] = {}
         self._verified_output_schemas: dict[str, dict[str, JsonValue]] = {}
-        self._verify_locks: WeakKeyDictionary[asyncio.AbstractEventLoop, asyncio.Lock] = (
-            WeakKeyDictionary()
+        self._last_verify_error: McpGatewayUnavailable | McpGatewayToolUnreachable | None = None
+        self._verify_lock = threading.Lock()
+
+    def _all_schemas_verified(self) -> bool:
+        schemas = self._verified_input_schemas
+        return all(
+            (spec.execute_tool_name, "execute") in schemas
+            and (spec.observe_tool_name, "observe") in schemas
+            for spec in self._by_execute_name.values()
         )
 
     @staticmethod
@@ -395,22 +412,49 @@ class McpGatewayToolAdapter:
             for item in specs
         )
 
-    async def _verify_on_demand(self) -> dict[tuple[str, str], dict[str, JsonValue]]:
-        if self._verified_input_schemas:
-            return dict(self._verified_input_schemas)
-        loop = asyncio.get_running_loop()
-        lock = self._verify_locks.get(loop)
-        if lock is None:
-            lock = asyncio.Lock()
-            self._verify_locks[loop] = lock
-        async with lock:
-            if self._verified_input_schemas:
-                return dict(self._verified_input_schemas)
+    async def _verify_on_demand_result(
+        self,
+    ) -> tuple[
+        dict[tuple[str, str], dict[str, JsonValue]],
+        McpGatewayUnavailable | McpGatewayToolUnreachable | None,
+    ]:
+        if self._all_schemas_verified():
+            return dict(self._verified_input_schemas), None
+        state_lock = threading.Lock()
+        state = {"cancelled": False, "acquired": False}
+
+        def acquire_lock() -> None:
+            self._verify_lock.acquire()
+            with state_lock:
+                if state["cancelled"]:
+                    self._verify_lock.release()
+                    return
+                state["acquired"] = True
+
+        try:
+            await asyncio.to_thread(acquire_lock)
+        except BaseException:
+            with state_lock:
+                state["cancelled"] = True
+                should_release = state["acquired"]
+                state["acquired"] = False
+            if should_release:
+                self._verify_lock.release()
+            raise
+        try:
+            if self._all_schemas_verified():
+                return dict(self._verified_input_schemas), None
             try:
-                await self.verify_catalog()
-            except (McpGatewayToolUnreachable, McpGatewayUnavailable):
-                return {}
-            return dict(self._verified_input_schemas)
+                await self._verify_catalog(preserve_on_unavailable=True)
+            except (McpGatewayUnavailable, McpGatewayToolUnreachable) as exc:
+                return dict(self._verified_input_schemas), exc
+            return dict(self._verified_input_schemas), None
+        finally:
+            self._verify_lock.release()
+
+    async def _verify_on_demand(self) -> dict[tuple[str, str], dict[str, JsonValue]]:
+        schemas, _ = await self._verify_on_demand_result()
+        return schemas
 
     def planner(self, *, allow_unverified: bool = False) -> McpGatewayToolPlanner:
         if not self._verified_input_schemas and not allow_unverified:
@@ -428,98 +472,131 @@ class McpGatewayToolAdapter:
         )
 
     async def verify_catalog(self) -> dict[str, str]:
-        # A rejected re-admission must not leave an earlier catalog usable.
-        self._verified_input_schemas = {}
-        self._verified_output_schemas = {}
-        rows: list[Any] = []
-        cursor: str | None = None
-        seen_cursors: set[str] = set()
-        while True:
-            query = {"include_pagination": "true", "limit": "50"}
-            if cursor is not None:
-                query["cursor"] = cursor
-            page = await asyncio.to_thread(
-                self._request_json, "GET", "/tools?" + parse.urlencode(query), None
-            )
-            if (not isinstance(page, dict) or "nextCursor" not in page
-                    or not isinstance(page.get("tools"), list)):
-                raise RuntimeError("MCP gateway catalog page is invalid")
-            rows.extend(page["tools"])
-            if len(rows) > 1_024:
-                raise RuntimeError("MCP gateway catalog is invalid")
-            cursor = page["nextCursor"]
-            if cursor is None:
-                break
-            if (not isinstance(cursor, str) or not cursor or len(cursor) > 4_096
-                    or cursor in seen_cursors or not page["tools"]
-                    or len(rows) == 1_024):
-                raise RuntimeError("MCP gateway catalog cursor is invalid")
-            seen_cursors.add(cursor)
-        by_name: dict[str, dict[str, Any]] = {}
-        for row in rows:
-            if not isinstance(row, dict) or not isinstance(row.get("name"), str):
-                raise RuntimeError("MCP gateway catalog row is invalid")
-            name = row["name"]
-            if name in by_name:
-                raise RuntimeError("MCP gateway catalog contains duplicate tools")
-            by_name[name] = row
-        verified: dict[str, str] = {}
-        input_schemas: dict[tuple[str, str], dict[str, JsonValue]] = {}
-        output_schemas: dict[str, dict[str, JsonValue]] = {}
-        for spec in self._by_execute_name.values():
-            for phase, tool_name, catalog_name, expected_hash, bindings in (
-                (
-                    "execute",
-                    spec.execute_tool_name,
-                    spec.execute_catalog_name,
-                    spec.execute_catalog_sha256,
-                    spec.execute_argument_bindings,
-                ),
-                (
-                    "observe",
-                    spec.observe_tool_name,
-                    spec.observe_catalog_name,
-                    spec.observe_catalog_sha256,
-                    spec.observe_argument_bindings,
-                ),
-            ):
-                row = by_name.get(catalog_name)
-                if row is None:
-                    raise RuntimeError("MCP gateway required tool is absent")
-                selected = mcp_gateway_catalog_binding(row, contract=spec.contract)
-                actual_hash = canonical_sha256(selected)
-                if actual_hash != expected_hash:
-                    from eva.adapters.connectors.mcp_filesystem_contract import (
-                        compatible_filesystem_admission,
-                    )
-                    admission = compatible_filesystem_admission(
-                        row=row, rows=rows, selected=selected,
-                        expected_sha256=expected_hash,
-                        admitted_schema=spec.descriptor.input_schema,
-                        bindings=bindings,
-                    )
-                    if admission is None:
-                        raise RuntimeError(
-                            "MCP gateway tool differs from the sealed catalog"
-                        )
-                    actual_hash = canonical_sha256(admission)
-                verified[catalog_name] = actual_hash
-                input_schema = selected["input_schema"]
-                if not isinstance(input_schema, dict):
-                    raise RuntimeError("MCP gateway input schema is invalid")
-                _validate_projection_contract(
-                    spec.descriptor.input_schema,
-                    input_schema,
-                    bindings,
+        return await self._verify_catalog(preserve_on_unavailable=False)
+
+    async def _verify_catalog(self, *, preserve_on_unavailable: bool = False) -> dict[str, str]:
+        try:
+            rows: list[Any] = []
+            cursor: str | None = None
+            seen_cursors: set[str] = set()
+            while True:
+                query = {"include_pagination": "true", "limit": "50"}
+                if cursor is not None:
+                    query["cursor"] = cursor
+                page = await asyncio.to_thread(
+                    self._request_json, "GET", "/tools?" + parse.urlencode(query), None
                 )
-                input_schemas[(tool_name, phase)] = input_schema
-                output_schema = selected.get("output_schema")
-                if output_schema is not None:
-                    if not isinstance(output_schema, dict):
-                        raise RuntimeError("MCP gateway output schema is invalid")
-                    output_schemas[tool_name] = output_schema
+                if (not isinstance(page, dict) or "nextCursor" not in page
+                        or not isinstance(page.get("tools"), list)):
+                    raise RuntimeError("MCP gateway catalog page is invalid")
+                rows.extend(page["tools"])
+                if len(rows) > 1_024:
+                    raise RuntimeError("MCP gateway catalog is invalid")
+                cursor = page["nextCursor"]
+                if cursor is None:
+                    break
+                if (not isinstance(cursor, str) or not cursor or len(cursor) > 4_096
+                        or cursor in seen_cursors or not page["tools"]
+                        or len(rows) == 1_024):
+                    raise RuntimeError("MCP gateway catalog cursor is invalid")
+                seen_cursors.add(cursor)
+            by_name: dict[str, dict[str, Any]] = {}
+            for row in rows:
+                if not isinstance(row, dict) or not isinstance(row.get("name"), str):
+                    raise RuntimeError("MCP gateway catalog row is invalid")
+                name = row["name"]
+                if name in by_name:
+                    raise RuntimeError("MCP gateway catalog contains duplicate tools")
+                by_name[name] = row
+            verified: dict[str, str] = {}
+            input_schemas: dict[tuple[str, str], dict[str, JsonValue]] = {}
+            output_schemas: dict[str, dict[str, JsonValue]] = {}
+            unreachable_error: McpGatewayToolUnreachable | None = None
+            for spec in self._by_execute_name.values():
+                spec_verified: dict[str, str] = {}
+                spec_inputs: dict[tuple[str, str], dict[str, JsonValue]] = {}
+                spec_outputs: dict[str, dict[str, JsonValue]] = {}
+                spec_unreachable = False
+                for phase, tool_name, catalog_name, expected_hash, bindings in (
+                    (
+                        "execute",
+                        spec.execute_tool_name,
+                        spec.execute_catalog_name,
+                        spec.execute_catalog_sha256,
+                        spec.execute_argument_bindings,
+                    ),
+                    (
+                        "observe",
+                        spec.observe_tool_name,
+                        spec.observe_catalog_name,
+                        spec.observe_catalog_sha256,
+                        spec.observe_argument_bindings,
+                    ),
+                ):
+                    row = by_name.get(catalog_name)
+                    if row is None:
+                        raise RuntimeError("MCP gateway required tool is absent")
+                    try:
+                        selected = mcp_gateway_catalog_binding(
+                            row, contract=spec.contract
+                        )
+                    except McpGatewayToolUnreachable as exc:
+                        if unreachable_error is None:
+                            unreachable_error = exc
+                        spec_unreachable = True
+                        continue
+                    actual_hash = canonical_sha256(selected)
+                    if actual_hash != expected_hash:
+                        from eva.adapters.connectors.mcp_filesystem_contract import (
+                            compatible_filesystem_admission,
+                        )
+                        admission = compatible_filesystem_admission(
+                            row=row, rows=rows, selected=selected,
+                            expected_sha256=expected_hash,
+                            admitted_schema=spec.descriptor.input_schema,
+                            bindings=bindings,
+                        )
+                        if admission is None:
+                            raise RuntimeError(
+                                "MCP gateway tool differs from the sealed catalog"
+                            )
+                        actual_hash = canonical_sha256(admission)
+                    spec_verified[catalog_name] = actual_hash
+                    input_schema = selected["input_schema"]
+                    if not isinstance(input_schema, dict):
+                        raise RuntimeError("MCP gateway input schema is invalid")
+                    _validate_projection_contract(
+                        spec.descriptor.input_schema,
+                        input_schema,
+                        bindings,
+                    )
+                    spec_inputs[(tool_name, phase)] = input_schema
+                    output_schema = selected.get("output_schema")
+                    if output_schema is not None:
+                        if not isinstance(output_schema, dict):
+                            raise RuntimeError("MCP gateway output schema is invalid")
+                        spec_outputs[tool_name] = output_schema
+                if not spec_unreachable:
+                    verified.update(spec_verified)
+                    input_schemas.update(spec_inputs)
+                    output_schemas.update(spec_outputs)
+        except Exception as exc:
+            if preserve_on_unavailable and isinstance(exc, McpGatewayUnavailable):
+                self._last_verify_error = exc
+                raise
+            # A rejected re-admission must not leave an earlier catalog usable.
+            self._verified_input_schemas = {}
+            self._verified_output_schemas = {}
+            self._last_verify_error = (
+                exc if isinstance(exc, McpGatewayUnavailable) else None
+            )
+            raise
         self._verified_input_schemas = input_schemas
         self._verified_output_schemas = output_schemas
+        if unreachable_error is not None:
+            self._last_verify_error = unreachable_error
+            raise unreachable_error
+        self._last_verify_error = None
         return verified
 
     async def execute(self, command: ToolRequest) -> ToolDispatchResult:
@@ -977,5 +1054,7 @@ __all__ = [
     "McpGatewayToolAdapter",
     "McpGatewayToolPlanner",
     "McpGatewayToolSpec",
+    "McpGatewayToolUnreachable",
+    "McpGatewayUnavailable",
     "mcp_gateway_catalog_binding",
 ]

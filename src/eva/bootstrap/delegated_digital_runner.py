@@ -12,7 +12,10 @@ import json
 from eva.adapters.connectors.delegated_completion import (
     completed_tool_evidence, recoverable_completion_context,
 )
-from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
+from eva.adapters.connectors.mcp_gateway import (
+    McpGatewayToolUnreachable,
+    McpGatewayUnavailable,
+)
 from eva.adapters.model.contracts import (ConversationModelDeadlineExceeded, ConversationModelRateLimited,
     ConversationModelUsageError, ConversationModelUnavailable, ConversationModelInputBudgetExceeded)
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
@@ -865,7 +868,13 @@ class DelegatedDigitalRunner:
                 else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached, ConversationModelInputBudgetExceeded))
                 else "incomplete_work" if isinstance(error, (_UnfinishedWorkPlan, ResearchCitationError))
                 else "provider_transient" if isinstance(error, ConversationModelRateLimited)
-                else "provider_unavailable" if isinstance(error, ConversationModelUnavailable) or type(error) is McpGatewayUnavailable
+                else "provider_unavailable" if (
+                    isinstance(error, ConversationModelUnavailable)
+                    or type(error) in {McpGatewayUnavailable, McpGatewayToolUnreachable}
+                    or (type(error) is ConversationConflict
+                        and str(error) == "MCP gateway catalog was not verified"
+                        and type(error.__cause__) in {McpGatewayUnavailable, McpGatewayToolUnreachable})
+                )
                 else "invalid_usage" if isinstance(error, ConversationModelUsageError)
                 else "internal_error")
             from eva.adapters.postgres.work_source_retention import WorkSourceUnavailable
