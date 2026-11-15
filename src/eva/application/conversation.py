@@ -1205,9 +1205,13 @@ class LivingConversation:
         if "start_digital_work" in available_names:
             self_context = (*self_context,
                 "Use start_digital_work BEFORE discovery or partial execution for multi-step "
-                "connector work: reading, comparison, saving, actions, automation/configuration "
-                "analysis, learning and skill reuse. A simple current-state read or known house "
-                "action may run directly. The worker has its own authorized tools; do not infer "
+                "external connector projects: complex multi-system comparison, saving files, deep configuration "
+                "analysis, learning new integrations and skill reuse. DO NOT use start_digital_work for "
+                "live smart-home reads/controls (temperatures, thermostats, sensors, weather, lights, scenes, "
+                "media players, toggling automations via control_or_read_smart_home), creating a single state "
+                "automation, Chromecast/HoloStage control (manage_holostage), or factual public lookups "
+                "(search_public_info) — always run those foreground tools directly in this turn! The worker has "
+                "its own authorized tools; do not infer "
                 "missing capability from the foreground catalog. Let it check access within the "
                 "existing mandate. Pass the full task and relevant authorized context; for learning "
                 "include the goal, application and retaining the method. For reuse, have it fetch "
@@ -1488,7 +1492,15 @@ class LivingConversation:
                 continue
             if self._actions is None or call.name not in available_names:
                 raise RuntimeError("conversation model requested an unavailable action")
-            offer_action_commentary(generated)
+            if not call.name.startswith((
+                "control_or_read_",
+                "manage_holostage",
+                "set_",
+                "read_",
+                "search_public_info",
+                "create_",
+            )):
+                offer_action_commentary(generated)
             if voice is not None:
                 voice.event({"type": "action_started", "name": call.name})
             try:

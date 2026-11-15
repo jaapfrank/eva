@@ -182,7 +182,7 @@ def query_or_launch_approved_cast_device(
     device_id: str,
     stage_url: str | None = None,
     app_id: str | None = None,
-    timeout_seconds: float = 4.5,
+    timeout_seconds: float = 6.5,
 ) -> dict[str, Any]:
     """Connect to an approved LAN Google Cast device on :8009, read receiver status, and optionally launch stage."""
     effective_app_id = app_id or (
@@ -324,14 +324,21 @@ def query_or_launch_approved_cast_device(
                         )
                     )
                     if effective_app_id == DASHCAST_WEB_RECEIVER_APP_ID:
-                        tls_sock.sendall(
-                            encode_cast_v2_frame(
-                                source_id="sender-0",
-                                destination_id=launched_transport_id,
-                                namespace=NS_DASHCAST,
-                                payload={"url": clean_url, "force": True},
-                            )
+                        dashcast_frame = encode_cast_v2_frame(
+                            source_id="sender-0",
+                            destination_id=launched_transport_id,
+                            namespace=NS_DASHCAST,
+                            payload={"url": clean_url, "force": True},
                         )
+                        tls_sock.sendall(dashcast_frame)
+                        # Give newly booted DashCast WebView ~350ms to attach its JS namespace listener,
+                        # then transmit the load URL a second time so cold TV boots never miss the URL.
+                        if deadline - time.monotonic() > 0.45:
+                            time.sleep(0.35)
+                            try:
+                                tls_sock.sendall(dashcast_frame)
+                            except OSError:
+                                pass
                     else:
                         tls_sock.sendall(
                             encode_cast_v2_frame(

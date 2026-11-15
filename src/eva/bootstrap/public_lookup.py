@@ -15,14 +15,19 @@ from eva.application.initiative_execution import require_initiative_context
 
 PUBLIC_LOOKUP = ConversationToolDescriptor(
     name="search_public_info",
-    description=("Look up a short factual public question needing sources or current information. "
-        "No internal data, private history, actions or extensive research. Supply only a "
-        "standalone third-person public question; resolve relative dates from the current "
-        "conversation date, write dates with the month name (e.g. '13 november 2026', never "
-        "YYYY-MM-DD), and express times of day in words (e.g. 'vanmiddag', 'nieuwste stand van zaken', "
-        "never HH:MM clock times like 15:36 or first-person words like mijn/ons/onze). "
-        "Set answer_directly=true only when this lookup answers the entire request, "
-        "without private context, comparison to other results or subsequent actions."),
+    description=("Immediate live web lookup for any factual or current open-world question "
+        "(such as current Formula 1 standings, Eredivisie standings, sports scores, news, "
+        "public schedules, weather, facts, releases, or general knowledge). Always prefer "
+        "search_public_info over start_background_research unless the user explicitly asks for "
+        "an extensive multi-source background report. Supply only a standalone third-person "
+        "public question (rewrite 'geef mij de stand van de F1 op dit moment' into 'Actuele stand "
+        "Formule 1 kampioenschap <maand> <jaar>'); resolve relative dates from the current "
+        "conversation date, write dates with the month name (e.g. '15 november 2026', never "
+        "YYYY-MM-DD), and express times of day in words (e.g. 'nieuwste stand', never HH:MM "
+        "clock times like 15:36 or first-person words like mijn/ons/onze). "
+        "Set answer_directly=true when this lookup answers the entire request on its own; "
+        "set answer_directly=false when you also need a follow-up step in the same turn "
+        "(such as showing a holographic card or casting to Chromecast via manage_holostage)."),
     input_schema={"type": "object", "additionalProperties": False,
         "properties": {
             "answer_directly": {"type": "boolean", "description": "The complete request can be answered from this public lookup alone."},

@@ -34,15 +34,23 @@ def create_app():
     sessions = {}
     heartbeats = {}
     lock = asyncio.Lock()
-    vad = silero.VAD.load(min_speech_duration=.1, min_silence_duration=.4)
+    vad = silero.VAD.load(
+        min_speech_duration=float(config.get("vad_min_speech_duration", 0.12)),
+        min_silence_duration=float(config.get("vad_min_silence_duration", 0.72)),
+    )
     backend = CoreClient(config["core_url"], token)
     stt_source = HomeAssistantSpeechInput(base_url=config["ha_url"], token=ha_token,
         pipeline_id=config["pipeline_id"], expected_stt_engine=config["stt_engine"],
         expected_pipeline_language=config["language"])
+    raw_voice = os.environ.get("EVA_VOICE_TTS_VOICE") or config.get("tts_voice") or "ColetteNeural"
+    if raw_voice == "FennaNeural" and not config.get("tts_voice_pinned"):
+        raw_voice = "ColetteNeural"
     tts_source = HomeAssistantSpeechOutput(base_url=config["ha_url"], token=ha_token,
         pipeline_id=config["pipeline_id"], tts_engine=config["tts_engine"],
-        tts_language=config["tts_language"], tts_voice=config.get("tts_voice"),
+        tts_language=config["tts_language"], tts_voice=raw_voice,
         audio_chunk_bytes=1024)
+    tts_tempo = float(config.get("tts_tempo", 1.09))
+    tts_trim_silence = bool(config.get("tts_trim_silence", True))
 
     @asynccontextmanager
     async def lifespan(app):
@@ -211,10 +219,12 @@ def create_app():
                 from eva.voice_service.codex_media import CodexMediaSession
                 session = CodexMediaSession(config, state, check, speech_output=tts_source)
             else:
-                session = AgentSession(stt=HomeAssistantSTT(stt_source, check, vad=vad), tts=streaming_speech_output(tts_source, check),
-                                       vad=vad, turn_detection="vad", allow_interruptions=True,
-                                       min_interruption_duration=.15, false_interruption_timeout=1.5,
-                                       aec_warmup_duration=0)
+                session = AgentSession(
+                    stt=HomeAssistantSTT(stt_source, check, vad=vad),
+                    tts=streaming_speech_output(tts_source, check, tempo=tts_tempo, trim_silence=tts_trim_silence),
+                    vad=vad, turn_detection="vad", allow_interruptions=True,
+                    min_interruption_duration=.15, false_interruption_timeout=1.5,
+                    aec_warmup_duration=0)
             @session.on("user_input_transcribed")
             def user_input_transcribed(event):
                 if event.is_final:

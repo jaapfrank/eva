@@ -241,12 +241,17 @@ class EvaStream(llm.LLMStream):
         if user is not None and user.id not in state.dispatched:
             # Generating a tool call is not admission: LiveKit may cancel this
             # generation when speech is interrupted before the tool starts.
+            # Use a fresh ephemeral LiveKit call_id per generation so overlapping
+            # LiveKit generations never collide in ToolExecutor, while message_id
+            # stays deterministically bound to user.id for Core deduplication.
             message_id = str(uuid5(UUID(state.session_id), user.id))
+            if message_id in state.active:
+                return
             state.message_users[message_id] = user.id
             state.snapshots[message_id] = state.history(self._chat_ctx, user.id)
             self._event_ch.send_nowait(llm.ChatChunk(id=message_id, delta=llm.ChoiceDelta(
                 role="assistant", tool_calls=[llm.FunctionToolCall(
-                    name="eva_turn", call_id=message_id,
+                    name="eva_turn", call_id=f"{message_id}:{uuid4().hex[:8]}",
                     arguments=json.dumps({"message_id": message_id, "text": user.text_content}),
                 )])))
             return
@@ -441,6 +446,8 @@ class EvaAgent(Agent):
         """Route one final transcript to Eva's authenticated core."""
         state = self.state
         user_id = state.message_users.get(message_id)
+        if message_id in state.active:
+            return json.dumps({"type": "done", "message_id": message_id})
         if user_id is not None:
             if user_id in state.dispatched:
                 return json.dumps({"type": "done", "message_id": message_id})

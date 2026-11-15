@@ -5,7 +5,7 @@ import struct
 from uuid import uuid4
 
 from livekit.agents import tts
-from eva.voice_service.media import TempoTTS
+from eva.voice_service.media import TempoTTS, clean_text_for_tts
 
 
 class ToneTTS(tts.TTS):
@@ -76,4 +76,51 @@ def test_tempo_streams_before_provider_ends_and_cancel_closes_provider():
             await stream.aclose()
             await speech.aclose()
         assert source.closed.is_set()
+    asyncio.run(run())
+
+
+class GapToneStream(tts.ChunkedStream):
+    async def _run(self, output_emitter):
+        output_emitter.initialize(request_id=str(uuid4()), sample_rate=24000,
+                                  num_channels=1, mime_type="audio/pcm", frame_size_ms=20)
+        tone = struct.pack("<480h", *(round(10000 * math.sin(2 * math.pi * 440 * n / 24000)) for n in range(480)))
+        zero = b"\x00" * 960
+        for _ in range(25):  # 0.5s speech
+            output_emitter.push(tone)
+        for _ in range(45):  # 0.9s internal digital zero gap
+            output_emitter.push(zero)
+        for _ in range(25):  # 0.5s speech
+            output_emitter.push(tone)
+        output_emitter.flush()
+
+
+class GapToneTTS(tts.TTS):
+    def __init__(self):
+        super().__init__(capabilities=tts.TTSCapabilities(streaming=False),
+                         sample_rate=24000, num_channels=1)
+
+    def synthesize(self, text, *, conn_options=None):
+        kwargs = {} if conn_options is None else {"conn_options": conn_options}
+        return GapToneStream(tts=self, input_text=text, **kwargs)
+
+
+def test_tempo_tts_trims_excessive_internal_digital_silence_and_cleans_urls():
+    assert clean_text_for_tts("**Max Verstappen** staat op 1 (https://formula1.com/standings).") == "Max Verstappen staat op 1."
+    assert clean_text_for_tts("Zie [Eredivisie](https://eredivisie.nl/stand) nu!") == "Zie Eredivisie nu!"
+
+    async def run():
+        source = GapToneTTS()
+        untrimmed = TempoTTS(source, rate=1.09, trim_silence=False)
+        trimmed = TempoTTS(source, rate=1.09, trim_silence=True, max_silence_ms=280)
+        async with untrimmed.synthesize("Twee zinnen") as s1:
+            raw_frames = [ev.frame async for ev in s1]
+        async with trimmed.synthesize("Twee zinnen") as s2:
+            fast_frames = [ev.frame async for ev in s2]
+        raw_samples = sum(f.samples_per_channel for f in raw_frames)
+        fast_samples = sum(f.samples_per_channel for f in fast_frames)
+        # 0.9s gap capped at 0.28s saves ~0.55s of dead air while preserving both spoken halves
+        assert (raw_samples - fast_samples) / 24000 > 0.45
+        assert fast_samples / 24000 > 1.05
+        await untrimmed.aclose()
+        await trimmed.aclose()
     asyncio.run(run())

@@ -184,6 +184,9 @@ def build_dashboard_voice(
             expected_pipeline_language=policy.pipeline_language,
         ),
         speech_output=HomeAssistantSpeechOutput(
-            **media, tts_engine=policy.tts_engine, tts_language=policy.tts_language,
+            **media,
+            tts_engine=policy.tts_engine,
+            tts_language=policy.tts_language,
+            tts_voice="ColetteNeural" if policy.tts_engine == "tts.home_assistant_cloud" else None,
         ), language=policy.pipeline_language, clock=clock,
     )

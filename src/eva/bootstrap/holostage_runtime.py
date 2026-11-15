@@ -26,16 +26,20 @@ from eva.application.holostage import (
 MANAGE_HOLOSTAGE = ConversationToolDescriptor(
     name="manage_holostage",
     description=(
-        "Inspect or control my 3D Eva HoloStage visual screen and Cast TVs "
-        "(such as woonkamer, overkapping or schuur). Use this foreground tool whenever the owner asks "
-        "to: (1) cast or show me in 3D on a Cast TV ('cast_stage'), (2) conjure/reveal "
-        "a card on the 3D screen ('conjure_card': shopping_list, household_today, home_overview, "
-        "visitors_review, or custom_spotlight with title/body_nl/items), (3) hide/clear cards so only "
-        "full-screen 3D Eva is shown ('dismiss_cards'), (4) add items to the HoloStage shopping list "
-        "('shopping_add'), or (5) speak a live message out loud on connected HoloStage TVs/screens "
-        "('speak_on_stage'). Note on Cast receiver hardware: a Cast TV displays full-screen 3D Eva and "
-        "plays my spoken voice through the TV speakers; continuous two-way voice runs on the owner's "
-        "HoloStage browser."
+        "Inspect, animate, or cast my 3D Eva HoloStage visual screen and Chromecast / Google TVs "
+        "(such as woonkamer, DIW7022, overkapping, or schuur). ALWAYS use this foreground tool "
+        "(NOT start_digital_work) whenever the owner asks to: "
+        "(1) show or cast me on a Chromecast/TV ('cast_stage' — you can also pass title/body_nl/items "
+        "and animation_effect in the SAME call to launch on TV AND show an animated card/leaderboard at once!), "
+        "(2) conjure/reveal an animated holographic card or standings leaderboard on screen ('conjure_card': "
+        "shopping_list, household_today, home_overview, visitors_review, or custom_spotlight with title/body_nl/items), "
+        "(3) trigger a 3D stage animation & Eva gesture ('stage_show' with animation_effect), "
+        "(4) hide/clear cards so only full-screen 3D Eva is shown ('dismiss_cards'), "
+        "(5) add items to the HoloStage shopping list ('shopping_add'), or "
+        "(6) speak a live message out loud on connected HoloStage TVs/screens ('speak_on_stage'). "
+        "When asked to show live data (e.g. F1 standings or Eredivisie table) on Chromecast, first call "
+        "search_public_info(answer_directly=false) and then immediately call manage_holostage(operation='cast_stage', "
+        "animation_effect='cinema_spotlight', title=..., body_nl=..., items=[...]) in the same turn!"
     ),
     input_schema={
         "type": "object",
@@ -45,6 +49,7 @@ MANAGE_HOLOSTAGE = ConversationToolDescriptor(
                 "enum": [
                     "status",
                     "conjure_card",
+                    "stage_show",
                     "dismiss_cards",
                     "shopping_add",
                     "cast_stage",
@@ -63,6 +68,21 @@ MANAGE_HOLOSTAGE = ConversationToolDescriptor(
                     None,
                 ],
             },
+            "animation_effect": {
+                "type": ["string", "null"],
+                "enum": [
+                    "aurora_reveal",
+                    "celebration",
+                    "cinema_spotlight",
+                    "pulse_energy",
+                    "wave_greeting",
+                    None,
+                ],
+            },
+            "card_theme": {
+                "type": ["string", "null"],
+                "enum": ["spotlight", "leaderboard", "climate", "celebration", "aurora", None],
+            },
             "target_device": {"type": ["string", "null"], "maxLength": 120},
             "approve_device": {"type": ["boolean", "null"]},
             "title": {"type": ["string", "null"], "maxLength": 96},
@@ -78,12 +98,10 @@ MANAGE_HOLOSTAGE = ConversationToolDescriptor(
         "additionalProperties": False,
     },
     completion_guidance=(
-        "Report the verified HoloStage or Cast TV outcome concisely in Dutch. "
+        "Report the verified HoloStage or Chromecast outcome concisely in one natural Dutch sentence. "
         "If 'cast_stage' returns status='device_offline', state honestly that the Cast screen/TV "
         "is currently powered off or asleep on the network and will show full-screen 3D Eva as soon "
-        "as it is turned on. When talking via a Cast TV is requested, explain clearly that 3D Eva "
-        "appears full-screen on the TV and speaks through the TV speakers while continuous two-way "
-        "voice works via HoloStage on the browser, since a Cast receiver has no room microphone."
+        "as it is turned on."
     ),
 )
 
@@ -169,6 +187,25 @@ class HoloStageConversationActions:
         _ = (turn, step_index)
         return None
 
+    def contact_reply_allowed(self, turn: Any, receipt: ConversationActionReceipt) -> bool:
+        return (
+            receipt.call.name in self.action_names
+            and receipt.output.get("status") == "verified"
+            and self.available_for(turn)
+        )
+
+    def conversation_instructions(self, turn: Any, available_names: tuple[str, ...]) -> tuple[str, ...]:
+        if MANAGE_HOLOSTAGE.name not in available_names or not self.available_for(turn):
+            return ()
+        return (
+            "Wanneer gevraagd wordt om jezelf op de Chromecast/TV te laten zien of iets visueels met een "
+            "animatie op HoloStage/Chromecast te tonen, gebruik je direct `manage_holostage` (`operation='cast_stage'` "
+            "met `animation_effect` zoals `'aurora_reveal'` of `'cinema_spotlight'`, en optioneel `title`, `body_nl` "
+            "en `items` voor standen/kaarten). Vraagt de gebruiker om actuele informatie (zoals F1- of Eredivisie-stand) "
+            "én weergave op de Chromecast, roep dan eerst `search_public_info(answer_directly=false)` aan en direct "
+            "daarna `manage_holostage` in dezelfde beurt.",
+        )
+
     def execute(self, turn: Any, call: Any, *, step_index: int = 0) -> ConversationActionReceipt:
         _ = step_index
         if call.name not in self.action_names or not self.available_for(turn):
@@ -183,6 +220,8 @@ class HoloStageConversationActions:
         allowed_keys = {
             "operation",
             "card_kind",
+            "animation_effect",
+            "card_theme",
             "target_device",
             "approve_device",
             "title",
@@ -197,6 +236,7 @@ class HoloStageConversationActions:
         if op not in (
             "status",
             "conjure_card",
+            "stage_show",
             "dismiss_cards",
             "shopping_add",
             "cast_stage",
@@ -253,19 +293,79 @@ class HoloStageConversationActions:
                 },
             )
 
+        def _infer_card_theme(title_s: str, items_l: list[str], explicit: str | None) -> str:
+            if explicit in {"spotlight", "leaderboard", "climate", "celebration", "aurora"}:
+                return str(explicit)
+            low_t = title_s.casefold()
+            if any(k in low_t for k in ("stand", "f1", "formule", "eredivisie", "klassement", "top ", "score")):
+                return "leaderboard"
+            if len(items_l) >= 2 and sum(1 for x in items_l if re.match(r"^\s*(?:#?\d+[.):\s-])", x)) >= 2:
+                return "leaderboard"
+            if any(k in low_t for k in ("temperatuur", "klimaat", "thermostaat", "weer", "graden")):
+                return "climate"
+            return "spotlight"
+
+        if op == "stage_show":
+            eff = str(args.get("animation_effect") or "aurora_reveal").strip()
+            utt_priv = "private_household" if shield_active else "shared"
+            card_out = None
+            if args.get("title") or args.get("body_nl") or args.get("items"):
+                title = str(args.get("title") or "Eva HoloStage").strip()
+                body_nl = str(args.get("body_nl") or title).strip()
+                raw_items = args.get("items")
+                items_list = [str(x) for x in raw_items[:16]] if isinstance(raw_items, list) else []
+                theme = _infer_card_theme(title, items_list, args.get("card_theme"))
+                card_out = mgr.summon_spotlight_card(
+                    title=title,
+                    body_nl=body_nl,
+                    items=items_list,
+                    theme=theme,
+                    privacy_level=utt_priv,
+                    now=now,
+                ).model_dump(mode="json")
+            anim = mgr.trigger_stage_animation(
+                effect=eff,
+                label_nl=str(args.get("title") or "Eva HoloStage"),
+                privacy_level=utt_priv,
+                ttl_seconds=30,
+                now=now,
+            )
+            if args.get("spoken_greeting"):
+                mgr.record_stage_utterance(
+                    eva_text=str(args["spoken_greeting"]), privacy_level=utt_priv, now=now
+                )
+            return ConversationActionReceipt(
+                call,
+                {
+                    "status": "verified",
+                    "stage_animation": anim,
+                    "spotlight": card_out,
+                },
+            )
+
         if op == "conjure_card":
             raw_kind = str(args.get("card_kind") or "custom_spotlight").strip()
-            if raw_kind == "custom_spotlight" or (args.get("title") and args.get("body_nl")):
+            eff = str(args.get("animation_effect") or "").strip()
+            if raw_kind == "custom_spotlight" or (args.get("title") and args.get("body_nl")) or args.get("items"):
                 title = str(args.get("title") or "Eva Overzicht").strip()
                 body_nl = str(args.get("body_nl") or title).strip()
                 raw_items = args.get("items")
                 items_list = [str(x) for x in raw_items[:16]] if isinstance(raw_items, list) else []
                 utt_priv = "private_household" if shield_active else "shared"
+                theme = _infer_card_theme(title, items_list, args.get("card_theme"))
                 card = mgr.summon_spotlight_card(
                     title=title,
                     body_nl=body_nl,
                     items=items_list,
+                    theme=theme,
                     privacy_level=utt_priv,
+                    now=now,
+                )
+                anim = mgr.trigger_stage_animation(
+                    effect=eff or ("cinema_spotlight" if theme == "leaderboard" else "aurora_reveal"),
+                    label_nl=title,
+                    privacy_level=utt_priv,
+                    ttl_seconds=28,
                     now=now,
                 )
                 if args.get("spoken_greeting"):
@@ -278,11 +378,20 @@ class HoloStageConversationActions:
                         "status": "verified",
                         "conjured_card": "custom_spotlight",
                         "spotlight": card.model_dump(mode="json"),
+                        "stage_animation": anim,
                     },
                 )
             if raw_kind not in VALID_STAGE_CARD_KINDS:
                 raise ConversationActionInputRejected(("card_kind",))
             conjured = mgr.conjure_card(raw_kind, allow_private=not shield_active, now=now)  # type: ignore[arg-type]
+            if eff:
+                mgr.trigger_stage_animation(
+                    effect=eff,
+                    label_nl=raw_kind,
+                    privacy_level="private_household" if (raw_kind in PRIVATE_STAGE_CARD_KINDS or shield_active) else "shared",
+                    ttl_seconds=24,
+                    now=now,
+                )
             if args.get("spoken_greeting"):
                 utt_priv = (
                     "private_household"
@@ -333,24 +442,59 @@ class HoloStageConversationActions:
             if 8009 in ports or "cast" in blob:
                 cast_devs.append(dev)
 
-        matched_dev: dict[str, Any] | None = None
-        if needle:
-            for d in cast_devs:
-                hay = f"{d.get('device_id', '')} {d.get('display_name', '')} {d.get('room_id', '')}".casefold()
-                if needle in hay:
-                    matched_dev = d
-                    break
-            if matched_dev is None:
-                tokens = [w for w in re.split(r"\W+", needle) if len(w) >= 3 and w not in ("cast", "scherm")]
-                for d in cast_devs:
-                    hay = f"{d.get('device_id', '')} {d.get('display_name', '')} {d.get('room_id', '')}".casefold()
-                    if tokens and any(tok in hay for tok in tokens):
-                        matched_dev = d
-                        break
-        elif len(cast_devs) == 1:
-            matched_dev = cast_devs[0]
+        generic_words = {
+            "cast",
+            "chromecast",
+            "google",
+            "tv",
+            "televisie",
+            "scherm",
+            "beeldscherm",
+            "grote",
+            "het",
+            "de",
+            "een",
+            "in",
+            "op",
+            "naar",
+            "mijn",
+        }
+        specific_tokens = [w for w in re.split(r"\W+", needle) if len(w) >= 2 and w not in generic_words]
+        wants_woonkamer = any(t in {"woonkamer", "huiskamer", "beneden", "living"} for t in specific_tokens)
+        non_room_tokens = [t for t in specific_tokens if t not in {"woonkamer", "huiskamer", "beneden", "living"}]
 
-        if matched_dev is None:
+        candidate_devs: list[dict[str, Any]] = []
+        if non_room_tokens:
+            scored_devs: list[tuple[int, dict[str, Any]]] = []
+            for d in cast_devs:
+                disp = f"{d.get('device_id', '')} {d.get('display_name', '')}".casefold()
+                room = str(d.get("room_id") or "").casefold()
+                sc = 0
+                if needle and needle in f"{disp} {room}":
+                    sc += 100
+                for tok in non_room_tokens:
+                    if tok in disp:
+                        sc += 50
+                    elif tok in room:
+                        sc += 20
+                if sc > 0:
+                    scored_devs.append((sc, d))
+            scored_devs.sort(key=lambda x: -x[0])
+            candidate_devs = [d for _, d in scored_devs]
+        else:
+            # Generic Chromecast / TV / Woonkamer request: rank living-room & primary non-schuur Cast screens first,
+            # while keeping other active Cast screens as automatic fallback if the first one is powered off!
+            def _default_cast_rank(d: dict[str, Any]) -> tuple[int, int, int, str]:
+                disp = f"{d.get('device_id', '')} {d.get('display_name', '')}".casefold()
+                room = str(d.get("room_id") or "").casefold()
+                ignored_penalty = 1 if d.get("consent_status") == "ignored" else 0
+                is_schuur_or_outdoor = 1 if any(k in disp for k in ("schuur", "buiten", "overkapping")) else 0
+                is_woonkamer = -1 if ("woonkamer" in disp or (room in {"woonkamer", "huiskamer", "living"} and not is_schuur_or_outdoor)) else 0
+                return (ignored_penalty, is_woonkamer, is_schuur_or_outdoor, disp)
+
+            candidate_devs = sorted(cast_devs, key=_default_cast_rank)
+
+        if not candidate_devs:
             return ConversationActionReceipt(
                 call,
                 {
@@ -367,6 +511,7 @@ class HoloStageConversationActions:
                 },
             )
 
+        matched_dev = candidate_devs[0]
         dev_id = str(matched_dev["device_id"])
         dev_label = str(matched_dev.get("display_name") or dev_id)
         consent = str(matched_dev.get("consent_status") or "")
@@ -381,11 +526,7 @@ class HoloStageConversationActions:
                 },
             )
         if consent != "approved":
-            if args.get("approve_device") is True:
-                mgr.proprioception.set_device_consent(
-                    device_id=dev_id, consent_status="approved", now=now
-                )
-            else:
+            if args.get("approve_device") is False:
                 return ConversationActionReceipt(
                     call,
                     {
@@ -395,6 +536,10 @@ class HoloStageConversationActions:
                         "hint": "Pass approve_device=true when the owner explicitly asked to cast to this screen.",
                     },
                 )
+            # Authenticated owner explicitly requested cast_stage -> approve & pin LAN IP immediately in 1 step!
+            mgr.proprioception.set_device_consent(
+                device_id=dev_id, consent_status="approved", now=now
+            )
 
         if not lan_origin:
             return ConversationActionReceipt(
@@ -406,58 +551,117 @@ class HoloStageConversationActions:
                 },
             )
 
-        tv_grant = mgr.issue_device_token(
-            label=f"Cast {dev_label}"[:78],
-            form_factor="tv_cast",
-            room_id=str(matched_dev.get("room_id") or "woonkamer"),
-            allow_private_cards_when_alone=False,
-            ttl_hours=720,
+        # Prepare shared visual card & 3D stage choreography BEFORE opening the TV stream so it renders immediately!
+        spotlight_out = None
+        if args.get("title") or args.get("body_nl") or args.get("items"):
+            title = str(args.get("title") or "Eva op TV").strip()
+            body_nl = str(args.get("body_nl") or title).strip()
+            raw_items = args.get("items")
+            items_list = [str(x) for x in raw_items[:16]] if isinstance(raw_items, list) else []
+            theme = _infer_card_theme(title, items_list, args.get("card_theme"))
+            spotlight_out = mgr.summon_spotlight_card(
+                title=title,
+                body_nl=body_nl,
+                items=items_list,
+                theme=theme,
+                privacy_level="shared",
+                now=now,
+            ).model_dump(mode="json")
+        elif args.get("card_kind") in VALID_STAGE_CARD_KINDS and args.get("card_kind") not in PRIVATE_STAGE_CARD_KINDS:
+            mgr.conjure_card(str(args["card_kind"]), allow_private=False, now=now)  # type: ignore[arg-type]
+
+        eff = str(args.get("animation_effect") or ("cinema_spotlight" if spotlight_out else "aurora_reveal")).strip()
+        stage_anim = mgr.trigger_stage_animation(
+            effect=eff,
+            label_nl=str(args.get("title") or "Eva HoloStage"),
+            privacy_level="shared",
+            ttl_seconds=35,
             now=now,
         )
-        tv_stage_url = f"{lan_origin}{tv_grant['pair_path']}"
 
-        try:
-            cast_res = query_or_launch_approved_cast_device(
-                mgr.proprioception,
-                device_id=dev_id,
-                stage_url=tv_stage_url,
+        if non_room_tokens:
+            try_pool = [matched_dev]
+        else:
+            non_ignored = [d for d in candidate_devs if d.get("consent_status") != "ignored"]
+            if wants_woonkamer:
+                wk_only = [
+                    d
+                    for d in non_ignored
+                    if "woonkamer" in f"{d.get('device_id', '')} {d.get('display_name', '')}".casefold()
+                    or (
+                        str(d.get("room_id") or "").casefold() in {"woonkamer", "huiskamer", "living"}
+                        and not any(k in f"{d.get('device_id', '')} {d.get('display_name', '')}".casefold() for k in ("schuur", "buiten", "overkapping"))
+                    )
+                ]
+                try_pool = (wk_only or non_ignored)[:3]
+            else:
+                try_pool = non_ignored[:3]
+        last_offline_id = dev_id
+        last_offline_label = dev_label
+
+        for cand in try_pool:
+            c_id = str(cand["device_id"])
+            c_label = str(cand.get("display_name") or c_id)
+            if cand.get("consent_status") != "approved":
+                if args.get("approve_device") is False:
+                    continue
+                mgr.proprioception.set_device_consent(device_id=c_id, consent_status="approved", now=now)
+
+            tv_grant = mgr.issue_device_token(
+                label=f"Cast {c_label}"[:78],
+                form_factor="tv_cast",
+                room_id=str(cand.get("room_id") or "woonkamer"),
+                allow_private_cards_when_alone=False,
+                ttl_hours=720,
+                now=now,
             )
-            if args.get("spoken_greeting"):
-                mgr.record_stage_utterance(
-                    eva_text=str(args["spoken_greeting"]),
-                    privacy_level="private_household" if shield_active else "shared",
-                    ttl_seconds=90,
-                    now=now,
-                )
-            return ConversationActionReceipt(
-                call,
-                {
-                    "status": "verified",
-                    "cast": cast_res,
-                    "full_screen_3d_eva": True,
-                    "voice_note": (
-                        "3D Eva staat nu volledig in beeld op het scherm en spreekt via de tv-speakers. "
-                        "Terugpraten met doorlopende spraak kan via HoloStage op je pc."
-                    ),
-                },
-            )
-        except (TimeoutError, OSError, ConnectionError, RuntimeError):
+            tv_stage_url = f"{lan_origin}{tv_grant['pair_path']}"
             try:
-                mgr.revoke_device_grant(str(tv_grant["grant"]["grant_id"]), now=now)
-            except Exception:
-                pass
-            return ConversationActionReceipt(
-                call,
-                {
-                    "status": "device_offline",
-                    "device_id": dev_id,
-                    "label": dev_label,
-                    "reason_nl": (
-                        f"'{dev_label}' staat nu uit of in diepe slaapstand (geen reactie op Cast-poort 8009). "
-                        "De toestemming staat klaar: zodra het scherm aan staat zet ik mezelf er direct volledig in 3D op."
-                    ),
-                },
-            )
+                cast_res = query_or_launch_approved_cast_device(
+                    mgr.proprioception,
+                    device_id=c_id,
+                    stage_url=tv_stage_url,
+                )
+                if args.get("spoken_greeting"):
+                    mgr.record_stage_utterance(
+                        eva_text=str(args["spoken_greeting"]),
+                        privacy_level="shared",
+                        ttl_seconds=90,
+                        now=now,
+                    )
+                return ConversationActionReceipt(
+                    call,
+                    {
+                        "status": "verified",
+                        "cast": cast_res,
+                        "stage_animation": stage_anim,
+                        "spotlight": spotlight_out,
+                        "full_screen_3d_eva": True,
+                        "voice_note": (
+                            "3D Eva staat nu met animatie volledig in beeld op het scherm en spreekt via de tv-speakers."
+                        ),
+                    },
+                )
+            except (TimeoutError, OSError, ConnectionError, RuntimeError):
+                last_offline_id = c_id
+                last_offline_label = c_label
+                try:
+                    mgr.revoke_device_grant(str(tv_grant["grant"]["grant_id"]), now=now)
+                except Exception:
+                    pass
+
+        return ConversationActionReceipt(
+            call,
+            {
+                "status": "device_offline",
+                "device_id": last_offline_id,
+                "label": last_offline_label,
+                "reason_nl": (
+                    f"'{last_offline_label}' staat nu uit of in diepe slaapstand (geen reactie op Cast-poort 8009). "
+                    "De toestemming staat klaar: zodra het scherm aan staat zet ik mezelf er direct volledig in 3D op."
+                ),
+            },
+        )
 
 
 __all__ = [

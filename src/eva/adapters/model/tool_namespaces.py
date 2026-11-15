@@ -44,7 +44,9 @@ def _presentation():
 def function_defer_loading(name):
     """Expose common authorized household/public tools without a discovery round."""
     _, direct = _presentation()
-    return name not in (direct | {"speak_and_continue", "search_public_info", "set_household_work_destination"})
+    return name not in (
+        direct | {"speak_and_continue", "search_public_info", "set_household_work_destination", "manage_holostage"}
+    )
 
 
 def deferred_namespaces(tools):

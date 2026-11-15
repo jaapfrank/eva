@@ -417,3 +417,35 @@ async def test_failed_new_speech_offer_does_not_release_unheard_replay():
         async def update(self, *args, **kwargs): pass
     await EvaAgent(state).eva_turn(Context(), "new", "New question")
     assert offered == ["New answer."]
+
+
+@pytest.mark.asyncio
+async def test_ephemeral_call_ids_and_active_turn_suppression_prevent_livekit_collision():
+    import json
+    from livekit.agents import llm
+    from eva.voice_service.agent import EvaLLM
+
+    state = BridgeState(Backend())
+    model = EvaLLM(state)
+    chat = llm.ChatContext()
+    chat.add_message(role="user", content="Wat is de temperatuur in de woonkamer?")
+
+    calls = []
+    for _ in range(2):
+        async with model.chat(chat_ctx=chat) as stream:
+            async for chunk in stream:
+                if chunk.delta and chunk.delta.tool_calls:
+                    calls.extend(chunk.delta.tool_calls)
+    assert len(calls) == 2
+    assert calls[0].call_id != calls[1].call_id
+    msg_id = json.loads(calls[0].arguments)["message_id"]
+    assert calls[0].call_id.startswith(f"{msg_id}:")
+
+    # While message_id is actively executing in eva_turn, overlapping LLM generation must not re-emit
+    state.active[msg_id] = "Wat is de temperatuur in de woonkamer?"
+    overlap_calls = []
+    async with model.chat(chat_ctx=chat) as stream:
+        async for chunk in stream:
+            if chunk.delta and chunk.delta.tool_calls:
+                overlap_calls.extend(chunk.delta.tool_calls)
+    assert overlap_calls == []

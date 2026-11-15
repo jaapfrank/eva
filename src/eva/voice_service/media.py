@@ -12,8 +12,8 @@ class InternalDigitalSilence:
     450 ms retains a sentence pause without accelerating speech or treating soft
     consonants as silence. Leading/trailing silence and chunk boundaries survive.
     """
-    def __init__(self, sample_rate=24000):
-        self.limit = sample_rate * 450 // 1000
+    def __init__(self, sample_rate=24000, *, max_silence_ms: int = 450):
+        self.limit = sample_rate * max_silence_ms // 1000
         self.seen_signal = False
         self.zeros = 0
         self.pending = 0
@@ -86,6 +86,22 @@ class HomeAssistantSTT(stt.STT):
         return stt.SpeechEvent(type=stt.SpeechEventType.FINAL_TRANSCRIPT,
             alternatives=[stt.SpeechData(language="nl", text=text)])
 
+def clean_text_for_tts(text: str) -> str:
+    """Strip markdown syntax and raw URLs before neural synthesis while keeping plain words."""
+    import re
+    cleaned = re.sub(r"```[\s\S]*?```", " ", text)
+    cleaned = re.sub(r"`([^`]+)`", r"\1", cleaned)
+    cleaned = re.sub(r"\[([^\]]+)\]\(https?://[^)]+\)", r"\1", cleaned)
+    cleaned = re.sub(r"\(\s*https?://[^\s)]+\s*\)", "", cleaned)
+    cleaned = re.sub(r"https?://\S+", "", cleaned)
+    cleaned = re.sub(r"\*\*([^*]+)\*\*", r"\1", cleaned)
+    cleaned = re.sub(r"\*(\S(?:[^*]*?\S)?)\*", r"\1", cleaned)
+    cleaned = re.sub(r"^#+\s*", "", cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    cleaned = re.sub(r"\s+([.,!?;:])", r"\1", cleaned)
+    return cleaned or text
+
+
 class HomeAssistantTTS(tts.TTS):
     def __init__(self, source, check=lambda: None):
         super().__init__(capabilities=tts.TTSCapabilities(streaming=False), sample_rate=24000, num_channels=1)
@@ -93,13 +109,13 @@ class HomeAssistantTTS(tts.TTS):
 
     def synthesize(self, text, *, conn_options=DEFAULT_API_CONNECT_OPTIONS):
         self.check()
-        return HAChunkedStream(tts=self, input_text=text, conn_options=conn_options)
+        return HAChunkedStream(tts=self, input_text=clean_text_for_tts(text), conn_options=conn_options)
 
 
 class TempoTTS(tts.TTS):
     """Apply pitch-preserving tempo using the installed FFmpeg audio filter."""
 
-    def __init__(self, source, *, rate: float = 1.0):
+    def __init__(self, source, *, rate: float = 1.0, trim_silence: bool = False, max_silence_ms: int = 280):
         if source.num_channels != 1:
             raise ValueError("speech tempo requires a mono source")
         if not 0.8 <= rate <= 1.3:
@@ -107,6 +123,8 @@ class TempoTTS(tts.TTS):
         super().__init__(capabilities=tts.TTSCapabilities(streaming=False),
                          sample_rate=source.sample_rate, num_channels=source.num_channels)
         self.source, self.rate = source, rate
+        self.trim_silence = trim_silence
+        self.max_silence_ms = max_silence_ms
 
     def synthesize(self, text, *, conn_options=DEFAULT_API_CONNECT_OPTIONS):
         return TempoChunkedStream(tts=self, input_text=text, conn_options=conn_options)
@@ -121,6 +139,11 @@ class TempoChunkedStream(tts.ChunkedStream):
         from fractions import Fraction
 
         sample_rate = self._tts.sample_rate
+        silence = (
+            InternalDigitalSilence(sample_rate=sample_rate, max_silence_ms=self._tts.max_silence_ms)
+            if self._tts.trim_silence
+            else None
+        )
         graph = av.filter.Graph()
         inlet = graph.add("abuffer", sample_rate=str(sample_rate),
                           sample_fmt="s16", channel_layout="mono",
@@ -146,6 +169,22 @@ class TempoChunkedStream(tts.ChunkedStream):
                 output_emitter.push(bytes(frame.planes[0])[:frame.samples * 2])
 
         position = 0
+        def push_pcm(pcm_bytes: bytes):
+            nonlocal position
+            if not pcm_bytes:
+                return
+            sample_count = len(pcm_bytes) // 2
+            if sample_count <= 0:
+                return
+            frame = av.AudioFrame(format="s16", layout="mono", samples=sample_count)
+            frame.planes[0].update(pcm_bytes)
+            frame.sample_rate = sample_rate
+            frame.time_base = Fraction(1, sample_rate)
+            frame.pts = position
+            position += sample_count
+            graph.push(frame)
+            drain()
+
         # Closing/cancelling this stream also closes the provider and decoder.
         async with self._tts.source.synthesize(
             self.input_text, conn_options=self._conn_options
@@ -154,23 +193,25 @@ class TempoChunkedStream(tts.ChunkedStream):
                 audio = event.frame
                 if audio.sample_rate != sample_rate or audio.num_channels != 1:
                     raise ValueError("speech tempo requires matching mono PCM")
-                frame = av.AudioFrame(format="s16", layout="mono",
-                                      samples=audio.samples_per_channel)
-                frame.planes[0].update(bytes(audio.data))
-                frame.sample_rate = sample_rate
-                frame.time_base = Fraction(1, sample_rate)
-                frame.pts = position
-                position += audio.samples_per_channel
-                graph.push(frame)
-                drain()
+                raw_pcm = bytes(audio.data)
+                push_pcm(silence.push(raw_pcm) if silence is not None else raw_pcm)
+        if silence is not None:
+            for tail_pcm in silence.finish():
+                push_pcm(tail_pcm)
         graph.push(None)
         drain()
         output_emitter.flush()
 
-def streaming_speech_output(source, check=lambda: None):
+def streaming_speech_output(source, check=lambda: None, *, tempo: float = 1.0, trim_silence: bool = False):
     """Stream explicit complete first sentences without the default 20-char wait."""
+    base_tts = HomeAssistantTTS(source, check)
+    effective_tts = (
+        TempoTTS(base_tts, rate=tempo, trim_silence=trim_silence)
+        if (abs(tempo - 1.0) > 1e-3 or trim_silence)
+        else base_tts
+    )
     return tts.StreamAdapter(
-        tts=HomeAssistantTTS(source, check),
+        tts=effective_tts,
         sentence_tokenizer=tokenize.blingfire.SentenceTokenizer(
             min_sentence_len=1, stream_context_len=1, retain_format=True),
     )

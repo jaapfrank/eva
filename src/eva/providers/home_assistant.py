@@ -38,6 +38,7 @@ from eva.adapters.connectors.local_vision import LocalVisionHttpAnalyzer
 from eva.providers.home_assistant_capabilities import HomeAssistantCapabilityProfile
 from eva.adapters.connectors.home_assistant_context import HomeAssistantDeviceContext
 from eva.providers.home_assistant_command_cache import HomeAssistantCommandCache
+from eva.providers.smart_home_fast_actions import SmartHomeFastActions
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -98,6 +99,7 @@ class HomeAssistantProviderFactory:
         "adapters/connectors/home_assistant_service_query.py",
         "adapters/connectors/home_assistant_admin.py",
         "adapters/connectors/home_assistant_automations.py",
+        "providers/smart_home_fast_actions.py",
     )
 
     @staticmethod
@@ -399,10 +401,12 @@ class HomeAssistantProviderFactory:
                 engine, api, api, authorize_turn=authorize_api,
                 configuration_sha256=api_configuration,
             ))
+        external_tools.append(SmartHomeFastActions(settings))
         available_actions = {
             name for external_tool in external_tools for name in external_tool.action_names
         }
         all_descriptors = (
+            *SmartHomeFastActions.conversation_tools(),
             *HomeAssistantApiTool.conversation_tools(),
             *HomeAssistantHouseholdTool.conversation_tools(),
             *HomeAssistantToolAdapter.conversation_tools(),

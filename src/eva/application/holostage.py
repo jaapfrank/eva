@@ -234,6 +234,7 @@ class HoloStageManager:
             "lan_stage_origin": "",
             "conjured_cards": [],
             "live_utterance": None,
+            "stage_animation": None,
             "shopping_list": [],
             "household_notes": [
                 {
@@ -308,6 +309,19 @@ class HoloStageManager:
                 dirty = True
         elif utt is not None:
             raw["live_utterance"] = None
+            dirty = True
+
+        anim = raw.get("stage_animation")
+        if isinstance(anim, dict):
+            try:
+                if _parse_iso(str(anim["expires_at"])) <= now:
+                    raw["stage_animation"] = None
+                    dirty = True
+            except Exception:
+                raw["stage_animation"] = None
+                dirty = True
+        elif anim is not None:
+            raw["stage_animation"] = None
             dirty = True
 
         for gr in raw.get("device_grants") or []:
@@ -650,6 +664,41 @@ class HoloStageManager:
 
         return effects
 
+    def trigger_stage_animation(
+        self,
+        *,
+        effect: str = "aurora_reveal",
+        label_nl: str = "",
+        privacy_level: Literal["shared", "private_household"] = "shared",
+        ttl_seconds: int = 24,
+        now: datetime | None = None,
+    ) -> dict[str, Any]:
+        ts = _utc_now(now)
+        valid_effects = {
+            "aurora_reveal",
+            "celebration",
+            "cinema_spotlight",
+            "pulse_energy",
+            "wave_greeting",
+        }
+        clean_effect = effect if effect in valid_effects else "aurora_reveal"
+        clean_label = re.sub(r"\s+", " ", (label_nl or "")).strip()[:96]
+        clamped_ttl = max(6, min(120, int(ttl_seconds)))
+        anim = {
+            "animation_id": "anim_" + secrets.token_hex(6),
+            "effect": clean_effect,
+            "label_nl": clean_label,
+            "privacy_level": privacy_level,
+            "created_at": _iso(ts),
+            "expires_at": _iso(ts + timedelta(seconds=clamped_ttl)),
+        }
+        with self._locked():
+            state = self._read_unlocked(ts)
+            state["stage_animation"] = anim
+            state["updated_at"] = _iso(ts)
+            self._write_unlocked(state)
+        return anim
+
     # --- Spotlight Cards ("Op het scherm toveren") ---
     def summon_spotlight_card(
         self,
@@ -657,6 +706,7 @@ class HoloStageManager:
         title: str,
         body_nl: str,
         items: list[str] | None = None,
+        theme: str = "spotlight",
         privacy_level: Literal["shared", "private_household"] = "shared",
         ttl_minutes: int = 60,
         now: datetime | None = None,
@@ -665,6 +715,7 @@ class HoloStageManager:
         clean_title = _clean_text(title, field_name="Kaarttitel", max_len=96)
         clean_body = _clean_text(body_nl, field_name="Kaartinhoud", max_len=800)
         clean_items = [_clean_text(str(x), field_name="Kaartregel", max_len=140) for x in (items or [])[:16] if str(x).strip()]
+        clean_theme = theme if theme in {"spotlight", "leaderboard", "climate", "celebration", "aurora"} else "spotlight"
         clamped_ttl = max(1, min(1440, int(ttl_minutes)))
         card_id = "card_" + secrets.token_hex(5)
         card = StageSpotlightCard(
@@ -672,6 +723,7 @@ class HoloStageManager:
             title=clean_title,
             body_nl=clean_body,
             items=clean_items,
+            theme=clean_theme,
             privacy_level=privacy_level,
             created_at=_iso(ts),
             expires_at=_iso(ts + timedelta(minutes=clamped_ttl)),
@@ -1177,6 +1229,15 @@ class HoloStageManager:
                 "household_candidate": bio_snap["household_candidate"] if allow_private else None,
             },
             "live_utterance": visible_utterance,
+            "stage_animation": (
+                raw.get("stage_animation")
+                if isinstance(raw.get("stage_animation"), dict)
+                and (
+                    raw["stage_animation"].get("privacy_level") != "private_household"
+                    or allow_private
+                )
+                else None
+            ),
             "cards": {
                 "active_focus": str(visible_conjured[0] if visible_conjured else "none"),
                 "conjured_cards": visible_conjured,

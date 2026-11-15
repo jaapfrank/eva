@@ -133,7 +133,10 @@ def test_provider_bundle_registers_tools_without_core_branch(
     assert "list_email_messages" in {
         descriptor.name for descriptor in bundle.conversation_tools
     }
-    assert len(bundle.external_tools) == 7
+    assert "control_or_read_smart_home" in {
+        name for tools in bundle.external_tools for name in tools.action_names
+    }
+    assert len(bundle.external_tools) == 8
     assert bundle.event_source is not None
 
 

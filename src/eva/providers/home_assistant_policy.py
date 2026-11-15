@@ -5,7 +5,8 @@ Pure metadata does not configure a provider, grant a capability or contact HA.
 READ_ACTIONS = frozenset({"read_home_assistant_inventory", "read_home_assistant_state",
                           "read_home_assistant_history", "home_assistant_request"})
 DIRECT_ACTIONS = frozenset({"read_home_assistant_inventory", "home_assistant_request",
-                            "set_home_assistant_light", "set_home_assistant_switch"})
+                            "set_home_assistant_light", "set_home_assistant_switch",
+                            "control_or_read_smart_home"})
 TOOL_GROUPS = (
     ("eva_home", "Use Home Assistant devices, services, states, history, and automations.",
      ("home_assistant_request", "read_home_assistant_inventory", "read_home_assistant_state", "read_home_assistant_history",

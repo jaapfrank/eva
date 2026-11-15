@@ -418,12 +418,87 @@ HOLOSTAGE_HTML = """<!doctype html>
     }
     .conjured-overlay[hidden] { display: none !important; }
     .holo-card {
+      position: relative; overflow: hidden;
       background: var(--card);
-      border: 1px solid rgba(56, 189, 248, 0.34);
-      border-radius: 18px; padding: 16px 18px;
-      box-shadow: 0 18px 44px rgba(2, 6, 23, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      animation: holoMaterialize 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 20px; padding: 16px 18px;
+      box-shadow: 0 20px 48px rgba(2, 6, 23, 0.62), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      animation: holoMaterialize 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .holo-card::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(125deg, rgba(56, 189, 248, 0.14) 0%, transparent 38%, rgba(16, 185, 129, 0.08) 100%);
+    }
+    .holo-card.theme-leaderboard {
+      border-color: rgba(34, 211, 238, 0.58);
+      box-shadow: 0 22px 54px rgba(2, 6, 23, 0.72), 0 0 28px rgba(34, 211, 238, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+    .lb-list { list-style: none; padding: 0; margin: 10px 0 0 0; display: flex; flex-direction: column; gap: 6px; }
+    .lb-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 11px; border-radius: 12px;
+      background: rgba(8, 16, 32, 0.68);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      font-size: 0.91rem; font-weight: 500;
+      opacity: 0; transform: translateX(14px);
+      animation: lbRowSlide 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes lbRowSlide {
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .lb-rank {
+      min-width: 28px; height: 26px; padding: 0 6px; border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 800; letter-spacing: -0.02em;
+      background: rgba(51, 65, 85, 0.75); color: #e2e8f0;
+    }
+    .lb-row.pos-1 { border-color: rgba(251, 191, 36, 0.48); background: linear-gradient(90deg, rgba(251, 191, 36, 0.16), rgba(8, 16, 32, 0.72)); }
+    .lb-row.pos-1 .lb-rank { background: linear-gradient(135deg, #fbbf24, #d97706); color: #0f172a; }
+    .lb-row.pos-2 { border-color: rgba(203, 213, 225, 0.38); background: linear-gradient(90deg, rgba(203, 213, 225, 0.12), rgba(8, 16, 32, 0.72)); }
+    .lb-row.pos-2 .lb-rank { background: linear-gradient(135deg, #e2e8f0, #94a3b8); color: #0f172a; }
+    .lb-row.pos-3 { border-color: rgba(217, 119, 6, 0.42); background: linear-gradient(90deg, rgba(217, 119, 6, 0.14), rgba(8, 16, 32, 0.72)); }
+    .lb-row.pos-3 .lb-rank { background: linear-gradient(135deg, #f59e0b, #b45309); color: #0f172a; }
+    body[data-mode="tv_cast"] .conjured-overlay {
+      top: 56px; right: 42px; bottom: 96px;
+      width: min(540px, 46vw);
+    }
+    body[data-mode="tv_cast"] .holo-card { padding: 20px 22px; }
+    body[data-mode="tv_cast"] .holo-card-head h2 { font-size: 1.22rem; }
+    body[data-mode="tv_cast"] .lb-row { font-size: 1.02rem; padding: 10px 14px; }
+
+    /* Atmospheric 3D Stage Choreography Glow Layer */
+    .stage-fx-layer {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      opacity: 0; transition: opacity 0.85s ease;
+    }
+    .stage-fx-layer[data-fx="aurora_reveal"],
+    .stage-fx-layer[data-fx="wave_greeting"] {
+      opacity: 1;
+      background:
+        radial-gradient(ellipse 68% 42% at 50% 14%, rgba(34, 211, 238, 0.24), transparent 70%),
+        radial-gradient(ellipse 55% 38% at 28% 24%, rgba(16, 185, 129, 0.19), transparent 68%),
+        radial-gradient(ellipse 52% 35% at 74% 22%, rgba(168, 85, 247, 0.16), transparent 68%);
+      animation: fxAuroraPulse 4.2s ease-in-out infinite alternate;
+    }
+    .stage-fx-layer[data-fx="cinema_spotlight"] {
+      opacity: 1;
+      background:
+        conic-gradient(from 165deg at 36% -8%, transparent 0deg, rgba(56, 189, 248, 0.20) 18deg, transparent 38deg),
+        radial-gradient(ellipse 60% 48% at 72% 48%, rgba(34, 211, 238, 0.16), transparent 72%);
+      animation: fxAuroraPulse 3.6s ease-in-out infinite alternate;
+    }
+    .stage-fx-layer[data-fx="celebration"],
+    .stage-fx-layer[data-fx="pulse_energy"] {
+      opacity: 1;
+      background:
+        radial-gradient(ellipse 64% 46% at 50% 22%, rgba(251, 191, 36, 0.20), transparent 70%),
+        radial-gradient(ellipse 58% 44% at 35% 65%, rgba(16, 185, 129, 0.18), transparent 70%);
+      animation: fxAuroraPulse 2.8s ease-in-out infinite alternate;
+    }
+    @keyframes fxAuroraPulse {
+      from { transform: scale(1.0) translateY(0); filter: hue-rotate(0deg); }
+      to   { transform: scale(1.05) translateY(-8px); filter: hue-rotate(14deg); }
     }
     @keyframes holoMaterialize {
       from { opacity: 0; transform: translateY(12px) scale(0.97); }
@@ -609,6 +684,7 @@ HOLOSTAGE_HTML = """<!doctype html>
   </aside>
 
   <!-- Conjure-on-demand floating hologram cards (hidden when conjured_cards == []) -->
+  <div class="stage-fx-layer" id="stage-fx-layer" data-fx=""></div>
   <aside class="conjured-overlay" id="conjured-overlay" hidden></aside>
 
   <!-- Discreet Owner Drawer for TV Cast, Card Toggles, Pairing & Voiceprints -->
@@ -699,6 +775,27 @@ HOLOSTAGE_HTML = """<!doctype html>
     let vowelFormant = 0.5;
     let cameraTargetX = 0.0;
     let lastSpokenUtteranceId = null;
+    let lastStageAnimationId = '';
+    let activeStageFx = '';
+    let stageFxStartedAt = 0;
+    let stageFxTimer = null;
+
+    function triggerStageChoreography(effectName, durationMs = 11000) {
+      const allowedFx = ['aurora_reveal', 'cinema_spotlight', 'celebration', 'pulse_energy', 'wave_greeting'];
+      const fx = allowedFx.includes(effectName) ? effectName : 'aurora_reveal';
+      activeStageFx = fx;
+      stageFxStartedAt = performance.now();
+      const layer = $('stage-fx-layer');
+      if (layer) layer.dataset.fx = fx;
+      if (stageFxTimer) clearTimeout(stageFxTimer);
+      stageFxTimer = setTimeout(() => {
+        activeStageFx = '';
+        if (layer) layer.dataset.fx = '';
+      }, Math.max(2500, Number(durationMs) || 11000));
+    }
+    if (currentMode === 'tv_cast') {
+      triggerStageChoreography('aurora_reveal', 9500);
+    }
     let activeRemoteTrack = null;
     let cameraStream = null;
     let cameraOpenSeq = 0;
@@ -1333,10 +1430,17 @@ HOLOSTAGE_HTML = """<!doctype html>
           }
         }
 
-        // Smooth camera pan when cards are conjured so Eva stands left of the hologram card
+        // Smooth camera pan & cinematic 3D stage choreography (Aurora / Spotlight / Celebration)
+        const fxAge = activeStageFx ? Math.max(0, (performance.now() - stageFxStartedAt) * 0.001) : 999.0;
+        const fxEnv = fxAge < 9.5 ? Math.sin(Math.min(1.0, fxAge / 0.85) * (Math.PI * 0.5)) * Math.max(0, 1.0 - Math.max(0, fxAge - 5.5) / 4.0) : 0.0;
         lookX += (cameraTargetX - lookX) * Math.min(1, dt * 5.0);
-        camera.position.x = lookX * 0.55;
-        camera.lookAt(lookX, 1.24, 0);
+        const cineArcX = fxEnv * Math.sin(fxAge * 0.85) * 0.14;
+        const cineZoomZ = 2.75 - fxEnv * (activeStageFx === 'cinema_spotlight' ? 0.22 : 0.34);
+        camera.position.x = lookX * 0.55 + cineArcX;
+        camera.position.y = 1.38 + fxEnv * 0.04;
+        camera.position.z += (cineZoomZ - camera.position.z) * Math.min(1, dt * 3.8);
+        camera.lookAt(lookX, 1.24 + fxEnv * 0.03, 0);
+        rimLight.intensity = 1.15 + fxEnv * 1.15 + voiceEnergy * 0.35;
 
         // --- Natural Humanoid Standing, Breathing, Eye Contact & Conversational Gestures ---
         if (avatarRoot) {
@@ -1437,51 +1541,71 @@ HOLOSTAGE_HTML = """<!doctype html>
             }
           }
 
-          // Relaxed shoulders & arms at sides + expressive alternating forearm/hand gestures when speaking
+          // Relaxed shoulders & arms at sides + expressive alternating forearm/hand gestures + stage greeting wave!
           const gEnv = speakActivity * (0.38 + 0.62 * Math.min(1, voiceEnergy * 1.4));
           const gLeft = Math.max(0, Math.sin(t * 2.15) * 0.65 + Math.sin(t * 1.15 + 0.5) * 0.35) * gEnv;
           const gRight = Math.max(0, Math.sin(t * 1.85 + 1.9) * 0.65 + Math.sin(t * 1.05 + 2.4) * 0.35) * gEnv;
+          const waveActive = (fxAge < 4.2 && (activeStageFx === 'aurora_reveal' || activeStageFx === 'wave_greeting' || activeStageFx === 'celebration'))
+            ? Math.sin(Math.min(1.0, fxAge / 0.55) * (Math.PI * 0.5)) * Math.max(0, 1.0 - Math.max(0, fxAge - 2.8) / 1.4)
+            : 0.0;
+          const presentActive = (fxAge < 5.5 && activeStageFx === 'cinema_spotlight')
+            ? Math.sin(Math.min(1.0, fxAge / 0.65) * (Math.PI * 0.5)) * Math.max(0, 1.0 - Math.max(0, fxAge - 3.8) / 1.7)
+            : 0.0;
+          const waveOsc = Math.sin(t * 7.2) * waveActive;
 
           poseBone('LeftShoulder', 0.0, 0.0, -breath * 0.016, smoothPose);
-          poseBone('RightShoulder', 0.0, 0.0, breath * 0.016, smoothPose);
+          poseBone('RightShoulder', 0.0, 0.0, breath * 0.016 + waveActive * 0.08, smoothPose);
 
           // +localZ on LeftArm / -localZ on RightArm relaxes arms inward toward body; -localX swings slightly forward
           poseBone('LeftArm', -0.03 - gLeft * 0.16, gLeft * 0.08, 0.11 - breath * 0.014 - gLeft * 0.04, smoothPose);
-          poseBone('RightArm', -0.03 - gRight * 0.16, -gRight * 0.08, -0.11 + breath * 0.014 + gRight * 0.04, smoothPose);
+          poseBone(
+            'RightArm',
+            -0.03 - gRight * 0.16 - waveActive * 0.68 - presentActive * 0.36,
+            -gRight * 0.08 - presentActive * 0.24,
+            -0.11 + breath * 0.014 + gRight * 0.04 - waveActive * 0.22 - presentActive * 0.18,
+            smoothPose
+          );
 
-          // -localX bends elbows naturally forward & upward during speech
+          // -localX bends elbows naturally forward & upward during speech, wave, or spotlight presentation
           poseBone('LeftForeArm', -0.07 - breath * 0.015 - gLeft * 0.42, gLeft * 0.14, 0.02, smoothPose);
-          poseBone('RightForeArm', -0.07 - breath * 0.015 - gRight * 0.44, -gRight * 0.14, -0.02, smoothPose);
+          poseBone(
+            'RightForeArm',
+            -0.07 - breath * 0.015 - gRight * 0.44 - waveActive * 1.12 - presentActive * 0.62,
+            -gRight * 0.14 + waveOsc * 0.28,
+            -0.02 + waveOsc * 0.22,
+            smoothPose
+          );
 
           poseBone('LeftHand', -gLeft * 0.12, gLeft * 0.18, gLeft * 0.15, smoothPose);
-          poseBone('RightHand', -gRight * 0.12, -gRight * 0.18, -gRight * 0.15, smoothPose);
+          poseBone('RightHand', -gRight * 0.12 - presentActive * 0.18, -gRight * 0.18 + waveOsc * 0.32, -gRight * 0.15 + waveOsc * 0.26, smoothPose);
         }
 
-        // Liquid-Core orbital neural field (`dx/dt` coupled harmonic drift modulated by voice & camera attention)
+        // Liquid-Core orbital neural field (`dx/dt` coupled harmonic drift modulated by voice, camera & stage choreography)
         const shieldNow = !!stageState?.privacy_shield?.active;
         const camNow = !!(cameraStream || stageState?.visual_copilot?.active);
         const pArr = neuralField.geo.attributes.position.array;
-        const orbitSpeed = 0.22 + voiceEnergy * 0.85 + (liveVoiceState === 'thinking' ? 0.45 : 0.0);
-        const radialTighten = camNow ? 0.86 : (liveVoiceState === 'thinking' ? 0.90 : (1.0 + voiceEnergy * 0.14));
+        const orbitSpeed = 0.22 + voiceEnergy * 0.85 + fxEnv * 1.15 + (liveVoiceState === 'thinking' ? 0.45 : 0.0);
+        const radialTighten = camNow ? 0.86 : (liveVoiceState === 'thinking' ? 0.90 : (1.0 + voiceEnergy * 0.14 + fxEnv * 0.22));
         for (let i = 0; i < neuralField.count; i++) {
           const s0 = neuralField.seeds[i * 4];
           const baseR = neuralField.seeds[i * 4 + 1] * radialTighten;
           const baseY = neuralField.seeds[i * 4 + 2];
           const w = neuralField.seeds[i * 4 + 3];
           const theta = s0 + t * orbitSpeed * w + Math.sin(t * 0.7 + s0) * 0.18;
-          const rNow = baseR + Math.sin(t * (1.4 * w) + s0 * 2.0) * (0.035 + voiceEnergy * 0.06);
-          const yNow = baseY + Math.sin(t * (0.95 * w) + s0) * (0.045 + voiceEnergy * 0.05);
+          const rNow = baseR + Math.sin(t * (1.4 * w) + s0 * 2.0) * (0.035 + voiceEnergy * 0.06 + fxEnv * 0.08);
+          const yNow = baseY + Math.sin(t * (0.95 * w) + s0) * (0.045 + voiceEnergy * 0.05 + fxEnv * 0.12);
           pArr[i * 3] = Math.cos(theta) * rNow;
           pArr[i * 3 + 1] = yNow;
           pArr[i * 3 + 2] = Math.sin(theta) * rNow - 0.10;
         }
         neuralField.geo.attributes.position.needsUpdate = true;
+        const fxColor = activeStageFx === 'celebration' ? 0xfbbf24 : (activeStageFx ? 0x22d3ee : null);
         neuralField.mat.color.setHex(
-          shieldNow ? 0xf59e0b : (camNow ? 0x22d3ee : (evaSpeaking || liveSession ? 0x10b981 : 0x38bdf8))
+          shieldNow ? 0xf59e0b : (fxColor || (camNow ? 0x22d3ee : (evaSpeaking || liveSession ? 0x10b981 : 0x38bdf8)))
         );
-        neuralField.mat.opacity = liveSession || camNow || evaSpeaking ? (0.48 + voiceEnergy * 0.34) : 0.32;
+        neuralField.mat.opacity = (liveSession || camNow || evaSpeaking || fxEnv > 0.05) ? Math.min(0.95, 0.48 + voiceEnergy * 0.34 + fxEnv * 0.36) : 0.32;
 
-        const pulse = 1.0 + (voiceEnergy * 0.30) + Math.sin(t * 2.1) * 0.02;
+        const pulse = 1.0 + (voiceEnergy * 0.30) + fxEnv * 0.34 + Math.sin(t * 2.1) * 0.02;
         halo.scale.setScalar(pulse);
         haloMat.color.setHex(
           shieldNow ? 0xf59e0b : (camNow ? 0x22d3ee : (evaSpeaking || liveSession ? 0x10b981 : 0x38bdf8))
@@ -1590,6 +1714,11 @@ HOLOSTAGE_HTML = """<!doctype html>
           const el = $('stage-tts-audio') || new Audio();
           el.muted = false;
           el.src = url;
+          try {
+            if ('preservesPitch' in el) el.preservesPitch = true;
+            if ('webkitPreservesPitch' in el) el.webkitPreservesPitch = true;
+            el.playbackRate = 1.09;
+          } catch (_e) {}
           attachElementAnalyser(el);
           ttsSpeaking = true;
           evaSpeaking = true;
@@ -1623,7 +1752,14 @@ HOLOSTAGE_HTML = """<!doctype html>
     }
 
     function playNeuralSpeech(text, reset = false) {
-      const clean = (text || '').trim();
+      const clean = String(text || '')
+        .replace(/\\[([^\\]]+)\\]\\(https?:\\/\\/[^)]+\\)/g, '$1')
+        .replace(/\\(\\s*https?:\\/\\/[^\\s)]+\\s*\\)/g, '')
+        .replace(/https?:\\/\\/\\S+/g, '')
+        .replace(/\\*\\*([^*]+)\\*\\*/g, '$1')
+        .replace(/\\*(\\S(?:[^*]*?\\S)?)\\*/g, '$1')
+        .replace(/\\s+/g, ' ')
+        .trim();
       if (!clean) return;
       if (reset) stopNeuralSpeechQueue();
       ttsQueue.push({ gen: ttsGeneration, urlPromise: fetchSpeechBlobUrl(clean) });
@@ -1943,16 +2079,37 @@ HOLOSTAGE_HTML = """<!doctype html>
 
         if (kind === 'custom_spotlight') {
           for (const sp of (st.cards.spotlights || [])) {
-            const listHtml = (sp.items || []).length
-              ? '<ul style="margin:8px 0 0 18px;padding:0">' + sp.items.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>'
-              : '';
+            const itemsArr = sp.items || [];
+            const isLeaderboard = sp.theme === 'leaderboard' || (
+              itemsArr.length >= 2 && itemsArr.filter(x => /^\\s*#?\\d+[.):\\s-]/.test(String(x))).length >= 2
+            );
+            let listHtml = '';
+            if (itemsArr.length) {
+              if (isLeaderboard) {
+                listHtml = '<ul class="lb-list">' + itemsArr.map((rawRow, idx) => {
+                  const sRow = String(rawRow).trim();
+                  const mRank = sRow.match(/^\\s*#?(\\d+)[.):\\s-]+\\s*(.*)$/);
+                  const rankNum = mRank ? parseInt(mRank[1], 10) : (idx + 1);
+                  const rowText = mRank ? mRank[2] : sRow;
+                  const posCls = rankNum <= 3 ? `pos-${rankNum}` : '';
+                  return `<li class="lb-row ${posCls}" style="animation-delay:${idx * 55}ms">
+                    <span class="lb-rank">#${rankNum}</span>
+                    <span style="flex:1">${esc(rowText)}</span>
+                  </li>`;
+                }).join('') + '</ul>';
+              } else {
+                listHtml = '<ul style="margin:8px 0 0 18px;padding:0">' + itemsArr.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>';
+              }
+            }
+            const themeCls = isLeaderboard ? 'theme-leaderboard' : '';
+            const icon = isLeaderboard ? '🏆' : (sp.theme === 'climate' ? '🌡️' : '✨');
             cardsHtml.push(`
-              <article class="holo-card">
+              <article class="holo-card ${themeCls}">
                 <div class="holo-card-head">
-                  <h2>✨ ${esc(sp.title)}</h2>
-                  <button type="button" class="btn-sm" data-dismiss-spot="${esc(sp.card_id)}">Sluit ✕</button>
+                  <h2>${icon} ${esc(sp.title)}</h2>
+                  ${currentMode === 'tv_cast' ? '' : `<button type="button" class="btn-sm" data-dismiss-spot="${esc(sp.card_id)}">Sluit ✕</button>`}
                 </div>
-                <div style="font-size:0.9rem;line-height:1.45">${esc(sp.body_nl)}${listHtml}</div>
+                <div style="font-size:0.92rem;line-height:1.48">${esc(sp.body_nl)}${listHtml}</div>
               </article>`);
           }
         }
@@ -2144,6 +2301,12 @@ HOLOSTAGE_HTML = """<!doctype html>
 
       renderConjuredCards(st);
       renderAdminDrawer(st);
+
+      const anim = st.stage_animation;
+      if (anim && anim.animation_id && anim.animation_id !== lastStageAnimationId) {
+        lastStageAnimationId = anim.animation_id;
+        triggerStageChoreography(anim.effect || 'aurora_reveal', 11500);
+      }
 
       // Ambient TV Cast mode: display and speak shared live utterances out of TV speakers
       const utt = st.live_utterance;
@@ -2814,6 +2977,7 @@ def install_dashboard_holostage(
                     title=str(payload.get("title") or ""),
                     body_nl=str(payload.get("body_nl") or ""),
                     items=items_list,
+                    theme=str(payload.get("theme") or "spotlight"),
                     privacy_level=priv,
                     ttl_minutes=ttl_val,
                 )

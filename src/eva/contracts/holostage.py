@@ -56,6 +56,7 @@ class StageSpotlightCard(BaseModel):
     title: str = Field(min_length=1, max_length=96)
     body_nl: str = Field(min_length=1, max_length=800)
     items: list[str] = Field(default_factory=list, max_length=16)
+    theme: str = Field(default="spotlight", max_length=32)
     privacy_level: Literal["shared", "private_household"] = "shared"
     created_at: str = Field(min_length=20, max_length=32)
     expires_at: str = Field(min_length=20, max_length=32)
