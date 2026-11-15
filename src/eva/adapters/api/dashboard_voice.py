@@ -45,10 +45,20 @@ def _origin_allowed(socket: WebSocket, allowed_origin: str) -> bool:
         return False
     if socket.headers.get("sec-fetch-site") == "cross-site":
         return False
-    allowed = urlsplit(allowed_origin)
+    host_header = socket.headers.get("host", "")
+    if not host_header or any(ch.isspace() or ch in "/?#@\\" for ch in host_header):
+        return False
+    try:
+        allowed = urlsplit(allowed_origin)
+        allowed_port = allowed.port
+        target = urlsplit(f"http://{host_header}")
+        target_port = target.port
+    except ValueError:
+        return False
     if (
         allowed.scheme != "http"
         or allowed.hostname not in _LOOPBACK_HOSTS
+        or (allowed_port is not None and not 1 <= allowed_port <= 65535)
         or allowed.username
         or allowed.password
         or allowed.path not in ("", "/")
@@ -56,12 +66,9 @@ def _origin_allowed(socket: WebSocket, allowed_origin: str) -> bool:
         or allowed.fragment
     ):
         return False
-    host_header = socket.headers.get("host", "")
-    if not host_header or any(ch.isspace() or ch in "/?#@\\" for ch in host_header):
-        return False
-    target = urlsplit(f"http://{host_header}")
     if (
         target.hostname not in _LOOPBACK_HOSTS
+        or (target_port is not None and not 1 <= target_port <= 65535)
         or target.username
         or target.password
         or target.path

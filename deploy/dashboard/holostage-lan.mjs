@@ -211,6 +211,19 @@ export function createHoloStageLanProxy({
         : '';
       if (STAGE_TOKEN_RE.test(headerTok)) checkHeaders['x-holostage-token'] = headerTok;
 
+      let settled = false;
+      const unavailable = {
+        allowed: false,
+        status: 503,
+        detail: 'Eva HoloStage spraakcontrole is tijdelijk niet bereikbaar.',
+      };
+      const finish = result => {
+        if (!settled) {
+          settled = true;
+          resolve(result);
+        }
+      };
+
       const checkReq = http.request(
         {
           hostname: '127.0.0.1',
@@ -223,8 +236,9 @@ export function createHoloStageLanProxy({
         checkRes => {
           const status = checkRes.statusCode || 502;
           if (status === 200) {
+            checkRes.on('error', () => {});
             checkRes.resume();
-            resolve({ allowed: true, status: 200, detail: null });
+            finish({ allowed: true, status: 200, detail: null });
             return;
           }
           const chunks = [];
@@ -233,6 +247,8 @@ export function createHoloStageLanProxy({
             total += chunk.length;
             if (total <= 4096) chunks.push(chunk);
           });
+          checkRes.on('error', () => finish(unavailable));
+          checkRes.on('aborted', () => finish(unavailable));
           checkRes.on('end', () => {
             let detail = null;
             try {
@@ -241,16 +257,19 @@ export function createHoloStageLanProxy({
                 detail = parsed.detail.trim().slice(0, 280);
               }
             } catch { /* fallback detail below */ }
-            resolve({ allowed: false, status, detail });
+            finish({ allowed: false, status, detail });
+          });
+          checkRes.on('close', () => {
+            if (!checkRes.complete) finish(unavailable);
           });
         }
       );
       checkReq.on('timeout', () => {
         checkReq.destroy();
-        resolve({ allowed: false, status: 503, detail: 'Eva HoloStage spraakcontrole is tijdelijk niet bereikbaar.' });
+        finish(unavailable);
       });
       checkReq.on('error', () => {
-        resolve({ allowed: false, status: 503, detail: 'Eva HoloStage spraakcontrole is tijdelijk niet bereikbaar.' });
+        finish(unavailable);
       });
       checkReq.end();
     });

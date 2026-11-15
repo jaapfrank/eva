@@ -40,10 +40,17 @@ function rawHttpJson({ port, method = 'POST', path, headers = {} }) {
 test('holostage-lan voice proxy forwards Core 403 detail and surfaces 503 when Core check fails', async () => {
   let grantStatus = 403;
   let grantBody = { detail: 'Privéschild is actief: live eigenaarsspraak is tijdelijk afgeschermd' };
+  let abortMidBody = false;
   let voiceHits = 0;
 
   const fakeCore = http.createServer((req, res) => {
     if (req.url === '/internal/v1/dashboard/holostage/voice-grant-check') {
+      if (abortMidBody) {
+        res.writeHead(403, { 'content-type': 'application/json; charset=utf-8', 'content-length': '120' });
+        res.write('{"detail":"afgebroken');
+        setImmediate(() => req.socket.destroy(new Error('simulated upstream TCP reset')));
+        return;
+      }
       res.writeHead(grantStatus, { 'content-type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify(grantBody));
       return;
@@ -103,7 +110,18 @@ test('holostage-lan voice proxy forwards Core 403 detail and surfaces 503 when C
     assert.equal(res200.json?.url, 'wss://jaap.diplodocus-goldeye.ts.net');
     assert.equal(voiceHits, 1);
 
-    // 3. When Core upstream is down, returns 503 instead of misleading 403
+    // 3. Upstream Core mid-body TCP reset after 403 headers resolves cleanly to 503 without hanging
+    abortMidBody = true;
+    const resMidReset = await rawHttpJson({
+      port: proxyPort,
+      path: '/internal/v1/dashboard/holostage/voice/session',
+      headers: funnelHeaders,
+    });
+    assert.equal(resMidReset.status, 503);
+    assert.match(resMidReset.json?.detail || '', /tijdelijk niet bereikbaar/);
+    abortMidBody = false;
+
+    // 4. When Core upstream is down, returns 503 instead of misleading 403
     await closeServer(fakeCore);
     const res503 = await rawHttpJson({
       port: proxyPort,

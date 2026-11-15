@@ -322,13 +322,16 @@ def test_loopback_owner_proxy_origin_accepted_while_forwarded_or_remote_rejected
                 "reply", "audio", "audio_end", "turn_finished"
             ]
 
-    # Forwarding headers, cross-site fetch metadata, mismatched Origin/Host, or non-loopback peer fail closed (1008)
+    # Forwarding headers, cross-site fetch metadata, malformed Host/port, mismatched Origin/Host, or non-loopback peer fail closed (1008)
     denied_cases = [
         ("127.0.0.1", {**proxy_hdrs, "x-forwarded-for": "10.0.20.99"}),
         ("127.0.0.1", {**proxy_hdrs, "forwarded": "for=10.0.20.99"}),
         ("127.0.0.1", {**proxy_hdrs, "sec-fetch-site": "cross-site"}),
         ("127.0.0.1", {**proxy_hdrs, "origin": "http://localhost:44711"}),
         ("127.0.0.1", {**proxy_hdrs, "host": "evil.test:44710", "origin": "http://evil.test:44710"}),
+        ("127.0.0.1", {**proxy_hdrs, "host": "[invalid", "origin": "http://[invalid"}),
+        ("127.0.0.1", {**proxy_hdrs, "host": "::1", "origin": "http://::1"}),
+        ("127.0.0.1", {**proxy_hdrs, "host": "localhost:abc", "origin": "http://localhost:abc"}),
         ("10.0.20.99", proxy_hdrs),
     ]
     for peer_ip, hdrs in denied_cases:
