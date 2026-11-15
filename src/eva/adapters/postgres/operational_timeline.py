@@ -1045,10 +1045,31 @@ def _state_from_event(event: TimelineEvent) -> CheckpointState:
     return state
 
 
+_POST_ISOLATION_RETAIN_EVENTS = frozenset({
+    "MEMORY_REFLECTION_CLAIMED",
+    "MEMORY_RETAIN_ERASED",
+    "MEMORY_RETAIN_RESULT_RECONCILED",
+})
+
+
 def _has_verified_chronology_isolation(events: tuple[TimelineEvent, ...]) -> bool:
-    if len(events) < 2 or events[-1].event_type != "MEMORY_RETAIN_CHRONOLOGY_ISOLATED":
+    if len(events) < 2:
         return False
-    data = events[-1].payload.get("data")
+    isolated_indices = [
+        index
+        for index, item in enumerate(events)
+        if item.event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED"
+    ]
+    if len(isolated_indices) != 1 or isolated_indices[0] < 1:
+        return False
+    iso_index = isolated_indices[0]
+    isolated_event = events[iso_index]
+    if any(
+        item.event_type not in _POST_ISOLATION_RETAIN_EVENTS
+        for item in events[iso_index + 1:]
+    ):
+        return False
+    data = isolated_event.payload.get("data")
     if not isinstance(data, dict) or data.get("contract") != "EvaHistoricalChronologyIsolation/v1":
         return False
     tail_expected = canonical_sha256([
@@ -1059,7 +1080,7 @@ def _has_verified_chronology_isolation(events: tuple[TimelineEvent, ...]) -> boo
             "occurred_at": item.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "payload_sha256": item.payload_sha256,
         }
-        for item in events[1:-1]
+        for item in events[1:iso_index]
     ])
     if data.get("tail_history_sha256") != tail_expected:
         return False
@@ -1081,11 +1102,16 @@ def _has_verified_chronology_isolation(events: tuple[TimelineEvent, ...]) -> boo
                 "occurred_at": item.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 "payload_sha256": first_hash if index == 0 else item.payload_sha256,
             }
-            for index, item in enumerate(events[:-1])
+            for index, item in enumerate(events[:iso_index])
         ]
         if data.get("source_history_sha256") != canonical_sha256(records):
             return False
-    return events[-1].occurred_at >= max(item.occurred_at for item in events[:-1])
+    if isolated_event.occurred_at < max(item.occurred_at for item in events[:iso_index]):
+        return False
+    return all(
+        later.occurred_at >= earlier.occurred_at
+        for earlier, later in zip(events[iso_index:], events[iso_index + 1:])
+    )
 
 
 

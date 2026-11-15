@@ -14,7 +14,9 @@ import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.memory_outbox import (
-    conversation_memory_document_from_outbox_data, PostgresMemoryOutbox,
+    PostgresMemoryOutbox,
+    conversation_memory_document_from_outbox_data,
+    validate_historical_retain_prefix,
 )
 from eva.adapters.postgres.operational_timeline import (
     CheckpointState,
@@ -1238,6 +1240,7 @@ class PostgresPeopleMemoryOverview:
                         "memory retention attempt is out of order",
                         "memory retention success is out of order",
                         "memory retention terminal state is out of order",
+                        "erased memory source is not terminal",
                     }:
                         return "unavailable", "historical_protocol_attention"
                     raise
@@ -1279,8 +1282,15 @@ class PostgresPeopleMemoryOverview:
         if isinstance(document, CompactedPrivateMemorySource):
             history_records[0]["payload_sha256"] = document.content_compaction.queued_payload_sha256
         history_hash = canonical_sha256(history_records)
+        prior_isolated_needs_help = (
+            previous.event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED"
+            and isinstance(previous.payload.get("data"), dict)
+            and previous.payload["data"].get("contract") == "EvaHistoricalChronologyIsolation/v1"
+            and previous.payload["data"].get("terminal_disposition") == "needs_help"
+        )
         if (event.event_type != "MEMORY_RETAIN_RESULT_RECONCILED"
-                or previous.event_type not in {"MEMORY_RETAIN_NEEDS_HELP", "MEMORY_RETAIN_RETRY_SCHEDULED"}
+                or (previous.event_type not in {"MEMORY_RETAIN_NEEDS_HELP", "MEMORY_RETAIN_RETRY_SCHEDULED"}
+                    and not prior_isolated_needs_help)
                 or set(data) != {"document_id", "bank_id", "content_sha256", "operation_id",
                     "selected_fact_count", "disposition", "proof_sha256", "source_history_sha256"}
                 or data["document_id"] != document.document_id
@@ -1309,39 +1319,51 @@ class PostgresPeopleMemoryOverview:
         self, state: CheckpointState, events: tuple[TimelineEvent, ...]
     ) -> MemoryFlowState | None:
         """Accept an explicitly isolated historical chronology without declaring its prefix valid."""
-        if len(events) < 2 or events[-1].event_type != "MEMORY_RETAIN_CHRONOLOGY_ISOLATED":
+        if len(events) < 2:
             return None
+        isolated_indices = [
+            index
+            for index, item in enumerate(events)
+            if item.event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED"
+        ]
+        if len(isolated_indices) != 1 or isolated_indices[0] < 1:
+            return None
+        iso_index = isolated_indices[0]
         try:
             for event in events:
                 self._event_data(event)
-            first = events[0]
-            queued_data = self._event_data(first)
+            if tuple(item.sequence for item in events) != tuple(range(1, len(events) + 1)):
+                return None
+            prefix = events[:iso_index]
+            isolated_event = events[iso_index]
+            post_events = events[iso_index + 1:]
+            validated = validate_historical_retain_prefix(
+                self._timeline,
+                tenant_id=self._tenant_id,
+                installation_id=self._installation_id,
+                thread_id=state.thread_id,
+                prefix=prefix,
+            )
+            if validated.defect_code is None:
+                return None
+            operation_id = str(uuid5(NAMESPACE_URL, validated.document_id))
+            if any(item.operation_id != operation_id for item in events):
+                return None
+            if isolated_event.occurred_at < max(item.occurred_at for item in prefix):
+                return None
+            if any(
+                later.occurred_at < earlier.occurred_at
+                for earlier, later in zip(events[iso_index:], events[iso_index + 1:])
+            ):
+                return None
+            queued_data = self._event_data(events[0])
             erasure = queued_data.get("content_erasure")
             document = (
                 _erased_memory_status_source(queued_data)
                 if erasure is not None
                 else conversation_memory_document_from_outbox_data(queued_data)
             )
-            source_content_sha256 = (
-                None
-                if isinstance(document, _ErasedMemoryStatusSource)
-                else document.content_compaction.content_sha256
-                if isinstance(document, CompactedPrivateMemorySource)
-                else hashlib.sha256(document.content.encode()).hexdigest()
-            )
-            operation_id = str(uuid5(NAMESPACE_URL, document.document_id))
-            if (
-                first.event_type != "MEMORY_RETAIN_QUEUED"
-                or document.tenant_id != self._tenant_id
-                or document.installation_id != self._installation_id
-                or state.thread_id != PostgresMemoryOutbox._thread_id(document.document_id)
-                or any(event.operation_id != operation_id for event in events)
-                or state.status != "completed"
-            ):
-                return None
-            self._require_event_state(first, phase="memory_queued", status="active", retry_count=0)
-            last = events[-1]
-            data = self._event_data(last)
+            data = self._event_data(isolated_event)
             expected_keys = {
                 "contract",
                 "document_id",
@@ -1354,7 +1376,7 @@ class PostgresPeopleMemoryOverview:
             if (
                 set(data) != expected_keys
                 or data["contract"] != "EvaHistoricalChronologyIsolation/v1"
-                or data["document_id"] != document.document_id
+                or data["document_id"] != validated.document_id
                 or not isinstance(data["proof_sha256"], str)
                 or not _SHA256.fullmatch(data["proof_sha256"])
                 or not isinstance(data["source_history_sha256"], str)
@@ -1363,7 +1385,7 @@ class PostgresPeopleMemoryOverview:
                 or not _SHA256.fullmatch(data["tail_history_sha256"])
             ):
                 return None
-            history_records = [
+            tail_records = [
                 {
                     "event_id": str(item.event_id),
                     "sequence": item.sequence,
@@ -1371,59 +1393,177 @@ class PostgresPeopleMemoryOverview:
                     "occurred_at": item.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                     "payload_sha256": item.payload_sha256,
                 }
-                for item in events[:-1]
+                for item in prefix[1:]
             ]
-            if isinstance(document, CompactedPrivateMemorySource):
-                history_records[0]["payload_sha256"] = document.content_compaction.queued_payload_sha256
-            if data["tail_history_sha256"] != canonical_sha256(history_records[1:]):
+            if data["tail_history_sha256"] != canonical_sha256(tail_records):
                 return None
-            if (
-                not isinstance(document, _ErasedMemoryStatusSource)
-                and data["source_history_sha256"] != canonical_sha256(history_records)
-            ):
+            if validated.erased_at is None and data["source_history_sha256"] != validated.source_history_sha256:
                 return None
-            prior = events[-2].payload["checkpoint"]
+
             disposition = data["terminal_disposition"]
-            if erasure is not None:
-                if state.phase not in {"memory_erased", "memory_not_selected", "memory_retained"}:
-                    return None
-                self._require_event_state(
-                    last,
-                    phase=state.phase,
-                    status="completed",
-                    retry_count=prior["retry_count"],
-                    last_error_fingerprint=prior["last_error_fingerprint"],
-                )
-                return "no_signals"
-            if data["content_sha256"] != source_content_sha256:
-                return None
-            if disposition == "retained":
-                if state.phase != "memory_retained" or not any(
-                    item.event_type == "MEMORY_RETAIN_SUCCEEDED"
-                    and self._event_data(item).get("document_id") == document.document_id
-                    and self._event_data(item).get("content_sha256") == source_content_sha256
-                    for item in events[:-1]
+            iso_cp = isolated_event.payload["checkpoint"]
+            if disposition == "erased":
+                if (
+                    validated.erased_at is None
+                    or data["content_sha256"] != "erased"
+                    or post_events
+                    or iso_cp["phase"] not in {"memory_erased", "memory_not_selected", "memory_retained"}
+                    or state.phase != iso_cp["phase"]
+                    or state.status != "completed"
                 ):
                     return None
                 self._require_event_state(
-                    last,
-                    phase="memory_retained",
+                    isolated_event,
+                    phase=str(iso_cp["phase"]),
                     status="completed",
-                    retry_count=prior["retry_count"],
-                    last_error_fingerprint=prior["last_error_fingerprint"],
+                    retry_count=validated.prefix_retry_count,
+                    last_error_fingerprint=validated.prefix_last_error_fingerprint,
                 )
-                return "up_to_date"
-            if disposition == "not_selected":
-                if state.phase != "memory_not_selected":
+                return "no_signals"
+
+            if not isinstance(data["content_sha256"], str) or not _SHA256.fullmatch(data["content_sha256"]):
+                return None
+            if validated.observed_content_sha256 is not None and data["content_sha256"] != validated.observed_content_sha256:
+                return None
+            if validated.erased_at is None and data["content_sha256"] != validated.source_content_sha256:
+                return None
+
+            if disposition == "retained":
+                if (
+                    prefix[-1].event_type not in {"MEMORY_RETAIN_SUCCEEDED", "MEMORY_REFLECTION_CLAIMED"}
+                    or not any(
+                        item.event_type == "MEMORY_RETAIN_SUCCEEDED"
+                        and self._event_data(item).get("document_id") == validated.document_id
+                        and self._event_data(item).get("content_sha256") == data["content_sha256"]
+                        for item in prefix[1:]
+                    )
+                ):
                     return None
                 self._require_event_state(
-                    last,
+                    isolated_event,
+                    phase="memory_retained",
+                    status="completed",
+                    retry_count=validated.prefix_retry_count,
+                    last_error_fingerprint=validated.prefix_last_error_fingerprint,
+                )
+                if len(post_events) > 1:
+                    return None
+                if len(post_events) == 1:
+                    claim_event = post_events[0]
+                    if (
+                        claim_event.event_type != "MEMORY_REFLECTION_CLAIMED"
+                        or validated.audience.kind != "private_person"
+                        or any(item.event_type == "MEMORY_REFLECTION_CLAIMED" for item in prefix[1:])
+                        or self._event_data(claim_event) != {
+                            "principal_sha256": hashlib.sha256(validated.principal_id.encode()).hexdigest(),
+                            "document_sha256": hashlib.sha256(validated.document_id.encode()).hexdigest(),
+                            "meaning": "dispatch claimed; completion and outcome recorded separately",
+                        }
+                    ):
+                        return None
+                    self._require_event_state(
+                        claim_event,
+                        phase="memory_retained",
+                        status="completed",
+                        retry_count=validated.prefix_retry_count,
+                        last_error_fingerprint=None,
+                    )
+                if state.phase != "memory_retained" or state.status != "completed":
+                    return None
+                if validated.erased_at is not None:
+                    if validated.erased_at < events[-1].occurred_at:
+                        return None
+                    return "no_signals"
+                return "up_to_date"
+
+            if disposition == "not_selected":
+                if (
+                    post_events
+                    or prefix[-1].event_type not in {"MEMORY_RETAIN_NOT_SELECTED", "MEMORY_RETAIN_RESULT_RECONCILED"}
+                    or not any(
+                        item.event_type in {"MEMORY_RETAIN_NOT_SELECTED", "MEMORY_RETAIN_RESULT_RECONCILED"}
+                        and self._event_data(item).get("document_id") == validated.document_id
+                        and self._event_data(item).get("content_sha256") == data["content_sha256"]
+                        and self._event_data(item).get("selected_fact_count") == 0
+                        for item in prefix[1:]
+                    )
+                ):
+                    return None
+                self._require_event_state(
+                    isolated_event,
                     phase="memory_not_selected",
                     status="completed",
-                    retry_count=prior["retry_count"],
-                    last_error_fingerprint=prior["last_error_fingerprint"],
+                    retry_count=validated.prefix_retry_count,
+                    last_error_fingerprint=validated.prefix_last_error_fingerprint,
                 )
+                if state.phase != "memory_not_selected" or state.status != "completed":
+                    return None
+                if validated.erased_at is not None:
+                    if validated.erased_at < events[-1].occurred_at:
+                        return None
+                    return "no_signals"
                 return "up_to_date"
+
+            if disposition == "needs_help":
+                if prefix[-1].event_type != "MEMORY_RETAIN_NEEDS_HELP":
+                    return None
+                self._require_event_state(
+                    isolated_event,
+                    phase="memory_needs_help",
+                    status="needs_help",
+                    retry_count=validated.prefix_retry_count,
+                    last_error_fingerprint=validated.prefix_last_error_fingerprint,
+                )
+                if not post_events:
+                    if (
+                        validated.erased_at is not None
+                        or state.phase != "memory_needs_help"
+                        or state.status != "needs_help"
+                    ):
+                        return None
+                    return "needs_help"
+                if len(post_events) != 1:
+                    return None
+                tail_event = post_events[0]
+                if tail_event.event_type == "MEMORY_RETAIN_ERASED":
+                    if (
+                        validated.erased_at is None
+                        or validated.erasure is None
+                        or self._event_data(tail_event) != {
+                            "contract": "EvaMemoryOutboxErasure/v1",
+                            "document_sha256": hashlib.sha256(validated.document_id.encode()).hexdigest(),
+                            "operation_sha256": validated.erasure["operation_sha256"],
+                            "principal_sha256": validated.erasure["principal_sha256"],
+                            "status": "erased",
+                        }
+                        or tail_event.occurred_at != validated.erased_at
+                        or state.phase != "memory_erased"
+                        or state.status != "completed"
+                    ):
+                        return None
+                    self._require_event_state(
+                        tail_event,
+                        phase="memory_erased",
+                        status="completed",
+                        retry_count=validated.prefix_retry_count,
+                        last_error_fingerprint=validated.prefix_last_error_fingerprint,
+                    )
+                    return "no_signals"
+                if tail_event.event_type == "MEMORY_RETAIN_RESULT_RECONCILED":
+                    self._validate_closed_reconciliation(
+                        document,
+                        None if validated.erased_at is not None else validated.source_content_sha256,
+                        events,
+                    )
+                    if state.phase != "memory_not_selected" or state.status != "completed":
+                        return None
+                    if validated.erased_at is not None:
+                        if validated.erased_at < tail_event.occurred_at:
+                            return None
+                        return "no_signals"
+                    return "up_to_date"
+                return None
+
             return None
         except Exception:
             return None
@@ -1570,8 +1710,9 @@ class PostgresPeopleMemoryOverview:
                                           retry_count=attempt)
                 result = "up_to_date"
             elif event.event_type == "MEMORY_RETAIN_NOT_SELECTED":
-                if (prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"}
-                        or set(data) != {"bank_id", "content_sha256", "document_id", "selected_fact_count", "operation_id"}
+                if prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"}:
+                    raise PeopleMemoryOverviewError("memory retention success is out of order")
+                if (set(data) != {"bank_id", "content_sha256", "document_id", "selected_fact_count", "operation_id"}
                         or data["document_id"] != document.document_id
                         or not isinstance(data["content_sha256"], str)
                         or not _SHA256.fullmatch(data["content_sha256"])

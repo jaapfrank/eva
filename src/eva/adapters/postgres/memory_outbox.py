@@ -17,6 +17,7 @@ from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
     CheckpointState,
     PostgresOperationalTimeline,
+    TimelineEvent,
     TimelineScope,
     operational_checkpoints,
     operational_events,
@@ -1137,11 +1138,18 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                     or events[-1].payload.get("data") != data):
                 raise RuntimeError("closed memory reconciliation replay differs")
             return current
+        prior_isolated_needs_help = (
+            events[-1].event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED"
+            and isinstance(events[-1].payload.get("data"), dict)
+            and events[-1].payload["data"].get("contract") == "EvaHistoricalChronologyIsolation/v1"
+            and events[-1].payload["data"].get("terminal_disposition") == "needs_help"
+        )
         if (current.revision != job.state.revision
                 or (current.phase, current.status) not in {
                     ("memory_needs_help", "needs_help"), ("memory_retry", "failed")}
-                or events[-1].event_type not in {
-                    "MEMORY_RETAIN_NEEDS_HELP", "MEMORY_RETAIN_RETRY_SCHEDULED"}):
+                or (events[-1].event_type not in {
+                    "MEMORY_RETAIN_NEEDS_HELP", "MEMORY_RETAIN_RETRY_SCHEDULED"}
+                    and not prior_isolated_needs_help)):
             raise RuntimeError("closed memory reconciliation job is no longer failed")
         return self._timeline.transition(
             thread_id=current.thread_id, expected_revision=current.revision,
@@ -1153,73 +1161,70 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         )
 
     def isolate_historical_chronology(
-        self, thread_id: str, *, proof_sha256: str, now: datetime,
+        self,
+        thread_id: str,
+        *,
+        proof_sha256: str,
+        now: datetime,
+        cutoff_utc: datetime | None = None,
     ) -> CheckpointState:
         """Append an explicit, hash-bound boundary isolating historical chronology defects."""
-        if (not isinstance(thread_id, str) or not re.fullmatch(r"memory-retain:[0-9a-f]{64}", thread_id)
-                or not isinstance(proof_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", proof_sha256)):
+        if (
+            not isinstance(thread_id, str)
+            or not re.fullmatch(r"memory-retain:[0-9a-f]{64}", thread_id)
+            or not isinstance(proof_sha256, str)
+            or not re.fullmatch(r"[0-9a-f]{64}", proof_sha256)
+        ):
             raise RuntimeError("historical chronology isolation parameters are invalid")
+        if (
+            not isinstance(now, datetime)
+            or now.tzinfo is None
+            or now.utcoffset() != UTC.utcoffset(now)
+            or now.microsecond
+        ):
+            raise ValueError("historical chronology isolation time must be whole-second UTC")
+        if cutoff_utc is not None and (
+            not isinstance(cutoff_utc, datetime)
+            or cutoff_utc.tzinfo is None
+            or cutoff_utc.utcoffset() != UTC.utcoffset(cutoff_utc)
+            or cutoff_utc.microsecond
+        ):
+            raise ValueError("historical chronology cutoff time must be whole-second UTC")
         current = self._timeline.load(thread_id)
         events = self._timeline.events(thread_id)
-        if len(events) < 2 or events[0].event_type != "MEMORY_RETAIN_QUEUED":
-            raise RuntimeError("historical chronology isolation requires queued history")
-        queued_data = events[0].payload.get("data") if isinstance(events[0].payload, dict) else None
-        if not isinstance(queued_data, dict):
-            raise RuntimeError("historical chronology isolation source is malformed")
-        erasure = queued_data.get("content_erasure")
-        document_id = queued_data.get("document_id")
-        if (not isinstance(document_id, str) or not document_id
-                or thread_id != self._thread_id(document_id)
-                or queued_data.get("tenant_id") != self._tenant_id
-                or queued_data.get("installation_id") != self._installation_id):
-            raise RuntimeError("historical chronology isolation source scope differs")
-        operation_id = str(uuid5(NAMESPACE_URL, document_id))
-        if any(event.operation_id != operation_id for event in events):
-            raise RuntimeError("historical chronology isolation operation binding differs")
-        prefix = events[:-1] if events[-1].event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED" else events
-        if erasure is not None:
-            content_sha256 = "erased"
-            terminal_disposition = "erased"
-            target_phase = current.phase if current.phase in {"memory_erased", "memory_not_selected", "memory_retained"} else "memory_erased"
+        isolated_indices = [
+            index
+            for index, item in enumerate(events)
+            if item.event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED"
+        ]
+        if len(isolated_indices) > 1:
+            raise RuntimeError("historical chronology has multiple isolation boundaries")
+        if isolated_indices:
+            iso_index = isolated_indices[0]
+            if iso_index < 1 or any(
+                item.event_type not in {
+                    "MEMORY_REFLECTION_CLAIMED",
+                    "MEMORY_RETAIN_ERASED",
+                    "MEMORY_RETAIN_RESULT_RECONCILED",
+                }
+                for item in events[iso_index + 1:]
+            ):
+                raise RuntimeError("historical chronology post-isolation events are invalid")
+            prefix = events[:iso_index]
         else:
-            document = self._document_from_data(queued_data)
-            content_sha256 = (
-                document.content_compaction.content_sha256
-                if isinstance(document, CompactedPrivateMemorySource)
-                else hashlib.sha256(document.content.encode("utf-8")).hexdigest()
-            )
-            if current.phase == "memory_retained" and current.status == "completed":
-                if not any(
-                    event.event_type == "MEMORY_RETAIN_SUCCEEDED"
-                    and isinstance(event.payload.get("data"), dict)
-                    and event.payload["data"].get("document_id") == document_id
-                    and event.payload["data"].get("content_sha256") == content_sha256
-                    for event in prefix
-                ):
-                    raise RuntimeError("historical retained chronology lacks matching success receipt")
-                terminal_disposition = "retained"
-                target_phase = "memory_retained"
-            elif current.phase in {"memory_not_selected", "memory_needs_help"}:
-                terminal_disposition = "not_selected"
-                target_phase = "memory_not_selected"
-            else:
-                raise RuntimeError("historical chronology state cannot be isolated")
-        compaction = queued_data.get("content_compaction")
-        first_hash = (
-            compaction.get("queued_payload_sha256")
-            if isinstance(compaction, dict) and isinstance(compaction.get("queued_payload_sha256"), str)
-            else prefix[0].payload_sha256
+            iso_index = None
+            prefix = events
+        validated = validate_historical_retain_prefix(
+            self._timeline,
+            tenant_id=self._tenant_id,
+            installation_id=self._installation_id,
+            thread_id=thread_id,
+            prefix=prefix,
         )
-        source_history_sha256 = canonical_sha256([
-            {
-                "event_id": str(event.event_id),
-                "sequence": event.sequence,
-                "event_type": event.event_type,
-                "occurred_at": event.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "payload_sha256": first_hash if index == 0 else event.payload_sha256,
-            }
-            for index, event in enumerate(prefix)
-        ])
+        if cutoff_utc is not None and prefix[0].occurred_at > cutoff_utc:
+            raise RuntimeError("historical chronology source is newer than cutoff")
+        if validated.defect_code is None:
+            raise RuntimeError("historical chronology is already valid")
         tail_history_sha256 = canonical_sha256([
             {
                 "event_id": str(event.event_id),
@@ -1230,19 +1235,46 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             }
             for event in prefix[1:]
         ])
+        if iso_index is not None:
+            existing_data = events[iso_index].payload.get("data")
+            if (
+                not isinstance(existing_data, dict)
+                or existing_data.get("contract") != "EvaHistoricalChronologyIsolation/v1"
+                or existing_data.get("document_id") != validated.document_id
+                or existing_data.get("tail_history_sha256") != tail_history_sha256
+                or existing_data.get("proof_sha256") != proof_sha256
+            ):
+                raise RuntimeError("historical chronology isolation replay differs")
+            if validated.erased_at is None:
+                if (
+                    existing_data.get("content_sha256") != validated.source_content_sha256
+                    or existing_data.get("source_history_sha256") != validated.source_history_sha256
+                ):
+                    raise RuntimeError("historical chronology isolation replay differs")
+            elif existing_data.get("terminal_disposition") == "erased":
+                if existing_data.get("content_sha256") != "erased":
+                    raise RuntimeError("historical chronology isolation replay differs")
+            elif validated.erased_at < events[iso_index].occurred_at:
+                raise RuntimeError("historical chronology isolation replay differs")
+            return current
+        if now < max(event.occurred_at for event in prefix):
+            raise RuntimeError("historical chronology isolation precedes latest event")
+        if validated.terminal_disposition is None or validated.target_phase is None or validated.target_status is None:
+            raise RuntimeError("historical chronology state cannot be isolated")
+        content_sha256 = (
+            "erased"
+            if validated.terminal_disposition == "erased"
+            else str(validated.source_content_sha256)
+        )
         data = {
             "contract": "EvaHistoricalChronologyIsolation/v1",
-            "document_id": document_id,
+            "document_id": validated.document_id,
             "content_sha256": content_sha256,
-            "terminal_disposition": terminal_disposition,
-            "source_history_sha256": source_history_sha256,
+            "terminal_disposition": validated.terminal_disposition,
+            "source_history_sha256": validated.source_history_sha256,
             "tail_history_sha256": tail_history_sha256,
             "proof_sha256": proof_sha256,
         }
-        if events[-1].event_type == "MEMORY_RETAIN_CHRONOLOGY_ISOLATED":
-            if events[-1].payload.get("data") != data:
-                raise RuntimeError("historical chronology isolation replay differs")
-            return current
         return self._timeline.transition(
             thread_id=current.thread_id,
             expected_revision=current.revision,
@@ -1251,10 +1283,10 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             occurred_at=now,
             data=data,
             event_type="MEMORY_RETAIN_CHRONOLOGY_ISOLATED",
-            phase=target_phase,
-            status="completed",
-            retry_count=current.retry_count,
-            last_error_fingerprint=current.last_error_fingerprint,
+            phase=validated.target_phase,
+            status=validated.target_status,  # type: ignore[arg-type]
+            retry_count=validated.prefix_retry_count,
+            last_error_fingerprint=validated.prefix_last_error_fingerprint,
         )
 
     def fail(
@@ -1459,9 +1491,666 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         )
 
 
+_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+_CHECKPOINT_SNAPSHOT_KEYS = frozenset({
+    "checkpoint_id",
+    "deadline",
+    "last_error_fingerprint",
+    "operation_id",
+    "phase",
+    "retry_count",
+    "revision",
+    "status",
+    "updated_at",
+})
+
+
+@dataclass(frozen=True, slots=True)
+class ValidatedHistoricalRetainPrefix:
+    """Verified structural, identity, and receipt facts for one retain timeline prefix."""
+
+    document_id: str
+    principal_id: str
+    audience: MemoryAudience
+    retention_mode: str
+    source_content_sha256: str | None
+    observed_content_sha256: str | None
+    source_history_sha256: str
+    erased_at: datetime | None
+    erasure: dict[str, object] | None
+    defect_code: str | None
+    terminal_disposition: str | None
+    target_phase: str | None
+    target_status: str | None
+    prefix_retry_count: int
+    prefix_last_error_fingerprint: str | None
+
+
+def _parse_utc_second_text(value: object, message: str) -> datetime:
+    if not isinstance(value, str):
+        raise RuntimeError(message)
+    try:
+        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
+    except ValueError as error:
+        raise RuntimeError(message) from error
+
+
+def _validate_retain_event_envelope(event: TimelineEvent) -> tuple[dict[str, object], dict[str, object]]:
+    if not isinstance(event.payload, dict) or set(event.payload) != {"checkpoint", "data"}:
+        raise RuntimeError("historical chronology event payload is malformed")
+    checkpoint = event.payload.get("checkpoint")
+    data = event.payload.get("data")
+    if not isinstance(checkpoint, dict) or not isinstance(data, dict):
+        raise RuntimeError("historical chronology event payload is malformed")
+    if set(checkpoint) != _CHECKPOINT_SNAPSHOT_KEYS:
+        raise RuntimeError("historical chronology event checkpoint is malformed")
+    retry_count = checkpoint.get("retry_count")
+    fingerprint = checkpoint.get("last_error_fingerprint")
+    if (
+        checkpoint["checkpoint_id"] != event.checkpoint_id
+        or checkpoint["operation_id"] != event.operation_id
+        or checkpoint["revision"] != event.sequence
+        or checkpoint["updated_at"] != event.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ")
+        or checkpoint["deadline"] is not None
+        or type(retry_count) is not int
+        or not 0 <= retry_count <= 3
+        or (fingerprint is not None and (not isinstance(fingerprint, str) or not _SHA256_RE.fullmatch(fingerprint)))
+    ):
+        raise RuntimeError("historical chronology event checkpoint differs")
+    return checkpoint, data
+
+
+def _validate_erased_queued_data(
+    data: dict[str, object],
+) -> tuple[str, str, str, str, MemoryAudience, str, str | None, str | None, datetime, dict[str, object]]:
+    required = {
+        "conversation_id",
+        "document_id",
+        "evidence_ref",
+        "installation_id",
+        "kind",
+        "occurred_at",
+        "principal_id",
+        "privacy_class",
+        "source_ref",
+        "tenant_id",
+        "trust",
+        "content_erasure",
+    }
+    optional = {"audience", "project_id", "retention_until", "retention_mode", "content_compaction"}
+    if (
+        not required <= set(data)
+        or set(data) - required - optional
+        or data["kind"] != "hindsight_memory_document"
+        or any(
+            not isinstance(data[key], str) or not data[key]
+            for key in required - {"content_erasure"}
+        )
+    ):
+        raise RuntimeError("erased memory source metadata is malformed")
+    proof = data["content_erasure"]
+    if (
+        not isinstance(proof, dict)
+        or set(proof) != {"contract", "erased_at", "message_sha256", "operation_sha256", "principal_sha256", "status"}
+        or proof["contract"] != "EvaConversationContentErasure/v1"
+        or proof["status"] != "erased"
+        or any(
+            not isinstance(proof[key], str) or not _SHA256_RE.fullmatch(proof[key])
+            for key in ("message_sha256", "operation_sha256", "principal_sha256")
+        )
+        or proof["message_sha256"] != hashlib.sha256(str(data["source_ref"]).encode("utf-8")).hexdigest()
+        or proof["principal_sha256"] != hashlib.sha256(str(data["principal_id"]).encode("utf-8")).hexdigest()
+    ):
+        raise RuntimeError("erased memory source proof differs")
+    occurred = _parse_utc_second_text(data["occurred_at"], "erased memory source time is malformed")
+    erased_at = _parse_utc_second_text(proof["erased_at"], "erased memory source time is malformed")
+    if erased_at < occurred:
+        raise RuntimeError("memory erasure precedes its source")
+    if "content_compaction" in data:
+        compacted = compacted_private_memory_source_from_data(
+            {key: value for key, value in data.items() if key != "content_erasure"}
+        )
+        return (
+            compacted.tenant_id,
+            compacted.installation_id,
+            compacted.document_id,
+            compacted.principal_id,
+            compacted.audience,
+            compacted.retention_mode,
+            compacted.content_compaction.content_sha256,
+            compacted.content_compaction.source_payload_sha256,
+            erased_at,
+            proof,
+        )
+    conversation_id = str(data["conversation_id"])
+    principal_id = str(data["principal_id"])
+    if "audience" in data:
+        audience = memory_audience_from_wire(data["audience"])
+    elif conversation_id.startswith("telegram:-"):
+        raise RuntimeError("erased group memory lacks its original audience")
+    else:
+        audience = MemoryAudience.private_person(principal_id=principal_id)
+    mode = str(data.get("retention_mode", "immediate"))
+    if (
+        audience.principal_id != principal_id
+        or mode not in {"dream", "immediate"}
+        or data["privacy_class"] not in {"public", "internal", "confidential", "restricted"}
+        or data["trust"] not in {
+            "direct_user",
+            "verified_external",
+            "host_policy",
+            "model_inference_unconfirmed",
+            "legacy_unverified",
+        }
+    ):
+        raise RuntimeError("erased memory source scope is invalid")
+    project = data.get("project_id")
+    if project is not None and (not isinstance(project, str) or not project.strip() or len(project) > 200):
+        raise RuntimeError("erased memory source project is invalid")
+    if data.get("retention_until") is not None:
+        retention_until = _parse_utc_second_text(
+            data["retention_until"], "erased memory retention time is malformed"
+        )
+        if retention_until < occurred:
+            raise RuntimeError("erased memory retention precedes its source")
+    document_id = str(data["document_id"])
+    if mode == "dream" and (
+        audience.kind != "private_person"
+        or data["trust"] != "direct_user"
+        or project is not None
+        or document_id != f"{conversation_id}:exchange:{data['source_ref']}"
+    ):
+        raise RuntimeError("erased dream source scope is invalid")
+    if audience.kind == "household":
+        prefix_conv = f"household:{audience.household_id}:conversation:"
+        if (
+            not conversation_id.startswith(prefix_conv)
+            or not conversation_id.removeprefix(prefix_conv)
+            or project is not None
+            or any(not str(data[key]).startswith(conversation_id + ":") for key in ("document_id", "source_ref", "evidence_ref"))
+        ):
+            raise RuntimeError("erased household source has cross-scope provenance")
+    return (
+        str(data["tenant_id"]),
+        str(data["installation_id"]),
+        document_id,
+        principal_id,
+        audience,
+        mode,
+        None,
+        None,
+        erased_at,
+        proof,
+    )
+
+
+def validate_historical_retain_prefix(
+    timeline: PostgresOperationalTimeline,
+    *,
+    tenant_id: str,
+    installation_id: str,
+    thread_id: str,
+    prefix: tuple[TimelineEvent, ...],
+) -> ValidatedHistoricalRetainPrefix:
+    """Validate every event in a retain prefix and classify any chronology-only defect."""
+    if len(prefix) < 2 or prefix[0].event_type != "MEMORY_RETAIN_QUEUED":
+        raise RuntimeError("historical chronology isolation requires queued history")
+    if tuple(item.sequence for item in prefix) != tuple(range(1, len(prefix) + 1)):
+        raise RuntimeError("historical chronology sequence is non-contiguous")
+    first_cp, queued_data = _validate_retain_event_envelope(prefix[0])
+    if (
+        first_cp["phase"] != "memory_queued"
+        or first_cp["status"] != "active"
+        or first_cp["retry_count"] != 0
+        or first_cp["last_error_fingerprint"] is not None
+    ):
+        raise RuntimeError("historical chronology initial checkpoint is malformed")
+    if "content_erasure" in queued_data:
+        (
+            doc_tenant,
+            doc_installation,
+            document_id,
+            principal_id,
+            audience,
+            retention_mode,
+            source_content_sha256,
+            source_payload_sha256,
+            erased_at,
+            erasure,
+        ) = _validate_erased_queued_data(queued_data)
+    else:
+        document = conversation_memory_document_from_outbox_data(queued_data)
+        doc_tenant = document.tenant_id
+        doc_installation = document.installation_id
+        document_id = document.document_id
+        principal_id = document.principal_id
+        audience = document.audience
+        retention_mode = document.retention_mode
+        source_content_sha256 = (
+            document.content_compaction.content_sha256
+            if isinstance(document, CompactedPrivateMemorySource)
+            else hashlib.sha256(document.content.encode("utf-8")).hexdigest()
+        )
+        source_payload_sha256 = (
+            document.content_compaction.source_payload_sha256
+            if isinstance(document, CompactedPrivateMemorySource)
+            else canonical_sha256(queued_data)
+        )
+        erased_at = None
+        erasure = None
+    if (
+        not document_id
+        or document_id.startswith("procedure-reference:")
+        or thread_id != PostgresMemoryOutbox._thread_id(document_id)
+        or doc_tenant != tenant_id
+        or doc_installation != installation_id
+    ):
+        raise RuntimeError("historical chronology isolation source scope differs")
+    operation_id = str(uuid5(NAMESPACE_URL, document_id))
+    if any(item.operation_id != operation_id for item in prefix):
+        raise RuntimeError("historical chronology isolation operation binding differs")
+
+    compaction = queued_data.get("content_compaction")
+    first_hash = (
+        compaction.get("queued_payload_sha256")
+        if isinstance(compaction, dict) and isinstance(compaction.get("queued_payload_sha256"), str)
+        else prefix[0].payload_sha256
+    )
+    history_records = [
+        {
+            "event_id": str(item.event_id),
+            "sequence": item.sequence,
+            "event_type": item.event_type,
+            "occurred_at": item.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "payload_sha256": first_hash if idx == 0 else item.payload_sha256,
+        }
+        for idx, item in enumerate(prefix)
+    ]
+    source_history_sha256 = canonical_sha256(history_records)
+
+    observed_content_sha256 = source_content_sha256
+    has_succeeded_receipt = False
+    has_zero_receipt = False
+    defect_code: str | None = None
+    strict_attempt = 0
+    strict_prior_type = prefix[0].event_type
+    strict_last_error: str | None = None
+    strict_result = "processing"
+
+    for index, event in enumerate(prefix[1:], 1):
+        cp, data = _validate_retain_event_envelope(event)
+        etype = event.event_type
+        if etype == "MEMORY_RETAIN_ATTEMPTED":
+            attempt_val = data.get("attempt")
+            if (
+                set(data) != {"attempt", "document_id"}
+                or data.get("document_id") != document_id
+                or type(attempt_val) is not int
+                or not 1 <= attempt_val <= 3
+                or cp["phase"] != "memory_retaining"
+                or cp["status"] != "waiting_for_proof"
+                or cp["retry_count"] != attempt_val
+            ):
+                raise RuntimeError("historical chronology attempt event is malformed")
+            if defect_code is None:
+                next_attempt = strict_attempt + 1
+                if (
+                    strict_prior_type not in {"MEMORY_RETAIN_QUEUED", "MEMORY_RETAIN_RETRY_SCHEDULED"}
+                    or next_attempt > 3
+                    or attempt_val != next_attempt
+                    or cp["last_error_fingerprint"] != strict_last_error
+                ):
+                    defect_code = "attempt_out_of_order"
+                else:
+                    strict_attempt = next_attempt
+                    strict_result = "processing"
+        elif etype == "MEMORY_DREAM_SOURCE_RECONCILED":
+            if (
+                retention_mode != "dream"
+                or set(data) != {"document_id", "batch_thread_id", "bank_id", "operation_id"}
+                or data["document_id"] != document_id
+                or any(not isinstance(data[k], str) or not str(data[k]).strip() for k in ("batch_thread_id", "bank_id", "operation_id"))
+                or cp["phase"] != "memory_retaining"
+                or cp["status"] != "waiting_for_proof"
+            ):
+                raise RuntimeError("historical chronology dream reconciliation is malformed")
+            batch_events = timeline.events(str(data["batch_thread_id"]))
+            if not batch_events or batch_events[0].event_type != "MEMORY_DREAM_BATCH_ASSIGNED":
+                raise RuntimeError("historical chronology dream manifest is missing")
+            _, manifest_data = _validate_retain_event_envelope(batch_events[0])
+            members = PostgresMemoryOutbox._dream_members(manifest_data, str(data["batch_thread_id"]))
+            bindings = [
+                _validate_retain_event_envelope(candidate)[1]
+                for candidate in batch_events
+                if candidate.event_type == "MEMORY_DREAM_DISPATCH_BOUND"
+            ]
+            member_matches = [
+                item
+                for item in members
+                if item["document_id"] == document_id
+                and (source_payload_sha256 is None or item["source_payload_sha256"] == source_payload_sha256)
+            ]
+            if len(member_matches) != 1 or bindings != [{"bank_id": data["bank_id"], "operation_id": data["operation_id"]}]:
+                raise RuntimeError("historical chronology dream binding differs")
+            if defect_code is None:
+                if (
+                    strict_prior_type not in {"MEMORY_RETAIN_RETRY_SCHEDULED", "MEMORY_RETAIN_NEEDS_HELP"}
+                    or cp["retry_count"] != strict_attempt
+                    or cp["last_error_fingerprint"] != strict_last_error
+                ):
+                    defect_code = "attempt_out_of_order"
+                else:
+                    strict_result = "processing"
+        elif etype == "MEMORY_RETAIN_SUCCEEDED":
+            if set(data) != {"bank_id", "content_sha256", "document_id"}:
+                raise RuntimeError("historical chronology success event is malformed")
+            receipt = MemoryRetentionReceipt(
+                bank_id=data.get("bank_id"),  # type: ignore[arg-type]
+                document_id=data.get("document_id"),  # type: ignore[arg-type]
+                content_sha256=data.get("content_sha256"),  # type: ignore[arg-type]
+            )
+            if (
+                receipt.document_id != document_id
+                or (observed_content_sha256 is not None and receipt.content_sha256 != observed_content_sha256)
+                or cp["phase"] != "memory_retained"
+                or cp["status"] != "completed"
+                or cp["last_error_fingerprint"] is not None
+            ):
+                raise RuntimeError("historical chronology success receipt differs")
+            observed_content_sha256 = receipt.content_sha256
+            has_succeeded_receipt = True
+            if defect_code is None:
+                if (
+                    strict_prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"}
+                    or cp["retry_count"] != strict_attempt
+                ):
+                    defect_code = "success_out_of_order"
+                else:
+                    strict_result = "up_to_date"
+        elif etype == "MEMORY_REFLECTION_CLAIMED":
+            expected_claim = {
+                "principal_sha256": hashlib.sha256(principal_id.encode("utf-8")).hexdigest(),
+                "document_sha256": hashlib.sha256(document_id.encode("utf-8")).hexdigest(),
+                "meaning": "dispatch claimed; completion and outcome recorded separately",
+            }
+            if (
+                audience.kind != "private_person"
+                or data != expected_claim
+                or cp["phase"] != "memory_retained"
+                or cp["status"] != "completed"
+                or cp["last_error_fingerprint"] is not None
+            ):
+                raise RuntimeError("historical chronology reflection claim is malformed")
+            if defect_code is None:
+                if strict_prior_type != "MEMORY_RETAIN_SUCCEEDED" or cp["retry_count"] != strict_attempt:
+                    defect_code = "success_out_of_order"
+                else:
+                    strict_result = "up_to_date"
+        elif etype == "MEMORY_RETAIN_NOT_SELECTED":
+            content_digest = data.get("content_sha256")
+            if (
+                set(data) != {"bank_id", "content_sha256", "document_id", "selected_fact_count", "operation_id"}
+                or data["document_id"] != document_id
+                or not isinstance(content_digest, str)
+                or not _SHA256_RE.fullmatch(content_digest)
+                or (observed_content_sha256 is not None and content_digest != observed_content_sha256)
+                or type(data["selected_fact_count"]) is not int
+                or data["selected_fact_count"] != 0
+                or not isinstance(data["bank_id"], str)
+                or not data["bank_id"].strip()
+                or not isinstance(data["operation_id"], str)
+                or not data["operation_id"].strip()
+                or cp["phase"] != "memory_not_selected"
+                or cp["status"] != "completed"
+                or cp["last_error_fingerprint"] is not None
+            ):
+                raise RuntimeError("historical chronology zero-selection receipt differs")
+            observed_content_sha256 = content_digest
+            has_zero_receipt = True
+            if defect_code is None:
+                if (
+                    strict_prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"}
+                    or cp["retry_count"] != strict_attempt
+                ):
+                    defect_code = "success_out_of_order"
+                else:
+                    strict_result = "up_to_date"
+        elif etype == "MEMORY_RETAIN_RESULT_RECONCILED":
+            content_digest = data.get("content_sha256")
+            prev_event = prefix[index - 1]
+            prev_cp, _ = _validate_retain_event_envelope(prev_event)
+            expected_subhistory = canonical_sha256(history_records[:index])
+            if (
+                set(data) != {
+                    "document_id",
+                    "bank_id",
+                    "content_sha256",
+                    "operation_id",
+                    "selected_fact_count",
+                    "disposition",
+                    "proof_sha256",
+                    "source_history_sha256",
+                }
+                or data["document_id"] != document_id
+                or not isinstance(content_digest, str)
+                or not _SHA256_RE.fullmatch(content_digest)
+                or (observed_content_sha256 is not None and content_digest != observed_content_sha256)
+                or not isinstance(data["source_history_sha256"], str)
+                or not _SHA256_RE.fullmatch(data["source_history_sha256"])
+                or (erased_at is None and data["source_history_sha256"] != expected_subhistory)
+                or type(data["selected_fact_count"]) is not int
+                or data["selected_fact_count"] != 0
+                or data["disposition"] != "not_selected"
+                or not isinstance(data["proof_sha256"], str)
+                or not _SHA256_RE.fullmatch(data["proof_sha256"])
+                or any(
+                    not isinstance(data[key], str) or not str(data[key]).strip() or len(str(data[key])) > 512
+                    for key in ("bank_id", "operation_id")
+                )
+                or cp["phase"] != "memory_not_selected"
+                or cp["status"] != "completed"
+            ):
+                raise RuntimeError("historical chronology closed reconciliation is malformed")
+            observed_content_sha256 = content_digest
+            has_zero_receipt = True
+            if defect_code is None:
+                if (
+                    prev_event.event_type not in {"MEMORY_RETAIN_NEEDS_HELP", "MEMORY_RETAIN_RETRY_SCHEDULED"}
+                    or prev_cp["status"] not in {"failed", "needs_help"}
+                    or cp["retry_count"] != prev_cp["retry_count"]
+                    or cp["last_error_fingerprint"] != prev_cp["last_error_fingerprint"]
+                ):
+                    defect_code = "terminal_state_out_of_order"
+                else:
+                    strict_result = "up_to_date"
+        elif etype == "MEMORY_RETAIN_ERASED":
+            if (
+                erasure is None
+                or data != {
+                    "contract": "EvaMemoryOutboxErasure/v1",
+                    "document_sha256": hashlib.sha256(document_id.encode("utf-8")).hexdigest(),
+                    "operation_sha256": erasure["operation_sha256"],
+                    "principal_sha256": erasure["principal_sha256"],
+                    "status": "erased",
+                }
+                or cp["phase"] != "memory_erased"
+                or cp["status"] != "completed"
+            ):
+                raise RuntimeError("historical chronology erasure receipt differs")
+            if defect_code is None:
+                if (
+                    event is not prefix[-1]
+                    or strict_prior_type in {
+                        "MEMORY_RETAIN_SUCCEEDED",
+                        "MEMORY_RETAIN_NOT_SELECTED",
+                        "MEMORY_RETAIN_RESULT_RECONCILED",
+                        "MEMORY_REFLECTION_CLAIMED",
+                        "MEMORY_RETAIN_ERASED",
+                    }
+                    or event.occurred_at != erased_at
+                    or cp["retry_count"] != strict_attempt
+                    or cp["last_error_fingerprint"] != strict_last_error
+                ):
+                    defect_code = "erased_not_terminal"
+                else:
+                    strict_result = "no_signals"
+        elif etype == "MEMORY_RETAIN_RETRY_SCHEDULED":
+            err_fp = data.get("error_fingerprint")
+            retry_val = data.get("retry_count")
+            if (
+                set(data) != {"document_id", "error_fingerprint", "retry_count"}
+                or data["document_id"] != document_id
+                or type(retry_val) is not int
+                or not 1 <= retry_val <= 3
+                or not isinstance(err_fp, str)
+                or not _SHA256_RE.fullmatch(err_fp)
+                or cp["phase"] != "memory_retry"
+                or cp["status"] != "failed"
+                or cp["retry_count"] != retry_val
+                or cp["last_error_fingerprint"] != err_fp
+            ):
+                raise RuntimeError("historical chronology retry event is malformed")
+            if defect_code is None:
+                if (
+                    strict_prior_type != "MEMORY_RETAIN_ATTEMPTED"
+                    or strict_attempt >= 3
+                    or retry_val != strict_attempt
+                ):
+                    defect_code = "attempt_out_of_order"
+                else:
+                    strict_last_error = err_fp
+                    strict_result = "retrying"
+        elif etype == "MEMORY_RETAIN_NEEDS_HELP":
+            failure_keys = {"document_id", "error_fingerprint", "retry_count"}
+            restart_keys = {"document_id", "reason"}
+            next_strict_error = strict_last_error
+            if set(data) == failure_keys:
+                err_fp = data.get("error_fingerprint")
+                retry_val = data.get("retry_count")
+                if (
+                    data["document_id"] != document_id
+                    or type(retry_val) is not int
+                    or not 1 <= retry_val <= 3
+                    or not isinstance(err_fp, str)
+                    or not _SHA256_RE.fullmatch(err_fp)
+                    or cp["retry_count"] != retry_val
+                    or cp["last_error_fingerprint"] != err_fp
+                ):
+                    raise RuntimeError("historical chronology terminal failure is malformed")
+                next_strict_error = err_fp
+                strict_retry_matches = retry_val == 3
+            elif set(data) == restart_keys:
+                if (
+                    data["document_id"] != document_id
+                    or data["reason"] != "retry_budget_exhausted_after_ambiguous_restart"
+                    or not 1 <= int(cp["retry_count"]) <= 3
+                ):
+                    raise RuntimeError("historical chronology terminal restart is malformed")
+                strict_retry_matches = cp["retry_count"] == 3 and cp["last_error_fingerprint"] == strict_last_error
+            else:
+                raise RuntimeError("historical chronology terminal state is malformed")
+            if cp["phase"] != "memory_needs_help" or cp["status"] != "needs_help":
+                raise RuntimeError("historical chronology terminal checkpoint is malformed")
+            if defect_code is None:
+                if (
+                    strict_prior_type != "MEMORY_RETAIN_ATTEMPTED"
+                    or strict_attempt != 3
+                    or not strict_retry_matches
+                ):
+                    defect_code = "terminal_state_out_of_order"
+                else:
+                    strict_last_error = next_strict_error
+                    strict_result = "needs_help"
+        else:
+            raise RuntimeError("historical chronology event is unknown")
+        strict_prior_type = etype
+
+    last_cp, _ = _validate_retain_event_envelope(prefix[-1])
+    prefix_phase = str(last_cp["phase"])
+    prefix_status = str(last_cp["status"])
+    prefix_retry_count = int(last_cp["retry_count"])
+    prefix_last_error = (
+        None if last_cp["last_error_fingerprint"] is None else str(last_cp["last_error_fingerprint"])
+    )
+
+    if defect_code is None and erased_at is not None:
+        if (
+            prefix_status != "completed"
+            or strict_result not in {"up_to_date", "no_signals"}
+            or erased_at < prefix[-1].occurred_at
+        ):
+            defect_code = "erased_not_terminal"
+    if defect_code is None and any(
+        later.occurred_at < earlier.occurred_at
+        for earlier, later in zip(prefix, prefix[1:])
+    ):
+        defect_code = "backwards_timestamp"
+
+    terminal_disposition: str | None = None
+    target_phase: str | None = None
+    target_status: str | None = None
+    if erased_at is not None:
+        terminal_disposition = "erased"
+        target_phase = (
+            prefix_phase
+            if prefix_phase in {"memory_erased", "memory_not_selected", "memory_retained"}
+            else "memory_erased"
+        )
+        target_status = "completed"
+    elif (
+        prefix_phase == "memory_retained"
+        and prefix_status == "completed"
+        and prefix[-1].event_type in {"MEMORY_RETAIN_SUCCEEDED", "MEMORY_REFLECTION_CLAIMED"}
+        and has_succeeded_receipt
+        and source_content_sha256 is not None
+    ):
+        terminal_disposition = "retained"
+        target_phase = "memory_retained"
+        target_status = "completed"
+    elif (
+        prefix_phase == "memory_not_selected"
+        and prefix_status == "completed"
+        and prefix[-1].event_type in {"MEMORY_RETAIN_NOT_SELECTED", "MEMORY_RETAIN_RESULT_RECONCILED"}
+        and has_zero_receipt
+        and source_content_sha256 is not None
+    ):
+        terminal_disposition = "not_selected"
+        target_phase = "memory_not_selected"
+        target_status = "completed"
+    elif (
+        prefix_phase == "memory_needs_help"
+        and prefix_status == "needs_help"
+        and prefix[-1].event_type == "MEMORY_RETAIN_NEEDS_HELP"
+        and source_content_sha256 is not None
+    ):
+        terminal_disposition = "needs_help"
+        target_phase = "memory_needs_help"
+        target_status = "needs_help"
+
+    return ValidatedHistoricalRetainPrefix(
+        document_id=document_id,
+        principal_id=principal_id,
+        audience=audience,
+        retention_mode=retention_mode,
+        source_content_sha256=source_content_sha256,
+        observed_content_sha256=observed_content_sha256,
+        source_history_sha256=source_history_sha256,
+        erased_at=erased_at,
+        erasure=erasure,
+        defect_code=defect_code,
+        terminal_disposition=terminal_disposition,
+        target_phase=target_phase,
+        target_status=target_status,
+        prefix_retry_count=prefix_retry_count,
+        prefix_last_error_fingerprint=prefix_last_error,
+    )
+
+
 __all__ = [
     "DurableMemoryRetentionJob",
     "MemoryOutboxContentErasureReceipt",
     "PostgresMemoryOutbox",
+    "ValidatedHistoricalRetainPrefix",
     "conversation_memory_document_from_outbox_data",
+    "validate_historical_retain_prefix",
 ]
