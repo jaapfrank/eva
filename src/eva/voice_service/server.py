@@ -36,7 +36,7 @@ def create_app():
     lock = asyncio.Lock()
     vad = silero.VAD.load(
         min_speech_duration=float(config.get("vad_min_speech_duration", 0.12)),
-        min_silence_duration=float(config.get("vad_min_silence_duration", 0.72)),
+        min_silence_duration=float(config.get("vad_min_silence_duration", 0.78)),
     )
     backend = CoreClient(config["core_url"], token)
     stt_source = HomeAssistantSpeechInput(base_url=config["ha_url"], token=ha_token,
@@ -212,16 +212,27 @@ def create_app():
                 task = asyncio.create_task(send())
                 tasks.add(task)
                 task.add_done_callback(tasks.discard)
-            state = BridgeState(backend, notify)
+            state = BridgeState(
+                backend, notify, replay_unheard=bool(config.get("replay_unheard", False))
+            )
+            session_tts = None
             # Browser capture already requests AEC. LiveKit's initial 3s warmup
             # would otherwise discard a real correction during the first answer.
             if config.get("voice_engine") == "codex":
                 from eva.voice_service.codex_media import CodexMediaSession
                 session = CodexMediaSession(config, state, check, speech_output=tts_source)
             else:
+                session_tts = streaming_speech_output(
+                    tts_source,
+                    check,
+                    tempo=tts_tempo,
+                    trim_silence=tts_trim_silence,
+                    realtime_config=config,
+                    backend=backend,
+                )
                 session = AgentSession(
                     stt=HomeAssistantSTT(stt_source, check, vad=vad),
-                    tts=streaming_speech_output(tts_source, check, tempo=tts_tempo, trim_silence=tts_trim_silence),
+                    tts=session_tts,
                     vad=vad, turn_detection="vad", allow_interruptions=True,
                     min_interruption_duration=.15, false_interruption_timeout=1.5,
                     aec_warmup_duration=0)
@@ -236,6 +247,11 @@ def create_app():
             def user_state_changed(event):
                 notify({"type": "user_voice_state", "state": event.new_state})
             async def delete_room():
+                if session_tts is not None:
+                    try:
+                        await session_tts.aclose()
+                    except Exception:
+                        pass
                 try:
                     if backend.private_work_returns:
                         await backend.work_return("close", state.session_id)

@@ -1253,7 +1253,7 @@ class LivingConversation:
                 "to repeat it automatically or silently start a background task.")
         if voice is not None:
             self_context = (*self_context, *voice.instructions())
-            if not any(item.call.name == SPEAK_AND_CONTINUE for item in receipts):
+            if voice.allow_interim_speech and not any(item.call.name == SPEAK_AND_CONTINUE for item in receipts):
                 available_names = (*available_names, SPEAK_AND_CONTINUE)
             if voice.request_identity is not None:
                 available_names = (*available_names, VERIFY_VOICE)
@@ -1271,7 +1271,7 @@ class LivingConversation:
 
         def offer_action_commentary(result: ConversationModelResult) -> None:
             nonlocal voice_bridge_offered, available_names, self_context
-            if voice is None or voice_bridge_offered or result.text_phase != "commentary":
+            if voice is None or not voice.allow_interim_speech or voice_bridge_offered or result.text_phase != "commentary":
                 return
             offered = voice.offer_commentary(result.text)
             if offered is None:
@@ -1350,6 +1350,7 @@ class LivingConversation:
                 MEMORY_SEARCH_ACTION, STOP_VOICE_WORK, VERIFY_VOICE, SPEAK_AND_CONTINUE,
                 "read_recent_activity",
                 "search_public_info",
+                "manage_holostage",
                 "list_reusable_procedures", "resolve_reusable_procedure",
                 "start_delegated_work", "start_background_research", "start_digital_work", "list_delegated_work", "get_delegated_work", "get_related_work", "search_delegated_work", "revise_digital_work",
                 "stop_delegated_work", "stop_related_work", "resume_delegated_work",

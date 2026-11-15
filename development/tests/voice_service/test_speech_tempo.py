@@ -106,7 +106,7 @@ class GapToneTTS(tts.TTS):
 
 def test_tempo_tts_trims_excessive_internal_digital_silence_and_cleans_urls():
     assert clean_text_for_tts("**Max Verstappen** staat op 1 (https://formula1.com/standings).") == "Max Verstappen staat op 1."
-    assert clean_text_for_tts("Zie [Eredivisie](https://eredivisie.nl/stand) nu!") == "Zie Eredivisie nu!"
+    assert clean_text_for_tts("Zie [Eredivisie](https://eredivisie.nl/stand) nu! ## Bronnen - 2026 STANDINGS") == "Zie Eredivisie nu!"
 
     async def run():
         source = GapToneTTS()
@@ -123,4 +123,86 @@ def test_tempo_tts_trims_excessive_internal_digital_silence_and_cleans_urls():
         assert fast_samples / 24000 > 1.05
         await untrimmed.aclose()
         await trimmed.aclose()
+    asyncio.run(run())
+
+
+def test_codex_realtime_tts_falls_back_seamlessly_when_realtime_channel_unavailable():
+    from eva.voice_service.realtime_tts import CodexRealtimeTTS
+
+    async def run():
+        fallback = GapToneTTS()
+        rt_tts = CodexRealtimeTTS(
+            fallback_tts=fallback,
+            codex_executable=None,
+            codex_auth_file=None,
+            backend=None,
+            voice="juniper",
+            ready_wait_seconds=0.05,
+        )
+        rt_tts.prewarm()
+        async with rt_tts.synthesize("**Hoi Jaap!** (https://example.org)") as stream:
+            frames = [ev.frame async for ev in stream]
+        assert sum(f.samples_per_channel for f in frames) > 24000
+        await rt_tts.aclose()
+
+    asyncio.run(run())
+
+
+def test_closing_stream_adapter_closes_wrapped_realtime_tts_and_partial_remainder_falls_back():
+    from eva.voice_service.media import _ClosingStreamAdapter
+    from eva.voice_service.realtime_tts import CodexRealtimeTTS
+    from livekit.agents import tokenize
+
+    seen_fallback_texts: list[str] = []
+    closed_wrapped = False
+
+    class RecordingFallbackTTS(GapToneTTS):
+        def synthesize(self, text: str, *, conn_options=None):
+            seen_fallback_texts.append(text)
+            return super().synthesize(text, conn_options=conn_options)
+
+        async def aclose(self) -> None:
+            nonlocal closed_wrapped
+            closed_wrapped = True
+            await super().aclose()
+
+    class PartialEngine:
+        usable = True
+
+        def ensure_warming(self) -> None:
+            return None
+
+        async def wait_ready(self, _timeout: float) -> bool:
+            return True
+
+        async def stream_speech(self, _text: str, push_pcm) -> str:
+            push_pcm(struct.pack("<480h", *([4000] * 480)))
+            return "Tweede zin via fallback."
+
+        async def aclose(self) -> None:
+            return None
+
+    async def run():
+        fb = RecordingFallbackTTS()
+        rt_tts = CodexRealtimeTTS(
+            fallback_tts=fb,
+            codex_executable="/bin/true",
+            codex_auth_file="/etc/hostname",
+            backend=object(),
+            voice="juniper",
+            ready_wait_seconds=0.05,
+        )
+        rt_tts._engine = PartialEngine()  # type: ignore[assignment]
+        adapter = _ClosingStreamAdapter(
+            tts=rt_tts,
+            sentence_tokenizer=tokenize.blingfire.SentenceTokenizer(min_sentence_len=90),
+        )
+        async with rt_tts.synthesize("Eerste zin via realtime. Tweede zin via fallback.") as stream:
+            frames = [ev.frame async for ev in stream]
+        assert seen_fallback_texts == ["Tweede zin via fallback."]
+        assert sum(f.samples_per_channel for f in frames) > 24000
+        await adapter.aclose()
+        assert rt_tts._closed is True
+        assert closed_wrapped is True
+
     asyncio.run(run())

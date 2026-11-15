@@ -149,7 +149,8 @@ def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
     context = VoiceContext(recent=recent, request_identity=request_identity,
         active_work=tuple((message_id(item.message_id), item.text) for item in payload.active_work),
         stop=stop, event=event,
-        known_results=tuple((message_id(item.message_id), item.text) for item in payload.work_results))
+        known_results=tuple((message_id(item.message_id), item.text) for item in payload.work_results),
+        allow_interim_speech=False)
     def run():
         nonlocal turn
         stage = "respond"

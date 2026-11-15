@@ -90,6 +90,7 @@ def clean_text_for_tts(text: str) -> str:
     """Strip markdown syntax and raw URLs before neural synthesis while keeping plain words."""
     import re
     cleaned = re.sub(r"```[\s\S]*?```", " ", text)
+    cleaned = re.sub(r"\s*#+\s*(?:Bronnen|Sources)\b[\s\S]*$", "", cleaned, flags=re.IGNORECASE)
     cleaned = re.sub(r"`([^`]+)`", r"\1", cleaned)
     cleaned = re.sub(r"\[([^\]]+)\]\(https?://[^)]+\)", r"\1", cleaned)
     cleaned = re.sub(r"\(\s*https?://[^\s)]+\s*\)", "", cleaned)
@@ -202,15 +203,68 @@ class TempoChunkedStream(tts.ChunkedStream):
         drain()
         output_emitter.flush()
 
-def streaming_speech_output(source, check=lambda: None, *, tempo: float = 1.0, trim_silence: bool = False):
-    """Stream explicit complete first sentences without the default 20-char wait."""
+class _ClosingStreamAdapter(tts.StreamAdapter):
+    """Ensure `aclose()` cascades to `_wrapped_tts` so Realtime sessions never leak."""
+
+    async def aclose(self) -> None:
+        try:
+            await super().aclose()
+        finally:
+            await self._wrapped_tts.aclose()
+
+
+def streaming_speech_output(
+    source,
+    check=lambda: None,
+    *,
+    tempo: float = 1.0,
+    trim_silence: bool = False,
+    realtime_config: dict | None = None,
+    backend=None,
+):
+    """Stream explicit complete sentences; use pre-warmed Realtime human voice when available."""
+    from pathlib import Path
+
     base_tts = HomeAssistantTTS(source, check)
     effective_tts = (
         TempoTTS(base_tts, rate=tempo, trim_silence=trim_silence)
         if (abs(tempo - 1.0) > 1e-3 or trim_silence)
         else base_tts
     )
-    return tts.StreamAdapter(
+    use_realtime = False
+    if isinstance(realtime_config, dict) and realtime_config.get("realtime_tts_enabled", True) is not False:
+        exe = realtime_config.get("codex_executable")
+        auth = realtime_config.get("codex_auth_file")
+        if (
+            backend is not None
+            and isinstance(exe, str)
+            and exe
+            and isinstance(auth, str)
+            and auth
+            and Path(exe).is_file()
+            and Path(auth).is_file()
+        ):
+            use_realtime = True
+    if use_realtime and isinstance(realtime_config, dict):
+        from eva.voice_service.realtime_tts import CodexRealtimeTTS
+
+        rt_tts = CodexRealtimeTTS(
+            fallback_tts=effective_tts,
+            codex_executable=realtime_config.get("codex_executable"),
+            codex_auth_file=realtime_config.get("codex_auth_file"),
+            backend=backend,
+            check=check,
+            voice=str(realtime_config.get("realtime_voice") or "juniper"),
+            ready_wait_seconds=float(realtime_config.get("realtime_tts_ready_wait", 2.4)),
+        )
+        rt_tts.prewarm()
+        return _ClosingStreamAdapter(
+            tts=rt_tts,
+            sentence_tokenizer=tokenize.blingfire.SentenceTokenizer(
+                min_sentence_len=90, stream_context_len=1, retain_format=True
+            ),
+        )
+    return _ClosingStreamAdapter(
         tts=effective_tts,
         sentence_tokenizer=tokenize.blingfire.SentenceTokenizer(
             min_sentence_len=1, stream_context_len=1, retain_format=True),

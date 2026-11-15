@@ -65,6 +65,7 @@ class VoiceContext:
     known_results: tuple[tuple[str, str], ...] = ()
 
     request_identity: Callable[[], dict] | None = None
+    allow_interim_speech: bool = True
 
     def verify_identity(self, call):
         if call.arguments or self.request_identity is None:
@@ -145,7 +146,10 @@ class VoiceContext:
             "niet meer terugvindt, zeg dat eenvoudig en concreet; gebruik geen formele "
             "betrouwbaarheidsverklaring. Geef per beurt één vlot, vloeiend en natuurlijk "
             "gesproken antwoord, zonder een vraag op te knippen in meerdere losse antwoorden "
-            "en zonder URL's of markdown voor te lezen. Geef GEEN voorafzin, aankondiging "
+            "en zonder URL's of markdown voor te lezen. Wanneer de eigenaar zegt 'laat je zien op de "
+            "chromecast', 'laat jezelf zien op de chromecast', 'kom op de tv' of iets op het scherm wil "
+            "tonen, roep dan ALTIJD direct `manage_holostage` aan met `operation='cast_stage'` (en een "
+            "passende `animation_effect`). Geef GEEN voorafzin, aankondiging "
             "('ik kijk even...') of speak_and_continue bij directe huisvragen (temperatuur, "
             "sensoren, lampen, scènes, automatiseringen), Chromecast/HoloStage of actuele "
             "kennisvragen via search_public_info: roep de tool direct zonder commentary aan "

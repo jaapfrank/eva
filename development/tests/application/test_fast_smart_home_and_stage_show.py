@@ -440,3 +440,117 @@ def test_fast_foreground_tools_suppress_double_answer_spoken_updates() -> None:
 
     assert not any(e.get("type") == "spoken_update" for e in events)
     assert reply.text == "Het is nu 21,5 graden in de woonkamer."
+
+
+def test_direct_voice_reply_eliminates_phase1_roundtrip_and_interim_tool(tmp_path: Path) -> None:
+    import hashlib
+    from eva.bootstrap.public_lookup import PublicLookupActions
+    from eva.application.voice_context import SPEAK_AND_CONTINUE
+    from tests.application.test_conversation import _Memory
+
+    owner_sha = hashlib.sha256(b"owner-jaap").hexdigest()
+    fast = SmartHomeFastActions(
+        HomeAssistantProviderSettings(
+            endpoint_url="http://127.0.0.1:8123",
+            credential="ha-test-token",
+            effects_enabled=True,
+            effect_allowlist=(),
+            effect_principal_sha256_allowlist=(owner_sha,),
+            event_domains=("light", "climate"),
+            api_enabled=True,
+        )
+    )
+    owner_turn = _private_turn("Wat is de temperatuur in de woonkamer?")
+    climate_receipt = ConversationActionReceipt(
+        ConversationActionCall("c1", SMART_HOME_LIVE.name, {"operation": "read_climate", "target": "woonkamer"}),
+        {
+            "status": "verified",
+            "operation": "read_climate",
+            "target": "woonkamer",
+            "climate_zones": [
+                {
+                    "entity_id": "climate.woonkamer",
+                    "name": "Woonkamer",
+                    "state": "heat",
+                    "current_temperature_c": "21.5",
+                    "target_temperature_c": "20",
+                }
+            ],
+            "sensors": [],
+            "outdoor_weather": [],
+        },
+    )
+    assert fast.direct_voice_reply(owner_turn, (climate_receipt,)) == "In de woonkamer is het nu 21,5 graden."
+    # Multi-intent turn mentioning Chromecast returns None so phase-1 can continue to manage_holostage
+    cast_turn = _private_turn("Wat is de temperatuur in de woonkamer en zet dat op de Chromecast?")
+    assert fast.direct_voice_reply(cast_turn, (climate_receipt,)) is None
+
+    # PublicLookupActions strips markdown URL citations in direct_voice_reply
+    raw_content = "Kimi Antonelli staat bovenaan met 390 punten ([formula1.com](https://www.formula1.com/en/results))."
+    pub_actions = PublicLookupActions(
+        None,
+        None,
+        type("Auth", (), {"action_names": ("start_background_research",), "available_for": staticmethod(lambda _: True)})(),
+    )
+    pub_receipt = ConversationActionReceipt(
+        ConversationActionCall(
+            "p1",
+            "search_public_info",
+            {"question": "Stand Formule 1", "public_review": "public_unlinked", "answer_directly": True},
+        ),
+        {
+            "status": "verified",
+            "result": {
+                "content": raw_content,
+                "content_sha256": hashlib.sha256(raw_content.encode()).hexdigest(),
+                "sources": [{"url": "https://www.formula1.com/en/results"}],
+                "verification_scope": "research_artifact_only",
+            },
+        },
+    )
+    assert (
+        pub_actions.direct_voice_reply(owner_turn, (pub_receipt,))
+        == "Kimi Antonelli staat bovenaan met 390 punten."
+    )
+
+    # ConversationService executes ONLY 1 model call (0 phase-1 calls!) and omits SPEAK_AND_CONTINUE when allow_interim_speech=False
+    identity = IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80)
+    seen_available: list[tuple[str, ...]] = []
+    model_calls = 0
+
+    class OnePhaseModel:
+        def generate(self, *args: Any, **kwargs: Any) -> ConversationModelResult:
+            nonlocal model_calls
+            model_calls += 1
+            seen_available.append(tuple(kwargs.get("available_actions") or ()))
+            return ConversationModelResult(
+                None,
+                "gpt-6-sol",
+                ConversationActionCall("c1", SMART_HOME_LIVE.name, {"operation": "read_climate", "target": "woonkamer"}),
+            )
+
+    class Router:
+        action_names = (SMART_HOME_LIVE.name,)
+
+        def pending(self, turn: ConversationTurn) -> None:
+            return None
+
+        def active_context(self, turn: ConversationTurn) -> tuple[str, ...]:
+            return ()
+
+        def execute(self, turn: ConversationTurn, call: ConversationActionCall) -> ConversationActionReceipt:
+            return climate_receipt
+
+        def direct_voice_reply(self, turn: ConversationTurn, receipts: tuple[ConversationActionReceipt, ...]) -> str | None:
+            return fast.direct_voice_reply(turn, receipts)
+
+        def reply_guard(self, turn: ConversationTurn, receipts: tuple[ConversationActionReceipt, ...]):
+            return fast.reply_guard(turn, receipts)
+
+    ctx = VoiceContext((), (), lambda _: None, lambda _: None, allow_interim_speech=False)
+    with voice_context(ctx):
+        reply = LivingConversation(_Memory(), OnePhaseModel(), identity, Router()).respond(owner_turn)
+
+    assert model_calls == 1
+    assert SPEAK_AND_CONTINUE not in seen_available[0]
+    assert reply.text == "In de woonkamer is het nu 21,5 graden."

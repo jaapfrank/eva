@@ -180,11 +180,19 @@ class PublicLookupActions:
         if not isinstance(text, str) or not text.strip() or len(text.split()) > 120:
             return None
         import hashlib
+        import re
         if (result.get("verification_scope") != "research_artifact_only"
                 or result.get("content_sha256") != hashlib.sha256(text.encode()).hexdigest()):
             return None
         self._authorize(turn)
-        return text.strip()
+        # Strip inline markdown URL citations so spoken voice replies never read raw URLs aloud.
+        spoken = re.sub(r"\(\s*\[[^\]]+\]\(https?://[^)]+\)\s*\)", "", text)
+        spoken = re.sub(r"\[([^\]]+)\]\(https?://[^)]+\)", r"\1", spoken)
+        spoken = re.sub(r"\(\s*https?://[^\s)]+\s*\)", "", spoken)
+        spoken = re.sub(r"https?://\S+", "", spoken)
+        spoken = re.sub(r"\s+([.,!?;:])", r"\1", spoken)
+        spoken = re.sub(r"\s+", " ", spoken).strip()
+        return spoken or text.strip()
 
     def reply_guard(self, turn, receipts):
         def guard(text):

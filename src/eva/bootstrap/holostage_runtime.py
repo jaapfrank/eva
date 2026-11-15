@@ -28,9 +28,11 @@ MANAGE_HOLOSTAGE = ConversationToolDescriptor(
     description=(
         "Inspect, animate, or cast my 3D Eva HoloStage visual screen and Chromecast / Google TVs "
         "(such as woonkamer, DIW7022, overkapping, or schuur). ALWAYS use this foreground tool "
-        "(NOT start_digital_work) whenever the owner asks to: "
-        "(1) show or cast me on a Chromecast/TV ('cast_stage' — you can also pass title/body_nl/items "
-        "and animation_effect in the SAME call to launch on TV AND show an animated card/leaderboard at once!), "
+        "(NOT start_digital_work) whenever the owner asks in Dutch or English to: "
+        "(1) show or cast me on a Chromecast/TV — including phrases like 'laat je zien op de chromecast', "
+        "'laat jezelf zien op de chromecast', 'kom op de tv', 'toon jezelf op het scherm', or 'zet dit op de tv' "
+        "-> call operation='cast_stage' (with animation_effect='wave_greeting' or 'aurora_reveal', and optional "
+        "title/body_nl/items to launch on TV AND show an animated card/leaderboard in ONE single step!), "
         "(2) conjure/reveal an animated holographic card or standings leaderboard on screen ('conjure_card': "
         "shopping_list, household_today, home_overview, visitors_review, or custom_spotlight with title/body_nl/items), "
         "(3) trigger a 3D stage animation & Eva gesture ('stage_show' with animation_effect), "
@@ -205,6 +207,76 @@ class HoloStageConversationActions:
             "én weergave op de Chromecast, roep dan eerst `search_public_info(answer_directly=false)` aan en direct "
             "daarna `manage_holostage` in dezelfde beurt.",
         )
+
+    def contact_reply_allowed(self, turn: Any, receipt: ConversationActionReceipt) -> bool:
+        return receipt.call.name in self.action_names and self.available_for(turn)
+
+    def reply_guard(self, turn: Any, receipts: tuple[ConversationActionReceipt, ...]):
+        if not any(r.call.name in self.action_names for r in receipts):
+            return None
+
+        def _guard(text: str) -> str:
+            if not self.available_for(turn):
+                raise ConversationConflict("HoloStage control requires private owner authority")
+            return text
+
+        return _guard
+
+    def direct_voice_reply(self, turn: Any, receipts: tuple[ConversationActionReceipt, ...]) -> str | None:
+        """Eliminate phase-1 LLM round-trip on single-step HoloStage & Chromecast actions."""
+        if len(receipts) != 1 or not self.available_for(turn):
+            return None
+        receipt = receipts[0]
+        if receipt.call.name not in self.action_names:
+            return None
+        op = str(receipt.call.arguments.get("operation") or "")
+        out = receipt.output
+        st = str(out.get("status") or "")
+
+        if op == "cast_stage":
+            if st == "verified":
+                cast_info = out.get("cast") or {}
+                label = str(
+                    cast_info.get("display_name")
+                    or cast_info.get("label")
+                    or cast_info.get("device_id")
+                    or "je Chromecast"
+                )
+                spot = out.get("spotlight")
+                if isinstance(spot, dict) and spot.get("title"):
+                    return f"Ik heb {spot['title']} met een animatie op {label} gezet."
+                return f"Ik sta nu met animatie op {label}!"
+            if st == "device_offline":
+                label = str(out.get("label") or "je Chromecast")
+                return (
+                    f"Ik wilde mezelf op {label} zetten, maar dat scherm staat nu uit of in slaapstand. "
+                    "Zodra hij aan staat kom ik direct in beeld."
+                )
+            return None
+
+        if st != "verified":
+            return None
+
+        if op == "stage_show":
+            spot = out.get("spotlight")
+            if isinstance(spot, dict) and spot.get("title"):
+                return f"Kijk maar, ik laat {spot['title']} nu met een animatie op je scherm zien."
+            return "Kijk maar, ik laat nu een animatie op je scherm zien."
+
+        if op == "conjure_card":
+            spot = out.get("spotlight")
+            if isinstance(spot, dict) and spot.get("title"):
+                return f"Ik heb {spot['title']} op je scherm gezet."
+            return "Ik heb de kaart op je scherm getoverd."
+
+        if op == "dismiss_cards":
+            return "Ik heb de kaarten van je scherm gehaald."
+
+        if op == "shopping_add":
+            added = (out.get("added_item") or {}).get("label") or "het item"
+            return f"Ik heb {added} op de boodschappenlijst gezet."
+
+        return None
 
     def execute(self, turn: Any, call: Any, *, step_index: int = 0) -> ConversationActionReceipt:
         _ = step_index

@@ -328,6 +328,136 @@ class SmartHomeFastActions:
             and self.available_for(turn)
         )
 
+    def reply_guard(self, turn: Any, receipts: tuple[ConversationActionReceipt, ...]):
+        if not any(r.call.name == SMART_HOME_LIVE.name for r in receipts):
+            return None
+
+        def _guard(text: str) -> str:
+            if not self.available_for(turn):
+                raise ConversationConflict("Smart home authority is unavailable")
+            return text
+
+        return _guard
+
+    def direct_voice_reply(self, turn: Any, receipts: tuple[ConversationActionReceipt, ...]) -> str | None:
+        """Eliminate phase-1 LLM round-trip on single-step verified home reads & controls."""
+        if len(receipts) != 1 or not self.available_for(turn):
+            return None
+        receipt = receipts[0]
+        if receipt.call.name != SMART_HOME_LIVE.name or receipt.output.get("status") != "verified":
+            return None
+        prompt_low = str(getattr(turn, "text", "") or "").casefold()
+        # Let multi-intent requests (e.g. "wat is de temperatuur én zet het op de chromecast") continue to phase 1
+        if any(
+            k in prompt_low
+            for k in (
+                "chromecast",
+                "holostage",
+                "op de tv",
+                "op tv",
+                "op het scherm",
+                "automatisering maken",
+                "boodschappen",
+                " en zet ",
+                " én zet ",
+                " en zoek ",
+                "alle kamers",
+            )
+        ):
+            return None
+
+        def _fmt_num(val: Any) -> str:
+            return str(val).replace(".", ",")
+
+        out = receipt.output
+        op = str(out.get("operation") or "")
+        target = str(out.get("target") or "").strip()
+
+        if op == "read_climate":
+            if any(k in prompt_low for k in ("buiten", "het weer")) and out.get("outdoor_weather"):
+                w = out["outdoor_weather"][0]
+                wt = w.get("temperature_c")
+                if wt is not None:
+                    return f"Buiten is het nu {_fmt_num(wt)} graden."
+            zones = out.get("climate_zones") or []
+            if zones:
+                # Prefer a real room zone over house-wide aggregate when target is generic
+                chosen = next((z for z in zones if z.get("entity_id") != "climate.home"), zones[0])
+                cur = chosen.get("current_temperature_c")
+                tgt = chosen.get("target_temperature_c")
+                hum = chosen.get("humidity_pct")
+                room_label = target if target and target != "huis" else str(chosen.get("name") or "huis").casefold()
+                if room_label in {"woonkamer", "keuken", "badkamer", "slaapkamer", "hal", "kantoor", "zolder"}:
+                    loc = f"In de {room_label}"
+                elif room_label == "huis":
+                    loc = "In huis"
+                else:
+                    loc = f"Bij {chosen.get('name') or room_label}"
+                if any(k in prompt_low for k in ("luchtvochtigheid", "vochtig")) and hum is not None:
+                    if cur is not None:
+                        return f"{loc} is de luchtvochtigheid nu {_fmt_num(hum)} procent en het is {_fmt_num(cur)} graden."
+                    return f"{loc} is de luchtvochtigheid nu {_fmt_num(hum)} procent."
+                if cur is not None:
+                    if tgt is not None and any(k in prompt_low for k in ("ingesteld", "thermostaat", "doel")):
+                        return f"{loc} is het nu {_fmt_num(cur)} graden, en de thermostaat staat op {_fmt_num(tgt)} graden."
+                    return f"{loc} is het nu {_fmt_num(cur)} graden."
+            sensors = out.get("sensors") or []
+            for s in sensors:
+                unit = str(s.get("unit") or "")
+                st_val = s.get("state")
+                if st_val not in {None, "unknown", "unavailable"} and "c" in unit.casefold():
+                    loc = f"In de {target}" if target and target != "huis" else f"Bij {s.get('name')}"
+                    return f"{loc} is het nu {_fmt_num(st_val)} graden."
+            return None
+
+        if op == "set_climate":
+            cl = out.get("climate") or {}
+            name = str(cl.get("name") or target or "de thermostaat")
+            tgt = cl.get("target_temperature_c")
+            st_val = str(cl.get("state") or "")
+            if tgt is not None and receipt.call.arguments.get("temperature_c") is not None:
+                return f"Ik heb {name} ingesteld op {_fmt_num(tgt)} graden."
+            if st_val:
+                return f"Ik heb {name} op {st_val} gezet."
+            return None
+
+        if op == "control_lights":
+            ents = out.get("entities") or []
+            svc = str(out.get("service") or "turn_on")
+            bri = receipt.call.arguments.get("brightness_pct")
+            label = f"de verlichting in de {target}" if target in {"woonkamer", "keuken", "badkamer", "slaapkamer", "hal", "kantoor", "tuin", "overkapping", "schuur"} else (str(ents[0].get("name")) if len(ents) == 1 else (target or "de verlichting"))
+            if svc == "turn_off":
+                return f"Ik heb {label} uitgezet."
+            if isinstance(bri, int):
+                return f"Ik heb {label} op {bri} procent gezet."
+            if svc == "toggle":
+                return f"Ik heb {label} omgeschakeld."
+            return f"Ik heb {label} aangezet."
+
+        if op == "activate_scene":
+            sc = out.get("scene") or {}
+            return f"Ik heb scène {sc.get('name') or target} geactiveerd."
+
+        if op == "control_media":
+            mp = out.get("media_player") or {}
+            name = str(mp.get("name") or target or "de speler")
+            act = str(out.get("action") or "")
+            vol = receipt.call.arguments.get("volume_pct")
+            if act == "volume_set" and isinstance(vol, int):
+                return f"Ik heb het volume van {name} op {vol} procent gezet."
+            verbs = {
+                "media_play": "gestart",
+                "media_pause": "gepauzeerd",
+                "media_stop": "gestopt",
+                "turn_on": "aangezet",
+                "turn_off": "uitgezet",
+            }
+            if act in verbs:
+                return f"Ik heb {name} {verbs[act]}."
+            return None
+
+        return None
+
     def pending(self, turn: Any, *, step_index: int = 0) -> None:
         _ = (turn, step_index)
         return None
