@@ -228,3 +228,123 @@ test('Tailscale Funnel HTTPS stage proxy enforces private_stage grant check, rew
     await Promise.all([lan,coreUpstream,voiceUpstream,lkUpstream].map(s=>new Promise(r=>s.close(r))));
   }
 });
+
+test('local owner allows cross-site top-level GET HTML shell navigations while blocking fetch, iframe, POST, WS, and API routes', {timeout:5000}, async()=>{
+  const seen=[];
+  let wsUpgraded=0;
+  const upstream=http.createServer((req,res)=>{
+    seen.push({method:req.method,url:req.url});
+    if(req.url==='/internal/v1/dashboard/subroute-redirect'){
+      res.writeHead(307,{location:`http://localhost:${upstream.address().port}/internal/v1/dashboard/holostage`}).end();
+      return;
+    }
+    res.writeHead(200,{'content-type':'text/html; charset=utf-8'}).end('<!doctype html><title>Eva</title>');
+  });
+  upstream.on('upgrade',(_req,sock)=>{
+    wsUpgraded+=1;
+    sock.write('HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\n\r\n');
+    sock.end();
+  });
+  upstream.listen(0,'127.0.0.1');await once(upstream,'listening');
+  const proxy=createLocalOwner({token:'synthetic-test-authority',port:0,upstreamPort:upstream.address().port});
+  proxy.listen(0,'127.0.0.1');await once(proxy,'listening');
+  const pPort=proxy.address().port;
+  const call=(path,method='GET',headers={})=>new Promise((resolve,reject)=>{
+    const req=http.request({
+      hostname:'127.0.0.1',port:pPort,path,method,
+      headers:{host:`localhost:${pPort}`,...headers}
+    },res=>{
+      res.resume();
+      res.on('end',()=>resolve({status:res.statusCode,location:res.headers.location}));
+    });
+    req.on('error',reject);req.end();
+  });
+  const callWs=(path,headers={})=>new Promise((resolve,reject)=>{
+    const req=http.request({
+      hostname:'127.0.0.1',port:pPort,path,
+      headers:{host:`localhost:${pPort}`,connection:'Upgrade',upgrade:'websocket',...headers}
+    });
+    req.on('upgrade',(_res,sock)=>{sock.destroy();resolve(101);});
+    req.on('response',res=>{res.resume();resolve(res.statusCode);});
+    req.on('error',reject);req.end();
+  });
+  const crossSiteDocNav={'sec-fetch-site':'cross-site','sec-fetch-mode':'navigate','sec-fetch-dest':'document','sec-fetch-user':'?1'};
+  try{
+    // 1. Safe top-level cross-site GET HTML shell navigations succeed (including redirect chains & trailing slashes)
+    assert.equal((await call('/internal/v1/dashboard/holostage','GET',crossSiteDocNav)).status,200);
+    assert.equal((await call('/internal/v1/dashboard/holostage?mode=cockpit','GET',crossSiteDocNav)).status,200);
+    assert.equal((await call('/internal/v1/dashboard','GET',crossSiteDocNav)).status,200);
+    const rootRedir=await call('/','GET',crossSiteDocNav);
+    assert.equal(rootRedir.status,302);
+    assert.equal(rootRedir.location,'/internal/v1/dashboard');
+    const slashHoloRedir=await call('/internal/v1/dashboard/holostage/?mode=cockpit','GET',crossSiteDocNav);
+    assert.equal(slashHoloRedir.status,302);
+    assert.equal(slashHoloRedir.location,'/internal/v1/dashboard/holostage?mode=cockpit');
+    const slashDashRedir=await call('/internal/v1/dashboard/','GET',crossSiteDocNav);
+    assert.equal(slashDashRedir.status,302);
+    assert.equal(slashDashRedir.location,'/internal/v1/dashboard');
+
+    // 2. Host casing and upstream Location port-leak rewrite stay on proxy
+    assert.equal((await call('/internal/v1/dashboard/holostage','GET',{...crossSiteDocNav,host:`LOCALHOST:${pPort}`})).status,200);
+    const upRedir=await call('/internal/v1/dashboard/subroute-redirect','GET',{'sec-fetch-site':'same-origin'});
+    assert.equal(upRedir.status,307);
+    assert.equal(upRedir.location,'/internal/v1/dashboard/holostage');
+
+    // 3. Cross-site fetch / XHR (cors & no-cors without Origin) stay strictly 403
+    assert.equal((await call('/internal/v1/dashboard/holostage','GET',{'sec-fetch-site':'cross-site','sec-fetch-mode':'no-cors','sec-fetch-dest':'empty'})).status,403);
+    assert.equal((await call('/internal/v1/dashboard/holostage','GET',{'sec-fetch-site':'cross-site','sec-fetch-mode':'cors','sec-fetch-dest':'empty',origin:'https://foreign.invalid'})).status,403);
+
+    // 4. Cross-site & cross-port iframe / embed / object / fencedframe stay strictly 403
+    for(const dest of ['iframe','frame','embed','object','fencedframe']){
+      assert.equal((await call('/internal/v1/dashboard/holostage','GET',{'sec-fetch-site':'cross-site','sec-fetch-mode':'navigate','sec-fetch-dest':dest})).status,403);
+      assert.equal((await call('/internal/v1/dashboard/holostage','GET',{'sec-fetch-site':'same-site','sec-fetch-mode':'navigate','sec-fetch-dest':dest})).status,403);
+    }
+    const cbPath='/internal/v1/dashboard/owned-packages/'+'b'.repeat(64)+'/callback';
+    assert.equal((await call(cbPath,'GET',{'sec-fetch-site':'cross-site','sec-fetch-mode':'navigate','sec-fetch-dest':'iframe'})).status,403);
+
+    // 5. Cross-site POST, Origin-bearing GET, and cross-site navigations to JSON API routes stay strictly 403
+    assert.equal((await call('/internal/v1/dashboard/holostage','POST',{'sec-fetch-site':'cross-site','sec-fetch-mode':'navigate','sec-fetch-dest':'document'})).status,403);
+    assert.equal((await call('/internal/v1/dashboard/holostage/turn-stream','POST',{'sec-fetch-site':'cross-site','sec-fetch-mode':'cors','sec-fetch-dest':'empty',origin:'https://foreign.invalid'})).status,403);
+    assert.equal((await call('/internal/v1/dashboard/holostage','GET',{...crossSiteDocNav,origin:'https://foreign.invalid'})).status,403);
+    assert.equal((await call('/internal/v1/dashboard/holostage','GET',{...crossSiteDocNav,origin:'null'})).status,403);
+    assert.equal((await call('/internal/v1/dashboard/model-providers','GET',crossSiteDocNav)).status,403);
+    assert.equal((await call('/internal/v1/dashboard/people-memory','GET',crossSiteDocNav)).status,403);
+    assert.equal((await call('/internal/v1/dashboard/holostage/state','GET',crossSiteDocNav)).status,403);
+    assert.equal((await call('/internal/v1/dashboard/holostage/voice/session/ready','GET',crossSiteDocNav)).status,403);
+
+    // 6.Encoded traversal and protocol-relative paths stay strictly 403
+    assert.equal((await call('//evil.invalid/internal/v1/dashboard/holostage','GET')).status,403);
+    assert.equal((await call('/internal/v1/dashboard/holostage/voice/%2e%2e/state','GET')).status,403);
+
+    // 7. Cross-site WebSocket upgrades stay 403 even if spoofing navigate/document; same-origin WS upgrades succeed
+    assert.equal(await callWs('/internal/v1/dashboard/browser/ws',{origin:'https://foreign.invalid','sec-fetch-site':'cross-site','sec-fetch-mode':'websocket','sec-fetch-dest':'empty'}),403);
+    assert.equal(await callWs('/internal/v1/dashboard/browser/ws',{...crossSiteDocNav}),403);
+    assert.equal(await callWs('/internal/v1/dashboard/browser/ws',{origin:`http://localhost:${pPort}`,'sec-fetch-site':'same-origin','sec-fetch-mode':'websocket','sec-fetch-dest':'empty'}),101);
+    assert.equal(wsUpgraded,1);
+    assert.equal(seen.length,5);
+  }finally{
+    proxy.closeAllConnections();upstream.closeAllConnections();
+    await Promise.all([new Promise(r=>proxy.close(r)),new Promise(r=>upstream.close(r))]);
+  }
+});
+
+test('local owner accepts IPv6 loopback ::1 when bound to ::1', {timeout:4000}, async()=>{
+  const upstream=http.createServer((_req,res)=>res.writeHead(200).end('ipv6-ok'));
+  upstream.listen(0,'127.0.0.1');await once(upstream,'listening');
+  const proxy=createLocalOwner({token:'synthetic-test-authority',port:0,upstreamPort:upstream.address().port});
+  proxy.listen(0,'::1');await once(proxy,'listening');
+  const pPort=proxy.address().port;
+  try{
+    const status=await new Promise((resolve,reject)=>{
+      const req=http.request({
+        hostname:'::1',port:pPort,path:'/internal/v1/dashboard/holostage',method:'GET',
+        headers:{host:`[::1]:${pPort}`,'sec-fetch-site':'cross-site','sec-fetch-mode':'navigate','sec-fetch-dest':'document'}
+      },res=>{res.resume();res.on('end',()=>resolve(res.statusCode));});
+      req.on('error',reject);req.end();
+    });
+    assert.equal(status,200);
+  }finally{
+    proxy.closeAllConnections();upstream.closeAllConnections();
+    await Promise.all([new Promise(r=>proxy.close(r)),new Promise(r=>upstream.close(r))]);
+  }
+});
