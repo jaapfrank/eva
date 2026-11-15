@@ -793,6 +793,9 @@ class PostgresHindsightMemoryRuntime:
             except (ConversationModelRateLimited, ConversationModelUnavailable):
                 raise
             except Exception as error:
+                from eva.adapters.projection.hindsight import HindsightProjectionUnavailable
+                if isinstance(error, HindsightProjectionUnavailable):
+                    raise
                 from eva.bootstrap.self_repair import repair_failed_turn
                 reply = repair_failed_turn(self, turn, error)
                 if reply is not None:

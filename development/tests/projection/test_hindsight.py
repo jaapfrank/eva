@@ -2359,3 +2359,50 @@ def test_missing_imported_legacy_source_does_not_invent_native_erasure(hindsight
     assert second.recall.selected[0].trust == "legacy_unverified"
     assert "original_source" not in second.confirmed_facts[0].value
     assert second.recall.excluded_reasons == {}
+
+
+@pytest.mark.parametrize("code,expected_unavailable", [
+    (429, True),
+    (500, True),
+    (502, True),
+    (503, True),
+    (504, True),
+    (400, False),
+    (422, False),
+])
+def test_transient_http_5xx_and_429_map_to_unavailable_while_4xx_remains_protocol_error(
+    monkeypatch, code, expected_unavailable,
+):
+    import io
+    import urllib.error
+    import urllib.request
+    from eva.adapters.projection.hindsight import HindsightProjectionUnavailable
+
+    closed = []
+
+    class _ErrBody(io.BytesIO):
+        def read(self, *args, **kwargs):
+            if expected_unavailable:
+                raise TimeoutError("upstream stalled on 429/5xx body")
+            return super().read(*args, **kwargs)
+
+        def close(self):
+            closed.append(True)
+            super().close()
+
+    def raise_http_error(req, timeout=None):
+        body = _ErrBody(b'{"detail":"private upstream diagnostic detail"}')
+        err = urllib.error.HTTPError(req.full_url, code, "err", hdrs=None, fp=body)
+        err.close = body.close  # type: ignore[method-assign]
+        raise err
+
+    monkeypatch.setattr(urllib.request, "urlopen", raise_http_error)
+    engine = HindsightMemoryEngine(HindsightProjectionConfig("http://127.0.0.1:19999"))
+    expected_exc = HindsightProjectionUnavailable if expected_unavailable else HindsightProjectionProtocolError
+    with pytest.raises(expected_exc) as exc_info:
+        engine._request("POST", "/v1/default/banks/b/memories/recall", {"query": "test"})
+    assert closed == [True]
+    if expected_unavailable:
+        assert "private upstream diagnostic detail" not in str(exc_info.value)
+        fallback = engine.recall_or_sql_fallback(_query())
+        assert fallback.fallback_reason == "hindsight_unavailable"

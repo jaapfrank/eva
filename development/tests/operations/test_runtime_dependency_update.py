@@ -223,3 +223,134 @@ def test_unknown_recovery_dispatch_is_not_repeated_and_revocation_prevents_start
     with pytest.raises(RuntimeError,match='unknown'):
         run_dependency_image_recovery(inputs,interface,folder,guard=lambda:True,run=fail)
     assert len(calls)==1
+
+
+def test_version_at_least_and_satisfied_reject_prerelease_and_partial_roles():
+    from eva.operations.runtime_dependency_update import maintenance_versions_satisfied, version_at_least
+    assert version_at_least('3.3.6', '3.3.6') is True
+    assert version_at_least('3.3.8', '3.3.6') is True
+    assert version_at_least('3.3.10', '3.3.6') is True
+    assert version_at_least('3.3.6.0', '3.3.6') is True
+    assert version_at_least('3.3.4', '3.3.6') is False
+    assert version_at_least('3.3.8rc1', '3.3.6') is False
+    assert version_at_least('3.3.6rc1', '3.3.6rc1') is False
+    assert maintenance_versions_satisfied(
+        {'core': {'psycopg': '3.3.8', 'psycopg-binary': '3.3.8'},
+         'delegated-work-worker': {'psycopg': '3.3.8', 'psycopg-binary': '3.3.8'}},
+        '3.3.6',
+    ) is True
+    assert maintenance_versions_satisfied(
+        {'core': {'psycopg': '3.3.8', 'psycopg-binary': '3.3.8'},
+         'delegated-work-worker': {'psycopg': '3.3.4', 'psycopg-binary': '3.3.8'}},
+        '3.3.6',
+    ) is False
+    assert maintenance_versions_satisfied({'core': {'psycopg': '3.3.8', 'psycopg-binary': '3.3.8'}}, '3.3.6') is False
+    assert maintenance_versions_satisfied({'unknown': {'psycopg': '3.3.8', 'psycopg-binary': '3.3.8'}}, '3.3.6') is False
+
+
+def test_up_to_date_maintenance_request_returns_clean_status_and_refuses_downgrade_submit(tmp_path):
+    import threading
+    inv_old = {r: {'distributions': {'psycopg': {'version': '3.3.4'}, 'psycopg-binary': {'version': '3.3.4'}}}
+               for r in ('core', 'delegated-work-worker')}
+    inv_new = {r: {'distributions': {'psycopg': {'version': '3.3.8'}, 'psycopg-binary': {'version': '3.3.8'}}}
+               for r in ('core', 'delegated-work-worker')}
+    current_inv = [inv_old]
+    observed = []
+    def observe():
+        inv = current_inv[0]
+        obs = {'source_sha256': canonical_sha256(inv), 'inventory': inv,
+               'official_releases': {'psycopg': {'sha256': '1'*64}, 'psycopg-binary': {'sha256': '2'*64}}}
+        observed.append(obs['source_sha256'])
+        return obs
+    target_adapter = SimpleNamespace(
+        config={'observation_interval_seconds': 3600},
+        observe=observe,
+        inventory=lambda: current_inv[0],
+        target=lambda *a: pytest.fail('up-to-date describe/status must not build downgrade target'),
+    )
+    meta = {'task_id': 'work:eva-initiative:builder', 'role': None}
+    def maintenance_call(action, **kw):
+        if action == 'observe':
+            return {'state': 'already_up_to_date'}
+        if action == 'binding':
+            return {'origin': {'original_work_id': meta['task_id']}, 'work': dict(meta)}
+        raise AssertionError(action)
+    runtime = SimpleNamespace(config={'scope_sha256': 'a'*64}, maintenance_call=maintenance_call)
+    stages = MaintenanceStages(target_adapter, runtime=runtime, artifacts=None, applications=None, publisher=None, settings=None)
+    stages.controller = SimpleNamespace(lock=threading.RLock(), jobs={})
+    stages.observe_due()
+    assert len(observed) == 1
+    # Simulate container upgrade after cached hourly observation.
+    current_inv[0] = inv_new
+    req = {'task_id': meta['task_id'], 'request_id': 'b'*64, 'scope_sha256': 'a'*64}
+    described = stages.request({**req, 'action': 'describe'})
+    assert len(observed) == 2
+    assert described['contract'] == 'EvaComponentMaintenanceUpToDate/v1'
+    assert described['state'] == 'already_up_to_date'
+    assert described['accepted'] is False and described['installed'] is False and described['up_to_date'] is True
+    assert stages.request({**req, 'action': 'status'}) == described
+    with pytest.raises(ValueError, match='already meets or exceeds'):
+        stages.request({**req, 'action': 'submit'})
+    meta['role'] = 'original_behavior_oracle'
+    with pytest.raises(ValueError, match='assessment may only read'):
+        stages.request({**req, 'action': 'describe'})
+    meta['role'] = None
+    stages.controller.jobs['c'*64] = {
+        'contract': 'EvaDependencyMaintenanceHandoff/v1',
+        'target_id': 'c'*64,
+        'task_id': meta['task_id'],
+        'state': 'completed',
+    }
+    assert stages.request({**req, 'action': 'status'}) == {
+        'target_id': 'c'*64, 'state': 'completed', 'accepted': True, 'installed': True,
+    }
+
+
+def test_concurrent_observe_due_and_request_serialize_without_missing_observation():
+    import threading
+    import time
+    inv = {r: {'distributions': {'psycopg': {'version': '3.3.8'}, 'psycopg-binary': {'version': '3.3.8'}}}
+           for r in ('core', 'delegated-work-worker')}
+    entered = threading.Event()
+    release = threading.Event()
+    calls = []
+    def slow_observe():
+        calls.append('observe')
+        entered.set()
+        release.wait(timeout=5)
+        return {'source_sha256': canonical_sha256(inv), 'inventory': inv,
+                'official_releases': {'psycopg': {'sha256': '1'*64}, 'psycopg-binary': {'sha256': '2'*64}}}
+    target_adapter = SimpleNamespace(
+        config={'observation_interval_seconds': 3600},
+        observe=slow_observe,
+        inventory=lambda: inv,
+        target=lambda *a: pytest.fail('up-to-date must not build target'),
+    )
+    meta = {'task_id': 'work:eva-initiative:builder', 'role': None}
+    runtime = SimpleNamespace(
+        config={'scope_sha256': 'a'*64},
+        maintenance_call=lambda action, **kw: {'origin': {'original_work_id': meta['task_id']}, 'work': dict(meta)}
+        if action == 'binding' else {'state': 'already_up_to_date'},
+    )
+    stages = MaintenanceStages(target_adapter, runtime=runtime, artifacts=None, applications=None, publisher=None, settings=None)
+    stages.controller = SimpleNamespace(lock=threading.RLock(), jobs={})
+    t1 = threading.Thread(target=stages.observe_due)
+    t1.start()
+    assert entered.wait(timeout=5)
+    results = []
+    errors = []
+    def run_req():
+        try:
+            results.append(stages.request({'action': 'describe', 'task_id': meta['task_id'],
+                                           'request_id': 'b'*64, 'scope_sha256': 'a'*64}))
+        except Exception as exc:
+            errors.append(exc)
+    t2 = threading.Thread(target=run_req)
+    t2.start()
+    time.sleep(0.05)
+    release.set()
+    t1.join(timeout=5)
+    t2.join(timeout=5)
+    assert errors == []
+    assert len(calls) == 1
+    assert len(results) == 1 and results[0]['state'] == 'already_up_to_date'

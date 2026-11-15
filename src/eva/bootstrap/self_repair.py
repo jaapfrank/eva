@@ -265,8 +265,9 @@ class _ScheduledFailureRepair:
 
 def repair_failed_turn(runtime, turn, error):
     repair = getattr(runtime, '_self_repair', None)
+    from eva.adapters.projection.hindsight import HindsightProjectionUnavailable
     from eva.application.cancellation import WorkInterrupted
-    if repair is None or isinstance(error, (ConversationStopped, WorkInterrupted)):
+    if repair is None or isinstance(error, (ConversationStopped, WorkInterrupted, HindsightProjectionUnavailable)):
         return None
     try:
         observation = RepairObservation.from_error(error,
@@ -308,8 +309,10 @@ def observe_failed_work(store, service, source, spec, error, *, clock):
     This does not replay the original work, convert failure to success or start
     another model. The same durable repair intake later claims the native lane.
     """
+    from eva.adapters.projection.hindsight import HindsightProjectionUnavailable
     from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
     if (isinstance(spec, DelegatedInitiativeDigitalWorkSpec) or source is None
+            or isinstance(error, HindsightProjectionUnavailable)
             or source.audience.kind != 'private_person' or source.project_id is not None):
         return None
     try:

@@ -244,3 +244,30 @@ def test_full_legacy_shared_scope_does_not_read_excluded_ninth_frame(target):
         'sources':{path:frame['source_sha256'] for path in paths[1:]},'excluded_paths':[paths[0]]}
     assert resolved=={**scope,'target_id':canonical_sha256(scope),'installed':False}
     assert len(calls)==16 and all(path!=paths[0] for _,path in calls)
+
+
+def test_describe_superseded_distinguishes_clean_upgrade_from_peer_mismatch_and_protected_frames(target):
+    registry,binding,installation,source,calls,_=target
+    # Current un-upgraded source is NOT superseded.
+    assert registry.describe_superseded(binding['incident_id']) is None
+    # Split-brain peer mismatch is NOT superseded.
+    registry.source=lambda image,path:source if image==installation['core']['image'] else source+b'# Foreign work\n'
+    assert registry.describe_superseded(binding['incident_id']) is None
+    # Consistent upgraded bytes across roles ARE reported as superseded, while prepare/resolve still refuse.
+    upgraded=source+b'# Installed newer release\n'
+    registry.source=lambda image,path:upgraded
+    binding['observation']['frames'].append(
+        {'path':'operations/protected_only.py','function':'guard:1','source_sha256':hashlib.sha256(upgraded).hexdigest()}
+    )
+    superseded=registry.describe_superseded(binding['incident_id'])
+    assert superseded=={
+        'incident_id':binding['incident_id'],
+        'superseded_paths':['application/new_component.py'],
+        'excluded_paths':['operations/protected_only.py'],
+    }
+    with pytest.raises(ValueError,match='no currently repairable source'):
+        registry.prepare(binding['incident_id'])
+    assert calls==[]
+    # Protected-only frames with no repairable frame must still return None.
+    binding['observation']['frames']=[binding['observation']['frames'][-1]]
+    assert registry.describe_superseded(binding['incident_id']) is None

@@ -933,7 +933,19 @@ class HindsightMemoryEngine:
             )
         except urllib.error.HTTPError as error:
             if error.code not in allowed_statuses:
-                detail = error.read(2048).decode("utf-8", errors="replace")
+                if error.code == 429 or 500 <= error.code <= 599:
+                    error.close()
+                    raise HindsightProjectionUnavailable(
+                        f"Hindsight {method} {path} is unavailable (HTTP {error.code})"
+                    ) from error
+                try:
+                    detail = error.read(2048).decode("utf-8", errors="replace")
+                except (TimeoutError, socket.timeout, OSError) as read_error:
+                    raise HindsightProjectionUnavailable(
+                        f"Hindsight {method} {path} is unavailable (HTTP {error.code})"
+                    ) from read_error
+                finally:
+                    error.close()
                 raise HindsightProjectionProtocolError(
                     f"Hindsight {method} {path} returned HTTP {error.code}: {detail}"
                 ) from error
@@ -944,6 +956,10 @@ class HindsightMemoryEngine:
             ) from error
         try:
             raw = response.read(_MAX_RESPONSE_BYTES + 1)
+        except (TimeoutError, socket.timeout, OSError) as error:
+            raise HindsightProjectionUnavailable(
+                f"Hindsight {method} {path} is unavailable"
+            ) from error
         finally:
             response.close()
         if len(raw) > _MAX_RESPONSE_BYTES:

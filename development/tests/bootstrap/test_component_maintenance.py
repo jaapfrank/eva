@@ -361,3 +361,51 @@ def test_pg18_default_observation_clock_reaches_real_retained_source(costless_na
     assert len(retained)==1 and retained[0].occurred_at==NOW
     source=sensory._event_from_thread('sensory:maintenance-'+'a'*64)
     assert source.occurred_at==NOW and source.source=='component_maintenance'
+
+
+def test_up_to_date_observation_records_audit_without_emitting_false_update_sensory_event():
+    calls=[];retained=[]
+    authority=SimpleNamespace(policy=lambda:({'component_maintenance':POLICY},'a'*64),owner=SimpleNamespace(),
+        timeline=SimpleNamespace(create_thread=lambda **kw:calls.append(kw)))
+    observation=dict(source_sha256='1'*64,inventory_sha256='2'*64,
+        official_releases={'psycopg':'c'*64,'psycopg-binary':'d'*64},
+        versions={'core':{'psycopg':'3.3.8','psycopg-binary':'3.3.8'},
+                  'delegated-work-worker':{'psycopg':'3.3.8','psycopg-binary':'3.3.8'}})
+    store=SimpleNamespace(retain=lambda event:retained.append(event) or 'retained')
+    result=observe_installed_maintenance(authority,observation,sensory_store=store,now=datetime.now(UTC).replace(microsecond=0))
+    assert result=={'state':'already_up_to_date','source_sha256':'1'*64}
+    assert len(calls)==1 and calls[0]['event_type']=='COMPONENT_MAINTENANCE_OBSERVED'
+    assert retained==[]
+
+
+def test_pg18_up_to_date_installed_versions_suppress_private_maintenance_attention(costless_native):
+    import json
+    from datetime import timedelta
+    from eva.adapters.postgres.sensory_events import PostgresSensoryEventStore
+    from eva.bootstrap.component_maintenance import compose_component_maintenance
+    auth,old,interests,owner,sensory,path,policy=costless_native
+    policy['component_maintenance']=dict(POLICY);path.write_text(json.dumps(policy));auth.policy()
+    store=PostgresSensoryEventStore(owner._engine,tenant_id=owner._tenant_id,
+        installation_id=owner._installation_id,initiative_principal_id=str(owner._owner),
+        initiative_authorizer=auth.policy,context_reviews_only=True)
+    compose_component_maintenance(_composable(auth),attention_store=store)
+    old_obs=dict(source_sha256='1'*64,inventory_sha256='2'*64,
+        official_releases={'psycopg':'c'*64,'psycopg-binary':'d'*64},
+        versions={'core':{'psycopg':'3.3.4','psycopg-binary':'3.3.4'}})
+    assert observe_installed_maintenance(auth,old_obs,sensory_store=sensory,now=NOW)['state']=='retained'
+    with owner._engine.connect() as connection:
+        store._timeline._scope(connection)
+        assert len(store._private_maintenance_context_reader(connection,store._timeline._scope_value,str(owner._owner),NOW))==1
+    upgraded=dict(source_sha256='3'*64,inventory_sha256='4'*64,
+        official_releases={'psycopg':'c'*64,'psycopg-binary':'d'*64},
+        versions={'core':{'psycopg':'3.3.8','psycopg-binary':'3.3.8'},
+                  'delegated-work-worker':{'psycopg':'3.3.8','psycopg-binary':'3.3.8'}})
+    # Same-second tie ('1'*64 < '3'*64 at NOW) and later timestamp must both suppress stale attention.
+    assert observe_installed_maintenance(auth,upgraded,sensory_store=sensory,now=NOW)['state']=='already_up_to_date'
+    with owner._engine.connect() as connection:
+        store._timeline._scope(connection)
+        assert store._private_maintenance_context_reader(connection,store._timeline._scope_value,str(owner._owner),NOW)==()
+    later=NOW+timedelta(seconds=5)
+    with owner._engine.connect() as connection:
+        store._timeline._scope(connection)
+        assert store._private_maintenance_context_reader(connection,store._timeline._scope_value,str(owner._owner),later)==()

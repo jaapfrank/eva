@@ -847,13 +847,13 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Drie concrete E4.16-zelfherstelblokkades zijn verholpen, onafhankelijk gereviewd (APPROVED), lockstep geïnstalleerd in core/worker/evaluator en live geverifieerd: (1) geketende __cause__/__context__-frames blijven behouden in RepairObservation en _RUNNER zodat gewrapte fouten hun echte Eva-oorzaakframe tonen en reproduceren, (2) RuntimeRepairArtifacts.seed_sources vult /workspace/repair/support/eva met transitieve eva.*-imports uit het exact geïnstalleerde image incl. pkgutil.extend_path en TIKTOKEN_CACHE_DIR naast een gesynchroniseerd programming_workspace-image (Python 3.12 / pydantic-ai-slim 2.66.0 / openai 3.46.0), en (3) core/worker zijn van 427/383 naar 3 OCI-lagen geconsolideerd met behoud van het F2.1-releasevenster (rel-f4d4b55de9093346-4c8e1ed17e1c65e9). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1).",
+    "nextAction": "Drie aanvullende live productiefouten in E4.16, E4.19 en Hindsight-beschikbaarheid zijn opgelost, onafhankelijk gereviewd (APPROVED), lockstep geïnstalleerd in core/worker/evaluator (4 OCI-lagen) en live geverifieerd: (1) E4.16 retourneert EvaRuntimeRepairSuperseded/v1 voor ingehaalde bronframes (inclusief completed_tool_evidence-afronding zonder HTTP 400 / incomplete_work; live bewezen op self-repair:1c8a4f53...), (2) E4.19 herkent up-to-date geïnstalleerde pakketparen (psycopg 3.3.8 >= 3.3.6 over core en worker) met geserialiseerde observatievergrendeling, registreert COMPONENT_MAINTENANCE_OBSERVED zonder vals component_update_available-signaal (live bewezen om 06:46:27Z; aandachtslijst leeg), en (3) Hindsight sluit HTTP 429/5xx- en lees-timeouts direct zonder upstream-body-lek en degradeert naar SQL-fallback zonder valse E4.16-zelfherstelrun, met behoud van het F2.1-releasevenster (rel-f4d4b55de9093346-4c8e1ed17e1c65e9). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1).",
     "ownerActionRequired": false,
     "startedAt": "2026-11-06T14:59:35.338758+00:00",
     "executionStep": "Provide complete proven original import closure for the same independent assessment",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false,
-    "checkedAt": "2026-11-15T05:25:00+00:00",
+    "checkedAt": "2026-11-15T06:50:00+00:00",
     "completedOutcome": {
       "status": "completed",
       "built": true,
@@ -3678,9 +3678,9 @@
           "summary": "Oorspronkelijke afhankelijkheidsketen completeren na vastgelegde beoordelingsblokkade.",
           "detail": "Eva heeft de onafhankelijke vervolgbeoordeling zelf gestart. Die stopte terecht: de oorspronkelijke code kon niet laden doordat onderliggende bronmodules ontbraken. De volledige oorspronkelijke afhankelijkheidsketen wordt nu gecontroleerd. Beide weigeringen en Eva’s kandidaat blijven behouden; er is geen geldig oordeel, installatie van de reparatie of hergebruik bewezen.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Bezig · E4.16-herstelketen vrijgemaakt, lagen geconsolideerd & 7-daagse waarneming actief",
-          "checkedAt": "2026-11-15T05:25:00+00:00",
-          "nextAction": "Drie concrete E4.16-zelfherstelblokkades zijn verholpen, onafhankelijk gereviewd (APPROVED), lockstep geïnstalleerd in core/worker/evaluator en live geverifieerd: (1) geketende __cause__/__context__-frames blijven behouden in RepairObservation en _RUNNER zodat gewrapte fouten hun echte Eva-oorzaakframe tonen en reproduceren, (2) RuntimeRepairArtifacts.seed_sources vult /workspace/repair/support/eva met transitieve eva.*-imports uit het exact geïnstalleerde image incl. pkgutil.extend_path en TIKTOKEN_CACHE_DIR naast een gesynchroniseerd programming_workspace-image (Python 3.12 / pydantic-ai-slim 2.66.0 / openai 3.46.0), en (3) core/worker zijn van 427/383 naar 3 OCI-lagen geconsolideerd met behoud van het F2.1-releasevenster (rel-f4d4b55de9093346-4c8e1ed17e1c65e9). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1)."
+          "state": "Bezig · E4.16/E4.19/Hindsight-productiefouten opgelost & 7-daagse waarneming actief",
+          "checkedAt": "2026-11-15T06:50:00+00:00",
+          "nextAction": "Drie aanvullende live productiefouten in E4.16, E4.19 en Hindsight-beschikbaarheid zijn opgelost, onafhankelijk gereviewd (APPROVED), lockstep geïnstalleerd in core/worker/evaluator (4 OCI-lagen) en live geverifieerd: (1) E4.16 retourneert EvaRuntimeRepairSuperseded/v1 voor ingehaalde bronframes (inclusief completed_tool_evidence-afronding zonder HTTP 400 / incomplete_work; live bewezen op self-repair:1c8a4f53...), (2) E4.19 herkent up-to-date geïnstalleerde pakketparen (psycopg 3.3.8 >= 3.3.6 over core en worker) met geserialiseerde observatievergrendeling, registreert COMPONENT_MAINTENANCE_OBSERVED zonder vals component_update_available-signaal (live bewezen om 06:46:27Z; aandachtslijst leeg), en (3) Hindsight sluit HTTP 429/5xx- en lees-timeouts direct zonder upstream-body-lek en degradeert naar SQL-fallback zonder valse E4.16-zelfherstelrun, met behoud van het F2.1-releasevenster (rel-f4d4b55de9093346-4c8e1ed17e1c65e9). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1)."
         },
         "next": {
           "taskId": "E4.15",
@@ -9954,9 +9954,9 @@
                   "E4.16",
                   "E4.17"
                 ],
-                "nextAction": "Behoud de geldige geen-updatekeuze en wacht op een werkelijk relevante nieuwe onderhoudsaanleiding. Heropen dezelfde bron niet en start geen extra onderzoek om activiteit te tonen. Werk andere concrete uitvoerbare tekorten op bestaande kaarten af; volledige E4.19 pas sluiten na echte update/toepassing/gebruik/herstel.",
+                "nextAction": "Up-to-date versieherkenning (psycopg 3.3.8 >= 3.3.6 in core en worker) is geïnstalleerd en live bewezen (COMPONENT_MAINTENANCE_OBSERVED zonder valse component_update_available-melding; EvaComponentMaintenanceUpToDate/v1 op describe/status). Wacht op een werkelijk relevante nieuwe onderhoudsaanleiding; volledige E4.19 pas sluiten na echte update/toepassing/gebruik/herstel.",
                 "implementationStatus": "declared_mandate_context_installed_and_actually_used_relevant_update_open",
-                "checkedAt": "2026-10-24T10:58:51.156682+00:00",
+                "checkedAt": "2026-11-15T06:50:00+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [],
@@ -17290,9 +17290,9 @@
                 "E4.16",
                 "E4.17"
               ],
-              "nextAction": "Behoud de geldige geen-updatekeuze en wacht op een werkelijk relevante nieuwe onderhoudsaanleiding. Heropen dezelfde bron niet en start geen extra onderzoek om activiteit te tonen. Werk andere concrete uitvoerbare tekorten op bestaande kaarten af; volledige E4.19 pas sluiten na echte update/toepassing/gebruik/herstel.",
+              "nextAction": "Up-to-date versieherkenning (psycopg 3.3.8 >= 3.3.6 in core en worker) is geïnstalleerd en live bewezen (COMPONENT_MAINTENANCE_OBSERVED zonder valse component_update_available-melding; EvaComponentMaintenanceUpToDate/v1 op describe/status). Wacht op een werkelijk relevante nieuwe onderhoudsaanleiding; volledige E4.19 pas sluiten na echte update/toepassing/gebruik/herstel.",
               "implementationStatus": "declared_mandate_context_installed_and_actually_used_relevant_update_open",
-              "checkedAt": "2026-10-24T10:58:51.156682+00:00",
+              "checkedAt": "2026-11-15T06:50:00+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [],
@@ -21089,7 +21089,7 @@
       "developmentCredits": "unknown"
     }
   },
-  "updatedAt": "2026-11-15T05:25:00+00:00",
+  "updatedAt": "2026-11-15T06:50:00+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -21171,8 +21171,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-15T05:25:00+00:00",
-  "checkedAt": "2026-11-15T05:25:00+00:00",
+  "lastUpdatedAt": "2026-11-15T06:50:00+00:00",
+  "checkedAt": "2026-11-15T06:50:00+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

@@ -14,6 +14,7 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
@@ -24,6 +25,43 @@ from eva.operations.runtime_repair_development import _put
 PAIR = ("psycopg", "psycopg-binary")
 VERSION = "3.3.6"
 ROLES = {"core", "delegated-work-worker"}
+
+
+def _release_version_tuple(version: str) -> tuple[int, ...] | None:
+    if not isinstance(version, str) or re.fullmatch(r"[0-9]+(?:\.[0-9]+)*", version) is None:
+        return None
+    parts = [int(part) for part in version.split(".")]
+    while len(parts) > 1 and parts[-1] == 0:
+        parts.pop()
+    return tuple(parts)
+
+
+def version_at_least(installed: str, target: str) -> bool:
+    parsed_installed = _release_version_tuple(installed)
+    parsed_target = _release_version_tuple(target)
+    return (
+        parsed_installed is not None
+        and parsed_target is not None
+        and parsed_installed >= parsed_target
+    )
+
+
+def maintenance_versions_satisfied(
+    versions: dict, target_version: str, *, packages: tuple[str, ...] = PAIR
+) -> bool:
+    if (
+        not isinstance(versions, dict)
+        or set(versions) != ROLES
+        or not isinstance(target_version, str)
+    ):
+        return False
+    expected_packages = set(packages)
+    return all(
+        isinstance(role_packages, dict)
+        and set(role_packages) == expected_packages
+        and all(version_at_least(ver, target_version) for ver in role_packages.values())
+        for role_packages in versions.values()
+    )
 
 class _NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
@@ -618,31 +656,60 @@ class MaintenanceStages:
     def __init__(self,target,*,runtime,artifacts,applications,publisher,settings):
         self.target,self.runtime,self.artifacts,self.applications,self.publisher,self.settings=target,runtime,artifacts,applications,publisher,settings
         self.controller=None;self.last_observation=None;self.last_poll=None
+        self._observation_lock=threading.RLock()
 
     def call(self,job,action,**arguments):
         return self.runtime.maintenance_call(action,origin=job['origin'],**arguments)
 
-    def observe_due(self):
+    def observe_due(self, *, force=False):
         import time
-        if self.last_poll is not None and time.monotonic()-self.last_poll<self.target.config['observation_interval_seconds']:return
-        self.last_poll=time.monotonic()  # An unavailable source is not retried every host tick.
-        observation=self.target.observe()
-        compact={'source_sha256':observation['source_sha256'],'inventory_sha256':canonical_sha256(observation['inventory']),
-            'official_releases':{n:r['sha256'] for n,r in observation['official_releases'].items()},
-            'versions':{r:{n:v['distributions'][n]['version'] for n in PAIR} for r,v in observation['inventory'].items()}}
-        self.runtime.maintenance_call('observe',observation=compact)
-        self.last_observation=observation;self.last_poll=time.monotonic()
+        with self._observation_lock:
+            if not force and self.last_poll is not None and time.monotonic()-self.last_poll<self.target.config['observation_interval_seconds']:return
+            self.last_poll=time.monotonic()  # An unavailable source is not retried every host tick.
+            observation=self.target.observe()
+            compact={'source_sha256':observation['source_sha256'],'inventory_sha256':canonical_sha256(observation['inventory']),
+                'official_releases':{n:r['sha256'] for n,r in observation['official_releases'].items()},
+                'versions':{r:{n:v['distributions'][n]['version'] for n in PAIR} for r,v in observation['inventory'].items()}}
+            self.runtime.maintenance_call('observe',observation=compact)
+            self.last_observation=observation;self.last_poll=time.monotonic()
 
     def request(self,request):
         if set(request)!={'action','task_id','request_id','scope_sha256'} or request['action'] not in {'describe','submit','status'} or request['scope_sha256']!=self.runtime.config['scope_sha256']:
             raise ValueError('closed maintenance handoff request required')
         _identifier(request['request_id'])
-        self.observe_due()
-        observation=self.last_observation
+        with self._observation_lock:
+            prior_observation=self.last_observation
+            self.observe_due()
+            if self.last_observation is None:
+                self.observe_due(force=True)
+            elif (self.last_observation is prior_observation
+                    and callable(getattr(self.target,'inventory',None))
+                    and self.target.inventory()!=self.last_observation['inventory']):
+                self.observe_due(force=True)
+            observation=self.last_observation
         if observation is None:raise ValueError('actual maintenance observation unavailable')
         binding=self.runtime.maintenance_call('binding',task_id=request['task_id'],observation_sha256=observation['source_sha256'])
         origin,meta=binding['origin'],binding['work']
-        target=self.target.target(origin,observation);identity=target['target_id'];controller=self.controller
+        controller=self.controller
+        actual_versions={r:{n:v['distributions'][n]['version'] for n in PAIR}
+            for r,v in observation['inventory'].items()}
+        if meta['role'] is None and request['action']=='status':
+            with controller.lock:
+                existing=next((j for j in controller.jobs.values()
+                    if j.get('contract')=='EvaDependencyMaintenanceHandoff/v1'
+                    and j.get('task_id')==meta['task_id']),None)
+                if existing is not None:
+                    return self.public(existing)
+        if set(actual_versions)==ROLES and maintenance_versions_satisfied(actual_versions,VERSION):
+            if meta['role'] is not None:
+                raise ValueError('assessment may only read its own maintenance inputs')
+            if request['action'] in {'describe','status'}:
+                return {'contract':'EvaComponentMaintenanceUpToDate/v1','state':'already_up_to_date',
+                    'accepted':False,'installed':False,'up_to_date':True,'packages':list(PAIR),
+                    'target_version':VERSION,'actual_versions':actual_versions,
+                    'next_action':'no_update_needed'}
+            raise ValueError('installed component pair already meets or exceeds target version')
+        target=self.target.target(origin,observation);identity=target['target_id']
         with controller.lock:
             job=controller.jobs.get(identity)
             if meta['role'] is not None:

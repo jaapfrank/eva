@@ -135,6 +135,21 @@ def completed_tool_evidence(receipts):
                 if result.get('accepted') is not True or result.get('installed') is not False:
                     return False
                 completed = True  # Handoff completes this phase, not the repair incident.
+            elif (
+                receipt.call.arguments in ({'action': 'describe'}, {'action': 'status'})
+                and result.get('contract') == 'EvaRuntimeRepairSuperseded/v1'
+                and result.get('state') == 'superseded_by_installed_release'
+                and result.get('repairable') is False
+                and result.get('accepted') is False
+                and result.get('installed') is False
+            ):
+                completed = True
+            elif (
+                receipt.call.arguments == {'action': 'status'}
+                and result.get('accepted') is True
+                and type(result.get('installed')) is bool
+            ):
+                completed = True
             continue
         if receipt.call.name in {"save_work_progress", "get_delegated_work", PROGRAMMING_LIST}:
             # Planning and reading a predecessor are context, not new completed work.

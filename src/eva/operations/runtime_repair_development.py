@@ -414,9 +414,35 @@ class RuntimeRepairDevelopment:
                 or meta['task_id']!=request['task_id']):
             raise ValueError('repair handoff work differs')
         with self.lock:
-            target=self.targets.resolve(request['incident_id'])
-            identity=target['target_id'];job=self.jobs.get(identity)
             role=meta['role']
+            execution=meta.get('execution_id',meta['task_id'])
+            is_original_builder=(role is None
+                and execution=='work:eva-initiative:'+binding['intent_id'].removeprefix('personal-interest:'))
+            try:
+                target=self.targets.resolve(request['incident_id'])
+            except ValueError as error:
+                if error.args!=('failure has no currently repairable source',) or not is_original_builder:
+                    raise
+                if request['action']=='status':
+                    existing=next((j for j in self.jobs.values()
+                        if j.get('contract')=='EvaRuntimeRepairHandoff/v1'
+                        and j.get('incident_id')==request['incident_id']
+                        and j.get('failure')==binding),None)
+                    if existing is not None:
+                        return self._public(existing)
+                if request['action'] in {'describe','status'} and hasattr(self.targets,'describe_superseded'):
+                    superseded=self.targets.describe_superseded(request['incident_id'])
+                    if superseded is not None:
+                        return {'contract':'EvaRuntimeRepairSuperseded/v1',
+                            'incident_id':binding['incident_id'],
+                            'state':'superseded_by_installed_release',
+                            'repairable':False,'accepted':False,'installed':False,
+                            'superseded_paths':superseded['superseded_paths'],
+                            'excluded_paths':superseded['excluded_paths'],
+                            'next_action':'finish_without_submit_already_superseded',
+                            'meaning':'Observed source hashes are no longer installed on the current runtime; finish without submitting a candidate.'}
+                raise
+            identity=target['target_id'];job=self.jobs.get(identity)
             services=repair_services(target)
             if request['action']=='describe':
                 if len(services)==1 and role is not None:

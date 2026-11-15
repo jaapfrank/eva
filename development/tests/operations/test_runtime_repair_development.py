@@ -232,3 +232,63 @@ def test_role_scoped_oracle_is_bound_before_source_seed_and_stays_candidate_blin
     metadata['candidate_sha256']=None
     assert c.request(meta_request)['repair_services']==[f.repair_role]
     assert f.seeded==[oracle_task]
+
+
+def test_superseded_incident_describe_and_status_return_clean_readonly_payload_while_submit_and_oracle_refuse(flow):
+    f=flow;c=f.controller
+    f.targets.source=lambda image,path:(BASELINE+'# Newer installed release\n').encode()
+    described=c.request({**f.request,'action':'describe'})
+    assert described=={
+        'contract':'EvaRuntimeRepairSuperseded/v1',
+        'incident_id':f.binding['incident_id'],
+        'state':'superseded_by_installed_release',
+        'repairable':False,
+        'accepted':False,
+        'installed':False,
+        'superseded_paths':[PATH],
+        'excluded_paths':[],
+        'next_action':'finish_without_submit_already_superseded',
+        'meaning':'Observed source hashes are no longer installed on the current runtime; finish without submitting a candidate.',
+    }
+    assert c.request({**f.request,'action':'status'})==described
+    assert f.seeded==[] and not c.jobs
+    with pytest.raises(ValueError,match='no currently repairable source'):
+        c.request({**f.request,'action':'submit'})
+    assert not c.jobs
+    oracle_task='work:eva-initiative:'+'1'*64
+    f.metadata[oracle_task]={**f.meta,'task_id':oracle_task,'role':'original_behavior_oracle','target_id':f.identity}
+    with pytest.raises(ValueError,match='no currently repairable source'):
+        c.request({**f.request,'task_id':oracle_task,'action':'describe'})
+    c.jobs[f.identity]={
+        'contract':'EvaRuntimeRepairHandoff/v1',
+        'target_id':f.identity,
+        'incident_id':f.binding['incident_id'],
+        'failure':f.binding,
+        'state':'completed',
+    }
+    assert c.request({**f.request,'action':'status'})=={
+        'target_id':f.identity,
+        'incident_id':f.binding['incident_id'],
+        'state':'completed',
+        'accepted':True,
+        'installed':True,
+        'next_action':'inspect_existing_handoff',
+    }
+    from eva.adapters.connectors.delegated_completion import completed_tool_evidence
+    from eva.adapters.postgres.component_improvement_actions import REPAIR
+    from eva.application.conversation import ConversationActionCall, ConversationActionReceipt
+    def _receipt(action, op_result):
+        return ConversationActionReceipt(
+            call=ConversationActionCall('id-' + action, REPAIR, {'action': action}),
+            output={'status': 'verified', 'operation_result': op_result},
+        )
+    assert completed_tool_evidence([_receipt('describe', described)]) is True
+    assert completed_tool_evidence([_receipt('status', described)]) is True
+    assert completed_tool_evidence([_receipt('status', c.request({**f.request,'action':'status'}))]) is True
+    assert completed_tool_evidence([_receipt('describe', {
+        'target_id': f.identity, 'role': None, 'handoff': '/workspace/repair/handoff.json',
+        'candidate_output': '/workspace/repair/candidate.json', 'installed': False,
+    })]) is False
+    assert completed_tool_evidence([_receipt('status', {
+        'state': 'not_submitted', 'installed': False,
+    })]) is False

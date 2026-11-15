@@ -185,6 +185,44 @@ class RuntimeRepairTargets:
         with self._lock:
             return self._resolve(incident_id)
 
+    def describe_superseded(self, incident_id):
+        """Verify read-only that all observed repairable frames were superseded."""
+        with self._lock:
+            current = verified_failure_binding(self.binding(incident_id))
+            if current['incident_id'] != incident_id:
+                raise ValueError('host resolved another repair incident')
+            installation = self._installation()
+            superseded, excluded, seen = [], [], set()
+            for frame in reversed(current['observation']['frames']):
+                path = frame['path']
+                if path in seen:
+                    continue
+                seen.add(path)
+                if not repairable_source(path):
+                    excluded.append(path)
+                    continue
+                versions = {}
+                for service, runtime in installation.items():
+                    raw = self.source(runtime['image'], path)
+                    if raw is None:
+                        continue
+                    if not isinstance(raw, bytes) or not 1 <= len(raw) <= MAX_REPAIR_SOURCE_BYTES:
+                        raise ValueError('bounded installed repair source required')
+                    raw.decode('utf-8')
+                    versions[service] = hashlib.sha256(raw).hexdigest()
+                digests = set(versions.values())
+                if len(digests) > 1 or digests == {frame['source_sha256']}:
+                    return None
+                superseded.append(path)
+            if not superseded:
+                return None
+            if (verified_failure_binding(self.binding(incident_id)) != current
+                    or self._installation() != installation):
+                raise ValueError('repair authority or installation changed during target resolution')
+            return {'incident_id': current['incident_id'],
+                    'superseded_paths': sorted(superseded),
+                    'excluded_paths': sorted(excluded)}
+
     def _prepare(self, incident_id):
         resolved = self._resolve(incident_id)
         identity = resolved['target_id']

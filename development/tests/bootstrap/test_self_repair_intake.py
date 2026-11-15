@@ -3,19 +3,20 @@ from contextlib import contextmanager
 from types import SimpleNamespace
 import pytest
 from eva.adapters.model.contracts import ConversationModelRateLimited, ConversationModelUnavailable
+from eva.adapters.projection.hindsight import HindsightProjectionUnavailable
 from eva.application.conversation import ConversationStopped, ConversationConflict
 from eva.application.cancellation import WorkInterrupted
-from eva.bootstrap.self_repair import repair_failed_turn
+from eva.bootstrap.self_repair import observe_failed_work, repair_failed_turn
 
 
-@pytest.mark.parametrize('error',[ConversationStopped('stop'),WorkInterrupted('stop')])
+@pytest.mark.parametrize('error',[ConversationStopped('stop'),WorkInterrupted('stop'),HindsightProjectionUnavailable('down')])
 def test_cancellation_never_enters_repair(error):
     def unexpected(*args):raise AssertionError('Repair must not be entered')
     runtime=SimpleNamespace(_self_repair=SimpleNamespace(observe=unexpected))
     assert repair_failed_turn(runtime,None,error) is None
 
 
-@pytest.mark.parametrize("error_type", [ConversationModelRateLimited, ConversationModelUnavailable])
+@pytest.mark.parametrize("error_type", [ConversationModelRateLimited, ConversationModelUnavailable, HindsightProjectionUnavailable])
 def test_provider_refusal_stays_on_the_original_failure_route(error_type, monkeypatch):
     from contextlib import nullcontext
     from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
@@ -49,3 +50,9 @@ def test_busy_original_execution_does_not_adopt_a_repair():
         _journal=lambda turn:SimpleNamespace(execution=busy))
     assert repair_failed_turn(runtime,None,RuntimeError('private error')) is None
     assert calls==[]
+
+
+def test_transient_hindsight_unavailable_never_queues_work_self_repair():
+    store=SimpleNamespace(_initiative_authority_loader=lambda:pytest.fail('must not load repair authority'))
+    source=SimpleNamespace(audience=SimpleNamespace(kind='private_person'),project_id=None)
+    assert observe_failed_work(store,None,source,object(),HindsightProjectionUnavailable('down'),clock=lambda:None) is None

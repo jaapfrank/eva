@@ -86,6 +86,37 @@ def _maintenance_attention_observations(authority, connection, scope, principal_
                 or any(not isinstance(v, str) or re.fullmatch(r"[0-9A-Za-z.+_-]{1,40}", v) is None
                        for v in packages.values())):
             raise ValueError("maintenance installed version metadata differs")
+    from eva.operations.runtime_dependency_update import maintenance_versions_satisfied
+    if maintenance_versions_satisfied(versions, maintenance["target_version"], packages=tuple(maintenance["packages"])):
+        return ()
+    latest_rows = connection.execute(sa.select(e.occurred_at, e.payload, e.payload_sha256).where(
+        e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+        e.thread_id.startswith("component-maintenance-source:"),
+        e.event_type == "COMPONENT_MAINTENANCE_OBSERVED", e.sequence == 1,
+        sa.or_(
+            e.occurred_at > row.occurred_at,
+            sa.and_(
+                e.occurred_at == row.occurred_at,
+                e.thread_id != "component-maintenance-source:" + observation_sha,
+            ),
+        ),
+        e.occurred_at <= now,
+    ).order_by(e.occurred_at.desc(), e.thread_id).limit(8)).all()
+    if latest_rows:
+        newest_at = latest_rows[0].occurred_at
+        newest_satisfied = False
+        for candidate in latest_rows:
+            if candidate.occurred_at < newest_at:
+                break
+            if canonical_sha256(candidate.payload) != bytes(candidate.payload_sha256).hex():
+                raise ValueError("maintenance retained observation differs")
+            latest_versions = candidate.payload.get("data", {}).get("versions")
+            if isinstance(latest_versions, dict) and maintenance_versions_satisfied(
+                latest_versions, maintenance["target_version"], packages=tuple(maintenance["packages"])
+            ):
+                newest_satisfied = True
+        if newest_satisfied:
+            return ()
     authorization = maintenance["authorization_source"].encode("utf-8")
     declared_mandate = {
         "enabled": True,
@@ -242,6 +273,7 @@ def observe_installed_maintenance(authority,observation,*,sensory_store=None,now
     from eva.application.sensory import SensoryEvent
     from eva.adapters.postgres.sensory_events import PostgresSensoryEventStore
     from eva.adapters.postgres.operational_timeline import CheckpointConflict
+    from eva.operations.runtime_dependency_update import maintenance_versions_satisfied
     policy,_=maintenance_policy(authority);now=now or datetime.now(UTC).replace(microsecond=0)
     if set(observation)!={'source_sha256','inventory_sha256','official_releases','versions'}:
         raise ValueError('closed software observation required')
@@ -249,12 +281,22 @@ def observe_installed_maintenance(authority,observation,*,sensory_store=None,now
     if set(observation['official_releases'])!={'psycopg','psycopg-binary'}:
         raise ValueError('unsupported maintenance source')
     for digest in observation['official_releases'].values():_sha(digest)
+    versions=observation['versions']
+    if (not isinstance(versions,dict) or not versions
+            or set(versions)-{'core','delegated-work-worker'}
+            or any(not isinstance(pkgs,dict) or set(pkgs)!=set(policy['packages'])
+                   or any(not isinstance(v,str) or re.fullmatch(r'[0-9A-Za-z.+_-]{1,40}',v) is None
+                          for v in pkgs.values())
+                   for pkgs in versions.values())):
+        raise ValueError('maintenance installed version metadata differs')
     owner=authority.owner;identity='component-maintenance-source:'+observation['source_sha256']
     try:
         authority.timeline.create_thread(thread_id=identity,checkpoint_id=identity+':observed',occurred_at=now,
             data=observation,event_type='COMPONENT_MAINTENANCE_OBSERVED',phase='maintenance_observed',status='completed')
     except CheckpointConflict:
         if authority.timeline.events(identity)[0].payload['data']!=observation:raise ValueError('maintenance observation collision')
+    if maintenance_versions_satisfied(versions,policy['target_version'],packages=tuple(policy['packages'])):
+        return {'state':'already_up_to_date','source_sha256':observation['source_sha256']}
     sensory_store=sensory_store or PostgresSensoryEventStore(owner._engine,tenant_id=owner._tenant_id,installation_id=owner._installation_id)
     event=SensoryEvent(source='component_maintenance',source_event_id='maintenance-'+observation['source_sha256'],
         event_type='component_update_available',occurred_at=now,payload={**observation,'component_set':'psycopg',
