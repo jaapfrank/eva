@@ -67,9 +67,8 @@ class RepairObservation:
                     or not isinstance(digest, str) or not sha.fullmatch(digest)):
                 raise ValueError('invalid repair frame')
 
-    @classmethod
-    def from_error(cls, error, *, source_root):
-        root = Path(source_root).resolve()
+    @staticmethod
+    def _trace_frames(error, root: Path) -> list[tuple[str, str, str]]:
         frames = []
         trace = error.__traceback__
         while trace is not None:
@@ -84,9 +83,38 @@ class RepairObservation:
                     frames.append((relative, trace.tb_frame.f_code.co_name + ':' + str(trace.tb_lineno),
                                    hashlib.sha256(raw).hexdigest()))
             trace = trace.tb_next
+        return frames
+
+    @classmethod
+    def from_error(cls, error, *, source_root):
+        root = Path(source_root).resolve()
+        primary = cls._trace_frames(error, root)
+        causes: list[list[tuple[str, str, str]]] = []
+        seen = {id(error)}
+        current = error
+        while len(causes) < 8:
+            nxt = current.__cause__
+            if nxt is None and not getattr(current, '__suppress_context__', False):
+                nxt = current.__context__
+            if nxt is None or id(nxt) in seen:
+                break
+            seen.add(id(nxt))
+            causes.append(cls._trace_frames(nxt, root))
+            current = nxt
+        chained = [frame for group in reversed(causes) for frame in group]
+        if chained:
+            kept_primary = primary[-max(8, 16 - len(chained)):]
+            kept_chained = chained[-(16 - len(kept_primary)):] if len(kept_primary) < 16 else []
+            combined = kept_chained + kept_primary
+        else:
+            combined = primary[-16:]
+        deduped: list[tuple[str, str, str]] = []
+        for frame in combined:
+            if not deduped or deduped[-1] != frame:
+                deduped.append(frame)
         error_type = type(error)
         return cls(hashlib.sha256((error_type.__module__ + '.' + error_type.__qualname__)
-                                 .encode()).hexdigest(), tuple(frames[-16:]))
+                                 .encode()).hexdigest(), tuple(deduped[-16:]))
 
     def to_payload(self):
         return {'error_type_sha256': self.error_type_sha256,

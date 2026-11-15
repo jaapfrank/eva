@@ -455,7 +455,9 @@ class RuntimeRepairDevelopment:
                 elif role not in (None,'original_behavior_oracle'):
                     raise ValueError('unknown repair phase')
                 response = {**public_repair_target(target),'role':role,
-                    'installed_source_snapshot':'/workspace/repair/source/eva',**supplemental}
+                    'installed_source_snapshot':'/workspace/repair/source/eva',
+                    'installed_import_root':'/workspace/repair/support',
+                    'installed_pythonpath':'/workspace/repair/support:/opt/eva-source',**supplemental}
                 if role is None:
                     from eva.operations.runtime_repair_target import repair_builder_handoff
                     response['builder_handoff'] = repair_builder_handoff(target)

@@ -14,7 +14,9 @@ def configured_runtime_repairs(config,*,settings,programming,applications,runtim
     from eva.operations.runtime_repair_target import RuntimeRepairTargets
     from eva.operations.runtime_repair_evaluation import RuntimeRepairEvaluator
     from eva.operations.runtime_repair_development import RuntimeRepairDevelopment
-    from eva.operations.runtime_repair_publisher import current_repair_installation,read_image_source
+    from eva.operations.runtime_repair_publisher import (
+        current_repair_installation, read_image_source, read_image_support_sources,
+    )
     runtime=ComponentApplicationRuntime(runtime_config);publisher=ComponentReleasePublisher(config['publisher'])
     root=Path(config['receipt_root']);root.mkdir(mode=0o700,parents=True,exist_ok=True)
     holder={}
@@ -23,8 +25,10 @@ def configured_runtime_repairs(config,*,settings,programming,applications,runtim
         installation=lambda:current_repair_installation(publisher,root)[1],
         source=lambda image,path:read_image_source(publisher,image,path,root),
         criteria=lambda scope:holder['controller'].criteria(scope))
+    artifacts=RuntimeRepairArtifacts(programming,
+        support_source=lambda image,paths:read_image_support_sources(publisher,image,paths,root))
     controller=RuntimeRepairDevelopment(root,runtime=runtime,targets=targets,
-        evaluator=RuntimeRepairEvaluator(targets,settings),artifacts=RuntimeRepairArtifacts(programming),
+        evaluator=RuntimeRepairEvaluator(targets,settings),artifacts=artifacts,
         publisher=publisher,applications=applications,scope_sha256=runtime_config['scope_sha256'],
         poll_seconds=config.get('poll_seconds',2),start=False)
     holder['controller']=controller

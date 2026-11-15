@@ -276,7 +276,8 @@ def repair_builder_handoff(target):
                 "candidate_content":{"type":"string","minLength":1,"maxLength":MAX_REPAIR_SOURCE_BYTES,
                     "description":f"Complete changed Python module, at most {MAX_REPAIR_SOURCE_BYTES} UTF-8 bytes. The host checks hashes and syntax."}}})
     return {"contract":"EvaRuntimeRepairBuilderHandoff/v1", "target_id":target["target_id"],
-        "source_root":"/workspace/repair/source/eva", "candidate_file":"/workspace/repair/candidate.json",
+        "source_root":"/workspace/repair/source/eva", "import_root":"/workspace/repair/support",
+        "candidate_file":"/workspace/repair/candidate.json",
         "candidate_schema":{"type":"object", "additionalProperties":False,
             "required":["contract","target_id","diagnosis","files"], "properties":{
                 "contract":{"const":"EvaRuntimeRepairCandidate/v1"},
@@ -285,7 +286,7 @@ def repair_builder_handoff(target):
                 "files":{"type":"array","minItems":1,"maxItems":len(sources),
                     "items":{"anyOf":file_schemas},
                     "description":f"Unique selected paths only; combined UTF-8 source bytes at most {MAX_REPAIR_TOTAL_SOURCE_BYTES}."}}},
-        "handoff_steps":["Read the host-seeded source and diagnose the recorded failure.",
+        "handoff_steps":["Read the host-seeded source (use PYTHONPATH=/workspace/repair/support:/opt/eva-source to import exact installed dependencies) and diagnose the recorded failure.",
             "Write the actual candidate matching this schema and read back its exact bytes.",
             "Call manage_own_runtime_repair with action=submit once.",
             "After accepted=true finish this developer work; the host can start separate assessment only after completion."],

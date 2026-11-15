@@ -53,13 +53,33 @@ with contextlib.redirect_stdout(io.StringIO()),contextlib.redirect_stderr(io.Str
         assert len(encoded.encode())<=16384
         result['outcome']={'kind':'value','value':json.loads(encoded)}
     except Exception as error:
-        t=type(error);frames=[];trace=error.__traceback__
-        while trace is not None:
-            p=pathlib.Path(trace.tb_frame.f_code.co_filename).resolve()
-            if p.is_relative_to(root):
-                frames.append({'path':p.relative_to(root).as_posix(),
-                    'function':trace.tb_frame.f_code.co_name+':'+str(trace.tb_lineno)})
-            trace=trace.tb_next
+        t=type(error)
+        def _frames(exc):
+            items=[];trace=exc.__traceback__
+            while trace is not None:
+                p=pathlib.Path(trace.tb_frame.f_code.co_filename).resolve()
+                if p.is_relative_to(root):
+                    items.append({'path':p.relative_to(root).as_posix(),
+                        'function':trace.tb_frame.f_code.co_name+':'+str(trace.tb_lineno)})
+                trace=trace.tb_next
+            return items
+        primary=_frames(error);causes=[];seen={id(error)};cur=error
+        while len(causes)<8:
+            nxt=cur.__cause__
+            if nxt is None and not getattr(cur,'__suppress_context__',False):
+                nxt=cur.__context__
+            if nxt is None or id(nxt) in seen:break
+            seen.add(id(nxt));causes.append(_frames(nxt));cur=nxt
+        chained=[f for g in reversed(causes) for f in g]
+        if chained:
+            kp=primary[-max(8,16-len(chained)):]
+            kc=chained[-(16-len(kp)):] if len(kp)<16 else []
+            combined=kc+kp
+        else:
+            combined=primary[-16:]
+        frames=[]
+        for f in combined:
+            if not frames or frames[-1]!=f:frames.append(f)
         result['outcome']={'kind':'error','error_type_sha256':hashlib.sha256(
             (t.__module__+'.'+t.__qualname__).encode()).hexdigest(),'frames':frames[-16:]}
 result['executed_sources']=executed

@@ -10,7 +10,9 @@ import pytest
 
 from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES
 from eva.operations.runtime_repair_artifacts import RuntimeRepairArtifacts
-from eva.operations.runtime_repair_publisher import read_image_source, require_unshadowed_repair_source
+from eva.operations.runtime_repair_publisher import (
+    read_image_source, read_image_support_sources, require_unshadowed_repair_source, supportable_source,
+)
 
 
 def test_artifact_snapshot_refuses_symlinks_hardlinks_and_duplicate_fields(tmp_path):
@@ -146,3 +148,122 @@ def test_role_scoped_seed_uses_exact_worker_image(tmp_path):
     client.seed_sources(metadata, target, source=source)
     assert calls == [(image, path)]
     assert (tmp_path / metadata["workspace_key"] / "repair/source/eva" / path).read_bytes() == raw
+
+
+def test_seed_sources_populates_transitive_import_support_over_stale_base_package(tmp_path):
+    import hashlib
+    stale_root = tmp_path / "stale-opt"
+    (stale_root / "eva/adapters/model/tokenizer_data").mkdir(parents=True)
+    (stale_root / "eva/contracts").mkdir(parents=True)
+    (stale_root / "eva/__init__.py").write_text("PACKAGE_MARKER = 'eva'\n")
+    (stale_root / "eva/adapters/__init__.py").write_text("")
+    (stale_root / "eva/adapters/model/__init__.py").write_text(
+        "from __future__ import annotations\n"
+        "def __getattr__(name: str):\n"
+        "    if name == 'ExportedSymbol':\n"
+        "        return 'from-model-init'\n"
+        "    raise AttributeError(name)\n"
+    )
+    # Stale base lacks function_defer_loading, reproducing the 2026-11-14 live ImportError.
+    (stale_root / "eva/adapters/model/tool_namespaces.py").write_text("OLD_ONLY = True\n")
+    (stale_root / "eva/contracts/__init__.py").write_text("")
+    (stale_root / "eva/contracts/base.py").write_text("CONTRACT_V = 'v1'\n")
+
+    target_path = "adapters/model/pydantic_conversation.py"
+    target_bytes = (
+        b"from eva.adapters.model.tool_namespaces import function_defer_loading\n"
+        b"from eva.contracts.base import CONTRACT_V\n"
+        b"def check():\n"
+        b"    return f'{function_defer_loading()}:{CONTRACT_V}'\n"
+    )
+    dep_path = "adapters/model/tool_namespaces.py"
+    dep_bytes = (
+        b"from .helper_leaf import leaf_tag\n"
+        b"def function_defer_loading():\n"
+        b"    return 'defer-' + leaf_tag()\n"
+    )
+    leaf_path = "adapters/model/helper_leaf.py"
+    leaf_bytes = b"def leaf_tag():\n    return 'ok'\n"
+    init_bytes = (
+        b"from __future__ import annotations\n"
+        b"def __getattr__(name: str):\n"
+        b"    if name == 'ExportedSymbol':\n"
+        b"        return 'from-seeded-model-init'\n"
+        b"    raise AttributeError(name)\n"
+    )
+    target_bytes = (
+        b"from eva.adapters.model import ExportedSymbol\n"
+        + target_bytes
+    )
+    image_files = {
+        target_path: target_bytes,
+        dep_path: dep_bytes,
+        leaf_path: leaf_bytes,
+        "adapters/model/__init__.py": init_bytes,
+    }
+    image = "sha256:" + "3" * 64
+    workspace_root = tmp_path / "workspaces"
+    workspace_root.mkdir()
+    batch_calls = []
+
+    def support_batch(img, paths):
+        assert img == image
+        batch_calls.append(tuple(paths))
+        return {p: image_files.get(p) for p in paths}
+
+    client = RuntimeRepairArtifacts(
+        SimpleNamespace(config=SimpleNamespace(workspace_root=workspace_root)),
+        support_source=support_batch,
+    )
+    target = {
+        "contract": "EvaRuntimeRepairTarget/v1",
+        "target_id": "c" * 64,
+        "sources": {target_path: hashlib.sha256(target_bytes).hexdigest()},
+        "installation": {"core": {"image": image}},
+    }
+    meta = {"workspace_key": "d" * 64, "role": None}
+    client.seed_sources(meta, target, source=lambda img, rel: image_files.get(rel))
+
+    repair_dir = workspace_root / meta["workspace_key"] / "repair"
+    # Editable target tree still contains ONLY target['sources'].
+    assert [p.relative_to(repair_dir / "source/eva").as_posix()
+            for p in (repair_dir / "source/eva").rglob("*.py")] == [target_path]
+    # Support tree resolves transitive installed modules AND falls back to stale_root for contracts + __init__ exports.
+    out = subprocess.check_output(
+        [sys.executable, "-c",
+         "import os, eva; from eva.adapters.model import ExportedSymbol; "
+         "from eva.adapters.model.pydantic_conversation import check; "
+         "print(eva.PACKAGE_MARKER, ExportedSymbol, check(), os.environ.get('TIKTOKEN_CACHE_DIR'))"],
+        env={"PYTHONPATH": f"{repair_dir / 'support'}:{stale_root}"},
+        text=True,
+    ).strip()
+    expected_td = str(stale_root / "eva/adapters/model/tokenizer_data")
+    assert out == f"eva from-seeded-model-init defer-ok:v1 {expected_td}"
+    assert len(batch_calls) <= 4
+
+
+def test_supportable_source_and_batch_reader_enforce_boundaries(tmp_path):
+    assert supportable_source("contracts/conversation_model.py") is True
+    assert supportable_source("adapters/model/tool_namespaces.py") is True
+    assert supportable_source("adapters/credentials/runtime_files.py") is False
+    assert supportable_source("operations/component_evaluation.py") is False
+    assert supportable_source("../escape.py") is False
+
+    root = tmp_path / "eva"
+    (root / "contracts").mkdir(parents=True)
+    (root / "contracts/example.py").write_bytes(b"X = 1\n")
+
+    def command(argv, _):
+        script = argv[argv.index("-c") + 1]
+        args = argv[argv.index("-c") + 2:]
+        script = script.replace('"/opt/eva/src/eva"', repr(str(root)))
+        return subprocess.check_output([sys.executable, "-I", "-S", "-c", script, *args], text=True).strip()
+
+    publisher = SimpleNamespace(_command=command)
+    image = "sha256:" + "4" * 64
+    batch = read_image_support_sources(
+        publisher, image, ["contracts/example.py", "contracts/missing.py"], tmp_path
+    )
+    assert batch == {"contracts/example.py": b"X = 1\n", "contracts/missing.py": None}
+    with pytest.raises(ValueError, match="supportable"):
+        read_image_support_sources(publisher, image, ["adapters/credentials/secret.py"], tmp_path)

@@ -44,3 +44,41 @@ def test_external_traceback_is_not_promoted_to_own_repair_source(tmp_path):
 ])
 def test_materialized_observation_cannot_smuggle_paths_or_private_text(frame):
     with pytest.raises(ValueError):RepairObservation('a'*64,(frame,))
+
+
+def test_observation_includes_chained_cause_frames_and_respects_suppressed_context(tmp_path):
+    inner = tmp_path / 'adapters' / 'inner_helper.py'
+    outer = tmp_path / 'adapters' / 'wrapper.py'
+    inner.parent.mkdir(parents=True)
+    inner.write_text("def parse_payload():\n    secret = 'INNER_SECRET'\n    raise ValueError(secret)\n")
+    outer.write_text(
+        "def run_turn(fn, suppress=False):\n"
+        "    try:\n"
+        "        return fn()\n"
+        "    except Exception as exc:\n"
+        "        if suppress:\n"
+        "            raise RuntimeError('WRAPPER_SECRET') from None\n"
+        "        raise RuntimeError('WRAPPER_SECRET') from exc\n"
+    )
+    ns_inner, ns_outer = {}, {}
+    exec(compile(inner.read_text(), str(inner), 'exec'), ns_inner)
+    exec(compile(outer.read_text(), str(outer), 'exec'), ns_outer)
+
+    try:
+        ns_outer['run_turn'](ns_inner['parse_payload'], suppress=False)
+    except RuntimeError as err:
+        obs = RepairObservation.from_error(err, source_root=tmp_path)
+
+    paths = [frame[0] for frame in obs.frames]
+    funcs = [frame[1] for frame in obs.frames]
+    assert 'adapters/inner_helper.py' in paths
+    assert 'adapters/wrapper.py' in paths
+    assert funcs == ['run_turn:3', 'parse_payload:3', 'run_turn:7']
+    assert 'INNER_SECRET' not in str(obs.to_payload())
+    assert 'WRAPPER_SECRET' not in str(obs.to_payload())
+
+    try:
+        ns_outer['run_turn'](ns_inner['parse_payload'], suppress=True)
+    except RuntimeError as err_suppressed:
+        obs_suppressed = RepairObservation.from_error(err_suppressed, source_root=tmp_path)
+    assert [frame[0] for frame in obs_suppressed.frames] == ['adapters/wrapper.py']

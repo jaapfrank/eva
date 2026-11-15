@@ -120,6 +120,88 @@ def read_image_source(publisher,image,path,directory):
     return raw
 
 
+_BATCH_IMAGE_SOURCE_READER = '''
+from contextlib import ExitStack
+import base64, json, os, pathlib, stat, sys
+
+root = pathlib.Path("/opt/eva/src/eva")
+maximum = int(sys.argv[1])
+if root.resolve(strict=True) != root:
+    raise ValueError("image source root is shadowed")
+directory_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+
+def read_one(relative):
+    parts = relative.split("/")
+    with ExitStack() as opened:
+        parent = os.open(root, directory_flags)
+        opened.callback(os.close, parent)
+        try:
+            for part in parts[:-1]:
+                parent = os.open(part, directory_flags, dir_fd=parent)
+                opened.callback(os.close, parent)
+            info = os.stat(parts[-1], dir_fd=parent, follow_symlinks=False)
+        except FileNotFoundError:
+            return None
+        if not stat.S_ISREG(info.st_mode) or not 1 <= info.st_size <= maximum:
+            raise ValueError("bounded regular image source required")
+        descriptor = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
+        with os.fdopen(descriptor, "rb") as stream:
+            if os.fstat(stream.fileno()) != info:
+                raise ValueError("image source changed during read")
+            raw = stream.read(maximum + 1)
+        if len(raw) != info.st_size:
+            raise ValueError("image source size changed")
+        return base64.b64encode(raw).decode("ascii")
+
+print(json.dumps({rel: read_one(rel) for rel in sys.argv[2:]}, separators=(",", ":")))
+'''
+
+
+def supportable_source(path):
+    if not isinstance(path, str) or not 1 <= len(path) <= 240:
+        return False
+    parsed = PurePosixPath(path)
+    return (str(parsed) == path and not parsed.is_absolute()
+        and re.fullmatch(r'[A-Za-z0-9_/]+\.py', path) is not None
+        and not any(part in {'.', '..'} for part in parsed.parts)
+        and path.startswith(('application/', 'adapters/', 'bootstrap/', 'contracts/', 'domain/', 'providers/'))
+        and not path.startswith(('adapters/credentials/', 'operations/')))
+
+
+def read_image_support_sources(publisher, image, paths, directory):
+    from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES
+    if not isinstance(image, str) or re.fullmatch(r'sha256:[0-9a-f]{64}', image) is None:
+        raise ValueError('immutable repair image required')
+    unique = list(dict.fromkeys(paths))
+    if not unique:
+        return {}
+    if len(unique) > 64 or any(not supportable_source(path) for path in unique):
+        raise ValueError('bounded supportable image source paths required')
+    encoded = publisher._command(['docker', 'run', '--rm', '--pull', 'never', '--network', 'none',
+        '--read-only', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
+        '--user', '10001:10001', '--pids-limit', '64', '--memory', '256m',
+        '--entrypoint', 'python', image, '-I', '-S', '-c', _BATCH_IMAGE_SOURCE_READER,
+        str(MAX_REPAIR_SOURCE_BYTES), *unique], directory)
+    if len(encoded) > 8 * 1024 * 1024:
+        raise ValueError('bounded image support batch required')
+    payload = json.loads(encoded)
+    if not isinstance(payload, dict) or set(payload) != set(unique):
+        raise ValueError('image support batch keys differ')
+    resolved = {}
+    for path, item in payload.items():
+        if item is None:
+            resolved[path] = None
+            continue
+        if not isinstance(item, str) or len(item) > 4 * ((MAX_REPAIR_SOURCE_BYTES + 2) // 3):
+            raise ValueError('bounded image source required')
+        raw = base64.b64decode(item, validate=True)
+        if not 1 <= len(raw) <= MAX_REPAIR_SOURCE_BYTES:
+            raise ValueError('bounded image source required')
+        raw.decode('utf-8')
+        resolved[path] = raw
+    return resolved
+
+
 def publish_runtime_repair(publisher,job,directory):
     from eva.operations.runtime_repair_application import verify_runtime_repair_release
     release_file=directory/'published-release.json'
