@@ -850,10 +850,17 @@ class DelegatedDigitalRunner:
             outcome = ToolFreeChildOutcome("succeeded", result, usage, False, None)
         except Exception as error:
             from eva.adapters.model.contracts import ResearchCitationError
+            from eva.adapters.postgres.delegated_work import DelegatedWorkConflict
             if journal is not None and source is not None:
                 with suppress(Exception):
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
-            status = ("cancelled" if cancellation_event is not None and cancellation_event.is_set()
+            stop_requested = bool(cancellation_event is not None and cancellation_event.is_set())
+            if not stop_requested and isinstance(error, DelegatedWorkConflict):
+                with suppress(Exception):
+                    check_stop = getattr(self.store, "stop_requested", None)
+                    if callable(check_stop):
+                        stop_requested = bool(check_stop(call))
+            status = ("cancelled" if stop_requested
                 else "timed_out" if isinstance(error, ConversationModelDeadlineExceeded) or self.clock() >= deadline
                 else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached, ConversationModelInputBudgetExceeded))
                 else "incomplete_work" if isinstance(error, (_UnfinishedWorkPlan, ResearchCitationError))
@@ -864,7 +871,7 @@ class DelegatedDigitalRunner:
             from eva.adapters.postgres.work_source_retention import WorkSourceUnavailable
             if (self.failure_observer is not None and native_guard is None and source is not None
                     and status in {'internal_error','incomplete_work','budget_exceeded'}
-                    and not isinstance(error, (_BlockedWorkPlan, WorkSourceUnavailable))):
+                    and not isinstance(error, (_BlockedWorkPlan, WorkSourceUnavailable, DelegatedWorkConflict))):
                 with suppress(Exception):
                     await asyncio.to_thread(self.failure_observer,source,spec,error)
             # Preserve only a complete returned reply, never streamed fragments or

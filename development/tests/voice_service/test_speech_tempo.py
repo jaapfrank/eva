@@ -206,3 +206,83 @@ def test_closing_stream_adapter_closes_wrapped_realtime_tts_and_partial_remainde
         assert closed_wrapped is True
 
     asyncio.run(run())
+
+
+def test_open_webrtc_speech_wire_cleans_up_resources_on_setup_failure(monkeypatch):
+    import pytest
+    from eva.voice_service import codex_media
+
+    closed_order: list[str] = []
+
+    class FakeBridge:
+        allow_handoffs = True
+
+        async def open(self):
+            return self
+
+        async def close(self):
+            closed_order.append("bridge")
+
+    class FakeChannel:
+        readyState = "connecting"
+
+        def on(self, *_args):
+            return None
+
+    class FakePeer:
+        connectionState = "new"
+
+        def __init__(self, *_args, **_kwargs):
+            self.localDescription = type("Desc", (), {"sdp": "v=0"})()
+
+        def addTrack(self, _track):
+            return None
+
+        def createDataChannel(self, _name):
+            return FakeChannel()
+
+        def on(self, *_args):
+            return lambda fn: fn
+
+        async def createOffer(self):
+            return self.localDescription
+
+        async def setLocalDescription(self, _desc):
+            return None
+
+        async def close(self):
+            closed_order.append("peer")
+
+    class FailingVoiceSession:
+        def __init__(self, *_args, **_kwargs):
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def start(self, *_args, **_kwargs):
+            raise RuntimeError("SDP HTTP 503")
+
+        async def close(self):
+            closed_order.append("voice_session")
+
+    monkeypatch.setattr(codex_media, "EvaVoiceBackend", lambda *_a, **_kw: FakeBridge())
+    monkeypatch.setattr(codex_media, "RTCPeerConnection", FakePeer)
+    monkeypatch.setattr(codex_media, "CodexVoiceSession", FailingVoiceSession)
+
+    async def run():
+        with pytest.raises(RuntimeError, match="SDP HTTP 503"):
+            await codex_media.open_webrtc_speech_wire(
+                codex_executable="/bin/true",
+                codex_auth_file="/etc/hostname",
+                backend=object(),
+                session_id="s-fail",
+                check=lambda: None,
+                voice="juniper",
+                on_message=lambda _m: None,
+                on_track=lambda _t: None,
+                on_disconnect=lambda: None,
+            )
+        assert closed_order == ["voice_session", "peer", "bridge"]
+
+    asyncio.run(run())

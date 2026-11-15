@@ -41,6 +41,7 @@ def test_household_ledger_enforces_jaap_lola_scope_and_honest_null_costs(tmp_pat
         state_file=state_file,
         release_id="rel-20261114-a",
         runtime_metrics_probe=lambda: {"state": "ready", "ingress_turns_24h": 4},
+        now=t0,
     )
 
     assert stat.S_IMODE(state_file.stat().st_mode) == 0o600
@@ -129,7 +130,9 @@ def test_seven_day_stability_gate_blocks_premature_acceptance_and_resets_on_new_
     assert accepted["release_window"]["f2_2_owner_accepted"] is True
 
     # Deploying a new release archives prior window and resets 7-day contiguous clock
-    upgraded = HouseholdObservationLedger(state_file=state_file, release_id="rel-v2")
+    upgraded = HouseholdObservationLedger(
+        state_file=state_file, release_id="rel-v2", now=t0 + timedelta(hours=170, minutes=30),
+    )
     reset_snap = upgraded.snapshot(now=t0 + timedelta(hours=171))
     assert reset_snap["release_window"]["release_id"] == "rel-v2"
     assert reset_snap["release_window"]["seven_day_gate_met"] is False

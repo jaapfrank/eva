@@ -189,13 +189,6 @@ class HoloStageConversationActions:
         _ = (turn, step_index)
         return None
 
-    def contact_reply_allowed(self, turn: Any, receipt: ConversationActionReceipt) -> bool:
-        return (
-            receipt.call.name in self.action_names
-            and receipt.output.get("status") == "verified"
-            and self.available_for(turn)
-        )
-
     def conversation_instructions(self, turn: Any, available_names: tuple[str, ...]) -> tuple[str, ...]:
         if MANAGE_HOLOSTAGE.name not in available_names or not self.available_for(turn):
             return ()
@@ -221,62 +214,6 @@ class HoloStageConversationActions:
             return text
 
         return _guard
-
-    def direct_voice_reply(self, turn: Any, receipts: tuple[ConversationActionReceipt, ...]) -> str | None:
-        """Eliminate phase-1 LLM round-trip on single-step HoloStage & Chromecast actions."""
-        if len(receipts) != 1 or not self.available_for(turn):
-            return None
-        receipt = receipts[0]
-        if receipt.call.name not in self.action_names:
-            return None
-        op = str(receipt.call.arguments.get("operation") or "")
-        out = receipt.output
-        st = str(out.get("status") or "")
-
-        if op == "cast_stage":
-            if st == "verified":
-                cast_info = out.get("cast") or {}
-                label = str(
-                    cast_info.get("display_name")
-                    or cast_info.get("label")
-                    or cast_info.get("device_id")
-                    or "je Chromecast"
-                )
-                spot = out.get("spotlight")
-                if isinstance(spot, dict) and spot.get("title"):
-                    return f"Ik heb {spot['title']} met een animatie op {label} gezet."
-                return f"Ik sta nu met animatie op {label}!"
-            if st == "device_offline":
-                label = str(out.get("label") or "je Chromecast")
-                return (
-                    f"Ik wilde mezelf op {label} zetten, maar dat scherm staat nu uit of in slaapstand. "
-                    "Zodra hij aan staat kom ik direct in beeld."
-                )
-            return None
-
-        if st != "verified":
-            return None
-
-        if op == "stage_show":
-            spot = out.get("spotlight")
-            if isinstance(spot, dict) and spot.get("title"):
-                return f"Kijk maar, ik laat {spot['title']} nu met een animatie op je scherm zien."
-            return "Kijk maar, ik laat nu een animatie op je scherm zien."
-
-        if op == "conjure_card":
-            spot = out.get("spotlight")
-            if isinstance(spot, dict) and spot.get("title"):
-                return f"Ik heb {spot['title']} op je scherm gezet."
-            return "Ik heb de kaart op je scherm getoverd."
-
-        if op == "dismiss_cards":
-            return "Ik heb de kaarten van je scherm gehaald."
-
-        if op == "shopping_add":
-            added = (out.get("added_item") or {}).get("label") or "het item"
-            return f"Ik heb {added} op de boodschappenlijst gezet."
-
-        return None
 
     def execute(self, turn: Any, call: Any, *, step_index: int = 0) -> ConversationActionReceipt:
         _ = step_index

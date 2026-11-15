@@ -120,6 +120,7 @@ class HouseholdObservationLedger:
         state_file: Path | None = None,
         release_id: str | None = None,
         runtime_metrics_probe: Callable[[], dict[str, Any]] | None = None,
+        now: datetime | None = None,
     ) -> None:
         raw_target = state_file or _default_state_file()
         if raw_target.is_symlink() or raw_target.parent.is_symlink():
@@ -131,7 +132,7 @@ class HouseholdObservationLedger:
         self._release_id = _normalize_release_id(release_id)
         self._runtime_metrics_probe = runtime_metrics_probe
         self._mem_lock = threading.Lock()
-        self._ensure_release_window()
+        self._ensure_release_window(now=now)
 
     @contextmanager
     def _locked_state(self, *, write: bool, now: datetime | None = None) -> Iterator[dict[str, Any]]:
@@ -162,8 +163,8 @@ class HouseholdObservationLedger:
                 finally:
                     os.close(fd)
 
-    def _ensure_release_window(self) -> None:
-        with self._locked_state(write=True):
+    def _ensure_release_window(self, *, now: datetime | None = None) -> None:
+        with self._locked_state(write=True, now=now):
             pass
 
     def _read_or_default(self, current: datetime) -> dict[str, Any]:

@@ -168,6 +168,80 @@ class MicrophoneTrack(AudioStreamTrack):
             self.on_overrun(self.dropped_frames, self.frames.qsize())
 
 
+async def open_webrtc_speech_wire(
+    *,
+    codex_executable: str,
+    codex_auth_file: str,
+    backend,
+    session_id: str,
+    check,
+    voice: str,
+    on_message,
+    on_track,
+    on_disconnect,
+):
+    """Open one muted-input WebRTC literal-speech channel (`SPEECH_PROMPT`, `media_only=True`)."""
+    check()
+    bridge = peer = voice_session = offer_task = None
+    try:
+        bridge = await EvaVoiceBackend(backend, session_id, check).open()
+        bridge.allow_handoffs = False
+        try:
+            peer = RTCPeerConnection(RTCConfiguration(iceServers=[]))
+        except TypeError:
+            peer = RTCPeerConnection()
+        mic = MicrophoneTrack()
+        mic.enabled = False
+        peer.addTrack(mic)
+        channel = peer.createDataChannel('oai-events')
+        channel.on('message', on_message)
+        peer.on('track', on_track)
+
+        @peer.on('connectionstatechange')
+        def _on_conn():
+            if peer.connectionState in {'failed', 'closed', 'disconnected'}:
+                on_disconnect()
+
+        def _send_context(event: dict) -> None:
+            check()
+            if channel.readyState != 'open':
+                raise RuntimeError('Realtime speech data channel is not open')
+            channel.send(json.dumps(event, ensure_ascii=False))
+
+        voice_session = CodexVoiceSession(
+            codex_executable,
+            lambda: access_lease(codex_auth_file),
+            bridge,
+            media_only=True,
+            context_sender=_send_context,
+            voice=normalize_realtime_v3_voice(voice),
+        )
+
+        async def _prepare_offer() -> None:
+            await peer.setLocalDescription(await peer.createOffer())
+
+        offer_task = asyncio.create_task(_prepare_offer())
+        await voice_session.__aenter__()
+        await offer_task
+        check()
+        answer = await voice_session.start(
+            peer.localDescription.sdp, prompt=SPEECH_PROMPT, output_modality='audio'
+        )
+        await peer.setRemoteDescription(RTCSessionDescription(sdp=answer, type='answer'))
+        return bridge, peer, channel, voice_session
+    except BaseException:
+        if offer_task is not None and not offer_task.done():
+            offer_task.cancel()
+            await asyncio.gather(offer_task, return_exceptions=True)
+        for obj in (voice_session, peer, bridge):
+            if obj is not None:
+                try:
+                    await obj.close()
+                except Exception:
+                    pass
+        raise
+
+
 class OfferedSpeech:
     def __init__(self, on_interrupt=lambda:None):
         self.task=None

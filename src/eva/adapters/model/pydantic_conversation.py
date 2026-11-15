@@ -39,6 +39,7 @@ from pydantic_ai import (
     TextPartDelta,
     ToolCallPartDelta,
     ToolDefinition,
+    UnexpectedModelBehavior,
 )
 from pydantic_ai.messages import (
     BaseToolCallPart,
@@ -2343,7 +2344,8 @@ class PydanticConversationModel:
             ConversationModelTiming,
         ]:
             dispatched_attempts = 0
-            unavailable_failure: CodexProviderError | None = None
+            unavailable_failure: CodexProviderError | ConversationModelError | None = None
+            prior_raw_usage: RawUsageAttestation | None = None
             for attempt in range(2):
                 check_cancellation()
                 # Refresh before admission: retries and language repair spend
@@ -2462,6 +2464,16 @@ class PydanticConversationModel:
                     raise ConversationModelError(message) from error
                 except (Exception, asyncio.CancelledError) as error:
                     record_failure(error)
+                    if (
+                        attempt == 0
+                        and session is not None
+                        and not output_started[0]
+                        and isinstance(error, ConversationModelError)
+                        and isinstance(error.__cause__, UnexpectedModelBehavior)
+                    ):
+                        unavailable_failure = error
+                        prior_raw_usage = raw_usage
+                        continue
                     raise
                 complete_current_model_request(
                     request_id, phase[2],
@@ -2478,8 +2490,8 @@ class PydanticConversationModel:
                         ConversationModelUsage.partial(
                             model_attempts=2,
                             tool_calls=usage.tool_calls,
-                            input_tokens=usage.input_tokens,
-                            output_tokens=usage.output_tokens,
+                            input_tokens=(prior_raw_usage.input_tokens if prior_raw_usage is not None else 0) + usage.input_tokens,
+                            output_tokens=(prior_raw_usage.output_tokens if prior_raw_usage is not None else 0) + usage.output_tokens,
                         ),
                         phase[3],
                     )

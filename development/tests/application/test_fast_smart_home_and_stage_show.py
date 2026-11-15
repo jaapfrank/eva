@@ -442,7 +442,7 @@ def test_fast_foreground_tools_suppress_double_answer_spoken_updates() -> None:
     assert reply.text == "Het is nu 21,5 graden in de woonkamer."
 
 
-def test_direct_voice_reply_eliminates_phase1_roundtrip_and_interim_tool(tmp_path: Path) -> None:
+def test_direct_voice_reply_kept_only_for_sourced_public_lookup_and_no_scripted_templates(tmp_path: Path) -> None:
     import hashlib
     from eva.bootstrap.public_lookup import PublicLookupActions
     from eva.application.voice_context import SPEAK_AND_CONTINUE
@@ -460,31 +460,12 @@ def test_direct_voice_reply_eliminates_phase1_roundtrip_and_interim_tool(tmp_pat
             api_enabled=True,
         )
     )
-    owner_turn = _private_turn("Wat is de temperatuur in de woonkamer?")
-    climate_receipt = ConversationActionReceipt(
-        ConversationActionCall("c1", SMART_HOME_LIVE.name, {"operation": "read_climate", "target": "woonkamer"}),
-        {
-            "status": "verified",
-            "operation": "read_climate",
-            "target": "woonkamer",
-            "climate_zones": [
-                {
-                    "entity_id": "climate.woonkamer",
-                    "name": "Woonkamer",
-                    "state": "heat",
-                    "current_temperature_c": "21.5",
-                    "target_temperature_c": "20",
-                }
-            ],
-            "sensors": [],
-            "outdoor_weather": [],
-        },
-    )
-    assert fast.direct_voice_reply(owner_turn, (climate_receipt,)) == "In de woonkamer is het nu 21,5 graden."
-    # Multi-intent turn mentioning Chromecast returns None so phase-1 can continue to manage_holostage
-    cast_turn = _private_turn("Wat is de temperatuur in de woonkamer en zet dat op de Chromecast?")
-    assert fast.direct_voice_reply(cast_turn, (climate_receipt,)) is None
+    holostage_actions = HoloStageConversationActions(lambda: None)
+    # SmartHomeFastActions and HoloStageConversationActions let Eva's Sol model phrase natural replies (no scripted templates)
+    assert not hasattr(fast, "direct_voice_reply")
+    assert not hasattr(holostage_actions, "direct_voice_reply")
 
+    owner_turn = _private_turn("Wat is de Formule 1 stand?")
     # PublicLookupActions strips markdown URL citations in direct_voice_reply
     raw_content = "Kimi Antonelli staat bovenaan met 390 punten ([formula1.com](https://www.formula1.com/en/results))."
     pub_actions = PublicLookupActions(
@@ -513,7 +494,7 @@ def test_direct_voice_reply_eliminates_phase1_roundtrip_and_interim_tool(tmp_pat
         == "Kimi Antonelli staat bovenaan met 390 punten."
     )
 
-    # ConversationService executes ONLY 1 model call (0 phase-1 calls!) and omits SPEAK_AND_CONTINUE when allow_interim_speech=False
+    # ConversationService executes ONLY 1 model call on sourced public lookup and omits SPEAK_AND_CONTINUE when allow_interim_speech=False
     identity = IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80)
     seen_available: list[tuple[str, ...]] = []
     model_calls = 0
@@ -526,11 +507,15 @@ def test_direct_voice_reply_eliminates_phase1_roundtrip_and_interim_tool(tmp_pat
             return ConversationModelResult(
                 None,
                 "gpt-6-sol",
-                ConversationActionCall("c1", SMART_HOME_LIVE.name, {"operation": "read_climate", "target": "woonkamer"}),
+                ConversationActionCall(
+                    "p1",
+                    "search_public_info",
+                    {"question": "Stand Formule 1", "public_review": "public_unlinked", "answer_directly": True},
+                ),
             )
 
     class Router:
-        action_names = (SMART_HOME_LIVE.name,)
+        action_names = ("search_public_info",)
 
         def pending(self, turn: ConversationTurn) -> None:
             return None
@@ -539,13 +524,13 @@ def test_direct_voice_reply_eliminates_phase1_roundtrip_and_interim_tool(tmp_pat
             return ()
 
         def execute(self, turn: ConversationTurn, call: ConversationActionCall) -> ConversationActionReceipt:
-            return climate_receipt
+            return pub_receipt
 
         def direct_voice_reply(self, turn: ConversationTurn, receipts: tuple[ConversationActionReceipt, ...]) -> str | None:
-            return fast.direct_voice_reply(turn, receipts)
+            return pub_actions.direct_voice_reply(turn, receipts)
 
         def reply_guard(self, turn: ConversationTurn, receipts: tuple[ConversationActionReceipt, ...]):
-            return fast.reply_guard(turn, receipts)
+            return pub_actions.reply_guard(turn, receipts)
 
     ctx = VoiceContext((), (), lambda _: None, lambda _: None, allow_interim_speech=False)
     with voice_context(ctx):
@@ -553,4 +538,231 @@ def test_direct_voice_reply_eliminates_phase1_roundtrip_and_interim_tool(tmp_pat
 
     assert model_calls == 1
     assert SPEAK_AND_CONTINUE not in seen_available[0]
-    assert reply.text == "In de woonkamer is het nu 21,5 graden."
+    assert reply.text == "Kimi Antonelli staat bovenaan met 390 punten."
+
+
+def test_user_stop_delegated_conflict_marks_cancelled_without_false_self_repair(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import asyncio
+    from datetime import timedelta
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    from eva.adapters.postgres.delegated_work import DelegatedWorkConflict
+    import eva.adapters.postgres.work_corrections as corrections
+    from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+    import eva.bootstrap.delegated_digital_runner as runner_module
+    from eva.bootstrap.delegated_digital_runner import DelegatedDigitalRunner
+    from eva.contracts.canonical_json import canonical_sha256
+
+    empty_actions = lambda *args: SimpleNamespace(action_names=(), available_for=lambda _t: False)
+    monkeypatch.setattr(runner_module, "BackgroundWorkProgress", empty_actions)
+    monkeypatch.setattr(runner_module, "ComponentImprovementActions", empty_actions)
+    monkeypatch.setattr(runner_module, "load_work_progress", lambda *args: None)
+    monkeypatch.setattr(corrections, "work_corrections", lambda *args: ())
+
+    source = ConversationTurn.private(
+        "tenant", "install", "owner", "chat", "message",
+        "Onderzoek en stop direct.", NOW.strftime("%Y-%m-%dT%H:%M:%SZ"),
+    )
+    root = Path(__file__).resolve().parents[3] / "src/eva"
+    rel_path = "bootstrap/delegated_digital_runner.py"
+    profile = DelegatedDigitalProfile(
+        "model:test", "a" * 64, "b" * 64, ("use_connector_tool",),
+        ((rel_path, hashlib.sha256((root / rel_path).read_bytes()).hexdigest()),),
+    )
+    spec = profile.build_spec(
+        source={
+            k: getattr(source, k)
+            for k in ("tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")
+        } | {"audience": {"kind": "private_person", "principal_id": "owner"}},
+        source_ingress_sha256=canonical_sha256(PostgresConversationJournal._ingress_data(source)),
+        work_id="work:stop-race",
+        episode_id="episode:stop-race",
+        generation=1,
+        parent_task_id="task:stop-race",
+        owner_principal_id="owner",
+        principal_binding_id="binding:one",
+        task="Onderzoek en stop direct.",
+        created_at=NOW,
+        deadline=NOW + timedelta(seconds=300),
+    )
+
+    from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+    assert callable(getattr(PostgresDelegatedWorkStore, "stop_requested", None))
+
+    class StoppedStore:
+        _engine = None
+        requested = True
+
+        def authorize_tool_dispatch(self, _call: Any) -> None:
+            raise DelegatedWorkConflict("research call is stopped or no longer authorized")
+
+        def stop_requested(self, _call: Any) -> bool:
+            return self.requested
+
+    class Journal:
+        def __init__(self) -> None:
+            self.usages: list[ConversationModelUsage] = []
+
+        def begin_model_request(self, _turn: Any) -> str:
+            return str(len(self.usages))
+
+        def complete_model_request(self, _turn: Any, _req: str, usage: ConversationModelUsage, **_kw: Any) -> None:
+            self.usages.append(usage)
+
+        def model_usage(self, _turn: Any) -> ConversationModelUsage:
+            return ConversationModelUsage.aggregate(tuple(self.usages))
+
+    class Tools:
+        action_names = ("use_connector_tool",)
+
+        def available_for(self, _turn: Any) -> bool:
+            return True
+
+        def active_context(self, _turn: Any) -> tuple[str, ...]:
+            return ()
+
+        def pending(self, _turn: Any, *, step_index: int) -> None:
+            return None
+
+        def execute(self, turn: Any, call: Any, *, step_index: int) -> ConversationActionReceipt:
+            from eva.application.background_execution import authorize_background_dispatch
+            authorize_background_dispatch(turn)
+            return ConversationActionReceipt(call, {"status": "verified"})
+
+    class OneToolCallModel:
+        def generate(self, *_args: Any, **_kwargs: Any) -> ConversationModelResult:
+            return ConversationModelResult(
+                None,
+                "controlled",
+                ConversationActionCall("call-stop-1", "use_connector_tool", {}),
+                usage=ConversationModelUsage.measured(tool_calls=1, input_tokens=30, output_tokens=10),
+            )
+
+    from test_conversation import _Memory
+    observed_failures: list[Any] = []
+    store = StoppedStore()
+    runner = DelegatedDigitalRunner(
+        store,
+        profile,
+        source_loader=lambda _: source,
+        memory=_Memory(),
+        model=OneToolCallModel(),
+        identity=IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",)),
+        connector_tools=(Tools(),),
+        journal_factory=lambda *_: Journal(),
+        clock=lambda: NOW,
+        failure_observer=lambda *a: observed_failures.append(a),
+    )
+    outcome = asyncio.run(runner.run(spec, call_id="child-call:1", cancellation_event=asyncio.Event()))
+    assert outcome.status == "cancelled"
+    assert observed_failures == []
+
+    store.requested = False
+    conflict_outcome = asyncio.run(runner.run(spec, call_id="child-call:2", cancellation_event=asyncio.Event()))
+    assert conflict_outcome.status == "internal_error"
+    assert observed_failures == []
+
+
+def test_live_provider_zero_part_response_retries_once_cleanly(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from importlib import import_module
+    from typing import AsyncIterator
+    from pydantic_ai.messages import ModelResponse, TextPart
+    from pydantic_ai.models.function import AgentInfo, DeltaThinkingPart, DeltaToolCall, FunctionModel
+    from pydantic_ai.models.wrapper import WrapperModel
+    from eva.adapters.model.openai_codex_provider import RawUsageAttestation
+    from eva.contracts.memory import MemoryRecall
+
+    mod = import_module("eva.adapters.model.pydantic_conversation")
+
+    class _AttestingModel(WrapperModel):
+        def __init__(self, wrapped: FunctionModel, owner: Any) -> None:
+            super().__init__(wrapped)
+            self._owner = owner
+
+        from contextlib import asynccontextmanager
+
+        @asynccontextmanager
+        async def request_stream(self, messages: Any, model_settings: Any, model_request_parameters: Any, run_context: Any = None) -> AsyncIterator[Any]:
+            async with self.wrapped.request_stream(messages, model_settings, model_request_parameters, run_context) as streamed:
+                try:
+                    yield streamed
+                finally:
+                    u = streamed.usage
+                    self._owner._last_usage = RawUsageAttestation(
+                        u.input_tokens, u.output_tokens, u.input_tokens + u.output_tokens,
+                    )
+
+    class ZeroPartThenAnswerProvider:
+        entered = 0
+
+        def __init__(self, _settings: Any, *, credential_loader: Any) -> None:
+            self._credential_loader = credential_loader
+            self.access_token_sha256 = "0" * 64
+            self.local_stream_closed = True
+            self.observation = None
+            self._last_usage = RawUsageAttestation(50, 4, 54)
+            self.model = _AttestingModel(
+                FunctionModel(
+                    self._respond,
+                    stream_function=self._stream,
+                    model_name="gpt-6-sol",
+                ),
+                self,
+            )
+
+        async def __aenter__(self) -> ZeroPartThenAnswerProvider:
+            type(self).entered += 1
+            self._credential_loader()
+            self._attempt = type(self).entered
+            return self
+
+        async def __aexit__(self, *_err: object) -> None:
+            return None
+
+        def consume_raw_usage(self) -> RawUsageAttestation:
+            return self._last_usage
+
+        async def _respond(self, _messages: Any, _info: AgentInfo) -> ModelResponse:
+            return ModelResponse(parts=[TextPart("In de woonkamer is het 21,5 graden.")])
+
+        async def _stream(self, _messages: Any, _info: AgentInfo) -> AsyncIterator[str | dict[int, DeltaToolCall | DeltaThinkingPart]]:
+            if self._attempt == 1:
+                yield {0: DeltaThinkingPart(content="hmm")}
+                return
+            yield "In de woonkamer is het 21,5 graden."
+
+    monkeypatch.setattr(mod, "OpenAICodexProvider", ZeroPartThenAnswerProvider)
+    from eva.application.memory import PresenceMemory
+    from eva.contracts.canonical_json import canonical_sha256
+    recall = MemoryRecall(
+        schema_version=1,
+        contract="MemoryRecall/v1",
+        recall_id="recall:zero-part",
+        query_purpose="conversation_reply",
+        tenant_id="tenant-home",
+        principal_id="33333333-3333-4333-8333-333333333333",
+        conversation_id="voice-1",
+        project_id=None,
+        requested_valid_at="2026-11-15T00:30:00Z",
+        admitted_fact_ids_sha256=canonical_sha256([]),
+        selected=[],
+        excluded_reasons={},
+        projection_version="providerless-test-v1",
+        scope_sha256=canonical_sha256({"kind": "person"}),
+        created_at="2026-11-15T00:30:00Z",
+    )
+    adapter = mod.PydanticConversationModel(auth_file=tmp_path / "unused.json")
+    monkeypatch.setattr(adapter, "_load_auth", lambda: ("tok", "acct"))
+    res = adapter.generate(
+        _private_turn("Wat is de temperatuur?"),
+        IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80),
+        PresenceMemory(recall, ()),
+        (),
+    )
+    assert ZeroPartThenAnswerProvider.entered == 2
+    assert res.text == "In de woonkamer is het 21,5 graden."
+    assert res.usage.model_attempts == 2
+    assert res.usage.measurement == "partial"
+    assert res.usage.input_tokens > 0
+    assert res.usage.output_tokens > 0

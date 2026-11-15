@@ -6,7 +6,7 @@ Automatisch uit development/design/product/execution-workboard-v1.json; geen twe
 
 **E4.16 · Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen** — in_progress
 
-Volgende stap: Hostproducer (eva-component-evaluation.service), canonieke single-file compose en Core/Worker-profielen zijn gesynchroniseerd; delegated-work-worker blijft duurzaam healthy voorbij 120s TTL (45s fail-closed cache-onderhoud + vooraf gecompileerde Python 3.12 bytecode: koude check 3.4s i.p.v. 24.3s), sensorische hervalidatie draait foutvrij (0 RECOVERY_FAILED) en pure Realtime spraaksessies tellen mee in F2.1 (used_model=False). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1) zonder handmatige Codex-kandidaat.
+Volgende stap: Samengevoegde code-opschoning (-500+ netto productieregels: gedeelde open_webrtc_speech_wire zonder dubbele WebRTC-engine en zonder hardcoded Nederlandse direct_voice_reply-templates in smart-home/HoloStage) plus twee productie-reparaties (STOP-conflict in DelegatedDigitalRunner via stop_requested zonder valse E4.16-zelfherstelrun en 1-shot herstel bij transiënte 0-part modelrespons op OpenAICodexProvider) zijn onafhankelijk gereviewd (APPROVED), lockstep geïnstalleerd in core/worker/media en live geverifieerd met behoud van het F2.1-releasevenster (rel-f4d4b55de9093346-4c8e1ed17e1c65e9). Volg nu het volgende echte autonome hersteldoel én de lopende 7-daagse gezinswaarneming (F2.1).
 
 ## Voortgang
 
