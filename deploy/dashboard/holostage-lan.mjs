@@ -221,12 +221,37 @@ export function createHoloStageLanProxy({
           timeout: 4000,
         },
         checkRes => {
-          checkRes.resume();
-          resolve(checkRes.statusCode === 200);
+          const status = checkRes.statusCode || 502;
+          if (status === 200) {
+            checkRes.resume();
+            resolve({ allowed: true, status: 200, detail: null });
+            return;
+          }
+          const chunks = [];
+          let total = 0;
+          checkRes.on('data', chunk => {
+            total += chunk.length;
+            if (total <= 4096) chunks.push(chunk);
+          });
+          checkRes.on('end', () => {
+            let detail = null;
+            try {
+              const parsed = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+              if (parsed && typeof parsed.detail === 'string' && parsed.detail.trim()) {
+                detail = parsed.detail.trim().slice(0, 280);
+              }
+            } catch { /* fallback detail below */ }
+            resolve({ allowed: false, status, detail });
+          });
         }
       );
-      checkReq.on('timeout', () => { checkReq.destroy(); resolve(false); });
-      checkReq.on('error', () => resolve(false));
+      checkReq.on('timeout', () => {
+        checkReq.destroy();
+        resolve({ allowed: false, status: 503, detail: 'Eva HoloStage spraakcontrole is tijdelijk niet bereikbaar.' });
+      });
+      checkReq.on('error', () => {
+        resolve({ allowed: false, status: 503, detail: 'Eva HoloStage spraakcontrole is tijdelijk niet bereikbaar.' });
+      });
       checkReq.end();
     });
   }
@@ -355,11 +380,16 @@ export function createHoloStageLanProxy({
     if (typeof voiceSub === 'string') {
       // Pause incoming body stream while verifying private_stage grant on Core
       req.pause();
-      const allowedVoice = await verifyPrivateStageVoiceGrant(req);
-      if (!allowedVoice) {
+      const grantCheck = await verifyPrivateStageVoiceGrant(req);
+      if (!grantCheck.allowed) {
         req.resume();
-        res.writeHead(403, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' })
-          .end(JSON.stringify({ detail: 'Tweerichtingsspraak is alleen toegestaan op gekoppelde privé-gezinsapparaten.' }));
+        const status = grantCheck.status === 401 || grantCheck.status === 403 || grantCheck.status === 503
+          ? grantCheck.status
+          : 403;
+        res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' })
+          .end(JSON.stringify({
+            detail: grantCheck.detail || 'Tweerichtingsspraak is alleen toegestaan op gekoppelde privé-gezinsapparaten.',
+          }));
         return;
       }
       proxyVoiceRequest(req, res, voiceSub);

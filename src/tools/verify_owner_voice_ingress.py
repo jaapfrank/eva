@@ -62,9 +62,14 @@ async def verify(nginx):
                     async with client.get("http://127.0.0.1:44714"+path) as response: assert response.status == status
                 async with client.get("http://127.0.0.1:44714/owner-voice/livekit/rtc/validate?access_token=test-jwt") as response:
                     assert response.status == 200 and await response.text() == "validated"
+                async with client.get("http://127.0.0.1:44714/owner-voice/livekit/rtc/v1/validate?access_token=test-jwt") as response:
+                    assert response.status == 200 and await response.text() == "validated"
                 async with client.ws_connect("http://127.0.0.1:44714/owner-voice/livekit/rtc?access_token=test-jwt") as socket:
                     await socket.send_bytes(b"binary-signaling")
                     assert (await socket.receive()).data == b"binary-signaling"
+                async with client.ws_connect("http://127.0.0.1:44714/owner-voice/livekit/rtc/v1?access_token=test-jwt") as socket:
+                    await socket.send_bytes(b"binary-signaling-v1")
+                    assert (await socket.receive()).data == b"binary-signaling-v1"
             async with aiohttp.ClientSession() as denied:
                 async with denied.get("http://127.0.0.1:44714/owner-voice/session/ready", headers={"Authorization":"Bearer test-owner"}) as response:
                     assert response.status == 403

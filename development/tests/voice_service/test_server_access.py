@@ -269,3 +269,115 @@ def test_loopback_sfu_avoids_double_turn_hairpin_while_browser_keeps_relay(voice
         else:
             assert connect_options[0].rtc_config is None
         client.post("/session/end/" + body["room"], headers=auth)
+
+
+def test_agent_metadata_grant_deferred_prewarm_and_connect_timeout_cleanup(voice_config, monkeypatch):
+    import base64
+    from livekit.rtc._ffi_client import FfiClient
+
+    events = []
+    connect_calls = []
+    unsubscribed = []
+    fail_first = [True]
+    fake_ffi_queue = object()
+
+    def decode_jwt_grants(jwt_token):
+        payload_b64 = jwt_token.split(".")[1]
+        payload_b64 += "=" * (-len(payload_b64) % 4)
+        return json.loads(base64.urlsafe_b64decode(payload_b64))["video"]
+
+    class FakeTTS:
+        def prewarm(self):
+            events.append("tts_prewarm")
+
+        async def aclose(self):
+            events.append("tts_aclose")
+
+    def fake_streaming_speech_output(*args, **kwargs):
+        events.append(("tts_init", kwargs.get("prewarm")))
+        return FakeTTS()
+
+    class Session:
+        def __init__(self, **kwargs):
+            pass
+
+        def on(self, event):
+            return lambda callback: callback
+
+        async def start(self, *args, **kwargs):
+            events.append("session_started")
+
+        async def aclose(self):
+            events.append("session_closed")
+
+    class Room:
+        def __init__(self):
+            self.remote_participants = {"owner": object()}
+            self._connected = False
+            self._ffi_queue = fake_ffi_queue
+
+        def isconnected(self):
+            return self._connected
+
+        def on(self, event):
+            return lambda callback: callback
+
+        async def connect(self, url, token, options=None):
+            connect_calls.append((token, options))
+            events.append("room_connect")
+            if fail_first[0]:
+                fail_first[0] = False
+                raise TimeoutError("signal handshake timed out")
+            self._connected = True
+
+        async def disconnect(self):
+            events.append("room_disconnect")
+
+    class Control:
+        def __init__(self, *args, **kwargs):
+            self.room = self
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *args):
+            pass
+
+        async def delete_room(self, request):
+            events.append("room_deleted")
+
+    monkeypatch.setattr(server, "streaming_speech_output", fake_streaming_speech_output)
+    monkeypatch.setattr(server, "AgentSession", Session)
+    monkeypatch.setattr(server.rtc, "Room", Room)
+    monkeypatch.setattr(server.api, "LiveKitAPI", Control)
+    monkeypatch.setattr(FfiClient.instance.queue, "unsubscribe", lambda q: unsubscribed.append(q))
+
+    auth = {"Authorization": "Bearer test-owner-secret", "Origin": voice_config["origin"]}
+    with TestClient(server.create_app()) as client:
+        failed = client.post("/session", headers=auth)
+        assert failed.status_code == 503
+        assert "tts_prewarm" not in events
+        assert unsubscribed == [fake_ffi_queue]
+        assert events == [
+            ("tts_init", False),
+            "room_connect",
+            "session_closed",
+            "room_disconnect",
+            "tts_aclose",
+            "room_deleted",
+        ]
+
+        events.clear()
+        ok = client.post("/session", headers=auth)
+        assert ok.status_code == 200
+        body = ok.json()
+        eva_grants = decode_jwt_grants(connect_calls[-1][0])
+        owner_grants = decode_jwt_grants(body["token"])
+        assert eva_grants["agent"] is True
+        assert eva_grants["canUpdateOwnMetadata"] is True
+        assert owner_grants.get("agent") is False
+        assert owner_grants.get("canUpdateOwnMetadata") is False
+        assert connect_calls[-1][1].connect_timeout == 8.0
+        assert events.index("room_connect") < events.index("session_started") < events.index("tts_prewarm")
+        assert client.post("/session/end/" + body["room"], headers=auth).status_code == 200
+        assert unsubscribed == [fake_ffi_queue]

@@ -1,8 +1,8 @@
 [Unit]
 Description=Eva2 native household voice ingress
-BindsTo=eva.service
-PartOf=eva.service
-After=eva.service network-online.target
+BindsTo=eva2-telegram.service
+PartOf=eva2-telegram.service
+After=eva2-telegram.service network-online.target
 Wants=network-online.target
 
 [Service]
@@ -30,6 +30,6 @@ RestrictAddressFamilies=AF_INET AF_UNIX
 CapabilityBoundingSet=
 UMask=0077
 
-# Installation adds Wants=eva2-voice-ingress.service to eva.service. Consequently
+# Installation adds Wants=eva2-voice-ingress.service to eva2-telegram.service. Consequently
 # the existing stop/switch/start cutover closes voice before copying data, then
 # renders the selected slot on restart. Do not enable this service independently.

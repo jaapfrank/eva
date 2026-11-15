@@ -15,6 +15,7 @@ from datetime import UTC, datetime
 import hashlib
 import json
 from typing import Protocol
+from urllib.parse import urlsplit
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Request, Response, WebSocket, WebSocketDisconnect
@@ -25,6 +26,50 @@ from eva.adapters.api.dashboard_access import DashboardAccess
 from eva.application.conversation import ConversationTurn, GroundedReply, silent_completion_scope
 from eva.application.voice import SpeechAudioChunk, admit_final_voice_turn
 from eva.contracts.voice import VoiceSession, VoiceTurn
+
+
+_LOOPBACK_HOSTS = frozenset({"localhost", "127.0.0.1", "::1"})
+_FORWARDED_HEADERS = ("forwarded", "x-forwarded-for", "x-forwarded-host", "x-forwarded-proto")
+
+
+def _origin_allowed(socket: WebSocket, allowed_origin: str) -> bool:
+    supplied = socket.headers.get("origin")
+    if not supplied:
+        return False
+    if supplied == allowed_origin:
+        return True
+    peer = socket.client.host if socket.client is not None else ""
+    if peer not in {"127.0.0.1", "::1"}:
+        return False
+    if any(name in socket.headers for name in _FORWARDED_HEADERS):
+        return False
+    if socket.headers.get("sec-fetch-site") == "cross-site":
+        return False
+    allowed = urlsplit(allowed_origin)
+    if (
+        allowed.scheme != "http"
+        or allowed.hostname not in _LOOPBACK_HOSTS
+        or allowed.username
+        or allowed.password
+        or allowed.path not in ("", "/")
+        or allowed.query
+        or allowed.fragment
+    ):
+        return False
+    host_header = socket.headers.get("host", "")
+    if not host_header or any(ch.isspace() or ch in "/?#@\\" for ch in host_header):
+        return False
+    target = urlsplit(f"http://{host_header}")
+    if (
+        target.hostname not in _LOOPBACK_HOSTS
+        or target.username
+        or target.password
+        or target.path
+        or target.query
+        or target.fragment
+    ):
+        return False
+    return supplied.lower() == f"http://{host_header.lower()}"
 
 
 class SpeechInput(Protocol):
@@ -77,7 +122,7 @@ def install_dashboard_voice(
     async def voice(socket: WebSocket) -> None:
         # No permissive development mode, query credentials or cross-origin media.
         if (config is None or access.token is None or socket.query_params
-                or socket.headers.get("origin") != config.allowed_origin):
+                or not _origin_allowed(socket, config.allowed_origin)):
             await socket.close(code=1008)
             return
         try:

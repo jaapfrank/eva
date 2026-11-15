@@ -47,7 +47,7 @@ def render(*, environment: str, listen: str, home_assistant: str,
             proxy_connect_timeout 2s;
             proxy_read_timeout 45s;
         }
-        location ~ "^/owner-voice/livekit/rtc(?:/validate)?$" {
+        location ~ "^/owner-voice/livekit/rtc(?:/v1)?(?:/validate)?$" {
             if ($request_method != GET) { return 405; }
             rewrite ^/owner-voice/livekit/(.*)$ /$1 break;
             proxy_pass http://127.0.0.1:7880;
@@ -117,26 +117,45 @@ http {{
 """
 
 
+_DEFAULT_INGRESS_SERVICES = ("eva2-telegram.service", "eva.service")
+
+
+def resolve_source_environment(
+    source_service: str = "auto",
+    *,
+    systemctl: str = "/usr/bin/systemctl",
+) -> str:
+    if source_service == "auto":
+        candidates = list(_DEFAULT_INGRESS_SERVICES)
+    else:
+        if not re.fullmatch(r"[a-zA-Z0-9_-]+\.service", source_service):
+            raise ValueError("invalid source service name")
+        candidates = [source_service]
+    active_units: list[str] = []
+    for unit in candidates:
+        state = subprocess.run(
+            [systemctl, "is-active", unit],
+            check=False, capture_output=True, text=True,
+        ).stdout.strip()
+        if state == "active":
+            active_units.append(unit)
+    if len(active_units) != 1:
+        raise RuntimeError("Eva ingress is not active")
+    return subprocess.run(
+        [systemctl, "show", active_units[0], "--property=Environment", "--value"],
+        check=True, capture_output=True, text=True,
+    ).stdout
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--owner-voice", action="store_true")
     parser.add_argument("--listen", required=True)
     parser.add_argument("--home-assistant", required=True)
     parser.add_argument("--runtime", default="/run/eva2-voice-ingress")
-    parser.add_argument("--source-service", default="eva.service")
+    parser.add_argument("--source-service", default="auto")
     args = parser.parse_args()
-    if not re.fullmatch(r"[a-zA-Z0-9_-]+\.service", args.source_service):
-        raise ValueError("invalid source service name")
-    state = subprocess.run(
-        ["/usr/bin/systemctl", "is-active", args.source_service],
-        check=True, capture_output=True, text=True,
-    ).stdout.strip()
-    if state != "active":
-        raise RuntimeError("Eva ingress is not active")
-    environment = subprocess.run(
-        ["/usr/bin/systemctl", "show", args.source_service, "--property=Environment", "--value"],
-        check=True, capture_output=True, text=True,
-    ).stdout
+    environment = resolve_source_environment(args.source_service)
     config = render(environment=environment, listen=args.listen,
                     home_assistant=args.home_assistant, runtime=args.runtime, owner_voice=args.owner_voice)
     directory = Path(args.runtime)

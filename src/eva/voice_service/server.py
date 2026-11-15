@@ -181,7 +181,8 @@ def create_app():
                 return (api.AccessToken(key, secret).with_identity(identity)
                     .with_ttl(timedelta(minutes=30))
                     .with_grants(api.VideoGrants(room_join=True, room=room_name,
-                        can_publish=True, can_subscribe=True, can_publish_data=True, agent=agent)).to_jwt())
+                        can_publish=True, can_subscribe=True, can_publish_data=True,
+                        can_update_own_metadata=agent, agent=agent)).to_jwt())
             ice_servers = []
             if config.get("cloud_relay", False):
                 try:
@@ -229,6 +230,7 @@ def create_app():
                     trim_silence=tts_trim_silence,
                     realtime_config=config,
                     backend=backend,
+                    prewarm=False,
                 )
                 session = AgentSession(
                     stt=HomeAssistantSTT(stt_source, check, vad=vad),
@@ -271,7 +273,7 @@ def create_app():
             agent = EvaAgent(state)
             try:
                 async with asyncio.timeout(45 if config.get("voice_engine") == "codex" else 20):
-                    options = rtc.RoomOptions()
+                    options = rtc.RoomOptions(connect_timeout=8.0)
                     sfu_host = urlsplit(config["livekit_url"]).hostname
                     if ice_servers and sfu_host not in {"127.0.0.1", "localhost", "::1"}:
                         options.rtc_config = rtc.RtcConfiguration(ice_transport_type=rtc.IceTransportType.TRANSPORT_RELAY,
@@ -284,9 +286,14 @@ def create_app():
                     # the core return lease only after potentially slow media setup.
                     if backend.private_work_returns:
                         await backend.work_return("open", state.session_id)
+            except (TimeoutError, rtc.ConnectError):
+                await lease.close()
+                raise HTTPException(503, "Eva's stemverbinding kon niet op tijd worden geopend.") from None
             except BaseException:
                 await lease.close()
                 raise
+            if session_tts is not None:
+                session_tts.prewarm()
             @session.on("close")
             def closed(event):
                 asyncio.create_task(lease.close())

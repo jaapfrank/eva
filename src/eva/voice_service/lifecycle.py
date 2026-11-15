@@ -24,7 +24,15 @@ class SessionLease:
             await self.session.aclose()
         finally:
             try:
+                was_connected = bool(getattr(self.room, "isconnected", lambda: True)())
                 await self.room.disconnect()
+                if not was_connected and getattr(self.room, "_ffi_queue", None) is not None:
+                    try:
+                        from livekit.rtc._ffi_client import FfiClient
+
+                        FfiClient.instance.queue.unsubscribe(self.room._ffi_queue)
+                    except Exception:
+                        pass
             finally:
                 if self.delete_room is not None:
                     await self.delete_room()

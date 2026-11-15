@@ -722,6 +722,7 @@ HOLOSTAGE_HTML = """<!doctype html>
         </select>
         <button type="button" id="btn-issue-token" class="btn-sm">🔗 Maak eenmalige koppelingslink</button>
         <div id="issued-token-box" class="muted" style="word-break:break-all"></div>
+        <div id="device-grants-list" class="muted" style="margin-top:6px"></div>
       </div>
     </div>
 
@@ -1815,6 +1816,10 @@ HOLOSTAGE_HTML = """<!doctype html>
 
     async function startLiveVoice() {
       if (liveSession) return;
+      if (stageState?.viewer?.can_use_owner_voice === false) {
+        setVoicePill('⚠️ Live spraak staat uit op deze schermkoppeling — zet Spraak aan in ⚙️ Beheer', false);
+        return;
+      }
       if (!window.LivekitClient) {
         setVoicePill('⚠️ Spraakbibliotheek laadt nog of deze schermkoppeling heeft geen microfoontoegang', false);
         return;
@@ -2195,12 +2200,56 @@ HOLOSTAGE_HTML = """<!doctype html>
 
       const adminSig = JSON.stringify({
         c: st.cards?.home_overview?.cast_targets,
+        g: st.device_grants,
         v: st.biometrics_admin?.enrolled_members || st.speaker_biometrics?.enrolled_members,
         p: st.public_stage_origin,
         o: st.household_observation_summary
       });
       if (adminSig === lastAdminSig) return;
       lastAdminSig = adminSig;
+
+      const activeGrants = (st.device_grants || []).filter(g => g.status === 'active');
+      const grantsBox = $('device-grants-list');
+      if (grantsBox) {
+        if (activeGrants.length === 0) {
+          grantsBox.textContent = 'Nog geen gekoppelde schermen of telefoons.';
+        } else {
+          grantsBox.innerHTML = activeGrants.map(g => {
+            const canToggleVoice = g.form_factor === 'pocket' && g.allow_private_cards_when_alone;
+            const voiceBadge = g.allow_owner_voice ? '🎙️ spraak aan' : '💬 alleen tekst';
+            return `
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid rgba(148,163,184,0.1)">
+                <span><strong>${esc(g.label)}</strong> <span class="muted">(${esc(g.form_factor)} · ${voiceBadge})</span></span>
+                <span style="display:flex;gap:4px">
+                  ${canToggleVoice
+                    ? `<button type="button" class="btn-sm" data-grant-voice="${esc(g.grant_id)}" data-grant-voice-next="${g.allow_owner_voice ? '0' : '1'}">${g.allow_owner_voice ? '🔇 Spraak uit' : '🎙️ Spraak aan'}</button>`
+                    : ''}
+                  <button type="button" class="btn-sm" data-grant-revoke="${esc(g.grant_id)}" title="Trek koppeling in">✕</button>
+                </span>
+              </div>`;
+          }).join('');
+          grantsBox.querySelectorAll('[data-grant-voice]').forEach(btn => {
+            btn.onclick = async () => {
+              btn.disabled = true;
+              const res = await postAction({
+                action: 'set_device_owner_voice',
+                grant_id: btn.dataset.grantVoice,
+                allow_owner_voice: btn.dataset.grantVoiceNext === '1'
+              });
+              btn.disabled = false;
+              if (res?.message) setVoicePill(res.message, !!liveSession);
+            };
+          });
+          grantsBox.querySelectorAll('[data-grant-revoke]').forEach(btn => {
+            btn.onclick = async () => {
+              btn.disabled = true;
+              const res = await postAction({ action: 'revoke_device_grant', grant_id: btn.dataset.grantRevoke });
+              btn.disabled = false;
+              if (res?.message) setVoicePill(res.message, !!liveSession);
+            };
+          });
+        }
+      }
 
       const casts = st.cards?.home_overview?.cast_targets || [];
       const castList = $('cast-list');
@@ -2286,6 +2335,18 @@ HOLOSTAGE_HTML = """<!doctype html>
       const canCam = !!(st.viewer?.can_use_camera) && currentMode !== 'tv_cast' && !sh.active;
       const camBtn = $('btn-camera-toggle');
       if (camBtn) camBtn.hidden = !canCam;
+
+      if (!liveSession && currentMode !== 'tv_cast') {
+        if (st.viewer && st.viewer.can_use_owner_voice === false) {
+          $('btn-voice-start').hidden = true;
+          setVoicePill('💬 Alleen typen op deze schermkoppeling — zet Spraak aan in ⚙️ Beheer voor live bellen', false);
+        } else if (sh.active) {
+          $('btn-voice-start').hidden = true;
+          setVoicePill('🛡️ Privéschild actief — live spraak is tijdelijk gepauzeerd', false);
+        } else {
+          $('btn-voice-start').hidden = false;
+        }
+      }
 
       const vis = st.visual_copilot || {};
       const visPill = $('vision-pill');
@@ -2664,7 +2725,7 @@ HOLOSTAGE_HTML = """<!doctype html>
     }, currentMode === 'tv_cast' ? 2500 : 8000);
     if (currentMode !== 'tv_cast') {
       fetch(`${VOICE_BASE}/session/ready`).then(r => {
-        if (r.ok && !liveSession) {
+        if (r.ok && !liveSession && stageState?.viewer?.can_use_owner_voice !== false && !stageState?.privacy_shield?.active) {
           setVoicePill('🎙️ Klaar voor echt gesprek — klik op Start gesprek', false);
         }
       }).catch(() => {});
@@ -2873,6 +2934,7 @@ def install_dashboard_holostage(
         owner_only_actions = {
             "issue_device_token",
             "revoke_device_grant",
+            "set_device_owner_voice",
             "enroll_voice_pcm",
             "enroll_voice_embedding",
             "delete_voiceprint",
@@ -3047,6 +3109,17 @@ def install_dashboard_holostage(
             if action == "revoke_device_grant":
                 mgr.revoke_device_grant(str(payload.get("grant_id") or ""))
                 return _done("✓ Schermkoppeling ingetrokken.")
+
+            if action == "set_device_owner_voice":
+                updated_grant = mgr.set_device_owner_voice(
+                    str(payload.get("grant_id") or ""),
+                    allow_owner_voice=(payload.get("allow_owner_voice") is True),
+                )
+                state_lbl = "ingeschakeld" if updated_grant["allow_owner_voice"] else "uitgeschakeld"
+                return _done(
+                    f"🎙️ Live spraak {state_lbl} voor '{updated_grant['label']}'.",
+                    {"grant": updated_grant},
+                )
 
             if action == "enroll_voice_pcm":
                 b64 = str(payload.get("audio_pcm_b64") or "")

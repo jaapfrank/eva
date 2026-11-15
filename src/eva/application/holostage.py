@@ -982,6 +982,37 @@ class HoloStageManager:
             state["updated_at"] = _iso(ts)
             self._write_unlocked(state)
 
+    def set_device_owner_voice(
+        self, grant_id: str, *, allow_owner_voice: bool, now: datetime | None = None
+    ) -> dict[str, Any]:
+        ts = _utc_now(now)
+        with self._locked():
+            state = self._read_unlocked(ts)
+            target: dict[str, Any] | None = None
+            for gr in state.get("device_grants") or []:
+                if isinstance(gr, dict) and gr.get("grant_id") == grant_id:
+                    target = gr
+                    break
+            if target is None or target.get("status") != "active":
+                raise ValueError("Actieve schermkoppeling niet gevonden")
+            if target.get("form_factor") != "pocket" or not target.get("allow_private_cards_when_alone", False):
+                raise ValueError("Live eigenaarsspraak kan alleen op een privé Eva Pocket-koppeling worden ingesteld")
+            eff_voice = bool(allow_owner_voice)
+            target["allow_owner_voice"] = eff_voice
+            state["updated_at"] = _iso(ts)
+            self._write_unlocked(state)
+            return StageDeviceGrantSummary(
+                grant_id=str(target["grant_id"]),
+                label=str(target["label"]),
+                form_factor=target["form_factor"],
+                room_id=str(target["room_id"]),
+                allow_private_cards_when_alone=bool(target.get("allow_private_cards_when_alone", False)),
+                allow_owner_voice=eff_voice,
+                status=target["status"],
+                created_at=str(target["created_at"]),
+                expires_at=str(target["expires_at"]),
+            ).model_dump(mode="json")
+
     # --- Ephemeral In-Memory Camera Co-Pilot Context (Never Written to Disk) ---
     def _visual_store_key(self) -> str:
         return str(self.directory.resolve(strict=False))
@@ -1204,6 +1235,7 @@ class HoloStageManager:
                 "form_factor": form_factor,
                 "private_cards_visible": allow_private,
                 "can_use_camera": (viewer_kind == "owner" or allow_owner_voice) and form_factor != "tv_cast",
+                "can_use_owner_voice": (viewer_kind == "owner" or allow_owner_voice) and form_factor != "tv_cast",
                 "redacted_cards_count": redacted_count,
             },
             "visual_copilot": (

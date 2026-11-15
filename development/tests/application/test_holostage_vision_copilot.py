@@ -539,3 +539,102 @@ def test_lease_credential_loader_real_file_and_endpoint_runtime_error_scrubbing(
     assert res_502.status_code == 502
     assert res_502.json()["detail"] == "Beeldanalyse tijdelijk niet beschikbaar."
     assert "INTERNAL_SECRET_TRACE_999" not in res_502.text
+
+
+def test_set_device_owner_voice_upgrades_existing_pocket_grant_and_preserves_owner_only_gate(tmp_path: Path) -> None:
+    owner_token = "owner-secret-voice-toggle-token-2026-1234567890"
+
+    class _FakeRuntime:
+        _model_provider_control = SimpleNamespace(settings=SimpleNamespace(directory=tmp_path))
+        _dashboard_owner_principal_id = "owner-jaap"
+
+    app = FastAPI()
+    install_dashboard_holostage(app, access=DashboardAccess(owner_token), runtime=_FakeRuntime())
+    client = TestClient(app)
+    owner_hdrs = {"Authorization": f"Bearer {owner_token}", "X-HoloStage-Client": "1"}
+
+    # Issue a legacy Pocket pairing (`allow_owner_voice=False`, like "telefoon jaap" stg_02a3c802eb0a)
+    issued_jaap = client.post(
+        "/internal/v1/dashboard/holostage/action",
+        headers=owner_hdrs,
+        json={
+            "action": "issue_device_token",
+            "label": "telefoon jaap",
+            "form_factor": "pocket",
+            "allow_private_cards_when_alone": True,
+            "allow_owner_voice": False,
+        },
+    ).json()["issued"]
+    jaap_grant_id = issued_jaap["grant"]["grant_id"]
+    jaap_tok = issued_jaap["raw_token"]
+
+    issued_lola = client.post(
+        "/internal/v1/dashboard/holostage/action",
+        headers=owner_hdrs,
+        json={
+            "action": "issue_device_token",
+            "label": "Lola Eva Pocket",
+            "form_factor": "pocket",
+            "allow_private_cards_when_alone": True,
+            "allow_owner_voice": False,
+        },
+    ).json()["issued"]
+    lola_tok = issued_lola["raw_token"]
+
+    issued_tv = client.post(
+        "/internal/v1/dashboard/holostage/action",
+        headers=owner_hdrs,
+        json={"action": "issue_device_token", "label": "Woonkamer TV", "form_factor": "tv_cast"},
+    ).json()["issued"]
+    tv_grant_id = issued_tv["grant"]["grant_id"]
+
+    # Initially voice-grant-check is 403 and can_use_owner_voice is False on telefoon jaap
+    assert client.get(
+        "/internal/v1/dashboard/holostage/voice-grant-check",
+        headers={"X-HoloStage-Token": jaap_tok},
+    ).status_code == 403
+    st_before = client.get(
+        "/internal/v1/dashboard/holostage/state?mode=pocket",
+        headers={"X-HoloStage-Token": jaap_tok},
+    ).json()
+    assert st_before["viewer"]["can_use_owner_voice"] is False
+
+    # Non-owner Pocket viewer CANNOT self-elevate via set_device_owner_voice
+    denied = client.post(
+        "/internal/v1/dashboard/holostage/action",
+        headers={"X-HoloStage-Token": lola_tok, "X-HoloStage-Client": "1"},
+        json={"action": "set_device_owner_voice", "grant_id": jaap_grant_id, "allow_owner_voice": True},
+    )
+    assert denied.status_code == 403
+
+    # TV Cast grant CANNOT be given allow_owner_voice even by owner
+    tv_denied = client.post(
+        "/internal/v1/dashboard/holostage/action",
+        headers=owner_hdrs,
+        json={"action": "set_device_owner_voice", "grant_id": tv_grant_id, "allow_owner_voice": True},
+    )
+    assert tv_denied.status_code == 422
+
+    # Owner enables allow_owner_voice on telefoon jaap without re-pairing!
+    enabled = client.post(
+        "/internal/v1/dashboard/holostage/action",
+        headers=owner_hdrs,
+        json={"action": "set_device_owner_voice", "grant_id": jaap_grant_id, "allow_owner_voice": True},
+    )
+    assert enabled.status_code == 200
+    assert enabled.json()["grant"]["allow_owner_voice"] is True
+
+    # Now telefoon jaap passes voice-grant-check and reports can_use_owner_voice=True, while Lola stays 403!
+    assert client.get(
+        "/internal/v1/dashboard/holostage/voice-grant-check",
+        headers={"X-HoloStage-Token": jaap_tok},
+    ).status_code == 200
+    st_after = client.get(
+        "/internal/v1/dashboard/holostage/state?mode=pocket",
+        headers={"X-HoloStage-Token": jaap_tok},
+    ).json()
+    assert st_after["viewer"]["can_use_owner_voice"] is True
+    assert client.get(
+        "/internal/v1/dashboard/holostage/voice-grant-check",
+        headers={"X-HoloStage-Token": lola_tok},
+    ).status_code == 403

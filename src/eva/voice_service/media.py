@@ -206,6 +206,11 @@ class TempoChunkedStream(tts.ChunkedStream):
 class _ClosingStreamAdapter(tts.StreamAdapter):
     """Ensure `aclose()` cascades to `_wrapped_tts` so Realtime sessions never leak."""
 
+    def prewarm(self) -> None:
+        hook = getattr(self._wrapped_tts, "prewarm", None)
+        if callable(hook):
+            hook()
+
     async def aclose(self) -> None:
         try:
             await super().aclose()
@@ -221,6 +226,7 @@ def streaming_speech_output(
     trim_silence: bool = False,
     realtime_config: dict | None = None,
     backend=None,
+    prewarm: bool = True,
 ):
     """Stream explicit complete sentences; use pre-warmed Realtime human voice when available."""
     from pathlib import Path
@@ -257,7 +263,8 @@ def streaming_speech_output(
             voice=str(realtime_config.get("realtime_voice") or "juniper"),
             ready_wait_seconds=float(realtime_config.get("realtime_tts_ready_wait", 2.4)),
         )
-        rt_tts.prewarm()
+        if prewarm:
+            rt_tts.prewarm()
         return _ClosingStreamAdapter(
             tts=rt_tts,
             sentence_tokenizer=tokenize.blingfire.SentenceTokenizer(

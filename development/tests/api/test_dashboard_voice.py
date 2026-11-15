@@ -292,3 +292,48 @@ def test_speech_audio_chunk_is_shared_with_legacy_connector_import():
     assert SpeechAudioChunk is SharedChunk is DashboardChunk
     chunk = SharedChunk(b"synthetic-audio", "audio/mpeg")
     assert (chunk.data, chunk.mime_type) == (b"synthetic-audio", "audio/mpeg")
+
+
+def test_loopback_owner_proxy_origin_accepted_while_forwarded_or_remote_rejected():
+    runtime, media = Runtime(), Media()
+    config = DashboardVoice(
+        "http://localhost:44716",
+        session,
+        lambda grant: None,
+        media,
+        media,
+        clock=lambda: datetime(2026, 9, 8, 10, 30, tzinfo=UTC),
+    )
+    app = FastAPI()
+    install_dashboard_voice(app, access=DashboardAccess(TOKEN), runtime=runtime, config=config)
+
+    # Same-host loopback proxy (local-owner.mjs -> Core :44710) with matching Host/Origin succeeds
+    proxy_hdrs = {
+        "host": "localhost:44710",
+        "authorization": f"Bearer {TOKEN}",
+        "origin": "http://localhost:44710",
+    }
+    with TestClient(app, base_url="http://localhost:44710", client=("127.0.0.1", 4321)) as client:
+        with client.websocket_connect(PATH, headers=proxy_hdrs) as ws:
+            assert receive(ws)["type"] == "ready"
+            speak(ws)
+            reply, audio, end, finished = [receive(ws) for _ in range(4)]
+            assert [x["type"] for x in (reply, audio, end, finished)] == [
+                "reply", "audio", "audio_end", "turn_finished"
+            ]
+
+    # Forwarding headers, cross-site fetch metadata, mismatched Origin/Host, or non-loopback peer fail closed (1008)
+    denied_cases = [
+        ("127.0.0.1", {**proxy_hdrs, "x-forwarded-for": "10.0.20.99"}),
+        ("127.0.0.1", {**proxy_hdrs, "forwarded": "for=10.0.20.99"}),
+        ("127.0.0.1", {**proxy_hdrs, "sec-fetch-site": "cross-site"}),
+        ("127.0.0.1", {**proxy_hdrs, "origin": "http://localhost:44711"}),
+        ("127.0.0.1", {**proxy_hdrs, "host": "evil.test:44710", "origin": "http://evil.test:44710"}),
+        ("10.0.20.99", proxy_hdrs),
+    ]
+    for peer_ip, hdrs in denied_cases:
+        with TestClient(app, base_url="http://localhost:44710", client=(peer_ip, 4321)) as denied_client:
+            with pytest.raises(WebSocketDisconnect) as exc:
+                with denied_client.websocket_connect(PATH, headers=hdrs):
+                    pass
+            assert exc.value.code == 1008
