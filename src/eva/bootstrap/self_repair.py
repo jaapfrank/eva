@@ -26,7 +26,9 @@ def compose_self_repair(runtime):
     if policy.get('self_repair', {}).get('enabled') is not True:
         return None
     from eva.adapters.postgres.self_repair import PostgresSelfRepair
-    return _ScheduledFailureRepair(PostgresSelfRepair(authority, service))
+    return _ScheduledFailureRepair(
+        PostgresSelfRepair(authority, service, source_root=Path(__file__).resolve().parents[1])
+    )
 
 
 def _recovery_marker_matches(marker, work):

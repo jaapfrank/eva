@@ -252,11 +252,38 @@ def repair_source_current(connection, scope, source):
 
 
 class PostgresSelfRepair:
-    def __init__(self, authority, service, *, clock=None):
+    def __init__(self, authority, service, *, clock=None, source_root=None):
+        from pathlib import Path
         self.authority, self.service = authority, service
         self.owner = authority.owner
         self.timeline = PostgresOperationalTimeline(self.owner._engine, self.owner._scope)
         self.clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
+        self.source_root = None if source_root is None else Path(source_root).resolve(strict=True)
+
+    def _superseded_paths(self, observation):
+        if self.source_root is None:
+            return None
+        from eva.application.component_improvements import component_source
+        from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES, repairable_source
+        superseded, seen = [], set()
+        selected_count = 0
+        for path, _, expected in reversed(observation.frames):
+            if path in seen:
+                continue
+            seen.add(path)
+            if not repairable_source(path) or selected_count >= 8:
+                continue
+            try:
+                target = component_source(self.source_root, path)
+            except FileNotFoundError:
+                continue
+            if not target.is_file() or target.stat().st_size > MAX_REPAIR_SOURCE_BYTES:
+                return None
+            if hashlib.sha256(target.read_bytes()).hexdigest() != expected:
+                superseded.append(path)
+                continue
+            selected_count += 1
+        return sorted(superseded) if superseded else None
 
     def _permission(self):
         policy, digest = self.authority.policy()
@@ -414,7 +441,7 @@ class PostgresSelfRepair:
                     sa.case((e.payload['data']['mandate_sha256'].astext != digest, 0), else_=1),
                     c.updated_at, c.thread_id).limit(1)).one_or_none()
             if row is None:
-                return 'idle'
+                return self._reconcile_superseded_investigating(connection, now=now)
             if not connection.execute(sa.text('SELECT pg_try_advisory_xact_lock(hashtextextended(:key,0))'),
                                       {'key': row.thread_id}).scalar_one():
                 return 'busy'
@@ -441,6 +468,15 @@ class PostgresSelfRepair:
                 return 'source_unavailable'
             observation = RepairObservation(raw['error_type_sha256'], tuple(
                 (f['path'], f['function'], f['source_sha256']) for f in raw['frames']))
+            superseded = self._superseded_paths(observation)
+            if superseded:
+                transition_timeline_thread(connection, self.owner._scope, thread_id=row.thread_id,
+                    expected_revision=row.revision,
+                    checkpoint_id=f"{row.thread_id}:superseded:{row.revision + 1}",
+                    phase='repair_superseded', status='completed',
+                    event_type='SELF_REPAIR_SUPERSEDED', occurred_at=now,
+                    data={'superseded_paths': superseded})
+                return 'superseded'
             outcome = self._adopt(connection, data, observation, now=now)
             if outcome['status'] not in ('adopted', 'already_adopted'):
                 return 'waiting'
@@ -450,6 +486,92 @@ class PostgresSelfRepair:
                 event_type='SELF_REPAIR_INITIATIVE_ADMITTED', occurred_at=now,
                 data={'intent_id': data['intent_id']})
             return 'admitted'
+
+    def _reconcile_superseded_investigating(self, connection, *, now):
+        if self.source_root is None:
+            return 'idle'
+        from eva.adapters.postgres.current_catalog import delegated_work_runs
+        from eva.application.self_repair import RepairObservation
+        c, e, w = operational_checkpoints.c, operational_events.c, delegated_work_runs.c
+        terminal = {'release_ready', 'personal_stopped', 'initiative_completed', 'initiative_blocked'}
+        candidates = connection.execute(sa.select(operational_checkpoints, e.payload.label('original'),
+            e.payload_sha256.label('original_sha')).join(
+            operational_events, sa.and_(e.tenant_id == c.tenant_id,
+                e.installation_id == c.installation_id, e.thread_id == c.thread_id,
+                e.event_type == 'SELF_REPAIR_OBSERVED')).where(
+            c.tenant_id == self.owner._scope.tenant_id,
+            c.installation_id == self.owner._scope.installation_id,
+            c.thread_id.startswith('self-repair:'), c.phase == 'repair_investigating',
+            c.status == 'waiting_for_proof').order_by(c.updated_at, c.thread_id).limit(16)).all()
+        for inv in candidates:
+            if canonical_sha256(inv.original) != bytes(inv.original_sha).hex():
+                continue
+            data = inv.original['data']; raw = data['observation']
+            observation = RepairObservation(raw['error_type_sha256'], tuple(
+                (f['path'], f['function'], f['source_sha256']) for f in raw['frames']))
+            superseded = self._superseded_paths(observation)
+            if not superseded:
+                continue
+            if not connection.execute(sa.text('SELECT pg_try_advisory_xact_lock(hashtextextended(:key,0))'),
+                                      {'key': inv.thread_id}).scalar_one():
+                continue
+            # Match RuntimeRepairHost lock hierarchy: intent:<parent> -> intent:<children> -> self-repair:<id>.
+            owner_query = self.owner._query()
+            intents = connection.execute(owner_query.where(
+                owner_query.selected_columns.adoption['data']['repair_incident_id'].astext == inv.thread_id
+            ).order_by(
+                sa.case((c.thread_id == 'intent:' + data['intent_id'], 0), else_=1),
+                c.thread_id,
+            ).with_for_update(of=operational_checkpoints)).all()
+            parent = next((r for r in intents if r.thread_id == 'intent:' + data['intent_id']), None)
+            if parent is None or any(r.phase not in terminal for r in intents):
+                continue
+            current = connection.execute(sa.select(operational_checkpoints).where(
+                c.tenant_id == self.owner._scope.tenant_id,
+                c.installation_id == self.owner._scope.installation_id,
+                c.thread_id == inv.thread_id).with_for_update()).one()
+            if (current.revision != inv.revision or current.phase != 'repair_investigating'
+                    or current.status != 'waiting_for_proof'):
+                continue
+            latest_event = connection.execute(sa.select(e.event_type).where(
+                e.tenant_id == self.owner._scope.tenant_id,
+                e.installation_id == self.owner._scope.installation_id,
+                e.thread_id == inv.thread_id, e.sequence == current.revision)).scalar_one_or_none()
+            # ComponentImprovementActions commits RUNTIME_REPAIR_REQUEST_ADMITTED in owner._scope.
+            handoff_pending = (parent.phase in {'release_ready', 'initiative_completed'}
+                and latest_event != 'SELF_REPAIR_REMAINS_OPEN'
+                and (len(intents) > 1 or connection.scalar(sa.select(sa.literal(True)).where(
+                    e.tenant_id == self.owner._scope.tenant_id,
+                    e.installation_id == self.owner._scope.installation_id,
+                    e.event_type == 'RUNTIME_REPAIR_REQUEST_ADMITTED',
+                    e.payload['data']['request']['incident_id'].astext == inv.thread_id,
+                    e.payload['data']['request']['action'].astext == 'submit').limit(1)) is True))
+            if handoff_pending:
+                continue
+            intent_ids = tuple(r.adoption['data']['intent_id'] for r in intents)
+            work_scope = self.service.store.scope
+            try:
+                PostgresOperationalTimeline(self.owner._engine, work_scope)._scope(connection)
+                active_work = connection.scalar(sa.select(sa.literal(True)).where(
+                    w.tenant_id == work_scope.tenant_id, w.installation_id == work_scope.installation_id,
+                    w.spec_payload['origin']['intent_id'].astext.in_(intent_ids),
+                    sa.or_(w.state.in_(('admitted', 'call_started')),
+                           sa.and_(w.lease_owner.is_not(None), w.lease_expires_at > now))).limit(1)) is True
+            finally:
+                self.owner._authorize(connection, now)
+            if active_work:
+                continue
+            superseded = self._superseded_paths(observation)
+            if not superseded:
+                continue
+            transition_timeline_thread(connection, self.owner._scope, thread_id=inv.thread_id,
+                expected_revision=current.revision,
+                checkpoint_id=f"{inv.thread_id}:superseded:{current.revision + 1}",
+                phase='repair_superseded', status='completed',
+                event_type='SELF_REPAIR_SUPERSEDED', occurred_at=now,
+                data={'superseded_paths': superseded})
+            return 'superseded'
+        return 'idle'
 
 
 def record_failed_work_repair_notice(store,spec,repair,*,now):

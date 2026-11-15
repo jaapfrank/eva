@@ -298,3 +298,129 @@ def test_source_lock_has_exact_scope_type_digest_and_no_mutation_privilege(nativ
     with f.control._engine.connect() as connection:
         # PUBLIC is represented by grantee=0, not a login role.
         assert connection.scalar(sa.text("SELECT count(*) FROM pg_proc p, LATERAL aclexplode(p.proacl) a WHERE p.oid='eva_core.lock_conversation_source(uuid,bytea)'::regprocedure AND a.grantee=0"))==0
+
+
+def test_superseded_queued_and_investigating_repairs_close_cleanly_without_preempting_submitted_handoff(native_digital, tmp_path):
+    import hashlib
+    from tests.postgres.test_delegated_work_store import _usage
+    from tests.postgres.test_native_initiative_digital_work import started, result
+    from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline
+
+    f, _, turn, journal, _ = prepare(native_digital, stop_previous=False)
+    f.profile = replace(f.profile, capability_ids=('write_programming_file', 'use_programming_tool',
+        'use_connector_tool', 'draft_own_component_improvement', 'prepare_own_component_release'))
+    f.service.digital_profile = f.profile
+    f.policy['digital_work'] = {'worker_profile_release_sha256': f.profile.release.worker_profile_release_sha256,
+        'capability_ids': list(f.profile.capability_ids)}
+    f.path.write_text(json.dumps(f.policy))
+    pkg = tmp_path / 'eva'
+    (pkg / 'application').mkdir(parents=True)
+    target_file = pkg / 'application' / 'example.py'
+    v1 = b'def example():\n    return 1\n'
+    target_file.write_bytes(v1)
+    obs1 = RepairObservation('1' * 64, (('application/example.py', 'example:1', hashlib.sha256(v1).hexdigest()),))
+    repair = PostgresSelfRepair(f.auth, f.service, clock=lambda: NOW, source_root=pkg)
+
+    # 1. Queued repair whose source is upgraded before adoption closes as repair_superseded.
+    queued = repair.observe(turn, obs1)
+    assert queued['created'] and not queued['admitted']
+    v2 = b'def example():\n    return 2\n'
+    target_file.write_bytes(v2)
+    f.control.stop(f.claim.intent_id, now=NOW)
+    assert repair.run_once() == 'superseded'
+    assert repair.timeline.load(queued['incident_id']).phase == 'repair_superseded'
+
+    # 2. Adopted repair whose builder failed (initiative_blocked) reconciles to repair_superseded
+    #    once a newer release upgrades the observed source, and owner card turns 'done'.
+    turn2 = replace(turn, message_id='failed-builder-source')
+    journal.admit(turn2)
+    obs2 = RepairObservation('2' * 64, (('application/example.py', 'example:1', hashlib.sha256(v2).hexdigest()),))
+    adopted = repair.observe(turn2, obs2)
+    assert adopted['admitted']
+    claim2 = f.interests.claim_next(tenant_id=turn.tenant_id, installation_id=turn.installation_id, now=NOW)
+    admitted2 = admit_native_initiative(f.auth, claim2, f.service)
+    call2 = started(f, f.store.load(admitted2.work_id, **f.service._owner))
+    f.store.record_failure(call2, error_code='incomplete_work', error_fingerprint='3' * 64,
+        ambiguous=False, usage=_usage(), now=NOW)
+    card_before = next(c for c in f.control.page(now=NOW)['cards'] if c['intent_id'] == claim2.intent_id)
+    assert card_before['status'] == 'attention'
+    v3 = b'def example():\n    return 3\n'
+    target_file.write_bytes(v3)
+    assert repair.run_once() == 'superseded'
+    assert repair.timeline.load(adopted['incident_id']).phase == 'repair_superseded'
+    card_after = next(c for c in f.control.page(now=NOW)['cards'] if c['intent_id'] == claim2.intent_id)
+    assert card_after['status'] == 'done' and card_after['can_stop'] is False
+
+    # 3. Completed builder WITHOUT submit handoff reconciles cleanly to repair_superseded
+    #    even alongside earlier owner initiatives, turning its owner card from 'working' to 'done'.
+    turn3a = replace(turn, message_id='completed-nosubmit-source')
+    journal.admit(turn3a)
+    obs3a = RepairObservation('3' * 64, (('application/example.py', 'example:1', hashlib.sha256(v3).hexdigest()),))
+    nosubmit = repair.observe(turn3a, obs3a)
+    assert nosubmit['admitted']
+    claim3a = f.interests.claim_next(tenant_id=turn.tenant_id, installation_id=turn.installation_id, now=NOW)
+    admitted3a = admit_native_initiative(f.auth, claim3a, f.service)
+    call3a = started(f, f.store.load(admitted3a.work_id, **f.service._owner))
+    f.store.record_success(call3a, result(call3a), now=NOW)
+    assert next(c for c in f.control.page(now=NOW)['cards'] if c['intent_id'] == claim3a.intent_id)['status'] == 'working'
+    v4 = b'def example():\n    return 4\n'
+    target_file.write_bytes(v4)
+    assert repair.run_once() == 'superseded'
+    assert repair.timeline.load(nosubmit['incident_id']).phase == 'repair_superseded'
+    card3a = next(c for c in f.control.page(now=NOW)['cards'] if c['intent_id'] == claim3a.intent_id)
+    assert card3a['status'] == 'done' and card3a['can_stop'] is False
+
+    # 4. Completed builder WITH an admitted submit handoff in owner._scope stays
+    #    repair_investigating so host close_verified is never preempted; once a child
+    #    oracle fails and host records SELF_REPAIR_REMAINS_OPEN, a subsequent release
+    #    closes the incident as repair_superseded and marks BOTH parent and child cards 'done'.
+    from eva.adapters.postgres.self_repair import current_repair_binding
+    from eva.bootstrap.runtime_repair_host import handle_host_repair_request
+    from eva.bootstrap.runtime_repair_work import admit_repair_assessment
+    turn3 = replace(turn, message_id='submitted-builder-source')
+    journal.admit(turn3)
+    obs3 = RepairObservation('4' * 64, (('application/example.py', 'example:1', hashlib.sha256(v4).hexdigest()),))
+    submitted = repair.observe(turn3, obs3)
+    assert submitted['admitted']
+    claim3 = f.interests.claim_next(tenant_id=turn.tenant_id, installation_id=turn.installation_id, now=NOW)
+    admitted3 = admit_native_initiative(f.auth, claim3, f.service)
+    work3 = f.store.load(admitted3.work_id, **f.service._owner)
+    call3 = started(f, work3)
+    PostgresOperationalTimeline(f.control._engine, f.control._scope).create_thread(
+        thread_id='component-draft:' + '5' * 64, checkpoint_id='component-draft:' + '5' * 64 + ':request',
+        occurred_at=NOW, phase='repair_handoff_unconfirmed', status='active',
+        event_type='RUNTIME_REPAIR_REQUEST_ADMITTED',
+        data={'execution_id': work3.spec.execution_id, 'spec_sha256': work3.spec.sha256,
+              'source_ingress_sha256': work3.spec.source_ingress_sha256,
+              'request': {'action': 'submit', 'incident_id': submitted['incident_id']}})
+    f.store.record_success(call3, result(call3), now=NOW)
+    v5 = b'def example():\n    return 5\n'
+    target_file.write_bytes(v5)
+    assert repair.run_once() == 'idle'
+    assert repair.timeline.load(submitted['incident_id']).phase == 'repair_investigating'
+
+    # Admit and fail a child original_behavior_oracle, record SELF_REPAIR_REMAINS_OPEN,
+    # then upgrade to v6 and verify both parent ('attention') and child ('attention') cards turn 'done'.
+    target_file.write_bytes(v4)
+    oracle = admit_repair_assessment(f.auth, f.service, incident_id=submitted['incident_id'],
+        role='original_behavior_oracle', target_id='6' * 64,
+        sources={'application/example.py': hashlib.sha256(v4).hexdigest()},
+        source_root=pkg, candidate_sha256=None, comparison_sha256=None)
+    oracle_claim = f.interests.claim_next(tenant_id=turn.tenant_id, installation_id=turn.installation_id, now=NOW)
+    oracle_admitted = admit_native_initiative(f.auth, oracle_claim, f.service)
+    oracle_call = started(f, f.store.load(oracle_admitted.work_id, **f.service._owner))
+    f.store.record_failure(oracle_call, error_code='incomplete_work', error_fingerprint='7' * 64,
+        ambiguous=False, usage=_usage(), now=NOW)
+    scope_sha = current_repair_binding(f.auth, submitted['incident_id'], now=NOW)['scope_sha256']
+    handle_host_repair_request({'action': 'record_waiting', 'incident_id': submitted['incident_id'],
+        'scope_sha256': scope_sha, 'outcome': 'blocked', 'reason_code': 'oracle_failed',
+        'handoff_sha256': '8' * 64}, authority=f.auth, service=f.service, store=f.store)
+    cards_waiting = {c['intent_id']: c for c in f.control.page(now=NOW)['cards']}
+    assert cards_waiting[claim3.intent_id]['status'] == 'attention'
+    assert cards_waiting[oracle['intent_id']]['status'] == 'attention'
+    target_file.write_bytes(b'def example():\n    return 6\n')
+    assert repair.run_once() == 'superseded'
+    assert repair.timeline.load(submitted['incident_id']).phase == 'repair_superseded'
+    cards_done = {c['intent_id']: c for c in f.control.page(now=NOW)['cards']}
+    assert cards_done[claim3.intent_id]['status'] == 'done' and cards_done[claim3.intent_id]['can_stop'] is False
+    assert cards_done[oracle['intent_id']]['status'] == 'done' and cards_done[oracle['intent_id']]['can_stop'] is False

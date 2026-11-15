@@ -140,9 +140,12 @@ class RuntimeRepairTargets:
                     raise ValueError('bounded installed repair source required')
                 raw.decode('utf-8')
                 versions[service] = (hashlib.sha256(raw).hexdigest(), len(raw))
-            if not versions or {v[0] for v in versions.values()} != {frame['source_sha256']}:
+            digests = {v[0] for v in versions.values()}
+            if len(digests) > 1:
                 excluded.append(path)
                 continue
+            if digests != {frame['source_sha256']}:
+                raise ValueError('failure has no currently repairable source')
             services = tuple(role for role in _REPAIR_ROLES if role in versions)
             observed[path] = (services, *next(iter(versions.values())))
             if len(services) == 1:
@@ -186,19 +189,21 @@ class RuntimeRepairTargets:
             return self._resolve(incident_id)
 
     def describe_superseded(self, incident_id):
-        """Verify read-only that all observed repairable frames were superseded."""
+        """Verify read-only that observed repairable frames were superseded."""
         with self._lock:
             current = verified_failure_binding(self.binding(incident_id))
             if current['incident_id'] != incident_id:
                 raise ValueError('host resolved another repair incident')
             installation = self._installation()
             superseded, excluded, seen = [], [], set()
+            singleton = set()
+            shared_count = 0
             for frame in reversed(current['observation']['frames']):
                 path = frame['path']
                 if path in seen:
                     continue
                 seen.add(path)
-                if not repairable_source(path):
+                if not repairable_source(path) or (not singleton and shared_count >= 8):
                     excluded.append(path)
                     continue
                 versions = {}
@@ -211,9 +216,16 @@ class RuntimeRepairTargets:
                     raw.decode('utf-8')
                     versions[service] = hashlib.sha256(raw).hexdigest()
                 digests = set(versions.values())
-                if len(digests) > 1 or digests == {frame['source_sha256']}:
+                if len(digests) > 1:
                     return None
-                superseded.append(path)
+                if digests != {frame['source_sha256']}:
+                    superseded.append(path)
+                    continue
+                services = tuple(role for role in _REPAIR_ROLES if role in versions)
+                if len(services) == 1:
+                    singleton.add(services)
+                else:
+                    shared_count += 1
             if not superseded:
                 return None
             if (verified_failure_binding(self.binding(incident_id)) != current

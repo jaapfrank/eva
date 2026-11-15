@@ -106,6 +106,104 @@ def test_explicit_stop_does_not_restart_project(database, stop_kind):
     assert child["work_id"] is None
 
 
+def test_running_digital_work_correction_stops_started_call_and_resumes_once(database):
+    service, turn, clock = setup(database, "l2-running-call-correction", False)
+    root = Path(__file__).resolve().parents[3] / "src/eva"
+    source = "bootstrap/delegated_digital_runner.py"
+    service.digital_profile = DelegatedDigitalProfile("model:controlled", "a"*64, "b"*64,
+        ("discover_connector_tools", "use_connector_tool"),
+        ((source, hashlib.sha256((root/source).read_bytes()).hexdigest()),))
+    first = service.execute("digital", turn, task="Prepare a document", request_key="first")["work"]["work_id"]
+    second = ScheduledOwnerWork(service).schedule(turn, request_key="second", request={
+        "task": "Summarize the completed document", "after_work_id": first})
+    claim = service.store.claim_next(worker_id="worker:running-first",
+        release=service.digital_profile.release, now=clock[0])
+    started_call = service.store.start_call(claim, now=clock[0])
+    assert started_call.call_id is not None
+    clock[0] += timedelta(seconds=1)
+    correction = service.execute("revise_digital", replace(turn, message_id="correct-running"),
+        request_key="correct-running", revision={"work_id": first, "instruction": "Include section two"})
+    assert correction["status"] == "correction_saved"
+    # While the running worker has not yet observed STOP, scheduler waits cleanly.
+    clock[0] += timedelta(seconds=1)
+    assert ScheduledOwnerWork(service).run_once() == "idle"
+    # Worker honors STOP after starting its call (call_id is preserved on the stopped row).
+    stopped = service.store.record_stopped(started_call, usage=_usage(), now=clock[0])
+    assert stopped.state == "stopped" and stopped.call_id == started_call.call_id
+    assert ScheduledOwnerWork(service).run_once() == "dispatched"
+    rows = {row["schedule_id"]: row for row in ScheduledOwnerWork(service).list()["schedules"]}
+    successor = rows[correction["schedule"]["schedule_id"]]["work_id"]
+    assert successor != first and rows[second["schedule_id"]]["state"] == "scheduled"
+    replay = service._execute("resume", turn, task=None, work_id=first,
+        request_key=correction["schedule"]["schedule_id"], corrected_stop_resume=True)
+    assert replay["created"] is False and replay["prior_outcome_unknown"] is True
+    clock[0] += timedelta(seconds=1)
+    resumed_claim = service.store.claim_next(worker_id="worker:running-resumed",
+        release=service.digital_profile.release, now=clock[0])
+    assert resumed_claim.spec.work_id == successor
+    resumed_call = service.store.start_call(resumed_claim, now=clock[0])
+    output = "Completed document with section two."
+    service.store.record_success(resumed_call, DelegatedDigitalWorkResult(
+        contract="DelegatedDigitalWorkResult/v4", schema_version=4, work_id=successor,
+        call_id=resumed_call.call_id, spec_sha256=resumed_claim.spec.sha256, output=output,
+        output_sha256=hashlib.sha256(output.encode()).hexdigest(),
+        usage=_usage().to_payload(), completed_at=clock[0].strftime("%Y-%m-%dT%H:%M:%SZ")), now=clock[0])
+    assert ScheduledOwnerWork(service).run_once() == "dispatched"
+    rows = {row["schedule_id"]: row for row in ScheduledOwnerWork(service).list()["schedules"]}
+    assert output in service.store.load(rows[second["schedule_id"]]["work_id"], **service._owner).spec.task
+
+
+def test_unguarded_scheduled_resume_refusal_blocks_with_guidance_never_false_admitted(database):
+    service, turn, clock = setup(database, "l2-unguarded-resume-refusal", False)
+    root = Path(__file__).resolve().parents[3] / "src/eva"
+    source = "bootstrap/delegated_digital_runner.py"
+    service.digital_profile = DelegatedDigitalProfile("model:controlled", "a"*64, "b"*64,
+        ("discover_connector_tools", "use_connector_tool"),
+        ((source, hashlib.sha256((root/source).read_bytes()).hexdigest()),))
+    first = service.execute("digital", turn, task="Prepare a document", request_key="first")["work"]["work_id"]
+    claim = service.store.claim_next(worker_id="worker:unguarded",
+        release=service.digital_profile.release, now=clock[0])
+    started_call = service.store.start_call(claim, now=clock[0])
+    service.store.request_stop(first, **service._owner, now=clock[0])
+    service.store.record_stopped(started_call, usage=_usage(), now=clock[0])
+    queued = ScheduledOwnerWork(service).schedule(turn, request_key="unguarded-resume", request={
+        "work_id": first, "run_at": (clock[0] + timedelta(seconds=5)).isoformat().replace("+00:00", "Z")},
+        resume=True)
+    clock[0] += timedelta(seconds=6)
+    assert ScheduledOwnerWork(service).run_once() == "blocked"
+    schedule_view = next(s for s in ScheduledOwnerWork(service).list()["schedules"]
+                         if s["schedule_id"] == queued["schedule_id"])
+    assert schedule_view["state"] == "blocked" and schedule_view["work_id"] is None
+    assert "onzekere uitkomst" in schedule_view["block_reason"]
+
+    # Even when a valid corrected resume child already exists (so unguarded _execute returns
+    # a non-null work dict alongside status='not_resumable'), an unguarded scheduled resume
+    # still transitions to 'blocked' rather than falsely emitting SCHEDULED_WORK_ADMITTED.
+    second_first = service.execute("digital", turn, task="Prepare second document",
+        request_key="second-first")["work"]["work_id"]
+    claim2 = service.store.claim_next(worker_id="worker:unguarded-2",
+        release=service.digital_profile.release, now=clock[0])
+    started_call2 = service.store.start_call(claim2, now=clock[0])
+    correction2 = service.execute("revise_digital", replace(turn, message_id="correct-2"),
+        request_key="correct-2", revision={"work_id": second_first, "instruction": "Revise"})
+    service.store.record_stopped(started_call2, usage=_usage(), now=clock[0])
+    unguarded_with_existing = ScheduledOwnerWork(service).schedule(turn,
+        request_key="unguarded-existing", request={"work_id": second_first,
+            "run_at": (clock[0] + timedelta(seconds=10)).isoformat().replace("+00:00", "Z")},
+        resume=True)
+    # Dispatch the legitimate wait_for_stop correction first so work:eva-resume:* exists.
+    assert ScheduledOwnerWork(service).run_once() == "dispatched"
+    existing_child = next(s for s in ScheduledOwnerWork(service).list()["schedules"]
+                          if s["schedule_id"] == correction2["schedule"]["schedule_id"])["work_id"]
+    assert existing_child is not None
+    clock[0] += timedelta(seconds=11)
+    assert ScheduledOwnerWork(service).run_once() == "blocked"
+    blocked_view = next(s for s in ScheduledOwnerWork(service).list()["schedules"]
+                        if s["schedule_id"] == unguarded_with_existing["schedule_id"])
+    assert blocked_view["state"] == "blocked" and blocked_view["work_id"] is None
+    assert "onzekere uitkomst" in blocked_view["block_reason"]
+
+
 def _run_scheduler_process(service, now):
     """Reconstruct only configuration in a fresh interpreter; all work comes from DB."""
     import json

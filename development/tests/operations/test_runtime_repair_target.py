@@ -271,3 +271,28 @@ def test_describe_superseded_distinguishes_clean_upgrade_from_peer_mismatch_and_
     # Protected-only frames with no repairable frame must still return None.
     binding['observation']['frames']=[binding['observation']['frames'][-1]]
     assert registry.describe_superseded(binding['incident_id']) is None
+
+
+def test_innermost_upgraded_frame_supersedes_mixed_call_stack_without_reading_ninth_frame(target):
+    registry,binding,_,source,calls,_=target
+    upgraded=source+b'# Fixed inner implementation\n'
+    digest=hashlib.sha256(source).hexdigest()
+    binding['observation']['frames']=[
+        {'path':'application/excluded_ninth.py','function':'outer:1','source_sha256':digest},
+        *[{'path':f'application/unchanged_{i}.py','function':'step:1','source_sha256':digest}
+          for i in range(8)],
+        {'path':'adapters/model/pydantic_conversation.py','function':'_run:2','source_sha256':digest},
+    ]
+    def read(image,path):
+        if path=='application/excluded_ninth.py':
+            raise OSError('ninth path beyond 8-source scope must stay unread')
+        return upgraded if path=='adapters/model/pydantic_conversation.py' else source
+    registry.source=read
+    with pytest.raises(ValueError,match='no currently repairable source'):
+        registry.resolve(binding['incident_id'])
+    assert registry.describe_superseded(binding['incident_id'])=={
+        'incident_id':binding['incident_id'],
+        'superseded_paths':['adapters/model/pydantic_conversation.py'],
+        'excluded_paths':['application/excluded_ninth.py'],
+    }
+    assert calls==[]

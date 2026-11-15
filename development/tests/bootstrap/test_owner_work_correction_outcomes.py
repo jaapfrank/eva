@@ -63,6 +63,8 @@ def test_correction_reports_confirmed_stop_and_uncertain_later_effect(monkeypatc
             raise ValueError("private scheduling detail")
         return {"state": "scheduled", "schedule_id": "schedule:one"}
 
+    from contextlib import nullcontext
+    monkeypatch.setattr(work_corrections, "correction_boundary", lambda *_: nullcontext())
     monkeypatch.setattr(work_corrections, "record_work_correction", record)
     monkeypatch.setattr(scheduled_work.ScheduledOwnerWork, "schedule", schedule)
     result = service.execute("revise_digital", turn, request_key="correction-request",
@@ -81,3 +83,54 @@ def test_correction_reports_confirmed_stop_and_uncertain_later_effect(monkeypatc
     else:
         assert result["schedule"] == {"state": "scheduled", "schedule_id": "schedule:one"}
     assert len(appointments) == int(failure != "correction" and (failure is None or committed))
+
+
+def test_corrected_stop_resume_requires_stopped_unleased_task_with_recorded_correction(monkeypatch):
+    from eva.bootstrap import scheduled_admission
+    owner, binding = uuid4(), uuid4()
+    now = datetime(2026, 9, 24, 12, tzinfo=UTC)
+    scope = external_timeline_scope("family", "home", "test")
+    spec = DelegatedDigitalWorkSpec.model_construct(work_id="work:original", generation=1)
+    previous = SimpleNamespace(spec=spec, state="stopped", call_id="started-call",
+        stop_requested_at=now, lease_owner=None, lease_expires_at=None,
+        usage=None, error_code=None, error_fingerprint=None)
+
+    def load(work_id, **kwargs):
+        if work_id != spec.work_id:
+            raise DelegatedWorkNotFound("no successor")
+        return previous
+
+    store = SimpleNamespace(scope=scope, _engine=object(), load=load,
+        validate_admission_authority=lambda **kwargs: None)
+    service = DelegatedWorkOwnerService(store, owner_principal_id=owner,
+        principal_binding_id=binding, clock=lambda: now)
+    service._view = lambda obj, **kw: {"work_id": obj.spec.work_id}
+    turn = ConversationTurn.private("family", "home", str(owner), "private:owner",
+        "message:correction", "Revise this task", "2026-09-24T12:00:00Z")
+
+    # Without a recorded correction for this exact work_id, even corrected_stop_resume refuses.
+    monkeypatch.setattr(work_corrections, "work_corrections", lambda *_: ())
+    out = service._execute("resume", turn, task=None, work_id=spec.work_id,
+        request_key="test", corrected_stop_resume=True)
+    assert out["status"] == "not_resumable" and out["created"] is False
+
+    # With a recorded correction, stopped unleased task reaches normal resume planning,
+    # whereas ambiguous or leased tasks remain blocked.
+    monkeypatch.setattr(work_corrections, "work_corrections",
+        lambda *_: ({"work_id": spec.work_id, "instruction": "adjust"},))
+    monkeypatch.setattr(scheduled_admission, "scheduled_creation_time",
+        lambda *_: (_ for _ in ()).throw(RuntimeError("reached corrected resume planning")))
+    with pytest.raises(RuntimeError, match="reached corrected resume planning"):
+        service._execute("resume", turn, task=None, work_id=spec.work_id,
+            request_key="test", corrected_stop_resume=True)
+    previous.lease_owner = "worker:still-leased"
+    previous.lease_expires_at = now
+    out = service._execute("resume", turn, task=None, work_id=spec.work_id,
+        request_key="test", corrected_stop_resume=True)
+    assert out["status"] == "not_resumable"
+    previous.lease_owner = None
+    previous.lease_expires_at = None
+    previous.state = "ambiguous"
+    out = service._execute("resume", turn, task=None, work_id=spec.work_id,
+        request_key="test", corrected_stop_resume=True)
+    assert out["status"] == "not_resumable"

@@ -25,6 +25,8 @@ def setup(engine, label, voice=True):
     turn = ConversationTurn.private('tenant:'+label, 'installation:'+label, str(owner),
         'voice:'+str(uuid4()) if voice else 'dashboard:'+str(binding),
         'message:1', 'Research with sources', NOW.strftime('%Y-%m-%dT%H:%M:%SZ'))
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    PostgresConversationJournal(engine, service.conversation_scope).admit(turn)
     if voice:
         assert service.private_return(turn, 'open')['status'] == 'open'
     return service, turn, at

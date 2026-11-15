@@ -762,9 +762,30 @@ class ScheduledOwnerWork:
                 else:
                     result = (self.service._execute(request["operation"], turn,
                         task=task, work_id=request.get("work_id"), request_key=thread_id,
-                        admission_time=admission_time) if self.audience_adapter is None else
+                        admission_time=admission_time,
+                        corrected_stop_resume=bool(
+                            request.get("operation") == "resume" and request.get("wait_for_stop") is True))
+                        if self.audience_adapter is None else
                         self.audience_adapter.dispatch(request, turn, task, thread_id, admission_time))
-                work_id = result["work"]["work_id"]
+                work_view = result.get("work") if isinstance(result, dict) else None
+                if (not isinstance(result, dict)
+                        or result.get("status") in {"not_resumable", "not_found", "source_unavailable"}
+                        or not isinstance(work_view, dict)
+                        or not isinstance(work_view.get("work_id"), str) or not work_view["work_id"]):
+                    guidance = result.get("guidance") if isinstance(result, dict) else None
+                    reason = (guidance.strip() if isinstance(guidance, str) and guidance.strip()
+                              else "De geplande opdracht kon niet veilig worden gestart.")
+                    transition_timeline_thread(conn, self.scope, thread_id=thread_id,
+                        expected_revision=row.revision, checkpoint_id=thread_id + ":blocked",
+                        phase="blocked", status="needs_help", event_type="SCHEDULED_WORK_BLOCKED",
+                        occurred_at=self.service.now(), data={
+                            "reason": reason,
+                            "status": str((result.get("status") if isinstance(result, dict) else None)
+                                          or "invalid_dispatch_result"),
+                            "automatic_retry": False,
+                        })
+                    return "blocked"
+                work_id = work_view["work_id"]
             except _ProviderRecoveryDeferred:
                 return "waiting"
             except Exception as error:
@@ -772,11 +793,19 @@ class ScheduledOwnerWork:
                     # Roll back admission and schedule together. A broken transaction
                     # cannot safely append a separate blocked checkpoint.
                     raise
+                from eva.adapters.postgres.delegated_work import DelegatedWorkNotResumable
+                reason = ("De taak is nog actief of al geslaagd; er is geen nieuwe poging gestart."
+                          if isinstance(error, DelegatedWorkNotResumable) else
+                          "Deze taak is niet meer beschikbaar voor hervatting."
+                          if isinstance(error, DelegatedWorkNotFound) else None)
                 transition_timeline_thread(conn, self.scope, thread_id=thread_id,
                     expected_revision=row.revision, checkpoint_id=thread_id + ":blocked",
                     phase="blocked", status="needs_help", event_type="SCHEDULED_WORK_BLOCKED",
-                    occurred_at=self.service.now(), data={"error_type": type(error).__name__,
-                                                        "automatic_retry": False})
+                    occurred_at=self.service.now(), data={
+                        "error_type": type(error).__name__,
+                        **({"reason": reason} if reason is not None else {}),
+                        "automatic_retry": False,
+                    })
                 return "blocked"
             transition_timeline_thread(conn, self.scope, thread_id=thread_id,
                 expected_revision=row.revision, checkpoint_id=thread_id + ":dispatched",

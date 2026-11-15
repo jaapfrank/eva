@@ -112,7 +112,9 @@ class DelegatedWorkOwnerService:
                  work_id: str | None, request_key: str, research: dict | None = None,
                  intent_id: str | None = None, feedback: str | None = None,
                  schedule: dict | None = None, schedule_id: str | None = None,
-                 admission_time: datetime | None = None, search: dict | None = None, revision: dict | None = None, prior_work_id: str | None = None) -> dict:
+                 admission_time: datetime | None = None, search: dict | None = None,
+                 revision: dict | None = None, prior_work_id: str | None = None,
+                 corrected_stop_resume: bool = False) -> dict:
         if not self.available_for(turn):
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
         prior_research = None
@@ -394,10 +396,19 @@ class DelegatedWorkOwnerService:
             f"{previous.spec.work_id}:{previous.spec.generation + 1}",
         ))
         reconciliation = None
+        corrected_stop = False
+        if (corrected_stop_resume and operation == "resume"
+                and type(previous.spec) is DelegatedDigitalWorkSpec
+                and previous.state == "stopped" and previous.stop_requested_at is not None
+                and previous.lease_owner is None and previous.lease_expires_at is None):
+            from eva.adapters.postgres.work_corrections import work_corrections
+            corrected_stop = any(item.get("work_id") == previous.spec.work_id
+                                 for item in work_corrections(self.store._engine, previous.spec))
         # A private digital call can have external effects even when model usage
         # was measured. Preserve uncertainty and report any existing generation.
         # Native initiative and household continuations retain their own contracts.
         if (type(previous.spec) is DelegatedDigitalWorkSpec
+                and not corrected_stop
                 and (previous.state in {"call_started", "ambiguous"}
                      or (previous.state == "stopped" and previous.call_id is not None))):
             try:
@@ -495,7 +506,7 @@ class DelegatedWorkOwnerService:
                 **({"recovery": reconciliation} if reconciliation is not None else {}),
                 "prior_outcome_unknown": (reconciliation is None and (previous.state in {"call_started", "ambiguous"}
                     or (previous.state == "stopped" and previous.call_id is not None
-                        and (previous.usage is None or previous.usage.measurement != "measured"
+                        and (corrected_stop or previous.usage is None or previous.usage.measurement != "measured"
                              or previous.usage.completed_model_responses != 1)))),
                 "guidance": "Een nieuwe begrensde poging; de eerdere call en het eerdere verbruik blijven bewaard."}
 
