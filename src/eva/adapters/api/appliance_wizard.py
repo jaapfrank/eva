@@ -1145,7 +1145,7 @@ _APP_HTML = """<!doctype html>
         const {value, done} = await reader.read();
         buf += decoder.decode(value, {stream: !done});
         let nl;
-        while ((nl = buf.indexOf('\n')) >= 0) {
+        while ((nl = buf.indexOf('\\n')) >= 0) {
           const line = buf.slice(0, nl).trim();
           buf = buf.slice(nl + 1);
           if (!line) continue;

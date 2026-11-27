@@ -31,6 +31,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       --muted: #94a3b8;
     }
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     html, body {
       margin: 0; padding: 0; width: 100vw; height: 100vh; height: 100dvh;
       overflow: hidden; background: var(--bg); color: var(--text);
@@ -59,19 +60,21 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     /* Top HUD */
     .top-hud {
       position: fixed;
-      top: calc(12px + env(safe-area-inset-top, 0px));
-      left: calc(14px + env(safe-area-inset-left, 0px));
-      right: calc(14px + env(safe-area-inset-right, 0px));
+      top: calc(10px + env(safe-area-inset-top, 0px));
+      left: calc(12px + env(safe-area-inset-left, 0px));
+      right: calc(12px + env(safe-area-inset-right, 0px));
       z-index: 24;
-      display: flex; justify-content: space-between; align-items: flex-start;
-      gap: 8px; pointer-events: none;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      gap: 8px; pointer-events: auto; padding-bottom: 2px;
     }
+    .top-hud::-webkit-scrollbar { display: none; }
     .hud-group {
-      display: flex; flex-wrap: wrap; gap: 7px; align-items: center; pointer-events: auto;
+      display: flex; flex-wrap: nowrap; flex-shrink: 0; gap: 6px; align-items: center;
     }
     .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 7px 13px; border-radius: 999px; font-size: 0.8rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; white-space: nowrap;
+      padding: 6px 11px; border-radius: 999px; font-size: 0.77rem; font-weight: 600;
       color: var(--text); background: var(--glass); border: 1px solid var(--border);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       cursor: pointer; transition: all 0.18s ease; text-decoration: none;
@@ -105,7 +108,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     /* Reversible "Ik heb je gehoord" Stack */
     .heard-stack {
       position: fixed;
-      top: calc(60px + env(safe-area-inset-top, 0px));
+      top: calc(54px + env(safe-area-inset-top, 0px));
       left: calc(14px + env(safe-area-inset-left, 0px));
       z-index: 25; width: min(355px, calc(100vw - 28px));
       display: flex; flex-direction: column; gap: 8px; pointer-events: none;
@@ -132,9 +135,9 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     /* Right Guided Wizard & Stage Panel */
     .stage-drawer {
       position: fixed;
-      top: calc(58px + env(safe-area-inset-top, 0px));
+      top: calc(54px + env(safe-area-inset-top, 0px));
       right: calc(16px + env(safe-area-inset-right, 0px));
-      bottom: calc(128px + env(safe-area-inset-bottom, 0px));
+      bottom: calc(136px + env(safe-area-inset-bottom, 0px));
       width: min(470px, calc(100vw - 32px));
       z-index: 22; overflow-y: auto; padding: 20px; border-radius: 24px;
       background: var(--glass-strong); border: 1px solid rgba(56, 189, 248, 0.28);
@@ -248,7 +251,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     /* Eva's Spoken Subtitle Bubble (shifts left on wide screens when Wizard is open) */
     .speech-halo {
       position: fixed; left: 50%; transform: translateX(-50%);
-      bottom: calc(122px + env(safe-area-inset-bottom, 0px));
+      bottom: calc(142px + env(safe-area-inset-bottom, 0px));
       z-index: 15; width: min(620px, 90vw); pointer-events: auto;
       text-align: center; transition: left 0.35s ease, width 0.35s ease;
     }
@@ -269,21 +272,21 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       position: fixed; left: 50%; transform: translateX(-50%);
       bottom: calc(12px + env(safe-area-inset-bottom, 0px));
       z-index: 23; width: min(740px, calc(100vw - 24px));
-      display: flex; flex-direction: column; gap: 7px;
+      display: flex; flex-direction: column; gap: 6px;
       transition: left 0.35s ease, width 0.35s ease;
     }
     body.drawer-open .bottom-dock {
       left: calc((100vw - 490px) / 2);
-      width: min(560px, calc(100vw - 520px));
+      width: min(590px, calc(100vw - 510px));
     }
     .chips-row {
-      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;
+      padding-bottom: 2px;
     }
-    .chips-row::-webkit-scrollbar { display: none; }
     .chip {
-      flex: 0 0 auto; padding: 5px 11px; border-radius: 999px;
+      flex: 0 0 auto; padding: 4px 10px; border-radius: 999px;
       background: rgba(12, 21, 42, 0.78); border: 1px solid var(--border);
-      color: #cbd5e1; font-size: 0.76rem; cursor: pointer; white-space: nowrap;
+      color: #cbd5e1; font-size: 0.74rem; cursor: pointer; white-space: nowrap;
     }
     .chip:hover { border-color: var(--accent); color: #fff; }
 
@@ -316,14 +319,19 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       color: #e0f2fe; font-weight: 700; font-size: 0.84rem; cursor: pointer;
     }
 
+    @media (max-width: 1120px) {
+      .top-hud { flex-wrap: wrap; }
+      .hud-group { flex-wrap: wrap; }
+      .stage-drawer, .heard-stack { top: calc(92px + env(safe-area-inset-top, 0px)); }
+    }
     @media (max-width: 980px) {
       body.drawer-open .speech-halo,
       body.drawer-open .bottom-dock {
         left: 50%; width: min(700px, calc(100vw - 24px));
       }
       .stage-drawer {
-        left: 12px; right: 12px; width: auto; top: calc(58px + env(safe-area-inset-top, 0px));
-        bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+        left: 12px; right: 12px; width: auto; top: calc(92px + env(safe-area-inset-top, 0px));
+        bottom: calc(134px + env(safe-area-inset-bottom, 0px));
       }
     }
   </style>
@@ -650,8 +658,13 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     }
 
     // --- 2. Spoken Dutch Voice ---
+    let currentTtsAbort = null;
     function stopSpeaking() {
       ttsSpeaking = false;
+      if (currentTtsAbort) {
+        try { currentTtsAbort.abort(); } catch (_e) {}
+        currentTtsAbort = null;
+      }
       try { window.speechSynthesis?.cancel(); } catch (_e) {}
       if (currentSource) {
         try { currentSource.stop(); } catch (_e) {}
@@ -677,12 +690,16 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       if (!audioEnabled) return;
       stopSpeaking();
 
+      const ttsCtrl = new AbortController();
+      currentTtsAbort = ttsCtrl;
       try {
         const res = await fetch('/internal/v1/appliance/living/speech', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: clean })
+          body: JSON.stringify({ text: clean }),
+          signal: ttsCtrl.signal
         });
+        if (ttsCtrl.signal.aborted) return;
         if (res.status === 200) {
           const buf = await res.arrayBuffer();
           if (buf.byteLength > 256) {
@@ -957,8 +974,11 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           pill.textContent = '🛡️ Onbekende stem · Privéschild actief';
         }
 
-        if (data.conjure_panel) {
-          openDrawer(data.conjure_panel);
+        if (data.conjure_preset) {
+          selectedIntegrationPreset = data.conjure_preset;
+        }
+        if (data.conjure_panel && (activeDrawer !== 'wizard' || data.conjure_panel === 'wizard')) {
+          openDrawer(data.conjure_panel, null, data.conjure_preset || null);
         }
         waveUntil = performance.now() + 1800;
         if (data.reply_text) await speakDutch(data.reply_text);
@@ -968,9 +988,14 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     }
 
     // --- 6. Guided 6-Step 3D Onboarding Wizard & Quick Drawers ---
-    function openDrawer(kind, step = null) {
+    function openDrawer(kind, step = null, preset = null) {
       activeDrawer = kind;
       if (step !== null) wizardStep = step;
+      if (preset) {
+        selectedIntegrationPreset = preset;
+      } else if (kind === 'smart_home') {
+        selectedIntegrationPreset = 'home_assistant';
+      }
       $('stage-drawer').hidden = false;
       document.body.classList.add('drawer-open');
       renderDrawer(kind);
@@ -1098,7 +1123,8 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         </button>
       `).join('');
 
-      const pendingBanner = pending ? `
+      const showPendingBanner = !!(pending && (!pending.service_kind || pending.service_kind === activeKey));
+      const pendingBanner = showPendingBanner ? `
         <div class="card-sec" style="border-color:rgba(56,189,248,0.68); background:rgba(8,47,73,0.62);">
           <div style="font-size:0.82rem; font-weight:700; color:#7dd3fc; margin-bottom:4px;">
             ✨ Eva staat klaar om te koppelen: ${escapeHtml(pending.title || pending.service_id)}
@@ -1114,7 +1140,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         formHtml = buildSmartHomeSectionHtml(sh);
       } else {
         const p = presets[activeKey] || presets.rest_api;
-        const usePending = pending && (pending.service_kind === activeKey || activeKey === 'rest_api');
+        const usePending = !!(pending && pending.service_kind === activeKey);
         const sid = usePending ? pending.service_id : p.service_id;
         const stitle = usePending ? pending.title : p.title;
         const surl = (usePending && pending.default_url) ? pending.default_url : p.base_url;
@@ -1166,6 +1192,12 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
               <label>API-sleutel / Wachtwoord (blijft versleuteld buiten LLM)</label>
               <input id="uv-secret" type="password" autocomplete="new-password" placeholder="Plak veilig in Eva’s Kluis…" />
             </div>
+            ${activeKey.startsWith('unifi_') ? `
+              <label class="check-row">
+                <input id="uv-unifi-both" type="checkbox" checked />
+                <span>Koppel met deze UniFi OS-sleutel direct zowel <strong>UniFi Netwerk</strong> als <strong>UniFi Protect</strong></span>
+              </label>
+            ` : ''}
             ${activeKey === 'email' ? `
               <div class="field">
                 <label>Optioneel: SMTP-server (voor uitgaande mail, bijv. smtps://smtp.gmail.com:465)</label>
@@ -1268,7 +1300,8 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
                 auth_mode: $('uv-auth').value,
                 username: $('uv-user') ? $('uv-user').value.trim() : '',
                 secret: $('uv-secret') ? $('uv-secret').value.trim() : '',
-                smtp_url: $('uv-smtp') ? $('uv-smtp').value.trim() : ''
+                smtp_url: $('uv-smtp') ? $('uv-smtp').value.trim() : '',
+                also_connect_unifi_pair: $('uv-unifi-both') ? $('uv-unifi-both').checked : false
               })
             });
             const d = await r.json();
@@ -1576,7 +1609,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
             <div class="list-item"><span>✨ Karakter &amp; Regels</span><strong>${escapeHtml(eva.display_name || 'Eva')} (${(hh.custom_rules || []).length} afspraken)</strong></div>
             <div class="list-item"><span>🏡 Home Assistant</span><strong style="color:${haOk ? '#6ee7b7' : '#94a3b8'};">${haOk ? '✓ Actief verbonden' : 'Optioneel'}</strong></div>
             <p style="font-size:0.81rem; color:var(--muted); line-height:1.45; margin:10px 0 0;">
-              Je kunt deze wizard op elk moment weer openen via <strong>🪄 Wizard</strong> linksboven, of gewoon hardop tegen Eva zeggen wat je wilt aanpassen.
+              Je kunt deze wizard op elk moment weer openen via <strong>🪄 Kennismaking / Wizard</strong> linksboven, of gewoon hardop tegen Eva zeggen wat je wilt aanpassen.
             </p>
           </div>
           <div class="wiz-nav">
@@ -2066,6 +2099,7 @@ MEMBER_WELCOME_HTML = """<!doctype html>
       --muted: #94a3b8;
     }
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     html, body {
       margin: 0; padding: 0; width: 100vw; height: 100vh; height: 100dvh;
       overflow: hidden; background:
@@ -2080,39 +2114,39 @@ MEMBER_WELCOME_HTML = """<!doctype html>
     }
     .welcome-dock {
       position: fixed; left: 50%; transform: translateX(-50%);
-      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
       z-index: 15; width: min(500px, calc(100vw - 24px));
-      padding: 20px; border-radius: 24px;
+      padding: 15px 18px; border-radius: 22px;
       background: var(--glass); border: 1px solid var(--border);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
-      max-height: 62dvh; overflow-y: auto;
+      max-height: min(84dvh, calc(100dvh - 24px)); overflow-y: auto;
     }
-    h1 { margin: 0 0 6px; font-size: 1.32rem; }
-    .greet { font-size: 0.93rem; line-height: 1.5; color: #e2e8f0; margin-bottom: 14px; }
-    .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+    h1 { margin: 0 0 4px; font-size: 1.24rem; }
+    .greet { font-size: 0.89rem; line-height: 1.44; color: #e2e8f0; margin-bottom: 10px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 9px; }
     .chip {
-      padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border);
-      background: rgba(15, 23, 42, 0.72); color: #cbd5e1; font-size: 0.8rem; cursor: pointer;
+      padding: 5px 10px; border-radius: 999px; border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.72); color: #cbd5e1; font-size: 0.77rem; cursor: pointer;
     }
     .chip.selected {
       border-color: var(--emerald); background: rgba(6, 78, 59, 0.65); color: #ecfdf5;
     }
     .wish-in {
-      width: 100%; padding: 11px 14px; border-radius: 12px;
+      width: 100%; padding: 9px 12px; border-radius: 11px;
       border: 1px solid var(--border); background: rgba(2, 6, 23, 0.72);
-      color: var(--text); font-size: 0.92rem; margin-bottom: 10px;
+      color: var(--text); font-size: 0.88rem; margin-bottom: 8px;
     }
     .row { display: flex; gap: 8px; align-items: center; }
     .btn-main {
-      flex: 1; padding: 13px 16px; border-radius: 14px; border: none;
+      flex: 1; padding: 11px 15px; border-radius: 13px; border: none;
       background: linear-gradient(135deg, #38bdf8, #10b981);
-      color: #04121f; font-weight: 700; font-size: 0.95rem; cursor: pointer;
+      color: #04121f; font-weight: 700; font-size: 0.91rem; cursor: pointer;
       text-decoration: none; text-align: center; display: inline-block;
     }
     .btn-mic {
-      padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.45);
-      background: rgba(8, 47, 73, 0.65); color: #e0f2fe; font-weight: 600; font-size: 0.85rem; cursor: pointer;
+      padding: 9px 12px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.45);
+      background: rgba(8, 47, 73, 0.65); color: #e0f2fe; font-weight: 600; font-size: 0.82rem; cursor: pointer;
     }
     .btn-mic.rec { border-color: #f43f5e; background: rgba(136, 19, 55, 0.75); color: #fff; }
   </style>

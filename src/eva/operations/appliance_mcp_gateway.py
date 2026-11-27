@@ -687,13 +687,17 @@ class UniversalIntegrationHub:
         data = _read_private_json(self.pending_file, {})
         if not data or not data.get("service_id"):
             return None
+        exp = data.get("expires_epoch")
+        if not isinstance(exp, int) or exp <= int(time.time()):
+            self.clear_pending_connection()
+            return None
         return data
 
     def clear_pending_connection(self, service_id: str | None = None) -> None:
         if not self.pending_file.is_file():
             return
         if service_id:
-            cur = self.get_pending_connection()
+            cur = _read_private_json(self.pending_file, {})
             if cur and cur.get("service_id") != service_id:
                 return
         try:
@@ -717,6 +721,7 @@ class UniversalIntegrationHub:
             "auth_mode": str(args.get("auth_mode") or "api_key"),
             "instructions_nl": str(args.get("instructions_nl") or "")[:400],
             "requested_at": _utc_now_iso(),
+            "expires_epoch": int(time.time()) + 600,
         }
         _write_private_json(self.pending_file, req)
         return {
@@ -1699,11 +1704,34 @@ class UniversalIntegrationHub:
             except Exception:
                 pass
         unifi_hint = detect_local_unifi_console()
+        if unifi_hint.get("reachable"):
+            unifi_hint = {
+                **unifi_hint,
+                "hosts_both_network_and_protect": True,
+                "note_nl": (
+                    f"UniFi OS Console bereikbaar op {unifi_hint['url']} ({unifi_hint['ip']}); "
+                    "hierop kunnen zowel UniFi Netwerk als UniFi Protect met dezelfde UniFi OS API-Key gekoppeld worden."
+                ),
+            }
+        ha_hint: dict[str, Any] = {
+            "reachable": False,
+            "url": "http://homeassistant.local:8123",
+            "ip": "",
+            "token_configured": (self.runtime_root / "secrets" / "home-assistant-token").is_file(),
+        }
+        try:
+            ha_ip = socket.gethostbyname("homeassistant.local")
+            with socket.create_connection((ha_ip, 8123), timeout=0.8):
+                ha_hint["reachable"] = True
+                ha_hint["ip"] = ha_ip
+        except OSError:
+            pass
         return {
             "ok": True,
             "configured_vault_services": self.list_services(),
             "custom_capabilities": self.list_capabilities(),
             "discovered_lan_devices": lan_devices,
+            "home_assistant_detected": ha_hint,
             "unifi_console_detected": unifi_hint,
         }
 

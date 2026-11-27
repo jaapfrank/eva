@@ -6,6 +6,7 @@ set -euo pipefail
 # headless Setup Wizard (poort 8765) klaar op http://eva.local:8765.
 
 EVA_REPO_URL="${EVA_REPO_URL:-https://github.com/jaapfrank/eva.git}"
+EVA_BRANCH="${EVA_BRANCH:-feat/immersive-eva-onboarding}"
 EVA_REPO_DIR="${EVA_REPO_DIR:-/opt/eva2}"
 EVA_RUNTIME_ROOT="${EVA_RUNTIME_ROOT:-/var/lib/eva2-local}"
 EVA_WIZARD_DIR="${EVA_WIZARD_DIR:-/var/lib/eva2-appliance}"
@@ -167,7 +168,7 @@ elif [ -f "$EVA_SEED_DIR/eva-repo.tar.gz" ]; then
   mkdir -p "$EVA_REPO_DIR"
   tar -xzf "$EVA_SEED_DIR/eva-repo.tar.gz" -C "$EVA_REPO_DIR"
 elif [ ! -d "$EVA_REPO_DIR/.git" ]; then
-  git clone "$EVA_REPO_URL" "$EVA_REPO_DIR"
+  git clone --branch "$EVA_BRANCH" "$EVA_REPO_URL" "$EVA_REPO_DIR" || git clone "$EVA_REPO_URL" "$EVA_REPO_DIR"
 else
   git -C "$EVA_REPO_DIR" pull --ff-only || true
 fi

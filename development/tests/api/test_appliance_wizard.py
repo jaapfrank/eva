@@ -914,4 +914,63 @@ def test_persistent_sessions_loopback_auto_pair_universal_vault_and_self_buildin
         gw_srv.server_close()
 
 
+def test_beheer_js_integrity_dual_unifi_pair_and_pending_expiry(tmp_path: Path) -> None:
+    import time
+    from eva.operations.appliance_mcp_gateway import UniversalIntegrationHub
+
+    service = _service(tmp_path)
+    client = _paired_client(service)
+
+    # 1. /beheer HTML must preserve escaped '\\n' inside JS stream parser (no unescaped newline SyntaxError)
+    beheer = client.get("/beheer")
+    assert beheer.status_code == 200
+    assert "buf.indexOf('\\n')" in beheer.text
+
+    # 2. Pure observational LAN question must NOT prematurely conjure a credential drawer
+    obs_turn = client.post(
+        "/internal/v1/appliance/living/turn",
+        json={"text": "Hoi Eva, zie jij mijn Home Assistant en UniFi op het netwerk?"},
+    )
+    assert obs_turn.status_code == 200
+    assert obs_turn.json()["conjure_panel"] is None
+
+    # 3. Combined UniFi Network + UniFi Protect request opens aligned preset tab
+    both_turn = client.post(
+        "/internal/v1/appliance/living/turn",
+        json={"text": "Eva, maak verbinding met mijn UniFi netwerk en UniFi Protect."},
+    )
+    assert both_turn.status_code == 200
+    assert both_turn.json()["conjure_panel"] == "integrations"
+    assert both_turn.json()["conjure_preset"] == "unifi_network"
+
+    # 4. 1-Click dual UniFi connect activates BOTH unifi_network and unifi_protect in the AES-256 Vault
+    dual_res = client.post(
+        "/internal/v1/appliance/living/integrations/connect",
+        json={
+            "service_id": "unifi_network",
+            "title": "UniFi Netwerk & Wi-Fi",
+            "service_kind": "unifi_network",
+            "base_url": "https://10.0.20.1",
+            "auth_mode": "api_key",
+            "secret": "unifi_os_shared_api_key_abcdef",
+            "also_connect_unifi_pair": True,
+            "skip_probe": True,
+        },
+    )
+    assert dual_res.status_code == 200
+    svcs = {s["service_id"]: s for s in dual_res.json()["stage"]["integrations"]["services"]}
+    assert "unifi_network" in svcs and svcs["unifi_network"]["has_credential"] is True
+    assert "unifi_protect" in svcs and svcs["unifi_protect"]["has_credential"] is True
+
+    # 5. Expired pending-connection.json is automatically cleaned up so it never hijacks unrelated turns
+    hub = UniversalIntegrationHub(tmp_path / "runtime")
+    hub.record_connection_request({"service_id": "oud_verzoek", "service_kind": "calendar"})
+    raw_pend = json.loads(hub.pending_file.read_text(encoding="utf-8"))
+    raw_pend["expires_epoch"] = int(time.time()) - 5
+    hub.pending_file.write_text(json.dumps(raw_pend), encoding="utf-8")
+    assert hub.get_pending_connection() is None
+    assert not hub.pending_file.exists()
+
+
+
 

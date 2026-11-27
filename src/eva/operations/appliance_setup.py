@@ -252,6 +252,30 @@ def _detect_lan_ipv4s() -> list[str]:
     except OSError:
         pass
 
+    # In WSL2 NAT mode, eth0 only sees an internal 172.16-31.x.x Hyper-V subnet;
+    # include the Windows host's real home Wi-Fi/Ethernet LAN IPv4 (192.168.x.x / 10.x.x.x)
+    # so phone QR codes point to the reachable laptop IP on Wi-Fi.
+    if not any(ip.startswith(("192.168.", "10.")) for ip in found):
+        proc_ver = Path("/proc/version")
+        ipconfig_exe = Path("/mnt/c/Windows/System32/ipconfig.exe")
+        if proc_ver.is_file() and ipconfig_exe.is_file():
+            try:
+                if "microsoft" in proc_ver.read_text(encoding="utf-8", errors="ignore").lower():
+                    ic_res = subprocess.run(
+                        [str(ipconfig_exe)],
+                        capture_output=True,
+                        timeout=1.2,
+                        check=False,
+                    )
+                    ic_txt = ic_res.stdout.decode("cp850", errors="ignore")
+                    for m_ip in re.findall(
+                        r"\b(?:192\.168|10\.\d{1,3})\.\d{1,3}\.\d{1,3}\b", ic_txt
+                    ):
+                        if not m_ip.endswith((".0", ".1", ".255")):
+                            _add(m_ip)
+            except (OSError, subprocess.SubprocessError):
+                pass
+
     def _priority(ip_str: str) -> int:
         if ip_str.startswith("192.168."):
             return 0
@@ -3865,27 +3889,63 @@ class ApplianceSetupService:
     def connect_universal_service(self, payload: Mapping[str, Any]) -> dict[str, Any]:
         """Store credentials in AES-256-GCM PreLlmCredentialVault, live-probe, and update Eva's awareness."""
         hub = self._integration_hub()
+        service_kind = str(payload.get("service_kind") or "rest_api")
+        base_url = str(payload.get("base_url") or "")
+        auth_mode = str(payload.get("auth_mode") or "api_key")
+        username = str(payload.get("username") or "")
+        secret = str(payload.get("secret") or "")
+        verify_tls = bool(payload.get("verify_tls", False))
+        run_probe = not (self.dry_run_apply or bool(payload.get("skip_probe", False)))
         try:
             res = hub.save_and_verify_service(
                 service_id=str(payload.get("service_id") or ""),
                 title=str(payload.get("title") or ""),
-                service_kind=str(payload.get("service_kind") or "rest_api"),
-                base_url=str(payload.get("base_url") or ""),
-                auth_mode=str(payload.get("auth_mode") or "api_key"),
-                username=str(payload.get("username") or ""),
-                secret=str(payload.get("secret") or ""),
+                service_kind=service_kind,
+                base_url=base_url,
+                auth_mode=auth_mode,
+                username=username,
+                secret=secret,
                 smtp_url=str(payload.get("smtp_url") or ""),
                 header_name=str(payload.get("header_name") or ""),
-                verify_tls=bool(payload.get("verify_tls", False)),
-                run_probe=not (self.dry_run_apply or bool(payload.get("skip_probe", False))),
+                verify_tls=verify_tls,
+                run_probe=run_probe,
             )
         except (ValueError, PermissionError, RuntimeError) as exc:
             raise ApplianceSetupError(str(exc)) from exc
+
+        detail = str(res["summary_nl"])
+        if bool(payload.get("also_connect_unifi_pair", False)) and service_kind in {
+            "unifi_network",
+            "unifi_protect",
+        }:
+            sibling_kind = "unifi_protect" if service_kind == "unifi_network" else "unifi_network"
+            sibling_title = (
+                "UniFi Protect Camera's & Deurbel"
+                if sibling_kind == "unifi_protect"
+                else "UniFi Netwerk & Wi-Fi"
+            )
+            try:
+                sib_res = hub.save_and_verify_service(
+                    service_id=sibling_kind,
+                    title=sibling_title,
+                    service_kind=sibling_kind,
+                    base_url=base_url,
+                    auth_mode=auth_mode,
+                    username=username,
+                    secret=secret,
+                    verify_tls=verify_tls,
+                    run_probe=run_probe,
+                )
+                detail = f"{detail} Ook direct geactiveerd: {sib_res['summary_nl']}"
+            except Exception:
+                pass
+
+        hub.clear_pending_connection()
         self._sync_household_head_settings()
         return {
             "ok": True,
             "service_id": res["service_id"],
-            "detail": res["summary_nl"],
+            "detail": detail,
             "stage": self.living_stage_snapshot(),
         }
 
@@ -4023,6 +4083,7 @@ class ApplianceSetupService:
 
         applied_changes: list[dict[str, Any]] = []
         conjure_panel: str | None = None
+        conjure_preset: str | None = None
 
         # 1. Instant character sphere tasting (Scene 3 or anytime)
         valid_presets = {p.preset_id: p for p in CHARACTER_PRESETS}
@@ -4227,22 +4288,61 @@ class ApplianceSetupService:
             hub_turn = self._integration_hub()
             existing_sids = {s["service_id"] for s in hub_turn.list_services() if s.get("has_credential")}
             existing_kinds = {s["service_kind"] for s in hub_turn.list_services() if s.get("has_credential")}
+            wants_connect = any(
+                w in low_txt
+                for w in (
+                    "koppel",
+                    "verbind",
+                    "aansluit",
+                    "instel",
+                    "inlog",
+                    "token",
+                    "sleutel",
+                    "toegang",
+                    "activeer",
+                    "activeren",
+                )
+            )
             if conjure_panel is None:
                 if any(
                     kw in low_txt
                     for kw in (
-                        "home assistant",
-                        "homeassistant",
                         "long living token",
                         "long-lived token",
                         "slim huis koppelen",
                         "lampen koppelen",
                     )
+                ) or (
+                    wants_connect and ("home assistant" in low_txt or "homeassistant" in low_txt)
                 ):
                     sh_now = state["modules"]["smart_home"]
                     if not (sh_now.get("enabled") and (self._secrets_dir() / "home-assistant-token").is_file()):
+                        hub_turn.clear_pending_connection()
                         conjure_panel = "smart_home"
-                elif "unifi protect" in low_txt or ("protect" in low_txt and "camera" in low_txt):
+                        conjure_preset = "home_assistant"
+                elif (
+                    wants_connect
+                    and "protect" in low_txt
+                    and any(w in low_txt for w in ("netwerk", "network", "wifi", "wi-fi"))
+                ):
+                    if "unifi_network" not in existing_kinds or "unifi_protect" not in existing_kinds:
+                        u_det = self._probe_local_unifi_cached()
+                        hub_turn.record_connection_request(
+                            {
+                                "service_id": "unifi_network",
+                                "title": "UniFi Netwerk & UniFi Protect",
+                                "service_kind": "unifi_network",
+                                "default_url": u_det["url"],
+                                "auth_mode": "api_key",
+                                "instructions_nl": (
+                                    "Plak je UniFi OS Integration API-Key (Control Plane → Integrations) en laat het vinkje "
+                                    "aan staan: dan worden zowel UniFi Netwerk als UniFi Protect in één klik versleuteld gekoppeld!"
+                                ),
+                            }
+                        )
+                        conjure_panel = "integrations"
+                        conjure_preset = "unifi_network"
+                elif wants_connect and ("unifi protect" in low_txt or ("protect" in low_txt and "camera" in low_txt)):
                     if "unifi_protect" not in existing_kinds and "unifi_protect" not in existing_sids:
                         u_det = self._probe_local_unifi_cached()
                         hub_turn.record_connection_request(
@@ -4256,7 +4356,8 @@ class ApplianceSetupService:
                             }
                         )
                         conjure_panel = "integrations"
-                elif "unifi" in low_txt:
+                        conjure_preset = "unifi_protect"
+                elif wants_connect and "unifi" in low_txt:
                     if "unifi_network" not in existing_kinds and "unifi_network" not in existing_sids:
                         u_det = self._probe_local_unifi_cached()
                         hub_turn.record_connection_request(
@@ -4270,10 +4371,11 @@ class ApplianceSetupService:
                             }
                         )
                         conjure_panel = "integrations"
-                elif any(kw in low_txt for kw in ("agenda", "caldav", "kalender", "icloud agenda", "google calendar")):
-                    if "calendar" not in existing_kinds and any(
-                        w in low_txt for w in ("koppel", "verbind", "aansluit", "instel", "toegang")
-                    ):
+                        conjure_preset = "unifi_network"
+                elif wants_connect and any(
+                    kw in low_txt for kw in ("agenda", "caldav", "kalender", "icloud agenda", "google calendar")
+                ):
+                    if "calendar" not in existing_kinds:
                         hub_turn.record_connection_request(
                             {
                                 "service_id": "gezins_agenda",
@@ -4285,10 +4387,9 @@ class ApplianceSetupService:
                             }
                         )
                         conjure_panel = "integrations"
-                elif any(kw in low_txt for kw in ("e-mail", "email", "mailbox", "imap", "gmail")):
-                    if "email" not in existing_kinds and any(
-                        w in low_txt for w in ("koppel", "verbind", "aansluit", "instel", "toegang")
-                    ):
+                        conjure_preset = "calendar"
+                elif wants_connect and any(kw in low_txt for kw in ("e-mail", "email", "mailbox", "imap", "gmail")):
+                    if "email" not in existing_kinds:
                         hub_turn.record_connection_request(
                             {
                                 "service_id": "eigen_email",
@@ -4300,6 +4401,7 @@ class ApplianceSetupService:
                             }
                         )
                         conjure_panel = "integrations"
+                        conjure_preset = "email"
                 elif any(kw in low_txt for kw in ("telegram koppelen", "botfather")):
                     conjure_panel = "telegram"
                 elif any(kw in low_txt for kw in ("open kluis", "koppelingen openen", "nieuwe koppeling")):
@@ -4327,7 +4429,7 @@ class ApplianceSetupService:
             except Exception:
                 pass
 
-        # 4. Generate natural Dutch reply via Living Core (with graceful warm fallback)
+        # 4. Generate natural Dutch reply via Living Core (with instant response for pure local preference toggles)
         owner_nm = snap_now["household"]["owner_name"]
         speaker_nm = (
             str(speaker_match["display_name"])
@@ -4342,60 +4444,33 @@ class ApplianceSetupService:
         eva_nm = snap_now["eva"]["display_name"]
         fam_members = snap_now["household"]["family_members"]
         reply_text: str | None = None
+        pure_local_preference = bool(
+            applied_changes
+            and conjure_panel is None
+            and "?" not in raw_text
+            and all(
+                c["kind"] in {"guest_mode", "household_rule", "tone_preference", "household_intro"}
+                for c in applied_changes
+            )
+        )
 
-        if raw_text and snap_now["core_ready"]:
+        if raw_text and snap_now["core_ready"] and not pure_local_preference:
             pend_before = self._integration_hub().get_pending_connection()
-            ctx_parts: list[str] = []
-            if applied_changes:
-                notes = "; ".join(f"{c['title']}: {c['summary']}" for c in applied_changes)
-                ctx_parts.append(f"Zojuist live opgeslagen voor het huishouden: {notes}.")
-            if conjure_panel in {"smart_home", "integrations"}:
-                if pend_before and pend_before.get("service_id"):
-                    u_det = snap_now.get("integrations", {}).get("unifi_detected") or {}
-                    extra_lan = (
-                        f" (UniFi Console al live gevonden op {u_det['url']}!)"
-                        if pend_before.get("service_kind") in {"unifi_network", "unifi_protect"} and u_det.get("reachable")
-                        else ""
-                    )
-                    ctx_parts.append(
-                        f"Het beveiligde koppelvak voor '{pend_before['title']}'{extra_lan} staat NU rechts op het scherm open voor {speaker_nm}! "
-                        "Vertel enthousiast dat hij zijn API-sleutel of inloggegevens daar veilig in de versleutelde kluis kan plakken en op 'Test, Versleutel & Activeer' kan klikken (nooit in de chat)."
-                    )
-                else:
-                    ha_det = snap_now["channels"]["smart_home"]["lan_detected"]
-                    if ha_det.get("reachable"):
-                        ctx_parts.append(
-                            f"Home Assistant is live gevonden op {ha_det['url']} ({ha_det['ip']}), "
-                            f"en het beveiligde koppelvak staat NU rechts op het scherm open voor {speaker_nm}! "
-                            "Vertel dat hij daar veilig zijn Long-Lived Access Token kan plakken en op 'Verbind & Activeer' klikt."
-                        )
-                    else:
-                        ctx_parts.append(
-                            f"Het beveiligde Koppelingen & Kluis-venster staat NU rechts op het scherm open voor {speaker_nm}!"
-                        )
-            elif conjure_panel == "wizard":
-                ctx_parts.append(
-                    "De 6-staps Kennismakings-Wizard is zojuist rechts op het scherm geopend zodat alles stap voor stap kan worden nagelopen."
-                )
+            prev_req_at = (pend_before or {}).get("requested_at")
             if unknown_voice:
-                ctx_parts.append(
-                    "Stemherkenning hoort een onbekende stem in de kamer (privéschild actief) — deel geen privézaken of agenda van het gezin."
-                )
-            elif speaker_nm != owner_nm:
-                ctx_parts.append(f"Lokale stemherkenning herkent gezinslid {speaker_nm} aan het woord.")
-            if ctx_parts:
                 core_prompt = (
-                    f"[Contextnotitie: {' '.join(ctx_parts)} "
-                    "Reageer warm, natuurlijk en vlot in het Nederlands zonder systeemtermen.]\n"
-                    f"{'Bezoeker' if unknown_voice else speaker_nm} zegt: {raw_text}"
+                    "Er spreekt een onbekende bezoeker in de kamer (privéschild actief; deel geen gezinsagenda of privézaken): "
+                    f"{raw_text}"
                 )
             else:
                 core_prompt = raw_text
             reply_text = self._try_core_conversation_turn(core_prompt)
-            # If Eva's model invoked `request_owner_connection` during this turn, auto-open the card on the 3D stage!
+            # If Eva's model invoked `request_owner_connection` during this turn, auto-open the exact tab on the 3D stage!
             pend_after = self._integration_hub().get_pending_connection()
-            if pend_after and conjure_panel is None:
-                conjure_panel = "integrations"
+            if pend_after and pend_after.get("requested_at") != prev_req_at:
+                if conjure_panel is None:
+                    conjure_panel = "integrations"
+                conjure_preset = str(pend_after.get("service_kind") or "auto")
 
         if not reply_text:
             if applied_changes:
@@ -4440,6 +4515,7 @@ class ApplianceSetupService:
             "reply_text": reply_text,
             "applied_changes": applied_changes,
             "conjure_panel": conjure_panel,
+            "conjure_preset": conjure_preset,
             "voice_enrolled": voice_res is not None,
             "speaker_match": speaker_match,
             "stage": self.living_stage_snapshot(base_origin=base_origin),

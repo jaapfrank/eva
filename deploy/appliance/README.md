@@ -1,40 +1,41 @@
 # Eva 1-Klik Karakter-, Contact- & Appliance Installer
 
-Deze map bevat de complete out-of-the-box installatie- en contactomgeving voor Eva:
-1. **Immersieve 3D "Eerste Ontwaking" & Levend Contact (`GET /` op `:8765`)**:
-   - **De Eerste Hartslag:** als er nog geen AI-model gekoppeld is, verschijnt één rustig ademend scherm waarmee je Eva met 1 klik wekt via ChatGPT/Codex (of één van de 14 andere cloud-/lokale modellen), inclusief automatische achtergrondaansturing.
-   - **Fullscreen 3D `eva.glb` Ontmoeting & Spraak:** Eva stapt lokaal (zonder externe CDN's) in 3D naar voren met oogcontact, ademhaling, lip-sync en gesproken Nederlandse stem, leert lokaal 16 kHz stemafdrukken herkennen (`BiometricPresenceFusion`) en laat je live 4 karakterbollen proeven die tegelijk wegschrijven naar ondertekende `SOUL.md` én `HouseholdHeadSettings`.
-   - **Omkeerbare "Ik heb je gehoord"-kaarten & Visite-modus:** zeg of typ in gewoon Nederlands wensen of grenzen (*"Na 21:00 uur alleen storen als het dringend is"*, *"Drogere humor graag"*) met directe **`[↩ Ongedaan maken]`**-knop, of roep *"Eva, we krijgen visite!"* om direct het privéschild (`BiometricPresenceFusion`) en de feestelijke gastvrouw-modus te activeren.
-   - **Persoonlijke 1-Scan Welkomstkaart voor Lola & Gasten (`GET /welkom/{token}`):** genereer een eigen QR-code voor Lola (`gezin`) of bezoek (`gast`). Op haar eigen telefoon begroet 3D Eva haar bij naam, leert haar eigen wensen & stemgeluid kennen en opent direct haar eigen `Eva Pocket` — strikt gescheiden van het eigenaarsbeheer.
+Deze map bevat de complete out-of-the-box installatie-, kluis- en 3D-contactomgeving voor Eva:
+1. **Immersieve 3D "Eerste Ontwaking" & 6-Staps Kennismakings-Wizard (`GET /` op `:8765`)**:
+   - **Automatische Lokale Koppeling:** open je `http://127.0.0.1:8765/pair` rechtstreeks op de laptop zelf, dan herkent Eva de lokale pc automatisch zonder dat je een koppelcode hoeft over te typen (apparaten op wifi gebruiken wel de veilige `EVA-XXXX`-koppelcode of QR-scan).
+   - **6-Staps Begeleide Wizard + Fullscreen 3D `eva.glb`:** loop stap voor stap door **1. AI-Brein** (1-klik ChatGPT/Codex of 14 andere modellen), **2. Jij & Gezin** (`Jaap` & `Lola`), **3. Lokale 64-D Stemherkenning** (met live stemtest!), **4. Karakter & Huisafspraken** (met directe `[↩ Ongedaan maken]`-knop), **5. Koppelingen, AES-256 Kluis & Lola QR** (Home Assistant, UniFi Netwerk + UniFi Protect in 1 klik, Agenda, E-mail en eigen API's) en **6. Klaar voor Levend Contact**.
+   - **Zelfbouwende Vaardigheden (`build_and_run_capability`):** vraag je Eva iets waar nog geen standaardkoppeling voor bestaat, dan zoekt ze zelf documentatie op en schrijft, controleert (AST + sandbox) en bewaart ze een nieuwe Python-vaardigheid.
+   - **Persoonlijke 1-Scan Welkomstkaart voor Lola & Gasten (`GET /welkom/{token}`):** genereer een eigen QR-code voor Lola (`gezin`) of bezoek (`gast`). Op haar telefoon begroet 3D Eva haar bij naam, leert haar stem & wensen kennen en opent haar eigen `Eva Pocket`.
 2. **Volledige 6-Tab Systeemconfigurator onder `GET /beheer` ("⚙ Motorkap")**:
-   - Voor geavanceerd beheer: Telegram `@BotFather` 1-scan koppeling zonder gebruikers-ID's (`eva2-local-telegram.service`), Home Assistant / AgentMail modules, maandplafond en geheimvrije `.json`-profielback-ups.
-3. **Geen "Black Box" bij Headless Installatie:**
-   - **Vroege Bootstrap Status-Server op poort `8765`:** al 5 seconden na eerste opstart zie je een live Nederlandstalige voortgangsbalk terwijl Ubuntu, Docker en Python 3.12 op de achtergrond klaarzetten, waarna het scherm vanzelf doorschakelt naar de wizard.
-   - **`Zoek-Eva.cmd` Netwerk-Radar:** scant in ~1 seconde je hele `/24`-thuisnetwerk op poort `8765` en opent Eva automatisch op IP, ook als Windows of je router `eva.local` niet oplost.
+   - Voor geavanceerd beheer: Telegram `@BotFather` 1-scan koppeling zonder gebruikers-ID's, maandplafond en geheimvrije `.json`-profielexport/-import.
 
 ---
 
-## A. Direct openen op deze Windows-laptop (WSL2)
-- Dubbelklik op [`Start-Eva-Installer.cmd`](../../Start-Eva-Installer.cmd) om de lokale wizard direct gekoppeld te openen.
-- Dubbelklik op [`Zoek-Eva.cmd`](../../Zoek-Eva.cmd) om een Eva-mini-pc op je thuisnetwerk automatisch te vinden.
+## A. Maandag: Installeren & Onboarden op je Nieuwe Laptop
+
+### Optie 1 — Nieuwe laptop draait Windows 11 (aanbevolen 1-klik)
+1. Zet deze `eva`-map op je nieuwe laptop (via `git clone -b feat/immersive-eva-onboarding https://github.com/jaapfrank/eva.git` of door de map te kopiëren).
+2. Dubbelklik op **[`Installeer-Eva-Op-Nieuwe-Laptop.cmd`](../../Installeer-Eva-Op-Nieuwe-Laptop.cmd)**.
+   - Staat WSL2 + Ubuntu 24.04 nog niet aan op de nieuwe laptop? Dan zet het script dit automatisch aan (herstart eenmalig als Windows daarom vraagt en dubbelklik nog één keer).
+   - Op Windows 11 activeert het script automatisch `networkingMode=mirrored` zodat Lola's welkomst-QR en Eva Pocket direct vanaf je telefoon op jullie thuis-wifi werken.
+   - Zodra de installatie klaar is, springt je browser vanzelf open in de **3D Kennismakings-Wizard** (`http://127.0.0.1:8765/pair` → `/`)!
+3. Dagelijks openen na installatie: dubbelklik op **[`Start-Eva-Installer.cmd`](../../Start-Eva-Installer.cmd)**.
+
+### Optie 2 — Nieuwe laptop of mini-pc draait rechtstreeks Ubuntu 24.04 LTS
+Voer in de terminal één commando uit:
+```bash
+curl -fsSL https://raw.githubusercontent.com/jaapfrank/eva/feat/immersive-eva-onboarding/deploy/appliance/firstboot-install-eva.sh | sudo bash
+```
+Open daarna `http://127.0.0.1:8765/pair` in je browser.
+
+### Optioneel: Je huidige karakter & gezinsinstellingen meenemen (`.json`)
+- Open op deze laptop `http://127.0.0.1:8765/beheer` → tabblad **5. Activeren** → klik op **Exporteer profiel (.json)** en klik op de nieuwe laptop op **Importeer profiel (.json)** (of doorloop op maandag lekker vers de 6-staps 3D Wizard!).
 
 ---
 
-## B. Headless USB / Hybride ISO voor de HP Pro Mini 400 G9
-
-### Aanbevolen op je eigen laptop (met Administrator-rechten / Rufus)
-Genereer de hybride UEFI+GPT autoinstall-ISO + bijbehorende `Open-Eva-HP-Mini-Setup.html`:
+## B. Headless USB / Hybride ISO voor een losse HP Pro Mini 400 G9
+Genereer de hybride UEFI+GPT autoinstall-ISO (let op: deze optie wist de doel-pc volledig voor gebruik als dedicated mini-server):
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\deploy\appliance\build-eva-usb.ps1 -DownloadUbuntuIso
 ```
-Schrijf vervolgens `deploy\appliance\eva-usb-output\eva2-hp-mini-autoinstall.iso` met **Rufus** (of `balenaEtcher`, of `-WriteUsbDrive` in een Administrator-PowerShell) naar je USB-stick. Een hybride GPT/UEFI ISO via Rufus start op HP Pro Mini G9-systemen met Secure Boot betrouwbaarder op dan een losse MBR-bestandskopie.
-
-> **Belangrijk bij een HP Pro Mini waar nog een oud besturingssysteem op de SSD staat:** HP zet `Windows Boot Manager` standaard vóór USB in het UEFI-opstartmenu. Staat er nog een oud OS op de interne NVMe-SSD, kies dan éénmalig bij aanzetten via `F9` de USB-stick (of wis de SSD vooraf). Je hoort **twee korte piepjes** zodra de autoinstall écht vanaf USB is gestart, en **drie piepjes + uitschakelen** zodra Ubuntu klaar is en de USB eruit mag.
-
----
-
-## C. 1-Commando Installatie op elke verse Ubuntu Server 24.04 / Raspberry Pi
-Heb je Ubuntu Server 24.04 standaard (of via SSH) op de HP Pro Mini of Raspberry Pi gezet? Eén commando richt alles in inclusief live voortgang op `http://<ip>:8765`:
-```bash
-curl -fsSL https://raw.githubusercontent.com/jaapfrank/eva/main/deploy/appliance/firstboot-install-eva.sh | sudo bash
-```
+Schrijf `deploy\appliance\eva-usb-output\eva2-hp-mini-autoinstall.iso` met **Rufus** naar een USB-stick en gebruik **[`Zoek-Eva.cmd`](../../Zoek-Eva.cmd)** om het kastje op je thuisnetwerk automatisch te vinden.
