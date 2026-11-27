@@ -359,6 +359,12 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       <span class="pill static active-emerald" id="hud-speaker-pill" hidden></span>
     </div>
     <div class="hud-group">
+      <button type="button" class="pill active-emerald" id="btn-live-call" title="Start of stop een doorlopend handsfree gesprek met Eva (zonder telkens te klikken)">
+        🎙️ <span id="live-call-label">Start Live Gesprek</span>
+      </button>
+      <button type="button" class="pill" id="btn-voice-engine" title="Kies tussen GPT Realtime 2.1, GPT Realtime 2.1 Mini of Gemini 3.8 Live">
+        ⚡ <span id="voice-engine-label">gpt-realtime-2.1</span>
+      </button>
       <button type="button" class="pill" id="btn-rules">
         📜 Afspraken <span id="rules-count">(0)</span>
       </button>
@@ -373,6 +379,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       </a>
     </div>
   </header>
+  <audio id="rt-remote-audio" autoplay playsinline hidden></audio>
 
   <!-- Reversible "Ik heb je gehoord" Stack -->
   <section class="heard-stack" id="heard-stack" aria-live="polite"></section>
@@ -408,12 +415,12 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       <button type="button" class="chip" data-panel="family">💌 QR-kaart voor Lola</button>
     </div>
     <form class="input-bar" id="living-form">
-      <button type="button" class="mic-btn" id="btn-mic" title="Praat Nederlands tegen Eva (herkent jouw ingeleerde stem)">🎙️</button>
+      <button type="button" class="mic-btn" id="btn-mic" title="Start of stop een doorlopend live spraakgesprek (GPT Realtime 2.1 / Gemini 3.8 Live)">🎙️</button>
       <input
         type="text"
         class="talk-input"
         id="talk-input"
-        placeholder="Praat of typ gewoon Nederlands tegen Eva…"
+        placeholder="Klik op 🎙️ voor doorlopend live gesprek, of typ Nederlands tegen Eva…"
         autocomplete="off"
       />
       <button type="submit" class="send-btn" id="btn-send">Zeg ↵</button>
@@ -657,9 +664,26 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       animate();
     }
 
-    // --- 2. Spoken Dutch Voice ---
+    // --- 2. Neural Clause Queue + Full-Duplex Realtime Live Call (gpt-realtime-2.1 / gemini-3.8-live) ---
     let currentTtsAbort = null;
+    let speechQueue = [];
+    let speechQueueDraining = false;
+    let speechGen = 0;
+
+    function ensureAudioCtx() {
+      if (!currentAudioCtx) currentAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (currentAudioCtx.state === 'suspended') currentAudioCtx.resume().catch(() => {});
+      if (!activeAnalyser) {
+        activeAnalyser = currentAudioCtx.createAnalyser();
+        activeAnalyser.fftSize = 128;
+        freqBins = new Uint8Array(activeAnalyser.frequencyBinCount);
+      }
+      return currentAudioCtx;
+    }
+
     function stopSpeaking() {
+      speechGen += 1;
+      speechQueue = [];
       ttsSpeaking = false;
       if (currentTtsAbort) {
         try { currentTtsAbort.abort(); } catch (_e) {}
@@ -672,24 +696,9 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
     }
 
-    function pickBestDutchVoice() {
-      const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
-      const nl = voices.filter(v => /^nl([-_]|$)/i.test(v.lang));
-      if (!nl.length) return null;
-      for (const kw of ['Fenna', 'Colette', 'Natural', 'Google Nederlands', 'Claire', 'Xander']) {
-        const hit = nl.find(v => v.name.includes(kw));
-        if (hit) return hit;
-      }
-      return nl[0];
-    }
-
-    async function speakDutch(text) {
+    async function fetchNeuralBuffer(text, gen) {
       const clean = String(text || '').trim();
-      if (!clean) return;
-      $('eva-subtitle').textContent = clean;
-      if (!audioEnabled) return;
-      stopSpeaking();
-
+      if (!clean || !audioEnabled) return null;
       const ttsCtrl = new AbortController();
       currentTtsAbort = ttsCtrl;
       try {
@@ -699,53 +708,80 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           body: JSON.stringify({ text: clean }),
           signal: ttsCtrl.signal
         });
-        if (ttsCtrl.signal.aborted) return;
-        if (res.status === 200) {
-          const buf = await res.arrayBuffer();
-          if (buf.byteLength > 256) {
-            if (!currentAudioCtx) currentAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (currentAudioCtx.state === 'suspended') await currentAudioCtx.resume();
-            const decoded = await currentAudioCtx.decodeAudioData(buf);
-            const src = currentAudioCtx.createBufferSource();
-            src.buffer = decoded;
-            activeAnalyser = currentAudioCtx.createAnalyser();
-            activeAnalyser.fftSize = 128;
-            freqBins = new Uint8Array(activeAnalyser.frequencyBinCount);
-            src.connect(activeAnalyser);
-            activeAnalyser.connect(currentAudioCtx.destination);
-            currentSource = src;
-            ttsSpeaking = true;
-            src.onended = () => { ttsSpeaking = false; currentSource = null; };
-            src.start(0);
-            userUnlockedAudio = true;
-            $('first-voice-unlock').hidden = true;
-            return;
-          }
-        }
-      } catch (_e) {}
-
-      if ('speechSynthesis' in window) {
-        const utt = new SpeechSynthesisUtterance(clean);
-        utt.lang = 'nl-NL';
-        utt.rate = 1.02;
-        utt.pitch = 1.03;
-        const v = pickBestDutchVoice();
-        if (v) utt.voice = v;
-        utt.onstart = () => {
-          ttsSpeaking = true;
-          userUnlockedAudio = true;
-          $('first-voice-unlock').hidden = true;
-        };
-        utt.onend = () => { ttsSpeaking = false; };
-        utt.onerror = () => { ttsSpeaking = false; };
-        window.speechSynthesis.speak(utt);
-        setTimeout(() => {
-          if (!ttsSpeaking && !userUnlockedAudio) $('first-voice-unlock').hidden = false;
-        }, 450);
+        if (ttsCtrl.signal.aborted || gen !== speechGen || res.status !== 200) return null;
+        const buf = await res.arrayBuffer();
+        if (buf.byteLength <= 256) return null;
+        const ctx = ensureAudioCtx();
+        return await ctx.decodeAudioData(buf);
+      } catch (_e) {
+        return null;
       }
     }
 
+    function enqueueSpeechClause(text, { reset = false, updateSubtitle = true } = {}) {
+      const clean = String(text || '').trim();
+      if (!clean) return;
+      if (updateSubtitle) $('eva-subtitle').textContent = clean;
+      if (!audioEnabled || liveCallSession) return;
+      if (reset) stopSpeaking();
+      const gen = speechGen;
+      // Start fetching & decoding immediately in parallel so sentence N+1 is ready before sentence N ends!
+      const bufPromise = fetchNeuralBuffer(clean, gen);
+      speechQueue.push({ gen, text: clean, bufPromise });
+      drainSpeechQueue();
+    }
+
+    async function drainSpeechQueue() {
+      if (speechQueueDraining) return;
+      speechQueueDraining = true;
+      try {
+        while (speechQueue.length > 0) {
+          const item = speechQueue.shift();
+          if (item.gen !== speechGen) continue;
+          const decoded = await item.bufPromise;
+          if (!decoded || item.gen !== speechGen) continue;
+          const ctx = ensureAudioCtx();
+          if (ctx.state === 'suspended') await ctx.resume();
+          await new Promise(resolve => {
+            const src = ctx.createBufferSource();
+            src.buffer = decoded;
+            src.connect(activeAnalyser);
+            activeAnalyser.connect(ctx.destination);
+            currentSource = src;
+            ttsSpeaking = true;
+            userUnlockedAudio = true;
+            $('first-voice-unlock').hidden = true;
+            src.onended = () => {
+              if (currentSource === src) currentSource = null;
+              if (speechQueue.length === 0) ttsSpeaking = false;
+              resolve();
+            };
+            src.start(0);
+          });
+        }
+      } finally {
+        speechQueueDraining = false;
+        if (speechQueue.length === 0 && !liveCallSession) ttsSpeaking = false;
+      }
+    }
+
+    async function speakDutch(text) {
+      enqueueSpeechClause(text, { reset: true, updateSubtitle: true });
+    }
+
     // --- 3. Fixed-Duration 16 kHz PCM Helper (for Wizard Step 3 Enroll & Live Voice Test) ---
+    function floatTo16BitPcmB64(chunks, total) {
+      const merged = new Int16Array(total);
+      let off = 0;
+      for (const c of chunks) { merged.set(c, off); off += c.length; }
+      const bytes = new Uint8Array(merged.buffer);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i += 0x8000) {
+        bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+      }
+      return btoa(bin);
+    }
+
     async function captureFixedPcm16B64(durationMs = 3400) {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -772,106 +808,389 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       proc.disconnect();
       await ctx.close();
       stream.getTracks().forEach(t => t.stop());
-
-      const merged = new Int16Array(total);
-      let off = 0;
-      for (const c of chunks) { merged.set(c, off); off += c.length; }
-      const bytes = new Uint8Array(merged.buffer);
-      let bin = '';
-      for (let i = 0; i < bytes.length; i += 0x8000) {
-        bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
-      }
-      return btoa(bin);
+      return floatTo16BitPcmB64(chunks, total);
     }
 
-    // --- 4. Conversational Microphone (Recognizes Speaker + Transcribes Speech) ---
-    let micActive = false, micStopFn = null;
-    async function toggleMicCapture() {
-      if (micActive && micStopFn) { micStopFn(); return; }
-      userUnlockedAudio = true;
-      stopSpeaking();
+    // --- 4. Continuous Hands-Free Realtime Live Call (gpt-realtime-2.1, gpt-realtime-2.1-mini & gemini-3.8-live) ---
+    let liveCallSession = null;
 
-      let stream = null, audioCtx = null, processor = null;
-      const pcmChunks = [];
-      let totalSamples = 0;
+    function syncLiveCallUi(stateText = null) {
+      const active = !!liveCallSession;
+      $('btn-mic').classList.toggle('recording', active);
+      $('btn-live-call').classList.toggle('active-guest', active);
+      $('btn-live-call').classList.toggle('active-emerald', !active);
+      $('live-call-label').textContent = active ? 'Beëindig Live Gesprek' : 'Start Live Gesprek';
+      if ($('btn-rt-test-call')) {
+        $('btn-rt-test-call').textContent = active ? '🎙️ Beëindig Live Gesprek' : '🎙️ Start nu Live Gesprek';
+      }
+      $('talk-input').placeholder = active
+        ? '🟢 Doorlopend gesprek actief — praat gewoon door of onderbreek Eva met je stem…'
+        : 'Klik op 🎙️ voor doorlopend live gesprek, of typ Nederlands tegen Eva…';
+      if (stateText) $('eva-subtitle').textContent = stateText;
+    }
+
+    async function stopRealtimeLiveCall(reasonMsg = null) {
+      const sess = liveCallSession;
+      liveCallSession = null;
+      ttsSpeaking = false;
+      syncLiveCallUi(reasonMsg);
+      const audioEl = $('rt-remote-audio');
+      if (audioEl) {
+        try { audioEl.pause(); audioEl.srcObject = null; } catch (_e) {}
+      }
+      if (!sess) return;
+      if (sess.bioTimer) clearInterval(sess.bioTimer);
+      try { sess.dc?.close(); } catch (_e) {}
+      try { sess.pc?.close(); } catch (_e) {}
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const src = audioCtx.createMediaStreamSource(stream);
-        processor = audioCtx.createScriptProcessor(4096, 1, 1);
-        const inRate = audioCtx.sampleRate || 48000;
-        processor.onaudioprocess = ev => {
-          if (totalSamples >= 96000) return;
-          const input = ev.inputBuffer.getChannelData(0);
-          const ratio = inRate / 16000;
-          const outLen = Math.floor(input.length / ratio);
-          const int16 = new Int16Array(outLen);
-          for (let i = 0; i < outLen; i++) {
-            const s = Math.max(-1, Math.min(1, input[Math.floor(i * ratio)]));
-            int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-          }
-          pcmChunks.push(int16);
-          totalSamples += outLen;
-        };
-        src.connect(processor);
-        processor.connect(audioCtx.destination);
-      } catch (_e) {
-        $('eva-subtitle').textContent = 'Geef je browser microfoontoegang of typ je bericht hieronder.';
+        if (sess.ws && sess.ws.readyState === WebSocket.OPEN) {
+          sess.ws.send(JSON.stringify({ type: 'stop' }));
+        }
+        sess.ws?.close();
+      } catch (_e) {}
+      try { sess.proc?.disconnect(); } catch (_e) {}
+      try { sess.micSrc?.disconnect(); } catch (_e) {}
+      try { sess.remoteSrc?.disconnect(); } catch (_e) {}
+      for (const t of (sess.stream?.getTracks() || [])) {
+        try { t.stop(); } catch (_e) {}
+      }
+      if (sess.sessionId) {
+        fetch('/internal/v1/appliance/living/realtime/stop', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sess.sessionId }),
+          keepalive: true
+        }).catch(() => {});
+      }
+    }
+
+    async function toggleRealtimeLiveCall() {
+      userUnlockedAudio = true;
+      if (liveCallSession) {
+        await stopRealtimeLiveCall('Live gesprek gepauzeerd. Klik op 🎙️ Start Live Gesprek wanneer je weer verder wilt praten.');
+        return;
+      }
+      stopSpeaking();
+      const rtCfg = stage?.realtime_voice || {};
+      const selModel = rtCfg.selected_model || 'gpt-realtime-2.1';
+      const selVoice = rtCfg.selected_voice || (selModel.startsWith('gemini') ? 'Aoede' : 'marin');
+
+      if (selModel.startsWith('gemini') && !rtCfg.has_gemini_key) {
+        openDrawer('voice_engine');
+        $('eva-subtitle').textContent = 'Plak rechts eenmalig je Google Gemini API-sleutel in de Kluis om Gemini 3.8 Live te starten.';
         return;
       }
 
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      let rec = null, transcript = '';
-      micActive = true;
-      $('btn-mic').classList.add('recording');
-      $('talk-input').placeholder = 'Luisteren… spreek Nederlands (klik nogmaals om te verzenden)';
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+          video: false
+        });
+      } catch (_e) {
+        $('eva-subtitle').textContent = 'Geef je browser toestemming voor de microfoon om handsfree met Eva te praten.';
+        return;
+      }
 
-      const finish = async () => {
-        if (!micActive) return;
-        micActive = false;
-        $('btn-mic').classList.remove('recording');
-        $('talk-input').placeholder = 'Praat of typ gewoon Nederlands tegen Eva…';
-        try { rec?.stop(); } catch (_e) {}
-        try { processor?.disconnect(); } catch (_e) {}
-        try { await audioCtx?.close(); } catch (_e) {}
-        try { stream?.getTracks().forEach(t => t.stop()); } catch (_e) {}
+      const ctx = ensureAudioCtx();
+      if (ctx.state === 'suspended') await ctx.resume();
 
-        let pcmB64 = '';
-        if (totalSamples >= 3200) {
-          const merged = new Int16Array(totalSamples);
-          let off = 0;
-          for (const c of pcmChunks) { merged.set(c, off); off += c.length; }
-          const bytes = new Uint8Array(merged.buffer);
-          let bin = '';
-          for (let i = 0; i < bytes.length; i += 0x8000) {
-            bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+      const sess = { model: selModel, voice: selVoice, stream, sessionId: null };
+      liveCallSession = sess;
+      syncLiveCallUi(`⏳ Live verbinding openen met ${selModel}…`);
+
+      // Background local 64-D speaker verification (100% local, identifies Jaap vs Lola vs visitor!)
+      try {
+        const micSrc = ctx.createMediaStreamSource(stream);
+        const bioProc = ctx.createScriptProcessor(4096, 1, 1);
+        sess.micSrc = micSrc;
+        sess.proc = bioProc;
+        let bioChunks = [], bioSamples = 0, lastBioCheck = 0;
+        const inRate = ctx.sampleRate || 48000;
+        bioProc.onaudioprocess = ev => {
+          if (liveCallSession !== sess) return;
+          const inp = ev.inputBuffer.getChannelData(0);
+          let sumSq = 0;
+          for (let i = 0; i < inp.length; i += 4) sumSq += inp[i] * inp[i];
+          const rms = Math.sqrt(sumSq / (inp.length / 4));
+          const ratio = inRate / 16000;
+          const outLen = Math.floor(inp.length / ratio);
+          const int16 = new Int16Array(outLen);
+          for (let i = 0; i < outLen; i++) {
+            const s = Math.max(-1, Math.min(1, inp[Math.floor(i * ratio)]));
+            int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
           }
-          pcmB64 = btoa(bin);
+          if (sess.onPcm16Chunk) sess.onPcm16Chunk(int16, rms);
+          const anyVoiceEnrolled = (stage?.household?.members || []).some(m => m.voice_enrolled);
+          if (anyVoiceEnrolled && !ttsSpeaking && rms > 0.02) {
+            bioChunks.push(int16);
+            bioSamples += outLen;
+            const now = Date.now();
+            if (bioSamples >= 36000 && now - lastBioCheck > 12000) {
+              lastBioCheck = now;
+              const b64 = floatTo16BitPcmB64(bioChunks, bioSamples);
+              bioChunks = []; bioSamples = 0;
+              fetch('/internal/v1/appliance/living/voice-check', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ audio_pcm_b64: b64 })
+              }).then(r => r.json()).then(d => {
+                const sp = d?.match;
+                if (sp && sp.status === 'household_voice_candidate') {
+                  const pill = $('hud-speaker-pill');
+                  pill.hidden = false;
+                  pill.textContent = `🎙️ Stem herkend: ${sp.display_name} (${sp.similarity_pct}%)`;
+                } else if (sp && sp.status === 'unknown_voice') {
+                  const pill = $('hud-speaker-pill');
+                  pill.hidden = false;
+                  pill.textContent = '🛡️ Onbekende stem · Privéschild actief';
+                }
+              }).catch(() => {});
+            }
+          }
+        };
+        const silentGain = ctx.createGain();
+        silentGain.gain.value = 0;
+        micSrc.connect(bioProc);
+        bioProc.connect(silentGain);
+        silentGain.connect(ctx.destination);
+      } catch (_e) {}
+
+      if (selModel.startsWith('gemini')) {
+        await startGeminiLiveWsSession(sess, ctx);
+      } else {
+        await startOpenAiOrCodexWebrtcSession(sess, ctx);
+      }
+    }
+
+    async function startOpenAiOrCodexWebrtcSession(sess, ctx) {
+      try {
+        const pc = new RTCPeerConnection();
+        sess.pc = pc;
+        pc.addTrack(sess.stream.getAudioTracks()[0], sess.stream);
+
+        pc.ontrack = ev => {
+          if (liveCallSession !== sess) return;
+          const remoteStream = ev.streams[0] || new MediaStream([ev.track]);
+          const audioEl = $('rt-remote-audio');
+          audioEl.srcObject = remoteStream;
+          audioEl.muted = !audioEnabled;
+          audioEl.play().catch(() => {});
+          try {
+            const remSrc = ctx.createMediaStreamSource(remoteStream);
+            sess.remoteSrc = remSrc;
+            remSrc.connect(activeAnalyser);
+          } catch (_e) {}
+        };
+
+        pc.onconnectionstatechange = () => {
+          if (liveCallSession === sess && ['failed', 'closed', 'disconnected'].includes(pc.connectionState)) {
+            stopRealtimeLiveCall('De live spraakverbinding is gesloten. Klik op 🎙️ om te hervatten.');
+          }
+        };
+
+        const dc = pc.createDataChannel('oai-events');
+        sess.dc = dc;
+        let evaTranscriptBuf = '';
+
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+
+        const res = await fetch('/internal/v1/appliance/living/realtime/webrtc', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            offer_sdp: offer.sdp,
+            model: sess.model,
+            voice: sess.voice
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.detail || 'Kon GPT Realtime sessie niet starten.');
         }
-        const finalTxt = ($('talk-input').value || transcript || '').trim();
-        if (finalTxt) {
-          $('talk-input').value = '';
-          await sendLivingTurn({ text: finalTxt, audio_pcm_b64: pcmB64 });
+        if (liveCallSession !== sess) return;
+        sess.sessionId = data.session_id;
+
+        dc.onopen = () => {
+          if (liveCallSession !== sess) return;
+          if (data.session_update) {
+            dc.send(JSON.stringify(data.session_update));
+          }
+          syncLiveCallUi(`🟢 Doorlopend gesprek actief (${data.model}) — praat gewoon tegen Eva!`);
+          waveUntil = performance.now() + 2200;
+          dc.send(JSON.stringify({
+            type: 'response.create',
+            response: {
+              instructions: `Begroet ${stage?.household?.owner_name || 'Jaap'} kort, warm en enthousiast in één vlotte Nederlandse zin en laat weten dat jullie nu rechtstreeks doorlopend kunnen praten zonder op knoppen te klikken.`
+            }
+          }));
+        };
+
+        dc.onmessage = async msgEv => {
+          if (liveCallSession !== sess) return;
+          let ev;
+          try { ev = JSON.parse(msgEv.data); } catch (_e) { return; }
+          const t = ev.type || '';
+
+          if (t === 'input_audio_buffer.speech_started') {
+            ttsSpeaking = false;
+            evaTranscriptBuf = '';
+            $('eva-subtitle').textContent = '🟢 Eva luistert…';
+          } else if (t === 'conversation.item.input_audio_transcription.completed' && ev.transcript) {
+            $('eva-subtitle').textContent = `🎙️ Jij: "${ev.transcript.trim()}"`;
+          } else if ((t === 'response.audio_transcript.delta' || t === 'response.output_audio_transcript.delta') && ev.delta) {
+            ttsSpeaking = true;
+            evaTranscriptBuf += ev.delta;
+            $('eva-subtitle').textContent = evaTranscriptBuf;
+          } else if (t === 'response.audio.done' || t === 'response.output_audio.done' || t === 'response.done') {
+            ttsSpeaking = false;
+            evaTranscriptBuf = '';
+          } else if (t === 'response.function_call_arguments.done') {
+            const fnName = ev.name || '';
+            const callId = ev.call_id || '';
+            let args = {};
+            try { args = JSON.parse(ev.arguments || '{}'); } catch (_e) {}
+
+            let outputObj = { ok: true };
+            if (fnName === 'open_scherm_paneel') {
+              const p = args.paneel || 'integrations';
+              openDrawer(p);
+              outputObj = { ok: true, geopend: p };
+            } else if (fnName === 'zet_visite_modus') {
+              const r = await fetch('/internal/v1/appliance/living/guest-mode', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ enabled: !!args.actief })
+              });
+              const d = await r.json();
+              if (r.ok && d.stage) applyStageState(d.stage);
+              outputObj = { ok: true, visite_modus: !!args.actief };
+            } else {
+              const verzoek = String(args.verzoek || '').trim() || 'Kijk even in huis';
+              const r = await fetch('/internal/v1/appliance/living/turn', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: verzoek })
+              });
+              const d = await r.json();
+              if (r.ok) {
+                if (d.stage) applyStageState(d.stage, { preserveDrawerInputs: activeDrawer === 'wizard' });
+                if (Array.isArray(d.applied_changes)) d.applied_changes.forEach(pushHeardCard);
+                if (d.conjure_preset) selectedIntegrationPreset = d.conjure_preset;
+                if (d.conjure_panel && (activeDrawer !== 'wizard' || d.conjure_panel === 'wizard')) {
+                  openDrawer(d.conjure_panel, null, d.conjure_preset || null);
+                }
+                outputObj = { geverifieerd_resultaat_uit_eva_kern: d.reply_text || 'Uitgevoerd.' };
+              } else {
+                outputObj = { fout: d.detail || 'Kon actie niet uitvoeren.' };
+              }
+            }
+
+            if (dc.readyState === 'open' && callId) {
+              dc.send(JSON.stringify({
+                type: 'conversation.item.create',
+                item: {
+                  type: 'function_call_output',
+                  call_id: callId,
+                  output: JSON.stringify(outputObj)
+                }
+              }));
+              dc.send(JSON.stringify({ type: 'response.create' }));
+            }
+          }
+        };
+
+        await pc.setRemoteDescription({ type: 'answer', sdp: data.answer_sdp });
+      } catch (err) {
+        await stopRealtimeLiveCall(`⚠️ ${err.message || 'Kon live spraak niet starten.'}`);
+      }
+    }
+
+    async function startGeminiLiveWsSession(sess, ctx) {
+      const wsProto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const url = `${wsProto}//${location.host}/internal/v1/appliance/living/realtime/gemini-ws?model=${encodeURIComponent(sess.model)}&voice=${encodeURIComponent(sess.voice)}`;
+      const ws = new WebSocket(url);
+      sess.ws = ws;
+      let nextPlayTime = 0;
+      const activeGeminiSources = [];
+
+      const flushGeminiAudio = () => {
+        ttsSpeaking = false;
+        nextPlayTime = ctx.currentTime;
+        while (activeGeminiSources.length) {
+          const s = activeGeminiSources.pop();
+          try { s.stop(); } catch (_e) {}
         }
       };
-      micStopFn = finish;
 
-      if (SR) {
-        rec = new SR();
-        rec.lang = 'nl-NL';
-        rec.interimResults = true;
-        rec.onresult = ev => {
-          let s = '';
-          for (let i = 0; i < ev.results.length; i++) s += ev.results[i][0].transcript;
-          transcript = s.trim();
-          $('talk-input').value = transcript;
-        };
-        rec.onend = () => { if (micActive) finish(); };
-        rec.onerror = () => { if (micActive) setTimeout(finish, 1000); };
-        try { rec.start(); } catch (_e) { setTimeout(finish, 3500); }
-      } else {
-        setTimeout(finish, 3600);
-      }
+      sess.onPcm16Chunk = (int16) => {
+        if (ws.readyState !== WebSocket.OPEN) return;
+        const bytes = new Uint8Array(int16.buffer);
+        let bin = '';
+        for (let i = 0; i < bytes.length; i += 0x8000) {
+          bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+        }
+        ws.send(JSON.stringify({ type: 'audio', pcm16_b64: btoa(bin) }));
+      };
+
+      ws.onmessage = ev => {
+        if (liveCallSession !== sess) return;
+        let msg;
+        try { msg = JSON.parse(ev.data); } catch (_e) { return; }
+        if (msg.type === 'ready') {
+          syncLiveCallUi(`🟢 Doorlopend gesprek actief (${msg.model}) — praat gewoon tegen Eva!`);
+          ws.send(JSON.stringify({
+            type: 'text',
+            text: `Hoi Eva! Begroet ${stage?.household?.owner_name || 'Jaap'} kort en warm in één Nederlandse zin.`
+          }));
+        } else if (msg.type === 'interrupted') {
+          flushGeminiAudio();
+          $('eva-subtitle').textContent = '🟢 Eva luistert…';
+        } else if (msg.type === 'audio' && msg.pcm24_b64 && audioEnabled) {
+          const bin = atob(msg.pcm24_b64);
+          const bytes = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+          const int16 = new Int16Array(bytes.buffer);
+          const float32 = new Float32Array(int16.length);
+          for (let i = 0; i < int16.length; i++) float32[i] = int16[i] / 32768.0;
+          const audioBuf = ctx.createBuffer(1, float32.length, 24000);
+          audioBuf.getChannelData(0).set(float32);
+          const src = ctx.createBufferSource();
+          src.buffer = audioBuf;
+          src.connect(activeAnalyser);
+          activeAnalyser.connect(ctx.destination);
+          const startAt = Math.max(ctx.currentTime + 0.02, nextPlayTime);
+          nextPlayTime = startAt + audioBuf.duration;
+          ttsSpeaking = true;
+          activeGeminiSources.push(src);
+          src.onended = () => {
+            const idx = activeGeminiSources.indexOf(src);
+            if (idx >= 0) activeGeminiSources.splice(idx, 1);
+            if (activeGeminiSources.length === 0) ttsSpeaking = false;
+          };
+          src.start(startAt);
+        } else if (msg.type === 'transcript' && msg.text) {
+          $('eva-subtitle').textContent = msg.text;
+        } else if (msg.type === 'conjure_panel' && msg.panel) {
+          openDrawer(msg.panel);
+        } else if (msg.type === 'stage_update') {
+          if (msg.stage) applyStageState(msg.stage, { preserveDrawerInputs: activeDrawer === 'wizard' });
+          if (Array.isArray(msg.applied_changes)) msg.applied_changes.forEach(pushHeardCard);
+          if (msg.conjure_preset) selectedIntegrationPreset = msg.conjure_preset;
+          if (msg.conjure_panel) openDrawer(msg.conjure_panel, null, msg.conjure_preset || null);
+        } else if (msg.type === 'error') {
+          if (msg.need_key) openDrawer('voice_engine');
+          stopRealtimeLiveCall(`⚠️ ${msg.detail || 'Gemini Live verbinding gestopt.'}`);
+        }
+      };
+
+      ws.onerror = () => {
+        if (liveCallSession === sess) stopRealtimeLiveCall('⚠️ Kon Gemini 3.8 Live WebSocket niet bereiken.');
+      };
+      ws.onclose = () => {
+        if (liveCallSession === sess) stopRealtimeLiveCall('Live gesprek beëindigd.');
+      };
     }
 
     // --- 5. Helpers & Reversible Cards ---
@@ -939,6 +1258,9 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
 
       $('wiz-hud-label').textContent = stage.wizard_completed ? 'Wizard' : 'Kennismaking (stap ' + wizardStep + '/6)';
+      if ($('voice-engine-label') && stage.realtime_voice?.selected_model) {
+        $('voice-engine-label').textContent = stage.realtime_voice.selected_model;
+      }
 
       if (!preserveDrawerInputs && activeDrawer) {
         renderDrawer(activeDrawer);
@@ -946,42 +1268,77 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     }
 
     async function sendLivingTurn(payload) {
+      // If user is already in a live WebRTC/Gemini call and typed text, send straight into the live session!
+      if (liveCallSession && payload.text && !payload.preset_id && !payload.text.startsWith('/')) {
+        if (liveCallSession.dc && liveCallSession.dc.readyState === 'open') {
+          liveCallSession.dc.send(JSON.stringify({
+            type: 'conversation.item.create',
+            item: { type: 'message', role: 'user', content: [{ type: 'input_text', text: payload.text }] }
+          }));
+          liveCallSession.dc.send(JSON.stringify({ type: 'response.create' }));
+          return;
+        }
+        if (liveCallSession.ws && liveCallSession.ws.readyState === WebSocket.OPEN) {
+          liveCallSession.ws.send(JSON.stringify({ type: 'text', text: payload.text }));
+          return;
+        }
+      }
+
       $('btn-send').disabled = true;
-      $('eva-subtitle').textContent = `${stage?.eva?.display_name || 'Eva'} luistert en denkt mee…`;
+      stopSpeaking();
+      $('eva-subtitle').textContent = `${stage?.eva?.display_name || 'Eva'} luistert…`;
       try {
-        const res = await fetch('/internal/v1/appliance/living/turn', {
+        const res = await fetch('/internal/v1/appliance/living/turn-stream', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        const data = await res.json();
-        if (!res.ok) {
-          $('eva-subtitle').textContent = data.detail || 'Er ging iets mis.';
+        if (!res.ok || !res.body) {
+          const d = await res.json().catch(() => ({}));
+          $('eva-subtitle').textContent = d.detail || 'Er ging iets mis.';
           return;
         }
-        if (data.stage) applyStageState(data.stage, { preserveDrawerInputs: activeDrawer === 'wizard' });
-        if (Array.isArray(data.applied_changes)) data.applied_changes.forEach(pushHeardCard);
 
-        // Live speaker recognition feedback in top HUD
-        const sp = data.speaker_match;
-        if (sp && sp.status === 'household_voice_candidate') {
-          const pill = $('hud-speaker-pill');
-          pill.hidden = false;
-          pill.textContent = `🎙️ Stem herkend: ${sp.display_name} (${sp.similarity_pct}%)`;
-        } else if (sp && sp.status === 'unknown_voice') {
-          const pill = $('hud-speaker-pill');
-          pill.hidden = false;
-          pill.textContent = '🛡️ Onbekende stem · Privéschild actief';
-        }
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = '', draftText = '', clauseCount = 0;
 
-        if (data.conjure_preset) {
-          selectedIntegrationPreset = data.conjure_preset;
+        while (true) {
+          const { value, done } = await reader.read();
+          buf += decoder.decode(value || new Uint8Array(), { stream: !done });
+          let nl;
+          while ((nl = buf.indexOf('\\n')) >= 0) {
+            const line = buf.slice(0, nl).trim();
+            buf = buf.slice(nl + 1);
+            if (!line) continue;
+            let ev;
+            try { ev = JSON.parse(line); } catch (_e) { continue; }
+            if (ev.type === 'filler' && ev.text) {
+              enqueueSpeechClause(ev.text, { reset: true, updateSubtitle: true });
+            } else if (ev.type === 'delta' && ev.text) {
+              draftText += ev.text;
+              $('eva-subtitle').textContent = draftText;
+            } else if (ev.type === 'speech_clause' && ev.text) {
+              clauseCount += 1;
+              enqueueSpeechClause(ev.text, { reset: false, updateSubtitle: !draftText });
+            } else if (ev.type === 'final') {
+              if (ev.stage) applyStageState(ev.stage, { preserveDrawerInputs: activeDrawer === 'wizard' });
+              if (Array.isArray(ev.applied_changes)) ev.applied_changes.forEach(pushHeardCard);
+              if (ev.conjure_preset) selectedIntegrationPreset = ev.conjure_preset;
+              if (ev.conjure_panel && (activeDrawer !== 'wizard' || ev.conjure_panel === 'wizard')) {
+                openDrawer(ev.conjure_panel, null, ev.conjure_preset || null);
+              }
+              waveUntil = performance.now() + 1800;
+              if (ev.reply_text) {
+                $('eva-subtitle').textContent = ev.reply_text;
+                if (clauseCount === 0) enqueueSpeechClause(ev.reply_text, { reset: false, updateSubtitle: false });
+              }
+            } else if (ev.type === 'error') {
+              $('eva-subtitle').textContent = ev.detail || 'Er ging iets mis.';
+            }
+          }
+          if (done) break;
         }
-        if (data.conjure_panel && (activeDrawer !== 'wizard' || data.conjure_panel === 'wizard')) {
-          openDrawer(data.conjure_panel, null, data.conjure_preset || null);
-        }
-        waveUntil = performance.now() + 1800;
-        if (data.reply_text) await speakDutch(data.reply_text);
       } finally {
         $('btn-send').disabled = false;
       }
@@ -1488,19 +1845,18 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       } else if (wizardStep === 3) {
         const enrolled = !!ownerMember.voice_enrolled;
         contentHtml = `
+          ${buildRealtimeVoiceEngineCardHtml()}
           <div class="card-sec">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <strong>🎙️ Stap 3 — Hoe herkent Eva dat jij ${escapeHtml(hh.owner_name || 'het')} bent?</strong>
+              <strong>🎙️ Jouw Lokale 64-D Stemafdruk (${escapeHtml(hh.owner_name || 'Jaap')})</strong>
               ${enrolled ? '<span class="badge-ok">✓ Stem bekend</span>' : '<span style="font-size:0.78rem; color:var(--gold);">Nog opnemen</span>'}
             </div>
-            <p style="margin:0 0 12px; font-size:0.81rem; color:var(--muted); line-height:1.48;">
-              1. <strong>Op je telefoon &amp; Telegram</strong> herkent Eva jou aan je persoonlijke cryptografische sleutel.<br/>
-              2. <strong>In de kamer via de microfoon</strong> herkent ze je aan een lokale 64-D stemafdruk (blijft 100% binnen deze pc). Hoort ze een onbekende stem, dan schiet automatisch het Privéschild aan!
+            <p style="margin:0 0 10px; font-size:0.8rem; color:var(--muted); line-height:1.45;">
+              Tijdens het doorlopende live gesprek herkent Eva jouw stem 100% lokaal op deze pc. Hoort ze een vreemde stem in de kamer, dan springt automatisch het Privéschild aan!
             </p>
-            <div style="padding:11px; border-radius:12px; background:rgba(8,47,73,0.45); border:1px solid rgba(56,189,248,0.35); margin-bottom:10px;">
-              <div style="font-size:0.8rem; color:#bae6fd; margin-bottom:8px;">
-                Klik hieronder en zeg rustig hardop:<br/>
-                <em>"Hoi ${escapeHtml(eva.display_name || 'Eva')}, ik ben ${escapeHtml(hh.owner_name || 'Jaap')} en ik woon hier thuis."</em>
+            <div style="padding:10px; border-radius:12px; background:rgba(8,47,73,0.45); border:1px solid rgba(56,189,248,0.35); margin-bottom:9px;">
+              <div style="font-size:0.79rem; color:#bae6fd; margin-bottom:7px;">
+                Zeg rustig hardop: <em>"Hoi ${escapeHtml(eva.display_name || 'Eva')}, ik ben ${escapeHtml(hh.owner_name || 'Jaap')} en ik woon hier thuis."</em>
               </div>
               <button type="button" class="btn-primary" id="btn-wiz-enroll">
                 🎙️ ${enrolled ? 'Stemafdruk opnieuw opnemen (3,5 sec)' : 'Neem nu mijn stemafdruk op (3,5 sec)'}
@@ -1509,7 +1865,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
             <button type="button" class="btn-ghost" id="btn-wiz-voicetest" style="width:100%;" ${!enrolled ? 'disabled' : ''}>
               🔍 Test nu live of Eva mijn stem herkent (2,5 sec)
             </button>
-            <div id="wiz-voice-msg" style="margin-top:10px; font-size:0.84rem; line-height:1.45;"></div>
+            <div id="wiz-voice-msg" style="margin-top:8px; font-size:0.83rem; line-height:1.45;"></div>
           </div>
           <div class="wiz-nav">
             <button type="button" class="btn-ghost" data-go-step="2">← Terug</button>
@@ -1741,6 +2097,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
 
       if (wizardStep === 3) {
+        wireRealtimeVoiceEngineHandlers(() => renderWizardStep());
         $('btn-wiz-enroll').onclick = async () => {
           userUnlockedAudio = true;
           stopSpeaking();
@@ -1906,10 +2263,143 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
     }
 
+    function buildRealtimeVoiceEngineCardHtml() {
+      const rt = stage.realtime_voice || {};
+      const models = rt.models || [];
+      const selModel = rt.selected_model || 'gpt-realtime-2.1';
+      const curSpec = models.find(m => m.model_id === selModel) || models[0] || { voices: ['marin'], provider: 'openai_realtime' };
+      const selVoice = rt.selected_voice || curSpec.default_voice || 'marin';
+      const isGemini = selModel.startsWith('gemini');
+      const readyOk = isGemini ? !!rt.has_gemini_key : !!(rt.has_openai_key || rt.codex_webrtc_ready);
+      const statusBadge = readyOk
+        ? `<span class="badge-ok">✓ Direct klaar${(!isGemini && !rt.has_openai_key && rt.codex_webrtc_ready) ? ' (ChatGPT Live)' : ''}</span>`
+        : '<span style="font-size:0.76rem; color:var(--gold);">API-sleutel nodig</span>';
+
+      return `
+        <div class="card-sec" style="border-color:rgba(16,185,129,0.45);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+            <strong style="font-size:0.9rem;">⚡ Doorlopende Realtime Spraak (Geen robotstem!)</strong>
+            ${statusBadge}
+          </div>
+          <p style="margin:0 0 10px; font-size:0.79rem; color:var(--muted); line-height:1.44;">
+            Praat echt vlot heen-en-weer met menselijke intonatie, directe onderbreking (barge-in) en natuurlijke Nederlandse tussenzinnetjes terwijl Eva in je huis of kluis kijkt.
+          </p>
+          <div class="field">
+            <label>Realtime Spraakmodel</label>
+            <select id="rt-model-sel">
+              ${models.map(m => `<option value="${escapeHtml(m.model_id)}" ${m.model_id === selModel ? 'selected' : ''}>${escapeHtml(m.label)}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label>Stemklank</label>
+            <select id="rt-voice-sel">
+              ${(curSpec.voices || ['marin']).map(v => `<option value="${escapeHtml(v)}" ${v === selVoice ? 'selected' : ''}>${escapeHtml(v)}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label id="rt-key-label">${isGemini
+              ? `Google Gemini API-sleutel ${rt.has_gemini_key ? '(opgeslagen in Kluis — leeg laten om te behouden)' : '(verplicht voor Gemini 3.8 Live)'}`
+              : `Optioneel: Eigen OpenAI API-sleutel ${rt.has_openai_key ? '(opgeslagen in Kluis)' : '(leeg laten gebruikt automatisch jouw ChatGPT-login)'}`}</label>
+            <input id="rt-key-in" type="password" autocomplete="new-password" placeholder="${isGemini ? 'Plak Google AI Studio sleutel (AIza...)…' : 'Optioneel: sk-... voor directe OpenAI Realtime API'}" />
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-ghost" id="btn-rt-save" style="flex:1;">💾 Bewaar spraakkeuze</button>
+            <button type="button" class="btn-primary" id="btn-rt-test-call" style="flex:1.3;">
+              🎙️ ${liveCallSession ? 'Beëindig Live Gesprek' : 'Start nu Live Gesprek'}
+            </button>
+          </div>
+          <div id="rt-save-msg" style="margin-top:7px; font-size:0.8rem;"></div>
+        </div>
+      `;
+    }
+
+    function wireRealtimeVoiceEngineHandlers(rerenderFn) {
+      const mSel = $('rt-model-sel');
+      if (!mSel) return;
+      const onModelPick = async () => {
+        const rt = stage.realtime_voice || {};
+        const models = rt.models || [];
+        const picked = models.find(m => m.model_id === mSel.value) || models[0];
+        const vSel = $('rt-voice-sel');
+        if (vSel && picked) {
+          const voices = picked.voices || ['marin'];
+          const defV = picked.default_voice || voices[0];
+          vSel.innerHTML = voices.map(v => `<option value="${escapeHtml(v)}" ${v === defV ? 'selected' : ''}>${escapeHtml(v)}</option>`).join('');
+        }
+        const isGem = mSel.value.startsWith('gemini');
+        if ($('rt-key-label')) {
+          $('rt-key-label').textContent = isGem
+            ? `Google Gemini API-sleutel ${rt.has_gemini_key ? '(opgeslagen in Kluis — leeg laten om te behouden)' : '(verplicht voor Gemini 3.8 Live)'}`
+            : `Optioneel: Eigen OpenAI API-sleutel ${rt.has_openai_key ? '(opgeslagen in Kluis)' : '(leeg laten gebruikt automatisch jouw ChatGPT-login)'}`;
+        }
+        if ($('rt-key-in')) {
+          $('rt-key-in').placeholder = isGem
+            ? 'Plak Google AI Studio sleutel (AIza...)…'
+            : 'Optioneel: sk-... voor directe OpenAI Realtime API';
+        }
+        const r = await fetch('/internal/v1/appliance/living/realtime/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: mSel.value, voice: picked?.default_voice || '' })
+        });
+        const d = await r.json();
+        if (r.ok && d.stage) {
+          applyStageState(d.stage, { preserveDrawerInputs: true });
+        }
+      };
+      mSel.addEventListener('change', onModelPick);
+      mSel.addEventListener('input', onModelPick);
+
+      const saveRt = async () => {
+        const msg = $('rt-save-msg');
+        const r = await fetch('/internal/v1/appliance/living/realtime/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: $('rt-model-sel').value,
+            voice: $('rt-voice-sel').value,
+            api_key: $('rt-key-in') ? $('rt-key-in').value.trim() : ''
+          })
+        });
+        const d = await r.json();
+        if (!r.ok) {
+          if (msg) { msg.style.color = '#fb7185'; msg.textContent = d.detail || 'Opslaan mislukt.'; }
+          return false;
+        }
+        if ($('rt-key-in')) $('rt-key-in').value = '';
+        if (d.stage) applyStageState(d.stage, { preserveDrawerInputs: true });
+        rerenderFn();
+        if ($('rt-save-msg')) {
+          $('rt-save-msg').style.color = '#6ee7b7';
+          $('rt-save-msg').textContent = `✓ Realtime spraak ingesteld op ${d.realtime_voice?.selected_model} (${d.realtime_voice?.selected_voice})!`;
+        }
+        return true;
+      };
+
+      $('btn-rt-save').onclick = saveRt;
+      $('btn-rt-test-call').onclick = async () => {
+        if (liveCallSession) {
+          await stopRealtimeLiveCall('Live gesprek gepauzeerd. Klik op 🎙️ Start Live Gesprek wanneer je weer verder wilt praten.');
+          rerenderFn();
+          return;
+        }
+        const ok = await saveRt();
+        if (!ok) return;
+        await toggleRealtimeLiveCall();
+        rerenderFn();
+      };
+    }
+
     function renderDrawer(kind) {
       if (!stage) return;
       if (kind === 'wizard') {
         renderWizardStep();
+        return;
+      }
+      if (kind === 'voice_engine') {
+        $('drawer-title').textContent = '⚡ Realtime Live Spraakmotor';
+        $('drawer-body').innerHTML = buildRealtimeVoiceEngineCardHtml();
+        wireRealtimeVoiceEngineHandlers(() => renderDrawer('voice_engine'));
         return;
       }
       const body = $('drawer-body');
@@ -2000,12 +2490,16 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     $('btn-smart-home').onclick = () => (activeDrawer === 'integrations' || activeDrawer === 'smart_home') ? closeDrawer() : openDrawer('integrations');
     $('btn-rules').onclick = () => activeDrawer === 'rules' ? closeDrawer() : openDrawer('rules');
     $('btn-family').onclick = () => activeDrawer === 'family' ? closeDrawer() : openDrawer('family');
+    $('btn-voice-engine').onclick = () => activeDrawer === 'voice_engine' ? closeDrawer() : openDrawer('voice_engine');
+    $('btn-live-call').onclick = toggleRealtimeLiveCall;
 
     $('btn-audio-toggle').onclick = () => {
       audioEnabled = !audioEnabled;
       userUnlockedAudio = true;
       $('btn-audio-toggle').classList.toggle('active-cyan', audioEnabled);
       $('audio-label').textContent = audioEnabled ? 'Stem aan' : 'Stil';
+      const rtAudio = $('rt-remote-audio');
+      if (rtAudio) rtAudio.muted = !audioEnabled;
       if (!audioEnabled) stopSpeaking();
     };
     $('btn-hear-greeting').onclick = () => {
@@ -2027,7 +2521,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         speakDutch(next ? 'Visite-modus en privéschild staan aan!' : 'Welkom terug onder ons, de visite-modus is weer uit.');
       }
     };
-    $('btn-mic').onclick = toggleMicCapture;
+    $('btn-mic').onclick = toggleRealtimeLiveCall;
     $('living-form').onsubmit = async ev => {
       ev.preventDefault();
       userUnlockedAudio = true;
@@ -2063,7 +2557,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           : 'Welkom! Koppel rechts in stap 1 eerst mijn AI-brein, dan lopen we samen alle stappen door.';
         await speakDutch(greet);
       } else {
-        await speakDutch(`Welkom thuis, ${d.household?.owner_name || 'Jaap'}! Klik gerust op Wizard of Slim Huis bovenaan, of zeg waar ik je mee kan helpen.`);
+        await speakDutch(`Welkom thuis, ${d.household?.owner_name || 'Jaap'}! Klik bovenaan op Start Live Gesprek om gewoon doorlopend met mij te praten, of typ hieronder je vraag.`);
       }
     }
     boot();
@@ -2278,18 +2772,34 @@ MEMBER_WELCOME_HTML = """<!doctype html>
       anim();
     })();
 
-    function speakNl(text) {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'nl-NL';
-      u.rate = 1.02;
-      const nl = window.speechSynthesis.getVoices().find(v => /^nl/i.test(v.lang));
-      if (nl) u.voice = nl;
-      u.onstart = () => { ttsSpeaking = true; };
-      u.onend = () => { ttsSpeaking = false; };
-      u.onerror = () => { ttsSpeaking = false; };
-      window.speechSynthesis.speak(u);
+    let wlkAudioCtx = null, wlkSource = null;
+    async function speakNl(text) {
+      const clean = String(text || '').trim();
+      if (!clean) return;
+      try {
+        if (wlkSource) { try { wlkSource.stop(); } catch (_e) {} wlkSource = null; }
+        const res = await fetch('/internal/v1/appliance/living/speech', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: clean })
+        });
+        if (res.status === 200) {
+          const buf = await res.arrayBuffer();
+          if (buf.byteLength > 256) {
+            if (!wlkAudioCtx) wlkAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (wlkAudioCtx.state === 'suspended') await wlkAudioCtx.resume();
+            const decoded = await wlkAudioCtx.decodeAudioData(buf);
+            const src = wlkAudioCtx.createBufferSource();
+            src.buffer = decoded;
+            src.connect(wlkAudioCtx.destination);
+            wlkSource = src;
+            ttsSpeaking = true;
+            src.onended = () => { ttsSpeaking = false; wlkSource = null; };
+            src.start(0);
+            return;
+          }
+        }
+      } catch (_e) {}
     }
 
     async function record3sVoice() {

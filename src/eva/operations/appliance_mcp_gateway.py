@@ -754,6 +754,8 @@ class UniversalIntegrationHub:
             "calendar",
             "email",
             "rest_api",
+            "openai_realtime",
+            "gemini_live",
         }:
             raise ValueError("Onbekend diensttype")
         clean_url = base_url.strip()
@@ -792,7 +794,7 @@ class UniversalIntegrationHub:
 
         summary_nl = f"{title or sid} opgeslagen in versleutelde kluis."
         probe_data: dict[str, Any] = {}
-        if run_probe:
+        if run_probe and service_kind not in {"openai_realtime", "gemini_live"}:
             default_op = {
                 "unifi_network": "summary",
                 "unifi_protect": "summary",

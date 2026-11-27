@@ -972,5 +972,57 @@ def test_beheer_js_integrity_dual_unifi_pair_and_pending_expiry(tmp_path: Path) 
     assert not hub.pending_file.exists()
 
 
+def test_realtime_voice_models_vault_keys_and_turn_streaming_fillers(tmp_path: Path) -> None:
+    service = _service(tmp_path)
+    client = _paired_client(service)
+
+    # 1. Stage exposes gpt-realtime-2.1, gpt-realtime-2.1-mini, and gemini-3.8-live
+    st = client.get("/internal/v1/appliance/living/state").json()
+    rt = st["realtime_voice"]
+    assert rt["selected_model"] == "gpt-realtime-2.1"
+    model_ids = [m["model_id"] for m in rt["models"]]
+    assert model_ids == ["gpt-realtime-2.1", "gpt-realtime-2.1-mini", "gemini-3.8-live"]
+
+    # 2. Switching to gemini-3.8-live and storing Gemini key in AES-256 Vault keeps secret out of state
+    cfg_res = client.post(
+        "/internal/v1/appliance/living/realtime/config",
+        json={
+            "model": "gemini-3.8-live",
+            "voice": "Aoede",
+            "api_key": "AIzaSy_test_gemini_live_secret_key_999",
+        },
+    )
+    assert cfg_res.status_code == 200
+    cfg_json = cfg_res.json()
+    assert cfg_json["realtime_voice"]["selected_model"] == "gemini-3.8-live"
+    assert cfg_json["stage"]["realtime_voice"]["selected_model"] == "gemini-3.8-live"
+    assert cfg_json["stage"]["realtime_voice"]["selected_voice"] == "Aoede"
+    assert cfg_json["realtime_voice"]["has_gemini_key"] is True
+    assert "AIzaSy_test_gemini_live_secret_key_999" not in json.dumps(cfg_json)
+
+    # Switch back to gpt-realtime-2.1-mini and verify stage persistence across reload
+    mini_res = client.post(
+        "/internal/v1/appliance/living/realtime/config",
+        json={"model": "gpt-realtime-2.1-mini", "voice": "coral"},
+    )
+    assert mini_res.status_code == 200
+    assert mini_res.json()["realtime_voice"]["selected_model"] == "gpt-realtime-2.1-mini"
+    assert mini_res.json()["realtime_voice"]["selected_voice"] == "coral"
+    reloaded_st = client.get("/internal/v1/appliance/living/state").json()
+    assert reloaded_st["realtime_voice"]["selected_model"] == "gpt-realtime-2.1-mini"
+    assert reloaded_st["realtime_voice"]["selected_voice"] == "coral"
+
+    # 3. Streaming NDJSON turn returns speech clauses + final payload cleanly
+    stream_res = client.post(
+        "/internal/v1/appliance/living/turn-stream",
+        json={"text": "Eva, we krijgen visite!"},
+    )
+    assert stream_res.status_code == 200
+    events = [json.loads(line) for line in stream_res.text.splitlines() if line.strip()]
+    assert any(e["type"] == "speech_clause" for e in events)
+    assert any(e["type"] == "final" and e["ok"] is True for e in events)
+
+
+
 
 

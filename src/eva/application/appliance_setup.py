@@ -499,6 +499,22 @@ class ApplianceSetupPort(Protocol):
 
     def delete_custom_capability(self, capability_id: str) -> dict[str, Any]: ...
 
+    def save_realtime_voice_preference(self, payload: Mapping[str, Any]) -> dict[str, Any]: ...
+
+    def start_realtime_webrtc_session(
+        self, payload: Mapping[str, Any], *, base_origin: str | None = None
+    ) -> dict[str, Any]: ...
+
+    def stop_realtime_voice_session(self, payload: Mapping[str, Any]) -> dict[str, Any]: ...
+
+    def stream_living_turn_ndjson(
+        self, payload: Mapping[str, Any], *, base_origin: str | None = None
+    ) -> Any: ...
+
+    async def bridge_gemini_live_websocket(
+        self, websocket: Any, *, model: str, voice: str, base_origin: str | None = None
+    ) -> None: ...
+
     def proxy_dashboard_request(
         self,
         *,

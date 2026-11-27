@@ -74,6 +74,14 @@ from eva.operations.appliance_mcp_gateway import (
     detect_local_unifi_console,
     ensure_gateway_runtime_files,
 )
+from eva.operations.appliance_realtime_voice import (
+    REALTIME_MODEL_CATALOG,
+    RealtimeVoiceHub,
+    VALID_REALTIME_MODELS,
+    pick_dutch_filler_phrase,
+    run_gemini_live_bridge,
+    synthesize_neural_dutch_mp3,
+)
 from eva.operations.initialize_dashboard_authority import initialize_dashboard_authority
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
 from eva.operations.installer_identity_storage import (
@@ -406,6 +414,7 @@ class ApplianceSetupService:
         self._codex_login: _CodexLoginProcess | None = None
         self._telegram_magic: _TelegramMagicLinkSession | None = None
         self._pairing_code_plain: str | None = None
+        self._realtime_hub = RealtimeVoiceHub(self.runtime_root)
         self._ensure_pairing_record()
         self._load_persisted_sessions()
 
@@ -671,6 +680,10 @@ class ApplianceSetupService:
             "awakening_turns": 0,
             "guest_mode_active": False,
             "wizard_completed": False,
+            "realtime_voice": {
+                "model": "gpt-realtime-2.1",
+                "voice": "marin",
+            },
         }
 
     def _load_state(self) -> dict[str, Any]:
@@ -678,7 +691,7 @@ class ApplianceSetupService:
         base = self._default_state()
         if stored is None:
             return base
-        for section in ("profile", "hardware", "ids", "model"):
+        for section in ("profile", "hardware", "ids", "model", "realtime_voice"):
             if isinstance(stored.get(section), dict):
                 base[section].update(stored[section])
         if isinstance(stored.get("modules"), dict):
@@ -2092,6 +2105,7 @@ class ApplianceSetupService:
                 ),
                 "EVA_CONVERSATION_MODEL": state["model"].get("conversation_model", "gpt-6-astra"),
                 "EVA_CONVERSATION_REASONING_EFFORT": state["model"].get("reasoning_effort", "medium"),
+                "TZ": state["profile"].get("time_zone", "Europe/Amsterdam"),
                 "EVA_RUNTIME_TENANT_ID": ids["tenant_id"],
                 "EVA_RUNTIME_INSTALLATION_ID": ids["installation_id"],
                 "EVA_RUNTIME_PRINCIPAL_ID": ids["principal_id"],
@@ -2206,6 +2220,18 @@ class ApplianceSetupService:
             owner_principal_id=ids["principal_id"],
         )
         env_vals.update(gw_env)
+
+        # Fast live contact model + deferred CPU recall when running Astra medium/high
+        if (
+            state["model"].get("mode", "codex") == "codex"
+            and env_vals.get("EVA_CONVERSATION_MODEL") == "gpt-6-astra"
+            and env_vals.get("EVA_CONVERSATION_REASONING_EFFORT") in {"medium", "high"}
+        ):
+            env_vals["EVA_CONVERSATION_CONTACT_MODEL"] = "gpt-6-sol"
+            env_vals["EVA_CONVERSATION_CONTACT_REASONING_EFFORT"] = "none"
+        else:
+            env_vals.pop("EVA_CONVERSATION_CONTACT_MODEL", None)
+            env_vals.pop("EVA_CONVERSATION_CONTACT_REASONING_EFFORT", None)
 
         # Activate background Research & Digital Worker when Codex model lease is active
         lease_file = self.runtime_root / "model-lease" / "auth.json"
@@ -3677,6 +3703,7 @@ class ApplianceSetupService:
                 "pending_request": self._integration_hub().get_pending_connection(),
                 "unifi_detected": self._probe_local_unifi_cached(),
             },
+            "realtime_voice": self._realtime_voice_status(state, codex_status),
             "eva": {
                 "display_name": character.get("display_name", "Eva"),
                 "preset_id": character.get("preset_id", "warm_huisgenoot"),
@@ -4824,7 +4851,288 @@ class ApplianceSetupService:
         except Exception:
             pass
 
+        # 3. Warm Dutch neural female voice (`nl-NL-FennaNeural` via edge-tts, cached in RAM)
+        neural = synthesize_neural_dutch_mp3(clean_text, voice="nl-NL-FennaNeural")
+        if neural is not None:
+            return neural
+
         return None
+
+    # ------------------------------------------------------------------
+    # Full-Duplex Realtime Live Voice (`gpt-realtime-2.1`, `gpt-realtime-2.1-mini`, `gemini-3.8-live`)
+    # ------------------------------------------------------------------
+
+    def _find_realtime_api_key(self, kind: str) -> str | None:
+        hub = self._integration_hub()
+        vault_meta = hub.vault.list_metadata()
+        slot_candidates = (
+            ("openai_realtime", "openai_api")
+            if kind == "openai"
+            else ("gemini_live", "gemini_cloud", "gemini")
+        )
+        for slot in slot_candidates:
+            if slot in vault_meta:
+                try:
+                    _, secret = hub.vault.use_secret_for_approved_device(
+                        device_id=slot,
+                        is_device_approved=True,
+                        callback=lambda u, s: (u, s),
+                    )
+                    if secret.strip():
+                        return secret.strip()
+                except Exception:
+                    pass
+        try:
+            mp = ModelProviderSettings(self._model_providers_dir())
+            data = mp.read()
+            for cid, row in (data.get("connections") or {}).items():
+                if not isinstance(row, dict) or not row.get("enabled"):
+                    continue
+                if kind == "openai" and row.get("kind") == "openai_compatible" and "api.openai.com" in str(row.get("endpoint") or ""):
+                    _, key = mp.connection(cid)
+                    if key and key != "eva-local-keyless-endpoint":
+                        return key.strip()
+                if kind == "gemini" and row.get("kind") == "gemini":
+                    _, key = mp.connection(cid)
+                    if key:
+                        return key.strip()
+        except Exception:
+            pass
+        return None
+
+    def _realtime_voice_status(
+        self, state: Mapping[str, Any], codex_status: Mapping[str, Any]
+    ) -> dict[str, Any]:
+        rt_cfg = state.get("realtime_voice") if isinstance(state.get("realtime_voice"), Mapping) else {}
+        sel_model = str(rt_cfg.get("model") or "gpt-realtime-2.1")
+        if sel_model not in VALID_REALTIME_MODELS:
+            sel_model = "gpt-realtime-2.1"
+        spec = VALID_REALTIME_MODELS[sel_model]
+        sel_voice = str(rt_cfg.get("voice") or spec["default_voice"])
+        if sel_voice not in spec["voices"]:
+            sel_voice = str(spec["default_voice"])
+
+        has_oai = bool(self._find_realtime_api_key("openai"))
+        has_gem = bool(self._find_realtime_api_key("gemini"))
+        codex_ok = bool(
+            codex_status.get("logged_in")
+            or (self.runtime_root / "model-lease" / "auth.json").is_file()
+        )
+        ready = (has_oai or codex_ok) if spec["provider"] == "openai_realtime" else has_gem
+        return {
+            "selected_model": sel_model,
+            "selected_voice": sel_voice,
+            "transport": spec["transport"],
+            "ready": ready,
+            "has_openai_key": has_oai,
+            "has_gemini_key": has_gem,
+            "codex_webrtc_ready": codex_ok,
+            "models": list(REALTIME_MODEL_CATALOG),
+        }
+
+    def save_realtime_voice_preference(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        model = str(payload.get("model") or "gpt-realtime-2.1").strip()
+        if model not in VALID_REALTIME_MODELS:
+            raise ApplianceSetupError("onbekend realtime spraakmodel")
+        spec = VALID_REALTIME_MODELS[model]
+        voice = str(payload.get("voice") or spec["default_voice"]).strip()
+        if voice not in spec["voices"]:
+            voice = str(spec["default_voice"])
+
+        api_key = str(payload.get("api_key") or "").strip()
+        if api_key:
+            slot_id = "gemini_live" if spec["provider"] == "gemini_live" else "openai_realtime"
+            title = "Google Gemini 3.8 Live Sleutel" if slot_id == "gemini_live" else "OpenAI Realtime 2.1 Sleutel"
+            base_url = "https://generativelanguage.googleapis.com" if slot_id == "gemini_live" else "https://api.openai.com"
+            self._integration_hub().save_and_verify_service(
+                service_id=slot_id,
+                title=title,
+                service_kind=slot_id,
+                base_url=base_url,
+                auth_mode="api_key",
+                secret=api_key,
+                run_probe=False,
+            )
+
+        state = self._load_state()
+        state["realtime_voice"] = {"model": model, "voice": voice}
+        self._save_state(state)
+        return {
+            "ok": True,
+            "realtime_voice": self._realtime_voice_status(state, self._codex_auth_status()),
+            "stage": self.living_stage_snapshot(),
+        }
+
+    def start_realtime_webrtc_session(
+        self, payload: Mapping[str, Any], *, base_origin: str | None = None
+    ) -> dict[str, Any]:
+        offer_sdp = str(payload.get("offer_sdp") or "")
+        state = self._load_state()
+        rt_cfg = state.get("realtime_voice") if isinstance(state.get("realtime_voice"), Mapping) else {}
+        req_model = str(payload.get("model") or rt_cfg.get("model") or "gpt-realtime-2.1")
+        if req_model not in {"gpt-realtime-2.1", "gpt-realtime-2.1-mini"}:
+            req_model = "gpt-realtime-2.1"
+        req_voice = str(payload.get("voice") or rt_cfg.get("voice") or "marin")
+        snap = self.living_stage_snapshot(base_origin=base_origin)
+        lease_path = self.runtime_root / "model-lease" / "auth.json"
+        if not lease_path.is_file() and self.codex_auth_file.is_file():
+            lease_path = self.codex_auth_file
+        try:
+            return self._realtime_hub.negotiate_openai_or_codex_webrtc(
+                offer_sdp=offer_sdp,
+                model=req_model,
+                voice=req_voice,
+                stage_snapshot=snap,
+                openai_api_key=self._find_realtime_api_key("openai"),
+                codex_lease_path=lease_path,
+            )
+        except (ValueError, RuntimeError, TimeoutError) as exc:
+            raise ApplianceSetupError(str(exc), status_code=502) from exc
+
+    def stop_realtime_voice_session(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        sid = str(payload.get("session_id") or "").strip() or None
+        return self._realtime_hub.stop_session(sid)
+
+    async def bridge_gemini_live_websocket(
+        self, websocket: Any, *, model: str, voice: str, base_origin: str | None = None
+    ) -> None:
+        state = self._load_state()
+        rt_cfg = state.get("realtime_voice") if isinstance(state.get("realtime_voice"), Mapping) else {}
+        eff_model = model or str(rt_cfg.get("model") or "gemini-3.8-live")
+        if not eff_model.startswith("gemini"):
+            eff_model = "gemini-3.8-live"
+        eff_voice = voice or str(rt_cfg.get("voice") or "Aoede")
+        snap = await asyncio.to_thread(self.living_stage_snapshot, base_origin=base_origin)
+        gem_key = await asyncio.to_thread(self._find_realtime_api_key, "gemini")
+        await run_gemini_live_bridge(
+            browser_ws=websocket,
+            gemini_api_key=gem_key or "",
+            requested_model=eff_model,
+            voice=eff_voice,
+            stage_snapshot=snap,
+            execute_core_turn=lambda txt: self.handle_living_turn({"text": txt}, base_origin=base_origin),
+            set_guest_mode_fn=lambda on: self.set_guest_mode(enabled=on),
+        )
+
+    def stream_living_turn_ndjson(
+        self, payload: Mapping[str, Any], *, base_origin: str | None = None
+    ) -> Iterator[bytes]:
+        """Stream NDJSON turn with automatic Dutch 'tussenzinnetje' after 1.1s if Core is busy with tools/recall."""
+        from eva.application.holostage import SentenceBoundaryChunker
+        from queue import Empty, SimpleQueue
+
+        raw_text = str(payload.get("text") or "").strip()
+        state = self._load_state()
+        owner_nm = str(state["profile"].get("owner_name") or "Jaap")
+        q: SimpleQueue[dict[str, Any] | None] = SimpleQueue()
+
+        def _worker() -> None:
+            try:
+                low = raw_text.lower()
+                is_special = (
+                    not raw_text
+                    or bool(payload.get("preset_id"))
+                    or raw_text.startswith("/")
+                    or detect_living_intent(raw_text)["kind"] != "none"
+                )
+                if is_special or self.dry_run_apply:
+                    out = self.handle_living_turn(payload, base_origin=base_origin)
+                    if out.get("reply_text"):
+                        q.put({"type": "speech_clause", "text": out["reply_text"]})
+                    q.put({"type": "final", **out})
+                    return
+
+                pend_before = self._integration_hub().get_pending_connection()
+                prev_req_at = (pend_before or {}).get("requested_at")
+
+                status_code, _, stream_or_bytes = self.open_dashboard_stream(
+                    method="POST",
+                    path="/internal/v1/dashboard/conversation/respond",
+                    query="",
+                    headers={
+                        "Content-Type": "application/json",
+                        "Accept": "application/x-ndjson",
+                        "Origin": self.core_base_url,
+                    },
+                    body=json.dumps({"text": raw_text[:980]}).encode("utf-8"),
+                    owner_authenticated=True,
+                )
+                if status_code != 200 or isinstance(stream_or_bytes, bytes):
+                    out = self.handle_living_turn(payload, base_origin=base_origin)
+                    if out.get("reply_text"):
+                        q.put({"type": "speech_clause", "text": out["reply_text"]})
+                    q.put({"type": "final", **out})
+                    return
+
+                chunker = SentenceBoundaryChunker()
+                deltas: list[str] = []
+                final_text = ""
+                for raw_line in stream_or_bytes:
+                    line = raw_line.decode("utf-8", errors="replace").strip()
+                    if not line:
+                        continue
+                    try:
+                        ev = json.loads(line)
+                    except ValueError:
+                        continue
+                    if ev.get("contract") == "EvaTextDelta/v1" and isinstance(ev.get("text"), str):
+                        delta = ev["text"]
+                        deltas.append(delta)
+                        q.put({"type": "delta", "text": delta})
+                        for clause in chunker.feed(delta):
+                            q.put({"type": "speech_clause", "text": clause})
+                    elif ev.get("contract") == "EvaInternalGroundedReply/v1":
+                        final_text = str(ev.get("text") or "").strip()
+
+                for rem in chunker.flush():
+                    q.put({"type": "speech_clause", "text": rem})
+
+                reply_text = final_text or "".join(deltas).strip()
+                conjure_panel: str | None = None
+                conjure_preset: str | None = None
+                pend_after = self._integration_hub().get_pending_connection()
+                if pend_after and pend_after.get("requested_at") != prev_req_at:
+                    conjure_panel = "integrations"
+                    conjure_preset = str(pend_after.get("service_kind") or "auto")
+                elif any(w in low for w in ("koppel", "verbind", "aansluit", "instel", "token", "sleutel")):
+                    if "home assistant" in low or "homeassistant" in low:
+                        conjure_panel = "smart_home"
+                        conjure_preset = "home_assistant"
+
+                q.put(
+                    {
+                        "type": "final",
+                        "ok": True,
+                        "reply_text": reply_text,
+                        "applied_changes": [],
+                        "conjure_panel": conjure_panel,
+                        "conjure_preset": conjure_preset,
+                        "stage": self.living_stage_snapshot(base_origin=base_origin),
+                    }
+                )
+            except Exception as exc:
+                q.put({"type": "error", "detail": str(exc)})
+            finally:
+                q.put(None)
+
+        threading.Thread(target=_worker, daemon=True, name="eva-living-turn-stream").start()
+        filler_sent = False
+        first_speech_seen = False
+        t0 = time.monotonic()
+        while True:
+            try:
+                item = q.get(timeout=0.35)
+            except Empty:
+                if not filler_sent and not first_speech_seen and raw_text and (time.monotonic() - t0) >= 1.15:
+                    filler_sent = True
+                    filler_txt = pick_dutch_filler_phrase(raw_text, owner_nm)
+                    yield (json.dumps({"type": "filler", "text": filler_txt}, ensure_ascii=False) + "\n").encode("utf-8")
+                continue
+            if item is None:
+                return
+            if item.get("type") in {"speech_clause", "delta", "final"}:
+                first_speech_seen = True
+            yield (json.dumps(item, ensure_ascii=False) + "\n").encode("utf-8")
 
 
 __all__ = [

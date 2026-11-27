@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
-from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi import FastAPI, HTTPException, Request, Response, WebSocket, WebSocketDisconnect
 from fastapi.responses import (
     FileResponse,
     HTMLResponse,
@@ -47,7 +47,7 @@ _STAGE_SECURITY_HEADERS = {
     "Cache-Control": "no-store",
     "Content-Security-Policy": (
         "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; "
-        "img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' data: blob:; "
+        "img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' ws: wss: data: blob:; "
         "worker-src 'self' blob:; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
     ),
     "Referrer-Policy": "no-referrer",
@@ -1572,7 +1572,11 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
 
     @app.post("/internal/v1/appliance/living/speech")
     async def post_living_speech(request: Request) -> Response:
-        _require_session(request)
+        _require_lan(request)
+        has_owner = service.is_paired_session(request.cookies.get(_SESSION_COOKIE))
+        has_welcome = request.cookies.get(_WELCOME_COOKIE) == "1"
+        if not has_owner and not has_welcome:
+            raise HTTPException(status_code=401, detail="koppeling vereist")
         _require_same_origin(request)
         body = await _read_json(request)
         synth = service.synthesize_living_speech(str(body.get("text", "")))
@@ -1628,6 +1632,74 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_session(request)
         _require_same_origin(request)
         return _call(service.delete_custom_capability, capability_id)
+
+    @app.post("/internal/v1/appliance/living/realtime/config")
+    async def post_living_realtime_config(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.save_realtime_voice_preference, await _read_json(request))
+
+    @app.post("/internal/v1/appliance/living/realtime/webrtc")
+    async def post_living_realtime_webrtc(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        body = await _read_json(request, max_bytes=262_144)
+        return _call(
+            service.start_realtime_webrtc_session,
+            body,
+            base_origin=_request_origin(request),
+        )
+
+    @app.post("/internal/v1/appliance/living/realtime/stop")
+    async def post_living_realtime_stop(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.stop_realtime_voice_session, await _read_json(request))
+
+    @app.post("/internal/v1/appliance/living/turn-stream")
+    async def post_living_turn_stream(request: Request) -> StreamingResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        body = await _read_json(request, max_bytes=524_288)
+        stream = service.stream_living_turn_ndjson(body, base_origin=_request_origin(request))
+        return StreamingResponse(
+            stream,
+            media_type="application/x-ndjson",
+            headers={
+                "Cache-Control": "no-store",
+                "X-Accel-Buffering": "no",
+                "X-Content-Type-Options": "nosniff",
+            },
+        )
+
+    @app.websocket("/internal/v1/appliance/living/realtime/gemini-ws")
+    async def ws_living_gemini_live(websocket: WebSocket) -> None:
+        host = websocket.client.host if websocket.client else None
+        if not service.client_permitted(host):
+            await websocket.close(code=1008)
+            return
+        if not service.is_paired_session(websocket.cookies.get(_SESSION_COOKIE)):
+            await websocket.close(code=1008)
+            return
+        await websocket.accept()
+        model = str(websocket.query_params.get("model") or "gemini-3.8-live")
+        voice = str(websocket.query_params.get("voice") or "Aoede")
+        host_hdr = websocket.headers.get("host") or "127.0.0.1:8765"
+        scheme = "https" if websocket.url.scheme in {"wss", "https"} else "http"
+        try:
+            await service.bridge_gemini_live_websocket(
+                websocket,
+                model=model,
+                voice=voice,
+                base_origin=f"{scheme}://{host_hdr}",
+            )
+        except WebSocketDisconnect:
+            pass
+        finally:
+            try:
+                await websocket.close()
+            except Exception:
+                pass
 
     @app.get("/welkom/{token}", response_class=HTMLResponse)
     def get_member_welcome_page(request: Request, token: str) -> HTMLResponse:
