@@ -415,6 +415,7 @@ class ApplianceSetupService:
         self._telegram_magic: _TelegramMagicLinkSession | None = None
         self._pairing_code_plain: str | None = None
         self._realtime_hub = RealtimeVoiceHub(self.runtime_root)
+        self._ha_cam_cache: tuple[float, dict[str, Any]] | None = None
         self._ensure_pairing_record()
         self._load_persisted_sessions()
 
@@ -511,18 +512,19 @@ class ApplianceSetupService:
             expiry = self._sessions.get(tok_sha)
             if expiry is None or expiry <= now:
                 return False
-            self._sessions[tok_sha] = now + _SESSION_TTL_SECONDS
             prev_wall = self._session_wall_expiries.get(tok_sha, 0)
+            new_ttl = max(_SESSION_TTL_SECONDS, prev_wall - now_wall)
+            self._sessions[tok_sha] = now + new_ttl
             if prev_wall - now_wall < (_SESSION_TTL_SECONDS - 1800):
                 self._session_wall_expiries[tok_sha] = now_wall + _SESSION_TTL_SECONDS
                 self._persist_sessions_unlocked()
             return True
 
-    def _issue_session_unlocked(self, now: float) -> str:
+    def _issue_session_unlocked(self, now: float, *, ttl_seconds: int = _SESSION_TTL_SECONDS) -> str:
         session_id = secrets.token_urlsafe(32)
         tok_sha = self._session_key_sha256(session_id)
-        self._sessions[tok_sha] = now + _SESSION_TTL_SECONDS
-        self._session_wall_expiries[tok_sha] = int(time.time()) + _SESSION_TTL_SECONDS
+        self._sessions[tok_sha] = now + ttl_seconds
+        self._session_wall_expiries[tok_sha] = int(time.time()) + ttl_seconds
         self._persist_sessions_unlocked()
         return session_id
 
@@ -589,7 +591,8 @@ class ApplianceSetupService:
                 raise ApplianceSetupError("koppelcode is onjuist", status_code=401)
 
             self._failed_attempts.pop(client_key, None)
-            return self._issue_session_unlocked(now)
+            ttl = (365 * 86400) if candidate.startswith("EVA-DISP-") else _SESSION_TTL_SECONDS
+            return self._issue_session_unlocked(now, ttl_seconds=ttl)
 
     # ------------------------------------------------------------------
     # Persistent wizard state helpers
@@ -684,6 +687,15 @@ class ApplianceSetupService:
                 "model": "gpt-realtime-2.1",
                 "voice": "marin",
             },
+            "main_display": {
+                "enabled": True,
+                "label": "Keuken Hoofdscherm (UniFi Connect Display)",
+                "room": "keuken",
+                "camera_entity_id": "",
+                "camera_snapshot_url": "",
+                "wake_entity_id": "notify.keuken_scherm",
+                "https_port": 8766,
+            },
         }
 
     def _load_state(self) -> dict[str, Any]:
@@ -691,7 +703,7 @@ class ApplianceSetupService:
         base = self._default_state()
         if stored is None:
             return base
-        for section in ("profile", "hardware", "ids", "model", "realtime_voice"):
+        for section in ("profile", "hardware", "ids", "model", "realtime_voice", "main_display"):
             if isinstance(stored.get(section), dict):
                 base[section].update(stored[section])
         if isinstance(stored.get("modules"), dict):
@@ -3704,6 +3716,7 @@ class ApplianceSetupService:
                 "unifi_detected": self._probe_local_unifi_cached(),
             },
             "realtime_voice": self._realtime_voice_status(state, codex_status),
+            "main_display": self._main_display_status(state, base_origin=base_origin),
             "eva": {
                 "display_name": character.get("display_name", "Eva"),
                 "preset_id": character.get("preset_id", "warm_huisgenoot"),
@@ -5012,7 +5025,358 @@ class ApplianceSetupService:
             stage_snapshot=snap,
             execute_core_turn=lambda txt: self.handle_living_turn({"text": txt}, base_origin=base_origin),
             set_guest_mode_fn=lambda on: self.set_guest_mode(enabled=on),
+            execute_vision_look=lambda cam, q: self.handle_vision_look({"camera_hint": cam, "prompt": q}),
         )
+
+    # ------------------------------------------------------------------
+    # Main Family Wall Display (`UC-Display-SE-21`), Local LAN HTTPS (:8766) & Camera Vision Bridge
+    # ------------------------------------------------------------------
+
+    def ensure_lan_tls_cert(self) -> tuple[Path, Path]:
+        """Ensure an X.509 TLS certificate covering localhost + all current LAN IPs exists for wall-display WebRTC."""
+        from datetime import timedelta
+        from cryptography import x509
+        from cryptography.hazmat.primitives import hashes, serialization
+        from cryptography.hazmat.primitives.asymmetric import rsa
+        from cryptography.x509.oid import NameOID
+
+        cert_path = self.workspace / "lan-tls-cert.pem"
+        key_path = self.workspace / "lan-tls-key.pem"
+        meta_path = self.workspace / "lan-tls-meta.json"
+        lan_ips = sorted(set(["127.0.0.1"] + _detect_lan_ipv4s()))
+
+        if cert_path.is_file() and key_path.is_file():
+            meta = _read_json_if_present(meta_path) or {}
+            if meta.get("ips") == lan_ips and int(meta.get("expires_epoch") or 0) > int(time.time()) + 86400 * 7:
+                return cert_path, key_path
+
+        key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        subject = issuer = x509.Name(
+            [
+                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Eva Thuisserver"),
+                x509.NameAttribute(NameOID.COMMON_NAME, "Eva Local LAN Stage CA"),
+            ]
+        )
+        san_entries: list[x509.GeneralName] = [
+            x509.DNSName("localhost"),
+            x509.DNSName(socket.gethostname() or "eva-local"),
+        ]
+        for raw_ip in lan_ips:
+            try:
+                san_entries.append(x509.IPAddress(ipaddress.ip_address(raw_ip)))
+            except ValueError:
+                continue
+
+        now_dt = datetime.now(UTC)
+        exp_dt = now_dt + timedelta(days=825)
+        cert = (
+            x509.CertificateBuilder()
+            .subject_name(subject)
+            .issuer_name(issuer)
+            .public_key(key.public_key())
+            .serial_number(x509.random_serial_number())
+            .not_valid_before(now_dt - timedelta(minutes=5))
+            .not_valid_after(exp_dt)
+            .add_extension(x509.BasicConstraints(ca=True, path_length=0), critical=True)
+            .add_extension(x509.SubjectAlternativeName(san_entries), critical=False)
+            .sign(key, hashes.SHA256())
+        )
+
+        key_bytes = key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            encryption_algorithm=serialization.NoEncryption(),
+        )
+        cert_bytes = cert.public_bytes(serialization.Encoding.PEM)
+        atomic_write_private(key_path, key_bytes)
+        atomic_write_private(cert_path, cert_bytes)
+        _write_json_private(meta_path, {"ips": lan_ips, "expires_epoch": int(exp_dt.timestamp())})
+        return cert_path, key_path
+
+    def get_lan_ca_cert_pem(self) -> str:
+        cert_path, _ = self.ensure_lan_tls_cert()
+        return cert_path.read_text(encoding="utf-8")
+
+    def _discover_ha_cameras_and_displays(self) -> dict[str, Any]:
+        now_m = time.monotonic()
+        if self._ha_cam_cache is not None and (now_m - self._ha_cam_cache[0]) < 25.0:
+            return self._ha_cam_cache[1]
+
+        out: dict[str, Any] = {"cameras": [], "display_entities": []}
+        state = self._load_state()
+        ha_url = str(state["modules"]["smart_home"].get("url") or "").strip().rstrip("/")
+        tok_path = self._secrets_dir() / "home-assistant-token"
+        if not ha_url or not tok_path.is_file():
+            self._ha_cam_cache = (now_m, out)
+            return out
+
+        try:
+            token = tok_path.read_text(encoding="utf-8").strip()
+            parsed = urlsplit(ha_url)
+            conn_cls = http.client.HTTPSConnection if parsed.scheme == "https" else http.client.HTTPConnection
+            conn = conn_cls(parsed.hostname or "127.0.0.1", parsed.port or (443 if parsed.scheme == "https" else 8123), timeout=3.0)
+            try:
+                conn.request("GET", "/api/states", headers={"Authorization": f"Bearer {token}", "Accept": "application/json"})
+                resp = conn.getresponse()
+                raw = resp.read(2 * 1024 * 1024)
+                if resp.status == 200:
+                    items = json.loads(raw.decode("utf-8", errors="replace"))
+                    if isinstance(items, list):
+                        for row in items:
+                            if not isinstance(row, dict):
+                                continue
+                            eid = str(row.get("entity_id") or "")
+                            st = str(row.get("state") or "")
+                            attrs = row.get("attributes") if isinstance(row.get("attributes"), dict) else {}
+                            fname = str(attrs.get("friendly_name") or eid)
+                            if eid.startswith("camera.") and "valetudo" not in eid and "low_resolution" not in eid:
+                                out["cameras"].append({"entity_id": eid, "label": fname, "state": st})
+                            low_comb = f"{eid} {fname}".lower()
+                            if (
+                                eid.startswith(("notify.", "switch."))
+                                and any(k in low_comb for k in ("unifi_display", "uc_display", "keuken_scherm", "connect_display", "display"))
+                            ):
+                                out["display_entities"].append({"entity_id": eid, "label": fname, "state": st})
+            finally:
+                conn.close()
+        except Exception:
+            pass
+
+        self._ha_cam_cache = (now_m, out)
+        return out
+
+    def _main_display_status(self, state: Mapping[str, Any], *, base_origin: str | None = None) -> dict[str, Any]:
+        md = dict(state.get("main_display") or {})
+        disc = self._discover_ha_cameras_and_displays()
+        lan_ips = _detect_lan_ipv4s()
+        https_port = int(md.get("https_port") or 8766)
+        best_lan_ip = lan_ips[0] if lan_ips else "127.0.0.1"
+        https_base = f"https://{best_lan_ip}:{https_port}"
+        primary_http, _ = self._preferred_lan_origin(base_origin)
+
+        cam_id = str(md.get("camera_entity_id") or "")
+        if not cam_id and disc["cameras"]:
+            # Prefer a kitchen/living/doorbell camera automatically when available
+            preferred_cam = next(
+                (
+                    c["entity_id"]
+                    for c in disc["cameras"]
+                    if any(k in c["label"].lower() for k in ("keuken", "woonkamer", "doorbell", "deurbel"))
+                ),
+                disc["cameras"][0]["entity_id"],
+            )
+            cam_id = str(preferred_cam)
+
+        return {
+            "enabled": bool(md.get("enabled", True)),
+            "label": str(md.get("label") or "Keuken Hoofdscherm (UC-Display-SE-21)"),
+            "room": str(md.get("room") or "keuken"),
+            "camera_entity_id": cam_id,
+            "camera_snapshot_url": str(md.get("camera_snapshot_url") or ""),
+            "wake_entity_id": str(md.get("wake_entity_id") or "notify.keuken_scherm"),
+            "https_port": https_port,
+            "https_origin": https_base,
+            "kiosk_preview_url": f"{primary_http}/?kiosk=1",
+            "available_cameras": disc["cameras"],
+            "detected_displays": disc["display_entities"],
+        }
+
+    def save_main_display_config(
+        self, payload: Mapping[str, Any], *, base_origin: str | None = None
+    ) -> dict[str, Any]:
+        state = self._load_state()
+        md = dict(state.get("main_display") or {})
+        if "label" in payload:
+            md["label"] = re.sub(r"\s+", " ", str(payload.get("label") or "")).strip()[:80] or md.get("label", "Hoofdscherm")
+        if "room" in payload:
+            md["room"] = re.sub(r"[^a-z0-9_-]+", "_", str(payload.get("room") or "keuken").lower()).strip("_") or "keuken"
+        if "camera_entity_id" in payload:
+            md["camera_entity_id"] = str(payload.get("camera_entity_id") or "").strip()[:120]
+        if "camera_snapshot_url" in payload:
+            md["camera_snapshot_url"] = str(payload.get("camera_snapshot_url") or "").strip()[:300]
+        if "wake_entity_id" in payload:
+            md["wake_entity_id"] = str(payload.get("wake_entity_id") or "").strip()[:120]
+        state["main_display"] = md
+        self._save_state(state)
+
+        alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+        code = "EVA-DISP-" + "".join(secrets.choice(alphabet) for _ in range(12))
+        with self._lock:
+            self._device_invites[code] = self._clock() + 86400.0
+
+        status = self._main_display_status(state, base_origin=base_origin)
+        kiosk_https_url = f"{status['https_origin']}/pair?kiosk=1#{code}"
+        return {
+            "ok": True,
+            "pairing_code": code,
+            "kiosk_https_url": kiosk_https_url,
+            "qr_svg": render_qr_svg(kiosk_https_url),
+            "main_display": status,
+            "stage": self.living_stage_snapshot(base_origin=base_origin),
+        }
+
+    def wake_main_display(self) -> dict[str, Any]:
+        """Wake the UC-Display-SE-21 screen via Home Assistant Companion notify or ha-unifi-connect switch."""
+        state = self._load_state()
+        ha_url = str(state["modules"]["smart_home"].get("url") or "").strip().rstrip("/")
+        tok_path = self._secrets_dir() / "home-assistant-token"
+        if not ha_url or not tok_path.is_file():
+            raise ApplianceSetupError("Home Assistant is nog niet gekoppeld om het scherm te wekken.")
+
+        wake_id = str((state.get("main_display") or {}).get("wake_entity_id") or "notify.keuken_scherm").strip()
+        targets = [wake_id] if wake_id else []
+        if "notify.unifi_display_for_arm64" not in targets:
+            targets.append("notify.unifi_display_for_arm64")
+
+        token = tok_path.read_text(encoding="utf-8").strip()
+        parsed = urlsplit(ha_url)
+        conn_cls = http.client.HTTPSConnection if parsed.scheme == "https" else http.client.HTTPConnection
+        triggered: list[str] = []
+        for target in targets:
+            conn = conn_cls(parsed.hostname or "127.0.0.1", parsed.port or (443 if parsed.scheme == "https" else 8123), timeout=4.0)
+            try:
+                if target.startswith("switch."):
+                    svc_path = "/api/services/switch/turn_on"
+                    body = json.dumps({"entity_id": target}).encode("utf-8")
+                else:
+                    svc_name = target.split(".", 1)[1] if "." in target else target
+                    svc_path = f"/api/services/notify/{svc_name}"
+                    body = json.dumps({"message": "command_screen_on"}).encode("utf-8")
+                conn.request(
+                    "POST",
+                    svc_path,
+                    body=body,
+                    headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+                )
+                resp = conn.getresponse()
+                resp.read(16_384)
+                if 200 <= resp.status < 300:
+                    triggered.append(target)
+            except OSError:
+                continue
+            finally:
+                conn.close()
+
+        return {
+            "ok": bool(triggered),
+            "triggered": triggered,
+            "detail": (
+                f"Wek-signaal verstuurd naar {', '.join(triggered)}!"
+                if triggered
+                else "Kon geen wek-signaal afleveren bij Home Assistant."
+            ),
+        }
+
+    def handle_vision_look(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        """Analyze either a browser/USB camera JPEG or a live Home Assistant / UniFi Protect camera snapshot."""
+        from eva.adapters.model.holostage_vision import HoloStageVisionBridge, HoloStageVisionError
+
+        raw_b64 = str(payload.get("image_jpeg_b64") or "").strip()
+        cam_hint = str(payload.get("camera_hint") or "").strip().lower()
+        prompt_q = str(payload.get("prompt") or "Beschrijf vlot en warm in het Nederlands wat of wie je ziet.").strip()[:280]
+
+        img_bytes: bytes | None = None
+        media_type = "image/jpeg"
+        cam_label = "Lokale camera"
+
+        if raw_b64:
+            if "," in raw_b64 and raw_b64.startswith("data:"):
+                raw_b64 = raw_b64.split(",", 1)[1]
+            try:
+                img_bytes = base64.b64decode(raw_b64, validate=False)
+            except Exception as exc:
+                raise ApplianceSetupError("Ongeldig camerabeeld ontvangen") from exc
+
+        if not img_bytes:
+            state = self._load_state()
+            md_status = self._main_display_status(state)
+            cams = md_status["available_cameras"]
+            chosen_id = str(payload.get("camera_entity_id") or "").strip()
+            if not chosen_id and cam_hint and cams:
+                aliases = {
+                    "voordeur": ("doorbell", "deurbel", "voordeur"),
+                    "deurbel": ("doorbell", "deurbel", "voordeur"),
+                    "tuin": ("tuin", "garden", "achter"),
+                    "garage": ("garage", "oprit"),
+                    "keuken": ("keuken", "kitchen"),
+                }
+                search_terms: tuple[str, ...] = (cam_hint,)
+                for key, vals in aliases.items():
+                    if key in cam_hint:
+                        search_terms = vals
+                        break
+                matched = next(
+                    (
+                        c
+                        for c in cams
+                        if any(t in f"{c['entity_id']} {c['label']}".lower() for t in search_terms)
+                    ),
+                    None,
+                )
+                if matched:
+                    chosen_id = str(matched["entity_id"])
+                    cam_label = str(matched["label"])
+
+            if not chosen_id:
+                chosen_id = str(md_status["camera_entity_id"] or "")
+                match_def = next((c for c in cams if c["entity_id"] == chosen_id), None)
+                if match_def:
+                    cam_label = str(match_def["label"])
+
+            ha_url = str(state["modules"]["smart_home"].get("url") or "").strip().rstrip("/")
+            tok_path = self._secrets_dir() / "home-assistant-token"
+            if chosen_id and ha_url and tok_path.is_file():
+                token = tok_path.read_text(encoding="utf-8").strip()
+                parsed = urlsplit(ha_url)
+                conn_cls = http.client.HTTPSConnection if parsed.scheme == "https" else http.client.HTTPConnection
+                conn = conn_cls(parsed.hostname or "127.0.0.1", parsed.port or (443 if parsed.scheme == "https" else 8123), timeout=6.0)
+                try:
+                    conn.request(
+                        "GET",
+                        f"/api/camera_proxy/{chosen_id}",
+                        headers={"Authorization": f"Bearer {token}"},
+                    )
+                    resp = conn.getresponse()
+                    fetched = resp.read(5 * 1024 * 1024)
+                    if resp.status == 200 and len(fetched) > 512:
+                        img_bytes = fetched
+                        ct = resp.getheader("Content-Type") or "image/jpeg"
+                        media_type = ct.split(";", 1)[0].strip() or "image/jpeg"
+                        if cam_label == "Lokale camera":
+                            cam_label = chosen_id
+                finally:
+                    conn.close()
+
+        if not img_bytes:
+            raise ApplianceSetupError(
+                "Geen camerabeeld beschikbaar. Kies bij 🖥️ Hoofdscherm een Home Assistant / UniFi Protect camera of geef cameratoestemming."
+            )
+
+        lease_path = self.runtime_root / "model-lease" / "auth.json"
+        if not lease_path.is_file() and self.codex_auth_file.is_file():
+            lease_path = self.codex_auth_file
+
+        old_auth_env = os.environ.get("EVA_CONVERSATION_AUTH_FILE")
+        try:
+            if lease_path.is_file():
+                os.environ["EVA_CONVERSATION_AUTH_FILE"] = str(lease_path)
+            bridge = HoloStageVisionBridge.from_runtime_settings()
+            receipt = bridge.analyze_frame(img_bytes, media_type=media_type, focus_hint=prompt_q)
+        except HoloStageVisionError as exc:
+            raise ApplianceSetupError(str(exc), status_code=502) from exc
+        finally:
+            if old_auth_env is None:
+                os.environ.pop("EVA_CONVERSATION_AUTH_FILE", None)
+            else:
+                os.environ["EVA_CONVERSATION_AUTH_FILE"] = old_auth_env
+
+        return {
+            "ok": True,
+            "camera_label": cam_label,
+            "summary_nl": receipt.summary_nl,
+            "latency_ms": receipt.latency_ms,
+            "model": receipt.model,
+        }
 
     def stream_living_turn_ndjson(
         self, payload: Mapping[str, Any], *, base_origin: str | None = None

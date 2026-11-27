@@ -1,0 +1,34 @@
+apply plugin: "com.android.application"
+
+android {
+    namespace "nl.jaapfrank.eva.display"
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "nl.jaapfrank.eva.display"
+        // UC-Display / UC-Display-SE-21 draait Android 9.0 (API 28) op arm64-v8a
+        minSdk 28
+        targetSdk 33
+        versionCode 1
+        versionName "1.0.0"
+        ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    // Bewust 0 Google Mobile Services (GMS) en 0 externe libraries zodat UniFi Connect de APK 100% toelaat!
+}

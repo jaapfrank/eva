@@ -91,8 +91,8 @@ if (-not $SkipFirewall -and (Test-IsAdmin)) {
     $ruleName = "Eva 3D Onboarding & Pocket (Thuisnetwerk)"
     $existingRule = Get-NetFirewallRule -DisplayName $ruleName -ErrorAction SilentlyContinue
     if (-not $existingRule) {
-        New-NetFirewallRule -DisplayName $ruleName -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8765 -Profile Private | Out-Null
-        Write-Host "[✓] Windows Firewall geopend voor poort 8765 op jouw thuisnetwerk (openbare netwerken blijven geblokkeerd)." -ForegroundColor Green
+        New-NetFirewallRule -DisplayName $ruleName -Direction Inbound -Action Allow -Protocol TCP -LocalPort @(8765, 8766) -Profile Private | Out-Null
+        Write-Host "[✓] Windows Firewall geopend voor poorten 8765 (HTTP) en 8766 (HTTPS Hoofdscherm) op jouw thuisnetwerk." -ForegroundColor Green
     }
 }
 

@@ -1022,6 +1022,38 @@ def test_realtime_voice_models_vault_keys_and_turn_streaming_fillers(tmp_path: P
     assert any(e["type"] == "speech_clause" for e in events)
     assert any(e["type"] == "final" and e["ok"] is True for e in events)
 
+    # 4. Main Display (UniFi Connect Display) HTTPS CA cert + 365-day EVA-DISP kiosk pairing
+    ca_res = client.get("/internal/v1/appliance/lan-ca.crt")
+    assert ca_res.status_code == 200
+    assert "BEGIN CERTIFICATE" in ca_res.text
+
+    md_res = client.post(
+        "/internal/v1/appliance/living/main-display",
+        json={
+            "label": "Keuken UC-Display-SE-21",
+            "room": "keuken",
+            "camera_entity_id": "camera.keuken_protect",
+            "wake_entity_id": "notify.keuken_scherm",
+        },
+    )
+    assert md_res.status_code == 200
+    md_json = md_res.json()
+    assert md_json["pairing_code"].startswith("EVA-DISP-")
+    assert "https://" in md_json["kiosk_https_url"] and "?kiosk=1#EVA-DISP-" in md_json["kiosk_https_url"]
+    assert md_json["stage"]["main_display"]["camera_entity_id"] == "camera.keuken_protect"
+
+    from fastapi.testclient import TestClient
+    from eva.adapters.api.appliance_wizard import create_appliance_wizard_app
+
+    kiosk_client = TestClient(create_appliance_wizard_app(service), base_url="http://127.0.0.1:8765")
+    pair_kiosk = kiosk_client.post(
+        "/internal/v1/appliance/pair",
+        json={"code": md_json["pairing_code"]},
+        headers={"Origin": "http://127.0.0.1:8765"},
+    )
+    assert pair_kiosk.status_code == 204
+    assert "Max-Age=31536000" in pair_kiosk.headers.get("set-cookie", "")
+
 
 
 

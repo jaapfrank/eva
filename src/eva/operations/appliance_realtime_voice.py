@@ -197,8 +197,8 @@ def build_realtime_eva_instructions(stage_snapshot: Mapping[str, Any]) -> str:
         "1. Spreek 100% natuurlijk, warm, vlot en menselijk Nederlands (Nederland), precies zoals een echte huisgenoot in de kamer praat — nooit stijf, nooit opgesomd met bulletpoints en nooit als een robot.",
         "2. Houd je gesproken antwoorden lekker vlot en bondig (meestal 1 tot 3 zinnen), zodat het een echt vlot heen-en-weer gesprek blijft.",
         "3. Geef op begroetingen, gezellige praatjes, grappen of algemene vragen METEEN direct antwoord zonder een tool aan te roepen.",
-        "4. TUSSENZINNETJES BIJ ACTIES (CRUCIAAL!): Zodra je `raadpleeg_eva_kern_en_huis` gaat aanroepen (voor Home Assistant lampen/sensoren, UniFi netwerk/Protect camera's, agenda, e-mail, persoonlijke herinneringen, huisregels of zelf een nieuwe vaardigheid bouwen), spreek je ALTIJD EERST hardop een kort, natuurlijk Nederlands tussenzinnetje uit in dezelfde beurt vóór of tijdens de tool-aanroep! Voorbeelden: 'Even in je Home Assistant kijken hoor…', 'Momentje, ik check je netwerk meteen even…', 'Ik pak het er gelijk even voor je bij…'. Daarna vertel je vlot het echte resultaat uit de tool.",
-        "5. Verzin nooit zelf sensorwaarden, camerabeelden, e-mails of apparaatstatussen: haal die altijd op via `raadpleeg_eva_kern_en_huis`.",
+        "4. TUSSENZINNETJES BIJ ACTIES (CRUCIAAL!): Zodra je `raadpleeg_eva_kern_en_huis` of `bekijk_camera_beeld` gaat aanroepen (voor Home Assistant lampen/sensoren, live meekijken via een camera, UniFi netwerk/Protect camera's, agenda, e-mail, persoonlijke herinneringen, huisregels of zelf een nieuwe vaardigheid bouwen), spreek je ALTIJD EERST hardop een kort, natuurlijk Nederlands tussenzinnetje uit in dezelfde beurt vóór of tijdens de tool-aanroep! Voorbeelden: 'Even in je Home Assistant kijken hoor…', 'Even op de camera kijken hoor…', 'Momentje, ik pak het er gelijk even voor je bij…'. Daarna vertel je vlot het echte resultaat uit de tool.",
+        "5. Verzin nooit zelf sensorwaarden, camerabeelden, e-mails of apparaatstatussen: haal camerabeelden altijd echt op via `bekijk_camera_beeld` en overige acties via `raadpleeg_eva_kern_en_huis`.",
         f"Huidige huisstatus: Home Assistant is {ha_status}. Gekoppelde kluis-diensten: {', '.join(vault_svcs) if vault_svcs else 'nog geen'}. Zelfgebouwde skills: {', '.join(caps) if caps else '0'}.",
     ]
     if guest_on:
@@ -246,6 +246,29 @@ def build_openai_realtime_tools() -> list[dict[str, Any]]:
                     }
                 },
                 "required": ["paneel"],
+            },
+        },
+        {
+            "type": "function",
+            "name": "bekijk_camera_beeld",
+            "description": (
+                "Kijk live mee via de camera van het Hoofdscherm of een Home Assistant / UniFi Protect camera "
+                "(bijv. keuken, voordeur/deurbel, tuin, garage) en analyseer wat of wie er te zien is. "
+                "Zeg altijd eerst hardop 'Even op de camera kijken hoor…' voordat je deze tool aanroept!"
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "camera_hint": {
+                        "type": "string",
+                        "description": "Optioneel: welke camera (bijv. 'keuken', 'voordeur', 'deurbel', 'tuin', 'garage' of leeg voor het hoofdscherm).",
+                    },
+                    "vraag": {
+                        "type": "string",
+                        "description": "Waar Eva specifiek op moet letten op het beeld.",
+                    },
+                },
+                "required": ["vraag"],
             },
         },
         {
@@ -298,6 +321,27 @@ def build_gemini_live_tools() -> list[dict[str, Any]]:
                             }
                         },
                         "required": ["paneel"],
+                    },
+                },
+                {
+                    "name": "bekijk_camera_beeld",
+                    "description": (
+                        "Kijk live mee via de camera van het Hoofdscherm of een Home Assistant / UniFi Protect camera "
+                        "(bijv. keuken, voordeur, deurbel, tuin, garage). Zeg eerst hardop een kort tussenzinnetje."
+                    ),
+                    "parameters": {
+                        "type": "OBJECT",
+                        "properties": {
+                            "camera_hint": {
+                                "type": "STRING",
+                                "description": "Welke camera (bijv. keuken, voordeur, tuin, garage of leeg voor hoofdscherm).",
+                            },
+                            "vraag": {
+                                "type": "STRING",
+                                "description": "Waar Eva op moet letten.",
+                            },
+                        },
+                        "required": ["vraag"],
                     },
                 },
                 {
@@ -744,6 +788,7 @@ async def run_gemini_live_bridge(
     stage_snapshot: Mapping[str, Any],
     execute_core_turn: Callable[[str], dict[str, Any]],
     set_guest_mode_fn: Callable[[bool], dict[str, Any]],
+    execute_vision_look: Callable[[str, str], dict[str, Any]] | None = None,
 ) -> None:
     """Full-duplex WebSocket bridge between browser 16kHz/24kHz PCM and Google Gemini 3.8 Live (`BidiGenerateContent`)."""
     from eva.adapters.connectors.appliance_gemini_live_ws import connect_gemini_live_websocket
@@ -931,6 +976,16 @@ async def run_gemini_live_bridge(
                             gm_res = await asyncio.to_thread(set_guest_mode_fn, bool(args.get("actief", True)))
                             await browser_ws.send_json({"type": "stage_update", "stage": gm_res.get("stage")})
                             result_obj = {"ok": True, "visite_modus": bool(args.get("actief", True))}
+                        elif fn_name == "bekijk_camera_beeld" and execute_vision_look is not None:
+                            vis_out = await asyncio.to_thread(
+                                execute_vision_look,
+                                str(args.get("camera_hint") or ""),
+                                str(args.get("vraag") or "Beschrijf wat je op het beeld ziet."),
+                            )
+                            result_obj = {
+                                "camera": str(vis_out.get("camera_label") or "camera"),
+                                "waarneming_nl": str(vis_out.get("summary_nl") or ""),
+                            }
                         else:
                             verzoek = str(args.get("verzoek") or "").strip() or "Kijk even in huis"
                             turn_out = await asyncio.to_thread(execute_core_turn, verzoek)

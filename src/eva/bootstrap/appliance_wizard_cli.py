@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 import sys
+import threading
 
 import uvicorn
 
@@ -16,6 +17,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="eva-appliance-wizard")
     parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--https-port", type=int, default=8766)
     parser.add_argument("--workspace", type=Path, default=Path("/var/lib/eva2-appliance"))
     parser.add_argument("--runtime-root", type=Path, default=Path("/var/lib/eva2-local"))
     parser.add_argument(
@@ -57,6 +59,26 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Eva Wizard gestart op http://127.0.0.1:{args.port}/pair")
 
     app = create_appliance_wizard_app(service)
+    if args.https_port and 1024 <= args.https_port <= 65535 and args.https_port != args.port:
+        try:
+            cert_path, key_path = service.ensure_lan_tls_cert()
+
+            def _serve_https() -> None:
+                cfg = uvicorn.Config(
+                    app,
+                    host=args.host,
+                    port=args.https_port,
+                    log_level="warning",
+                    ssl_certfile=str(cert_path),
+                    ssl_keyfile=str(key_path),
+                )
+                uvicorn.Server(cfg).run()
+
+            threading.Thread(target=_serve_https, name="eva-lan-https", daemon=True).start()
+            print(f"Eva Hoofdscherm HTTPS actief op https://0.0.0.0:{args.https_port}/?kiosk=1")
+        except Exception as exc:
+            print(f"Let op: kon HTTPS poort {args.https_port} niet starten: {exc}", file=sys.stderr)
+
     uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
     return 0
 

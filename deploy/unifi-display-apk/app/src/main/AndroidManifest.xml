@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Eva Hoofdscherm APK voor Ubiquiti UniFi Connect Display (UC-Display / UC-Display-SE-21, Android 9 arm64-v8a).
+  BELANGRIJK: Bevat UITSLUITEND permissies die door Ubiquiti's UniFi Connect Android-sandbox worden toegestaan
+  (GEEN CAMERA/STORAGE/CONTACTS/PHONE/SENSORS/GMS), zodat UniFi Connect de app zonder blokkade installeert
+  en RECORD_AUDIO + hardware echo-onderdrukking (AEC) automatisch vrijgeeft!
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="nl.jaapfrank.eva.display">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+    <application
+        android:label="Eva Hoofdscherm"
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true"
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

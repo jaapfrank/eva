@@ -116,7 +116,8 @@ _PAIR_HTML = """<!doctype html>
       body: JSON.stringify({code})
     });
     if (res.ok) {
-      location.replace('/');
+      const goKiosk = new URLSearchParams(location.search).get('kiosk') === '1' || String(code).startsWith('EVA-DISP-');
+      location.replace(goKiosk ? '/?kiosk=1' : '/');
       return;
     }
     let detail = 'Koppelcode geweigerd.';
@@ -130,7 +131,7 @@ _PAIR_HTML = """<!doctype html>
     localBtn.addEventListener('click', () => { tryLocalLoopbackPair().catch(() => {}); });
   }
   if (hashCode) {
-    history.replaceState(null, '', '/pair');
+    history.replaceState(null, '', '/pair' + location.search);
     input.value = hashCode;
     submitCode(hashCode).catch(() => { msg.textContent = 'Verbinding met Eva mislukt.'; });
   } else if (isLoopbackHost) {
@@ -1353,10 +1354,11 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
             status_code = getattr(exc, "status_code", 401)
             raise HTTPException(status_code=status_code, detail=str(exc)) from exc
         response = Response(status_code=204, headers=_SECURITY_HEADERS)
+        cookie_ttl = (365 * 86400) if code.strip().startswith("EVA-DISP-") else (12 * 3600)
         response.set_cookie(
             key=_SESSION_COOKIE,
             value=session_id,
-            max_age=12 * 3600,
+            max_age=cookie_ttl,
             httponly=True,
             samesite="strict",
             secure=request.url.scheme == "https",
@@ -1632,6 +1634,44 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_session(request)
         _require_same_origin(request)
         return _call(service.delete_custom_capability, capability_id)
+
+    @app.get("/internal/v1/appliance/lan-ca.crt", response_class=PlainTextResponse)
+    def get_lan_ca_certificate(request: Request) -> Response:
+        _require_lan(request)
+        pem = service.get_lan_ca_cert_pem()
+        return Response(
+            content=pem.encode("utf-8"),
+            media_type="application/x-x509-ca-cert",
+            headers={
+                "Content-Disposition": 'attachment; filename="eva-thuis-ca.crt"',
+                "Cache-Control": "no-store",
+                "X-Content-Type-Options": "nosniff",
+            },
+        )
+
+    @app.post("/internal/v1/appliance/living/main-display")
+    async def post_living_main_display(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        body = await _read_json(request)
+        return _call(
+            service.save_main_display_config,
+            body,
+            base_origin=_request_origin(request),
+        )
+
+    @app.post("/internal/v1/appliance/living/main-display/wake")
+    async def post_living_main_display_wake(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.wake_main_display)
+
+    @app.post("/internal/v1/appliance/living/vision-look")
+    async def post_living_vision_look(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        body = await _read_json(request, max_bytes=4 * 1024 * 1024)
+        return _call(service.handle_vision_look, body)
 
     @app.post("/internal/v1/appliance/living/realtime/config")
     async def post_living_realtime_config(request: Request) -> JSONResponse:

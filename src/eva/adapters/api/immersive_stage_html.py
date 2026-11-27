@@ -334,6 +334,23 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         bottom: calc(134px + env(safe-area-inset-bottom, 0px));
       }
     }
+
+    /* 21.5" UniFi Connect Wall-Display Kiosk Mode (/?kiosk=1) */
+    body.kiosk-mode #btn-wizard,
+    body.kiosk-mode #btn-smart-home,
+    body.kiosk-mode #btn-main-display,
+    body.kiosk-mode a[href="/beheer"] {
+      display: none !important;
+    }
+    body.kiosk-mode .pill {
+      padding: 9px 15px; font-size: 0.88rem;
+    }
+    body.kiosk-mode .speech-bubble {
+      font-size: 1.14rem; padding: 16px 24px;
+    }
+    body.kiosk-mode .mic-btn {
+      width: 48px; height: 48px; font-size: 1.25rem;
+    }
   </style>
 </head>
 <body>
@@ -347,6 +364,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         <span class="dot" id="hud-dot"></span>
         <span id="hud-eva-name">Eva</span>
       </div>
+      <span class="pill static" id="kiosk-clock" hidden></span>
       <button type="button" class="pill active-cyan" id="btn-wizard" title="Open de 6-staps Kennismakings- &amp; Installatie-Wizard">
         🪄 <span id="wiz-hud-label">Kennismakings-Wizard</span>
       </button>
@@ -364,6 +382,9 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       </button>
       <button type="button" class="pill" id="btn-voice-engine" title="Kies tussen GPT Realtime 2.1, GPT Realtime 2.1 Mini of Gemini 3.8 Live">
         ⚡ <span id="voice-engine-label">gpt-realtime-2.1</span>
+      </button>
+      <button type="button" class="pill" id="btn-main-display" title="Stel je UniFi Connect Display in als Gezins-Hoofdscherm met microfoon &amp; camera">
+        🖥️ Hoofdscherm
       </button>
       <button type="button" class="pill" id="btn-rules">
         📜 Afspraken <span id="rules-count">(0)</span>
@@ -416,6 +437,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     </div>
     <form class="input-bar" id="living-form">
       <button type="button" class="mic-btn" id="btn-mic" title="Start of stop een doorlopend live spraakgesprek (GPT Realtime 2.1 / Gemini 3.8 Live)">🎙️</button>
+      <button type="button" class="mic-btn" id="btn-cam-look" title="Laat Eva live meekijken via camera (lokaal of gekoppelde Home Assistant / UniFi Protect camera)" style="background:rgba(56,189,248,0.18);border-color:rgba(56,189,248,0.48);">📷</button>
       <input
         type="text"
         class="talk-input"
@@ -1066,6 +1088,11 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
               const d = await r.json();
               if (r.ok && d.stage) applyStageState(d.stage);
               outputObj = { ok: true, visite_modus: !!args.actief };
+            } else if (fnName === 'bekijk_camera_beeld') {
+              const visRes = await captureOrFetchVisionLook(args.camera_hint || '', args.vraag || 'Beschrijf wat of wie je ziet.');
+              outputObj = visRes.ok
+                ? { camera: visRes.camera_label, waarneming_nl: visRes.summary_nl }
+                : { fout: visRes.detail || 'Kon camerabeeld niet ophalen.' };
             } else {
               const verzoek = String(args.verzoek || '').trim() || 'Kijk even in huis';
               const r = await fetch('/internal/v1/appliance/living/turn', {
@@ -2482,6 +2509,127 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           }
         };
       }
+
+      if (kind === 'main_display') {
+        const md = stage.main_display || {};
+        const cams = md.available_cameras || [];
+        const dispEnts = md.detected_displays || [];
+        title.textContent = '🖥️ Gezins-Hoofdscherm (UniFi Connect Display)';
+        body.innerHTML = `
+          <div class="card-sec" style="border-color:rgba(56,189,248,0.5);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+              <strong style="font-size:0.9rem;">✨ UniFi Connect Display Unlock (Microfoon + Camera + 3D)</strong>
+              <span class="badge-ok">HTTPS :${escapeHtml(md.https_port || 8766)} actief</span>
+            </div>
+            <p style="margin:0 0 10px; font-size:0.79rem; color:var(--muted); line-height:1.45;">
+              Ubiquiti blokkeert in gewone <em>Web Mode</em> de microfoon en weigert APK's met <code>CAMERA</code>-rechten. Met Eva's speciaal gebouwde <strong>EvaUnifiDisplay.apk</strong> + lokale <strong>HTTPS :${escapeHtml(md.https_port || 8766)}</strong> werken de ingebouwde microfoon, speakers &amp; hardware echo-onderdrukking 100% handsfree, terwijl Eva live meekijkt via jouw gekoppelde kamer-/Protect-camera!
+            </p>
+            <div class="field">
+              <label>Naam van het Hoofdscherm</label>
+              <input id="md-label" type="text" value="${escapeHtml(md.label || 'Keuken Hoofdscherm (UC-Display-SE-21)')}" />
+            </div>
+            <div class="field">
+              <label>📷 Eva's Ogen bij het Hoofdscherm (Home Assistant / UniFi Protect camera)</label>
+              <select id="md-cam-sel">
+                <option value="">-- Automatisch / Lokale USB- of tabletcamera --</option>
+                ${cams.map(c => `<option value="${escapeHtml(c.entity_id)}" ${c.entity_id === md.camera_entity_id ? 'selected' : ''}>${escapeHtml(c.label)} (${escapeHtml(c.entity_id)})</option>`).join('')}
+              </select>
+            </div>
+            <div class="field">
+              <label>🔆 Scherm wekken via Home Assistant (${dispEnts.length ? 'gevonden op je netwerk!' : 'bijv. notify.keuken_scherm'})</label>
+              <input id="md-wake-in" type="text" value="${escapeHtml(md.wake_entity_id || (dispEnts[0]?.entity_id || 'notify.keuken_scherm'))}" />
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+              <button type="button" class="btn-primary" id="btn-md-save" style="flex:1.4;">🔗 Bewaar &amp; Maak 1-Jaar Hoofdscherm-URL</button>
+              <button type="button" class="btn-ghost" id="btn-md-wake" style="flex:1;">🔆 Wek Scherm nu</button>
+            </div>
+            <div id="md-msg" style="margin-top:8px; font-size:0.81rem;"></div>
+            <div id="md-url-out"></div>
+          </div>
+          <div class="card-sec">
+            <strong style="display:block; font-size:0.86rem; margin-bottom:6px;">📲 Stap-voor-stap op je UC-Display-SE-21 zetten</strong>
+            <ol style="margin:0; padding-left:18px; font-size:0.79rem; color:var(--muted); line-height:1.5;">
+              <li>Dubbelklik in de Eva-map op <code>Bouw-Eva-UniFi-Display-APK.cmd</code> om <code>eva-unifi-connect-display.apk</code> te bouwen.</li>
+              <li>Open <strong>UniFi Connect</strong> → klik op je <strong>Keuken Display</strong> → zet <em>Display Mode</em> op <strong>Android App</strong> → upload de APK.</li>
+              <li>Vul op het keukenscherm eenmalig de <strong>HTTPS Hoofdscherm-URL</strong> hierboven in (blijft 365 dagen ingelogd, met directe microfoon + WebRTC!).</li>
+            </ol>
+            <div style="margin-top:10px; display:flex; gap:8px;">
+              <a href="/?kiosk=1" target="_blank" rel="noopener" class="btn-ghost" style="flex:1; text-decoration:none; text-align:center;">👀 Bekijk Kiosk-weergave (/?kiosk=1)</a>
+            </div>
+          </div>
+        `;
+        $('btn-md-save').onclick = async () => {
+          const msg = $('md-msg');
+          const r = await fetch('/internal/v1/appliance/living/main-display', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              label: $('md-label').value.trim(),
+              camera_entity_id: $('md-cam-sel').value,
+              wake_entity_id: $('md-wake-in').value.trim()
+            })
+          });
+          const d = await r.json();
+          if (!r.ok) {
+            msg.style.color = '#fb7185';
+            msg.textContent = d.detail || 'Opslaan mislukt.';
+            return;
+          }
+          if (d.stage) applyStageState(d.stage, { preserveDrawerInputs: true });
+          msg.style.color = '#6ee7b7';
+          msg.textContent = '✓ Hoofdscherm opgeslagen! Gebruik onderstaande HTTPS-link in de Eva Display APK:';
+          $('md-url-out').innerHTML = `
+            <div class="qr-box" style="margin-top:8px;">
+              ${d.qr_svg}
+              <div style="font-weight:700; margin-top:6px;">HTTPS Start-URL voor Keukenscherm (365 dagen geldig)</div>
+              <div style="font-size:0.74rem; word-break:break-all; color:#0f172a; user-select:all; margin-top:4px;">${escapeHtml(d.kiosk_https_url)}</div>
+            </div>
+          `;
+        };
+        $('btn-md-wake').onclick = async () => {
+          const msg = $('md-msg');
+          msg.style.color = '#bae6fd';
+          msg.textContent = 'Wek-signaal sturen naar keukenscherm…';
+          const r = await fetch('/internal/v1/appliance/living/main-display/wake', { method: 'POST' });
+          const d = await r.json();
+          msg.style.color = r.ok && d.ok ? '#6ee7b7' : '#f59e0b';
+          msg.textContent = d.detail || 'Uitgevoerd.';
+        };
+      }
+    }
+
+    async function captureOrFetchVisionLook(cameraHint = '', promptText = '') {
+      let localB64 = '';
+      const configuredHaCam = stage?.main_display?.camera_entity_id || '';
+      if (!cameraHint && !configuredHaCam && navigator.mediaDevices?.getUserMedia) {
+        try {
+          const vStream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 960 }, height: { ideal: 540 } }, audio: false });
+          const vid = document.createElement('video');
+          vid.srcObject = vStream;
+          vid.muted = true;
+          vid.playsInline = true;
+          await vid.play();
+          await new Promise(r => setTimeout(r, 220));
+          const cnv = document.createElement('canvas');
+          cnv.width = vid.videoWidth || 640;
+          cnv.height = vid.videoHeight || 360;
+          cnv.getContext('2d').drawImage(vid, 0, 0, cnv.width, cnv.height);
+          localB64 = cnv.toDataURL('image/jpeg', 0.84);
+          vStream.getTracks().forEach(t => t.stop());
+        } catch (_e) {
+          // Display has no local lens or camera permission is sandboxed -> fall back to paired HA/Protect camera!
+        }
+      }
+      const r = await fetch('/internal/v1/appliance/living/vision-look', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          image_jpeg_b64: localB64,
+          camera_hint: cameraHint,
+          prompt: promptText || 'Beschrijf vlot, warm en natuurlijk in het Nederlands wat of wie je ziet.'
+        })
+      });
+      return await r.json();
     }
 
     // --- 7. Wiring & Startup ---
@@ -2491,7 +2639,34 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     $('btn-rules').onclick = () => activeDrawer === 'rules' ? closeDrawer() : openDrawer('rules');
     $('btn-family').onclick = () => activeDrawer === 'family' ? closeDrawer() : openDrawer('family');
     $('btn-voice-engine').onclick = () => activeDrawer === 'voice_engine' ? closeDrawer() : openDrawer('voice_engine');
+    $('btn-main-display').onclick = () => activeDrawer === 'main_display' ? closeDrawer() : openDrawer('main_display');
     $('btn-live-call').onclick = toggleRealtimeLiveCall;
+    $('btn-cam-look').onclick = async () => {
+      userUnlockedAudio = true;
+      enqueueSpeechClause('Even op de camera kijken hoor…', { reset: true, updateSubtitle: true });
+      const d = await captureOrFetchVisionLook('', $('talk-input').value.trim() || 'Vertel warm en vlot in 1 of 2 Nederlandse zinnen wat je op het beeld ziet.');
+      if (d.ok && d.summary_nl) {
+        $('eva-subtitle').textContent = `📷 (${d.camera_label || 'Camera'}): ${d.summary_nl}`;
+        enqueueSpeechClause(d.summary_nl, { reset: false, updateSubtitle: false });
+      } else {
+        $('eva-subtitle').textContent = d.detail || 'Kon geen camerabeeld ophalen.';
+      }
+    };
+
+    const isKioskMode = new URLSearchParams(location.search).get('kiosk') === '1';
+    if (isKioskMode) {
+      document.body.classList.add('kiosk-mode');
+      const clk = $('kiosk-clock');
+      if (clk) {
+        clk.hidden = false;
+        const tickClock = () => {
+          clk.textContent = new Date().toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+        };
+        tickClock();
+        setInterval(tickClock, 15000);
+      }
+      navigator.wakeLock?.request?.('screen').catch(() => {});
+    }
 
     $('btn-audio-toggle').onclick = () => {
       audioEnabled = !audioEnabled;
