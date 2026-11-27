@@ -156,7 +156,7 @@ fi
 
 # Beperk sudoers uitsluitend tot het activeren/herstarten van Eva-services vanuit de wizard.
 cat > /etc/sudoers.d/eva2-appliance << EOF
-$EVA_USER ALL=(root) NOPASSWD: /usr/bin/systemctl enable eva2-local-core.service eva2-local-owner.service, /usr/bin/systemctl restart eva2-local-core.service, /usr/bin/systemctl start eva2-local-core.service, /usr/bin/systemctl stop eva2-local-core.service, /usr/bin/systemctl restart eva2-local-owner.service, /usr/bin/systemctl start eva2-local-owner.service, /usr/bin/systemctl stop eva2-local-owner.service, /usr/bin/systemctl restart eva2-local-core.service eva2-local-owner.service, /usr/bin/systemctl enable eva2-local-telegram.service, /usr/bin/systemctl restart eva2-local-telegram.service, /usr/bin/systemctl start eva2-local-telegram.service, /usr/bin/systemctl stop eva2-local-telegram.service
+$EVA_USER ALL=(root) NOPASSWD: /usr/bin/systemctl enable eva2-local-core.service eva2-local-owner.service, /usr/bin/systemctl enable eva2-local-gateway.service, /usr/bin/systemctl restart eva2-local-gateway.service, /usr/bin/systemctl start eva2-local-gateway.service, /usr/bin/systemctl stop eva2-local-gateway.service, /usr/bin/systemctl enable eva2-local-worker.service, /usr/bin/systemctl restart eva2-local-worker.service, /usr/bin/systemctl start eva2-local-worker.service, /usr/bin/systemctl stop eva2-local-worker.service, /usr/bin/systemctl restart eva2-local-core.service, /usr/bin/systemctl start eva2-local-core.service, /usr/bin/systemctl stop eva2-local-core.service, /usr/bin/systemctl restart eva2-local-owner.service, /usr/bin/systemctl start eva2-local-owner.service, /usr/bin/systemctl stop eva2-local-owner.service, /usr/bin/systemctl restart eva2-local-core.service eva2-local-owner.service, /usr/bin/systemctl enable eva2-local-telegram.service, /usr/bin/systemctl restart eva2-local-telegram.service, /usr/bin/systemctl start eva2-local-telegram.service, /usr/bin/systemctl stop eva2-local-telegram.service
 EOF
 chmod 0440 /etc/sudoers.d/eva2-appliance
 
@@ -191,6 +191,7 @@ deps = list(data[\"project\"][\"dependencies\"]) + list(data[\"project\"][\"opti
 pathlib.Path(\"'\"\$REQ_FILE\"'\").write_text(\"\\n\".join(deps) + \"\\n\", encoding=\"utf-8\")
 '
 uv pip install --python \"\$HOME/.venvs/eva/bin/python\" -r \"\$REQ_FILE\"
+uv pip install --python \"\$HOME/.venvs/eva/bin/python\" openai==3.46.0 pydantic-ai-slim==2.66.0 pydantic-graph==2.66.0 genai-prices==0.2.1
 rm -f \"\$REQ_FILE\"
 SITE_PKGS=\$(\"\\$HOME/.venvs/eva/bin/python\" -c 'import sysconfig; print(sysconfig.get_paths()[\"purelib\"])')
 printf '%s/src\n%s\n' \"$EVA_REPO_DIR\" \"$EVA_REPO_DIR\" > \"\$SITE_PKGS/eva2_local.pth\"
@@ -330,11 +331,29 @@ RestartSec=3
 WantedBy=multi-user.target
 EOF
 
+cat > /etc/systemd/system/eva2-local-gateway.service << EOF
+[Unit]
+Description=Eva2 local authenticated MCP Gateway & Universal Capability Host
+After=network.target
+
+[Service]
+User=$EVA_USER
+Group=eva-runtime
+WorkingDirectory=$EVA_REPO_DIR
+ExecStart=$VENV_PY -m eva.bootstrap.appliance_mcp_gateway_cli --host 127.0.0.1 --port 44712 --runtime-root $EVA_RUNTIME_ROOT
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
 cat > /etc/systemd/system/eva2-local-core.service << EOF
 [Unit]
 Description=Eva2 local Living Core runtime
-After=network.target docker.service
+After=network.target docker.service eva2-local-gateway.service
 Requires=docker.service
+Wants=eva2-local-gateway.service
 
 [Service]
 User=$EVA_USER
@@ -342,6 +361,25 @@ Group=eva-runtime
 WorkingDirectory=$EVA_REPO_DIR
 EnvironmentFile=$EVA_RUNTIME_ROOT/runtime.env
 ExecStart=$VENV_PY -m uvicorn eva.bootstrap.runtime:create_runtime_app --factory --host 127.0.0.1 --port 44710 --no-access-log
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat > /etc/systemd/system/eva2-local-worker.service << EOF
+[Unit]
+Description=Eva2 local Delegated Research & Digital Worker
+After=network.target docker.service eva2-local-gateway.service eva2-local-core.service
+Wants=eva2-local-gateway.service
+
+[Service]
+User=$EVA_USER
+Group=eva-runtime
+WorkingDirectory=$EVA_REPO_DIR
+EnvironmentFile=$EVA_RUNTIME_ROOT/runtime.env
+ExecStart=$VENV_PY -m eva.bootstrap.delegated_work_service
 Restart=on-failure
 RestartSec=3
 
@@ -419,6 +457,7 @@ systemctl enable --now \
   eva2-local-model-lease.service \
   eva2-local-hindsight-lease.service \
   eva2-local-hindsight-starter.service \
+  eva2-local-gateway.service \
   eva2-appliance-wizard.service
 
 beep_tone

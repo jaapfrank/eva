@@ -69,6 +69,11 @@ from eva.operations.identity_pack_lifecycle import (
     IdentityPackLifecycleError,
     bootstrap_identity_authority,
 )
+from eva.operations.appliance_mcp_gateway import (
+    UniversalIntegrationHub,
+    detect_local_unifi_console,
+    ensure_gateway_runtime_files,
+)
 from eva.operations.initialize_dashboard_authority import initialize_dashboard_authority
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
 from eva.operations.installer_identity_storage import (
@@ -371,12 +376,14 @@ class ApplianceSetupService:
         self._clock = clock
         self._lock = threading.Lock()
         self._sessions: dict[str, float] = {}
+        self._session_wall_expiries: dict[str, int] = {}
         self._device_invites: dict[str, float] = {}
         self._failed_attempts: dict[str, list[float]] = {}
         self._codex_login: _CodexLoginProcess | None = None
         self._telegram_magic: _TelegramMagicLinkSession | None = None
         self._pairing_code_plain: str | None = None
         self._ensure_pairing_record()
+        self._load_persisted_sessions()
 
     # ------------------------------------------------------------------
     # Pairing & LAN access gate
@@ -387,6 +394,48 @@ class ApplianceSetupService:
 
     def _pairing_link_path(self) -> Path:
         return self.workspace / "pairing-link.private.txt"
+
+    def _sessions_path(self) -> Path:
+        return self.workspace / "sessions.private.json"
+
+    @staticmethod
+    def _session_key_sha256(session_cookie: str) -> str:
+        return hashlib.sha256(session_cookie.encode("utf-8")).hexdigest()
+
+    def _load_persisted_sessions(self) -> None:
+        raw = _read_json_if_present(self._sessions_path())
+        if not isinstance(raw, dict) or not isinstance(raw.get("sessions"), dict):
+            return
+        now_wall = int(time.time())
+        now_mono = self._clock()
+        for tok_sha, exp_val in raw["sessions"].items():
+            if (
+                isinstance(tok_sha, str)
+                and len(tok_sha) == 64
+                and isinstance(exp_val, int)
+                and not isinstance(exp_val, bool)
+                and exp_val > now_wall
+            ):
+                rem = exp_val - now_wall
+                self._sessions[tok_sha] = now_mono + rem
+                self._session_wall_expiries[tok_sha] = exp_val
+
+    def _persist_sessions_unlocked(self) -> None:
+        now_wall = int(time.time())
+        active = {
+            k: int(v)
+            for k, v in self._session_wall_expiries.items()
+            if isinstance(v, int) and v > now_wall
+        }
+        # Keep bounded to 32 most recent browser sessions
+        if len(active) > 32:
+            top_keys = sorted(active, key=lambda k: active[k], reverse=True)[:32]
+            active = {k: active[k] for k in top_keys}
+        self._session_wall_expiries = active
+        _write_json_private(
+            self._sessions_path(),
+            {"contract": "EvaApplianceSessions/v1", "sessions": active},
+        )
 
     def _ensure_pairing_record(self) -> dict[str, Any]:
         record = _read_json_if_present(self._pairing_path())
@@ -418,16 +467,48 @@ class ApplianceSetupService:
     def is_paired_session(self, session_cookie: str | None) -> bool:
         if not session_cookie:
             return False
+        tok_sha = self._session_key_sha256(session_cookie)
         now = self._clock()
+        now_wall = int(time.time())
         with self._lock:
             expired = [key for key, exp in self._sessions.items() if exp <= now]
             for key in expired:
                 self._sessions.pop(key, None)
-            expiry = self._sessions.get(session_cookie)
+                self._session_wall_expiries.pop(key, None)
+            expiry = self._sessions.get(tok_sha)
             if expiry is None or expiry <= now:
                 return False
-            self._sessions[session_cookie] = now + _SESSION_TTL_SECONDS
+            self._sessions[tok_sha] = now + _SESSION_TTL_SECONDS
+            prev_wall = self._session_wall_expiries.get(tok_sha, 0)
+            if prev_wall - now_wall < (_SESSION_TTL_SECONDS - 1800):
+                self._session_wall_expiries[tok_sha] = now_wall + _SESSION_TTL_SECONDS
+                self._persist_sessions_unlocked()
             return True
+
+    def _issue_session_unlocked(self, now: float) -> str:
+        session_id = secrets.token_urlsafe(32)
+        tok_sha = self._session_key_sha256(session_id)
+        self._sessions[tok_sha] = now + _SESSION_TTL_SECONDS
+        self._session_wall_expiries[tok_sha] = int(time.time()) + _SESSION_TTL_SECONDS
+        self._persist_sessions_unlocked()
+        return session_id
+
+    def exchange_loopback_session(self, *, remote_host: str | None) -> str:
+        cand = (remote_host or "").strip()
+        if cand.startswith("[") and "]" in cand:
+            cand = cand[1 : cand.index("]")]
+        if "%" in cand:
+            cand = cand.split("%", 1)[0]
+        try:
+            addr = ipaddress.ip_address(cand)
+        except ValueError as exc:
+            raise ApplianceSetupError("alleen lokaal op deze pc toegestaan", status_code=403) from exc
+        if isinstance(addr, ipaddress.IPv6Address) and addr.ipv4_mapped is not None:
+            addr = addr.ipv4_mapped
+        if not addr.is_loopback:
+            raise ApplianceSetupError("alleen lokaal op deze pc toegestaan", status_code=403)
+        with self._lock:
+            return self._issue_session_unlocked(self._clock())
 
     def exchange_pairing_code(self, code: str, *, client_key: str) -> str:
         candidate = str(code).strip()
@@ -475,9 +556,7 @@ class ApplianceSetupService:
                 raise ApplianceSetupError("koppelcode is onjuist", status_code=401)
 
             self._failed_attempts.pop(client_key, None)
-            session_id = secrets.token_urlsafe(32)
-            self._sessions[session_id] = now + _SESSION_TTL_SECONDS
-            return session_id
+            return self._issue_session_unlocked(now)
 
     # ------------------------------------------------------------------
     # Persistent wizard state helpers
@@ -2032,7 +2111,7 @@ class ApplianceSetupService:
             if owner_tg:
                 env_vals["EVA_TELEGRAM_PROACTIVE_CHAT_ID"] = str(owner_tg["telegram_user_id"])
         else:
-            disabled_providers.append("telegram")
+            disabled_providers.append("telegram_contacts")
             for k in (
                 "EVA_TELEGRAM_BOT_TOKEN_FILE",
                 "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE",
@@ -2094,6 +2173,39 @@ class ApplianceSetupService:
             env_vals.pop("EVA_AGENTMAIL_API_KEY_FILE", None)
 
         env_vals["EVA_EXTERNAL_PROVIDERS_DISABLED"] = ",".join(disabled_providers)
+
+        # Provision Universal MCP Gateway, Pre-LLM Vault tools, and Procedure References
+        gw_env = ensure_gateway_runtime_files(
+            runtime_root=self.runtime_root,
+            tenant_id=ids["tenant_id"],
+            installation_id=ids["installation_id"],
+            owner_principal_id=ids["principal_id"],
+        )
+        env_vals.update(gw_env)
+
+        # Activate background Research & Digital Worker when Codex model lease is active
+        lease_file = self.runtime_root / "model-lease" / "auth.json"
+        delegated_ready = bool(
+            not self.dry_run_apply
+            and state["model"].get("mode", "codex") == "codex"
+            and (lease_file.is_file() or self._codex_auth_status().get("logged_in"))
+        )
+        if delegated_ready:
+            env_vals["EVA_DELEGATED_WORK_ENABLED"] = "true"
+            env_vals["EVA_DELEGATED_RESEARCH_ENABLED"] = "true"
+            env_vals["EVA_DELEGATED_DIGITAL_ENABLED"] = "true"
+            env_vals["EVA_MODEL_ACCESS_LEASE_FILE"] = str(lease_file)
+            env_vals["EVA_DELEGATED_WORKER_ID"] = "eva2-local-worker"
+        else:
+            for dk in (
+                "EVA_DELEGATED_WORK_ENABLED",
+                "EVA_DELEGATED_RESEARCH_ENABLED",
+                "EVA_DELEGATED_DIGITAL_ENABLED",
+                "EVA_MODEL_ACCESS_LEASE_FILE",
+                "EVA_DELEGATED_WORKER_ID",
+            ):
+                env_vals.pop(dk, None)
+
         _write_env_file(env_path, env_vals)
 
         hw = _detect_host_hardware()
@@ -2165,6 +2277,16 @@ class ApplianceSetupService:
             except Exception as exc:
                 steps.append({"step": "authority", "status": "warning", "detail": f"Eigenaar-autoriteit controle: {exc}"})
 
+            # Start local authenticated MCP Gateway & Universal Capability Host BEFORE Living Core
+            self._run(["sudo", "-n", "systemctl", "enable", "eva2-local-gateway.service"])
+            self._run(["sudo", "-n", "systemctl", "restart", "eva2-local-gateway.service"])
+            gw_deadline = time.monotonic() + 5.0
+            while time.monotonic() < gw_deadline:
+                gw_st, _ = self._http_get_json("http://127.0.0.1:44712/health")
+                if gw_st == 200:
+                    break
+                time.sleep(0.25)
+
             self._run(
                 [
                     "sudo",
@@ -2185,6 +2307,11 @@ class ApplianceSetupService:
                     "eva2-local-owner.service",
                 ]
             )
+            if env_vals.get("EVA_DELEGATED_WORK_ENABLED") == "true":
+                self._run(["sudo", "-n", "systemctl", "enable", "eva2-local-worker.service"])
+                self._run(["sudo", "-n", "systemctl", "restart", "eva2-local-worker.service"])
+            else:
+                self._run(["sudo", "-n", "systemctl", "stop", "eva2-local-worker.service"])
             if restart_res.returncode == 0:
                 steps.append(
                     {
@@ -2725,7 +2852,25 @@ class ApplianceSetupService:
             or low.startswith("val het gezin niet lastig met losse")
             or low.startswith("eigen omgeving:")
             or low.startswith("home assistant:")
+            or low.startswith("koppelingen & kluis:")
+            or low.startswith("zelfbouw & onderzoek:")
         )
+
+    def _integration_hub(self) -> UniversalIntegrationHub:
+        return UniversalIntegrationHub(self.runtime_root)
+
+    def _probe_local_unifi_cached(self) -> dict[str, Any]:
+        now_m = time.monotonic()
+        cached = getattr(self, "_unifi_lan_cache", None)
+        if isinstance(cached, tuple) and (now_m - cached[0]) < 30.0:
+            return dict(cached[1])
+        res = (
+            {"reachable": False, "ip": "", "port": 443, "url": "https://192.168.1.1"}
+            if self.dry_run_apply
+            else detect_local_unifi_console()
+        )
+        self._unifi_lan_cache = (now_m, res)
+        return dict(res)
 
     def _probe_local_ha_reachable(self) -> dict[str, Any]:
         """Quickly check if Home Assistant is reachable on the local network (cached 25s)."""
@@ -2831,9 +2976,27 @@ class ApplianceSetupService:
             reach = f"al gevonden op {probe['url']}" if probe["reachable"] else "nog niet gekoppeld"
             ha_rule = (
                 f"Home Assistant: {reach}, wacht op koppeling. Vraag NOOIT tokens in de chat en zeg NOOIT "
-                "dat je niet kunt koppelen: wijs naar het beveiligde 'Slim Huis'-venster rechts op je scherm of Stap 5 van de Wizard."
+                "dat je niet kunt koppelen: wijs naar het beveiligde 'Koppelingen & Kluis'-venster rechts."
             )[:270]
-        return [env_rule, ha_rule]
+
+        hub = self._integration_hub()
+        svcs = hub.list_services()
+        active_names = [s["title"] for s in svcs if s.get("has_credential")]
+        svc_lbl = ", ".join(active_names[:6]) if active_names else "nog geen extra kluis-diensten"
+        vault_rule = (
+            f"Koppelingen & Kluis: Actief ({svc_lbl}). Voor UniFi Netwerk, UniFi Protect, agenda, e-mail "
+            "of elk ander systeem: gebruik `discover_network_and_vault`, `use_vault_service` of open het "
+            "beveiligde koppelvak met `request_owner_connection`."
+        )[:270]
+
+        caps = hub.list_capabilities()
+        cap_lbl = f" ({len(caps)} eigen skills actief)" if caps else ""
+        self_build_rule = (
+            f"Zelfbouw & Onderzoek{cap_lbl}: Kun je iets nog niet of ontbreekt een integratie? Zeg NOOIT "
+            "dat je dat niet kunt: zoek de API op (`search_public_info`) en schrijf, test en bewaar "
+            "zelf de Python-vaardigheid via `build_and_run_capability` of `start_digital_work`."
+        )[:270]
+        return [env_rule, ha_rule, vault_rule, self_build_rule]
 
     def _sync_household_head_settings(
         self,
@@ -3484,6 +3647,12 @@ class ApplianceSetupService:
                     "lan_detected": self._probe_local_ha_reachable(),
                 },
             },
+            "integrations": {
+                "services": self._integration_hub().list_services(),
+                "capabilities": self._integration_hub().list_capabilities(),
+                "pending_request": self._integration_hub().get_pending_connection(),
+                "unifi_detected": self._probe_local_unifi_cached(),
+            },
             "eva": {
                 "display_name": character.get("display_name", "Eva"),
                 "preset_id": character.get("preset_id", "warm_huisgenoot"),
@@ -3693,6 +3862,53 @@ class ApplianceSetupService:
             "stage": self.living_stage_snapshot(),
         }
 
+    def connect_universal_service(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        """Store credentials in AES-256-GCM PreLlmCredentialVault, live-probe, and update Eva's awareness."""
+        hub = self._integration_hub()
+        try:
+            res = hub.save_and_verify_service(
+                service_id=str(payload.get("service_id") or ""),
+                title=str(payload.get("title") or ""),
+                service_kind=str(payload.get("service_kind") or "rest_api"),
+                base_url=str(payload.get("base_url") or ""),
+                auth_mode=str(payload.get("auth_mode") or "api_key"),
+                username=str(payload.get("username") or ""),
+                secret=str(payload.get("secret") or ""),
+                smtp_url=str(payload.get("smtp_url") or ""),
+                header_name=str(payload.get("header_name") or ""),
+                verify_tls=bool(payload.get("verify_tls", False)),
+                run_probe=not (self.dry_run_apply or bool(payload.get("skip_probe", False))),
+            )
+        except (ValueError, PermissionError, RuntimeError) as exc:
+            raise ApplianceSetupError(str(exc)) from exc
+        self._sync_household_head_settings()
+        return {
+            "ok": True,
+            "service_id": res["service_id"],
+            "detail": res["summary_nl"],
+            "stage": self.living_stage_snapshot(),
+        }
+
+    def remove_universal_service(self, service_id: str) -> dict[str, Any]:
+        res = self._integration_hub().remove_service(service_id)
+        self._sync_household_head_settings()
+        return {**res, "stage": self.living_stage_snapshot()}
+
+    def delete_custom_capability(self, capability_id: str) -> dict[str, Any]:
+        res = self._integration_hub().handle_capability_tool(
+            {
+                "action": "delete",
+                "capability_id": capability_id,
+                "title": "",
+                "description": "",
+                "service_id": "",
+                "python_code": "",
+                "params_json": "{}",
+            }
+        )
+        self._sync_household_head_settings()
+        return {**res, "stage": self.living_stage_snapshot()}
+
     def handle_living_turn(
         self, payload: Mapping[str, Any], *, base_origin: str | None = None
     ) -> dict[str, Any]:
@@ -3707,6 +3923,68 @@ class ApplianceSetupService:
             raise ApplianceSetupError("bericht mag maximaal 900 tekens bevatten")
         if not raw_text and not clicked_preset and not complete_awakening:
             raise ApplianceSetupError("zeg of typ iets tegen Eva, of kies een karakterbol")
+
+        # 0. Pre-LLM AES-256-GCM Vault interception (/kluis <id> <geheim> NEVER touches LLM or logs!)
+        if raw_text and re.match(r"^/(?:kluis|wachtwoord)(?:\s|$)", raw_text.strip(), flags=re.IGNORECASE):
+            parts_kl = raw_text.strip().split(maxsplit=2)
+            if len(parts_kl) < 3:
+                return {
+                    "ok": True,
+                    "reply_text": (
+                        "Gebruik het beveiligde Koppelingen & Kluis-venster rechts op je scherm, "
+                        "of typ `/kluis <dienst-id> <wachtwoord-of-sleutel>`."
+                    ),
+                    "applied_changes": [],
+                    "conjure_panel": "integrations",
+                    "voice_enrolled": False,
+                    "speaker_match": None,
+                    "stage": self.living_stage_snapshot(base_origin=base_origin),
+                }
+            dev_ref = re.sub(r"[^a-z0-9_-]+", "_", parts_kl[1].strip().lower()).strip("_-")
+            secret_val = parts_kl[2]
+            hub_kl = self._integration_hub()
+            pend_kl = hub_kl.get_pending_connection()
+            try:
+                if pend_kl and pend_kl.get("service_id") == dev_ref and pend_kl.get("default_url"):
+                    user_kl, sec_kl = ("", secret_val)
+                    if ":" in secret_val and pend_kl.get("auth_mode") in {"basic_auth", "imap_password"}:
+                        user_kl, sec_kl = secret_val.split(":", 1)
+                    hub_kl.save_and_verify_service(
+                        service_id=dev_ref,
+                        title=str(pend_kl.get("title") or dev_ref),
+                        service_kind=str(pend_kl.get("service_kind") or "rest_api"),
+                        base_url=str(pend_kl.get("default_url") or ""),
+                        auth_mode=str(pend_kl.get("auth_mode") or "api_key"),
+                        username=user_kl,
+                        secret=sec_kl,
+                        run_probe=not self.dry_run_apply,
+                    )
+                else:
+                    hub_kl.vault.store_secret(device_id=dev_ref, secret_value=secret_val)
+                    hub_kl.clear_pending_connection(dev_ref)
+            except Exception as exc:
+                raise ApplianceSetupError(f"Kon geheim niet in kluis opslaan: {exc}") from exc
+            self._sync_household_head_settings()
+            return {
+                "ok": True,
+                "reply_text": (
+                    f"Veilig AES-256 versleuteld opgeslagen in mijn kluis voor '{dev_ref}' — "
+                    "volledig buiten het taalmodel en het gesprekslogboek om!"
+                ),
+                "applied_changes": [
+                    {
+                        "change_id": "",
+                        "kind": "vault_secret",
+                        "title": "🔐 Versleuteld opgeslagen in Kluis",
+                        "summary": f"Geheime sleutel gekoppeld aan '{dev_ref}'",
+                        "undoable": False,
+                    }
+                ],
+                "conjure_panel": None,
+                "voice_enrolled": False,
+                "speaker_match": None,
+                "stage": self.living_stage_snapshot(base_origin=base_origin),
+            }
 
         state = self._load_state()
         char = self._load_character()
@@ -3944,8 +4222,11 @@ class ApplianceSetupService:
             elif intent["kind"] == "conjure_card":
                 conjure_panel = str(intent["card"])
 
-            # Detect Smart Home / Telegram / Wizard setup questions directly so Eva pops open the right secure card
+            # Detect Smart Home / Universal Integrations (UniFi, Protect, Calendar, Email, etc.) / Wizard
             low_txt = raw_text.lower()
+            hub_turn = self._integration_hub()
+            existing_sids = {s["service_id"] for s in hub_turn.list_services() if s.get("has_credential")}
+            existing_kinds = {s["service_kind"] for s in hub_turn.list_services() if s.get("has_credential")}
             if conjure_panel is None:
                 if any(
                     kw in low_txt
@@ -3954,7 +4235,6 @@ class ApplianceSetupService:
                         "homeassistant",
                         "long living token",
                         "long-lived token",
-                        "toegangstoken",
                         "slim huis koppelen",
                         "lampen koppelen",
                     )
@@ -3962,8 +4242,68 @@ class ApplianceSetupService:
                     sh_now = state["modules"]["smart_home"]
                     if not (sh_now.get("enabled") and (self._secrets_dir() / "home-assistant-token").is_file()):
                         conjure_panel = "smart_home"
+                elif "unifi protect" in low_txt or ("protect" in low_txt and "camera" in low_txt):
+                    if "unifi_protect" not in existing_kinds and "unifi_protect" not in existing_sids:
+                        u_det = self._probe_local_unifi_cached()
+                        hub_turn.record_connection_request(
+                            {
+                                "service_id": "unifi_protect",
+                                "title": "UniFi Protect Camera's & Deurbel",
+                                "service_kind": "unifi_protect",
+                                "default_url": u_det["url"],
+                                "auth_mode": "api_key",
+                                "instructions_nl": "Maak in UniFi OS → Instellingen → Control Plane → Integrations een API-Key aan (of kies Lokaal account).",
+                            }
+                        )
+                        conjure_panel = "integrations"
+                elif "unifi" in low_txt:
+                    if "unifi_network" not in existing_kinds and "unifi_network" not in existing_sids:
+                        u_det = self._probe_local_unifi_cached()
+                        hub_turn.record_connection_request(
+                            {
+                                "service_id": "unifi_network",
+                                "title": "UniFi Netwerk & Wi-Fi Aanwezigheid",
+                                "service_kind": "unifi_network",
+                                "default_url": u_det["url"],
+                                "auth_mode": "api_key",
+                                "instructions_nl": "Plak je UniFi OS Integration API-Key (Control Plane → Integrations) of gebruik een lokaal alleen-lezen UniFi-account.",
+                            }
+                        )
+                        conjure_panel = "integrations"
+                elif any(kw in low_txt for kw in ("agenda", "caldav", "kalender", "icloud agenda", "google calendar")):
+                    if "calendar" not in existing_kinds and any(
+                        w in low_txt for w in ("koppel", "verbind", "aansluit", "instel", "toegang")
+                    ):
+                        hub_turn.record_connection_request(
+                            {
+                                "service_id": "gezins_agenda",
+                                "title": "Agenda (CalDAV / iCloud / Google ICS)",
+                                "service_kind": "calendar",
+                                "default_url": "https://caldav.icloud.com",
+                                "auth_mode": "basic_auth",
+                                "instructions_nl": "Vul je CalDAV-adres + app-specifiek wachtwoord in (of kies ICS-link voor een geheime Google/Outlook agenda-URL).",
+                            }
+                        )
+                        conjure_panel = "integrations"
+                elif any(kw in low_txt for kw in ("e-mail", "email", "mailbox", "imap", "gmail")):
+                    if "email" not in existing_kinds and any(
+                        w in low_txt for w in ("koppel", "verbind", "aansluit", "instel", "toegang")
+                    ):
+                        hub_turn.record_connection_request(
+                            {
+                                "service_id": "eigen_email",
+                                "title": "E-mail (IMAP & SMTP)",
+                                "service_kind": "email",
+                                "default_url": "imaps://imap.gmail.com:993",
+                                "auth_mode": "imap_password",
+                                "instructions_nl": "Vul je IMAP-server, e-mailadres en een App-wachtwoord in. Alles blijft AES-256 versleuteld in Eva's lokale kluis.",
+                            }
+                        )
+                        conjure_panel = "integrations"
                 elif any(kw in low_txt for kw in ("telegram koppelen", "botfather")):
                     conjure_panel = "telegram"
+                elif any(kw in low_txt for kw in ("open kluis", "koppelingen openen", "nieuwe koppeling")):
+                    conjure_panel = "integrations"
                 elif any(kw in low_txt for kw in ("open wizard", "start wizard", "kennismaking starten", "onboarding")):
                     conjure_panel = "wizard"
 
@@ -4004,23 +4344,35 @@ class ApplianceSetupService:
         reply_text: str | None = None
 
         if raw_text and snap_now["core_ready"]:
+            pend_before = self._integration_hub().get_pending_connection()
             ctx_parts: list[str] = []
             if applied_changes:
                 notes = "; ".join(f"{c['title']}: {c['summary']}" for c in applied_changes)
                 ctx_parts.append(f"Zojuist live opgeslagen voor het huishouden: {notes}.")
-            if conjure_panel == "smart_home":
-                ha_det = snap_now["channels"]["smart_home"]["lan_detected"]
-                if ha_det.get("reachable"):
+            if conjure_panel in {"smart_home", "integrations"}:
+                if pend_before and pend_before.get("service_id"):
+                    u_det = snap_now.get("integrations", {}).get("unifi_detected") or {}
+                    extra_lan = (
+                        f" (UniFi Console al live gevonden op {u_det['url']}!)"
+                        if pend_before.get("service_kind") in {"unifi_network", "unifi_protect"} and u_det.get("reachable")
+                        else ""
+                    )
                     ctx_parts.append(
-                        f"Home Assistant is zojuist live gevonden op het thuisnetwerk op {ha_det['url']} ({ha_det['ip']}), "
-                        f"en het beveiligde Home Assistant-koppelvak is NU rechts op het scherm voor {speaker_nm} geopend! "
-                        "Vertel enthousiast dat je Home Assistant op het thuisnetwerk ziet draaien en dat hij daar veilig zijn Long-Lived Access Token kan plakken en op 'Verbind & Activeer' kan klikken (nooit in de chat)."
+                        f"Het beveiligde koppelvak voor '{pend_before['title']}'{extra_lan} staat NU rechts op het scherm open voor {speaker_nm}! "
+                        "Vertel enthousiast dat hij zijn API-sleutel of inloggegevens daar veilig in de versleutelde kluis kan plakken en op 'Test, Versleutel & Activeer' kan klikken (nooit in de chat)."
                     )
                 else:
-                    ctx_parts.append(
-                        f"Het beveiligde Home Assistant-koppelvak is NU rechts op het scherm voor {speaker_nm} geopend! "
-                        "Vertel dat hij daar het adres en zijn Long-Lived Access Token veilig kan invullen en met één klik activeert."
-                    )
+                    ha_det = snap_now["channels"]["smart_home"]["lan_detected"]
+                    if ha_det.get("reachable"):
+                        ctx_parts.append(
+                            f"Home Assistant is live gevonden op {ha_det['url']} ({ha_det['ip']}), "
+                            f"en het beveiligde koppelvak staat NU rechts op het scherm open voor {speaker_nm}! "
+                            "Vertel dat hij daar veilig zijn Long-Lived Access Token kan plakken en op 'Verbind & Activeer' klikt."
+                        )
+                    else:
+                        ctx_parts.append(
+                            f"Het beveiligde Koppelingen & Kluis-venster staat NU rechts op het scherm open voor {speaker_nm}!"
+                        )
             elif conjure_panel == "wizard":
                 ctx_parts.append(
                     "De 6-staps Kennismakings-Wizard is zojuist rechts op het scherm geopend zodat alles stap voor stap kan worden nagelopen."
@@ -4034,12 +4386,16 @@ class ApplianceSetupService:
             if ctx_parts:
                 core_prompt = (
                     f"[Contextnotitie: {' '.join(ctx_parts)} "
-                    "Reageer warm, natuurlijk en vlot in maximaal twee korte Nederlandse zinnen zonder systeemtermen.]\n"
+                    "Reageer warm, natuurlijk en vlot in het Nederlands zonder systeemtermen.]\n"
                     f"{'Bezoeker' if unknown_voice else speaker_nm} zegt: {raw_text}"
                 )
             else:
                 core_prompt = raw_text
             reply_text = self._try_core_conversation_turn(core_prompt)
+            # If Eva's model invoked `request_owner_connection` during this turn, auto-open the card on the 3D stage!
+            pend_after = self._integration_hub().get_pending_connection()
+            if pend_after and conjure_panel is None:
+                conjure_panel = "integrations"
 
         if not reply_text:
             if applied_changes:

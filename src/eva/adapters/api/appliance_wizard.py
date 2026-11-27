@@ -84,6 +84,7 @@ _PAIR_HTML = """<!doctype html>
     <input id="pair-code" autocomplete="off" spellcheck="false" placeholder="EVA-XXXX-XXXX-XXXX" required>
     <button type="submit">Open Eva Wizard</button>
   </form>
+  <button id="pair-local-btn" type="button" hidden style="margin-top:.65rem;background:#1d4ed8;color:#eff6ff">Direct openen op deze pc</button>
   <p id="pair-msg" role="status"></p>
 </main>
 <script>
@@ -91,6 +92,21 @@ _PAIR_HTML = """<!doctype html>
   const msg = document.getElementById('pair-msg');
   const input = document.getElementById('pair-code');
   const form = document.getElementById('pair-form');
+  const localBtn = document.getElementById('pair-local-btn');
+  async function tryLocalLoopbackPair() {
+    msg.textContent = 'Lokale pc herkend — Eva direct openen…';
+    const res = await fetch('/internal/v1/appliance/pair-local', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'Content-Type': 'application/json'},
+      body: '{}'
+    });
+    if (res.ok) {
+      location.replace('/');
+      return true;
+    }
+    return false;
+  }
   async function submitCode(code) {
     msg.textContent = 'Koppelcode controleren…';
     const res = await fetch('/internal/v1/appliance/pair', {
@@ -108,10 +124,17 @@ _PAIR_HTML = """<!doctype html>
     msg.textContent = detail;
   }
   const hashCode = decodeURIComponent(location.hash.slice(1)).trim();
+  const isLoopbackHost = location.hostname === '127.0.0.1' || location.hostname === 'localhost' || location.hostname === '[::1]';
+  if (isLoopbackHost) {
+    localBtn.hidden = false;
+    localBtn.addEventListener('click', () => { tryLocalLoopbackPair().catch(() => {}); });
+  }
   if (hashCode) {
     history.replaceState(null, '', '/pair');
     input.value = hashCode;
     submitCode(hashCode).catch(() => { msg.textContent = 'Verbinding met Eva mislukt.'; });
+  } else if (isLoopbackHost) {
+    tryLocalLoopbackPair().catch(() => { msg.textContent = 'Klik op "Direct openen op deze pc" of vul je koppelcode in.'; });
   }
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
@@ -1294,6 +1317,30 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
             },
         )
 
+    @app.post("/internal/v1/appliance/pair-local")
+    async def pair_local_loopback(request: Request) -> Response:
+        client_key = _require_lan(request)
+        _require_same_origin(request)
+        host_hdr = (request.headers.get("host") or "").split(":", 1)[0].strip().lower()
+        if host_hdr not in {"127.0.0.1", "localhost", "[::1]"}:
+            raise HTTPException(status_code=403, detail="alleen rechtstreeks op deze pc toegestaan")
+        try:
+            session_id = service.exchange_loopback_session(remote_host=client_key)
+        except Exception as exc:
+            status_code = getattr(exc, "status_code", 403)
+            raise HTTPException(status_code=status_code, detail=str(exc)) from exc
+        response = Response(status_code=204, headers=_SECURITY_HEADERS)
+        response.set_cookie(
+            key=_SESSION_COOKIE,
+            value=session_id,
+            max_age=12 * 3600,
+            httponly=True,
+            samesite="strict",
+            secure=request.url.scheme == "https",
+            path="/",
+        )
+        return response
+
     @app.post("/internal/v1/appliance/pair")
     async def pair_exchange(request: Request) -> Response:
         client_key = _require_lan(request)
@@ -1309,6 +1356,7 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         response.set_cookie(
             key=_SESSION_COOKIE,
             value=session_id,
+            max_age=12 * 3600,
             httponly=True,
             samesite="strict",
             secure=request.url.scheme == "https",
@@ -1562,6 +1610,24 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_session(request)
         _require_same_origin(request)
         return _call(service.connect_smart_home, await _read_json(request))
+
+    @app.post("/internal/v1/appliance/living/integrations/connect")
+    async def post_living_integrations_connect(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.connect_universal_service, await _read_json(request))
+
+    @app.post("/internal/v1/appliance/living/integrations/{service_id}/remove")
+    async def post_living_integrations_remove(request: Request, service_id: str) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.remove_universal_service, service_id)
+
+    @app.post("/internal/v1/appliance/living/capabilities/{capability_id}/remove")
+    async def post_living_capability_remove(request: Request, capability_id: str) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.delete_custom_capability, capability_id)
 
     @app.get("/welkom/{token}", response_class=HTMLResponse)
     def get_member_welcome_page(request: Request, token: str) -> HTMLResponse:

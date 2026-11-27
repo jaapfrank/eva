@@ -342,8 +342,8 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       <button type="button" class="pill active-cyan" id="btn-wizard" title="Open de 6-staps Kennismakings- &amp; Installatie-Wizard">
         🪄 <span id="wiz-hud-label">Kennismakings-Wizard</span>
       </button>
-      <button type="button" class="pill" id="btn-smart-home" title="Koppel of beheer Home Assistant veilig">
-        🔌 <span id="ha-hud-label">Slim Huis</span>
+      <button type="button" class="pill" id="btn-smart-home" title="Koppel UniFi, Protect, Agenda, E-mail, Home Assistant of bekijk Eva's eigen vaardigheden">
+        🔌 <span id="ha-hud-label">Koppelingen &amp; Kluis</span>
       </button>
       <button type="button" class="pill" id="btn-guest-mode" title="Scherm privézaken direct af als er visite is">
         🥂 <span id="guest-mode-label">Visite-modus</span>
@@ -393,8 +393,9 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
   <!-- Bottom Conversational Bar -->
   <footer class="bottom-dock" id="bottom-dock">
     <div class="chips-row">
-      <button type="button" class="chip" data-panel="smart_home">🔌 Home Assistant koppelen</button>
-      <button type="button" class="chip" data-say="Na 21:00 uur alleen nog storen als het dringend is.">🌙 Na 21:00 uur rust</button>
+      <button type="button" class="chip" data-panel="integrations">🔌 Koppelingen &amp; Kluis</button>
+      <button type="button" class="chip" data-say="Eva, maak verbinding met mijn UniFi netwerk en UniFi Protect.">📡 Koppel UniFi &amp; Protect</button>
+      <button type="button" class="chip" data-say="Eva, maak verbinding met mijn agenda en e-mail.">📅 Koppel Agenda &amp; Mail</button>
       <button type="button" class="chip" data-say="Eva, we krijgen visite!">🥂 We krijgen visite!</button>
       <button type="button" class="chip" data-panel="family">💌 QR-kaart voor Lola</button>
     </div>
@@ -899,8 +900,13 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       $('rules-count').textContent = `(${(hh.custom_rules || []).length})`;
 
       const haConnected = !!(sh.enabled && sh.secret_present);
-      $('btn-smart-home').classList.toggle('active-emerald', haConnected);
-      $('ha-hud-label').textContent = haConnected ? 'Slim Huis ✓' : (sh.lan_detected?.reachable ? 'Slim Huis (gevonden!)' : 'Slim Huis');
+      const vaultSvcs = stage.integrations?.services || [];
+      const customCaps = stage.integrations?.capabilities || [];
+      const totalConnected = (haConnected ? 1 : 0) + vaultSvcs.filter(s => s.has_credential).length;
+      $('btn-smart-home').classList.toggle('active-emerald', totalConnected > 0);
+      $('ha-hud-label').textContent = totalConnected > 0
+        ? `Koppelingen (${totalConnected})${customCaps.length ? ' · ' + customCaps.length + ' skills' : ''}`
+        : (sh.lan_detected?.reachable || stage.integrations?.unifi_detected?.reachable ? 'Koppelingen (gevonden!)' : 'Koppelingen & Kluis');
 
       const guestOn = !!hh.guest_mode_active;
       document.body.classList.toggle('guest-mode', guestOn);
@@ -1011,6 +1017,298 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           <div id="ha-status-msg" style="margin-top:8px; font-size:0.82rem;"></div>
         </div>
       `;
+    }
+
+    let selectedIntegrationPreset = 'auto';
+
+    function getIntegrationPresets(unifiUrl) {
+      return {
+        home_assistant: { label: '🏡 Home Assistant' },
+        unifi_network: {
+          label: '📡 UniFi Netwerk',
+          service_id: 'unifi_network',
+          title: 'UniFi Netwerk & Wi-Fi',
+          service_kind: 'unifi_network',
+          base_url: unifiUrl || 'https://192.168.1.1',
+          auth_mode: 'api_key',
+          hint: 'Maak in UniFi OS → Instellingen → Control Plane → Integrations een API-Key aan (of kies Lokaal account hieronder).'
+        },
+        unifi_protect: {
+          label: '🎥 UniFi Protect',
+          service_id: 'unifi_protect',
+          title: 'UniFi Protect Camera’s & Deurbel',
+          service_kind: 'unifi_protect',
+          base_url: unifiUrl || 'https://192.168.1.1',
+          auth_mode: 'api_key',
+          hint: 'Gebruik een UniFi OS Integration API-Key of een lokaal UniFi OS-account voor camera’s & slimme detecties.'
+        },
+        calendar: {
+          label: '📅 Agenda',
+          service_id: 'gezins_agenda',
+          title: 'Agenda (CalDAV / iCloud / Google ICS)',
+          service_kind: 'calendar',
+          base_url: 'https://caldav.icloud.com',
+          auth_mode: 'basic_auth',
+          hint: 'Vul je CalDAV-adres + app-wachtwoord in, of kies "Geheime ICS-link" voor Google/Outlook agenda’s.'
+        },
+        email: {
+          label: '✉️ E-mail',
+          service_id: 'eigen_email',
+          title: 'E-mail (IMAP & SMTP)',
+          service_kind: 'email',
+          base_url: 'imaps://imap.gmail.com:993',
+          auth_mode: 'imap_password',
+          hint: 'Vul je IMAP-server, e-mailadres en App-wachtwoord in (bijv. Gmail App-wachtwoord of eigen mailserver).'
+        },
+        rest_api: {
+          label: '🌐 Eigen API / Dienst',
+          service_id: 'eigen_dienst',
+          title: 'Eigen Dienst / API',
+          service_kind: 'rest_api',
+          base_url: 'https://',
+          auth_mode: 'bearer_token',
+          hint: 'Koppel elk systeem (zonnepanelen, NAS, P1-meter, webhook of REST-API). Eva bouwt zelf de ontbrekende logica erbij!'
+        }
+      };
+    }
+
+    function buildUniversalIntegrationsHtml() {
+      const sh = stage.channels?.smart_home || {};
+      const integ = stage.integrations || {};
+      const pending = integ.pending_request;
+      const unifiDet = integ.unifi_detected || {};
+      const presets = getIntegrationPresets(unifiDet.reachable ? unifiDet.url : 'https://192.168.1.1');
+
+      let activeKey = selectedIntegrationPreset;
+      if (activeKey === 'auto') {
+        if (pending && pending.service_kind && presets[pending.service_kind]) {
+          activeKey = pending.service_kind;
+        } else if (!(sh.enabled && sh.secret_present) && sh.lan_detected?.reachable) {
+          activeKey = 'home_assistant';
+        } else if (unifiDet.reachable) {
+          activeKey = 'unifi_network';
+        } else {
+          activeKey = 'home_assistant';
+        }
+      }
+
+      const presetTabs = Object.entries(presets).map(([k, p]) => `
+        <button type="button" class="chip" data-integ-tab="${escapeHtml(k)}" style="${k === activeKey ? 'border-color:#38bdf8;background:rgba(14,65,102,0.82);color:#fff;font-weight:700;' : ''}">
+          ${escapeHtml(p.label)}
+        </button>
+      `).join('');
+
+      const pendingBanner = pending ? `
+        <div class="card-sec" style="border-color:rgba(56,189,248,0.68); background:rgba(8,47,73,0.62);">
+          <div style="font-size:0.82rem; font-weight:700; color:#7dd3fc; margin-bottom:4px;">
+            ✨ Eva staat klaar om te koppelen: ${escapeHtml(pending.title || pending.service_id)}
+          </div>
+          <div style="font-size:0.79rem; color:#e0f2fe; line-height:1.42;">
+            ${escapeHtml(pending.instructions_nl || 'Vul hieronder je gegevens veilig in Eva’s AES-256 Kluis in (buiten de chat om).')}
+          </div>
+        </div>
+      ` : '';
+
+      let formHtml = '';
+      if (activeKey === 'home_assistant') {
+        formHtml = buildSmartHomeSectionHtml(sh);
+      } else {
+        const p = presets[activeKey] || presets.rest_api;
+        const usePending = pending && (pending.service_kind === activeKey || activeKey === 'rest_api');
+        const sid = usePending ? pending.service_id : p.service_id;
+        const stitle = usePending ? pending.title : p.title;
+        const surl = (usePending && pending.default_url) ? pending.default_url : p.base_url;
+        const sauth = (usePending && pending.auth_mode) ? pending.auth_mode : p.auth_mode;
+        const shint = (usePending && pending.instructions_nl) ? pending.instructions_nl : p.hint;
+        const unifiBadge = (activeKey.startsWith('unifi_') && unifiDet.reachable)
+          ? `<span class="badge-info">🟢 Gevonden op ${escapeHtml(unifiDet.ip)}</span>`
+          : '<span class="badge-info">🔐 AES-256 Kluis</span>';
+
+        formHtml = `
+          <div class="card-sec">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+              <strong style="font-size:0.92rem;">${escapeHtml(p.label)} koppelen</strong>
+              ${unifiBadge}
+            </div>
+            <div style="font-size:0.79rem; color:var(--muted); margin-bottom:10px; line-height:1.45;">
+              ${escapeHtml(shint)}
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div class="field">
+                <label>Naam</label>
+                <input id="uv-title" type="text" value="${escapeHtml(stitle)}" />
+              </div>
+              <div class="field">
+                <label>Kluis-ID</label>
+                <input id="uv-id" type="text" value="${escapeHtml(sid)}" />
+              </div>
+            </div>
+            <input id="uv-kind" type="hidden" value="${escapeHtml(usePending ? pending.service_kind : p.service_kind)}" />
+            <div class="field">
+              <label>Serveradres / URL</label>
+              <input id="uv-url" type="text" value="${escapeHtml(surl)}" placeholder="https://..." />
+            </div>
+            <div class="field">
+              <label>Authenticatie</label>
+              <select id="uv-auth">
+                <option value="api_key" ${sauth === 'api_key' ? 'selected' : ''}>API-Key (bijv. UniFi X-API-KEY)</option>
+                <option value="basic_auth" ${sauth === 'basic_auth' ? 'selected' : ''}>Gebruikersnaam + Wachtwoord (Lokaal UniFi / CalDAV)</option>
+                <option value="imap_password" ${sauth === 'imap_password' ? 'selected' : ''}>E-mailadres + App-wachtwoord (IMAP/SMTP)</option>
+                <option value="bearer_token" ${sauth === 'bearer_token' ? 'selected' : ''}>Bearer Token (REST / OAuth)</option>
+                <option value="ics_url" ${sauth === 'ics_url' ? 'selected' : ''}>Alleen-lezen geheime ICS-link (zonder wachtwoord)</option>
+              </select>
+            </div>
+            <div class="field" id="uv-user-wrap">
+              <label>Gebruikersnaam / E-mailadres (alleen indien nodig)</label>
+              <input id="uv-user" type="text" autocomplete="off" placeholder="bijv. lokaal account of naam@voorbeeld.nl" />
+            </div>
+            <div class="field" id="uv-sec-wrap">
+              <label>API-sleutel / Wachtwoord (blijft versleuteld buiten LLM)</label>
+              <input id="uv-secret" type="password" autocomplete="new-password" placeholder="Plak veilig in Eva’s Kluis…" />
+            </div>
+            ${activeKey === 'email' ? `
+              <div class="field">
+                <label>Optioneel: SMTP-server (voor uitgaande mail, bijv. smtps://smtp.gmail.com:465)</label>
+                <input id="uv-smtp" type="text" placeholder="Automatisch afgeleid uit IMAP indien leeg" />
+              </div>
+            ` : ''}
+            <button type="button" class="btn-primary" id="btn-uv-connect" style="margin-top:4px;">
+              🔐 Test, Versleutel &amp; Activeer direct
+            </button>
+            <div id="uv-status-msg" style="margin-top:8px; font-size:0.82rem; line-height:1.42;"></div>
+          </div>
+        `;
+      }
+
+      const svcs = integ.services || [];
+      const svcsHtml = svcs.length ? `
+        <div class="card-sec">
+          <strong style="display:block; font-size:0.86rem; margin-bottom:8px;">🔐 Actieve diensten in Eva's Kluis (${svcs.length})</strong>
+          ${svcs.map(s => `
+            <div class="list-item" style="align-items:flex-start;">
+              <div>
+                <div style="font-weight:700;">${escapeHtml(s.title)} <span style="font-size:0.72rem; color:#6ee7b7;">(${escapeHtml(s.service_id)})</span></div>
+                <div style="font-size:0.75rem; color:var(--muted);">${escapeHtml(s.last_summary || s.base_url)}</div>
+              </div>
+              <button type="button" class="btn-ghost" data-del-svc="${escapeHtml(s.service_id)}" style="padding:5px 9px; font-size:0.75rem;">✕</button>
+            </div>
+          `).join('')}
+        </div>
+      ` : '';
+
+      const caps = integ.capabilities || [];
+      const capsHtml = `
+        <div class="card-sec">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-size:0.86rem;">🛠️ Door Eva zelfgebouwde vaardigheden (${caps.length})</strong>
+            <span class="badge-info">Autonome Sandbox</span>
+          </div>
+          <div style="font-size:0.77rem; color:var(--muted); line-height:1.42; margin-bottom:${caps.length ? '8px' : '0'};">
+            Vraag je Eva iets dat ze nog niet standaard kan? Dan zoekt ze zelf de documentatie op en programmeert, test en bewaart ze hier een nieuwe Python-vaardigheid.
+          </div>
+          ${caps.map(c => `
+            <div class="list-item" style="align-items:flex-start;">
+              <div>
+                <div style="font-weight:700;">⚡ ${escapeHtml(c.title)} <span style="font-size:0.71rem; color:#7dd3fc;">(${escapeHtml(c.capability_id)})</span></div>
+                <div style="font-size:0.75rem; color:var(--muted);">${escapeHtml(c.description || 'Geverifieerd in geïsoleerde sandbox')}</div>
+              </div>
+              <button type="button" class="btn-ghost" data-del-cap="${escapeHtml(c.capability_id)}" style="padding:5px 9px; font-size:0.75rem;">✕</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      return `
+        ${pendingBanner}
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:11px;">${presetTabs}</div>
+        ${formHtml}
+        ${svcsHtml}
+        ${capsHtml}
+      `;
+    }
+
+    function wireUniversalIntegrationsHandlers(rerenderFn) {
+      wireSmartHomeHandlers();
+      const body = $('drawer-body');
+      body.querySelectorAll('[data-integ-tab]').forEach(b => {
+        b.onclick = () => {
+          selectedIntegrationPreset = b.dataset.integTab;
+          rerenderFn();
+        };
+      });
+
+      const authSel = $('uv-auth');
+      if (authSel) {
+        const syncAuthVisibility = () => {
+          const mode = authSel.value;
+          if ($('uv-user-wrap')) $('uv-user-wrap').style.display = (mode === 'basic_auth' || mode === 'imap_password') ? 'block' : 'none';
+          if ($('uv-sec-wrap')) $('uv-sec-wrap').style.display = (mode === 'ics_url') ? 'none' : 'block';
+        };
+        authSel.onchange = syncAuthVisibility;
+        syncAuthVisibility();
+      }
+
+      const uvBtn = $('btn-uv-connect');
+      if (uvBtn) {
+        uvBtn.onclick = async () => {
+          const msg = $('uv-status-msg');
+          uvBtn.disabled = true;
+          uvBtn.textContent = '⏳ Testen & versleutelen in Kluis…';
+          msg.style.color = '#bae6fd';
+          msg.textContent = 'Verbinding live controleren en sleutel AES-256 versleutelen…';
+          try {
+            const r = await fetch('/internal/v1/appliance/living/integrations/connect', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                service_id: $('uv-id').value.trim(),
+                title: $('uv-title').value.trim(),
+                service_kind: $('uv-kind').value,
+                base_url: $('uv-url').value.trim(),
+                auth_mode: $('uv-auth').value,
+                username: $('uv-user') ? $('uv-user').value.trim() : '',
+                secret: $('uv-secret') ? $('uv-secret').value.trim() : '',
+                smtp_url: $('uv-smtp') ? $('uv-smtp').value.trim() : ''
+              })
+            });
+            const d = await r.json();
+            if (!r.ok) {
+              msg.style.color = '#fb7185';
+              msg.textContent = d.detail || 'Koppelen mislukt.';
+              return;
+            }
+            if ($('uv-secret')) $('uv-secret').value = '';
+            if (d.stage) applyStageState(d.stage, { preserveDrawerInputs: true });
+            rerenderFn();
+            pushHeardCard({
+              title: '🔐 Gekoppeld in Kluis!',
+              summary: d.detail,
+              undoable: false
+            });
+            await speakDutch(`Gelukt! ${d.detail} Je kunt me nu direct vragen om ermee te werken.`);
+          } finally {
+            if ($('btn-uv-connect')) {
+              $('btn-uv-connect').disabled = false;
+              $('btn-uv-connect').textContent = '🔐 Test, Versleutel & Activeer direct';
+            }
+          }
+        };
+      }
+
+      body.querySelectorAll('[data-del-svc]').forEach(b => {
+        b.onclick = async () => {
+          const r = await fetch(`/internal/v1/appliance/living/integrations/${encodeURIComponent(b.dataset.delSvc)}/remove`, { method: 'POST' });
+          const d = await r.json();
+          if (r.ok && d.stage) { applyStageState(d.stage, { preserveDrawerInputs: true }); rerenderFn(); }
+        };
+      });
+      body.querySelectorAll('[data-del-cap]').forEach(b => {
+        b.onclick = async () => {
+          const r = await fetch(`/internal/v1/appliance/living/capabilities/${encodeURIComponent(b.dataset.delCap)}/remove`, { method: 'POST' });
+          const d = await r.json();
+          if (r.ok && d.stage) { applyStageState(d.stage, { preserveDrawerInputs: true }); rerenderFn(); }
+        };
+      });
     }
 
     function wireSmartHomeHandlers() {
@@ -1227,7 +1525,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         `;
       } else if (wizardStep === 5) {
         contentHtml = `
-          ${buildSmartHomeSectionHtml(sh)}
+          ${buildUniversalIntegrationsHtml()}
 
           <div class="card-sec">
             <strong style="display:block; margin-bottom:4px;">💌 Persoonlijke 1-Scan Welkomstkaart voor Lola</strong>
@@ -1507,7 +1805,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
 
       if (wizardStep === 5) {
-        wireSmartHomeHandlers();
+        wireUniversalIntegrationsHandlers(() => renderWizardStep());
         $('btn-wiz-lola-qr').onclick = async () => {
           const nm = $('wiz-wlk-name').value.trim() || 'Lola';
           const r = await fetch('/internal/v1/appliance/living/member-welcome', {
@@ -1586,17 +1884,20 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       const hh = stage.household || {};
       const sh = stage.channels?.smart_home || {};
 
-      if (kind === 'smart_home') {
-        title.textContent = '🔌 Slim Huis & Home Assistant';
-        body.innerHTML = buildSmartHomeSectionHtml(sh) + `
+      if (kind === 'smart_home' || kind === 'integrations') {
+        if (kind === 'smart_home' && selectedIntegrationPreset === 'auto' && !stage.integrations?.pending_request) {
+          selectedIntegrationPreset = 'home_assistant';
+        }
+        title.textContent = '🔌 Koppelingen, Kluis & Eigen Vaardigheden';
+        body.innerHTML = buildUniversalIntegrationsHtml() + `
           <div class="card-sec">
-            <button type="button" class="btn-ghost" id="btn-lan-scan" style="width:100%;">🔍 Scan lokaal thuisnetwerk op slimme apparaten</button>
+            <button type="button" class="btn-ghost" id="btn-lan-scan" style="width:100%;">🔍 Scan lokaal thuisnetwerk op apparaten (UniFi, Hue, Sonos, Camera’s…)</button>
             <div id="lan-devs-list" style="margin-top:10px;">
-              ${(stage.discovered_devices || []).map(d => `<div class="list-item"><span>${escapeHtml(d.friendly_name || d.hostname || d.ip)}</span><span style="color:var(--muted); font-size:0.76rem;">${escapeHtml(d.category || '')}</span></div>`).join('')}
+              ${(stage.discovered_devices || []).map(d => `<div class="list-item"><span>${escapeHtml(d.display_name || d.friendly_name || d.hostname || d.ip)}</span><span style="color:var(--muted); font-size:0.76rem;">${escapeHtml(d.kind || d.category || '')}</span></div>`).join('')}
             </div>
           </div>
         `;
-        wireSmartHomeHandlers();
+        wireUniversalIntegrationsHandlers(() => renderDrawer(kind));
         $('btn-lan-scan').onclick = async () => {
           $('btn-lan-scan').textContent = 'Scannen…';
           const r = await fetch('/internal/v1/appliance/living/lan-scan', { method: 'POST' });
@@ -1663,7 +1964,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     // --- 7. Wiring & Startup ---
     $('btn-close-drawer').onclick = closeDrawer;
     $('btn-wizard').onclick = () => activeDrawer === 'wizard' ? closeDrawer() : openDrawer('wizard');
-    $('btn-smart-home').onclick = () => activeDrawer === 'smart_home' ? closeDrawer() : openDrawer('smart_home');
+    $('btn-smart-home').onclick = () => (activeDrawer === 'integrations' || activeDrawer === 'smart_home') ? closeDrawer() : openDrawer('integrations');
     $('btn-rules').onclick = () => activeDrawer === 'rules' ? closeDrawer() : openDrawer('rules');
     $('btn-family').onclick = () => activeDrawer === 'family' ? closeDrawer() : openDrawer('family');
 

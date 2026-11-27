@@ -747,3 +747,171 @@ def test_wizard_voice_verification_and_smart_home_conjuring_and_env(tmp_path: Pa
     assert fin.json()["wizard_completed"] is True
 
 
+def test_persistent_sessions_loopback_auto_pair_universal_vault_and_self_building(tmp_path: Path) -> None:
+    import asyncio
+    import threading
+    from eva.adapters.connectors.mcp_gateway import McpGatewayConfig, McpGatewayToolAdapter
+    from eva.operations.appliance_mcp_gateway import (
+        ApplianceMcpGatewayServer,
+        UniversalIntegrationHub,
+        build_appliance_gateway_catalog,
+    )
+    from eva.providers.mcp_gateway import parse_mcp_gateway_catalog
+
+    service1 = _service(tmp_path)
+    app1 = create_appliance_wizard_app(service1)
+
+    # 1. Loopback auto-pairing works on 127.0.0.1 and persists across service restarts!
+    local_client = TestClient(
+        app1,
+        headers={"host": "127.0.0.1:8765", "origin": "http://127.0.0.1:8765"},
+        client=("127.0.0.1", 52001),
+    )
+    assert local_client.post("/internal/v1/appliance/pair-local", json={}).status_code == 204
+    assert local_client.get("/internal/v1/appliance/living/state").status_code == 200
+    saved_cookie = local_client.cookies.get("eva_appliance_session")
+    assert saved_cookie
+
+    # LAN clients (non-loopback) are strictly forbidden from pair-local
+    lan_client = TestClient(
+        app1,
+        headers={"host": "127.0.0.1:8765", "origin": "http://127.0.0.1:8765"},
+        client=("192.168.1.99", 52002),
+    )
+    assert lan_client.post("/internal/v1/appliance/pair-local", json={}).status_code == 403
+
+    # Simulate service restart: brand-new ApplianceSetupService instance reloads sessions.private.json
+    service2 = _service(tmp_path)
+    app2 = create_appliance_wizard_app(service2)
+    restarted_client = TestClient(
+        app2,
+        headers={"host": "127.0.0.1:8765", "origin": "http://127.0.0.1:8765"},
+        client=("127.0.0.1", 52003),
+    )
+    restarted_client.cookies.set("eva_appliance_session", saved_cookie)
+    assert restarted_client.get("/internal/v1/appliance/living/state").status_code == 200
+
+    # 2. Asking Eva to connect UniFi Protect / Agenda conjures universal integrations & sets pending request
+    unifi_turn = restarted_client.post(
+        "/internal/v1/appliance/living/turn",
+        json={"text": "Eva, maak verbinding met mijn UniFi Protect camera's."},
+    )
+    assert unifi_turn.status_code == 200
+    assert unifi_turn.json()["conjure_panel"] == "integrations"
+    pend = unifi_turn.json()["stage"]["integrations"]["pending_request"]
+    assert pend["service_kind"] == "unifi_protect"
+
+    # 3. Connecting UniFi Network & Agenda stores AES-256-GCM credentials without exposing secrets in state
+    conn_unifi = restarted_client.post(
+        "/internal/v1/appliance/living/integrations/connect",
+        json={
+            "service_id": "unifi_network",
+            "title": "UniFi Thuisnetwerk",
+            "service_kind": "unifi_network",
+            "base_url": "https://10.0.20.1",
+            "auth_mode": "api_key",
+            "secret": "unifi_super_secret_key_998877",
+            "skip_probe": True,
+        },
+    )
+    assert conn_unifi.status_code == 200
+    stage_json = json.dumps(conn_unifi.json()["stage"])
+    assert "unifi_super_secret_key_998877" not in stage_json
+    assert any(s["service_id"] == "unifi_network" for s in conn_unifi.json()["stage"]["integrations"]["services"])
+
+    # Pre-LLM /kluis command stores secret directly in vault
+    kluis_turn = restarted_client.post(
+        "/internal/v1/appliance/living/turn",
+        json={"text": "/kluis unifi_protect protect_secret_token_12345"},
+    )
+    assert kluis_turn.status_code == 200
+    assert "protect_secret_token_12345" not in json.dumps(kluis_turn.json())
+
+    # 4. Verify sealed EvaMcpGatewayProvider/v4 catalog & Eva's self-programming capability sandbox
+    hub = UniversalIntegrationHub(tmp_path / "runtime")
+    gw_srv = ApplianceMcpGatewayServer(
+        ("127.0.0.1", 0),
+        hub=hub,
+        gateway_token="gw_test_token_with_32_characters_minimum",
+        registration_token="reg_test_token_with_32_characters_minimum",
+    )
+    gw_port = gw_srv.server_address[1]
+    threading.Thread(target=gw_srv.serve_forever, daemon=True).start()
+    try:
+        catalog_dict = build_appliance_gateway_catalog()
+        specs = parse_mcp_gateway_catalog(json.dumps(catalog_dict))
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(
+                base_url=f"http://127.0.0.1:{gw_port}",
+                bearer_token="gw_test_token_with_32_characters_minimum",
+                allow_plain_http=True,
+            ),
+            specs,
+        )
+        verified_hashes = asyncio.run(adapter.verify_catalog())
+        assert set(verified_hashes) == {
+            "discover_network_and_vault",
+            "request_owner_connection",
+            "use_vault_service",
+            "build_and_run_capability",
+        }
+
+        # Eva synthesizes, AST-validates, sandbox-tests, saves, and runs a brand-new Python capability!
+        create_res = hub.handle_capability_tool(
+            {
+                "action": "create_or_update",
+                "capability_id": "zonnepanelen_opbrengst",
+                "title": "Zonnepanelen Dagopbrengst",
+                "description": "Berekent netto kWh en slaat laatste stand op",
+                "service_id": "",
+                "python_code": (
+                    "def run_capability(ctx, params):\n"
+                    "    prev = ctx.get_state().get('runs', 0) + 1\n"
+                    "    ctx.set_state({'runs': prev})\n"
+                    "    watt = float(params.get('watt', 1200))\n"
+                    "    return {'kwh_schatting': round(watt * 4.5 / 1000.0, 2), 'run_nr': prev}\n"
+                ),
+                "params_json": json.dumps({"watt": 2000}),
+            }
+        )
+        assert create_res["ok"] is True
+        assert create_res["test_output"]["kwh_schatting"] == 9.0
+
+        run_res = hub.handle_capability_tool(
+            {
+                "action": "run",
+                "capability_id": "zonnepanelen_opbrengst",
+                "title": "",
+                "description": "",
+                "service_id": "",
+                "python_code": "",
+                "params_json": json.dumps({"watt": 3000}),
+            }
+        )
+        assert run_res["ok"] is True
+        assert run_res["output"]["kwh_schatting"] == 13.5
+        assert run_res["output"]["run_nr"] == 2
+
+        # Ensure /rpc float outputs sanitize cleanly for canonical_sha256 in McpGatewayToolAdapter
+        from eva.contracts.canonical_json import canonical_sha256
+        rpc_out = adapter._call_tool(
+            "build_and_run_capability",
+            {
+                "action": "run",
+                "capability_id": "zonnepanelen_opbrengst",
+                "title": "",
+                "description": "",
+                "service_id": "",
+                "python_code": "",
+                "params_json": json.dumps({"watt": 3000}),
+            },
+            "rpc_test_id_01",
+        )
+        assert canonical_sha256(rpc_out)
+        assert rpc_out["output"]["kwh_schatting"] == "13.5"
+    finally:
+        gw_srv.shutdown()
+        gw_srv.server_close()
+
+
+
