@@ -724,9 +724,15 @@ class UniversalIntegrationHub:
             "expires_epoch": int(time.time()) + 600,
         }
         _write_private_json(self.pending_file, req)
+        extra_note = (
+            "Het koppelvak staat nu rechts op het scherm open met het vinkje voor zowel UniFi Netwerk als UniFi Protect standaard AAN (één UniFi OS API-Key koppelt beide direct; roep request_owner_connection niet nogmaals aan)."
+            if kind in {"unifi_network", "unifi_protect"}
+            else "Het beveiligde koppelvak staat nu rechts op het scherm open."
+        )
         return {
             "ok": True,
             "status": "connection_card_opened_on_stage",
+            "note_nl": extra_note,
             "request": req,
         }
 

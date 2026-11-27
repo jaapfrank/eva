@@ -68,7 +68,7 @@ _MAX_TTS_CACHE_ITEMS = 72
 
 
 def clean_spoken_dutch(text: str) -> str:
-    """Clean markdown/URLs so neural TTS reads warm, natural Dutch prose."""
+    """Clean markdown, URLs, and emojis so neural TTS reads warm, natural Dutch prose."""
     cleaned = re.sub(r"```[\s\S]*?```", " ", text or "")
     cleaned = re.sub(r"`([^`]+)`", r"\1", cleaned)
     cleaned = re.sub(r"\[([^\]]+)\]\(https?://[^)]+\)", r"\1", cleaned)
@@ -76,7 +76,10 @@ def clean_spoken_dutch(text: str) -> str:
     cleaned = re.sub(r"\*\*([^*]+)\*\*", r"\1", cleaned)
     cleaned = re.sub(r"\*([^*]+)\*", r"\1", cleaned)
     cleaned = re.sub(r"^#+\s*", "", cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r"[\U0001F1E6-\U0001FAFF\u2600-\u27BF\uFE0F\u200D]+", " ", cleaned)
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    if not re.search(r"[A-Za-z0-9À-ÿ]", cleaned):
+        return ""
     return cleaned[:1400]
 
 
@@ -444,7 +447,7 @@ class RealtimeVoiceHub:
                 "input_audio_transcription": {"model": "gpt-4o-mini-transcribe", "language": "nl"},
                 "turn_detection": {
                     "type": "semantic_vad",
-                    "eagerness": "medium",
+                    "eagerness": "low",
                     "create_response": True,
                     "interrupt_response": True,
                 },

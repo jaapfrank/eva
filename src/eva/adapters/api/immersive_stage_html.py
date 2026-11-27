@@ -835,6 +835,9 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
 
     // --- 4. Continuous Hands-Free Realtime Live Call (gpt-realtime-2.1, gpt-realtime-2.1-mini & gemini-3.8-live) ---
     let liveCallSession = null;
+    let userIntendedLiveCall = false;
+    let liveReconnectAttempts = 0;
+    let liveReconnectTimer = null;
 
     function syncLiveCallUi(stateText = null) {
       const active = !!liveCallSession;
@@ -851,7 +854,12 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       if (stateText) $('eva-subtitle').textContent = stateText;
     }
 
-    async function stopRealtimeLiveCall(reasonMsg = null) {
+    async function stopRealtimeLiveCall(reasonMsg = null, { keepIntent = false } = {}) {
+      if (!keepIntent) {
+        userIntendedLiveCall = false;
+        liveReconnectAttempts = 0;
+        if (liveReconnectTimer) { clearTimeout(liveReconnectTimer); liveReconnectTimer = null; }
+      }
       const sess = liveCallSession;
       liveCallSession = null;
       ttsSpeaking = false;
@@ -886,12 +894,37 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
     }
 
-    async function toggleRealtimeLiveCall() {
+    function scheduleLiveCallReconnect() {
+      if (!userIntendedLiveCall || liveReconnectAttempts >= 4) {
+        stopRealtimeLiveCall('De live spraakverbinding is gesloten. Klik op 🎙️ om te hervatten.');
+        return;
+      }
+      liveReconnectAttempts += 1;
+      const delayMs = Math.min(10000, 1500 * Math.pow(2, liveReconnectAttempts - 1));
+      stopRealtimeLiveCall(`🔄 Verbinding kort onderbroken — Eva herstelt automatisch het live gesprek (poging ${liveReconnectAttempts}/4)…`, { keepIntent: true });
+      if (liveReconnectTimer) clearTimeout(liveReconnectTimer);
+      liveReconnectTimer = setTimeout(() => {
+        if (userIntendedLiveCall && !liveCallSession) {
+          toggleRealtimeLiveCall({ isAutoReconnect: true }).catch(() => {});
+        }
+      }, delayMs);
+    }
+
+    window.addEventListener('online', () => {
+      if (userIntendedLiveCall && !liveCallSession) {
+        if (liveReconnectTimer) clearTimeout(liveReconnectTimer);
+        liveReconnectAttempts = 0;
+        toggleRealtimeLiveCall({ isAutoReconnect: true }).catch(() => {});
+      }
+    });
+
+    async function toggleRealtimeLiveCall({ isAutoReconnect = false } = {}) {
       userUnlockedAudio = true;
-      if (liveCallSession) {
+      if (liveCallSession && !isAutoReconnect) {
         await stopRealtimeLiveCall('Live gesprek gepauzeerd. Klik op 🎙️ Start Live Gesprek wanneer je weer verder wilt praten.');
         return;
       }
+      userIntendedLiveCall = true;
       stopSpeaking();
       const rtCfg = stage?.realtime_voice || {};
       const selModel = rtCfg.selected_model || 'gpt-realtime-2.1';
@@ -917,7 +950,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       const ctx = ensureAudioCtx();
       if (ctx.state === 'suspended') await ctx.resume();
 
-      const sess = { model: selModel, voice: selVoice, stream, sessionId: null };
+      const sess = { model: selModel, voice: selVoice, stream, sessionId: null, isReconnect: !!isAutoReconnect };
       liveCallSession = sess;
       syncLiveCallUi(`⏳ Live verbinding openen met ${selModel}…`);
 
@@ -1006,8 +1039,10 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         };
 
         pc.onconnectionstatechange = () => {
-          if (liveCallSession === sess && ['failed', 'closed', 'disconnected'].includes(pc.connectionState)) {
-            stopRealtimeLiveCall('De live spraakverbinding is gesloten. Klik op 🎙️ om te hervatten.');
+          if (liveCallSession === sess && ['failed', 'disconnected'].includes(pc.connectionState)) {
+            scheduleLiveCallReconnect();
+          } else if (liveCallSession === sess && pc.connectionState === 'connected') {
+            liveReconnectAttempts = 0;
           }
         };
 
@@ -1036,17 +1071,20 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
 
         dc.onopen = () => {
           if (liveCallSession !== sess) return;
+          liveReconnectAttempts = 0;
           if (data.session_update) {
             dc.send(JSON.stringify(data.session_update));
           }
           syncLiveCallUi(`🟢 Doorlopend gesprek actief (${data.model}) — praat gewoon tegen Eva!`);
           waveUntil = performance.now() + 2200;
-          dc.send(JSON.stringify({
-            type: 'response.create',
-            response: {
-              instructions: `Begroet ${stage?.household?.owner_name || 'Jaap'} kort, warm en enthousiast in één vlotte Nederlandse zin en laat weten dat jullie nu rechtstreeks doorlopend kunnen praten zonder op knoppen te klikken.`
-            }
-          }));
+          if (!sess.isReconnect) {
+            dc.send(JSON.stringify({
+              type: 'response.create',
+              response: {
+                instructions: `Begroet ${stage?.household?.owner_name || 'Jaap'} kort, warm en enthousiast in één vlotte Nederlandse zin en laat weten dat jullie nu rechtstreeks doorlopend kunnen praten zonder op knoppen te klikken.`
+              }
+            }));
+          }
         };
 
         dc.onmessage = async msgEv => {
@@ -1056,7 +1094,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           const t = ev.type || '';
 
           if (t === 'input_audio_buffer.speech_started') {
-            ttsSpeaking = false;
+            stopSpeaking();
             evaTranscriptBuf = '';
             $('eva-subtitle').textContent = '🟢 Eva luistert…';
           } else if (t === 'conversation.item.input_audio_transcription.completed' && ev.transcript) {
@@ -1213,10 +1251,10 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       };
 
       ws.onerror = () => {
-        if (liveCallSession === sess) stopRealtimeLiveCall('⚠️ Kon Gemini 3.8 Live WebSocket niet bereiken.');
+        if (liveCallSession === sess) scheduleLiveCallReconnect();
       };
       ws.onclose = () => {
-        if (liveCallSession === sess) stopRealtimeLiveCall('Live gesprek beëindigd.');
+        if (liveCallSession === sess) scheduleLiveCallReconnect();
       };
     }
 
@@ -2640,7 +2678,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     $('btn-family').onclick = () => activeDrawer === 'family' ? closeDrawer() : openDrawer('family');
     $('btn-voice-engine').onclick = () => activeDrawer === 'voice_engine' ? closeDrawer() : openDrawer('voice_engine');
     $('btn-main-display').onclick = () => activeDrawer === 'main_display' ? closeDrawer() : openDrawer('main_display');
-    $('btn-live-call').onclick = toggleRealtimeLiveCall;
+    $('btn-live-call').onclick = () => toggleRealtimeLiveCall();
     $('btn-cam-look').onclick = async () => {
       userUnlockedAudio = true;
       enqueueSpeechClause('Even op de camera kijken hoor…', { reset: true, updateSubtitle: true });
@@ -2696,7 +2734,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         speakDutch(next ? 'Visite-modus en privéschild staan aan!' : 'Welkom terug onder ons, de visite-modus is weer uit.');
       }
     };
-    $('btn-mic').onclick = toggleRealtimeLiveCall;
+    $('btn-mic').onclick = () => toggleRealtimeLiveCall();
     $('living-form').onsubmit = async ev => {
       ev.preventDefault();
       userUnlockedAudio = true;
@@ -2720,10 +2758,69 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       return d;
     }
 
+    // Proactive Background Work Return Poller (announces newly built skills & completed research live on 3D Stage!)
+    const seenWorkOps = new Set();
+    async function pollBackgroundWorkReturns() {
+      if (document.hidden || stage?.household?.guest_mode_active) return;
+      try {
+        const res = await fetch('/internal/v1/dashboard/work/return/poll', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: '{}'
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data?.contract !== 'EvaPrivateWorkReturn/v1' || data.status !== 'claimed' || !data.result) return;
+        const r = data.result;
+        if (!r.work_id || !r.operation_id || !r.output) return;
+        if (crypto?.subtle) {
+          const hashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(r.output));
+          const hex = Array.from(new Uint8Array(hashBuf), b => b.toString(16).padStart(2, '0')).join('');
+          if (hex !== r.output_sha256) return;
+        }
+        await fetch('/internal/v1/dashboard/work/return/ack', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ work_id: r.work_id, operation_id: r.operation_id })
+        });
+        if (seenWorkOps.has(r.operation_id)) return;
+        seenWorkOps.add(r.operation_id);
+
+        await refreshStage();
+        let readable = r.output;
+        try {
+          const parsed = JSON.parse(r.output);
+          if (typeof parsed?.summary === 'string') readable = parsed.summary;
+        } catch (_e) {}
+        const cleanSummary = String(readable || '').trim().slice(0, 320);
+        pushHeardCard({
+          title: r.title ? `🛠️ Klaar: ${r.title.slice(0, 60)}` : '🛠️ Achtergrondopdracht klaar!',
+          summary: cleanSummary,
+          undoable: false
+        });
+        waveUntil = performance.now() + 2400;
+        if (liveCallSession?.dc?.readyState === 'open') {
+          liveCallSession.dc.send(JSON.stringify({
+            type: 'response.create',
+            response: {
+              instructions: `Vertel kort en enthousiast in het Nederlands dat je net op de achtergrond klaar bent met een opdracht: "${cleanSummary.slice(0, 220)}"`
+            }
+          }));
+        } else if (!ttsSpeaking) {
+          $('eva-subtitle').textContent = `✨ Klaar: ${cleanSummary}`;
+          enqueueSpeechClause(`Ik ben klaar op de achtergrond! ${cleanSummary.slice(0, 200)}`, { reset: false, updateSubtitle: false });
+        }
+      } catch (_e) {}
+    }
+
     async function boot() {
       boot3DEva();
       const d = await refreshStage();
       if (!d) return;
+      setInterval(pollBackgroundWorkReturns, 6500);
+      setTimeout(pollBackgroundWorkReturns, 2500);
       if (!d.wizard_completed) {
         wizardStep = d.ai_ready ? 2 : 1;
         openDrawer('wizard', wizardStep);

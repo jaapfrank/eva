@@ -5428,9 +5428,10 @@ class ApplianceSetupService:
                     q.put({"type": "final", **out})
                     return
 
-                chunker = SentenceBoundaryChunker()
+                chunker = SentenceBoundaryChunker(first_clause_min_words=4, steady_min_words=8)
                 deltas: list[str] = []
                 final_text = ""
+                stream_err_code: str | None = None
                 for raw_line in stream_or_bytes:
                     line = raw_line.decode("utf-8", errors="replace").strip()
                     if not line:
@@ -5444,22 +5445,35 @@ class ApplianceSetupService:
                         deltas.append(delta)
                         q.put({"type": "delta", "text": delta})
                         for clause in chunker.feed(delta):
-                            q.put({"type": "speech_clause", "text": clause})
+                            if re.search(r"[A-Za-z0-9À-ÿ]", clause):
+                                q.put({"type": "speech_clause", "text": clause})
                     elif ev.get("contract") == "EvaInternalGroundedReply/v1":
                         final_text = str(ev.get("text") or "").strip()
+                    elif ev.get("contract") == "EvaTextStreamError/v1":
+                        stream_err_code = str(ev.get("code") or "stream_error")
 
                 for rem in chunker.flush():
-                    q.put({"type": "speech_clause", "text": rem})
+                    if re.search(r"[A-Za-z0-9À-ÿ]", rem):
+                        q.put({"type": "speech_clause", "text": rem})
 
                 reply_text = final_text or "".join(deltas).strip()
+                if not reply_text and stream_err_code:
+                    reply_text = (
+                        "Mijn taalmodel meldde tijdelijk een gebruikslimiet — probeer het over een paar tellen gerust opnieuw."
+                        if stream_err_code == "provider_rate_limited"
+                        else "Mijn antwoord werd halverwege onderbroken bij het ophalen van de gegevens — vraag het gerust nog een keer!"
+                    )
+                    q.put({"type": "speech_clause", "text": reply_text})
                 conjure_panel: str | None = None
                 conjure_preset: str | None = None
                 pend_after = self._integration_hub().get_pending_connection()
                 if pend_after and pend_after.get("requested_at") != prev_req_at:
                     conjure_panel = "integrations"
                     conjure_preset = str(pend_after.get("service_kind") or "auto")
-                elif any(w in low for w in ("koppel", "verbind", "aansluit", "instel", "token", "sleutel")):
-                    if "home assistant" in low or "homeassistant" in low:
+                elif re.search(r"\b(?:koppel|koppelen|verbind|verbinden|aansluiten|instellen)\b", low):
+                    sh_cfg = self._load_state()["modules"]["smart_home"]
+                    ha_already = bool(sh_cfg.get("enabled") and (self._secrets_dir() / "home-assistant-token").is_file())
+                    if ("home assistant" in low or "homeassistant" in low) and (not ha_already or "opnieuw" in low or "token" in low):
                         conjure_panel = "smart_home"
                         conjure_preset = "home_assistant"
 
@@ -5482,12 +5496,32 @@ class ApplianceSetupService:
         threading.Thread(target=_worker, daemon=True, name="eva-living-turn-stream").start()
         filler_sent = False
         first_speech_seen = False
+        low_for_filler = raw_text.lower()
+        is_action_query = any(
+            k in low_for_filler
+            for k in (
+                "kijk", "check", "zoek", "lamp", "weer", "camera", "bouw", "maak", "koppel",
+                "verbind", "agenda", "mail", "unifi", "protect", "home assistant", "sensor", "stroom",
+            )
+        )
+        is_social_ack = (
+            not is_action_query
+            and "?" not in raw_text
+            and len(raw_text.split()) <= 8
+            and bool(
+                re.search(
+                    r"\b(?:hoi|hallo|hey|goedemorgen|goedemiddag|goedenavond|welterusten|dankjewel|dank\s+je|bedankt|top|super|prima|ok[eé]|fijn|doei)\b",
+                    low_for_filler,
+                )
+            )
+        )
+        filler_delay_s = 999.0 if is_social_ack else (1.25 if is_action_query else 3.40)
         t0 = time.monotonic()
         while True:
             try:
                 item = q.get(timeout=0.35)
             except Empty:
-                if not filler_sent and not first_speech_seen and raw_text and (time.monotonic() - t0) >= 1.15:
+                if not filler_sent and not first_speech_seen and raw_text and (time.monotonic() - t0) >= filler_delay_s:
                     filler_sent = True
                     filler_txt = pick_dutch_filler_phrase(raw_text, owner_nm)
                     yield (json.dumps({"type": "filler", "text": filler_txt}, ensure_ascii=False) + "\n").encode("utf-8")
