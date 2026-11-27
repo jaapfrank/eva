@@ -1,0 +1,73 @@
+#cloud-config
+# Volledig schermvrije (headless) Ubuntu Server 24.04 LTS autoinstall voor HP Pro Mini 400 G9.
+# De installatie wist de primaire interne NVMe/SSD-schijf, zet Ubuntu + Eva first-boot klaar
+# en schakelt daarna automatisch uit (poweroff). Zodra het power-lampje uitgaat mag de USB eruit.
+autoinstall:
+  version: 1
+  early-commands:
+    - sh -c "printf '\a' > /dev/console 2>/dev/null || true; sleep 0.2; printf '\a' > /dev/console 2>/dev/null || true"
+  locale: nl_NL.UTF-8
+  keyboard:
+    layout: us
+  timezone: Europe/Amsterdam
+  identity:
+    hostname: eva
+    username: evaadmin
+    # Standaardwachtwoord voor noodgevallen: "eva-lokaal-2026" (wijzig na wens of gebruik SSH-key).
+    password: "$6$EvaLocalSalt2026$Cq1PSjjkPbgC4.PO1osh285TN2mESgCeqaxMr5Gz1WPQkVwcuGYsNqKWZAslgIiUwhTH2lcFPq0gkvCWGuKTL0"
+  ssh:
+    install-server: true
+    allow-pw: true
+  network:
+    version: 2
+    ethernets:
+      all-en:
+        match:
+          name: "en*"
+        dhcp4: true
+        optional: true
+      all-eth:
+        match:
+          name: "eth*"
+        dhcp4: true
+        optional: true
+__WIFI_BLOCK__
+  storage:
+    layout:
+      name: lvm
+      match:
+        size: largest
+      sizing-policy: all
+  packages:
+    - avahi-daemon
+    - curl
+    - git
+  shutdown: poweroff
+  late-commands:
+    - mkdir -p /target/etc/eva-appliance /target/opt/eva2
+    - cp -f /cdrom/eva-seed/pairing.json /target/etc/eva-appliance/pairing.json
+    - chmod 0600 /target/etc/eva-appliance/pairing.json
+    - cp -f /cdrom/eva-seed/eva-repo.tar.gz /target/etc/eva-appliance/eva-repo.tar.gz
+    - tar -xzf /cdrom/eva-seed/eva-repo.tar.gz -C /target/opt/eva2
+    - cp -f /cdrom/eva-seed/firstboot-install-eva.sh /target/usr/local/sbin/eva-firstboot.sh
+    - chmod 0755 /target/usr/local/sbin/eva-firstboot.sh
+    - |
+      cat << 'EOF' > /target/etc/systemd/system/eva-firstboot.service
+      [Unit]
+      Description=Eva2 Headless First-Boot Appliance Setup
+      After=network-online.target
+      Wants=network-online.target
+      ConditionPathExists=!/var/lib/eva2-appliance/.firstboot-done
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/local/sbin/eva-firstboot.sh
+      ExecStartPost=/bin/touch /var/lib/eva2-appliance/.firstboot-done
+      StandardOutput=journal+console
+      StandardError=journal+console
+
+      [Install]
+      WantedBy=multi-user.target
+      EOF
+    - curtin in-target --target=/target -- systemctl enable eva-firstboot.service
+    - sh -c "printf '\a' > /dev/console 2>/dev/null || true; sleep 0.25; printf '\a' > /dev/console 2>/dev/null || true; sleep 0.25; printf '\a' > /dev/console 2>/dev/null || true"
