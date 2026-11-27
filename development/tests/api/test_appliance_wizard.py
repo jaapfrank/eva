@@ -686,3 +686,64 @@ def test_personal_member_welcome_portal_for_lola_and_guest_isolation(tmp_path: P
     assert lola_grant["allow_owner_voice"] is False
     assert lola_grant["allow_private_cards_when_alone"] is True
 
+
+def test_wizard_voice_verification_and_smart_home_conjuring_and_env(tmp_path: Path) -> None:
+    service = _service(tmp_path)
+    client = _paired_client(service)
+
+    # Wizard starts incomplete so new users always get the 6-step guided onboarding
+    st0 = client.get("/internal/v1/appliance/living/state").json()
+    assert st0["wizard_completed"] is False
+
+    # Step 3: Explicit voice enrollment + live voice recognition check (without mutating profile)
+    jaap_pcm = _make_synthetic_pcm16_b64(135.0, 0.6)
+    enr = client.post(
+        "/internal/v1/appliance/living/voice-enroll",
+        json={"audio_pcm_b64": jaap_pcm},
+    )
+    assert enr.status_code == 200
+    assert enr.json()["ok"] is True
+
+    chk = client.post(
+        "/internal/v1/appliance/living/voice-check",
+        json={"audio_pcm_b64": jaap_pcm},
+    )
+    assert chk.status_code == 200
+    match = chk.json()["match"]
+    assert match["status"] == "household_voice_candidate"
+    assert match["display_name"] == "Jaap"
+    assert match["similarity_pct"] >= 85
+
+    # Mentioning Home Assistant or a Long-Lived Token automatically conjures the secure smart_home card
+    ha_turn = client.post(
+        "/internal/v1/appliance/living/turn",
+        json={"text": "Kan je verbinding maken met Home Assistant? Ik heb een long living token."},
+    )
+    assert ha_turn.status_code == 200
+    assert ha_turn.json()["conjure_panel"] == "smart_home"
+
+    # 1-Click Smart Home connect writes all required HomeAssistantProviderFactory env vars
+    conn_res = client.post(
+        "/internal/v1/appliance/living/smart-home/connect",
+        json={
+            "url": "http://10.0.20.74:8123",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9_long_lived_test_token",
+            "allow_effects": True,
+            "skip_probe": True,
+        },
+    )
+    assert conn_res.status_code == 200
+    assert conn_res.json()["ok"] is True
+    env_text = (tmp_path / "runtime" / "runtime.env").read_text(encoding="utf-8")
+    assert "EVA_HOME_ASSISTANT_URL=http://10.0.20.74:8123" in env_text
+    assert "EVA_HOME_ASSISTANT_API_ENABLED=true" in env_text
+    assert "EVA_HOME_ASSISTANT_EFFECTS_ENABLED=true" in env_text
+    assert "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST=" in env_text
+    assert "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST=" in env_text
+
+    # Step 6: Completing wizard sets wizard_completed=True
+    fin = client.post("/internal/v1/appliance/living/wizard-state", json={"completed": True})
+    assert fin.status_code == 200
+    assert fin.json()["wizard_completed"] is True
+
+

@@ -42,7 +42,7 @@ _STOP_NAMES = frozenset(
 )
 
 _OWNER_INTRO_RE = re.compile(
-    r"\b(?:ik\s+ben|ik\s+heet|mijn\s+naam\s+is|noem\s+mij(?:\s+maar)?)\s+([A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]{1,24})\b"
+    r"\b(?:[Ii]k\s+ben|[Ii]k\s+heet|[Mm]ijn\s+naam\s+is|[Nn]oem\s+mij(?:\s+maar)?)\s+([A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]{1,24})\b"
 )
 _EVA_RENAME_RE = re.compile(
     r"\b(?:noem\s+jezelf|jij\s+heet(?:\s+voortaan)?|ik\s+noem\s+je|jouw\s+naam\s+wordt|heet\s+voortaan)\s+([A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]{1,24})\b",

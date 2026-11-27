@@ -1537,6 +1537,32 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
             headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
         )
 
+    @app.post("/internal/v1/appliance/living/voice-enroll")
+    async def post_living_voice_enroll(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        body = await _read_json(request, max_bytes=524_288)
+        return _call(service.enroll_living_voice, body)
+
+    @app.post("/internal/v1/appliance/living/voice-check")
+    async def post_living_voice_check(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        body = await _read_json(request, max_bytes=524_288)
+        return _call(service.check_living_voice, body)
+
+    @app.post("/internal/v1/appliance/living/wizard-state")
+    async def post_living_wizard_state(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.set_onboarding_wizard_state, await _read_json(request))
+
+    @app.post("/internal/v1/appliance/living/smart-home/connect")
+    async def post_living_smart_home_connect(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.connect_smart_home, await _read_json(request))
+
     @app.get("/welkom/{token}", response_class=HTMLResponse)
     def get_member_welcome_page(request: Request, token: str) -> HTMLResponse:
         _require_lan(request)

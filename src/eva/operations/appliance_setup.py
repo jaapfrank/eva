@@ -567,6 +567,7 @@ class ApplianceSetupService:
             "awakening_completed": False,
             "awakening_turns": 0,
             "guest_mode_active": False,
+            "wizard_completed": False,
         }
 
     def _load_state(self) -> dict[str, Any]:
@@ -591,6 +592,8 @@ class ApplianceSetupService:
             base["awakening_turns"] = stored["awakening_turns"]
         if isinstance(stored.get("guest_mode_active"), bool):
             base["guest_mode_active"] = stored["guest_mode_active"]
+        if isinstance(stored.get("wizard_completed"), bool):
+            base["wizard_completed"] = stored["wizard_completed"]
         return base
 
     def _save_state(self, state: Mapping[str, Any]) -> None:
@@ -2040,18 +2043,43 @@ class ApplianceSetupService:
 
         # Smart Home (Home Assistant)
         sh_mod = mods["smart_home"]
-        if sh_mod.get("enabled") and (secrets_dir / "home-assistant-token").is_file():
+        sh_tok_file = secrets_dir / "home-assistant-token"
+        if sh_mod.get("enabled") and sh_tok_file.is_file():
             env_vals["EVA_HOME_ASSISTANT_URL"] = sh_mod["url"]
-            env_vals["EVA_HOME_ASSISTANT_TOKEN_FILE"] = str(secrets_dir / "home-assistant-token")
-            env_vals["EVA_HOME_ASSISTANT_EFFECTS_ENABLED"] = (
-                "true" if sh_mod.get("allow_effects") else "false"
+            env_vals["EVA_HOME_ASSISTANT_TOKEN_FILE"] = str(sh_tok_file)
+            env_vals["EVA_HOME_ASSISTANT_API_ENABLED"] = "true"
+            principal_hashes = [
+                hashlib.sha256(str(ids["principal_id"]).encode("utf-8")).hexdigest()
+            ]
+            for tg_c in self._load_telegram_contacts(ids):
+                if tg_c.get("principal_id"):
+                    principal_hashes.append(
+                        hashlib.sha256(str(tg_c["principal_id"]).encode("utf-8")).hexdigest()
+                    )
+            env_vals["EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST"] = ",".join(
+                sorted(set(principal_hashes))
             )
+            if sh_mod.get("allow_effects"):
+                env_vals["EVA_HOME_ASSISTANT_EFFECTS_ENABLED"] = "true"
+                ha_tok = sh_tok_file.read_text(encoding="utf-8").strip()
+                disc = (
+                    {"allowlist": ["switch.eva_appliance:turn_on", "switch.eva_appliance:turn_off"]}
+                    if self.dry_run_apply
+                    else self._discover_ha_entities(str(sh_mod["url"]), ha_tok)
+                )
+                env_vals["EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"] = ",".join(disc["allowlist"])
+            else:
+                env_vals["EVA_HOME_ASSISTANT_EFFECTS_ENABLED"] = "false"
+                env_vals.pop("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", None)
         else:
             disabled_providers.append("home_assistant")
             for k in (
                 "EVA_HOME_ASSISTANT_URL",
                 "EVA_HOME_ASSISTANT_TOKEN_FILE",
+                "EVA_HOME_ASSISTANT_API_ENABLED",
                 "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
+                "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST",
+                "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST",
             ):
                 env_vals.pop(k, None)
 
@@ -2695,7 +2723,117 @@ class ApplianceSetupService:
             low.startswith("het kerngezin bestaat uitsluitend uit")
             or low.startswith("andere personen (buren, familie, bezoekers")
             or low.startswith("val het gezin niet lastig met losse")
+            or low.startswith("eigen omgeving:")
+            or low.startswith("home assistant:")
         )
+
+    def _probe_local_ha_reachable(self) -> dict[str, Any]:
+        """Quickly check if Home Assistant is reachable on the local network (cached 25s)."""
+        now_m = time.monotonic()
+        cached = getattr(self, "_ha_lan_cache", None)
+        if isinstance(cached, tuple) and (now_m - cached[0]) < 25.0:
+            return dict(cached[1])
+        result: dict[str, Any] = {"reachable": False, "url": "http://homeassistant.local:8123", "ip": ""}
+        if self.dry_run_apply:
+            self._ha_lan_cache = (now_m, result)
+            return dict(result)
+        state = self._load_state()
+        configured_url = str(state["modules"]["smart_home"].get("url") or "http://homeassistant.local:8123").strip()
+        parsed = urlsplit(configured_url)
+        host = parsed.hostname or "homeassistant.local"
+        port = parsed.port or 8123
+        try:
+            ip = socket.gethostbyname(host)
+            with socket.create_connection((ip, port), timeout=0.9):
+                result = {"reachable": True, "url": configured_url, "ip": ip}
+        except OSError:
+            pass
+        self._ha_lan_cache = (now_m, result)
+        return dict(result)
+
+    @staticmethod
+    def _discover_ha_entities(url: str, token: str) -> dict[str, Any]:
+        """Fetch /api/states from Home Assistant to build valid light/switch allowlist and summary."""
+        fallback = ["switch.eva_appliance:turn_on", "switch.eva_appliance:turn_off"]
+        parsed = urlsplit(url.rstrip("/"))
+        conn_cls = (
+            http.client.HTTPSConnection if parsed.scheme == "https" else http.client.HTTPConnection
+        )
+        base_path = parsed.path.rstrip("/")
+        conn = conn_cls(parsed.hostname or "", port=parsed.port, timeout=4.5)
+        try:
+            conn.request(
+                "GET",
+                f"{base_path}/api/states",
+                headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+            )
+            resp = conn.getresponse()
+            raw = resp.read(4_194_304)
+            if resp.status != 200:
+                return {"lights": 0, "switches": 0, "sensors": 0, "total": 0, "allowlist": fallback}
+            rows = json.loads(raw.decode("utf-8", errors="replace"))
+            if not isinstance(rows, list):
+                return {"lights": 0, "switches": 0, "sensors": 0, "total": 0, "allowlist": fallback}
+            lights = 0
+            switches = 0
+            sensors = 0
+            allow: list[str] = []
+            for item in rows:
+                if not isinstance(item, dict):
+                    continue
+                eid = str(item.get("entity_id") or "").strip()
+                dom, dot, obj_id = eid.partition(".")
+                if not dot or not obj_id:
+                    continue
+                if dom == "light":
+                    lights += 1
+                elif dom == "switch":
+                    switches += 1
+                elif dom in {"sensor", "binary_sensor"}:
+                    sensors += 1
+                if (
+                    dom in {"light", "switch"}
+                    and all(c in "abcdefghijklmnopqrstuvwxyz0123456789_" for c in obj_id)
+                    and len(allow) < 400
+                ):
+                    allow.append(f"{eid}:turn_on")
+                    allow.append(f"{eid}:turn_off")
+            return {
+                "lights": lights,
+                "switches": switches,
+                "sensors": sensors,
+                "total": len(rows),
+                "allowlist": allow if allow else fallback,
+            }
+        except Exception:
+            return {"lights": 0, "switches": 0, "sensors": 0, "total": 0, "allowlist": fallback}
+        finally:
+            conn.close()
+
+    def _self_awareness_rules(self, state: Mapping[str, Any]) -> list[str]:
+        hw = _detect_host_hardware()
+        hostname = socket.gethostname()
+        env_rule = (
+            f"Eigen omgeving: Je draait lokaal op thuisnetwerk-host '{hostname}' "
+            f"({hw['cpu_count']} CPU-cores, {hw['ram_gib']} GB RAM, lokale Postgres & Hindsight). "
+            "Vraag het gezin nooit of je lokaal, op een externe server of in Docker draait."
+        )[:270]
+        sh = state["modules"]["smart_home"]
+        ha_tok_ok = (self._secrets_dir() / "home-assistant-token").is_file()
+        if sh.get("enabled") and ha_tok_ok:
+            mode_lbl = "lezen en bedienen" if sh.get("allow_effects") else "alleen lezen"
+            ha_rule = (
+                f"Home Assistant: ACTIEF gekoppeld op {sh.get('url')} ({mode_lbl}). "
+                "Gebruik direct je Home Assistant-tools om sensoren te lezen of lampen/schakelaars te bedienen."
+            )[:270]
+        else:
+            probe = self._probe_local_ha_reachable()
+            reach = f"al gevonden op {probe['url']}" if probe["reachable"] else "nog niet gekoppeld"
+            ha_rule = (
+                f"Home Assistant: {reach}, wacht op koppeling. Vraag NOOIT tokens in de chat en zeg NOOIT "
+                "dat je niet kunt koppelen: wijs naar het beveiligde 'Slim Huis'-venster rechts op je scherm of Stap 5 van de Wizard."
+            )[:270]
+        return [env_rule, ha_rule]
 
     def _sync_household_head_settings(
         self,
@@ -2802,7 +2940,10 @@ class ApplianceSetupService:
                 for r in (refreshed_snap.get("eva_profile", {}).get("household_rules") or [])
                 if str(r).strip().startswith("Voorkeur van ")
             ]
-            merged_rules: list[str] = list(self._base_safety_rules(owner_name, effective_family))
+            merged_rules: list[str] = [
+                *self._base_safety_rules(owner_name, effective_family),
+                *self._self_awareness_rules(state),
+            ]
             for candidate in [*custom_lines, *(extra_rules or []), *preserved_member_rules]:
                 clean_r = re.sub(r"\s+", " ", str(candidate or "")).strip()[:275]
                 if (
@@ -2894,7 +3035,10 @@ class ApplianceSetupService:
             for r in (raw.get("eva_profile", {}).get("household_rules") or [])
             if str(r).strip().startswith("Voorkeur van ")
         ]
-        merged_rules = list(self._base_safety_rules(owner_name, eff_fam))
+        merged_rules = [
+            *self._base_safety_rules(owner_name, eff_fam),
+            *self._self_awareness_rules(state),
+        ]
         for candidate in [*custom_lines, *(extra_rules or []), *preserved_member_rules]:
             clean_r = re.sub(r"\s+", " ", str(candidate or "")).strip()[:275]
             if (
@@ -3300,15 +3444,46 @@ class ApplianceSetupService:
             if isinstance(rec, dict)
         ]
 
+        hw_info = _detect_host_hardware()
+        tg_poll = self.poll_telegram_magic_link()
+
         return {
             "contract": "EvaLivingStage/v1",
             "primary_origin": primary_origin,
             "lan_origins": all_origins,
+            "wizard_completed": bool(state.get("wizard_completed", False)),
             "awakening_completed": bool(state.get("awakening_completed", False)),
             "awakening_turns": int(state.get("awakening_turns", 0)),
             "ai_ready": ai_ready,
             "core_ready": bool(runtime_health.get("core_ready", False)),
             "applied": bool(state.get("last_applied_at")),
+            "hardware": {
+                "tier": state["hardware"].get("tier", hw_info["recommended_tier"]),
+                "monthly_spend_cents": int(state["hardware"].get("monthly_spend_cents", 0)),
+                "detected": hw_info,
+                "tiers": [
+                    {
+                        "tier_id": t.tier,
+                        "label": t.label,
+                        "summary": t.summary,
+                    }
+                    for t in HARDWARE_TIERS.values()
+                ],
+            },
+            "channels": {
+                "telegram": {
+                    "token_saved": (self._secrets_dir() / "telegram-bot-token").is_file(),
+                    "bot_username": state["modules"]["telegram"].get("bot_username", ""),
+                    "contacts": tg_poll.get("contacts", []),
+                },
+                "smart_home": {
+                    "enabled": bool(state["modules"]["smart_home"].get("enabled", False)),
+                    "url": state["modules"]["smart_home"].get("url", "http://homeassistant.local:8123"),
+                    "allow_effects": bool(state["modules"]["smart_home"].get("allow_effects", False)),
+                    "secret_present": (self._secrets_dir() / "home-assistant-token").is_file(),
+                    "lan_detected": self._probe_local_ha_reachable(),
+                },
+            },
             "eva": {
                 "display_name": character.get("display_name", "Eva"),
                 "preset_id": character.get("preset_id", "warm_huisgenoot"),
@@ -3373,6 +3548,151 @@ class ApplianceSetupService:
         except Exception:
             return None
 
+    def _observe_speaker_pcm_if_valid(self, audio_pcm_b64: str) -> dict[str, Any] | None:
+        raw_b64 = (audio_pcm_b64 or "").strip()
+        if not raw_b64:
+            return None
+        try:
+            pcm_bytes = base64.b64decode(raw_b64, validate=True)
+        except Exception:
+            return None
+        if len(pcm_bytes) < 6400 or len(pcm_bytes) > 320_000 or len(pcm_bytes) % 2 != 0:
+            return None
+        if os.name != "nt":
+            from eva.application.holostage import HoloStageManager
+
+            mgr = HoloStageManager(self._model_providers_dir())
+            try:
+                match = mgr.biometrics.observe_voice_pcm(pcm_bytes)
+                sim_ppm = int(match.get("similarity_ppm", 0))
+                return {
+                    **match,
+                    "similarity_pct": max(0, min(100, round(sim_ppm / 10_000))),
+                }
+            except Exception:
+                return None
+        return {"status": "unconfigured", "similarity_pct": 0}
+
+    def enroll_living_voice(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        """Explicitly enroll 16 kHz mono s16le PCM voiceprint for an active household member."""
+        audio_pcm_b64 = str(payload.get("audio_pcm_b64") or "").strip()
+        if not audio_pcm_b64:
+            raise ApplianceSetupError("geen spraakopname ontvangen")
+        hh_view = self._read_household_view()
+        req_member_id = str(payload.get("member_id") or "").strip()
+        if not req_member_id:
+            owner_m = next(
+                (
+                    m
+                    for m in (hh_view.get("members") or [])
+                    if isinstance(m, dict) and m.get("role") == "gezinshoofd"
+                ),
+                {"member_id": "owner-jaap"},
+            )
+            req_member_id = str(owner_m.get("member_id") or "owner-jaap")
+        res = self._enroll_member_pcm_if_valid(member_id=req_member_id, audio_pcm_b64=audio_pcm_b64)
+        if res is None:
+            raise ApplianceSetupError(
+                "stemopname was te kort of te stil — spreek ongeveer 3 seconden rustig in"
+            )
+        return {
+            "ok": True,
+            "enrollment": res,
+            "stage": self.living_stage_snapshot(),
+        }
+
+    def check_living_voice(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        """Test live speaker recognition against enrolled household voiceprints without mutating profiles."""
+        audio_pcm_b64 = str(payload.get("audio_pcm_b64") or "").strip()
+        if not audio_pcm_b64:
+            raise ApplianceSetupError("geen spraakopname ontvangen")
+        match = self._observe_speaker_pcm_if_valid(audio_pcm_b64)
+        if match is None:
+            raise ApplianceSetupError("stemopname was te kort voor herkenning (spreek ~2-3 sec)")
+        return {
+            "ok": True,
+            "match": match,
+            "stage": self.living_stage_snapshot(),
+        }
+
+    def set_onboarding_wizard_state(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        completed = bool(payload.get("completed", True))
+        state = self._load_state()
+        state["wizard_completed"] = completed
+        if completed:
+            state["awakening_completed"] = True
+        self._save_state(state)
+        self._sync_household_head_settings()
+        snap = self.living_stage_snapshot()
+        if completed and snap["ai_ready"] and not self.dry_run_apply and not snap["core_ready"]:
+            try:
+                self.apply_installation()
+                snap = self.living_stage_snapshot()
+            except Exception:
+                pass
+        return {
+            "ok": True,
+            "wizard_completed": completed,
+            "stage": snap,
+        }
+
+    def connect_smart_home(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        """Validate Home Assistant token, discover entities, write runtime.env, and live-restart Living Core."""
+        url = str(payload.get("url") or "http://homeassistant.local:8123").strip().rstrip("/")
+        token = str(payload.get("token") or "").strip()
+        allow_effects = bool(payload.get("allow_effects", True))
+        skip_probe = bool(payload.get("skip_probe", False))
+
+        self.save_module(
+            "smart_home",
+            {
+                "enabled": True,
+                "url": url,
+                "token": token,
+                "allow_effects": allow_effects,
+            },
+        )
+        tok_path = self._secrets_dir() / "home-assistant-token"
+        if not tok_path.is_file():
+            raise ApplianceSetupError("plak eerst je Home Assistant Long-Lived Access Token")
+        eff_token = tok_path.read_text(encoding="utf-8").strip()
+
+        if not skip_probe:
+            self.test_module("smart_home", {})
+
+        disc = (
+            {"lights": 0, "switches": 0, "sensors": 0, "total": 0}
+            if (self.dry_run_apply or skip_probe)
+            else self._discover_ha_entities(url, eff_token)
+        )
+        self.apply_installation()
+
+        # Wait briefly for eva2-local-core.service to return ready=True after restart
+        if not self.dry_run_apply:
+            deadline = time.monotonic() + 10.0
+            while time.monotonic() < deadline:
+                if self._runtime_health().get("core_ready"):
+                    break
+                time.sleep(0.35)
+
+        detail = (
+            f"Home Assistant gekoppeld op {url}! "
+            f"Gevonden: {disc['lights']} lampen, {disc['switches']} schakelaars en {disc['sensors']} sensoren."
+        )
+        return {
+            "ok": True,
+            "url": url,
+            "allow_effects": allow_effects,
+            "discovered": {
+                "lights": disc["lights"],
+                "switches": disc["switches"],
+                "sensors": disc["sensors"],
+                "total": disc["total"],
+            },
+            "detail": detail,
+            "stage": self.living_stage_snapshot(),
+        }
+
     def handle_living_turn(
         self, payload: Mapping[str, Any], *, base_origin: str | None = None
     ) -> dict[str, Any]:
@@ -3381,6 +3701,7 @@ class ApplianceSetupService:
         clicked_preset = str(payload.get("preset_id") or "").strip()
         audio_pcm_b64 = str(payload.get("audio_pcm_b64") or "").strip()
         complete_awakening = bool(payload.get("complete_awakening", False))
+        explicit_enroll = bool(payload.get("enroll_voice", False))
 
         if len(raw_text) > 900:
             raise ApplianceSetupError("bericht mag maximaal 900 tekens bevatten")
@@ -3389,19 +3710,38 @@ class ApplianceSetupService:
 
         state = self._load_state()
         char = self._load_character()
-        hh_view = self._read_household_view()
+        pre_snap = self.living_stage_snapshot(base_origin=base_origin)
         owner_member = next(
             (
                 m
-                for m in (hh_view.get("members") or [])
+                for m in (pre_snap["household"].get("members") or [])
                 if isinstance(m, dict) and m.get("role") == "gezinshoofd"
             ),
-            {"member_id": "owner-jaap"},
+            {"member_id": "owner-jaap", "voice_enrolled": False},
         )
-        voice_res = self._enroll_member_pcm_if_valid(
-            member_id=str(owner_member.get("member_id") or "owner-jaap"),
-            audio_pcm_b64=audio_pcm_b64,
+        owner_id = str(owner_member.get("member_id") or "owner-jaap")
+        owner_already_enrolled = bool(owner_member.get("voice_enrolled", False))
+
+        awk_preview = (
+            parse_awakening_utterance(
+                raw_text,
+                current_owner=str(state["profile"].get("owner_name", "Jaap")),
+                current_eva_name=str(char.get("display_name", "Eva")),
+            )
+            if raw_text
+            else {"owner_name": None}
         )
+
+        voice_res: dict[str, Any] | None = None
+        speaker_match: dict[str, Any] | None = None
+        if audio_pcm_b64:
+            if explicit_enroll or (not owner_already_enrolled and awk_preview.get("owner_name")):
+                voice_res = self._enroll_member_pcm_if_valid(
+                    member_id=owner_id,
+                    audio_pcm_b64=audio_pcm_b64,
+                )
+            else:
+                speaker_match = self._observe_speaker_pcm_if_valid(audio_pcm_b64)
 
         applied_changes: list[dict[str, Any]] = []
         conjure_panel: str | None = None
@@ -3604,6 +3944,29 @@ class ApplianceSetupService:
             elif intent["kind"] == "conjure_card":
                 conjure_panel = str(intent["card"])
 
+            # Detect Smart Home / Telegram / Wizard setup questions directly so Eva pops open the right secure card
+            low_txt = raw_text.lower()
+            if conjure_panel is None:
+                if any(
+                    kw in low_txt
+                    for kw in (
+                        "home assistant",
+                        "homeassistant",
+                        "long living token",
+                        "long-lived token",
+                        "toegangstoken",
+                        "slim huis koppelen",
+                        "lampen koppelen",
+                    )
+                ):
+                    sh_now = state["modules"]["smart_home"]
+                    if not (sh_now.get("enabled") and (self._secrets_dir() / "home-assistant-token").is_file()):
+                        conjure_panel = "smart_home"
+                elif any(kw in low_txt for kw in ("telegram koppelen", "botfather")):
+                    conjure_panel = "telegram"
+                elif any(kw in low_txt for kw in ("open wizard", "start wizard", "kennismaking starten", "onboarding")):
+                    conjure_panel = "wizard"
+
         # 3. Track awakening progress & auto-activate runtime when AI is ready and unprovisioned
         state = self._load_state()
         state["awakening_turns"] = int(state.get("awakening_turns", 0)) + 1
@@ -3626,17 +3989,53 @@ class ApplianceSetupService:
 
         # 4. Generate natural Dutch reply via Living Core (with graceful warm fallback)
         owner_nm = snap_now["household"]["owner_name"]
+        speaker_nm = (
+            str(speaker_match["display_name"])
+            if isinstance(speaker_match, dict)
+            and speaker_match.get("status") == "household_voice_candidate"
+            and speaker_match.get("display_name")
+            else owner_nm
+        )
+        unknown_voice = (
+            isinstance(speaker_match, dict) and speaker_match.get("status") == "unknown_voice"
+        )
         eva_nm = snap_now["eva"]["display_name"]
         fam_members = snap_now["household"]["family_members"]
         reply_text: str | None = None
 
         if raw_text and snap_now["core_ready"]:
+            ctx_parts: list[str] = []
             if applied_changes:
                 notes = "; ".join(f"{c['title']}: {c['summary']}" for c in applied_changes)
+                ctx_parts.append(f"Zojuist live opgeslagen voor het huishouden: {notes}.")
+            if conjure_panel == "smart_home":
+                ha_det = snap_now["channels"]["smart_home"]["lan_detected"]
+                if ha_det.get("reachable"):
+                    ctx_parts.append(
+                        f"Home Assistant is zojuist live gevonden op het thuisnetwerk op {ha_det['url']} ({ha_det['ip']}), "
+                        f"en het beveiligde Home Assistant-koppelvak is NU rechts op het scherm voor {speaker_nm} geopend! "
+                        "Vertel enthousiast dat je Home Assistant op het thuisnetwerk ziet draaien en dat hij daar veilig zijn Long-Lived Access Token kan plakken en op 'Verbind & Activeer' kan klikken (nooit in de chat)."
+                    )
+                else:
+                    ctx_parts.append(
+                        f"Het beveiligde Home Assistant-koppelvak is NU rechts op het scherm voor {speaker_nm} geopend! "
+                        "Vertel dat hij daar het adres en zijn Long-Lived Access Token veilig kan invullen en met één klik activeert."
+                    )
+            elif conjure_panel == "wizard":
+                ctx_parts.append(
+                    "De 6-staps Kennismakings-Wizard is zojuist rechts op het scherm geopend zodat alles stap voor stap kan worden nagelopen."
+                )
+            if unknown_voice:
+                ctx_parts.append(
+                    "Stemherkenning hoort een onbekende stem in de kamer (privéschild actief) — deel geen privézaken of agenda van het gezin."
+                )
+            elif speaker_nm != owner_nm:
+                ctx_parts.append(f"Lokale stemherkenning herkent gezinslid {speaker_nm} aan het woord.")
+            if ctx_parts:
                 core_prompt = (
-                    f"[Contextnotitie: Zojuist live opgeslagen voor het huishouden: {notes}. "
-                    "Bevestig dit warm, natuurlijk en vlot in maximaal twee korte Nederlandse zinnen zonder systeemtermen.]\n"
-                    f"{owner_nm} zegt: {raw_text}"
+                    f"[Contextnotitie: {' '.join(ctx_parts)} "
+                    "Reageer warm, natuurlijk en vlot in maximaal twee korte Nederlandse zinnen zonder systeemtermen.]\n"
+                    f"{'Bezoeker' if unknown_voice else speaker_nm} zegt: {raw_text}"
                 )
             else:
                 core_prompt = raw_text
@@ -3686,6 +4085,7 @@ class ApplianceSetupService:
             "applied_changes": applied_changes,
             "conjure_panel": conjure_panel,
             "voice_enrolled": voice_res is not None,
+            "speaker_match": speaker_match,
             "stage": self.living_stage_snapshot(base_origin=base_origin),
         }
 
