@@ -6,7 +6,7 @@ set -euo pipefail
 # headless Setup Wizard (poort 8765) klaar op http://eva.local:8765.
 
 EVA_REPO_URL="${EVA_REPO_URL:-https://github.com/jaapfrank/eva.git}"
-EVA_BRANCH="${EVA_BRANCH:-feat/immersive-eva-onboarding}"
+EVA_BRANCH="${EVA_BRANCH:-main}"
 EVA_REPO_DIR="${EVA_REPO_DIR:-/opt/eva2}"
 EVA_RUNTIME_ROOT="${EVA_RUNTIME_ROOT:-/var/lib/eva2-local}"
 EVA_WIZARD_DIR="${EVA_WIZARD_DIR:-/var/lib/eva2-appliance}"
@@ -184,9 +184,9 @@ if ! command -v uv >/dev/null 2>&1 && [ ! -x \"\$HOME/.local/bin/uv\" ]; then
   curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 export PATH=\"\$HOME/.local/bin:\$PATH\"
-uv python install 3.12.16
+uv python install 3.12
 mkdir -p \"\$HOME/.venvs\"
-uv venv --python 3.12.16 \"\$HOME/.venvs/eva\"
+uv venv --allow-existing --python 3.12 \"\$HOME/.venvs/eva\"
 REQ_FILE=\$(mktemp /tmp/eva-reqs-XXXXXX.txt)
 \"\$HOME/.venvs/eva/bin/python\" -c '
 import tomllib, pathlib
@@ -472,12 +472,27 @@ systemctl enable --now \
   eva2-local-hindsight-starter.service \
   eva2-local-gateway.service \
   eva2-appliance-wizard.service
+systemctl restart eva2-local-gateway.service eva2-appliance-wizard.service
+
+WIZARD_UP=0
+for _ in $(seq 1 25); do
+  if curl -fsS --max-time 2 http://127.0.0.1:8765/internal/v1/appliance/ping >/dev/null 2>&1; then
+    WIZARD_UP=1
+    break
+  fi
+  sleep 1
+done
+
+if [ "$WIZARD_UP" -ne 1 ]; then
+  echo "FOUT: eva2-appliance-wizard.service reageert niet op poort 8765. Recente logs:" >&2
+  journalctl -u eva2-appliance-wizard.service -n 35 --no-pager >&2 || true
+  exit 1
+fi
 
 beep_tone
 sleep 0.2
 beep_tone
-echo "Eva Appliance Wizard draait op http://$(hostname).local:8765/pair"
+echo "Eva Appliance Wizard draait actief op http://$(hostname).local:8765/pair"
 
-# Pre-pull gepinde Docker images in de achtergrond zodat de wizard direct bereikbaar is.
-docker pull "$POSTGRES_IMG" || true
-docker pull "$HINDSIGHT_IMG" || true
+# Pre-pull gepinde Docker images echt losgekoppeld op de achtergrond zodat de wizard direct open kan!
+nohup sh -c "docker pull '$POSTGRES_IMG' >/dev/null 2>&1 || true; docker pull '$HINDSIGHT_IMG' >/dev/null 2>&1 || true" >/var/log/eva-docker-prepull.log 2>&1 </dev/null &
