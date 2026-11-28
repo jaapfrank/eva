@@ -375,6 +375,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         🥂 <span id="guest-mode-label">Visite-modus</span>
       </button>
       <span class="pill static active-emerald" id="hud-speaker-pill" hidden></span>
+      <span class="pill static active-cyan" id="hud-bg-status" hidden>⏳ Eva activeert kern…</span>
     </div>
     <div class="hud-group">
       <button type="button" class="pill" id="btn-wake-sentinel" title="100% lokale 'Hé Eva' waker: luistert zonder openstaande cloud-verbinding en gaat na het gesprek vanzelf weer in slaapstand">
@@ -414,6 +415,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       <h2 id="drawer-title">🪄 Kennismaking met Eva</h2>
       <button type="button" class="close-x" id="btn-close-drawer">Verberg ✕</button>
     </div>
+    <div id="drawer-bg-banner" hidden style="margin:8px 16px 0; padding:9px 12px; border-radius:12px; background:rgba(8,47,73,0.78); border:1px solid rgba(56,189,248,0.52); font-size:0.79rem; color:#e0f2fe; line-height:1.42;"></div>
     <div id="drawer-body"></div>
   </aside>
 
@@ -791,13 +793,62 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       const clean = String(text || '').trim();
       if (!clean) return;
       if (updateSubtitle) $('eva-subtitle').textContent = clean;
-      if (!audioEnabled || liveCallSession) return;
+      if (!audioEnabled || (liveCallSession && liveCallSession.transport !== 'hybrid_https')) return;
       if (reset) stopSpeaking();
       const gen = speechGen;
       // Start fetching & decoding immediately in parallel so sentence N+1 is ready before sentence N ends!
       const bufPromise = fetchNeuralBuffer(clean, gen);
       speechQueue.push({ gen, text: clean, bufPromise });
       drainSpeechQueue();
+    }
+
+    function prefetchSpeech(text) {
+      const clean = String(text || '').trim();
+      if (!clean || !audioEnabled) return;
+      fetch('/internal/v1/appliance/living/speech', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: clean })
+      }).catch(() => {});
+    }
+
+    let bgApplyRunning = false;
+    function setBackgroundStatusBanner(text, { isDone = false } = {}) {
+      const pill = $('hud-bg-status');
+      const banner = $('drawer-bg-banner');
+      if (!text) {
+        if (pill) pill.hidden = true;
+        if (banner) banner.hidden = true;
+        return;
+      }
+      if (pill) {
+        pill.hidden = false;
+        pill.textContent = isDone ? '✅ Eva-kern actief' : '⏳ Eva start kern op…';
+      }
+      if (banner) {
+        banner.hidden = false;
+        banner.style.borderColor = isDone ? 'rgba(16,185,129,0.6)' : 'rgba(56,189,248,0.52)';
+        banner.style.background = isDone ? 'rgba(6,78,59,0.68)' : 'rgba(8,47,73,0.78)';
+        banner.textContent = text;
+      }
+    }
+
+    function runBackgroundApply(statusText = '⚙️ Eva start op de achtergrond haar AI-kern & geheugen op (~20 sec) — je kunt gewoon alvast doorgaan!') {
+      if (bgApplyRunning) return;
+      bgApplyRunning = true;
+      setBackgroundStatusBanner(statusText);
+      fetch('/internal/v1/appliance/apply', { method: 'POST' })
+        .then(() => refreshStage())
+        .then(() => {
+          setBackgroundStatusBanner('✅ Eva’s AI-kern en geheugen draaien nu volledig actief!', { isDone: true });
+          setTimeout(() => { if (!bgApplyRunning) setBackgroundStatusBanner(''); }, 4500);
+        })
+        .catch(() => {
+          setBackgroundStatusBanner('');
+        })
+        .finally(() => {
+          bgApplyRunning = false;
+        });
     }
 
     async function drainSpeechQueue() {
@@ -894,7 +945,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
 
     const WAKE_PHRASE_RE = /(?:^|\\b)(?:h[eé]y?|hoi|hallo|dag|lieve|luister|ok[eé])\\s+eva\\b[\\s,!.:?-]*(.*)$/i;
     const GOODBYE_PHRASE_RE = /\\b(?:tot\\s+zo(?:\\s+eva)?|slaap\\s+lekker(?:\\s+eva)?|stop\\s+(?:het\\s+)?gesprek|dat\\s+was\\s+het(?:\\s+eva)?|welterusten\\s+eva)\\b/i;
-    const AUTO_SLEEP_IDLE_MS = 28000;
+    const AUTO_SLEEP_IDLE_MS = 35000;
 
     function touchConversationActivity() {
       lastConversationActivityAt = Date.now();
@@ -926,12 +977,23 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       wakeSentinelActiveObj = null;
       if (!obj) return;
       obj.stopped = true;
-      try { obj.sr?.abort?.(); } catch (_e) {}
+      const hadSr = !!obj.sr;
+      try {
+        if (obj.sr) {
+          obj.sr.onend = null;
+          obj.sr.onresult = null;
+          obj.sr.stop?.();
+          obj.sr.abort?.();
+        }
+      } catch (_e) {}
       try { obj.proc?.disconnect(); } catch (_e) {}
       try { obj.filter?.disconnect(); } catch (_e) {}
       try { obj.src?.disconnect(); } catch (_e) {}
       for (const t of (obj.stream?.getTracks() || [])) {
         try { t.stop(); } catch (_e) {}
+      }
+      if (hadSr) {
+        await new Promise(r => setTimeout(r, 180));
       }
     }
 
@@ -1127,9 +1189,13 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     async function toggleWakeSentinel(forceState = null) {
       userUnlockedAudio = true;
       wakeSentinelEnabled = typeof forceState === 'boolean' ? forceState : !wakeSentinelEnabled;
+      touchConversationActivity();
       try { localStorage.setItem('eva_wake_sentinel_enabled', wakeSentinelEnabled ? '1' : '0'); } catch (_e) {}
       if (wakeSentinelEnabled) {
-        if (!liveCallSession) {
+        if (liveCallSession) {
+          // Never disconnect an active live conversation when toggling "Hé Eva" ON!
+          $('eva-subtitle').textContent = '🟢 Live gesprek blijft actief — na afloop luister ik automatisch lokaal naar "Hé Eva".';
+        } else {
           await armWakeSentinelCapture();
           $('eva-subtitle').textContent = '👂 Lokale waker actief — zeg gewoon "Hé Eva" (0 cloudverbruik in rust, automatische slaapstand na gesprek).';
         }
@@ -1147,7 +1213,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       touchConversationActivity();
       idleSleepWatchdog = setInterval(() => {
         if (!liveCallSession || !wakeSentinelEnabled) return;
-        if (ttsSpeaking) {
+        if (!liveCallSession.connected || ttsSpeaking) {
           touchConversationActivity();
           return;
         }
@@ -1191,7 +1257,16 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         try { audioEl.pause(); audioEl.srcObject = null; } catch (_e) {}
       }
       if (sess) {
+        if (sess.connectTimer) clearTimeout(sess.connectTimer);
         if (sess.bioTimer) clearInterval(sess.bioTimer);
+        if (sess.hybridSr) {
+          try {
+            sess.hybridSr.onend = null;
+            sess.hybridSr.onresult = null;
+            sess.hybridSr.stop?.();
+            sess.hybridSr.abort?.();
+          } catch (_e) {}
+        }
         try { sess.dc?.close(); } catch (_e) {}
         try { sess.pc?.close(); } catch (_e) {}
         try {
@@ -1224,17 +1299,23 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     }
 
     function scheduleLiveCallReconnect() {
-      if (!userIntendedLiveCall || liveReconnectAttempts >= 4) {
+      if (!userIntendedLiveCall) return;
+      if (liveReconnectAttempts >= 1 && liveCallSession) {
+        // After 1 WebRTC retry on UDP/NAT-restricted networks, switch seamlessly to Continuous Hybrid HTTPS Voice!
+        startHybridContinuousVoiceSession(liveCallSession);
+        return;
+      }
+      if (liveReconnectAttempts >= 2) {
         stopRealtimeLiveCall('De live spraakverbinding is gesloten. Klik op 🎙️ om te hervatten.');
         return;
       }
       liveReconnectAttempts += 1;
-      const delayMs = Math.min(10000, 1500 * Math.pow(2, liveReconnectAttempts - 1));
-      stopRealtimeLiveCall(`🔄 Verbinding kort onderbroken — Eva herstelt automatisch het live gesprek (poging ${liveReconnectAttempts}/4)…`, { keepIntent: true });
+      const delayMs = 1500;
+      stopRealtimeLiveCall(`🔄 WebRTC-verbinding opnieuw opbouwen (poging ${liveReconnectAttempts})…`, { keepIntent: true });
       if (liveReconnectTimer) clearTimeout(liveReconnectTimer);
       liveReconnectTimer = setTimeout(() => {
         if (userIntendedLiveCall && !liveCallSession) {
-          toggleRealtimeLiveCall({ isAutoReconnect: true }).catch(() => {});
+          toggleRealtimeLiveCall({ isAutoReconnect: true, preferHybridFallback: liveReconnectAttempts >= 1 }).catch(() => {});
         }
       }, delayMs);
     }
@@ -1247,7 +1328,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
     });
 
-    async function toggleRealtimeLiveCall({ isAutoReconnect = false, wokenByVoice = false, initialUserPrompt = '' } = {}) {
+    async function toggleRealtimeLiveCall({ isAutoReconnect = false, wokenByVoice = false, initialUserPrompt = '', preferHybridFallback = false } = {}) {
       userUnlockedAudio = true;
       if (liveCallSession && !isAutoReconnect) {
         await stopRealtimeLiveCall(
@@ -1289,8 +1370,11 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         voice: selVoice,
         stream,
         sessionId: null,
+        connected: false,
+        transport: 'webrtc',
         isReconnect: !!isAutoReconnect,
         wokenByVoice: !!wokenByVoice,
+        preferHybridFallback: !!preferHybridFallback,
         initialUserPrompt: String(initialUserPrompt || '').trim()
       };
       liveCallSession = sess;
@@ -1361,9 +1445,98 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
     }
 
+    function startHybridContinuousVoiceSession(sess) {
+      if (!sess || liveCallSession !== sess) return;
+      if (sess.connectTimer) { clearTimeout(sess.connectTimer); sess.connectTimer = null; }
+      try { sess.dc?.close(); } catch (_e) {}
+      try { sess.pc?.close(); } catch (_e) {}
+      sess.dc = null;
+      sess.pc = null;
+      sess.transport = 'hybrid_https';
+      sess.connected = true;
+      liveReconnectAttempts = 0;
+      touchConversationActivity();
+
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) {
+        stopRealtimeLiveCall('⚠️ WebRTC UDP wordt geblokkeerd door het netwerk/de firewall. Typ onderaan of gebruik Chrome/Edge voor doorlopende spraak.');
+        return;
+      }
+
+      syncLiveCallUi('🟢 Doorlopend gesprek actief (Hybride HTTPS-spraak) — praat gewoon tegen Eva!');
+      waveUntil = performance.now() + 2200;
+
+      const sr = new SR();
+      sr.lang = 'nl-NL';
+      sr.continuous = true;
+      sr.interimResults = true;
+      sr.maxAlternatives = 1;
+      sess.hybridSr = sr;
+      let turnBusy = false;
+
+      sr.onresult = async ev => {
+        if (liveCallSession !== sess) return;
+        touchConversationActivity();
+        for (let i = ev.resultIndex; i < ev.results.length; i++) {
+          const text = String(ev.results[i][0]?.transcript || '').trim();
+          if (!text) continue;
+          if (!ev.results[i].isFinal) {
+            if (ttsSpeaking && text.split(/\\s+/).length >= 2) stopSpeaking();
+            $('eva-subtitle').textContent = `🎙️ Jij: "${text}…"`;
+          } else if (!turnBusy) {
+            turnBusy = true;
+            stopSpeaking();
+            $('eva-subtitle').textContent = `🎙️ Jij: "${text}"`;
+            if (wakeSentinelEnabled && GOODBYE_PHRASE_RE.test(text)) {
+              await speakDutch('Tot zo! Ik luister op de achtergrond weer lokaal naar Hé Eva.');
+              setTimeout(() => {
+                if (liveCallSession === sess) stopRealtimeLiveCall('💤 Ik luister weer lokaal naar "Hé Eva".');
+              }, 2200);
+              turnBusy = false;
+              return;
+            }
+            try {
+              await sendLivingTurn({ text });
+            } finally {
+              turnBusy = false;
+              touchConversationActivity();
+            }
+          }
+        }
+      };
+
+      sr.onend = () => {
+        if (liveCallSession === sess && sess.transport === 'hybrid_https') {
+          setTimeout(() => {
+            if (liveCallSession === sess) {
+              try { sr.start(); } catch (_e) {}
+            }
+          }, 220);
+        }
+      };
+
+      try { sr.start(); } catch (_e) {}
+
+      if (sess.initialUserPrompt) {
+        const initP = sess.initialUserPrompt;
+        sess.initialUserPrompt = '';
+        sendLivingTurn({ text: initP }).catch(() => {});
+      } else if (!sess.isReconnect) {
+        speakDutch(
+          sess.wokenByVoice
+            ? `Ja ${stage?.household?.owner_name || 'Jaap'}, zeg het eens!`
+            : `Ik luister live met je mee, ${stage?.household?.owner_name || 'Jaap'}! Praat gewoon tegen me zonder op knoppen te klikken.`
+        );
+      }
+    }
+
     async function startOpenAiOrCodexWebrtcSession(sess, ctx) {
       try {
-        const pc = new RTCPeerConnection();
+        const pc = new RTCPeerConnection({
+          iceServers: [
+            { urls: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }
+          ]
+        });
         sess.pc = pc;
         pc.addTrack(sess.stream.getAudioTracks()[0], sess.stream);
 
@@ -1382,9 +1555,15 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         };
 
         pc.onconnectionstatechange = () => {
-          if (liveCallSession === sess && ['failed', 'disconnected'].includes(pc.connectionState)) {
-            scheduleLiveCallReconnect();
-          } else if (liveCallSession === sess && pc.connectionState === 'connected') {
+          if (liveCallSession !== sess || sess.transport !== 'webrtc') return;
+          if (['failed', 'disconnected'].includes(pc.connectionState)) {
+            if (sess.preferHybridFallback || !sess.connected) {
+              startHybridContinuousVoiceSession(sess);
+            } else {
+              scheduleLiveCallReconnect();
+            }
+          } else if (pc.connectionState === 'connected') {
+            sess.connected = true;
             liveReconnectAttempts = 0;
           }
         };
@@ -1396,24 +1575,63 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         const offer = await pc.createOffer();
         await pc.setLocalDescription(offer);
 
+        // Gather STUN/host ICE candidates BEFORE sending non-trickle HTTP SDP offer!
+        if (pc.iceGatheringState !== 'complete') {
+          await new Promise(resolve => {
+            let done = false;
+            const finish = () => {
+              if (done) return;
+              done = true;
+              clearTimeout(tmr);
+              pc.removeEventListener('icegatheringstatechange', onGather);
+              pc.removeEventListener('icecandidate', onCand);
+              resolve();
+            };
+            const onGather = () => { if (pc.iceGatheringState === 'complete') finish(); };
+            const onCand = ev => {
+              if (!ev.candidate) { finish(); return; }
+              if (ev.candidate.candidate && ev.candidate.candidate.includes('typ srflx')) {
+                setTimeout(finish, 180);
+              }
+            };
+            const tmr = setTimeout(finish, 1600);
+            pc.addEventListener('icegatheringstatechange', onGather);
+            pc.addEventListener('icecandidate', onCand);
+          });
+        }
+
+        const fullOfferSdp = pc.localDescription?.sdp || offer.sdp;
         const res = await fetch('/internal/v1/appliance/living/realtime/webrtc', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            offer_sdp: offer.sdp,
+            offer_sdp: fullOfferSdp,
             model: sess.model,
             voice: sess.voice
           })
         });
         const data = await res.json();
         if (!res.ok) {
+          if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+            startHybridContinuousVoiceSession(sess);
+            return;
+          }
           throw new Error(data.detail || 'Kon GPT Realtime sessie niet starten.');
         }
         if (liveCallSession !== sess) return;
         sess.sessionId = data.session_id;
 
+        // Watchdog: if UDP/STUN is blocked by router/VPN and DataChannel doesn't open in 9s, fall back seamlessly!
+        sess.connectTimer = setTimeout(() => {
+          if (liveCallSession === sess && sess.transport === 'webrtc' && dc.readyState !== 'open') {
+            startHybridContinuousVoiceSession(sess);
+          }
+        }, 9000);
+
         dc.onopen = () => {
           if (liveCallSession !== sess) return;
+          if (sess.connectTimer) { clearTimeout(sess.connectTimer); sess.connectTimer = null; }
+          sess.connected = true;
           liveReconnectAttempts = 0;
           touchConversationActivity();
           if (data.session_update) {
@@ -1445,6 +1663,14 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           let ev;
           try { ev = JSON.parse(msgEv.data); } catch (_e) { return; }
           const t = ev.type || '';
+
+          if (t === 'error') {
+            if (!sess.sentFallbackUpdate && data.session_update_fallback && dc.readyState === 'open') {
+              sess.sentFallbackUpdate = true;
+              dc.send(JSON.stringify(data.session_update_fallback));
+            }
+            return;
+          }
 
           if (t === 'input_audio_buffer.speech_started') {
             touchConversationActivity();
@@ -1810,7 +2036,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     function buildSmartHomeSectionHtml(sh) {
       const connected = !!(sh.enabled && sh.secret_present);
       const det = sh.lan_detected || {};
-      const defaultUrl = sh.url || det.url || 'http://homeassistant.local:8123';
+      const defaultUrl = (sh.url || det.url || 'http://homeassistant.local:8123').replace(/\\/+$/, '');
       return `
         <div class="card-sec">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
@@ -1821,8 +2047,22 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
                   ? `<span class="badge-info">🟢 Gevonden op ${escapeHtml(det.ip || 'thuisnetwerk')}</span>`
                   : '<span style="font-size:0.76rem; color:var(--muted);">Nog niet gekoppeld</span>')}
           </div>
-          <div style="font-size:0.8rem; color:var(--muted); margin-bottom:10px; line-height:1.45;">
-            Plak hieronder veilig je <strong>Long-Lived Access Token</strong> (Profiel in Home Assistant → Beveiliging → Langlevende toegangstokens). Dit token gaat rechtstreeks naar Eva's versleutelde kluis en nooit door de chat.
+          <div style="padding:10px 12px; border-radius:12px; background:rgba(8,47,73,0.48); border:1px solid rgba(56,189,248,0.38); margin-bottom:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
+              <strong style="font-size:0.81rem; color:#bae6fd;">🔑 Hulp bij je Home Assistant Token maken</strong>
+              <button type="button" class="btn-ghost" id="btn-ha-voice-guide" style="padding:4px 9px; font-size:0.75rem; border-color:rgba(56,189,248,0.5); color:#e0f2fe;">
+                🔊 Laat Eva stap voor stap helpen
+              </button>
+            </div>
+            <ol id="ha-steps-list" style="margin:0 0 8px; padding-left:18px; font-size:0.78rem; color:#e2e8f0; line-height:1.48;">
+              <li>Klik hieronder op <strong>↗ Open mijn Home Assistant Beveiliging</strong> (en log zo nodig in).</li>
+              <li>Scroll helemaal omlaag naar <strong>Langlevende toegangstokens</strong> (<em>Long-lived access tokens</em>).</li>
+              <li>Klik op <strong>Token aanmaken</strong>, geef als naam <code>Eva</code> en kopieer de getoonde code.</li>
+              <li>Plak die code hieronder in het token-veld en klik op <strong>Verbind &amp; Activeer</strong>!</li>
+            </ol>
+            <a id="btn-ha-open-sec" href="${escapeHtml(defaultUrl)}/profile/security" target="_blank" rel="noopener" class="btn-ghost" style="display:inline-flex; width:100%; justify-content:center; text-decoration:none; font-size:0.8rem; color:#7dd3fc; border-color:rgba(56,189,248,0.45);">
+              ↗ Open mijn Home Assistant Beveiliging (/profile/security)
+            </a>
           </div>
           <div class="field">
             <label>Home Assistant adres</label>
@@ -1830,7 +2070,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           </div>
           <div class="field">
             <label>Long-Lived Access Token ${sh.secret_present ? '(opgeslagen — leeg laten om huidig token te houden)' : ''}</label>
-            <input id="ha-tok-in" type="password" autocomplete="off" placeholder="Plak hier je Home Assistant token…" />
+            <input id="ha-tok-in" type="password" autocomplete="off" placeholder="Plak hier het gekopieerde Home Assistant token…" />
           </div>
           <label class="check-row">
             <input id="ha-eff-in" type="checkbox" ${sh.allow_effects !== false ? 'checked' : ''} />
@@ -2220,14 +2460,30 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     }
 
     function wireSmartHomeHandlers() {
+      const urlIn = $('ha-url-in');
+      const secLink = $('btn-ha-open-sec');
+      if (urlIn && secLink) {
+        urlIn.addEventListener('input', () => {
+          const base = (urlIn.value.trim() || 'http://homeassistant.local:8123').replace(/\\/+$/, '');
+          secLink.href = `${base}/profile/security`;
+        });
+      }
+      const guideBtn = $('btn-ha-voice-guide');
+      if (guideBtn) {
+        guideBtn.onclick = () => {
+          userUnlockedAudio = true;
+          speakDutch('Klik in Home Assistant linksonder op je naam, kies het tabblad Beveiliging, scroll helemaal omlaag naar Langlevende toegangstokens en klik op Token aanmaken. Plak die code daarna hier in mijn kluis!');
+        };
+      }
       const btn = $('btn-connect-ha');
       if (!btn) return;
       btn.onclick = async () => {
         const msg = $('ha-status-msg');
         btn.disabled = true;
-        btn.textContent = '⏳ Verbinden, apparaten zoeken & Eva activeren…';
+        btn.textContent = '⏳ Verbinden & Eva’s kern bijwerken (~15 sec)…';
         msg.style.color = '#bae6fd';
-        msg.textContent = 'Even geduld: verbinding testen en Eva’s Home Assistant-tools activeren…';
+        msg.textContent = 'Verbinding testen en Eva’s Home Assistant-kern op de achtergrond herstarten…';
+        setBackgroundStatusBanner('⚙️ Eva koppelt Home Assistant en herstart haar kern met jouw lampen & sensoren…');
         try {
           const r = await fetch('/internal/v1/appliance/living/smart-home/connect', {
             method: 'POST',
@@ -2240,6 +2496,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           });
           const d = await r.json();
           if (!r.ok) {
+            setBackgroundStatusBanner('');
             msg.style.color = '#fb7185';
             msg.textContent = d.detail || 'Koppelen mislukt.';
             return;
@@ -2247,6 +2504,8 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           $('ha-tok-in').value = '';
           msg.style.color = '#6ee7b7';
           msg.textContent = '✓ ' + d.detail;
+          setBackgroundStatusBanner('✅ Home Assistant actief gekoppeld!', { isDone: true });
+          setTimeout(() => { if (!bgApplyRunning) setBackgroundStatusBanner(''); }, 4000);
           if (d.stage) applyStageState(d.stage, { preserveDrawerInputs: true });
           pushHeardCard({
             title: 'Home Assistant actief!',
@@ -2304,7 +2563,11 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
             </button>
             <div id="wiz-codex-box" hidden style="padding:10px; border-radius:12px; background:rgba(8,47,73,0.5); margin-bottom:8px;">
               <div style="font-size:0.8rem;">Code: <strong id="wiz-codex-code" style="font-size:1.1rem; color:#7dd3fc;">…</strong></div>
-              <a id="wiz-codex-url" href="https://auth.openai.com/codex/device" target="_blank" rel="noopener" style="color:#38bdf8; font-size:0.82rem;">Open OpenAI inlogpagina ↗</a>
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:6px;">
+                <a id="wiz-codex-url" href="https://auth.openai.com/codex/device" target="_blank" rel="noopener" style="color:#38bdf8; font-size:0.82rem; font-weight:600;">1. Open OpenAI inlogpagina ↗</a>
+                <button type="button" class="btn-ghost" id="wiz-codex-check-now" style="padding:5px 10px; font-size:0.77rem;">🔄 Ik heb ingelogd → Ga door</button>
+              </div>
+              <div id="wiz-codex-status" style="font-size:0.77rem; color:#bae6fd; margin-top:6px;">Wachten tot je de code bevestigt in het OpenAI-tabblad…</div>
             </div>
             <details style="margin-top:6px;">
               <summary style="font-size:0.81rem; color:var(--muted); cursor:pointer;">Of kies Claude, Gemini, OpenRouter of lokaal model (Ollama)…</summary>
@@ -2499,8 +2762,22 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
 
       body.querySelectorAll('[data-go-step]').forEach(b => {
         b.onclick = () => {
-          wizardStep = Number(b.dataset.goStep);
+          userUnlockedAudio = true;
+          const nextStep = Number(b.dataset.goStep);
+          const goingForward = nextStep > wizardStep;
+          wizardStep = nextStep;
           renderWizardStep();
+          if (goingForward) {
+            if (wizardStep === 3) {
+              speakDutch('Laten we nu in stap 3 kort je stem opnemen zodat ik je op gehoor herken.');
+              prefetchSpeech('Klik hier in stap 4 gerust op een sfeerbol om mijn karakter te proeven, of voeg een huisafspraak toe.');
+            } else if (wizardStep === 4) {
+              speakDutch('Klik hier in stap 4 gerust op een sfeerbol om mijn karakter te proeven, of voeg een huisafspraak toe.');
+              prefetchSpeech('In stap 5 kunnen we Home Assistant en je telefoon koppelen. Klik gerust op Tokenhulp als ik je stap voor stap moet laten zien hoe je een Home Assistant token maakt!');
+            } else if (wizardStep === 5) {
+              speakDutch('In stap 5 kunnen we Home Assistant en je telefoon koppelen. Klik gerust op Tokenhulp als ik je stap voor stap moet laten zien hoe je een Home Assistant token maakt!');
+            }
+          }
         };
       });
 
@@ -2523,56 +2800,87 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         sel.onchange = syncP;
         syncP();
 
+        const completeStep1AndAdvance = () => {
+          clearInterval(codexPollTimer);
+          stage.ai_ready = true;
+          if (stage.model?.codex) stage.model.codex.logged_in = true;
+          if ($('wiz-next')) $('wiz-next').disabled = false;
+          runBackgroundApply('⚙️ ChatGPT gekoppeld! Eva start op de achtergrond haar kern & geheugen op (~20-30 sec) — je kunt hieronder alvast gewoon verder met Stap 2!');
+          wizardStep = 2;
+          renderWizardStep();
+          speakDutch('Gelukt, mijn brein is gekoppeld! Vul hier bij stap 2 even je voornaam en je gezinsleden in, terwijl ik op de achtergrond mijn geheugen opstart.');
+          prefetchSpeech('Laten we nu in stap 3 kort je stem opnemen zodat ik je op gehoor herken.');
+        };
+
+        const checkCodexOnce = async () => {
+          try {
+            const pr = await fetch('/internal/v1/appliance/model/codex/status');
+            const pd = await pr.json();
+            if (pd.user_code && $('wiz-codex-code')) $('wiz-codex-code').textContent = pd.user_code;
+            if (pd.logged_in) {
+              completeStep1AndAdvance();
+              return true;
+            }
+          } catch (_e) {}
+          return false;
+        };
+
+        if ($('wiz-codex-check-now')) {
+          $('wiz-codex-check-now').onclick = async () => {
+            userUnlockedAudio = true;
+            const ok = await checkCodexOnce();
+            if (!ok && $('wiz-codex-status')) {
+              $('wiz-codex-status').textContent = 'Nog niet bevestigd door OpenAI — rond het inloggen af in het geopende tabblad.';
+            }
+          };
+        }
+
         $('wiz-codex-btn').onclick = async () => {
+          userUnlockedAudio = true;
           const r = await fetch('/internal/v1/appliance/model/codex/start', { method: 'POST' });
           const d = await r.json();
           if (d.logged_in) {
-            await refreshStage();
-            wizardStep = 2;
-            renderWizardStep();
+            completeStep1AndAdvance();
             return;
           }
           $('wiz-codex-box').hidden = false;
           $('wiz-codex-code').textContent = d.user_code || '…';
           if (d.verification_url) $('wiz-codex-url').href = d.verification_url;
           clearInterval(codexPollTimer);
-          codexPollTimer = setInterval(async () => {
-            const pr = await fetch('/internal/v1/appliance/model/codex/status');
-            const pd = await pr.json();
-            if (pd.user_code) $('wiz-codex-code').textContent = pd.user_code;
-            if (pd.logged_in) {
-              clearInterval(codexPollTimer);
-              await fetch('/internal/v1/appliance/apply', { method: 'POST' });
-              await refreshStage();
-              wizardStep = 2;
-              renderWizardStep();
-            }
-          }, 2200);
+          codexPollTimer = setInterval(checkCodexOnce, 1800);
         };
 
         $('wiz-api-save').onclick = async () => {
+          userUnlockedAudio = true;
           const p = presets[Number(sel.value) || 0] || {};
-          const r = await fetch('/internal/v1/appliance/model/api', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              kind: p.kind || 'openai_compatible',
-              label: p.label || 'AI',
-              model: $('wiz-api-model').value,
-              endpoint: $('wiz-api-ep').value,
-              api_key: $('wiz-api-key').value
-            })
-          });
-          const d = await r.json();
-          if (!r.ok) { $('wiz-api-msg').textContent = d.detail || 'Fout'; return; }
-          await fetch('/internal/v1/appliance/apply', { method: 'POST' });
-          await refreshStage();
-          wizardStep = 2;
-          renderWizardStep();
+          $('wiz-api-save').disabled = true;
+          try {
+            const r = await fetch('/internal/v1/appliance/model/api', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                kind: p.kind || 'openai_compatible',
+                label: p.label || 'AI',
+                model: $('wiz-api-model').value,
+                endpoint: $('wiz-api-ep').value,
+                api_key: $('wiz-api-key').value
+              })
+            });
+            const d = await r.json();
+            if (!r.ok) { $('wiz-api-msg').textContent = d.detail || 'Fout'; return; }
+            completeStep1AndAdvance();
+          } finally {
+            if ($('wiz-api-save')) $('wiz-api-save').disabled = false;
+          }
         };
 
         if ($('wiz-next')) {
-          $('wiz-next').onclick = () => { wizardStep = 2; renderWizardStep(); };
+          $('wiz-next').onclick = () => {
+            userUnlockedAudio = true;
+            wizardStep = 2;
+            renderWizardStep();
+            speakDutch('Vul hier bij stap 2 even je voornaam en je gezinsleden in.');
+          };
         }
       }
 

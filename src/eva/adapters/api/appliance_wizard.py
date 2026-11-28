@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import html
 import json
 from pathlib import Path
@@ -1241,6 +1242,16 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
             raise
         return JSONResponse(payload, headers=_SECURITY_HEADERS)
 
+    async def _acall(fn, *args, **kwargs) -> JSONResponse:
+        try:
+            payload = await asyncio.to_thread(fn, *args, **kwargs)
+        except Exception as exc:
+            status_code = getattr(exc, "status_code", None)
+            if isinstance(status_code, int) and 400 <= status_code < 600:
+                raise HTTPException(status_code=status_code, detail=str(exc)) from exc
+            raise
+        return JSONResponse(payload, headers=_SECURITY_HEADERS)
+
     @app.exception_handler(HTTPException)
     async def _error_handler(_request: Request, error: HTTPException) -> JSONResponse:
         return JSONResponse(
@@ -1375,25 +1386,25 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_profile(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.save_profile_and_hardware, await _read_json(request))
+        return await _acall(service.save_profile_and_hardware, await _read_json(request))
 
     @app.post("/internal/v1/appliance/character/preview")
     async def post_char_preview(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.preview_character, await _read_json(request))
+        return await _acall(service.preview_character, await _read_json(request))
 
     @app.post("/internal/v1/appliance/character")
     async def post_character(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.save_character, await _read_json(request))
+        return await _acall(service.save_character, await _read_json(request))
 
     @app.post("/internal/v1/appliance/character/rollback")
     async def post_character_rollback(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.rollback_character)
+        return await _acall(service.rollback_character)
 
     @app.get("/internal/v1/appliance/character/soul-export")
     def get_soul_export(request: Request) -> PlainTextResponse:
@@ -1408,7 +1419,7 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_codex_start(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.start_codex_login)
+        return await _acall(service.start_codex_login)
 
     @app.get("/internal/v1/appliance/model/codex/status")
     def get_codex_status(request: Request) -> JSONResponse:
@@ -1419,31 +1430,31 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_model_api(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.save_and_test_api_model, await _read_json(request))
+        return await _acall(service.save_and_test_api_model, await _read_json(request))
 
     @app.post("/internal/v1/appliance/model/budget")
     async def post_model_budget(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.save_model_budget, await _read_json(request))
+        return await _acall(service.save_model_budget, await _read_json(request))
 
     @app.post("/internal/v1/appliance/modules/{module_id}")
     async def post_module(request: Request, module_id: str) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.save_module, module_id, await _read_json(request))
+        return await _acall(service.save_module, module_id, await _read_json(request))
 
     @app.post("/internal/v1/appliance/modules/{module_id}/test")
     async def post_module_test(request: Request, module_id: str) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.test_module, module_id, await _read_json(request))
+        return await _acall(service.test_module, module_id, await _read_json(request))
 
     @app.post("/internal/v1/appliance/apply")
     async def post_apply(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.apply_installation)
+        return await _acall(service.apply_installation)
 
     @app.get("/internal/v1/appliance/export")
     def get_export(request: Request) -> JSONResponse:
@@ -1468,7 +1479,7 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
             raise HTTPException(status_code=400, detail="ongeldige JSON in profielbestand") from exc
         if not isinstance(payload, dict):
             raise HTTPException(status_code=400, detail="profielbestand moet een JSON-object zijn")
-        return _call(service.import_portable_bundle, payload)
+        return await _acall(service.import_portable_bundle, payload)
 
     @app.get("/internal/v1/appliance/contact")
     def get_contact_hub(request: Request) -> JSONResponse:
@@ -1479,7 +1490,7 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_contact_device(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(
+        return await _acall(
             service.create_device_pairing,
             await _read_json(request),
             base_origin=_request_origin(request),
@@ -1489,13 +1500,13 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_contact_device_revoke(request: Request, grant_id: str) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.revoke_device_pairing, grant_id)
+        return await _acall(service.revoke_device_pairing, grant_id)
 
     @app.post("/internal/v1/appliance/contact/telegram/start")
     async def post_contact_tg_start(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.start_telegram_magic_link, await _read_json(request))
+        return await _acall(service.start_telegram_magic_link, await _read_json(request))
 
     @app.get("/internal/v1/appliance/contact/telegram/status")
     def get_contact_tg_status(request: Request) -> JSONResponse:
@@ -1506,13 +1517,13 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_contact_tg_remove(request: Request, telegram_user_id: int) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.remove_telegram_contact, telegram_user_id)
+        return await _acall(service.remove_telegram_contact, telegram_user_id)
 
     @app.post("/internal/v1/appliance/contact/test")
     async def post_contact_test(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.test_live_contact, await _read_json(request))
+        return await _acall(service.test_live_contact, await _read_json(request))
 
     @app.get("/internal/v1/appliance/living/state")
     def get_living_state(request: Request) -> JSONResponse:
@@ -1524,39 +1535,39 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request, max_bytes=524_288)
-        return _call(service.handle_living_turn, body, base_origin=_request_origin(request))
+        return await _acall(service.handle_living_turn, body, base_origin=_request_origin(request))
 
     @app.post("/internal/v1/appliance/living/undo/{change_id}")
     async def post_living_undo(request: Request, change_id: str) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.undo_living_change, change_id)
+        return await _acall(service.undo_living_change, change_id)
 
     @app.post("/internal/v1/appliance/living/rules/{rule_index}/remove")
     async def post_living_remove_rule(request: Request, rule_index: int) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.remove_household_rule, rule_index)
+        return await _acall(service.remove_household_rule, rule_index)
 
     @app.post("/internal/v1/appliance/living/guest-mode")
     async def post_living_guest_mode(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request)
-        return _call(service.set_guest_mode, enabled=bool(body.get("enabled", False)))
+        return await _acall(service.set_guest_mode, enabled=bool(body.get("enabled", False)))
 
     @app.post("/internal/v1/appliance/living/lan-scan")
     async def post_living_lan_scan(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.scan_lan_devices)
+        return await _acall(service.scan_lan_devices)
 
     @app.post("/internal/v1/appliance/living/lan-device/{device_id}")
     async def post_living_lan_device(request: Request, device_id: str) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request)
-        return _call(
+        return await _acall(
             service.set_lan_device_consent,
             device_id,
             approved=bool(body.get("approved", True)),
@@ -1566,7 +1577,7 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_living_member_welcome(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(
+        return await _acall(
             service.create_member_welcome,
             await _read_json(request),
             base_origin=_request_origin(request),
@@ -1581,7 +1592,7 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
             raise HTTPException(status_code=401, detail="koppeling vereist")
         _require_same_origin(request)
         body = await _read_json(request)
-        synth = service.synthesize_living_speech(str(body.get("text", "")))
+        synth = await asyncio.to_thread(service.synthesize_living_speech, str(body.get("text", "")))
         if synth is None:
             return Response(status_code=204, headers={"Cache-Control": "no-store"})
         audio_bytes, media_type = synth
@@ -1596,56 +1607,56 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request, max_bytes=524_288)
-        return _call(service.enroll_living_voice, body)
+        return await _acall(service.enroll_living_voice, body)
 
     @app.post("/internal/v1/appliance/living/voice-check")
     async def post_living_voice_check(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request, max_bytes=524_288)
-        return _call(service.check_living_voice, body)
+        return await _acall(service.check_living_voice, body)
 
     @app.post("/internal/v1/appliance/living/wizard-state")
     async def post_living_wizard_state(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.set_onboarding_wizard_state, await _read_json(request))
+        return await _acall(service.set_onboarding_wizard_state, await _read_json(request))
 
     @app.post("/internal/v1/appliance/living/smart-home/connect")
     async def post_living_smart_home_connect(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.connect_smart_home, await _read_json(request))
+        return await _acall(service.connect_smart_home, await _read_json(request))
 
     @app.post("/internal/v1/appliance/living/integrations/connect")
     async def post_living_integrations_connect(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.connect_universal_service, await _read_json(request))
+        return await _acall(service.connect_universal_service, await _read_json(request))
 
     @app.post("/internal/v1/appliance/living/integrations/{service_id}/remove")
     async def post_living_integrations_remove(request: Request, service_id: str) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.remove_universal_service, service_id)
+        return await _acall(service.remove_universal_service, service_id)
 
     @app.post("/internal/v1/appliance/living/capabilities/{capability_id}/remove")
     async def post_living_capability_remove(request: Request, capability_id: str) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.delete_custom_capability, capability_id)
+        return await _acall(service.delete_custom_capability, capability_id)
 
     @app.post("/internal/v1/appliance/living/knowledge-bank")
     async def post_living_knowledge_bank_save(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.save_knowledge_bank_entry, await _read_json(request, max_bytes=65_536))
+        return await _acall(service.save_knowledge_bank_entry, await _read_json(request, max_bytes=65_536))
 
     @app.post("/internal/v1/appliance/living/knowledge-bank/{item_id}/remove")
     async def post_living_knowledge_bank_remove(request: Request, item_id: str) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.delete_knowledge_bank_entry, item_id)
+        return await _acall(service.delete_knowledge_bank_entry, item_id)
 
     @app.get("/internal/v1/appliance/lan-ca.crt", response_class=PlainTextResponse)
     def get_lan_ca_certificate(request: Request) -> Response:
@@ -1666,7 +1677,7 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request)
-        return _call(
+        return await _acall(
             service.save_main_display_config,
             body,
             base_origin=_request_origin(request),
@@ -1676,27 +1687,27 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_living_main_display_wake(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.wake_main_display)
+        return await _acall(service.wake_main_display)
 
     @app.post("/internal/v1/appliance/living/vision-look")
     async def post_living_vision_look(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request, max_bytes=4 * 1024 * 1024)
-        return _call(service.handle_vision_look, body)
+        return await _acall(service.handle_vision_look, body)
 
     @app.post("/internal/v1/appliance/living/realtime/config")
     async def post_living_realtime_config(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.save_realtime_voice_preference, await _read_json(request))
+        return await _acall(service.save_realtime_voice_preference, await _read_json(request))
 
     @app.post("/internal/v1/appliance/living/realtime/webrtc")
     async def post_living_realtime_webrtc(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request, max_bytes=262_144)
-        return _call(
+        return await _acall(
             service.start_realtime_webrtc_session,
             body,
             base_origin=_request_origin(request),
@@ -1706,21 +1717,21 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
     async def post_living_realtime_stop(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
-        return _call(service.stop_realtime_voice_session, await _read_json(request))
+        return await _acall(service.stop_realtime_voice_session, await _read_json(request))
 
     @app.post("/internal/v1/appliance/living/wake-check")
     async def post_living_wake_check(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request, max_bytes=262_144)
-        return _call(service.check_wake_audio, body)
+        return await _acall(service.check_wake_audio, body)
 
     @app.post("/internal/v1/appliance/living/fast-action")
     async def post_living_fast_action(request: Request) -> JSONResponse:
         _require_session(request)
         _require_same_origin(request)
         body = await _read_json(request, max_bytes=65_536)
-        return _call(service.execute_fast_action, body, base_origin=_request_origin(request))
+        return await _acall(service.execute_fast_action, body, base_origin=_request_origin(request))
 
     @app.post("/internal/v1/appliance/living/turn-stream")
     async def post_living_turn_stream(request: Request) -> StreamingResponse:
@@ -1806,7 +1817,7 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_lan(request)
         _require_same_origin(request)
         body = await _read_json(request, max_bytes=524_288)
-        return _call(
+        return await _acall(
             service.complete_member_welcome,
             token,
             body,

@@ -552,6 +552,25 @@ class RealtimeVoiceHub:
                 self._codex_sessions.clear()
         return {"ok": True}
 
+    @staticmethod
+    def _read_codex_tokens(primary_path: Path, fallback_path: Path | None = None) -> tuple[str, str]:
+        """Extract (access_token, account_id) from either a flat lease file or nested ~/.codex/auth.json."""
+        for candidate in (primary_path, fallback_path):
+            if candidate is None or not candidate.is_file():
+                continue
+            try:
+                raw = json.loads(candidate.read_text(encoding="utf-8"))
+                if not isinstance(raw, dict):
+                    continue
+                tok_obj = raw.get("tokens") if isinstance(raw.get("tokens"), dict) else raw
+                acc_tok = str(tok_obj.get("access_token") or raw.get("access_token") or "").strip()
+                acc_id = str(tok_obj.get("account_id") or raw.get("account_id") or "").strip()
+                if acc_tok and acc_id:
+                    return acc_tok, acc_id
+            except Exception:
+                continue
+        return "", ""
+
     def negotiate_openai_or_codex_webrtc(
         self,
         *,
@@ -561,6 +580,7 @@ class RealtimeVoiceHub:
         stage_snapshot: Mapping[str, Any],
         openai_api_key: str | None,
         codex_lease_path: Path,
+        codex_fallback_auth_path: Path | None = None,
         noise_reduction: str = "far_field",
     ) -> dict[str, Any]:
         """Exchange browser WebRTC SDP offer for remote SDP answer using OpenAI Realtime API or ChatGPT/Codex OAuth."""
@@ -594,6 +614,14 @@ class RealtimeVoiceHub:
                 "tool_choice": "auto",
             },
         }
+        session_update_fallback = {
+            "type": "session.update",
+            "session": {
+                "instructions": instructions,
+                "tools": tools,
+                "tool_choice": "auto",
+            },
+        }
 
         # 1. Direct OpenAI Realtime WebRTC when an OpenAI Platform API key is stored in Eva's Vault/Settings
         clean_key = (openai_api_key or "").strip()
@@ -614,18 +642,41 @@ class RealtimeVoiceHub:
                 "voice": safe_voice,
                 "answer_sdp": answer_sdp,
                 "session_update": session_update_payload,
+                "session_update_fallback": session_update_fallback,
             }
 
         # 2. Zero-extra-key ChatGPT / Codex OAuth WebRTC (`codex app-server` `thread/realtime/start`)
-        if codex_lease_path.is_file():
-            return self._negotiate_codex_oauth_webrtc(
+        acc_tok, acc_id = self._read_codex_tokens(codex_lease_path, codex_fallback_auth_path)
+        if acc_tok and acc_id:
+            # Codex v3 already sets `voice` and `prompt` at thread/realtime/start; omit `voice` in session.update
+            # because Realtime GA rejects mutating `voice` once an audio track is negotiated.
+            codex_session_update = {
+                "type": "session.update",
+                "session": {
+                    "instructions": instructions,
+                    "input_audio_noise_reduction": nr_cfg,
+                    "input_audio_transcription": {"model": "gpt-4o-mini-transcribe", "language": "nl"},
+                    "turn_detection": {
+                        "type": "semantic_vad",
+                        "eagerness": "low",
+                        "create_response": True,
+                        "interrupt_response": True,
+                    },
+                    "tools": tools,
+                    "tool_choice": "auto",
+                },
+            }
+            res_cdx = self._negotiate_codex_oauth_webrtc(
                 offer_sdp=offer_sdp,
                 requested_model=target_model,
                 voice=safe_voice,
                 instructions=instructions,
-                session_update_payload=session_update_payload,
+                session_update_payload=codex_session_update,
                 codex_lease_path=codex_lease_path,
+                codex_fallback_auth_path=codex_fallback_auth_path,
             )
+            res_cdx["session_update_fallback"] = session_update_fallback
+            return res_cdx
 
         raise RuntimeError(
             "Log eerst in met je ChatGPT-account (Stap 1) of zet een OpenAI API-sleutel in Eva's Kluis voor GPT Realtime 2.1."
@@ -683,23 +734,22 @@ class RealtimeVoiceHub:
         instructions: str,
         session_update_payload: dict[str, Any],
         codex_lease_path: Path,
+        codex_fallback_auth_path: Path | None = None,
     ) -> dict[str, Any]:
         codex_bin = shutil.which("codex") or "/usr/local/bin/codex"
         if not Path(codex_bin).is_file():
             raise RuntimeError("Codex CLI is niet geïnstalleerd voor ChatGPT Live WebRTC")
 
-        lease = json.loads(codex_lease_path.read_text(encoding="utf-8"))
-        access_token = str(lease.get("access_token") or "").strip()
-        account_id = str(lease.get("account_id") or "").strip()
+        access_token, account_id = self._read_codex_tokens(codex_lease_path, codex_fallback_auth_path)
         if not access_token or not account_id:
             raise RuntimeError("ChatGPT/Codex sessie is verlopen; koppel opnieuw in Stap 1.")
 
-        temp_dir = tempfile.TemporaryDirectory(prefix="eva-rt-webrtc-")
+        temp_dir = tempfile.TemporaryDirectory(prefix="eva-rt-webrtc-", ignore_cleanup_errors=True)
         proc = subprocess.Popen(  # noqa: S603 - pinned local codex binary with isolated CODEX_HOME
             [codex_bin, "app-server", "--listen", "stdio://"],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
             text=True,
             bufsize=1,
             env={
@@ -718,6 +768,18 @@ class RealtimeVoiceHub:
                 proc.stdin.write(json.dumps(obj, ensure_ascii=False) + "\n")
                 proc.stdin.flush()
 
+            def _reply_auth_refresh(req_id: Any) -> None:
+                f_tok, f_acc = self._read_codex_tokens(codex_lease_path, codex_fallback_auth_path)
+                send_obj(
+                    {
+                        "id": req_id,
+                        "result": {
+                            "accessToken": f_tok or access_token,
+                            "chatgptAccountId": f_acc or account_id,
+                        },
+                    }
+                )
+
             def read_until_id(target_id: int, timeout_s: float = 12.0) -> dict[str, Any]:
                 deadline = time.monotonic() + timeout_s
                 while time.monotonic() < deadline:
@@ -728,16 +790,7 @@ class RealtimeVoiceHub:
                     msg = json.loads(line)
                     if "id" in msg and "method" in msg:
                         if msg["method"] == "account/chatgptAuthTokens/refresh":
-                            fresh = json.loads(codex_lease_path.read_text(encoding="utf-8"))
-                            send_obj(
-                                {
-                                    "id": msg["id"],
-                                    "result": {
-                                        "accessToken": fresh["access_token"],
-                                        "chatgptAccountId": fresh["account_id"],
-                                    },
-                                }
-                            )
+                            _reply_auth_refresh(msg["id"])
                         else:
                             send_obj({"id": msg["id"], "error": {"code": -32601, "message": "Disallowed"}})
                         continue
@@ -836,16 +889,7 @@ class RealtimeVoiceHub:
                     method = ev.get("method")
                     params = ev.get("params") or {}
                     if method == "account/chatgptAuthTokens/refresh" and "id" in ev:
-                        fresh = json.loads(codex_lease_path.read_text(encoding="utf-8"))
-                        send_obj(
-                            {
-                                "id": ev["id"],
-                                "result": {
-                                    "accessToken": fresh["access_token"],
-                                    "chatgptAccountId": fresh["account_id"],
-                                },
-                            }
-                        )
+                        _reply_auth_refresh(ev["id"])
                         continue
                     if params.get("threadId") != thread_id:
                         continue
@@ -873,16 +917,7 @@ class RealtimeVoiceHub:
                         try:
                             ev = json.loads(raw_line)
                             if ev.get("method") == "account/chatgptAuthTokens/refresh" and "id" in ev:
-                                fresh = json.loads(codex_lease_path.read_text(encoding="utf-8"))
-                                send_obj(
-                                    {
-                                        "id": ev["id"],
-                                        "result": {
-                                            "accessToken": fresh["access_token"],
-                                            "chatgptAccountId": fresh["account_id"],
-                                        },
-                                    }
-                                )
+                                _reply_auth_refresh(ev["id"])
                         except Exception:
                             pass
                 except Exception:

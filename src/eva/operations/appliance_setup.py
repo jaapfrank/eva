@@ -429,6 +429,30 @@ class ApplianceSetupService:
         self._ha_cam_cache: tuple[float, dict[str, Any]] | None = None
         self._ensure_pairing_record()
         self._load_persisted_sessions()
+        if not dry_run_apply and os.name != "nt":
+            threading.Thread(
+                target=self._prewarm_wizard_tts_cache,
+                daemon=True,
+                name="eva-tts-prewarm",
+            ).start()
+
+    @staticmethod
+    def _prewarm_wizard_tts_cache() -> None:
+        time.sleep(1.5)
+        phrases = (
+            "Welkom! Koppel rechts in stap 1 eerst mijn AI-brein, dan lopen we samen alle stappen door.",
+            "Hoi! Ik ben wakker en ik heb rechts de Kennismakings-Wizard voor je klaargezet. Laten we samen in een paar korte stappen jouw naam, je stem en Home Assistant instellen!",
+            "Gelukt, mijn brein is gekoppeld! Vul hier bij stap 2 even je voornaam en je gezinsleden in, terwijl ik op de achtergrond mijn geheugen opstart.",
+            "Laten we nu in stap 3 kort je stem opnemen zodat ik je op gehoor herken.",
+            "Klik hier in stap 4 gerust op een sfeerbol om mijn karakter te proeven, of voeg een huisafspraak toe.",
+            "In stap 5 kunnen we Home Assistant en je telefoon koppelen. Klik gerust op Tokenhulp als ik je stap voor stap moet laten zien hoe je een Home Assistant token maakt!",
+            "Klik in Home Assistant linksonder op je naam, kies het tabblad Beveiliging, scroll helemaal omlaag naar Langlevende toegangstokens en klik op Token aanmaken. Plak die code daarna hier in mijn kluis!",
+        )
+        for p in phrases:
+            try:
+                synthesize_neural_dutch_mp3(p)
+            except Exception:
+                break
 
     # ------------------------------------------------------------------
     # Pairing & LAN access gate
@@ -5047,8 +5071,6 @@ class ApplianceSetupService:
         req_voice = str(payload.get("voice") or rt_cfg.get("voice") or "marin")
         snap = self.living_stage_snapshot(base_origin=base_origin)
         lease_path = self.runtime_root / "model-lease" / "auth.json"
-        if not lease_path.is_file() and self.codex_auth_file.is_file():
-            lease_path = self.codex_auth_file
         try:
             return self._realtime_hub.negotiate_openai_or_codex_webrtc(
                 offer_sdp=offer_sdp,
@@ -5057,6 +5079,7 @@ class ApplianceSetupService:
                 stage_snapshot=snap,
                 openai_api_key=self._find_realtime_api_key("openai"),
                 codex_lease_path=lease_path,
+                codex_fallback_auth_path=self.codex_auth_file,
             )
         except (ValueError, RuntimeError, TimeoutError) as exc:
             raise ApplianceSetupError(str(exc), status_code=502) from exc
