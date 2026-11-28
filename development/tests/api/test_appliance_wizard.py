@@ -854,7 +854,51 @@ def test_persistent_sessions_loopback_auto_pair_universal_vault_and_self_buildin
             "request_owner_connection",
             "use_vault_service",
             "build_and_run_capability",
+            "beheer_gezins_kennisbank",
         }
+
+        # Verify Gezins-Kennisbank save, verbatim search, stage endpoint & delete
+        kb_rpc_save = adapter._call_tool(
+            "beheer_gezins_kennisbank",
+            {
+                "action": "opslaan",
+                "titel": "Vaatwasser Serienummer",
+                "inhoud_of_zoekterm": "Miele G7160 SCVi, serienummer SN-994120-NL",
+                "categorie": "code_of_serienummer",
+            },
+            "rpc_kb_01",
+        )
+        assert kb_rpc_save["ok"] is True
+        kb_rpc_search = adapter._call_tool(
+            "beheer_gezins_kennisbank",
+            {
+                "action": "zoeken",
+                "titel": "",
+                "inhoud_of_zoekterm": "Miele serienummer",
+                "categorie": "overig",
+            },
+            "rpc_kb_02",
+        )
+        assert kb_rpc_search["ok"] is True
+        assert "SN-994120-NL" in json.dumps(kb_rpc_search)
+        kb_stage_save = restarted_client.post(
+            "/internal/v1/appliance/living/knowledge-bank",
+            json={
+                "title": "Oma's Appeltaart",
+                "category": "recept",
+                "content": "175 graden hetelucht, 65 minuten, Goudrenetten.",
+            },
+        )
+        assert kb_stage_save.status_code == 200
+        kb_id = kb_stage_save.json()["item_id"]
+        assert any(
+            k["item_id"] == kb_id
+            for k in kb_stage_save.json()["stage"]["integrations"]["knowledge_bank"]
+        )
+        assert (
+            restarted_client.post(f"/internal/v1/appliance/living/knowledge-bank/{kb_id}/remove").status_code
+            == 200
+        )
 
         # Eva synthesizes, AST-validates, sandbox-tests, saves, and runs a brand-new Python capability!
         create_res = hub.handle_capability_tool(

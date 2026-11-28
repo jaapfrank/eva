@@ -1635,6 +1635,18 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_same_origin(request)
         return _call(service.delete_custom_capability, capability_id)
 
+    @app.post("/internal/v1/appliance/living/knowledge-bank")
+    async def post_living_knowledge_bank_save(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.save_knowledge_bank_entry, await _read_json(request, max_bytes=65_536))
+
+    @app.post("/internal/v1/appliance/living/knowledge-bank/{item_id}/remove")
+    async def post_living_knowledge_bank_remove(request: Request, item_id: str) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        return _call(service.delete_knowledge_bank_entry, item_id)
+
     @app.get("/internal/v1/appliance/lan-ca.crt", response_class=PlainTextResponse)
     def get_lan_ca_certificate(request: Request) -> Response:
         _require_lan(request)

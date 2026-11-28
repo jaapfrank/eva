@@ -413,25 +413,42 @@ class HoloStageVisionBridge:
         prompt_nl: str,
     ) -> tuple[str, int | None, int | None, int | None]:
         assert self._credential_loader is not None
-        req_body = {
+        is_gpt62 = self._codex_model.startswith("gpt-6.2")
+        user_msg: dict[str, Any] = {
+            "type": "message",
+            "role": "user",
+            "content": [
+                {"type": "input_text", "text": prompt_nl},
+                {"type": "input_image", "image_url": data_uri},
+            ],
+        }
+        input_msgs: list[dict[str, Any]] = (
+            [
+                {
+                    "type": "message",
+                    "role": "developer",
+                    "content": _VISUAL_PERCEPTION_INSTRUCTIONS,
+                },
+                user_msg,
+            ]
+            if is_gpt62
+            else [user_msg]
+        )
+        req_body: dict[str, Any] = {
             "model": self._codex_model,
-            "instructions": _VISUAL_PERCEPTION_INSTRUCTIONS,
+            "instructions": (
+                "Volg de leidende developer-instructies nauwkeurig."
+                if is_gpt62
+                else _VISUAL_PERCEPTION_INSTRUCTIONS
+            ),
             "store": False,
             "stream": True,
             "parallel_tool_calls": False,
             "tool_choice": "none",
             "tools": [],
             "reasoning": {"effort": "low"},
-            "input": [
-                {
-                    "type": "message",
-                    "role": "user",
-                    "content": [
-                        {"type": "input_text", "text": prompt_nl},
-                        {"type": "input_image", "image_url": data_uri},
-                    ],
-                }
-            ],
+            "prompt_cache_key": "eva-holostage-vision-v2",
+            "input": input_msgs,
         }
         deltas: list[str] = []
         in_tok: int | None = None
@@ -447,8 +464,9 @@ class HoloStageVisionBridge:
                 "Accept": "text/event-stream",
                 "Accept-Encoding": "identity",
                 "Origin": "https://chatgpt.com",
-                "User-Agent": "codex_cli_rs/0.0.0 (Eva)",
+                "User-Agent": "codex_cli_rs/0.172.0 (Eva)",
                 "originator": "codex_cli_rs",
+                "session-id": "eva-holostage-vision-v2",
                 "Content-Type": "application/json",
             }
             with httpx2.Client(

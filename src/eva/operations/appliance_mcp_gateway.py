@@ -37,7 +37,7 @@ import subprocess
 import sys
 import threading
 import time
-from typing import Any
+from typing import Any, Mapping
 from urllib.parse import quote, urljoin, urlsplit
 from uuid import uuid4
 import xml.etree.ElementTree as ET
@@ -576,6 +576,54 @@ BUILTIN_TOOL_DEFINITIONS: tuple[dict[str, Any], ...] = (
             "additionalProperties": False,
         },
     },
+    {
+        "name": "beheer_gezins_kennisbank",
+        "operation_kind": "invoke",
+        "description": (
+            "Bewaar, doorzoek of bekijk exacte naslagdocumenten in Eva's Gezins-Kennisbank (gekoppeld aan "
+            "Hindsight 1.3.0 Knowledge-Base met tijdloze opslag & hybride BM25+vector zoekfunctie) zonder dat "
+            "serienummers, codes, handleidingen, garanties of familierecepten door een taalmodel worden herschreven: "
+            "- `action='opslaan'`: bewaar een exact stuk naslagtekst onder `titel` en `categorie`. "
+            "- `action='zoeken'`: zoek razendsnel op trefwoord of betekenis in alle opgeslagen gezinsdocumenten. "
+            "- `action='overzicht'`: bekijk alle titels en categorieën in de kennisbank. "
+            "- `action='verwijder'`: verwijder een item op basis van `titel` of item-ID."
+        ),
+        "completion_guidance": (
+            "Geef gevonden serienummers, codes, stappen of recepten exact en helder terug in natuurlijk Nederlands."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "enum": ["opslaan", "zoeken", "overzicht", "verwijder"],
+                },
+                "titel": {
+                    "type": "string",
+                    "maxLength": 120,
+                    "description": "Duidelijke titel bij opslaan/verwijderen (bijv. 'Warmtepomp serienummer & filter'), of '' bij overzicht.",
+                },
+                "inhoud_of_zoekterm": {
+                    "type": "string",
+                    "maxLength": 16000,
+                    "description": "Exacte tekst/handleiding/code bij `opslaan`, zoekvraag bij `zoeken`, of '' bij `overzicht`/`verwijder`.",
+                },
+                "categorie": {
+                    "type": "string",
+                    "enum": [
+                        "handleiding",
+                        "code_of_serienummer",
+                        "recept",
+                        "garantie",
+                        "huisinfo",
+                        "overig",
+                    ],
+                },
+            },
+            "required": ["action", "titel", "inhoud_of_zoekterm", "categorie"],
+            "additionalProperties": False,
+        },
+    },
 )
 
 
@@ -652,6 +700,7 @@ class UniversalIntegrationHub:
         self.pending_file = self.mp_dir / "pending-connection.json"
         self.capabilities_dir = _ensure_private_dir(self.mp_dir / "custom-capabilities")
         self.capability_state_dir = _ensure_private_dir(self.mp_dir / "capability-state")
+        self.knowledge_bank_file = self.mp_dir / "knowledge-bank.json"
         self.gateways_file = self.mp_dir / "mcp-registered-gateways.json"
         self._lock = threading.Lock()
 
@@ -1688,6 +1737,277 @@ class UniversalIntegrationHub:
 
         return {"ok": False, "message_nl": f"Onbekende actie: {action}"}
 
+    # --- Verbatim Household Knowledge Bank + Hindsight 1.3.0 Knowledge-Base Sync ---
+
+    _HINDSIGHT_KB_BANK = "eva-gezins-kennisbank"
+
+    @staticmethod
+    def _hindsight_kb_request(
+        method: str,
+        path: str,
+        body: dict[str, Any] | None = None,
+        *,
+        timeout: float = 2.5,
+    ) -> tuple[int, dict[str, Any]]:
+        conn = http.client.HTTPConnection("127.0.0.1", 44672, timeout=timeout)
+        try:
+            headers = {"Accept": "application/json"}
+            payload: bytes | None = None
+            if body is not None:
+                headers["Content-Type"] = "application/json"
+                payload = json.dumps(body, ensure_ascii=False).encode("utf-8")
+            conn.request(method, path, body=payload, headers=headers)
+            resp = conn.getresponse()
+            raw = resp.read(262_144)
+            if 200 <= resp.status < 300 and raw:
+                parsed = json.loads(raw.decode("utf-8", errors="replace"))
+                return resp.status, parsed if isinstance(parsed, dict) else {}
+            return resp.status, {}
+        except Exception:
+            return 0, {}
+        finally:
+            conn.close()
+
+    def list_knowledge_bank_items(self) -> list[dict[str, Any]]:
+        raw = _read_private_json(self.knowledge_bank_file, {"items": {}})
+        items = raw.get("items") if isinstance(raw.get("items"), dict) else {}
+        out: list[dict[str, Any]] = []
+        for item_id, rec in sorted(
+            items.items(),
+            key=lambda kv: str((kv[1] or {}).get("updated_at") or ""),
+            reverse=True,
+        ):
+            if not isinstance(rec, dict):
+                continue
+            content = str(rec.get("content") or "")
+            out.append(
+                {
+                    "item_id": str(item_id),
+                    "title": str(rec.get("title") or item_id),
+                    "category": str(rec.get("category") or "overig"),
+                    "preview": content[:220],
+                    "content": content[:4000],
+                    "hindsight_synced": bool(rec.get("hindsight_synced", False)),
+                    "updated_at": str(rec.get("updated_at") or ""),
+                }
+            )
+        return out[:64]
+
+    def handle_knowledge_bank_tool(self, args: Mapping[str, Any]) -> dict[str, Any]:
+        action = str(args.get("action") or "zoeken").strip().lower()
+        titel = str(args.get("titel") or args.get("title") or "").strip()[:120]
+        body_or_q = str(
+            args.get("inhoud_of_zoekterm") or args.get("content") or args.get("query") or ""
+        ).strip()[:16000]
+        cat = str(args.get("categorie") or args.get("category") or "overig").strip().lower()
+        if cat not in {
+            "handleiding",
+            "code_of_serienummer",
+            "recept",
+            "garantie",
+            "huisinfo",
+            "overig",
+        }:
+            cat = "overig"
+
+        if action == "overzicht":
+            rows = self.list_knowledge_bank_items()
+            return {
+                "ok": True,
+                "aantal": len(rows),
+                "items": [
+                    {
+                        "item_id": r["item_id"],
+                        "titel": r["title"],
+                        "categorie": r["category"],
+                        "voorbeeld": r["preview"],
+                        "hindsight_synced": r["hindsight_synced"],
+                        "updated_at": r["updated_at"],
+                    }
+                    for r in rows
+                ],
+            }
+
+        if action == "opslaan":
+            if not titel or not body_or_q:
+                return {
+                    "ok": False,
+                    "message_nl": "Geef zowel een `titel` als de exacte `inhoud_of_zoekterm` mee om op te slaan.",
+                }
+            item_id = _slugify_id(titel, fallback="kennis_item")
+            now_iso = _utc_now_iso()
+            bank_path = f"/v1/default/banks/{self._HINDSIGHT_KB_BANK}"
+            hindsight_synced = False
+            page_id = ""
+
+            with self._lock:
+                raw = _read_private_json(self.knowledge_bank_file, {"items": {}})
+                items = dict(raw.get("items") or {})
+                prev = items.get(item_id) if isinstance(items.get(item_id), dict) else {}
+                page_id = str(prev.get("hindsight_page_id") or "")
+
+            # Sync timeless verbatim reference document + Knowledge-Base page to Hindsight 1.3.0
+            st_mem, _ = self._hindsight_kb_request(
+                "POST",
+                f"{bank_path}/memories",
+                {
+                    "async": True,
+                    "items": [
+                        {
+                            "content": f"[{titel} — {cat}]\n{body_or_q}",
+                            "timestamp": "unset",
+                            "context": f"Gezins-Kennisbank ({cat}): {titel}",
+                            "document_id": f"kb_{item_id}",
+                            "tags": ["gezins_kennisbank", cat],
+                        }
+                    ],
+                },
+            )
+            if 200 <= st_mem < 300:
+                hindsight_synced = True
+                if not page_id:
+                    st_pg, pg_data = self._hindsight_kb_request(
+                        "POST",
+                        f"{bank_path}/knowledge-base/pages",
+                        {
+                            "name": titel,
+                            "source_query": f"Exacte gegevens, codes en instructies voor {titel} ({cat})",
+                            "tags": ["gezins_kennisbank", cat],
+                        },
+                    )
+                    if 200 <= st_pg < 300 and isinstance(pg_data.get("page_id"), str):
+                        page_id = pg_data["page_id"]
+
+            with self._lock:
+                raw = _read_private_json(self.knowledge_bank_file, {"items": {}})
+                items = dict(raw.get("items") or {})
+                items[item_id] = {
+                    "item_id": item_id,
+                    "title": titel,
+                    "category": cat,
+                    "content": body_or_q,
+                    "hindsight_synced": hindsight_synced,
+                    "hindsight_page_id": page_id,
+                    "updated_at": now_iso,
+                }
+                _write_private_json(self.knowledge_bank_file, {"items": items})
+
+            return {
+                "ok": True,
+                "status": "saved",
+                "item_id": item_id,
+                "titel": titel,
+                "categorie": cat,
+                "hindsight_1_3_synced": hindsight_synced,
+            }
+
+        if action == "verwijder":
+            target_key = _slugify_id(titel or body_or_q, fallback="")
+            removed_id = ""
+            removed_page_id = ""
+            with self._lock:
+                raw = _read_private_json(self.knowledge_bank_file, {"items": {}})
+                items = dict(raw.get("items") or {})
+                for k in list(items.keys()):
+                    rec = items.get(k) or {}
+                    if k == target_key or k == titel or str(rec.get("title") or "").lower() == titel.lower():
+                        removed_id = k
+                        removed_page_id = str(rec.get("hindsight_page_id") or "")
+                        items.pop(k, None)
+                        break
+                if removed_id:
+                    _write_private_json(self.knowledge_bank_file, {"items": items})
+
+            if not removed_id:
+                return {"ok": False, "message_nl": f"Geen kennisbank-item gevonden voor '{titel or body_or_q}'."}
+
+            bank_path = f"/v1/default/banks/{self._HINDSIGHT_KB_BANK}"
+            self._hindsight_kb_request("DELETE", f"{bank_path}/documents/kb_{quote(removed_id)}", timeout=2.0)
+            if removed_page_id:
+                self._hindsight_kb_request(
+                    "DELETE",
+                    f"{bank_path}/knowledge-base/nodes/{quote(removed_page_id)}",
+                    timeout=2.0,
+                )
+            return {"ok": True, "status": "deleted", "item_id": removed_id}
+
+        if action == "zoeken":
+            query = (body_or_q or titel).strip()
+            raw = _read_private_json(self.knowledge_bank_file, {"items": {}})
+            items = raw.get("items") if isinstance(raw.get("items"), dict) else {}
+            if not query:
+                return {"ok": True, "resultaten": self.list_knowledge_bank_items()[:8]}
+
+            q_low = query.lower()
+            q_tokens = [
+                w
+                for w in re.split(r"\W+", q_low)
+                if len(w) >= 2 and w not in {"de", "het", "een", "van", "voor", "wat", "waar", "hoe", "onze", "ons"}
+            ]
+            scored: list[tuple[int, dict[str, Any]]] = []
+            by_title_low: dict[str, dict[str, Any]] = {}
+            for item_id, rec in items.items():
+                if not isinstance(rec, dict):
+                    continue
+                t_str = str(rec.get("title") or item_id)
+                c_str = str(rec.get("content") or "")
+                cat_str = str(rec.get("category") or "overig")
+                by_title_low[t_str.lower()] = rec
+                hay = f"{item_id} {t_str} {cat_str} {c_str}".lower()
+                score = 0
+                if q_low in hay:
+                    score += 80
+                score += sum(20 for tok in q_tokens if tok in hay)
+                if score > 0:
+                    scored.append((score, rec))
+
+            # Hybrid BM25 + Local Vector RRF search in Hindsight 1.3.0 Knowledge-Base
+            bank_path = f"/v1/default/banks/{self._HINDSIGHT_KB_BANK}"
+            st_kb, kb_res = self._hindsight_kb_request(
+                "GET",
+                f"{bank_path}/knowledge-base/search?q={quote(query)}&limit=5",
+                timeout=2.2,
+            )
+            hindsight_hits: list[dict[str, Any]] = []
+            if st_kb == 200 and isinstance(kb_res.get("results"), list):
+                seen_ids = {str(r.get("item_id")) for _, r in scored}
+                for hit in kb_res["results"][:5]:
+                    if not isinstance(hit, dict):
+                        continue
+                    h_name = str(hit.get("name") or "").strip()
+                    matched_local = by_title_low.get(h_name.lower())
+                    if matched_local and str(matched_local.get("item_id")) not in seen_ids:
+                        scored.append((45, matched_local))
+                        seen_ids.add(str(matched_local.get("item_id")))
+                    elif h_name:
+                        hindsight_hits.append(
+                            {
+                                "titel": h_name,
+                                "fragment": str(hit.get("snippet") or "")[:600],
+                            }
+                        )
+
+            scored.sort(key=lambda pair: -pair[0])
+            results = [
+                {
+                    "item_id": str(rec.get("item_id") or ""),
+                    "titel": str(rec.get("title") or ""),
+                    "categorie": str(rec.get("category") or "overig"),
+                    "exacte_inhoud": str(rec.get("content") or ""),
+                    "updated_at": str(rec.get("updated_at") or ""),
+                }
+                for _, rec in scored[:6]
+            ]
+            return {
+                "ok": True,
+                "zoekvraag": query,
+                "aantal_gevonden": len(results) + len(hindsight_hits),
+                "resultaten": results,
+                "hindsight_knowledge_hits": hindsight_hits,
+            }
+
+        return {"ok": False, "message_nl": f"Onbekende kennisbank-actie: {action}"}
+
     def discover_overview(self, *, scan_lan: bool = False) -> dict[str, Any]:
         lan_devices: list[dict[str, Any]] = []
         if os.name != "nt":
@@ -1738,6 +2058,14 @@ class UniversalIntegrationHub:
             "ok": True,
             "configured_vault_services": self.list_services(),
             "custom_capabilities": self.list_capabilities(),
+            "knowledge_bank_items": [
+                {
+                    "item_id": r["item_id"],
+                    "title": r["title"],
+                    "category": r["category"],
+                }
+                for r in self.list_knowledge_bank_items()[:24]
+            ],
             "discovered_lan_devices": lan_devices,
             "home_assistant_detected": ha_hint,
             "unifi_console_detected": unifi_hint,
@@ -1978,6 +2306,8 @@ class _GatewayRequestHandler(BaseHTTPRequestHandler):
             )
         if tool_name == "build_and_run_capability":
             return hub.handle_capability_tool(arguments)
+        if tool_name == "beheer_gezins_kennisbank":
+            return hub.handle_knowledge_bank_tool(arguments)
         return {"ok": False, "message_nl": f"Onbekende gateway-tool: {tool_name}"}
 
 

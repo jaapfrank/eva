@@ -578,7 +578,36 @@ class ApplianceFastPathEngine:
 
         if soort == "list_capabilities":
             caps = hub.list_capabilities()
-            return {"ok": True, "vaardigheden": caps, "kluis_diensten": hub.list_services()}
+            return {
+                "ok": True,
+                "vaardigheden": caps,
+                "kluis_diensten": hub.list_services(),
+                "kennisbank_items": hub.list_knowledge_bank_items(),
+            }
+
+        if soort == "knowledge_bank":
+            op = str(args.get("operatie") or "zoeken").strip().lower()
+            if op not in {"opslaan", "zoeken", "overzicht", "verwijder"}:
+                op = "zoeken"
+            try:
+                p_dict = json.loads(raw_params)
+                if not isinstance(p_dict, dict):
+                    p_dict = {}
+            except ValueError:
+                p_dict = {}
+            return hub.handle_knowledge_bank_tool(
+                {
+                    "action": op,
+                    "titel": str(p_dict.get("titel") or naam),
+                    "inhoud_of_zoekterm": str(
+                        p_dict.get("inhoud")
+                        or p_dict.get("inhoud_of_zoekterm")
+                        or p_dict.get("zoekterm")
+                        or naam
+                    ),
+                    "categorie": str(p_dict.get("categorie") or "overig"),
+                }
+            )
 
         if soort == "vault_service":
             op = str(args.get("operatie") or "summary").strip()

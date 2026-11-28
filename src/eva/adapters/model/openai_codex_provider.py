@@ -680,8 +680,19 @@ def _codex_compatible_request(
     tools = body.get("tools", [])
     if not isinstance(tools, list):
         raise CodexProviderError("configuration")
+    joined_instructions = "\n\n".join(instructions)
+    if str(body.get("model") or "").startswith("gpt-6.2"):
+        # GPT-6.2 Responses API places top-level `instructions` after the KV prompt-cache
+        # breakpoint (0% cached_tokens), whereas a leading `developer` message at input[0]
+        # sits inside the cached prefix (~98% cached_tokens across multi-phase/multi-turn calls).
+        projected_input.insert(
+            0,
+            {"content": joined_instructions, "role": "developer", "type": "message"},
+        )
+        body["instructions"] = "Volg de leidende developer-instructies nauwkeurig."
+    else:
+        body["instructions"] = joined_instructions
     body["input"] = projected_input
-    body["instructions"] = "\n\n".join(instructions)
     body.pop("text", None)
     body["parallel_tool_calls"] = False
     body.setdefault("tool_choice", "auto" if tools else "none")

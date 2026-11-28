@@ -892,8 +892,8 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     let wakeSentinelActiveObj = null;
     let wakeTriggerLock = false;
 
-    const WAKE_PHRASE_RE = /(?:^|\b)(?:h[eé]y?|hoi|hallo|dag|lieve|luister|ok[eé])\s+eva\b[\s,!.:?-]*(.*)$/i;
-    const GOODBYE_PHRASE_RE = /\b(?:tot\s+zo(?:\s+eva)?|slaap\s+lekker(?:\s+eva)?|stop\s+(?:het\s+)?gesprek|dat\s+was\s+het(?:\s+eva)?|welterusten\s+eva)\b/i;
+    const WAKE_PHRASE_RE = /(?:^|\\b)(?:h[eé]y?|hoi|hallo|dag|lieve|luister|ok[eé])\\s+eva\\b[\\s,!.:?-]*(.*)$/i;
+    const GOODBYE_PHRASE_RE = /\\b(?:tot\\s+zo(?:\\s+eva)?|slaap\\s+lekker(?:\\s+eva)?|stop\\s+(?:het\\s+)?gesprek|dat\\s+was\\s+het(?:\\s+eva)?|welterusten\\s+eva)\\b/i;
     const AUTO_SLEEP_IDLE_MS = 28000;
 
     function touchConversationActivity() {
@@ -1005,7 +1005,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
               const m = transcript.match(WAKE_PHRASE_RE);
               if (m) {
                 const rem = (m[1] || '').trim();
-                if (ev.results[i].isFinal || rem.split(/\s+/).filter(Boolean).length === 0) {
+                if (ev.results[i].isFinal || rem.split(/\\s+/).filter(Boolean).length === 0) {
                   triggerWake(rem);
                   return;
                 }
@@ -2050,12 +2050,53 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         </div>
       `;
 
+      const kbItems = integ.knowledge_bank || [];
+      const kbHtml = `
+        <div class="card-sec">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-size:0.86rem;">📚 Gezins-Kennisbank (${kbItems.length})</strong>
+            <span class="badge-info">Hindsight 1.3 · Letterlijk</span>
+          </div>
+          <div style="font-size:0.77rem; color:var(--muted); line-height:1.42; margin-bottom:8px;">
+            Bewaar serienummers, apparaat-handleidingen, filtermaten, garanties of familierecepten 100% woord-voor-woord (zonder herschrijving). Je kunt dit ook gewoon tegen Eva zeggen!
+          </div>
+          ${kbItems.map(k => `
+            <div class="list-item" style="align-items:flex-start;">
+              <div>
+                <div style="font-weight:700;">📄 ${escapeHtml(k.title)} <span style="font-size:0.7rem; color:#6ee7b7;">(${escapeHtml(k.category || 'huisinfo')})</span></div>
+                <div style="font-size:0.75rem; color:var(--muted); white-space:pre-wrap;">${escapeHtml(k.preview || '')}</div>
+              </div>
+              <button type="button" class="btn-ghost" data-del-kb="${escapeHtml(k.item_id)}" style="padding:5px 9px; font-size:0.75rem;">✕</button>
+            </div>
+          `).join('')}
+          <details style="margin-top:${kbItems.length ? '8px' : '2px'};">
+            <summary style="font-size:0.79rem; color:#7dd3fc; cursor:pointer;">+ Nieuw naslagitem toevoegen…</summary>
+            <div style="margin-top:8px;">
+              <div style="display:grid; grid-template-columns:1fr auto; gap:6px; margin-bottom:6px;">
+                <input id="kb-title-in" type="text" placeholder="Titel (bijv. Warmtepomp filtermaat)" style="padding:7px 10px; border-radius:9px; background:rgba(2,6,23,0.78); border:1px solid var(--border); color:#fff; font-size:0.81rem;" />
+                <select id="kb-cat-in" style="padding:7px 9px; border-radius:9px; background:rgba(2,6,23,0.78); border:1px solid var(--border); color:#fff; font-size:0.8rem;">
+                  <option value="handleiding">Handleiding</option>
+                  <option value="code_of_serienummer">Code / Serienr.</option>
+                  <option value="recept">Recept</option>
+                  <option value="garantie">Garantie</option>
+                  <option value="huisinfo" selected>Huisinfo</option>
+                </select>
+              </div>
+              <textarea id="kb-body-in" rows="2" placeholder="Plak of typ exacte gegevens, stappen of codes…" style="width:100%; box-sizing:border-box; padding:8px 10px; border-radius:9px; background:rgba(2,6,23,0.78); border:1px solid var(--border); color:#fff; font-size:0.81rem; margin-bottom:6px;"></textarea>
+              <button type="button" class="btn-ghost" id="btn-kb-save" style="width:100%;">💾 Bewaar in Gezins-Kennisbank</button>
+              <div id="kb-msg" style="font-size:0.77rem; margin-top:4px;"></div>
+            </div>
+          </details>
+        </div>
+      `;
+
       return `
         ${pendingBanner}
         <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:11px;">${presetTabs}</div>
         ${formHtml}
         ${svcsHtml}
         ${capsHtml}
+        ${kbHtml}
       `;
     }
 
@@ -2142,6 +2183,40 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           if (r.ok && d.stage) { applyStageState(d.stage, { preserveDrawerInputs: true }); rerenderFn(); }
         };
       });
+      body.querySelectorAll('[data-del-kb]').forEach(b => {
+        b.onclick = async () => {
+          const r = await fetch(`/internal/v1/appliance/living/knowledge-bank/${encodeURIComponent(b.dataset.delKb)}/remove`, { method: 'POST' });
+          const d = await r.json();
+          if (r.ok && d.stage) { applyStageState(d.stage, { preserveDrawerInputs: true }); rerenderFn(); }
+        };
+      });
+      const kbBtn = $('btn-kb-save');
+      if (kbBtn) {
+        kbBtn.onclick = async () => {
+          const msg = $('kb-msg');
+          kbBtn.disabled = true;
+          try {
+            const r = await fetch('/internal/v1/appliance/living/knowledge-bank', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                title: $('kb-title-in') ? $('kb-title-in').value.trim() : '',
+                category: $('kb-cat-in') ? $('kb-cat-in').value : 'huisinfo',
+                content: $('kb-body-in') ? $('kb-body-in').value.trim() : ''
+              })
+            });
+            const d = await r.json();
+            if (!r.ok) {
+              if (msg) { msg.style.color = '#fb7185'; msg.textContent = d.detail || 'Opslaan mislukt.'; }
+              return;
+            }
+            if (d.stage) applyStageState(d.stage, { preserveDrawerInputs: false });
+            rerenderFn();
+          } finally {
+            if ($('btn-kb-save')) $('btn-kb-save').disabled = false;
+          }
+        };
+      }
     }
 
     function wireSmartHomeHandlers() {

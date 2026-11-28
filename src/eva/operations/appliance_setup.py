@@ -1992,6 +1992,7 @@ class ApplianceSetupService:
                 "    ports:",
                 '      - "127.0.0.1:44672:8888"',
                 "    environment:",
+                f'      TZ: "{state["profile"].get("time_zone", "Europe/Amsterdam")}"',
                 '      HINDSIGHT_ENABLE_CP: "false"',
                 "      HINDSIGHT_API_LLM_PROVIDER: openai-codex",
                 "      HINDSIGHT_API_LLM_MODEL: gpt-6.2-astra",
@@ -3729,6 +3730,7 @@ class ApplianceSetupService:
             "integrations": {
                 "services": self._integration_hub().list_services(),
                 "capabilities": self._integration_hub().list_capabilities(),
+                "knowledge_bank": self._integration_hub().list_knowledge_bank_items(),
                 "pending_request": self._integration_hub().get_pending_connection(),
                 "unifi_detected": self._probe_local_unifi_cached(),
             },
@@ -4024,6 +4026,35 @@ class ApplianceSetupService:
             }
         )
         self._sync_household_head_settings()
+        return {**res, "stage": self.living_stage_snapshot()}
+
+    def save_knowledge_bank_entry(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        titel = str(payload.get("title") or payload.get("titel") or "").strip()
+        inhoud = str(payload.get("content") or payload.get("inhoud") or "").strip()
+        categorie = str(payload.get("category") or payload.get("categorie") or "huisinfo").strip()
+        if not titel or not inhoud:
+            raise ApplianceSetupError("vul een titel én de exacte naslagtekst in")
+        res = self._integration_hub().handle_knowledge_bank_tool(
+            {
+                "action": "opslaan",
+                "titel": titel,
+                "inhoud_of_zoekterm": inhoud,
+                "categorie": categorie,
+            }
+        )
+        if not res.get("ok"):
+            raise ApplianceSetupError(str(res.get("message_nl") or "kon item niet opslaan"))
+        return {**res, "stage": self.living_stage_snapshot()}
+
+    def delete_knowledge_bank_entry(self, item_id: str) -> dict[str, Any]:
+        res = self._integration_hub().handle_knowledge_bank_tool(
+            {
+                "action": "verwijder",
+                "titel": item_id,
+                "inhoud_of_zoekterm": "",
+                "categorie": "overig",
+            }
+        )
         return {**res, "stage": self.living_stage_snapshot()}
 
     def handle_living_turn(

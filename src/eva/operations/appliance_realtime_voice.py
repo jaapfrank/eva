@@ -199,6 +199,11 @@ def build_realtime_eva_instructions(stage_snapshot: Mapping[str, Any]) -> str:
         f"{c.get('title') or c.get('capability_id')} (id='{c.get('capability_id')}')"
         for c in (integ.get("capabilities") or [])
     ]
+    kb_items = [
+        str(k.get("title") or k.get("item_id"))
+        for k in (integ.get("knowledge_bank") or [])[:12]
+        if isinstance(k, Mapping)
+    ]
 
     lines = [
         f"Je bent {eva_name}, de levende, warme en slimme digitale huisgenoot van {owner_name}{fam_str}.",
@@ -207,10 +212,10 @@ def build_realtime_eva_instructions(stage_snapshot: Mapping[str, Any]) -> str:
         "1. Spreek 100% natuurlijk, warm, vlot en menselijk Nederlands (Nederland), precies zoals een echte huisgenoot in de kamer praat — nooit stijf, nooit opgesomd met bulletpoints en nooit als een robot.",
         "2. Houd je gesproken antwoorden lekker vlot en bondig (meestal 1 tot 3 zinnen), zodat het een echt vlot heen-en-weer gesprek blijft.",
         "3. Geef op begroetingen, gezellige praatjes, grappen of algemene vragen METEEN direct antwoord zonder een tool aan te roepen.",
-        "4. RAZENDSNELLE DIRECTE TOOLS (<0,1 sec!): Gebruik voor Home Assistant (temperatuur, weer, lampen lezen/aan/uit/dimmen, thermostaat, scènes) ALTIJD direct `snel_huis_lezen_of_bedienen`, en gebruik voor al gebouwde eigen Python-skills of gekoppelde kluis-diensten (UniFi, agenda, e-mail) ALTIJD direct `gebruik_eigen_vaardigheid_of_kluis`! Gebruik `raadpleeg_eva_kern_en_huis` alleen voor persoonlijke langetermijnherinneringen, web-onderzoek of wanneer je een GLOEDNIEUWE vaardigheid moet programmeren die nog niet bestaat.",
+        "4. RAZENDSNELLE DIRECTE TOOLS (<0,1 sec!): Gebruik voor Home Assistant (temperatuur, weer, lampen lezen/aan/uit/dimmen, thermostaat, scènes) ALTIJD direct `snel_huis_lezen_of_bedienen`, en gebruik voor al gebouwde eigen Python-skills, gekoppelde kluis-diensten (UniFi, agenda, e-mail) of de Gezins-Kennisbank (`soort='knowledge_bank'`, voor handleidingen, serienummers, recepten en vaste naslagcodes) ALTIJD direct `gebruik_eigen_vaardigheid_of_kluis`! Gebruik `raadpleeg_eva_kern_en_huis` alleen voor persoonlijke langetermijnherinneringen, web-onderzoek of wanneer je een GLOEDNIEUWE vaardigheid moet programmeren die nog niet bestaat.",
         "5. TUSSENZINNETJES BIJ ZWARE ACTIES: Alleen bij `bekijk_camera_beeld` of `raadpleeg_eva_kern_en_huis` spreek je eerst kort een natuurlijk Nederlands tussenzinnetje uit ('Even op de camera kijken hoor…' of 'Even induiken hoor…'). Bij `snel_huis_lezen_of_bedienen` is dat zo snel (<0,1s) dat je meteen vlot het antwoord kunt geven.",
         "6. Verzin nooit zelf sensorwaarden, camerabeelden, e-mails of apparaatstatussen: haal ze altijd echt op via je tools.",
-        f"Huidige huisstatus: Home Assistant is {ha_status}. Gekoppelde kluis-diensten: {', '.join(vault_svcs) if vault_svcs else 'nog geen'}. Zelfgebouwde skills (direct uitvoerbaar!): {', '.join(caps) if caps else '0'}.",
+        f"Huidige huisstatus: Home Assistant is {ha_status}. Gekoppelde kluis-diensten: {', '.join(vault_svcs) if vault_svcs else 'nog geen'}. Zelfgebouwde skills (direct uitvoerbaar!): {', '.join(caps) if caps else '0'}. Gezins-Kennisbank naslagitems: {', '.join(kb_items) if kb_items else '0'}.",
     ]
     if guest_on:
         lines.append(
@@ -264,27 +269,28 @@ def build_openai_realtime_tools() -> list[dict[str, Any]]:
             "type": "function",
             "name": "gebruik_eigen_vaardigheid_of_kluis",
             "description": (
-                "Voer razendsnel (<150ms) een al door Eva gebouwde Python-skill uit (zoals 'stroomkosten_calculator') "
-                "of raadpleeg direct een gekoppelde kluis-dienst (UniFi Netwerk, UniFi Protect, Agenda, E-mail)."
+                "Voer razendsnel (<150ms) een al door Eva gebouwde Python-skill uit (zoals 'stroomkosten_calculator'), "
+                "raadpleeg direct een gekoppelde kluis-dienst (UniFi Netwerk, UniFi Protect, Agenda, E-mail) "
+                "of sla op / zoek razendsnel in de Gezins-Kennisbank (`soort='knowledge_bank'`, voor handleidingen, codes, recepten en serienummers)."
             ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "soort": {
                         "type": "string",
-                        "enum": ["run_capability", "list_capabilities", "vault_service"],
+                        "enum": ["run_capability", "list_capabilities", "vault_service", "knowledge_bank"],
                     },
                     "naam_of_id": {
                         "type": "string",
-                        "description": "Exacte capability_id (bijv. 'stroomkosten_calculator') of kluis service_id.",
+                        "description": "Exacte capability_id, kluis service_id, of titel/zoekterm voor de Gezins-Kennisbank.",
                     },
                     "operatie": {
                         "type": "string",
-                        "description": "Bij vault_service bijv. 'summary', 'clients', 'today', 'inbox_summary'; bij run_capability 'run'.",
+                        "description": "Bij vault_service bijv. 'summary'/'clients'/'today'; bij knowledge_bank 'zoeken'/'opslaan'/'overzicht'; bij run_capability 'run'.",
                     },
                     "parameters_json": {
                         "type": "string",
-                        "description": "JSON-object met parameters als tekst, bijv. '{\"vermogen_watt\": 18, \"prijs_per_kwh\": 0.27}' of '{}'.",
+                        "description": "JSON-object met parameters als tekst, bijv. '{\"inhoud\": \"...\", \"categorie\": \"handleiding\"}' of '{}'.",
                     },
                 },
                 "required": ["soort", "naam_of_id", "operatie", "parameters_json"],
@@ -395,22 +401,23 @@ def build_gemini_live_tools() -> list[dict[str, Any]]:
                 {
                     "name": "gebruik_eigen_vaardigheid_of_kluis",
                     "description": (
-                        "Voer direct (<150ms) een al door Eva gebouwde Python-skill uit of raadpleeg een gekoppelde kluis-dienst."
+                        "Voer direct (<150ms) een al door Eva gebouwde Python-skill uit, raadpleeg een gekoppelde kluis-dienst, "
+                        "of bewaar/zoek in de Gezins-Kennisbank (soort=knowledge_bank)."
                     ),
                     "parameters": {
                         "type": "OBJECT",
                         "properties": {
                             "soort": {
                                 "type": "STRING",
-                                "description": "Kies uit: run_capability, list_capabilities, vault_service.",
+                                "description": "Kies uit: run_capability, list_capabilities, vault_service, knowledge_bank.",
                             },
                             "naam_of_id": {
                                 "type": "STRING",
-                                "description": "Capability ID of service ID.",
+                                "description": "Capability ID, service ID of titel/zoekterm voor knowledge_bank.",
                             },
                             "operatie": {
                                 "type": "STRING",
-                                "description": "Operatienaam of run.",
+                                "description": "Operatienaam, run, zoeken, opslaan of overzicht.",
                             },
                             "parameters_json": {
                                 "type": "STRING",
@@ -554,6 +561,7 @@ class RealtimeVoiceHub:
         stage_snapshot: Mapping[str, Any],
         openai_api_key: str | None,
         codex_lease_path: Path,
+        noise_reduction: str = "far_field",
     ) -> dict[str, Any]:
         """Exchange browser WebRTC SDP offer for remote SDP answer using OpenAI Realtime API or ChatGPT/Codex OAuth."""
         if not offer_sdp or not offer_sdp.lstrip().startswith("v=0") or len(offer_sdp) > 131_072:
@@ -563,12 +571,18 @@ class RealtimeVoiceHub:
         safe_voice = voice if voice in {"marin", "cedar", "coral", "sage", "juniper", "sol", "vale", "alloy", "shimmer"} else "marin"
         instructions = build_realtime_eva_instructions(stage_snapshot)
         tools = build_openai_realtime_tools()
+        nr_cfg = (
+            {"type": noise_reduction}
+            if noise_reduction in {"far_field", "near_field"}
+            else None
+        )
 
         session_update_payload = {
             "type": "session.update",
             "session": {
                 "instructions": instructions,
                 "voice": safe_voice,
+                "input_audio_noise_reduction": nr_cfg,
                 "input_audio_transcription": {"model": "gpt-4o-mini-transcribe", "language": "nl"},
                 "turn_detection": {
                     "type": "semantic_vad",
@@ -950,7 +964,11 @@ async def run_gemini_live_bridge(
         if m not in seen_models:
             seen_models.append(m)
 
-    uri = (
+    uri_v1alpha = (
+        "wss://generativelanguage.googleapis.com/ws/"
+        f"google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key={quote(clean_key)}"
+    )
+    uri_v1beta = (
         "wss://generativelanguage.googleapis.com/ws/"
         f"google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key={quote(clean_key)}"
     )
@@ -958,40 +976,49 @@ async def run_gemini_live_bridge(
     upstream = None
     active_model = seen_models[0]
     for cand_model in seen_models:
-        try:
-            ws = await connect_gemini_live_websocket(uri, open_timeout=10.0)
-            setup_msg = {
-                "setup": {
-                    "model": cand_model,
-                    "generationConfig": {
-                        "responseModalities": ["AUDIO"],
-                        "speechConfig": {
-                            "voiceConfig": {
-                                "prebuiltVoiceConfig": {"voiceName": safe_voice}
-                            }
-                        },
+        # Try v1alpha with Native Affective Dialog (emotional prosody matching) & Proactive Audio
+        # (ignoring background room talk not addressed to Eva) first, with automatic clean v1beta fallback.
+        attempts: list[tuple[str, bool]] = [(uri_v1alpha, True), (uri_v1beta, False)]
+        for target_uri, enable_affective_proactive in attempts:
+            ws = None
+            try:
+                ws = await connect_gemini_live_websocket(target_uri, open_timeout=10.0)
+                gen_cfg: dict[str, Any] = {
+                    "responseModalities": ["AUDIO"],
+                    "speechConfig": {
+                        "voiceConfig": {
+                            "prebuiltVoiceConfig": {"voiceName": safe_voice}
+                        }
                     },
+                }
+                setup_body: dict[str, Any] = {
+                    "model": cand_model,
+                    "generationConfig": gen_cfg,
                     "systemInstruction": {
                         "parts": [{"text": instructions}]
                     },
                     "tools": tools,
                 }
-            }
-            await ws.send(json.dumps(setup_msg, ensure_ascii=False))
-            first_raw = await asyncio.wait_for(ws.recv(), timeout=8.0)
-            first_msg = json.loads(first_raw.decode("utf-8") if isinstance(first_raw, bytes) else first_raw)
-            if "setupComplete" in first_msg:
-                upstream = ws
-                active_model = cand_model
-                break
-            await ws.close()
-        except Exception:
-            if upstream is not None:
-                try:
-                    await upstream.close()
-                except Exception:
-                    pass
-            upstream = None
+                if enable_affective_proactive:
+                    gen_cfg["enableAffectiveDialog"] = True
+                    setup_body["proactiveAudio"] = {"proactiveAudio": True}
+                await ws.send(json.dumps({"setup": setup_body}, ensure_ascii=False))
+                first_raw = await asyncio.wait_for(ws.recv(), timeout=8.0)
+                first_msg = json.loads(first_raw.decode("utf-8") if isinstance(first_raw, bytes) else first_raw)
+                if "setupComplete" in first_msg:
+                    upstream = ws
+                    active_model = cand_model
+                    break
+                await ws.close()
+            except Exception:
+                if ws is not None:
+                    try:
+                        await ws.close()
+                    except Exception:
+                        pass
+                upstream = None
+        if upstream is not None:
+            break
 
     if upstream is None:
         await browser_ws.send_json(
