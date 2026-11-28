@@ -107,29 +107,40 @@ if ($pid1 -ne "systemd") {
 }
 
 # Houd WSL2 wakker op de achtergrond zodat Eva blijft draaien als alle terminalvensters dicht zijn
-Start-Process -WindowStyle Hidden -FilePath $wslExe -ArgumentList @("-d", $DistroName, "-e", "sleep", "infinity") | Out-Null
+Start-Process -WindowStyle Hidden -FilePath $wslExe -ArgumentList @("-d", $DistroName, "-u", "root", "-e", "sleep", "infinity") | Out-Null
 
-# 5. Synchroniseer deze Eva-map snel naar /opt/eva2 (ext4) en draai firstboot-install-eva.sh
+# 5. Synchroniseer deze Eva-map snel naar /opt/eva2 (ext4), herstel altijd LF-regeleindes (tegen Windows git autocrlf) en draai firstboot-install-eva.sh
 Write-Host "[3/5] Eva-broncode klaarzetten in snelle Linux-opslag (/opt/eva2)..." -ForegroundColor Cyan
 $wslRepoPath = (& $wslExe -d $DistroName -u root -- wslpath -a ($RepoRoot -replace "\\", "/")).Trim()
 
-$syncScript = @"
+$syncScript = @'
 set -euo pipefail
 mkdir -p /opt/eva2
-tar -C "$wslRepoPath" \
+tar -C "__WSL_REPO__" \
   --exclude='.git/objects/pack/*.tmp' \
   --exclude='deploy/appliance/eva-usb-output' \
   --exclude='__pycache__' \
   --exclude='.pytest_cache' \
   --exclude='*.egg-info' \
   -cf - . | tar -C /opt/eva2 -xf -
+find /opt/eva2 -type f \( \
+  -name '*.sh' -o -name '*.py' -o -name '*.mjs' -o -name '*.js' -o -name '*.cjs' \
+  -o -name '*.yml' -o -name '*.yaml' -o -name '*.tmpl' -o -name '*.service' -o -name 'Dockerfile*' \
+\) -exec sed -i 's/\r$//' {} +
 chmod +x /opt/eva2/deploy/appliance/firstboot-install-eva.sh
-"@
-$syncScript -replace "`r", "" | & $wslExe -d $DistroName -u root -- bash -s
+'@.Replace("__WSL_REPO__", $wslRepoPath).Replace("`r`n", "`n")
+$syncB64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($syncScript))
+& $wslExe -d $DistroName -u root -- bash -lc "echo $syncB64 | base64 -d | tr -d '\r' | bash"
+if ($LASTEXITCODE -ne 0) {
+    throw "Synchroniseren van Eva-broncode naar /opt/eva2 is mislukt."
+}
 
 Write-Host "[4/5] Eva services, Docker, Python 3.12, Kluis & 3D Stage installeren (dit duurt de eerste keer ~3-6 min)..." -ForegroundColor Cyan
 Write-Host "      Tip: je kunt ondertussen al meekijken op http://127.0.0.1:8765 !" -ForegroundColor DarkCyan
-& $wslExe -d $DistroName -u root -- env EVA_REPO_DIR=/opt/eva2 bash /opt/eva2/deploy/appliance/firstboot-install-eva.sh
+& $wslExe -d $DistroName -u root -- bash -lc "sed -i 's/\r$//' /opt/eva2/deploy/appliance/firstboot-install-eva.sh && EVA_REPO_DIR=/opt/eva2 bash /opt/eva2/deploy/appliance/firstboot-install-eva.sh"
+if ($LASTEXITCODE -ne 0) {
+    throw "Uitvoeren van firstboot-install-eva.sh gaf foutcode $LASTEXITCODE."
+}
 
 # 6. Wacht tot poort 8765 gereed meldt en open 3D Eva direct in de standaardbrowser!
 Write-Host "[5/5] Wachten tot 3D Eva klaarstaat op http://127.0.0.1:8765 ..." -ForegroundColor Cyan
