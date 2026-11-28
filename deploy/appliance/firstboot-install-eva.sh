@@ -175,29 +175,39 @@ else
 fi
 chown -R "$EVA_UID:$EVA_UID" "$EVA_REPO_DIR"
 
-set_step 68 "Stap 4/6 · Python 3.12.16 en AI-bibliotheken installeren..."
-su -s /bin/bash "$EVA_USER" -c "
+set_step 68 "Stap 4/6 · Python 3.12 en AI-bibliotheken installeren..."
+cat > /tmp/eva-venv-setup.sh << 'EOVENV'
+#!/usr/bin/env bash
 set -euo pipefail
-if ! command -v uv >/dev/null 2>&1 && [ ! -x \"\$HOME/.local/bin/uv\" ]; then
+if ! command -v uv >/dev/null 2>&1 && [ ! -x "$HOME/.local/bin/uv" ]; then
   curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
-export PATH=\"\$HOME/.local/bin:\$PATH\"
+export PATH="$HOME/.local/bin:$PATH"
 uv python install 3.12
-mkdir -p \"\$HOME/.venvs\"
-uv venv --allow-existing --python 3.12 \"\$HOME/.venvs/eva\"
-REQ_FILE=\$(mktemp /tmp/eva-reqs-XXXXXX.txt)
-\"\$HOME/.venvs/eva/bin/python\" -c '
-import tomllib, pathlib
-data = tomllib.loads(pathlib.Path(\"$EVA_REPO_DIR/pyproject.toml\").read_text(encoding=\"utf-8\"))
-deps = list(data[\"project\"][\"dependencies\"]) + list(data[\"project\"][\"optional-dependencies\"][\"optional-models\"]) + [\"pytest\", \"httpx\", \"edge-tts\", \"vosk\", \"websockets\"]
-pathlib.Path(\"'\"\$REQ_FILE\"'\").write_text(\"\\n\".join(deps) + \"\\n\", encoding=\"utf-8\")
+mkdir -p "$HOME/.venvs"
+uv venv --allow-existing --python 3.12 "$HOME/.venvs/eva"
+REQ_FILE=$(mktemp /tmp/eva-reqs-XXXXXX.txt)
+REQ_FILE="$REQ_FILE" "$HOME/.venvs/eva/bin/python" -c '
+import os, pathlib, tomllib
+repo = pathlib.Path(os.environ["EVA_REPO_DIR"])
+req = pathlib.Path(os.environ["REQ_FILE"])
+data = tomllib.loads((repo / "pyproject.toml").read_text(encoding="utf-8"))
+deps = (
+    list(data["project"]["dependencies"])
+    + list(data["project"]["optional-dependencies"]["optional-models"])
+    + ["pytest", "httpx", "edge-tts", "vosk", "websockets"]
+)
+req.write_text("\n".join(deps) + "\n", encoding="utf-8")
 '
-uv pip install --python \"\$HOME/.venvs/eva/bin/python\" -r \"\$REQ_FILE\"
-uv pip install --python \"\$HOME/.venvs/eva/bin/python\" openai==3.46.0 pydantic-ai-slim==2.66.0 pydantic-graph==2.66.0 genai-prices==0.2.1
-rm -f \"\$REQ_FILE\"
-SITE_PKGS=\$(\"\\$HOME/.venvs/eva/bin/python\" -c 'import sysconfig; print(sysconfig.get_paths()[\"purelib\"])')
-printf '%s/src\n%s\n' \"$EVA_REPO_DIR\" \"$EVA_REPO_DIR\" > \"\$SITE_PKGS/eva2_local.pth\"
-"
+uv pip install --python "$HOME/.venvs/eva/bin/python" -r "$REQ_FILE"
+uv pip install --python "$HOME/.venvs/eva/bin/python" openai==3.46.0 pydantic-ai-slim==2.66.0 pydantic-graph==2.66.0 genai-prices==0.2.1
+rm -f "$REQ_FILE"
+SITE_PKGS=$("$HOME/.venvs/eva/bin/python" -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')
+printf '%s/src\n%s\n' "$EVA_REPO_DIR" "$EVA_REPO_DIR" > "$SITE_PKGS/eva2_local.pth"
+EOVENV
+chmod 0755 /tmp/eva-venv-setup.sh
+sudo -u "$EVA_USER" env HOME="$EVA_HOME" EVA_REPO_DIR="$EVA_REPO_DIR" bash /tmp/eva-venv-setup.sh
+rm -f /tmp/eva-venv-setup.sh
 
 set_step 88 "Stap 5/6 · Beveiligde mappen en systemd-services inrichten..."
 
@@ -398,6 +408,7 @@ RestartSec=3
 WantedBy=multi-user.target
 EOF
 
+NODE_BIN=$(command -v node || echo /usr/bin/node)
 cat > /etc/systemd/system/eva2-local-owner.service << EOF
 [Unit]
 Description=Eva2 local owner dashboard without interactive login
@@ -406,7 +417,7 @@ After=network.target eva2-local-core.service
 [Service]
 User=$EVA_USER
 Group=$EVA_USER
-ExecStart=/usr/bin/node $EVA_REPO_DIR/deploy/dashboard/local-owner.mjs
+ExecStart=$NODE_BIN $EVA_REPO_DIR/deploy/dashboard/local-owner.mjs
 LoadCredential=dashboard-token:$EVA_RUNTIME_ROOT/secrets/dashboard-token
 Restart=on-failure
 RestartSec=3

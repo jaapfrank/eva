@@ -3,8 +3,8 @@ setlocal
 title Eva Setup, Karakter ^& Contact Wizard
 echo Eva achtergrondomgeving wakker maken en openhouden...
 
-REM Houd WSL2 op de achtergrond volledig losgekoppeld actief zodat Windows de Eva-services niet na 8 sec stopt
-powershell.exe -NoProfile -WindowStyle Hidden -Command "$vbs=Join-Path $env:TEMP 'eva-wsl-keepalive.vbs'; Set-Content -Path $vbs -Value 'CreateObject(\"WScript.Shell\").Run \"wsl.exe -u root -- sleep infinity\", 0, False' -Encoding ASCII; Start-Process wscript.exe -ArgumentList \"`\"$vbs`\"\""
+REM Houd WSL2 op de achtergrond actief zonder zichtbare vensters of VBScript-popups
+powershell.exe -NoProfile -WindowStyle Hidden -Command "Remove-Item -Force (Join-Path $env:TEMP 'eva-wsl-keepalive.vbs') -ErrorAction SilentlyContinue; if (-not (Get-CimInstance Win32_Process -Filter \"Name='wsl.exe'\" | Where-Object { $_.CommandLine -match 'sleep infinity' })) { Start-Process -FilePath 'wsl.exe' -ArgumentList '-u','root','--','sleep','infinity' -WindowStyle Hidden }"
 
 echo Services controleren...
 wsl.exe -u root -e bash -lc "systemctl start eva2-local-gateway.service eva2-appliance-wizard.service eva2-local-core.service eva2-local-worker.service eva2-local-owner.service 2>/dev/null || systemctl start eva2-appliance-wizard.service"

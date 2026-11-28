@@ -114,11 +114,9 @@ if ($pid1 -ne "systemd" -or $wslConfigChanged) {
     Start-Sleep -Seconds 3
 }
 
-# Start een volledig losgekoppelde achtergrond-keepalive zodat WSL2 nooit stopt als dit venster sluit!
-$vbsPath = Join-Path $env:TEMP "eva-wsl-keepalive.vbs"
-$vbsContent = "Set ws = CreateObject(""WScript.Shell"")`r`nws.Run ""`"$wslExe`" -d $DistroName -u root -- sleep infinity"", 0, False`r`n"
-[System.IO.File]::WriteAllText($vbsPath, $vbsContent, [System.Text.Encoding]::ASCII)
-Start-Process -FilePath "wscript.exe" -ArgumentList "`"$vbsPath`"" | Out-Null
+# Houd WSL2 op de achtergrond wakker (naast vmIdleTimeout=-1 in .wslconfig), zonder VBScript popup!
+Remove-Item -Force (Join-Path $env:TEMP "eva-wsl-keepalive.vbs") -ErrorAction SilentlyContinue
+Start-Process -WindowStyle Hidden -FilePath $wslExe -ArgumentList @("-d", $DistroName, "-u", "root", "--", "sleep", "infinity") | Out-Null
 
 # 5. Synchroniseer Eva-map naar /opt/eva2 (ext4), strip altijd CRLF (\r) en draai firstboot-install-eva.sh
 Write-Host "[3/5] Eva-broncode klaarzetten in snelle Linux-opslag (/opt/eva2)..." -ForegroundColor Cyan
