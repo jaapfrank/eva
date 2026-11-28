@@ -190,8 +190,15 @@ def build_realtime_eva_instructions(stage_snapshot: Mapping[str, Any]) -> str:
             else "nog niet gekoppeld"
         )
     )
-    vault_svcs = [str(s.get("title") or s.get("service_id")) for s in (integ.get("services") or []) if s.get("has_credential")]
-    caps = [str(c.get("title") or c.get("capability_id")) for c in (integ.get("capabilities") or [])]
+    vault_svcs = [
+        f"{s.get('title') or s.get('service_id')} (id='{s.get('service_id')}')"
+        for s in (integ.get("services") or [])
+        if s.get("has_credential")
+    ]
+    caps = [
+        f"{c.get('title') or c.get('capability_id')} (id='{c.get('capability_id')}')"
+        for c in (integ.get("capabilities") or [])
+    ]
 
     lines = [
         f"Je bent {eva_name}, de levende, warme en slimme digitale huisgenoot van {owner_name}{fam_str}.",
@@ -200,9 +207,10 @@ def build_realtime_eva_instructions(stage_snapshot: Mapping[str, Any]) -> str:
         "1. Spreek 100% natuurlijk, warm, vlot en menselijk Nederlands (Nederland), precies zoals een echte huisgenoot in de kamer praat — nooit stijf, nooit opgesomd met bulletpoints en nooit als een robot.",
         "2. Houd je gesproken antwoorden lekker vlot en bondig (meestal 1 tot 3 zinnen), zodat het een echt vlot heen-en-weer gesprek blijft.",
         "3. Geef op begroetingen, gezellige praatjes, grappen of algemene vragen METEEN direct antwoord zonder een tool aan te roepen.",
-        "4. TUSSENZINNETJES BIJ ACTIES (CRUCIAAL!): Zodra je `raadpleeg_eva_kern_en_huis` of `bekijk_camera_beeld` gaat aanroepen (voor Home Assistant lampen/sensoren, live meekijken via een camera, UniFi netwerk/Protect camera's, agenda, e-mail, persoonlijke herinneringen, huisregels of zelf een nieuwe vaardigheid bouwen), spreek je ALTIJD EERST hardop een kort, natuurlijk Nederlands tussenzinnetje uit in dezelfde beurt vóór of tijdens de tool-aanroep! Voorbeelden: 'Even in je Home Assistant kijken hoor…', 'Even op de camera kijken hoor…', 'Momentje, ik pak het er gelijk even voor je bij…'. Daarna vertel je vlot het echte resultaat uit de tool.",
-        "5. Verzin nooit zelf sensorwaarden, camerabeelden, e-mails of apparaatstatussen: haal camerabeelden altijd echt op via `bekijk_camera_beeld` en overige acties via `raadpleeg_eva_kern_en_huis`.",
-        f"Huidige huisstatus: Home Assistant is {ha_status}. Gekoppelde kluis-diensten: {', '.join(vault_svcs) if vault_svcs else 'nog geen'}. Zelfgebouwde skills: {', '.join(caps) if caps else '0'}.",
+        "4. RAZENDSNELLE DIRECTE TOOLS (<0,1 sec!): Gebruik voor Home Assistant (temperatuur, weer, lampen lezen/aan/uit/dimmen, thermostaat, scènes) ALTIJD direct `snel_huis_lezen_of_bedienen`, en gebruik voor al gebouwde eigen Python-skills of gekoppelde kluis-diensten (UniFi, agenda, e-mail) ALTIJD direct `gebruik_eigen_vaardigheid_of_kluis`! Gebruik `raadpleeg_eva_kern_en_huis` alleen voor persoonlijke langetermijnherinneringen, web-onderzoek of wanneer je een GLOEDNIEUWE vaardigheid moet programmeren die nog niet bestaat.",
+        "5. TUSSENZINNETJES BIJ ZWARE ACTIES: Alleen bij `bekijk_camera_beeld` of `raadpleeg_eva_kern_en_huis` spreek je eerst kort een natuurlijk Nederlands tussenzinnetje uit ('Even op de camera kijken hoor…' of 'Even induiken hoor…'). Bij `snel_huis_lezen_of_bedienen` is dat zo snel (<0,1s) dat je meteen vlot het antwoord kunt geven.",
+        "6. Verzin nooit zelf sensorwaarden, camerabeelden, e-mails of apparaatstatussen: haal ze altijd echt op via je tools.",
+        f"Huidige huisstatus: Home Assistant is {ha_status}. Gekoppelde kluis-diensten: {', '.join(vault_svcs) if vault_svcs else 'nog geen'}. Zelfgebouwde skills (direct uitvoerbaar!): {', '.join(caps) if caps else '0'}.",
     ]
     if guest_on:
         lines.append(
@@ -218,12 +226,77 @@ def build_openai_realtime_tools() -> list[dict[str, Any]]:
     return [
         {
             "type": "function",
+            "name": "snel_huis_lezen_of_bedienen",
+            "description": (
+                "Ultrasnelle directe Home Assistant koppeling (<100ms op lokaal netwerk) om kamertemperatuur, "
+                "buitenweer, lampen of status uit te lezen of direct lampen aan/uit te zetten, te dimmen, "
+                "thermostaat in te stellen of een scène te activeren."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "actie": {
+                        "type": "string",
+                        "enum": [
+                            "lees_klimaat",
+                            "lees_status",
+                            "lees_weer",
+                            "lampen_aan",
+                            "lampen_uit",
+                            "dim_lampen",
+                            "stel_thermostaat_in",
+                            "activeer_scene",
+                        ],
+                    },
+                    "kamer_of_apparaat": {
+                        "type": "string",
+                        "description": "Kamer of apparaat (bijv. 'woonkamer', 'keuken', 'kantoor', 'lola', 'buiten' of '' voor heel het huis).",
+                    },
+                    "waarde": {
+                        "type": "string",
+                        "description": "Optioneel getal bij dimmen ('40') of thermostaat ('20.5'), anders ''.",
+                    },
+                },
+                "required": ["actie", "kamer_of_apparaat", "waarde"],
+            },
+        },
+        {
+            "type": "function",
+            "name": "gebruik_eigen_vaardigheid_of_kluis",
+            "description": (
+                "Voer razendsnel (<150ms) een al door Eva gebouwde Python-skill uit (zoals 'stroomkosten_calculator') "
+                "of raadpleeg direct een gekoppelde kluis-dienst (UniFi Netwerk, UniFi Protect, Agenda, E-mail)."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "soort": {
+                        "type": "string",
+                        "enum": ["run_capability", "list_capabilities", "vault_service"],
+                    },
+                    "naam_of_id": {
+                        "type": "string",
+                        "description": "Exacte capability_id (bijv. 'stroomkosten_calculator') of kluis service_id.",
+                    },
+                    "operatie": {
+                        "type": "string",
+                        "description": "Bij vault_service bijv. 'summary', 'clients', 'today', 'inbox_summary'; bij run_capability 'run'.",
+                    },
+                    "parameters_json": {
+                        "type": "string",
+                        "description": "JSON-object met parameters als tekst, bijv. '{\"vermogen_watt\": 18, \"prijs_per_kwh\": 0.27}' of '{}'.",
+                    },
+                },
+                "required": ["soort", "naam_of_id", "operatie", "parameters_json"],
+            },
+        },
+        {
+            "type": "function",
             "name": "raadpleeg_eva_kern_en_huis",
             "description": (
-                "Voer een echte actie of vraag uit in Eva's centrale kern, geheugen (Hindsight), "
-                "Home Assistant (lampen, schakelaars, sensoren, temperatuur), UniFi Netwerk, UniFi Protect, "
-                "Agenda, E-mail, huisafspraken of laat Eva zelf een nieuwe Python-vaardigheid programmeren. "
-                "BELANGRIJK: zeg altijd eerst hardop een kort Nederlands tussenzinnetje ('Even kijken hoor…') wanneer je deze tool aanroept!"
+                "Gebruik Eva's diepe kern en geheugen (Hindsight) voor persoonlijke herinneringen, web-zoekopdrachten, "
+                "nieuwe dienst-koppelingen of het programmeren van een GLOEDNIEUWE Python-vaardigheid die nog niet bestaat. "
+                "Zeg altijd eerst hardop een kort Nederlands tussenzinnetje ('Even induiken hoor…') wanneer je deze tool aanroept!"
             ),
             "parameters": {
                 "type": "object",
@@ -295,10 +368,62 @@ def build_gemini_live_tools() -> list[dict[str, Any]]:
         {
             "functionDeclarations": [
                 {
+                    "name": "snel_huis_lezen_of_bedienen",
+                    "description": (
+                        "Ultrasnelle directe Home Assistant koppeling (<100ms) voor kamertemperatuur, weer, "
+                        "lampenstatus of direct lampen/scènes/thermostaat bedienen."
+                    ),
+                    "parameters": {
+                        "type": "OBJECT",
+                        "properties": {
+                            "actie": {
+                                "type": "STRING",
+                                "description": "Kies uit: lees_klimaat, lees_status, lees_weer, lampen_aan, lampen_uit, dim_lampen, stel_thermostaat_in, activeer_scene.",
+                            },
+                            "kamer_of_apparaat": {
+                                "type": "STRING",
+                                "description": "Kamer of apparaat (bijv. woonkamer, keuken, kantoor, lola, buiten of leeg).",
+                            },
+                            "waarde": {
+                                "type": "STRING",
+                                "description": "Optionele waarde bij dimmen of thermostaat, anders leeg.",
+                            },
+                        },
+                        "required": ["actie", "kamer_of_apparaat", "waarde"],
+                    },
+                },
+                {
+                    "name": "gebruik_eigen_vaardigheid_of_kluis",
+                    "description": (
+                        "Voer direct (<150ms) een al door Eva gebouwde Python-skill uit of raadpleeg een gekoppelde kluis-dienst."
+                    ),
+                    "parameters": {
+                        "type": "OBJECT",
+                        "properties": {
+                            "soort": {
+                                "type": "STRING",
+                                "description": "Kies uit: run_capability, list_capabilities, vault_service.",
+                            },
+                            "naam_of_id": {
+                                "type": "STRING",
+                                "description": "Capability ID of service ID.",
+                            },
+                            "operatie": {
+                                "type": "STRING",
+                                "description": "Operatienaam of run.",
+                            },
+                            "parameters_json": {
+                                "type": "STRING",
+                                "description": "JSON-object als tekst.",
+                            },
+                        },
+                        "required": ["soort", "naam_of_id", "operatie", "parameters_json"],
+                    },
+                },
+                {
                     "name": "raadpleeg_eva_kern_en_huis",
                     "description": (
-                        "Voer een echte actie of vraag uit in Eva's centrale kern, geheugen, Home Assistant, "
-                        "UniFi Netwerk/Protect, Agenda, E-mail, huisregels of zelfbouw-sandbox. "
+                        "Raadpleeg Eva's diepe kern en geheugen voor herinneringen, web-onderzoek of het bouwen van een nieuwe Python-skill. "
                         "Zeg altijd eerst hardop een kort Nederlands tussenzinnetje voordat je deze functie aanroept."
                     ),
                     "parameters": {
@@ -792,6 +917,7 @@ async def run_gemini_live_bridge(
     execute_core_turn: Callable[[str], dict[str, Any]],
     set_guest_mode_fn: Callable[[bool], dict[str, Any]],
     execute_vision_look: Callable[[str, str], dict[str, Any]] | None = None,
+    execute_fast_tool: Callable[[str, Mapping[str, Any]], dict[str, Any]] | None = None,
 ) -> None:
     """Full-duplex WebSocket bridge between browser 16kHz/24kHz PCM and Google Gemini 3.8 Live (`BidiGenerateContent`)."""
     from eva.adapters.connectors.appliance_gemini_live_ws import connect_gemini_live_websocket
@@ -979,6 +1105,8 @@ async def run_gemini_live_bridge(
                             gm_res = await asyncio.to_thread(set_guest_mode_fn, bool(args.get("actief", True)))
                             await browser_ws.send_json({"type": "stage_update", "stage": gm_res.get("stage")})
                             result_obj = {"ok": True, "visite_modus": bool(args.get("actief", True))}
+                        elif fn_name in {"snel_huis_lezen_of_bedienen", "gebruik_eigen_vaardigheid_of_kluis"} and execute_fast_tool is not None:
+                            result_obj = await asyncio.to_thread(execute_fast_tool, fn_name, args)
                         elif fn_name == "bekijk_camera_beeld" and execute_vision_look is not None:
                             vis_out = await asyncio.to_thread(
                                 execute_vision_look,

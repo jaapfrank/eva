@@ -1696,6 +1696,20 @@ def create_appliance_wizard_app(service: ApplianceSetupPort) -> FastAPI:
         _require_same_origin(request)
         return _call(service.stop_realtime_voice_session, await _read_json(request))
 
+    @app.post("/internal/v1/appliance/living/wake-check")
+    async def post_living_wake_check(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        body = await _read_json(request, max_bytes=262_144)
+        return _call(service.check_wake_audio, body)
+
+    @app.post("/internal/v1/appliance/living/fast-action")
+    async def post_living_fast_action(request: Request) -> JSONResponse:
+        _require_session(request)
+        _require_same_origin(request)
+        body = await _read_json(request, max_bytes=65_536)
+        return _call(service.execute_fast_action, body, base_origin=_request_origin(request))
+
     @app.post("/internal/v1/appliance/living/turn-stream")
     async def post_living_turn_stream(request: Request) -> StreamingResponse:
         _require_session(request)

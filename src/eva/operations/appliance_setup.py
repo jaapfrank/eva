@@ -69,6 +69,10 @@ from eva.operations.identity_pack_lifecycle import (
     IdentityPackLifecycleError,
     bootstrap_identity_authority,
 )
+from eva.operations.appliance_fastpath import (
+    ApplianceFastPathEngine,
+    LocalDutchWakeWordDaemon,
+)
 from eva.operations.appliance_mcp_gateway import (
     UniversalIntegrationHub,
     detect_local_unifi_console,
@@ -415,6 +419,13 @@ class ApplianceSetupService:
         self._telegram_magic: _TelegramMagicLinkSession | None = None
         self._pairing_code_plain: str | None = None
         self._realtime_hub = RealtimeVoiceHub(self.runtime_root)
+        self._wake_daemon = LocalDutchWakeWordDaemon(
+            self.runtime_root, auto_warm=not dry_run_apply
+        )
+        self._fastpath = ApplianceFastPathEngine(
+            runtime_root=self.runtime_root,
+            ha_config_loader=lambda: dict(self._load_state()["modules"]["smart_home"]),
+        )
         self._ha_cam_cache: tuple[float, dict[str, Any]] | None = None
         self._ensure_pairing_record()
         self._load_persisted_sessions()
@@ -4494,7 +4505,17 @@ class ApplianceSetupService:
             )
         )
 
-        if raw_text and snap_now["core_ready"] and not pure_local_preference:
+        if raw_text and not pure_local_preference and conjure_panel is None and not unknown_voice:
+            fast_hit = self._fastpath.try_fast_conversational_turn(
+                raw_text,
+                owner_name=speaker_nm,
+                guest_mode=bool(snap_now["household"].get("guest_mode_active", False)),
+            )
+            if fast_hit is not None and fast_hit.get("reply_text"):
+                reply_text = str(fast_hit["reply_text"])
+                snap_now = self.living_stage_snapshot(base_origin=base_origin)
+
+        if not reply_text and raw_text and snap_now["core_ready"] and not pure_local_preference:
             pend_before = self._integration_hub().get_pending_connection()
             prev_req_at = (pend_before or {}).get("requested_at")
             if unknown_voice:
@@ -4798,12 +4819,17 @@ class ApplianceSetupService:
         }
 
     def synthesize_living_speech(self, text: str) -> tuple[bytes, str] | None:
-        """Synthesize natural spoken Dutch audio via Living Core TTS or OpenAI TTS if configured."""
+        """Synthesize natural spoken Dutch audio via cached `nl-NL-FennaNeural` or configured cloud TTS."""
         clean_text = re.sub(r"\s+", " ", (text or "").strip())[:1400]
         if not clean_text:
             return None
 
-        # 1. Try Living Core neural speech bridge (/internal/v1/dashboard/holostage/speech-audio)
+        # 1. Primary: Warm Dutch neural female voice (`nl-NL-FennaNeural`, <1ms from LRU RAM cache!)
+        neural = synthesize_neural_dutch_mp3(clean_text, voice="nl-NL-FennaNeural")
+        if neural is not None:
+            return neural
+
+        # 2. Fallback: Living Core neural speech bridge (/internal/v1/dashboard/holostage/speech-audio)
         tok_path = self._secrets_dir() / "dashboard-token"
         if tok_path.is_file():
             try:
@@ -4863,11 +4889,6 @@ class ApplianceSetupService:
                     conn.close()
         except Exception:
             pass
-
-        # 3. Warm Dutch neural female voice (`nl-NL-FennaNeural` via edge-tts, cached in RAM)
-        neural = synthesize_neural_dutch_mp3(clean_text, voice="nl-NL-FennaNeural")
-        if neural is not None:
-            return neural
 
         return None
 
@@ -4940,6 +4961,7 @@ class ApplianceSetupService:
             "has_openai_key": has_oai,
             "has_gemini_key": has_gem,
             "codex_webrtc_ready": codex_ok,
+            "wake_word": self._wake_daemon.status(),
             "models": list(REALTIME_MODEL_CATALOG),
         }
 
@@ -5006,6 +5028,20 @@ class ApplianceSetupService:
         sid = str(payload.get("session_id") or "").strip() or None
         return self._realtime_hub.stop_session(sid)
 
+    def check_wake_audio(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        """Verify a short local speech burst for 'Hé Eva' offline via Vosk NL (`0` cloud tokens)."""
+        pcm_b64 = str(payload.get("audio_pcm_b64") or "")
+        return self._wake_daemon.check_pcm16_b64(pcm_b64)
+
+    def execute_fast_action(
+        self, payload: Mapping[str, Any], *, base_origin: str | None = None
+    ) -> dict[str, Any]:
+        """Execute a sub-second Home Assistant or saved Python capability tool call directly."""
+        out = self._fastpath.execute_fast_tool(payload)
+        if out.get("ok") and str(payload.get("tool") or "") == "gebruik_eigen_vaardigheid_of_kluis":
+            out["stage"] = self.living_stage_snapshot(base_origin=base_origin)
+        return out
+
     async def bridge_gemini_live_websocket(
         self, websocket: Any, *, model: str, voice: str, base_origin: str | None = None
     ) -> None:
@@ -5026,6 +5062,7 @@ class ApplianceSetupService:
             execute_core_turn=lambda txt: self.handle_living_turn({"text": txt}, base_origin=base_origin),
             set_guest_mode_fn=lambda on: self.set_guest_mode(enabled=on),
             execute_vision_look=lambda cam, q: self.handle_vision_look({"camera_hint": cam, "prompt": q}),
+            execute_fast_tool=lambda fn, a: self._fastpath.execute_fast_tool({"tool": fn, "args": a}),
         )
 
     # ------------------------------------------------------------------
@@ -5404,6 +5441,37 @@ class ApplianceSetupService:
                     if out.get("reply_text"):
                         q.put({"type": "speech_clause", "text": out["reply_text"]})
                     q.put({"type": "final", **out})
+                    return
+
+                fast_hit = self._fastpath.try_fast_conversational_turn(
+                    raw_text,
+                    owner_name=owner_nm,
+                    guest_mode=bool(self._read_household_view().get("guest_mode_active", False)),
+                )
+                if fast_hit is not None and fast_hit.get("reply_text"):
+                    reply_fast = str(fast_hit["reply_text"])
+                    q.put({"type": "delta", "text": reply_fast})
+                    q.put({"type": "speech_clause", "text": reply_fast})
+                    need_stage_refresh = fast_hit.get("fastpath_kind") in {
+                        "ha_lights_control",
+                    }
+                    q.put(
+                        {
+                            "type": "final",
+                            "ok": True,
+                            "reply_text": reply_fast,
+                            "fastpath_kind": fast_hit.get("fastpath_kind"),
+                            "latency_ms": fast_hit.get("latency_ms"),
+                            "applied_changes": [],
+                            "conjure_panel": None,
+                            "conjure_preset": None,
+                            **(
+                                {"stage": self.living_stage_snapshot(base_origin=base_origin)}
+                                if need_stage_refresh
+                                else {}
+                            ),
+                        }
+                    )
                     return
 
                 pend_before = self._integration_hub().get_pending_connection()

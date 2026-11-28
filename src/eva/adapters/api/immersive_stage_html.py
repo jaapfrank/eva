@@ -65,16 +65,16 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       right: calc(12px + env(safe-area-inset-right, 0px));
       z-index: 24;
       display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
-      gap: 8px; pointer-events: auto; padding-bottom: 2px;
+      flex-wrap: wrap; row-gap: 6px; column-gap: 8px;
+      pointer-events: auto; padding-bottom: 2px;
     }
     .top-hud::-webkit-scrollbar { display: none; }
     .hud-group {
-      display: flex; flex-wrap: nowrap; flex-shrink: 0; gap: 6px; align-items: center;
+      display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
     }
     .pill {
-      display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; white-space: nowrap;
-      padding: 6px 11px; border-radius: 999px; font-size: 0.77rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; white-space: nowrap;
+      padding: 5px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 600;
       color: var(--text); background: var(--glass); border: 1px solid var(--border);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       cursor: pointer; transition: all 0.18s ease; text-decoration: none;
@@ -377,8 +377,11 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       <span class="pill static active-emerald" id="hud-speaker-pill" hidden></span>
     </div>
     <div class="hud-group">
+      <button type="button" class="pill" id="btn-wake-sentinel" title="100% lokale 'Hé Eva' waker: luistert zonder openstaande cloud-verbinding en gaat na het gesprek vanzelf weer in slaapstand">
+        👂 <span id="wake-sentinel-label">Hé Eva</span>
+      </button>
       <button type="button" class="pill active-emerald" id="btn-live-call" title="Start of stop een doorlopend handsfree gesprek met Eva (zonder telkens te klikken)">
-        🎙️ <span id="live-call-label">Start Live Gesprek</span>
+        🎙️ <span id="live-call-label">Live Gesprek</span>
       </button>
       <button type="button" class="pill" id="btn-voice-engine" title="Kies tussen GPT Realtime 2.1, GPT Realtime 2.1 Mini of Gemini 3.8 Live">
         ⚡ <span id="voice-engine-label">gpt-realtime-2.1</span>
@@ -466,6 +469,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     let currentSource = null;
     let evaMoodHex = 0x38bdf8;
     let waveUntil = 0;
+    let wakeRoomHearing = false;
     let codexPollTimer = null;
     let tgPollTimer = null;
 
@@ -613,7 +617,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         b.quaternion.slerp(targetQuat, alpha);
       }
 
-      let mouthOpen = 0, voiceEnergy = 0;
+      let mouthOpen = 0, mouthWidth = 1.0, voiceEnergy = 0;
       const clock = new THREE.Clock();
       function animate() {
         requestAnimationFrame(animate);
@@ -624,33 +628,53 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         rimLight.color.lerp(moodColor, Math.min(1, dt * 4));
         haloMat.color.lerp(moodColor, Math.min(1, dt * 4));
 
-        let measured = 0;
+        // 3-Band Spectral Formant Viseme Lip-Sync (open vowels aa/oo vs spread ee/ie vs fricatives s/f/t)
+        let measured = 0, lowFormant = 0, midFormant = 0, highFormant = 0;
         if (activeAnalyser && freqBins) {
           activeAnalyser.getByteFrequencyData(freqBins);
-          let sum = 0;
-          for (let i = 2; i < 36; i++) sum += freqBins[i];
-          measured = Math.min(1.0, sum / (34 * 135));
+          const nBins = freqBins.length;
+          const b1End = Math.min(nBins, 10), b2End = Math.min(nBins, 38), b3End = Math.min(nBins, 96);
+          let sLow = 0, sMid = 0, sHigh = 0;
+          for (let i = 2; i < b1End; i++) sLow += freqBins[i];
+          for (let i = b1End; i < b2End; i++) sMid += freqBins[i];
+          for (let i = b2End; i < b3End; i++) sHigh += freqBins[i];
+          lowFormant = Math.min(1.0, sLow / Math.max(1, (b1End - 2) * 148));
+          midFormant = Math.min(1.0, sMid / Math.max(1, (b2End - b1End) * 128));
+          highFormant = Math.min(1.0, sHigh / Math.max(1, (b3End - b2End) * 95));
+          measured = Math.min(1.0, lowFormant * 0.50 + midFormant * 0.38 + highFormant * 0.16);
         }
         if (ttsSpeaking && measured < 0.03) {
           const syll = Math.max(0, Math.sin(t * 11.6) * 0.52 + Math.sin(t * 7.3 + 0.8) * 0.42 + Math.sin(t * 17.1) * 0.22);
           measured = Math.min(0.86, syll * 0.78);
+          lowFormant = measured * (0.65 + 0.35 * Math.sin(t * 6.2));
+          midFormant = measured * (0.55 + 0.45 * Math.cos(t * 8.4));
+          highFormant = measured * 0.3;
         }
-        voiceEnergy += (measured - voiceEnergy) * Math.min(1, dt * 20);
-        const speaking = ttsSpeaking || voiceEnergy > 0.05;
-        const targetOpen = speaking ? Math.min(1.0, Math.max(0.05, voiceEnergy * 1.22)) : 0.0;
-        mouthOpen += (targetOpen - mouthOpen) * Math.min(1, dt * 18);
+        voiceEnergy += (measured - voiceEnergy) * Math.min(1, dt * 22);
+        const speaking = ttsSpeaking || voiceEnergy > 0.045;
+        const fricativePinch = Math.max(0.55, 1.0 - highFormant * 0.36);
+        const targetOpen = speaking
+          ? Math.min(1.0, Math.max(0.04, (lowFormant * 0.85 + midFormant * 0.55) * fricativePinch))
+          : 0.0;
+        const targetWidth = speaking
+          ? Math.max(0.84, Math.min(1.18, 0.94 + midFormant * 0.24 - lowFormant * 0.10))
+          : 1.0;
+        mouthOpen += (targetOpen - mouthOpen) * Math.min(1, dt * 22);
+        mouthWidth += (targetWidth - mouthWidth) * Math.min(1, dt * 18);
 
         if (mouthParts) {
-          const openCm = mouthOpen * 1.02;
-          mouthParts.upperLip.position.y = openCm * 0.36;
-          mouthParts.lowerLip.position.y = -openCm * 0.64;
-          mouthParts.cavity.visible = mouthOpen > 0.045;
+          const openCm = mouthOpen * 1.04;
+          mouthParts.upperLip.position.y = openCm * 0.35;
+          mouthParts.lowerLip.position.y = -openCm * 0.65;
+          mouthParts.upperLip.scale.x = mouthWidth;
+          mouthParts.lowerLip.scale.x = mouthWidth;
+          mouthParts.cavity.visible = mouthOpen > 0.042;
           if (mouthParts.cavity.visible) {
-            mouthParts.cavity.scale.set(0.92, Math.max(0.08, mouthOpen * 0.95), 1.0);
+            mouthParts.cavity.scale.set(0.90 * mouthWidth, Math.max(0.08, mouthOpen * 0.96), 1.0);
           }
         }
         for (const m of jawMeshes) {
-          if (m.morphTargetInfluences?.length) m.morphTargetInfluences[0] = mouthOpen * 0.85;
+          if (m.morphTargetInfluences?.length) m.morphTargetInfluences[0] = mouthOpen * 0.88;
         }
 
         // Shift camera right so 3D Eva stands gracefully on the left half when the Wizard is open
@@ -662,6 +686,8 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         if (avatarRoot) {
           const breath = Math.sin(t * 1.55) * 0.5 + 0.5;
           const sway = Math.sin(t * 0.45) * 0.65 + Math.sin(t * 0.29 + 1.1) * 0.35;
+          const saccadeX = Math.sin(t * 0.73) * 0.02 + Math.sin(t * 2.3) * 0.008;
+          const attentiveTilt = (!speaking && wakeRoomHearing) ? 0.045 : 0;
           avatarRoot.position.x = sway * 0.012;
           avatarRoot.position.y = baseFloorY + breath * 0.0025;
           avatarRoot.rotation.y = sway * 0.03 + pointerX * 0.09 + (activeDrawer && window.innerWidth > 980 ? 0.10 : 0);
@@ -671,9 +697,9 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           poseBone('Spine', -breath * 0.026 - (speaking ? 0.02 : 0), speaking ? Math.sin(t * 1.4) * 0.025 : 0, 0, smoothPose);
 
           const speakNod = speaking ? (-mouthOpen * 0.048 + Math.sin(t * 4.8) * 0.02) : 0;
-          const gazeYaw = pointerX * 0.14 + Math.sin(t * 0.52) * 0.035;
-          poseBone('neck', -0.045, gazeYaw * 0.35, 0, smoothPose);
-          poseBone('Head', -0.165 + pointerY * 0.06 + speakNod + breath * 0.012, gazeYaw * 0.75, Math.sin(t * 0.37) * 0.02, smoothPose);
+          const gazeYaw = pointerX * 0.14 + saccadeX + Math.sin(t * 0.52) * 0.03;
+          poseBone('neck', -0.045, gazeYaw * 0.35, attentiveTilt * 0.4, smoothPose);
+          poseBone('Head', -0.165 + pointerY * 0.06 + speakNod + breath * 0.012, gazeYaw * 0.75, Math.sin(t * 0.37) * 0.02 + attentiveTilt, smoothPose);
 
           if (performance.now() < waveUntil) {
             poseBone('RightArm', -0.55, 0.2, -0.85 + Math.sin(t * 9.0) * 0.18, smoothPose);
@@ -697,10 +723,31 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       if (currentAudioCtx.state === 'suspended') currentAudioCtx.resume().catch(() => {});
       if (!activeAnalyser) {
         activeAnalyser = currentAudioCtx.createAnalyser();
-        activeAnalyser.fftSize = 128;
+        activeAnalyser.fftSize = 512;
+        activeAnalyser.smoothingTimeConstant = 0.62;
         freqBins = new Uint8Array(activeAnalyser.frequencyBinCount);
       }
       return currentAudioCtx;
+    }
+
+    function playWakeChime() {
+      if (!audioEnabled) return;
+      try {
+        const ctx = ensureAudioCtx();
+        const now = ctx.currentTime;
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.085, now + 0.025);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.24);
+        gain.connect(ctx.destination);
+        const osc1 = ctx.createOscillator();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(587.33, now);
+        osc1.frequency.exponentialRampToValueAtTime(880.0, now + 0.13);
+        osc1.connect(gain);
+        osc1.start(now);
+        osc1.stop(now + 0.25);
+      } catch (_e) {}
     }
 
     function stopSpeaking() {
@@ -833,24 +880,298 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       return floatTo16BitPcmB64(chunks, total);
     }
 
-    // --- 4. Continuous Hands-Free Realtime Live Call (gpt-realtime-2.1, gpt-realtime-2.1-mini & gemini-3.8-live) ---
+    // --- 4. Zero-Cloud Local "Hé Eva" Wake-Word Sentinel + Auto-Sleep + Realtime Live Call ---
     let liveCallSession = null;
     let userIntendedLiveCall = false;
     let liveReconnectAttempts = 0;
     let liveReconnectTimer = null;
+    let lastConversationActivityAt = 0;
+    let idleSleepWatchdog = null;
+
+    let wakeSentinelEnabled = false;
+    let wakeSentinelActiveObj = null;
+    let wakeTriggerLock = false;
+
+    const WAKE_PHRASE_RE = /(?:^|\b)(?:h[eé]y?|hoi|hallo|dag|lieve|luister|ok[eé])\s+eva\b[\s,!.:?-]*(.*)$/i;
+    const GOODBYE_PHRASE_RE = /\b(?:tot\s+zo(?:\s+eva)?|slaap\s+lekker(?:\s+eva)?|stop\s+(?:het\s+)?gesprek|dat\s+was\s+het(?:\s+eva)?|welterusten\s+eva)\b/i;
+    const AUTO_SLEEP_IDLE_MS = 28000;
+
+    function touchConversationActivity() {
+      lastConversationActivityAt = Date.now();
+    }
+
+    function syncWakeSentinelUi() {
+      const btn = $('btn-wake-sentinel');
+      const lbl = $('wake-sentinel-label');
+      if (!btn || !lbl) return;
+      btn.classList.toggle('active-cyan', wakeSentinelEnabled);
+      if (!wakeSentinelEnabled) {
+        lbl.textContent = 'Hé Eva';
+      } else if (liveCallSession) {
+        lbl.textContent = 'Auto-slaap aan';
+      } else {
+        lbl.textContent = 'Hé Eva · Aan';
+      }
+      const drwBtn = $('btn-rt-toggle-wake');
+      if (drwBtn) {
+        drwBtn.textContent = wakeSentinelEnabled
+          ? '👂 "Hé Eva" Waker staat AAN (klik om uit te zetten)'
+          : '👂 Zet lokale "Hé Eva" Waker + Auto-Slaapstand AAN';
+      }
+    }
+
+    async function pauseWakeSentinelCapture() {
+      wakeRoomHearing = false;
+      const obj = wakeSentinelActiveObj;
+      wakeSentinelActiveObj = null;
+      if (!obj) return;
+      obj.stopped = true;
+      try { obj.sr?.abort?.(); } catch (_e) {}
+      try { obj.proc?.disconnect(); } catch (_e) {}
+      try { obj.filter?.disconnect(); } catch (_e) {}
+      try { obj.src?.disconnect(); } catch (_e) {}
+      for (const t of (obj.stream?.getTracks() || [])) {
+        try { t.stop(); } catch (_e) {}
+      }
+    }
+
+    async function armWakeSentinelCapture() {
+      if (!wakeSentinelEnabled || liveCallSession || wakeSentinelActiveObj) {
+        syncWakeSentinelUi();
+        return;
+      }
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+          video: false
+        });
+      } catch (_e) {
+        wakeSentinelEnabled = false;
+        try { localStorage.setItem('eva_wake_sentinel_enabled', '0'); } catch (_err) {}
+        syncWakeSentinelUi();
+        $('eva-subtitle').textContent = 'Geef eenmalig microfoontoestemming om de lokale "Hé Eva" waker te activeren.';
+        return;
+      }
+
+      const ctx = ensureAudioCtx();
+      const stateObj = { stream, stopped: false, webSpeechHealthy: false };
+      wakeSentinelActiveObj = stateObj;
+      syncWakeSentinelUi();
+
+      const triggerWake = async (remainderText = '') => {
+        if (stateObj.stopped || wakeTriggerLock || liveCallSession) return;
+        wakeTriggerLock = true;
+        try {
+          await pauseWakeSentinelCapture();
+          playWakeChime();
+          waveUntil = performance.now() + 2400;
+          const cleanRem = String(remainderText || '').trim();
+          await toggleRealtimeLiveCall({ wokenByVoice: true, initialUserPrompt: cleanRem });
+        } finally {
+          setTimeout(() => { wakeTriggerLock = false; }, 1200);
+        }
+      };
+
+      // Engine 1: Instant browser SpeechRecognition when available (Chrome/Edge desktop)
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SR) {
+        try {
+          const sr = new SR();
+          sr.lang = 'nl-NL';
+          sr.continuous = true;
+          sr.interimResults = true;
+          sr.maxAlternatives = 1;
+          stateObj.sr = sr;
+          sr.onstart = () => { stateObj.webSpeechHealthy = true; };
+          sr.onerror = ev => {
+            if (ev?.error === 'service-not-allowed' || ev?.error === 'not-allowed' || ev?.error === 'language-not-supported') {
+              stateObj.webSpeechHealthy = false;
+            }
+          };
+          sr.onend = () => {
+            if (!stateObj.stopped && stateObj.webSpeechHealthy && !liveCallSession && wakeSentinelEnabled) {
+              setTimeout(() => {
+                if (!stateObj.stopped && !liveCallSession) {
+                  try { sr.start(); } catch (_e) {}
+                }
+              }, 280);
+            }
+          };
+          sr.onresult = ev => {
+            if (stateObj.stopped || ttsSpeaking || liveCallSession) return;
+            for (let i = ev.resultIndex; i < ev.results.length; i++) {
+              const transcript = String(ev.results[i][0]?.transcript || '').trim();
+              const m = transcript.match(WAKE_PHRASE_RE);
+              if (m) {
+                const rem = (m[1] || '').trim();
+                if (ev.results[i].isFinal || rem.split(/\s+/).filter(Boolean).length === 0) {
+                  triggerWake(rem);
+                  return;
+                }
+              }
+            }
+          };
+          sr.start();
+        } catch (_e) {
+          stateObj.webSpeechHealthy = false;
+        }
+      }
+
+      // Engine 2: Zero-Network WebAudio Speech-Band VAD + Offline Vosk NL Verifier (essential for GMS-free UC-Display-SE-21!)
+      try {
+        const src = ctx.createMediaStreamSource(stream);
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 1350;
+        filter.Q.value = 0.75;
+        const proc = ctx.createScriptProcessor(4096, 1, 1);
+        stateObj.src = src;
+        stateObj.filter = filter;
+        stateObj.proc = proc;
+
+        const inRate = ctx.sampleRate || 48000;
+        let preRoll = [];
+        let speechChunks = [];
+        let speechSamples = 0;
+        let inSpeech = false;
+        let silenceFrames = 0;
+        let noiseFloor = 0.008;
+        let checkingServer = false;
+
+        proc.onaudioprocess = ev => {
+          if (stateObj.stopped || liveCallSession) return;
+          if (ttsSpeaking) {
+            inSpeech = false;
+            speechChunks = [];
+            speechSamples = 0;
+            wakeRoomHearing = false;
+            return;
+          }
+          const inp = ev.inputBuffer.getChannelData(0);
+          let sumSq = 0;
+          for (let i = 0; i < inp.length; i += 2) sumSq += inp[i] * inp[i];
+          const rms = Math.sqrt(sumSq / (inp.length / 2));
+
+          if (!inSpeech) {
+            noiseFloor = noiseFloor * 0.97 + Math.min(rms, 0.05) * 0.03;
+          }
+          const threshold = Math.max(0.014, noiseFloor * 2.7);
+          wakeRoomHearing = rms > threshold;
+
+          // Downsample to 16 kHz mono Int16
+          const ratio = inRate / 16000;
+          const outLen = Math.floor(inp.length / ratio);
+          const int16 = new Int16Array(outLen);
+          for (let i = 0; i < outLen; i++) {
+            const s = Math.max(-1, Math.min(1, inp[Math.floor(i * ratio)]));
+            int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+          }
+
+          // If native WebSpeech is already actively handling Desktop Chrome, skip redundant Vosk RPCs
+          if (stateObj.webSpeechHealthy) return;
+
+          if (rms > threshold) {
+            if (!inSpeech) {
+              inSpeech = true;
+              speechChunks = [...preRoll];
+              speechSamples = speechChunks.reduce((acc, c) => acc + c.length, 0);
+            }
+            silenceFrames = 0;
+            speechChunks.push(int16);
+            speechSamples += outLen;
+          } else if (inSpeech) {
+            speechChunks.push(int16);
+            speechSamples += outLen;
+            silenceFrames += 1;
+          } else {
+            preRoll.push(int16);
+            if (preRoll.length > 4) preRoll.shift();
+          }
+
+          // End of short human utterance (0.35s .. 2.8s) -> verify locally against offline Vosk NL!
+          if (inSpeech && (silenceFrames >= 3 || speechSamples >= 44800)) {
+            const captured = speechChunks;
+            const totalSmp = speechSamples;
+            inSpeech = false;
+            speechChunks = [];
+            speechSamples = 0;
+            silenceFrames = 0;
+            if (!checkingServer && totalSmp >= 5600) {
+              checkingServer = true;
+              const b64 = floatTo16BitPcmB64(captured, totalSmp);
+              fetch('/internal/v1/appliance/living/wake-check', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ audio_pcm_b64: b64 })
+              }).then(r => r.json()).then(d => {
+                if (d?.detected) {
+                  triggerWake(d.remainder_nl || '');
+                }
+              }).catch(() => {}).finally(() => {
+                checkingServer = false;
+              });
+            }
+          }
+        };
+
+        const silentGain = ctx.createGain();
+        silentGain.gain.value = 0;
+        src.connect(filter);
+        filter.connect(proc);
+        proc.connect(silentGain);
+        silentGain.connect(ctx.destination);
+      } catch (_e) {}
+    }
+
+    async function toggleWakeSentinel(forceState = null) {
+      userUnlockedAudio = true;
+      wakeSentinelEnabled = typeof forceState === 'boolean' ? forceState : !wakeSentinelEnabled;
+      try { localStorage.setItem('eva_wake_sentinel_enabled', wakeSentinelEnabled ? '1' : '0'); } catch (_e) {}
+      if (wakeSentinelEnabled) {
+        if (!liveCallSession) {
+          await armWakeSentinelCapture();
+          $('eva-subtitle').textContent = '👂 Lokale waker actief — zeg gewoon "Hé Eva" (0 cloudverbruik in rust, automatische slaapstand na gesprek).';
+        }
+      } else {
+        await pauseWakeSentinelCapture();
+        if (!liveCallSession) {
+          $('eva-subtitle').textContent = 'Lokale "Hé Eva" waker staat uit. Klik op 👂 of 🎙️ wanneer je wilt praten.';
+        }
+      }
+      syncWakeSentinelUi();
+    }
+
+    function startIdleSleepWatchdog() {
+      if (idleSleepWatchdog) clearInterval(idleSleepWatchdog);
+      touchConversationActivity();
+      idleSleepWatchdog = setInterval(() => {
+        if (!liveCallSession || !wakeSentinelEnabled) return;
+        if (ttsSpeaking) {
+          touchConversationActivity();
+          return;
+        }
+        if (Date.now() - lastConversationActivityAt >= AUTO_SLEEP_IDLE_MS) {
+          stopRealtimeLiveCall('💤 Gesprek rustig afgerond — ik luister weer lokaal naar "Hé Eva" (0 cloudverbruik).');
+        }
+      }, 2000);
+    }
 
     function syncLiveCallUi(stateText = null) {
       const active = !!liveCallSession;
       $('btn-mic').classList.toggle('recording', active);
       $('btn-live-call').classList.toggle('active-guest', active);
       $('btn-live-call').classList.toggle('active-emerald', !active);
-      $('live-call-label').textContent = active ? 'Beëindig Live Gesprek' : 'Start Live Gesprek';
+      $('live-call-label').textContent = active ? 'Stop Gesprek' : 'Live Gesprek';
       if ($('btn-rt-test-call')) {
         $('btn-rt-test-call').textContent = active ? '🎙️ Beëindig Live Gesprek' : '🎙️ Start nu Live Gesprek';
       }
       $('talk-input').placeholder = active
         ? '🟢 Doorlopend gesprek actief — praat gewoon door of onderbreek Eva met je stem…'
-        : 'Klik op 🎙️ voor doorlopend live gesprek, of typ Nederlands tegen Eva…';
+        : (wakeSentinelEnabled
+            ? '👂 Zeg gewoon "Hé Eva" om handsfree te praten, of typ hier je vraag…'
+            : 'Klik op 🎙️ voor doorlopend live gesprek, of typ Nederlands tegen Eva…');
+      syncWakeSentinelUi();
       if (stateText) $('eva-subtitle').textContent = stateText;
     }
 
@@ -859,6 +1180,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         userIntendedLiveCall = false;
         liveReconnectAttempts = 0;
         if (liveReconnectTimer) { clearTimeout(liveReconnectTimer); liveReconnectTimer = null; }
+        if (idleSleepWatchdog) { clearInterval(idleSleepWatchdog); idleSleepWatchdog = null; }
       }
       const sess = liveCallSession;
       liveCallSession = null;
@@ -868,29 +1190,36 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       if (audioEl) {
         try { audioEl.pause(); audioEl.srcObject = null; } catch (_e) {}
       }
-      if (!sess) return;
-      if (sess.bioTimer) clearInterval(sess.bioTimer);
-      try { sess.dc?.close(); } catch (_e) {}
-      try { sess.pc?.close(); } catch (_e) {}
-      try {
-        if (sess.ws && sess.ws.readyState === WebSocket.OPEN) {
-          sess.ws.send(JSON.stringify({ type: 'stop' }));
+      if (sess) {
+        if (sess.bioTimer) clearInterval(sess.bioTimer);
+        try { sess.dc?.close(); } catch (_e) {}
+        try { sess.pc?.close(); } catch (_e) {}
+        try {
+          if (sess.ws && sess.ws.readyState === WebSocket.OPEN) {
+            sess.ws.send(JSON.stringify({ type: 'stop' }));
+          }
+          sess.ws?.close();
+        } catch (_e) {}
+        try { sess.proc?.disconnect(); } catch (_e) {}
+        try { sess.micSrc?.disconnect(); } catch (_e) {}
+        try { sess.remoteSrc?.disconnect(); } catch (_e) {}
+        for (const t of (sess.stream?.getTracks() || [])) {
+          try { t.stop(); } catch (_e) {}
         }
-        sess.ws?.close();
-      } catch (_e) {}
-      try { sess.proc?.disconnect(); } catch (_e) {}
-      try { sess.micSrc?.disconnect(); } catch (_e) {}
-      try { sess.remoteSrc?.disconnect(); } catch (_e) {}
-      for (const t of (sess.stream?.getTracks() || [])) {
-        try { t.stop(); } catch (_e) {}
+        if (sess.sessionId) {
+          fetch('/internal/v1/appliance/living/realtime/stop', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ session_id: sess.sessionId }),
+            keepalive: true
+          }).catch(() => {});
+        }
       }
-      if (sess.sessionId) {
-        fetch('/internal/v1/appliance/living/realtime/stop', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ session_id: sess.sessionId }),
-          keepalive: true
-        }).catch(() => {});
+      // Automatically return to zero-cost local "Hé Eva" watch when sentinel mode is enabled!
+      if (!keepIntent && wakeSentinelEnabled) {
+        setTimeout(() => {
+          if (!liveCallSession && wakeSentinelEnabled) armWakeSentinelCapture();
+        }, 350);
       }
     }
 
@@ -918,12 +1247,17 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       }
     });
 
-    async function toggleRealtimeLiveCall({ isAutoReconnect = false } = {}) {
+    async function toggleRealtimeLiveCall({ isAutoReconnect = false, wokenByVoice = false, initialUserPrompt = '' } = {}) {
       userUnlockedAudio = true;
       if (liveCallSession && !isAutoReconnect) {
-        await stopRealtimeLiveCall('Live gesprek gepauzeerd. Klik op 🎙️ Start Live Gesprek wanneer je weer verder wilt praten.');
+        await stopRealtimeLiveCall(
+          wakeSentinelEnabled
+            ? '💤 Live gesprek gepauzeerd — ik luister weer lokaal naar "Hé Eva" (0 cloudverbruik).'
+            : 'Live gesprek gepauzeerd. Klik op 🎙️ Start Live Gesprek of zet 👂 "Hé Eva" aan.'
+        );
         return;
       }
+      await pauseWakeSentinelCapture();
       userIntendedLiveCall = true;
       stopSpeaking();
       const rtCfg = stage?.realtime_voice || {};
@@ -950,8 +1284,17 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       const ctx = ensureAudioCtx();
       if (ctx.state === 'suspended') await ctx.resume();
 
-      const sess = { model: selModel, voice: selVoice, stream, sessionId: null, isReconnect: !!isAutoReconnect };
+      const sess = {
+        model: selModel,
+        voice: selVoice,
+        stream,
+        sessionId: null,
+        isReconnect: !!isAutoReconnect,
+        wokenByVoice: !!wokenByVoice,
+        initialUserPrompt: String(initialUserPrompt || '').trim()
+      };
       liveCallSession = sess;
+      startIdleSleepWatchdog();
       syncLiveCallUi(`⏳ Live verbinding openen met ${selModel}…`);
 
       // Background local 64-D speaker verification (100% local, identifies Jaap vs Lola vs visitor!)
@@ -1072,18 +1415,28 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
         dc.onopen = () => {
           if (liveCallSession !== sess) return;
           liveReconnectAttempts = 0;
+          touchConversationActivity();
           if (data.session_update) {
             dc.send(JSON.stringify(data.session_update));
           }
           syncLiveCallUi(`🟢 Doorlopend gesprek actief (${data.model}) — praat gewoon tegen Eva!`);
           waveUntil = performance.now() + 2200;
           if (!sess.isReconnect) {
-            dc.send(JSON.stringify({
-              type: 'response.create',
-              response: {
-                instructions: `Begroet ${stage?.household?.owner_name || 'Jaap'} kort, warm en enthousiast in één vlotte Nederlandse zin en laat weten dat jullie nu rechtstreeks doorlopend kunnen praten zonder op knoppen te klikken.`
-              }
-            }));
+            if (sess.initialUserPrompt) {
+              dc.send(JSON.stringify({
+                type: 'conversation.item.create',
+                item: { type: 'message', role: 'user', content: [{ type: 'input_text', text: sess.initialUserPrompt }] }
+              }));
+              dc.send(JSON.stringify({ type: 'response.create' }));
+            } else {
+              const greetInstr = sess.wokenByVoice
+                ? `Je bent net gewekt met 'Hé Eva'. Reageer heel kort, warm en natuurlijk in het Nederlands (bijv. 'Ja ${stage?.household?.owner_name || 'Jaap'}, zeg het eens!' of 'Hoi! Waar kan ik mee helpen?').`
+                : `Begroet ${stage?.household?.owner_name || 'Jaap'} kort, warm en enthousiast in één vlotte Nederlandse zin en laat weten dat jullie nu rechtstreeks doorlopend kunnen praten zonder op knoppen te klikken.`;
+              dc.send(JSON.stringify({
+                type: 'response.create',
+                response: { instructions: greetInstr }
+              }));
+            }
           }
         };
 
@@ -1094,26 +1447,51 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           const t = ev.type || '';
 
           if (t === 'input_audio_buffer.speech_started') {
+            touchConversationActivity();
             stopSpeaking();
             evaTranscriptBuf = '';
             $('eva-subtitle').textContent = '🟢 Eva luistert…';
           } else if (t === 'conversation.item.input_audio_transcription.completed' && ev.transcript) {
-            $('eva-subtitle').textContent = `🎙️ Jij: "${ev.transcript.trim()}"`;
+            touchConversationActivity();
+            const cleanTr = ev.transcript.trim();
+            $('eva-subtitle').textContent = `🎙️ Jij: "${cleanTr}"`;
+            if (wakeSentinelEnabled && GOODBYE_PHRASE_RE.test(cleanTr)) {
+              sess.sleepAfterReply = true;
+            }
           } else if ((t === 'response.audio_transcript.delta' || t === 'response.output_audio_transcript.delta') && ev.delta) {
+            touchConversationActivity();
             ttsSpeaking = true;
             evaTranscriptBuf += ev.delta;
             $('eva-subtitle').textContent = evaTranscriptBuf;
           } else if (t === 'response.audio.done' || t === 'response.output_audio.done' || t === 'response.done') {
+            touchConversationActivity();
             ttsSpeaking = false;
             evaTranscriptBuf = '';
+            if (sess.sleepAfterReply && t === 'response.done') {
+              setTimeout(() => {
+                if (liveCallSession === sess) {
+                  stopRealtimeLiveCall('💤 Tot zo! Ik luister op de achtergrond weer lokaal naar "Hé Eva".');
+                }
+              }, 900);
+            }
           } else if (t === 'response.function_call_arguments.done') {
+            touchConversationActivity();
             const fnName = ev.name || '';
             const callId = ev.call_id || '';
             let args = {};
             try { args = JSON.parse(ev.arguments || '{}'); } catch (_e) {}
 
             let outputObj = { ok: true };
-            if (fnName === 'open_scherm_paneel') {
+            if (fnName === 'snel_huis_lezen_of_bedienen' || fnName === 'gebruik_eigen_vaardigheid_of_kluis') {
+              const r = await fetch('/internal/v1/appliance/living/fast-action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tool: fnName, args })
+              });
+              const d = await r.json();
+              if (d?.stage) applyStageState(d.stage, { preserveDrawerInputs: activeDrawer === 'wizard' });
+              outputObj = d;
+            } else if (fnName === 'open_scherm_paneel') {
               const p = args.paneel || 'integrations';
               openDrawer(p);
               outputObj = { ok: true, geopend: p };
@@ -2373,6 +2751,14 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
               🎙️ ${liveCallSession ? 'Beëindig Live Gesprek' : 'Start nu Live Gesprek'}
             </button>
           </div>
+          <div style="margin-top:8px;">
+            <button type="button" class="btn-ghost" id="btn-rt-toggle-wake" style="width:100%; border-color:rgba(56,189,248,0.45); color:#e0f2fe;">
+              👂 ${wakeSentinelEnabled ? '"Hé Eva" Waker staat AAN (klik om uit te zetten)' : 'Zet lokale "Hé Eva" Waker + Auto-Slaapstand AAN'}
+            </button>
+            <div style="margin-top:4px; font-size:0.75rem; color:var(--muted);">
+              Luistert 100% lokaal (Vosk NL offline + WebAudio, 0 cloudkosten in rust). Opent de live spraakverbinding zodra je <em>"Hé Eva"</em> zegt en sluit vanzelf na 28s stilte of <em>"Tot zo Eva"</em>.
+            </div>
+          </div>
           <div id="rt-save-msg" style="margin-top:7px; font-size:0.8rem;"></div>
         </div>
       `;
@@ -2442,6 +2828,12 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       };
 
       $('btn-rt-save').onclick = saveRt;
+      if ($('btn-rt-toggle-wake')) {
+        $('btn-rt-toggle-wake').onclick = async () => {
+          await toggleWakeSentinel();
+          rerenderFn();
+        };
+      }
       $('btn-rt-test-call').onclick = async () => {
         if (liveCallSession) {
           await stopRealtimeLiveCall('Live gesprek gepauzeerd. Klik op 🎙️ Start Live Gesprek wanneer je weer verder wilt praten.');
@@ -2678,6 +3070,7 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
     $('btn-family').onclick = () => activeDrawer === 'family' ? closeDrawer() : openDrawer('family');
     $('btn-voice-engine').onclick = () => activeDrawer === 'voice_engine' ? closeDrawer() : openDrawer('voice_engine');
     $('btn-main-display').onclick = () => activeDrawer === 'main_display' ? closeDrawer() : openDrawer('main_display');
+    $('btn-wake-sentinel').onclick = () => toggleWakeSentinel();
     $('btn-live-call').onclick = () => toggleRealtimeLiveCall();
     $('btn-cam-look').onclick = async () => {
       userUnlockedAudio = true;
@@ -2821,6 +3214,15 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
       if (!d) return;
       setInterval(pollBackgroundWorkReturns, 6500);
       setTimeout(pollBackgroundWorkReturns, 2500);
+
+      let savedWake = null;
+      try { savedWake = localStorage.getItem('eva_wake_sentinel_enabled'); } catch (_e) {}
+      if (savedWake === '1' || (savedWake === null && isKioskMode)) {
+        wakeSentinelEnabled = true;
+        armWakeSentinelCapture().catch(() => {});
+      }
+      syncWakeSentinelUi();
+
       if (!d.wizard_completed) {
         wizardStep = d.ai_ready ? 2 : 1;
         openDrawer('wizard', wizardStep);
@@ -2829,7 +3231,11 @@ IMMERSIVE_STAGE_HTML = """<!doctype html>
           : 'Welkom! Koppel rechts in stap 1 eerst mijn AI-brein, dan lopen we samen alle stappen door.';
         await speakDutch(greet);
       } else {
-        await speakDutch(`Welkom thuis, ${d.household?.owner_name || 'Jaap'}! Klik bovenaan op Start Live Gesprek om gewoon doorlopend met mij te praten, of typ hieronder je vraag.`);
+        await speakDutch(
+          wakeSentinelEnabled
+            ? `Welkom thuis, ${d.household?.owner_name || 'Jaap'}! Zeg gewoon Hé Eva om handsfree met mij te praten.`
+            : `Welkom thuis, ${d.household?.owner_name || 'Jaap'}! Zet bovenaan Hé Eva aan voor handsfree waken, of klik op Start Live Gesprek.`
+        );
       }
     }
     boot();

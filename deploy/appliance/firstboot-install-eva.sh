@@ -188,7 +188,7 @@ REQ_FILE=\$(mktemp /tmp/eva-reqs-XXXXXX.txt)
 \"\$HOME/.venvs/eva/bin/python\" -c '
 import tomllib, pathlib
 data = tomllib.loads(pathlib.Path(\"$EVA_REPO_DIR/pyproject.toml\").read_text(encoding=\"utf-8\"))
-deps = list(data[\"project\"][\"dependencies\"]) + list(data[\"project\"][\"optional-dependencies\"][\"optional-models\"]) + [\"pytest\", \"httpx\", \"edge-tts\"]
+deps = list(data[\"project\"][\"dependencies\"]) + list(data[\"project\"][\"optional-dependencies\"][\"optional-models\"]) + [\"pytest\", \"httpx\", \"edge-tts\", \"vosk\"]
 pathlib.Path(\"'\"\$REQ_FILE\"'\").write_text(\"\\n\".join(deps) + \"\\n\", encoding=\"utf-8\")
 '
 uv pip install --python \"\$HOME/.venvs/eva/bin/python\" -r \"\$REQ_FILE\"
