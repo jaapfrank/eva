@@ -959,7 +959,14 @@ class OpenAICodexProvider:
                 timeout=self._settings.timeout_seconds,
             )
             profile = openai_model_profile(self._settings.model_name)
-            if self._settings.model_name in {"gpt-6-astra", "gpt-6-sol", "gpt-6-luna"}:
+            if self._settings.model_name in {
+                "gpt-6-astra",
+                "gpt-6-sol",
+                "gpt-6-luna",
+                "gpt-6.2-astra",
+                "gpt-6.2-sol",
+                "gpt-6.2-luna",
+            }:
                 # Pydantic 2.37 omits these models' documented hosted tool search.
                 # Remove this compatibility override when upstream covers it.
                 # https://developers.openai.com/api/docs/guides/tools-tool-search

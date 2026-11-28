@@ -29,7 +29,7 @@ from eva.adapters.model.openai_endpoint import responses_base_url
 MAX_VISION_IMAGE_BYTES = 1_250_000
 MAX_VISION_SSE_BYTES = 262_144
 DEFAULT_CODEX_VISION_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
-DEFAULT_CODEX_VISION_MODEL = "gpt-6-astra"
+DEFAULT_CODEX_VISION_MODEL = "gpt-6.2-astra"
 
 _MODEL_LEASE_OWNER_UID = 1000
 _MODEL_LEASE_READER_GID = 65532

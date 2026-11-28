@@ -129,8 +129,13 @@ class RuntimeSettings:
         if self.conversation_contact_model == "gpt-6-sol":
             if self.conversation_contact_reasoning_effort != "none":
                 raise ValueError("Sol contact requires reasoning none")
-            if self.conversation_model != "gpt-6-astra" or self.conversation_reasoning_effort not in {"medium", "high"}:
+            if self.conversation_model not in {"gpt-6-astra", "gpt-6.2-astra"} or self.conversation_reasoning_effort not in {"medium", "high"}:
                 raise ValueError("Sol contact requires Astra work at medium or higher")
+        if self.conversation_contact_model == "gpt-6.2-sol":
+            if self.conversation_contact_reasoning_effort != "low":
+                raise ValueError("GPT-6.2 Sol contact requires reasoning low")
+            if self.conversation_model != "gpt-6.2-astra" or self.conversation_reasoning_effort not in {"medium", "high"}:
+                raise ValueError("GPT-6.2 Sol contact requires GPT-6.2 Astra work at medium or higher")
         if type(self.background_work_enabled) is not bool:
             raise ValueError("background work switch must be a boolean")
         if type(self.delegated_work_enabled) is not bool:

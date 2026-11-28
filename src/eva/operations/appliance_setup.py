@@ -107,11 +107,11 @@ POSTGRES_IMAGE = (
 HINDSIGHT_IMAGES_BY_ARCH = {
     "amd64": (
         "ghcr.io/vectorize-io/hindsight@sha256:"
-        "aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b"
+        "a91efa369a79e236d29c1a641656021b26e94831aad0ab67ae8030d0c3b15182"
     ),
     "arm64": (
         "ghcr.io/vectorize-io/hindsight@sha256:"
-        "4b903ed2cbf029d6d305030b0005002d61d6a3b1d9b85867fb459351dcaa671c"
+        "86eeec6d5f762a17e37906d62b41ee708923eac58abdcd69197b9578df76d967"
     ),
 }
 
@@ -654,7 +654,7 @@ class ApplianceSetupService:
             },
             "model": {
                 "mode": "codex",
-                "conversation_model": env_vals.get("EVA_CONVERSATION_MODEL", "gpt-6-astra"),
+                "conversation_model": env_vals.get("EVA_CONVERSATION_MODEL", "gpt-6.2-astra"),
                 "reasoning_effort": env_vals.get("EVA_CONVERSATION_REASONING_EFFORT", "medium"),
                 "selected_api_id": None,
             },
@@ -1994,8 +1994,9 @@ class ApplianceSetupService:
                 "    environment:",
                 '      HINDSIGHT_ENABLE_CP: "false"',
                 "      HINDSIGHT_API_LLM_PROVIDER: openai-codex",
-                "      HINDSIGHT_API_LLM_MODEL: gpt-6-astra",
+                "      HINDSIGHT_API_LLM_MODEL: gpt-6.2-astra",
                 "      HINDSIGHT_API_LLM_REASONING_EFFORT: medium",
+                '      HINDSIGHT_API_RECENCY_ALPHA: "0.25"',
                 "      HINDSIGHT_API_EMBEDDINGS_PROVIDER: local",
                 '      HINDSIGHT_API_EMBEDDINGS_LOCAL_FORCE_CPU: "true"',
                 '      HINDSIGHT_API_RERANKER_LOCAL_FORCE_CPU: "true"',
@@ -2126,7 +2127,11 @@ class ApplianceSetupService:
                     "EVA_CONVERSATION_AUTH_FILE",
                     str(self.runtime_root / "model-lease" / "auth.json"),
                 ),
-                "EVA_CONVERSATION_MODEL": state["model"].get("conversation_model", "gpt-6-astra"),
+                "EVA_CONVERSATION_MODEL": (
+                    "gpt-6.2-astra"
+                    if state["model"].get("conversation_model") in {None, "", "gpt-6-astra"}
+                    else state["model"].get("conversation_model", "gpt-6.2-astra")
+                ),
                 "EVA_CONVERSATION_REASONING_EFFORT": state["model"].get("reasoning_effort", "medium"),
                 "TZ": state["profile"].get("time_zone", "Europe/Amsterdam"),
                 "EVA_RUNTIME_TENANT_ID": ids["tenant_id"],
@@ -2247,11 +2252,12 @@ class ApplianceSetupService:
         # Fast live contact model + deferred CPU recall when running Astra medium/high
         if (
             state["model"].get("mode", "codex") == "codex"
-            and env_vals.get("EVA_CONVERSATION_MODEL") == "gpt-6-astra"
+            and env_vals.get("EVA_CONVERSATION_MODEL") in {"gpt-6-astra", "gpt-6.2-astra"}
             and env_vals.get("EVA_CONVERSATION_REASONING_EFFORT") in {"medium", "high"}
         ):
-            env_vals["EVA_CONVERSATION_CONTACT_MODEL"] = "gpt-6-sol"
-            env_vals["EVA_CONVERSATION_CONTACT_REASONING_EFFORT"] = "none"
+            is_62 = env_vals.get("EVA_CONVERSATION_MODEL") == "gpt-6.2-astra"
+            env_vals["EVA_CONVERSATION_CONTACT_MODEL"] = "gpt-6.2-sol" if is_62 else "gpt-6-sol"
+            env_vals["EVA_CONVERSATION_CONTACT_REASONING_EFFORT"] = "low" if is_62 else "none"
         else:
             env_vals.pop("EVA_CONVERSATION_CONTACT_MODEL", None)
             env_vals.pop("EVA_CONVERSATION_CONTACT_REASONING_EFFORT", None)

@@ -154,9 +154,7 @@ if ! command -v node >/dev/null 2>&1; then
   (curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs) || apt-get install -y nodejs npm
 fi
 
-if ! command -v codex >/dev/null 2>&1; then
-  npm install -g @openai/codex
-fi
+npm install -g @openai/codex@latest || true
 
 # Beperk sudoers uitsluitend tot het activeren/herstarten van Eva-services vanuit de wizard.
 cat > /etc/sudoers.d/eva2-appliance << EOF
@@ -252,9 +250,9 @@ install -m 0600 -o 999 -g 999 "$EVA_RUNTIME_ROOT/secrets/postgres-password" "$EV
 ARCH=$(uname -m)
 POSTGRES_IMG="docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60"
 if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
-  HINDSIGHT_IMG="ghcr.io/vectorize-io/hindsight@sha256:4b903ed2cbf029d6d305030b0005002d61d6a3b1d9b85867fb459351dcaa671c"
+  HINDSIGHT_IMG="ghcr.io/vectorize-io/hindsight@sha256:86eeec6d5f762a17e37906d62b41ee708923eac58abdcd69197b9578df76d967"
 else
-  HINDSIGHT_IMG="ghcr.io/vectorize-io/hindsight@sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b"
+  HINDSIGHT_IMG="ghcr.io/vectorize-io/hindsight@sha256:a91efa369a79e236d29c1a641656021b26e94831aad0ab67ae8030d0c3b15182"
 fi
 
 cat > "$EVA_RUNTIME_ROOT/hindsight-starter.py" << 'EOF'

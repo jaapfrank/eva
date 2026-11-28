@@ -40,9 +40,9 @@ _SHA256 = re.compile(r"[0-9a-f]{64}")
 # Owner-selected work model, 2026-09-28.
 # API-equivalent accounting rates, not a ChatGPT subscription invoice:
 # https://developers.openai.com/api/docs/models/gpt-6-astra
-MODEL_PROFILE_ID = "model:codex:gpt-6-astra:v1"
+MODEL_PROFILE_ID = "model:codex:gpt-6.2-astra:v1"
 WORKER_PROFILE_ID = "worker:research:v1"
-MODEL_NAME = "gpt-6-astra"
+MODEL_NAME = "gpt-6.2-astra"
 MODEL_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 MODEL_TIMEOUT_SECONDS = 30
 MODEL_MAXIMUM_REQUEST_BYTES = 256 * 1024
