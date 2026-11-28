@@ -120,12 +120,15 @@ apt-get install -y \
   curl \
   docker.io \
   docker-compose-v2 \
+  ffmpeg \
   git \
   sudo \
-  ufw || true
+  ufw \
+  unzip || true
 
 if command -v ufw >/dev/null 2>&1 && ufw status | grep -q "Status: active"; then
   ufw allow 8765/tcp || true
+  ufw allow 8766/tcp || true
 fi
 
 systemctl enable --now avahi-daemon docker
@@ -188,7 +191,7 @@ REQ_FILE=\$(mktemp /tmp/eva-reqs-XXXXXX.txt)
 \"\$HOME/.venvs/eva/bin/python\" -c '
 import tomllib, pathlib
 data = tomllib.loads(pathlib.Path(\"$EVA_REPO_DIR/pyproject.toml\").read_text(encoding=\"utf-8\"))
-deps = list(data[\"project\"][\"dependencies\"]) + list(data[\"project\"][\"optional-dependencies\"][\"optional-models\"]) + [\"pytest\", \"httpx\", \"edge-tts\", \"vosk\"]
+deps = list(data[\"project\"][\"dependencies\"]) + list(data[\"project\"][\"optional-dependencies\"][\"optional-models\"]) + [\"pytest\", \"httpx\", \"edge-tts\", \"vosk\", \"websockets\"]
 pathlib.Path(\"'\"\$REQ_FILE\"'\").write_text(\"\\n\".join(deps) + \"\\n\", encoding=\"utf-8\")
 '
 uv pip install --python \"\$HOME/.venvs/eva/bin/python\" -r \"\$REQ_FILE\"
@@ -200,8 +203,17 @@ printf '%s/src\n%s\n' \"$EVA_REPO_DIR\" \"$EVA_REPO_DIR\" > \"\$SITE_PKGS/eva2_l
 
 set_step 88 "Stap 5/6 · Beveiligde mappen en systemd-services inrichten..."
 
-mkdir -p "$EVA_RUNTIME_ROOT"/{secrets,pg-secret,private/restore-authority,work/model-providers,model-lease,hindsight-access,identity}
+mkdir -p "$EVA_RUNTIME_ROOT"/{secrets,pg-secret,private/restore-authority,work/model-providers,model-lease,hindsight-access,identity,wakeword}
 mkdir -p "$EVA_WIZARD_DIR" "$EVA_HOME/.codex"
+
+if [ ! -d "$EVA_RUNTIME_ROOT/wakeword/vosk-model-small-nl-0.22/conf" ]; then
+  curl -fsSL "https://alphacephei.com/vosk/models/vosk-model-small-nl-0.22.zip" -o "$EVA_RUNTIME_ROOT/wakeword/vosk-nl.zip" && \
+    unzip -qo "$EVA_RUNTIME_ROOT/wakeword/vosk-nl.zip" -d "$EVA_RUNTIME_ROOT/wakeword" && \
+    rm -f "$EVA_RUNTIME_ROOT/wakeword/vosk-nl.zip" || true
+fi
+
+chown -R "$EVA_UID:$EVA_UID" "$EVA_RUNTIME_ROOT/wakeword"
+chmod 0700 "$EVA_RUNTIME_ROOT/wakeword"
 
 chown "$EVA_UID:$EVA_UID" \
   "$EVA_RUNTIME_ROOT" "$EVA_RUNTIME_ROOT/secrets" "$EVA_RUNTIME_ROOT/private" \
