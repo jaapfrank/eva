@@ -12,8 +12,18 @@
 *.service text eol=lf
 *.toml text eol=lf
 *.json text eol=lf
+*.jsonl text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.mako text eol=lf
+*.sql text eol=lf
+*.lock text eol=lf
+*.in text eol=lf
+*.ini text eol=lf
+*.txt text eol=lf
 *.md text eol=lf
 Dockerfile* text eol=lf
+src/eva/adapters/model/tokenizer_data/* text eol=lf
 
 *.cmd text eol=crlf
 *.bat text eol=crlf
@@ -23,6 +33,7 @@ Dockerfile* text eol=lf
 *.jpg binary
 *.jpeg binary
 *.glb binary
+*.gpg binary
 *.mp3 binary
 *.wav binary
 *.so binary

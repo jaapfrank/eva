@@ -182,6 +182,14 @@ elif [ ! -d "$EVA_REPO_DIR/.git" ]; then
 else
   git -C "$EVA_REPO_DIR" pull --ff-only || true
 fi
+# Normaliseer altijd eventuele Windows CRLF (\r) in alle tekst- en dashboard-bestanden zodat SHA-256 manifests kloppen
+find "$EVA_REPO_DIR" -type f \( \
+  -name '*.sh' -o -name '*.bash' -o -name '*.py' -o -name '*.mjs' -o -name '*.js' -o -name '*.cjs' \
+  -o -name '*.html' -o -name '*.css' -o -name '*.mako' -o -name '*.sql' -o -name '*.txt' -o -name '*.md' \
+  -o -name '*.json' -o -name '*.jsonl' -o -name '*.toml' -o -name '*.lock' -o -name '*.in' -o -name '*.ini' \
+  -o -name '*.yml' -o -name '*.yaml' -o -name '*.tmpl' -o -name '*.service' -o -name 'Dockerfile*' \
+  -o -path '*/tokenizer_data/*' \
+\) -exec sed -i 's/\r$//' {} +
 chown -R "$EVA_UID:$EVA_GID" "$EVA_REPO_DIR"
 
 set_step 68 "Stap 4/6 · Python 3.12 en AI-bibliotheken installeren..."

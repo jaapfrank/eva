@@ -124,18 +124,30 @@ $wslRepoPath = (& $wslExe -d $DistroName -u root -- wslpath -a ($RepoRoot -repla
 
 $syncScript = @'
 set -euo pipefail
+rm -rf /opt/eva2
 mkdir -p /opt/eva2
-tar -C "__WSL_REPO__" \
-  --exclude='.git' \
-  --exclude='deploy/appliance/eva-usb-output' \
-  --exclude='__pycache__' \
-  --exclude='.pytest_cache' \
-  --exclude='*.egg-info' \
-  -cf - . | tar -C /opt/eva2 -xf -
+if [ -d "__WSL_REPO__/.git" ]; then
+  if ! command -v git >/dev/null 2>&1; then
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update && apt-get install -y git
+  fi
+  # Pak rechtstreeks uit de Git commit-database uit zodat Windows core.autocrlf NOOIT hashes (zoals dashboard_static) verandert!
+  git -c safe.directory='*' -C "__WSL_REPO__" archive HEAD | tar -C /opt/eva2 -xf -
+else
+  tar -C "__WSL_REPO__" \
+    --exclude='.git' \
+    --exclude='deploy/appliance/eva-usb-output' \
+    --exclude='__pycache__' \
+    --exclude='.pytest_cache' \
+    --exclude='*.egg-info' \
+    -cf - . | tar -C /opt/eva2 -xf -
+fi
 find /opt/eva2 -type f \( \
-  -name '*.sh' -o -name '*.py' -o -name '*.mjs' -o -name '*.js' -o -name '*.cjs' \
-  -o -name '*.json' -o -name '*.toml' -o -name '*.lock' -o -name '*.in' -o -name '*.ini' \
+  -name '*.sh' -o -name '*.bash' -o -name '*.py' -o -name '*.mjs' -o -name '*.js' -o -name '*.cjs' \
+  -o -name '*.html' -o -name '*.css' -o -name '*.mako' -o -name '*.sql' -o -name '*.txt' -o -name '*.md' \
+  -o -name '*.json' -o -name '*.jsonl' -o -name '*.toml' -o -name '*.lock' -o -name '*.in' -o -name '*.ini' \
   -o -name '*.yml' -o -name '*.yaml' -o -name '*.tmpl' -o -name '*.service' -o -name 'Dockerfile*' \
+  -o -path '*/tokenizer_data/*' \
 \) -exec sed -i 's/\r$//' {} +
 chmod +x /opt/eva2/deploy/appliance/firstboot-install-eva.sh
 '@.Replace("__WSL_REPO__", $wslRepoPath).Replace("`r`n", "`n")
