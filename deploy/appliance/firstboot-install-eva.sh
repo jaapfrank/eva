@@ -38,6 +38,11 @@ EOFJSON
 set_step 8 "Stap 1/6 · Systeem voorbereiden..."
 beep_tone
 
+# Stop eventuele eerdere wizard of achtergebleven voortgangsserver van een afgebroken poging
+systemctl stop eva2-appliance-wizard.service 2>/dev/null || true
+pkill -f '/run/eva-early-status.py' 2>/dev/null || true
+sleep 0.3
+
 # Start direct een lichtgewicht statusserver op poort 8765 zodat je vanaf seconde 5 live voortgang ziet!
 EARLY_PID=""
 if command -v python3 >/dev/null 2>&1 && ! ss -tln 2>/dev/null | grep -q ':8765 '; then
@@ -144,13 +149,17 @@ if ! id -u "$EVA_USER" >/dev/null 2>&1; then
 fi
 
 EVA_UID=$(id -u "$EVA_USER")
+EVA_GID=$(id -g "$EVA_USER")
 EVA_HOME=$(getent passwd "$EVA_USER" | cut -d: -f6)
+mkdir -p "$EVA_HOME"
+chown "$EVA_UID:$EVA_GID" "$EVA_HOME"
+chmod 0750 "$EVA_HOME"
 
 groupadd -f -g 65532 eva-runtime
 usermod -aG docker,eva-runtime "$EVA_USER"
 
 set_step 38 "Stap 2/6 · Node.js 22 en ChatGPT/Codex CLI installeren..."
-if ! command -v node >/dev/null 2>&1; then
+if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
   (curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs) || apt-get install -y nodejs npm
 fi
 
@@ -173,16 +182,32 @@ elif [ ! -d "$EVA_REPO_DIR/.git" ]; then
 else
   git -C "$EVA_REPO_DIR" pull --ff-only || true
 fi
-chown -R "$EVA_UID:$EVA_UID" "$EVA_REPO_DIR"
+chown -R "$EVA_UID:$EVA_GID" "$EVA_REPO_DIR"
 
 set_step 68 "Stap 4/6 · Python 3.12 en AI-bibliotheken installeren..."
+# Herstel eventuele root-eigendommen of kapotte symlinks naar /root uit een eerdere afgebroken installatie
+for d in "$EVA_HOME/.local" "$EVA_HOME/.venvs" "$EVA_HOME/.cache" "$EVA_HOME/.codex"; do
+  if [ -e "$d" ]; then
+    chown -R "$EVA_UID:$EVA_GID" "$d" 2>/dev/null || true
+  fi
+done
+if [ -e "$EVA_HOME/.venvs/eva" ] || [ -L "$EVA_HOME/.venvs/eva/bin/python" ]; then
+  if ! sudo -u "$EVA_USER" env -i HOME="$EVA_HOME" "$EVA_HOME/.venvs/eva/bin/python" -c "import sys" >/dev/null 2>&1; then
+    rm -rf "$EVA_HOME/.venvs/eva"
+  fi
+fi
+
 cat > /tmp/eva-venv-setup.sh << 'EOVENV'
 #!/usr/bin/env bash
 set -euo pipefail
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export UV_PYTHON_INSTALL_DIR="$HOME/.local/share/uv/python"
+export UV_CACHE_DIR="$HOME/.cache/uv"
 if ! command -v uv >/dev/null 2>&1 && [ ! -x "$HOME/.local/bin/uv" ]; then
   curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin"
 uv python install 3.12
 mkdir -p "$HOME/.venvs"
 uv venv --allow-existing --python 3.12 "$HOME/.venvs/eva"
@@ -206,7 +231,7 @@ SITE_PKGS=$("$HOME/.venvs/eva/bin/python" -c 'import sysconfig; print(sysconfig.
 printf '%s/src\n%s\n' "$EVA_REPO_DIR" "$EVA_REPO_DIR" > "$SITE_PKGS/eva2_local.pth"
 EOVENV
 chmod 0755 /tmp/eva-venv-setup.sh
-sudo -u "$EVA_USER" env HOME="$EVA_HOME" EVA_REPO_DIR="$EVA_REPO_DIR" bash /tmp/eva-venv-setup.sh
+sudo -u "$EVA_USER" env -i HOME="$EVA_HOME" USER="$EVA_USER" LOGNAME="$EVA_USER" EVA_REPO_DIR="$EVA_REPO_DIR" PATH="/usr/local/bin:/usr/bin:/bin" bash /tmp/eva-venv-setup.sh
 rm -f /tmp/eva-venv-setup.sh
 
 set_step 88 "Stap 5/6 · Beveiligde mappen en systemd-services inrichten..."
@@ -220,23 +245,26 @@ if [ ! -d "$EVA_RUNTIME_ROOT/wakeword/vosk-model-small-nl-0.22/conf" ]; then
     rm -f "$EVA_RUNTIME_ROOT/wakeword/vosk-nl.zip" || true
 fi
 
-chown -R "$EVA_UID:$EVA_UID" "$EVA_RUNTIME_ROOT/wakeword"
-chmod 0700 "$EVA_RUNTIME_ROOT/wakeword"
-
-chown "$EVA_UID:$EVA_UID" \
-  "$EVA_RUNTIME_ROOT" "$EVA_RUNTIME_ROOT/secrets" "$EVA_RUNTIME_ROOT/private" \
-  "$EVA_RUNTIME_ROOT/private/restore-authority" "$EVA_RUNTIME_ROOT/work" \
-  "$EVA_RUNTIME_ROOT/work/model-providers" "$EVA_RUNTIME_ROOT/hindsight-access" \
-  "$EVA_RUNTIME_ROOT/identity" "$EVA_WIZARD_DIR" "$EVA_HOME/.codex"
+chown -R "$EVA_UID:$EVA_GID" \
+  "$EVA_RUNTIME_ROOT/secrets" "$EVA_RUNTIME_ROOT/private" \
+  "$EVA_RUNTIME_ROOT/work" "$EVA_RUNTIME_ROOT/hindsight-access" \
+  "$EVA_RUNTIME_ROOT/identity" "$EVA_RUNTIME_ROOT/wakeword" \
+  "$EVA_WIZARD_DIR" "$EVA_HOME/.codex"
+chown "$EVA_UID:$EVA_GID" "$EVA_RUNTIME_ROOT"
 chmod 0700 \
   "$EVA_RUNTIME_ROOT" "$EVA_RUNTIME_ROOT/secrets" "$EVA_RUNTIME_ROOT/private" \
   "$EVA_RUNTIME_ROOT/private/restore-authority" "$EVA_RUNTIME_ROOT/work" \
   "$EVA_RUNTIME_ROOT/work/model-providers" "$EVA_RUNTIME_ROOT/hindsight-access" \
-  "$EVA_RUNTIME_ROOT/identity" "$EVA_WIZARD_DIR" "$EVA_HOME/.codex"
+  "$EVA_RUNTIME_ROOT/identity" "$EVA_RUNTIME_ROOT/wakeword" \
+  "$EVA_WIZARD_DIR" "$EVA_HOME/.codex"
+
+# Zorg dat bestaande privé-bestanden in workspace/secrets exact 0600 (alleen eigenaar) hebben voor fail-closed checks
+find "$EVA_WIZARD_DIR" "$EVA_RUNTIME_ROOT/secrets" "$EVA_RUNTIME_ROOT/private" "$EVA_RUNTIME_ROOT/identity" -type d -exec chmod 0700 {} + 2>/dev/null || true
+find "$EVA_WIZARD_DIR" "$EVA_RUNTIME_ROOT/secrets" "$EVA_RUNTIME_ROOT/private" "$EVA_RUNTIME_ROOT/identity" -type f -exec chmod 0600 {} + 2>/dev/null || true
 
 chmod 0755 "$EVA_RUNTIME_ROOT/pg-secret"
 touch "$EVA_RUNTIME_ROOT/hindsight-access/auth.lock"
-chown "$EVA_UID:$EVA_UID" "$EVA_RUNTIME_ROOT/hindsight-access/auth.lock"
+chown "$EVA_UID:$EVA_GID" "$EVA_RUNTIME_ROOT/hindsight-access/auth.lock"
 chmod 0600 "$EVA_RUNTIME_ROOT/hindsight-access/auth.lock"
 
 chown "$EVA_UID:65532" "$EVA_RUNTIME_ROOT/model-lease"
@@ -244,14 +272,14 @@ chmod 02750 "$EVA_RUNTIME_ROOT/model-lease"
 
 # Kopieer eventuele vooraf gegenereerde headless koppel-hash vanaf de USB-seed.
 if [ -f "$EVA_SEED_DIR/pairing.json" ] && [ ! -f "$EVA_WIZARD_DIR/pairing.json" ]; then
-  install -m 0600 -o "$EVA_UID" -g "$EVA_UID" "$EVA_SEED_DIR/pairing.json" "$EVA_WIZARD_DIR/pairing.json"
+  install -m 0600 -o "$EVA_UID" -g "$EVA_GID" "$EVA_SEED_DIR/pairing.json" "$EVA_WIZARD_DIR/pairing.json"
 fi
 
 # Genereer het PostgreSQL-wachtwoord alvast zodat de container zonder tussenkomst kan draaien.
 if [ ! -f "$EVA_RUNTIME_ROOT/secrets/postgres-password" ]; then
   PW=$(head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n')
   printf '%s\n' "$PW" > "$EVA_RUNTIME_ROOT/secrets/postgres-password"
-  chown "$EVA_UID:$EVA_UID" "$EVA_RUNTIME_ROOT/secrets/postgres-password"
+  chown "$EVA_UID:$EVA_GID" "$EVA_RUNTIME_ROOT/secrets/postgres-password"
   chmod 0600 "$EVA_RUNTIME_ROOT/secrets/postgres-password"
 fi
 install -m 0600 -o 999 -g 999 "$EVA_RUNTIME_ROOT/secrets/postgres-password" "$EVA_RUNTIME_ROOT/pg-secret/postgres-password"
@@ -294,24 +322,26 @@ while True:
         subprocess.run(["docker", "start", CONTAINER], check=False)
     time.sleep(3)
 EOF
-chown "$EVA_UID:$EVA_UID" "$EVA_RUNTIME_ROOT/hindsight-starter.py"
+chown "$EVA_UID:$EVA_GID" "$EVA_RUNTIME_ROOT/hindsight-starter.py"
 chmod 0755 "$EVA_RUNTIME_ROOT/hindsight-starter.py"
 
 VENV_PY="$EVA_HOME/.venvs/eva/bin/python"
+EVA_GROUP_NAME=$(id -gn "$EVA_USER")
 
 cat > /etc/systemd/system/eva2-local-model-lease.service << EOF
 [Unit]
 Description=Eva2 local model access lease publisher
 After=network.target
+StartLimitIntervalSec=0
 
 [Service]
 User=$EVA_USER
-Group=$EVA_USER
+Group=$EVA_GROUP_NAME
 SupplementaryGroups=eva-runtime
 WorkingDirectory=$EVA_REPO_DIR
 ExecStart=$VENV_PY -m eva.operations.model_credentials --source $EVA_HOME/.codex/auth.json --target $EVA_RUNTIME_ROOT/model-lease/auth.json
 Restart=always
-RestartSec=2
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
@@ -321,14 +351,15 @@ cat > /etc/systemd/system/eva2-local-hindsight-lease.service << EOF
 [Unit]
 Description=Eva2 local Hindsight Codex consumer lease publisher
 After=network.target
+StartLimitIntervalSec=0
 
 [Service]
 User=$EVA_USER
-Group=$EVA_USER
+Group=$EVA_GROUP_NAME
 WorkingDirectory=$EVA_REPO_DIR
 ExecStart=$VENV_PY -m eva.operations.model_credentials --format codex-consumer --source $EVA_HOME/.codex/auth.json --target $EVA_RUNTIME_ROOT/hindsight-access/auth.json
 Restart=always
-RestartSec=2
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
@@ -339,6 +370,7 @@ cat > /etc/systemd/system/eva2-local-hindsight-starter.service << EOF
 Description=Eva2 local Hindsight auto-starter when Codex lease becomes valid
 After=docker.service eva2-local-hindsight-lease.service
 Requires=docker.service
+StartLimitIntervalSec=0
 
 [Service]
 User=$EVA_USER
@@ -356,6 +388,7 @@ cat > /etc/systemd/system/eva2-local-gateway.service << EOF
 [Unit]
 Description=Eva2 local authenticated MCP Gateway & Universal Capability Host
 After=network.target
+StartLimitIntervalSec=0
 
 [Service]
 User=$EVA_USER
@@ -416,7 +449,7 @@ After=network.target eva2-local-core.service
 
 [Service]
 User=$EVA_USER
-Group=$EVA_USER
+Group=$EVA_GROUP_NAME
 ExecStart=$NODE_BIN $EVA_REPO_DIR/deploy/dashboard/local-owner.mjs
 LoadCredential=dashboard-token:$EVA_RUNTIME_ROOT/secrets/dashboard-token
 Restart=on-failure
@@ -452,6 +485,7 @@ cat > /etc/systemd/system/eva2-appliance-wizard.service << EOF
 Description=Eva2 1-click Character, Module & Appliance Wizard
 After=network-online.target docker.service
 Wants=network-online.target
+StartLimitIntervalSec=0
 
 [Service]
 User=$EVA_USER
@@ -461,7 +495,7 @@ WorkingDirectory=$EVA_REPO_DIR
 Environment=HOME=$EVA_HOME
 ExecStart=$VENV_PY -m eva.bootstrap.appliance_wizard_cli --host 0.0.0.0 --port 8765 --workspace $EVA_WIZARD_DIR --runtime-root $EVA_RUNTIME_ROOT --repo-root $EVA_REPO_DIR --codex-auth-file $EVA_HOME/.codex/auth.json
 Restart=always
-RestartSec=2
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
@@ -473,18 +507,51 @@ if [ -n "$EARLY_PID" ]; then
   wait "$EARLY_PID" 2>/dev/null || true
   EARLY_PID=""
 fi
+# Stop ook eventuele verweesde eva-early-status.py uit een eerdere afgebroken installatierun!
+pkill -f '/run/eva-early-status.py' 2>/dev/null || true
+for _ in $(seq 1 10); do
+  if ! ss -tln 2>/dev/null | grep -q ':8765 '; then
+    break
+  fi
+  pkill -9 -f '/run/eva-early-status.py' 2>/dev/null || true
+  sleep 0.3
+done
+
+# Pre-flight controle als $EVA_USER zodat een eventuele Python- of rechtenfout direct zichtbaar is vóór systemd start
+sudo -u "$EVA_USER" -g docker env -i HOME="$EVA_HOME" PATH="/usr/local/bin:/usr/bin:/bin" \
+  EVA_WIZARD_DIR="$EVA_WIZARD_DIR" EVA_RUNTIME_ROOT="$EVA_RUNTIME_ROOT" EVA_REPO_DIR="$EVA_REPO_DIR" \
+  "$VENV_PY" -c '
+import os
+from pathlib import Path
+from eva.adapters.api.appliance_wizard import create_appliance_wizard_app
+from eva.operations.appliance_setup import ApplianceSetupService
+
+svc = ApplianceSetupService(
+    workspace=Path(os.environ["EVA_WIZARD_DIR"]),
+    runtime_root=Path(os.environ["EVA_RUNTIME_ROOT"]),
+    repo_root=Path(os.environ["EVA_REPO_DIR"]),
+    codex_auth_file=Path(os.environ["HOME"]) / ".codex" / "auth.json",
+)
+create_appliance_wizard_app(svc)
+'
 
 systemctl daemon-reload
-systemctl enable --now \
+systemctl reset-failed 2>/dev/null || true
+systemctl enable \
   eva2-local-model-lease.service \
   eva2-local-hindsight-lease.service \
   eva2-local-hindsight-starter.service \
   eva2-local-gateway.service \
   eva2-appliance-wizard.service
-systemctl restart eva2-local-gateway.service eva2-appliance-wizard.service
+systemctl restart \
+  eva2-local-model-lease.service \
+  eva2-local-hindsight-lease.service \
+  eva2-local-hindsight-starter.service \
+  eva2-local-gateway.service \
+  eva2-appliance-wizard.service
 
 WIZARD_UP=0
-for _ in $(seq 1 25); do
+for _ in $(seq 1 30); do
   if curl -fsS --max-time 2 http://127.0.0.1:8765/internal/v1/appliance/ping >/dev/null 2>&1; then
     WIZARD_UP=1
     break
@@ -493,8 +560,9 @@ for _ in $(seq 1 25); do
 done
 
 if [ "$WIZARD_UP" -ne 1 ]; then
-  echo "FOUT: eva2-appliance-wizard.service reageert niet op poort 8765. Recente logs:" >&2
-  journalctl -u eva2-appliance-wizard.service -n 35 --no-pager >&2 || true
+  echo "FOUT: eva2-appliance-wizard.service reageert niet op poort 8765. Poort- en service-diagnose:" >&2
+  ss -tlnp 2>/dev/null | grep -E '8765|8766' >&2 || true
+  journalctl -u eva2-appliance-wizard.service -n 80 --no-pager >&2 || true
   exit 1
 fi
 

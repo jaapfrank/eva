@@ -126,7 +126,7 @@ $syncScript = @'
 set -euo pipefail
 mkdir -p /opt/eva2
 tar -C "__WSL_REPO__" \
-  --exclude='.git/objects/pack/*.tmp' \
+  --exclude='.git' \
   --exclude='deploy/appliance/eva-usb-output' \
   --exclude='__pycache__' \
   --exclude='.pytest_cache' \
@@ -134,6 +134,7 @@ tar -C "__WSL_REPO__" \
   -cf - . | tar -C /opt/eva2 -xf -
 find /opt/eva2 -type f \( \
   -name '*.sh' -o -name '*.py' -o -name '*.mjs' -o -name '*.js' -o -name '*.cjs' \
+  -o -name '*.json' -o -name '*.toml' -o -name '*.lock' -o -name '*.in' -o -name '*.ini' \
   -o -name '*.yml' -o -name '*.yaml' -o -name '*.tmpl' -o -name '*.service' -o -name 'Dockerfile*' \
 \) -exec sed -i 's/\r$//' {} +
 chmod +x /opt/eva2/deploy/appliance/firstboot-install-eva.sh
@@ -150,7 +151,7 @@ Write-Host "      Tip: je kunt ondertussen al meekijken op http://127.0.0.1:8765
 if ($LASTEXITCODE -ne 0) {
     Write-Host ""
     Write-Host "[!] De installatie in WSL2 meldde een fout (code $LASTEXITCODE). Laatste service-logs:" -ForegroundColor Red
-    & $wslExe -d $DistroName -u root -- bash -lc "journalctl -u eva2-appliance-wizard.service -n 25 --no-pager || true"
+    & $wslExe -d $DistroName -u root -- bash -lc "journalctl -u eva2-appliance-wizard.service -n 80 --no-pager || true"
     throw "firstboot-install-eva.sh is niet volledig afgerond."
 }
 
